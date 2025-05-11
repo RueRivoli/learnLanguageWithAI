@@ -1,0 +1,40 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "type-check": "vue-tsc --noEmit",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@compodium/nuxt": "^0.1.0-beta.9",
+    "@headlessui/vue": "^1.7.23",
+    "@nuxt/eslint": "^1.3.0",
+    "@nuxt/ui": "^3.1.0",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tailwindcss/vite": "^4.1.5",
+    "@unlok-co/nuxt-stripe": "^5.0.0",
+    "daisyui": "^5.0.28",
+    "eslint": "^9.25.1",
+    "lodash": "^4.17.21",
+    "nuxt": "^3.17.1",
+    "nuxt-stripe-module": "^3.2.0",
+    "tailwindcss": "^4.1.5",
+    "valibot": "^1.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^2.4.0",
+    "@nuxtjs/supabase": "^1.5.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "nuxt-headlessui": "^1.2.0",
+    "vue-tsc": "^2.2.10"
+  }
+}
