@@ -2,8 +2,7 @@
 import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
 import { getLevelLabel } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule";
-
-const client = useSupabaseClient();
+import { computed } from "vue";
 
 definePageMeta({
   layout: "authenticated",
@@ -12,23 +11,20 @@ definePageMeta({
 const grammarRules = ref<GrammarRule>([]);
 
 const getGrammarRules = async () => {
-  const { data, error } = await client
-    .from("turkish_grammar_rules")
-    .select("id,rule_name, rule_name_translation, difficulty_class");
-  if (error) throw error;
-  if (data) grammarRules.value = data;
+  const { data  } = await useFetch("/api/grammar-rules");
+  if (data) grammarRules.value = data.value;
 };
 
 getGrammarRules();
 
-// useHead({
-//   title: "Grammar rules",
-//   titleTemplate: "%s - Nuxt 3 Woocommerce",
-//   meta: [
-//     { name: "grammar-rules", content: "width=device-width, initial-scale=1" },
-//   ],
-//   link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-// });
+useHead({
+  title: "Grammar rules",
+  titleTemplate: "%s - Learn languages with AI",
+  meta: [
+    { name: "grammar-rules", content: "width=device-width, initial-scale=1" },
+  ],
+  link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+});
 </script>
 
 <template>
@@ -114,7 +110,14 @@ getGrammarRules();
                   :value="65"
                   max="100"
                 />
-                <!-- <div class="radial-progress text-primary" style="--value:70;" aria-valuenow="70" role="progressbar">70%</div> -->
+                <!-- <div
+                  class="radial-progress text-primary"
+                  style="--value: 70"
+                  aria-valuenow="70"
+                  role="progressbar"
+                >
+                  70%
+                </div> -->
               </td>
               <th>
                 <button class="btn btn-ghost">
