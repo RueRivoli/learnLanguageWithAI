@@ -1,8 +1,4 @@
 <script setup lang="ts">
-// const props = defineProps<{
-//   toCreateAccount: boolean;
-// }>({ toCreateAccount: false });
-
 const props = withDefaults(
   defineProps<{
     toCreateAccount?: boolean;
@@ -17,6 +13,7 @@ const createAccountActivated: boolean | null = ref<boolean>(
 );
 </script>
 
+
 <template>
   <div class="h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center">
     <div class="w-full flex flex-col justify-center items-center">
@@ -24,8 +21,8 @@ const createAccountActivated: boolean | null = ref<boolean>(
         <label class="label">
           <span
             :class="{
-              'text-indigo-500': !createAccountActivated,
-              'text-white': createAccountActivated,
+              'text-indigo-500 font-bold': !createAccountActivated,
+              'text-black dark:text-white': createAccountActivated,
             }"
             >Sign In</span
           ><input
@@ -36,8 +33,8 @@ const createAccountActivated: boolean | null = ref<boolean>(
           />
           <span
             :class="{
-              'text-orange-500': createAccountActivated,
-              'text-white': !createAccountActivated,
+              'text-orange-500 font-bold': createAccountActivated,
+              'text-black dark:text-white': !createAccountActivated,
             }"
             >Sign Up</span
           >

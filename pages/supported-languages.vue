@@ -1,6 +1,4 @@
-<script setup lang="ts">
-console.log("Supported Languages");
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
@@ -15,8 +13,8 @@ console.log("Supported Languages");
         </div>
         <div
           class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 sm:mt-8 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3"
-        > 
-        <div class="card bg-base-100 shadow-sm">
+        >
+          <div class="card bg-base-100 shadow-sm">
             <div class="card-body">
               <div class="flex justify-between">
                 <h2 class="text-3xl text-black font-bold">Turkish</h2>
@@ -54,11 +52,7 @@ console.log("Supported Languages");
             <div class="card-body">
               <div class="flex justify-between">
                 <h2 class="text-3xl text-black font-bold">Japanese</h2>
-                <img
-                  class="h-8 w-auto"
-                  src="../assets/img/japan.png"
-                  alt=""
-                />
+                <img class="h-8 w-auto" src="../assets/img/japan.png" alt="" />
               </div>
             </div>
           </div>
@@ -87,7 +81,6 @@ console.log("Supported Languages");
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

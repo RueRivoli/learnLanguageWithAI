@@ -5,7 +5,7 @@
     >
       <div class="absolute inset-0 -z-10 overflow-hidden">
         <svg
-          class="absolute top-0 left-[max(50%,25rem)] h-[64rem] w-[128rem] -translate-x-1/2  "
+          class="absolute top-0 left-[max(50%,25rem)] h-[64rem] w-[128rem] -translate-x-1/2"
           aria-hidden="true"
         >
           <defs>

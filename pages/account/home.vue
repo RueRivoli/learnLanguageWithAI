@@ -1,7 +1,9 @@
 <script setup lang="ts">
-// const user = useSupabaseUser();
+definePageMeta({
+  layout: "authenticated",
+});
 </script>
 
 <template>
-  <Authenticated> test </Authenticated>
+  <div></div>
 </template>
