@@ -1,10 +1,18 @@
 # Learn languages with AI
 
-This website is about learning language. But faster.
+This Nuxt.js website is about learning language. But faster.
 AI help us to detect your areas of improvements.
 In each new lesson, we generate for you a lesson containing: 
 - 10 of the most 10K used words that you don't know
 - a notion that you need to improve 
+
+## Tools
+
+- TailwindCSS
+- DaisyUI
+- Nuxt 3
+- Supabase
+
 
 ## Setup
 
