@@ -11,6 +11,7 @@ In each new lesson, we generate for you a lesson containing:
 - TailwindCSS
 - DaisyUI
 - Nuxt 3
+- Typescript
 - Supabase
 
 
