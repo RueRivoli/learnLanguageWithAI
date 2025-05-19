@@ -3,6 +3,7 @@
 This Nuxt.js website is about learning languages. But faster.
 
 AI helps us to detect where stands room for improvement.
+
 In each new lesson, we generate for you a lesson containing: 
 - 10 of the most 10K used words that you don't know
 - a notion that you need to improve 
