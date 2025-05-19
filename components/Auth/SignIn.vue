@@ -105,12 +105,10 @@ const handleSignInWithGoogle = async () => {
 <template>
   <div class="flex flex-col items-center p-7">
     <div class="mx-auto w-sm">
-      <!-- <h2 class="mb-2 font-semibold text-gray-900 text-2xl">Sign In</h2> -->
-
       <div>
         <button
           type="submit"
-          class="btn btn-default h-13 w-96 text-gray focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          class="btn btn-secondary h-13 w-96 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
           @click="handleSignInWithGoogle"
         >
           <img
@@ -118,7 +116,7 @@ const handleSignInWithGoogle = async () => {
             loading="lazy"
             height="24"
             width="24"
-            src="./../assets/img/google.svg"
+            src="./../../assets/img/google.svg"
           />
           <span>Sign In With Google</span>
         </button>
@@ -126,46 +124,37 @@ const handleSignInWithGoogle = async () => {
       <br />
 
       <div class="divider divider-neutral">or</div>
-      <!-- <div class="flex items-center gap-4 text-gray-500">
-        <hr class="flex-1 border-gray-300" />
-        or
-        <hr class="flex-1 border-gray-300" />
-      </div> -->
       <br />
 
       <div
         v-if="connexionError"
-        class="bg-red-800 mb-2 w-full border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+        class="w-full bg-error mb-2 border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
         {{ connexionError }}
       </div>
       <form :state="state" @submit.prevent="signUp">
         <div class="mb-5">
-          <label
-            for="email"
-            class="block mb-2 text-sm font-medium text-white light:text-gray"
+          <label for="email" class="block mb-2 text-sm font-medium"
             >Your email</label
           >
           <input
             id="email"
             v-model="state.email"
             type="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="w-full bg-base-200 border rounded-lg focus:ring-primary p-2.5"
             placeholder="email"
             required
           />
         </div>
         <div class="mb-5">
-          <label
-            for="password"
-            class="block mb-2 w-full text-sm font-medium text-white"
+          <label for="password" class="block mb-2 text-sm font-medium"
             >Your password</label
           >
           <input
             id="password"
             v-model="state.password"
             type="password"
-            class="bg-gray-50 w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="w-full bg-base-200 rounded-lg border focus:border-primary p-2.5"
             placeholder="password"
             required
           />
@@ -173,7 +162,7 @@ const handleSignInWithGoogle = async () => {
         <button
           type="submit"
           :disabled="isLoading"
-          class="btn btn-info w-full text-white dark:text-white bg-indigo-500 border-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          class="btn btn-primary w-full focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           @click="handleSignIn"
         >
           Sign In

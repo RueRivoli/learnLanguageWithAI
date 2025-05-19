@@ -104,7 +104,7 @@ const handleSignUp = async () => {
             loading="lazy"
             height="24"
             width="24"
-            src="./../assets/img/google.svg"
+            src="./../../assets/img/google.svg"
           />
           <span>Sign Up With Google</span>
         </button>
@@ -115,7 +115,7 @@ const handleSignUp = async () => {
 
       <div
         v-if="connexionError"
-        class="bg-red-800 mb-2 w-full border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+        class="bg-error mb-2 w-full border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
         {{ connexionError }}
       </div>
@@ -123,7 +123,7 @@ const handleSignUp = async () => {
         <div class="mb-5">
           <label
             for="email"
-            class="block mb-2 text-sm font-medium text-white light:text-gray"
+            class="block mb-2 text-sm font-medium"
             >Your email</label
           >
           <input
@@ -138,7 +138,7 @@ const handleSignUp = async () => {
         <div class="mb-5">
           <label
             for="password"
-            class="block mb-2 w-full text-sm font-medium text-white"
+            class="block mb-2 w-full text-sm font-mediu"
             >Your password</label
           >
           <input
