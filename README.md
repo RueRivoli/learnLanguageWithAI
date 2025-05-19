@@ -8,6 +8,9 @@ In each new lesson, we generate for you a lesson containing:
 - 10 of the most 8K used words that you don't know
 - a notion that you need to improve
 
+At the end of a lesson, the user needs to fill out a quiz.
+This evaluates your progess
+
 A dashboard keeps track of your knowledge of
 - the 8K most used words in the targeted language
 - the 1K most used expressions in the targeted language
