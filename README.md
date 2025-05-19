@@ -1,4 +1,4 @@
-# Learn languages with AI
+# Learn languages faster with AI
 
 This Nuxt.js website is about learning language. But faster.
 AI help us to detect your areas of improvements.
