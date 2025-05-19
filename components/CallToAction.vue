@@ -1,6 +1,4 @@
-<script setup lang="ts">
-defineProps<{}>();
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="relative px-6 pt-14 lg:px-8">
@@ -45,7 +43,7 @@ defineProps<{}>();
       </div> -->
       <div class="text-center">
         <h1
-          class="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl"
+          class="text-5xl font-semibold tracking-tight text-balance text-gray dark:text-white sm:text-7xl"
         >
           Learn a language more efficiently with AI
         </h1>

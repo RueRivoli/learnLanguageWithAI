@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const client = useSupabaseClient();
-const user = useSupabaseUser();
 
 const handleSignOut = async () => {
   const { error } = await client.auth.signOut();

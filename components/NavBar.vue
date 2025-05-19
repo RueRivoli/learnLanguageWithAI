@@ -1,12 +1,8 @@
-<script setup lang="ts">
-const client = useSupabaseClient();
-const user = useSupabaseUser();
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
-    <NavBarAuthUser v-if="user?.id" />
-    <NavBarPublic v-else />
+    <NavBarPublic />
   </div>
 </template>
 

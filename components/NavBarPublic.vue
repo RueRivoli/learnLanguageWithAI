@@ -10,8 +10,10 @@ const handleSignOut = async () => {
 <template>
   <div class="h-16">
     <div class="w-full navbar shadow-sm">
-      <div class="navbar-start">
-        <NuxtLink to="/"> <div>Learn Languages Fast With AI</div></NuxtLink>
+      <div class="navbar-start logo">
+        <NuxtLink to="/">
+          <span class="ml-2">GrammIA</span>
+        </NuxtLink>
       </div>
       <div class="navbar-center">
         <NuxtLink to="/working-explanation">
@@ -27,7 +29,6 @@ const handleSignOut = async () => {
         </NuxtLink>
       </div>
     </div>
-
 
     <!-- Mobile menu, show/hide based on menu open state. -->
     <div class="lg:hidden" role="dialog" aria-modal="true">
@@ -62,7 +63,7 @@ const handleSignOut = async () => {
             <div class="space-y-2 py-6">
               <NuxtLink to="/working-explanation">
                 <div>How does it work ?</div>
-                </NuxtLink>
+              </NuxtLink>
               <NuxtLink to="/supported-languages"
                 ><div>Which language is supported ?</div></NuxtLink
               >
@@ -75,10 +76,14 @@ const handleSignOut = async () => {
           </div>
         </div>
       </div>
-
-      
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.logo {
+  font-family: "Tagesschrift", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+</style>

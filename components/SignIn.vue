@@ -4,6 +4,7 @@ import { checkIfEmailPasswordCorrectFormat } from "./../utils/auth/auth";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const router = useRouter();
 const schema = z.object({
   email: z.string().email(),
   password: z
@@ -172,7 +173,7 @@ const handleSignInWithGoogle = async () => {
         <button
           type="submit"
           :disabled="isLoading"
-          class="btn btn-info w-full text-white bg-indigo-500 border-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          class="btn btn-info w-full text-white dark:text-white bg-indigo-500 border-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
           @click="handleSignIn"
         >
           Sign In
