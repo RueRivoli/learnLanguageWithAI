@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { watchEffect } from "vue";
 import * as z from "zod";
-import { checkIfEmailPasswordCorrectFormat } from "./../utils/auth/auth";
+import { checkIfEmailPasswordCorrectFormat } from "../../utils/auth/auth";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
@@ -30,39 +31,56 @@ watchEffect(() => {
 
 const connexionError: null | string = ref(null);
 const isLoading: boolean = ref(false);
-const createAccountActivated: boolean | null = ref(false);
 
-const testValidEmailPassword = () => {
-  if (schema.safeParse(state).success) {
-    console.log("email/pswd correct");
-    return true;
-  } else {
-    if (!z.string().email().safeParse(state.email).success)
-      connexionError.value = "Please input a valid email";
-    else
-      connexionError.value =
-        "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
-    return false;
+// const testValidEmailPassword = () => {
+//   console.log("test email and password");
+//   if (schema.safeParse(state).success) {
+//     console.log("email/pswd correct");
+//     return true;
+//   } else {
+//     console.log("sth invalid");
+//     if (!z.string().email().safeParse(state.email).success) {
+//       console.log("email invalid");
+//       connexionError.value = "Please input a valid email";
+//     } else {
+//       console.log("psswd invalid");
+//       connexionError.value =
+//         "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
+//     }
+
+//     return false;
+//   }
+// };
+
+const handleSignUpWithGoogle = async () => {
+  const { data, error } = await client.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: window.location.origin + "/account/home",
+    },
+  });
+  if (data?.url) {
+    console.log("data, url", data.url);
+    // redirect the user to the identity provider's authentication flow
+    //  window.location.href = data.url;
+    // router.push("/account/home");
   }
 };
 
-const signUp = async () => {
+const handleSignUp = async () => {
   connexionError.value = null;
-  if (!testValidEmailPassword()) return;
+  const errorFromCheck = checkIfEmailPasswordCorrectFormat(state);
+  if (errorFromCheck !== null) {
+    connexionError.value = errorFromCheck;
+    return;
+  }
+  if (!testValidEmailPassword(state)) return;
   isLoading.value = true;
   try {
-    const { data, error } = await client.auth.signUp({
-      email: state.email,
-      password: state.password,
+    return router.push({
+      name: "message-text",
+      params: { text: "Please check your mailbox to confirm your account" },
     });
-    if (error) {
-      console.log("error", error);
-      connexionError.value = error.message;
-      throw error;
-    } else if (data) {
-      console.log("data", data);
-    }
-    isLoading.value = false;
   } catch (error) {
     console.log("error", error);
     connexionError.value = error.message;
@@ -70,48 +88,16 @@ const signUp = async () => {
     isLoading.value = false;
   }
 };
-
-const handleSignIn = async () => {
-  connexionError.value = null;
-  const errorFromCheck = checkIfEmailPasswordCorrectFormat(state);
-  if (errorFromCheck !== null) {
-    connexionError.value = errorFromCheck;
-    return;
-  }
-  const { data, error } = await client.auth.signInWithPassword({
-    email: state.value.email,
-    password: state.value.password,
-  });
-  console.log("data", data);
-  console.log("error", error);
-};
-
-//TO DO: change to google
-const handleSignInWithGoogle = async () => {
-  console.log("handleSignInWithGoogle");
-  const { data, error } = await client.auth.signInWithOAuth({
-    provider: "github",
-    options: {
-      redirectTo: window.location.origin + "/account/home",
-    },
-  });
-  if (data.url) {
-    // redirect the user to the identity provider's authentication flow
-    window.location.href = data.url;
-  }
-};
 </script>
 
 <template>
   <div class="flex flex-col items-center p-7">
     <div class="mx-auto w-sm">
-      <!-- <h2 class="mb-2 font-semibold text-gray-900 text-2xl">Sign In</h2> -->
-
       <div>
         <button
           type="submit"
           class="btn btn-default h-13 w-96 text-gray focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-          @click="handleSignInWithGoogle"
+          @click="handleSignUpWithGoogle"
         >
           <img
             id="provider-logo"
@@ -120,17 +106,11 @@ const handleSignInWithGoogle = async () => {
             width="24"
             src="./../assets/img/google.svg"
           />
-          <span>Sign In With Google</span>
+          <span>Sign Up With Google</span>
         </button>
       </div>
       <br />
-
       <div class="divider divider-neutral">or</div>
-      <!-- <div class="flex items-center gap-4 text-gray-500">
-        <hr class="flex-1 border-gray-300" />
-        or
-        <hr class="flex-1 border-gray-300" />
-      </div> -->
       <br />
 
       <div
@@ -139,7 +119,7 @@ const handleSignInWithGoogle = async () => {
       >
         {{ connexionError }}
       </div>
-      <form :state="state" @submit.prevent="signUp">
+      <form :state="state" @submit.prevent="handleSignUp">
         <div class="mb-5">
           <label
             for="email"
@@ -170,13 +150,26 @@ const handleSignInWithGoogle = async () => {
             required
           />
         </div>
+        <!-- <div class="flex items-start mb-5">
+            <div class="flex items-center h-5">
+              <input
+                id="remember"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                required
+              />
+            </div>
+            <label for="remember" class="ms-2 text-sm font-medium text-gray-900"
+              >Remember me</label
+            >
+          </div> -->
         <button
           type="submit"
           :disabled="isLoading"
-          class="btn btn-info w-full text-white dark:text-white bg-indigo-500 border-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-          @click="handleSignIn"
+          class="btn btn-info w-full text-white border border-orange-500 bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
-          Sign In
+          Sign Up
         </button>
       </form>
     </div>

@@ -228,7 +228,7 @@ const sideBarOpened = ref(false);
       <div class="px-4">
         <NuxtLink
           class="flex items-center px-6 py-2 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-          to="/learning/mygrammar"
+          to="/learning/grammar"
         >
           <Cog8ToothIcon
             class="h-5 w-5 font-semibold dark:text-white text-stone-700 group-hover:text-white"
