@@ -1,6 +1,10 @@
-# Nuxt Minimal Starter
+# Learn languages with AI
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This website is about learning language. But faster.
+AI help us to detect your areas of improvements.
+In each new lesson, we generate for you a lesson containing: 
+- 10 of the most 10K used words that you don't know
+- a notion that you need to improve 
 
 ## Setup
 
