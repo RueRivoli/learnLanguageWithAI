@@ -2,7 +2,6 @@
 import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
 import { getLevelLabel } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule";
-import { computed } from "vue";
 
 definePageMeta({
   layout: "authenticated",
@@ -11,12 +10,22 @@ definePageMeta({
 const grammarRules = ref<GrammarRule>([]);
 
 const getGrammarRules = async () => {
-  const { data  } = await useFetch("/api/grammar-rules");
+  const { data } = await useFetch("/api/grammar-rules");
   if (data) grammarRules.value = data.value;
 };
 
 getGrammarRules();
 
+const getLeveledGrammarRules = async (difficultyClass: number) => {
+  const { data } = await useFetch("/api/grammar-rules", {
+    query: { difficulty_class: difficultyClass },
+  });
+  if (data) grammarRules.value = data.value;
+};
+
+const handleChange = (_: any, level: number) => {
+  getLeveledGrammarRules(level);
+};
 useHead({
   title: "Grammar rules",
   titleTemplate: "%s - Learn languages with AI",
@@ -45,24 +54,28 @@ useHead({
                 class="tab"
                 aria-label="All levels"
                 checked="checked"
+                @change="(_) => getGrammarRules()"
               />
               <input
                 type="radio"
                 name="my_tabs_1"
                 class="tab"
                 aria-label="Beginner"
+                @change="(_) => handleChange(_, 1)"
               />
               <input
                 type="radio"
                 name="my_tabs_1"
                 class="tab"
                 aria-label="Intermediate"
+                @change="(_) => handleChange(_, 2)"
               />
               <input
                 type="radio"
                 name="my_tabs_1"
                 class="tab"
                 aria-label="Advanced"
+                @change="(_) => handleChange(_, 3)"
               />
             </div>
           </div>
