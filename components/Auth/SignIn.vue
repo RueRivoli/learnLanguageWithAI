@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as z from "zod";
-import { checkIfEmailPasswordCorrectFormat } from "../../utils/auth/auth";
+import { checkIfEmailPasswordCorrectFormat } from "~/utils/auth/auth";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
@@ -108,7 +108,7 @@ const handleSignInWithGoogle = async () => {
       <div>
         <button
           type="submit"
-          class="btn btn-secondary h-13 w-96 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          class="btn btn-neutral h-12 w-full focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
           @click="handleSignInWithGoogle"
         >
           <img
@@ -123,7 +123,7 @@ const handleSignInWithGoogle = async () => {
       </div>
       <br />
 
-      <div class="divider divider-neutral">or</div>
+      <div class="divider divider-neutral text-sm">OR</div>
       <br />
 
       <div
@@ -154,7 +154,7 @@ const handleSignInWithGoogle = async () => {
             id="password"
             v-model="state.password"
             type="password"
-            class="w-full bg-base-200 rounded-lg border focus:border-primary p-2.5"
+            class="w-full bg-base-200 border rounded-lg focus:border-primary p-2.5"
             placeholder="password"
             required
           />
@@ -162,7 +162,7 @@ const handleSignInWithGoogle = async () => {
         <button
           type="submit"
           :disabled="isLoading"
-          class="btn btn-primary w-full focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          class="btn btn-primary w-full h-12 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           @click="handleSignIn"
         >
           Sign In

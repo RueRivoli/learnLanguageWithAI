@@ -12,8 +12,16 @@ import type { GrammarRule } from "~/types/grammar-rule";
 definePageMeta({
   layout: "authenticated",
 });
+useHead({
+  title: "Grammar rules",
+  titleTemplate: "%s - Learn languages with AI",
+  meta: [
+    { name: "grammar-rules", content: "width=device-width, initial-scale=1" },
+  ],
+  link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+});
 
-const grammarRules = ref<GrammarRule>([]);
+const grammarRules = ref<GrammarRule[]>([]);
 
 const getGrammarRules = async () => {
   const { data } = await useFetch("/api/grammar-rules");
@@ -29,17 +37,18 @@ const getLeveledGrammarRules = async (difficultyClass: number) => {
   if (data) grammarRules.value = data.value;
 };
 
-const handleChange = (_: any, level: number) => {
+const handleChange = (_: Event, level: number) => {
   getLeveledGrammarRules(level);
 };
-useHead({
-  title: "Grammar rules",
-  titleTemplate: "%s - Learn languages with AI",
-  meta: [
-    { name: "grammar-rules", content: "width=device-width, initial-scale=1" },
-  ],
-  link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-});
+
+const fakeProgressBar = (n: number) => {
+  if (n == 0) return 60;
+  else if (n == 1) return 25;
+  else if (n == 2) return 45;
+  else if (n == 3) return 95;
+  else if (n == 4) return 50;
+  else if (n == 5) return 100;
+};
 </script>
 
 <template>
@@ -49,7 +58,7 @@ useHead({
         <div class="p-5">
           <div class="flex items-center justify-between">
             <div>
-              <h2 class="font-bold text-2xl tracking-widest text-indigo-600">
+              <h2 class="font-bold text-xl tracking-widest text-primary">
                 Grammar rules
               </h2>
             </div>
@@ -131,7 +140,7 @@ useHead({
                   <progress
                     class="progress w-56"
                     :class="getProgressBarStyleClass(75)"
-                    :value="65"
+                    :value="fakeProgressBar(1)"
                     max="100"
                   />
                   <div

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <CallToAction />
+    <MarketingCallToAction />
     <div>
-      <MethodExplained />
+      <MarketingMethodExplained />
     </div>
   </div>
 </template>

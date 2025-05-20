@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <NavBar />
+    <LayoutNavBar />
     <NuxtPage />
   </div>
 </template>

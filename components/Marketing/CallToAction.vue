@@ -63,7 +63,12 @@
           </ul>
         </details> -->
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <NuxtLink :to="{ path: '/auth', params: { toCreateAccount: true } }">
+          <NuxtLink
+            :to="{
+              path: '/authorization/auth/',
+              params: { toCreateAccount: true },
+            }"
+          >
             <button class="btn btn-primary">Start</button>
           </NuxtLink>
           <!-- :to="{ path: '/auth', params: { toCreateAccount: true } } -->

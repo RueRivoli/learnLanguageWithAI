@@ -388,11 +388,6 @@ const sideBarOpened = ref(false);
 </template>
 
 <style scoped>
-.logo {
-  font-family: "Tagesschrift", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
 .button {
   width: 100%;
 }

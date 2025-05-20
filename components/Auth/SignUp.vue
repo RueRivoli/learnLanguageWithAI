@@ -29,7 +29,7 @@ watchEffect(() => {
   }
 });
 
-const connexionError: null | string = ref(null);
+const connexionError = ref<null | string>(null);
 const isLoading: boolean = ref(false);
 
 // const testValidEmailPassword = () => {
@@ -96,7 +96,7 @@ const handleSignUp = async () => {
       <div>
         <button
           type="submit"
-          class="btn btn-default h-13 w-96 text-gray focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          class="btn btn-neutral w-full h-12 focus:ring-4 focus:outline-none focus:ring-warning font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           @click="handleSignUpWithGoogle"
         >
           <img
@@ -110,7 +110,7 @@ const handleSignUp = async () => {
         </button>
       </div>
       <br />
-      <div class="divider divider-neutral">or</div>
+      <div class="divider divider-neutral">OR</div>
       <br />
 
       <div
@@ -121,31 +121,27 @@ const handleSignUp = async () => {
       </div>
       <form :state="state" @submit.prevent="handleSignUp">
         <div class="mb-5">
-          <label
-            for="email"
-            class="block mb-2 text-sm font-medium"
+          <label for="email" class="block mb-2 text-sm font-medium"
             >Your email</label
           >
           <input
             id="email"
             v-model="state.email"
             type="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-base-200 border rounded-lg focus:primary focus:border-primary block w-full p-2.5 placeholder-base-20"
             placeholder="email"
             required
           />
         </div>
         <div class="mb-5">
-          <label
-            for="password"
-            class="block mb-2 w-full text-sm font-mediu"
+          <label for="password" class="block mb-2 text-sm font-medium"
             >Your password</label
           >
           <input
             id="password"
             v-model="state.password"
             type="password"
-            class="bg-gray-50 w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-base-200 border rounded-lg focus:primary focus:border-primary block w-full p-2.5 placeholder-base-20"
             placeholder="password"
             required
           />
@@ -167,7 +163,7 @@ const handleSignUp = async () => {
         <button
           type="submit"
           :disabled="isLoading"
-          class="btn btn-info w-full text-white border border-orange-500 bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          class="btn btn-warning w-full h-12 border focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
         >
           Sign Up
         </button>

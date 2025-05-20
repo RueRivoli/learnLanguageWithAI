@@ -5,14 +5,11 @@ const props = withDefaults(
   }>(),
   {
     toCreateAccount: false,
-  }
+  },
 );
 
-const createAccountActivated: boolean | null = ref<boolean>(
-  props.toCreateAccount
-);
+const createAccountActivated = ref<boolean | null>(props.toCreateAccount);
 </script>
-
 
 <template>
   <div class="h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center">
@@ -21,27 +18,27 @@ const createAccountActivated: boolean | null = ref<boolean>(
         <label class="label">
           <span
             :class="{
-              'text-indigo-500 font-bold': !createAccountActivated,
-              'text-black dark:text-white': createAccountActivated,
+              'text-primary font-bold': !createAccountActivated,
+              'text-neutral dark:text-white': createAccountActivated,
             }"
             >Sign In</span
           ><input
             v-model="createAccountActivated"
             type="checkbox"
             checked="checked"
-            class="toggle toggle-xl border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            class="toggle toggle-xl text-primary border-primary checked:border-warning checked:text-warning"
           />
           <span
             :class="{
-              'text-orange-500 font-bold': createAccountActivated,
-              'text-black dark:text-white': !createAccountActivated,
+              'text-warning font-bold': createAccountActivated,
+              'text-neutral': !createAccountActivated,
             }"
             >Sign Up</span
           >
         </label>
       </div>
-      <SignUp v-if="createAccountActivated" />
-      <SignIn v-else />
+      <AuthSignUp v-if="createAccountActivated" />
+      <AuthSignIn v-else />
     </div>
   </div>
 </template>

@@ -46,7 +46,7 @@
                 Your best tutor to progress faster
               </p>
               <h1
-                class="mt-2 text-white text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl"
+                class="mt-2 text-neutral text-4xl font-semibold tracking-tight text-pretty sm:text-5xl"
               >
                 A programm that adapts to your level
               </h1>

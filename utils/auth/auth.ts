@@ -13,7 +13,7 @@ const schema = z.object({
 type Schema = z.InferOutput<typeof schema>;
 
 export const checkIfEmailPasswordCorrectFormat = (
-  state: Schema
+  state: Schema,
 ): null | string => {
   console.log("Auth.ts ==> check email and password");
   if (schema.safeParse(state).success) {
