@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import { getLevelLabel } from "~/utils/learning/grammar";
+import { ArrowTrendingUpIcon, EyeIcon } from "@heroicons/vue/24/solid";
+import {
+  getLevelLabel,
+  getGrammarRuleInitialLetters,
+  getGrammarRuleStyleClass,
+  getProgressBarStyleClass,
+  getPercentageStyleClass,
+} from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule";
 
 definePageMeta({
@@ -100,9 +106,12 @@ useHead({
                   <div class="avatar">
                     <div class="avatar avatar-placeholder">
                       <div
-                        class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-xl"
+                        class="text-neutral-content w-10 h-10 rounded-xl font-semibold"
+                        :class="getGrammarRuleStyleClass(rule)"
                       >
-                        <span class="text-xl">SD</span>
+                        <span class="text-xl">{{
+                          getGrammarRuleInitialLetters(rule.rule_name)
+                        }}</span>
                       </div>
                     </div>
                   </div>
@@ -118,72 +127,36 @@ useHead({
                 <component :is="getLevelLabel(rule.difficulty_class)" />
               </td>
               <td>
-                <progress
-                  class="progress progress-primary w-56"
-                  :value="65"
-                  max="100"
-                />
-                <!-- <div
-                  class="radial-progress text-primary"
-                  style="--value: 70"
-                  aria-valuenow="70"
-                  role="progressbar"
-                >
-                  70%
-                </div> -->
+                <div class="flex items-center">
+                  <progress
+                    class="progress w-56"
+                    :class="getProgressBarStyleClass(75)"
+                    :value="65"
+                    max="100"
+                  />
+                  <div
+                    class="ml-2 font-bold"
+                    :class="getPercentageStyleClass(75)"
+                  >
+                    65%
+                  </div>
+                </div>
               </td>
               <th>
                 <button class="btn btn-ghost">
-                  <ArrowRightCircleIcon
+                  <ArrowTrendingUpIcon
                     class="h-5 w-5 font-bold text-black dark:text-white group-hover:text-white"
                   />
-                  Quiz
                 </button>
                 <button class="btn btn-ghost">
-                  <ArrowRightCircleIcon
+                  <EyeIcon
                     class="h-5 w-5 font-bold text-black dark:text-white group-hover:text-white"
                   />
-                  Read
                 </button>
               </th>
             </tr>
           </tbody>
         </table>
-
-        <!-- <li v-for="rule in grammarRules" class="list-row">
-            <div>
-              <img
-                class="size-10 rounded-box"
-                src="https://img.daisyui.com/images/profile/demo/1@94.webp"
-              />
-            </div>
-            <div>
-              <div>{{ rule.rule_name }}</div>
-              <div class="text-xs uppercase font-semibold opacity-60">
-                {{ rule.rule_name_translation }}
-              </div>
-            </div>
-            <div class="flex flex-col items-center">
-              <div>Level</div>
-              <div>intermediate</div>
-            </div>
-            <div class="flex items-center">
-              <progress
-                class="progress progress-primary w-56"
-                :value="65"
-                max="100"
-              />
-            </div>
-
-            <div class="flex items-center">
-              <button class="btn btn-ghost">
-                <ArrowRightCircleIcon
-                  class="h-5 w-5 font-bold text-black dark:text-white group-hover:text-white"
-                />
-                Improve your score
-              </button>
-            </div>
-          </li> -->
       </div>
     </div>
 
