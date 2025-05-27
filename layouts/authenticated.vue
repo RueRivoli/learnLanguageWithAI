@@ -2,10 +2,12 @@
 
 <template>
   <div class="h-full flex min-h-screen">
-    <Sidebar />
+    <LayoutSidebar />
     <!-- Main content -->
-    <main class="grow justify-between p-6">
-      <div class="h-10 border-b border-zinc-200">header</div>
+    <main class="p-3 w-full">
+      <div class="h-10 border-b border-zinc-200">
+        <LayoutHeader />
+      </div>
       <!-- <slot /> -->
       <NuxtPage />
       <!-- <div class="flex justify-between"></div> -->
