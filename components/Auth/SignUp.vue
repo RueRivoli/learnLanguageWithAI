@@ -110,7 +110,7 @@ const handleSignUp = async () => {
         </button>
       </div>
       <br />
-      <div class="divider divider-neutral">OR</div>
+      <div class="divider divider-neutral text-sm">OR</div>
       <br />
 
       <div
