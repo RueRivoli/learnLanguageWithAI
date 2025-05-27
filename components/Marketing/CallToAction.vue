@@ -41,17 +41,31 @@
           >
         </div>
       </div> -->
+      <!-- <img
+        class="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+        src="~/assets/img/platform_screens/2.png"
+        alt=""
+      /> -->
+      <!-- rounded-[30%] -->
+      <div class="absolute inset-0 z-[-1] bg-cover bg-top bg-no-repeat opacity-40" style="background-image: url(&quot;/_nuxt/assets/img/grid8.png&quot;);"></div>
+
+      <!-- <div
+        class="absolute inset-0 z-[-1] flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat pointer-events-none bg-[url('/_nuxt/assets/img/grid5.png')]"
+      /> -->
+      <!-- <div
+        class="absolute inset-0 z-[-1] flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat pointer-events-none"
+        style="background-image: url(&quot;/_nuxt/assets/img/grid8.png&quot;)"
+      /> -->
       <div class="text-center">
         <h1
           class="text-5xl font-semibold tracking-tight text-balance text-gray dark:text-white sm:text-7xl"
         >
-          Learn a language more efficiently with AI
+          Learn a language <span class="text-primary">more efficiently</span> with AI
         </h1>
         <p
           class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"
         >
-          Learn a language through stories tailored to your level and designed
-          to target your weaknesses
+          Learn a language through stories tailored to your exact level
         </p>
         <!-- <details class="dropdown">
           <summary class="btn m-1">open or close</summary>
