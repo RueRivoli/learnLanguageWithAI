@@ -1,13 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ArrowLongRightIcon } from "@heroicons/vue/24/solid";
+</script>
 
 <template>
   <div class="relative px-6 pt-14 lg:px-8">
     <div
-      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-xl sm:-top-80"
       aria-hidden="true"
     >
       <div
-        class="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+        class="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-primary/40 to-primary opacity-80 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
         style="
           clip-path: polygon(
             74.1% 44.1%,
@@ -31,42 +33,27 @@
       />
     </div>
     <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-      <!-- <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-        <div
-          class="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
-        >
-          <a href="#" class="font-semibold text-indigo-600"
-            ><span class="absolute inset-0" aria-hidden="true" />Read more
-            <span aria-hidden="true">&rarr;</span></a
-          >
-        </div>
-      </div> -->
-      <!-- <img
-        class="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-        src="~/assets/img/platform_screens/2.png"
-        alt=""
-      /> -->
-      <!-- rounded-[30%] -->
-      <div class="absolute inset-0 z-[-1] bg-cover bg-top bg-no-repeat opacity-40" style="background-image: url(&quot;/_nuxt/assets/img/grid8.png&quot;);"></div>
-
-      <!-- <div
-        class="absolute inset-0 z-[-1] flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat pointer-events-none bg-[url('/_nuxt/assets/img/grid5.png')]"
-      /> -->
-      <!-- <div
-        class="absolute inset-0 z-[-1] flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat pointer-events-none"
+      <div
+        class="absolute inset-0 z-[-1] bg-cover bg-color-base-200 bg-top bg-no-repeat opacity-40"
         style="background-image: url(&quot;/_nuxt/assets/img/grid8.png&quot;)"
-      /> -->
+      />
       <div class="text-center">
         <h1
           class="text-5xl font-semibold tracking-tight text-balance text-gray dark:text-white sm:text-7xl"
         >
-          Learn a language <span class="text-primary">more efficiently</span> with AI
+          Learn a language
+          <span class="text-primary font-bold">more efficiently</span> with AI
         </h1>
         <p
           class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"
         >
-          Learn a language through stories tailored to your exact level
+          Have acess to stories tailored to your specific level
         </p>
+        <p class="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
+          containing the concepts you don't master and the vocabulary you need
+          to know
+        </p>
+
         <!-- <details class="dropdown">
           <summary class="btn m-1">open or close</summary>
           <ul
@@ -83,12 +70,16 @@
               params: { toCreateAccount: true },
             }"
           >
-            <button class="btn btn-primary">Start</button>
+            <button class="btn btn-primary">Start Now !</button>
           </NuxtLink>
-          <!-- :to="{ path: '/auth', params: { toCreateAccount: true } } -->
-          <!-- <a href=" class="text-sm/6 font-semibold text-gray-900"
-            >Learn more <span aria-hidden="true">→</span></a
-          > -->
+
+          <NuxtLink
+            class="flex items-center w-30"
+            to="/marketing/working-explanation"
+          >
+            <div class="flex-1 text-right">Learn more</div>
+            <ArrowLongRightIcon class="ml-2 h-5 w-5" />
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -97,7 +88,7 @@
       aria-hidden="true"
     >
       <div
-        class="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+        class="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-primary/40 to-primary opacity-80 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
         style="
           clip-path: polygon(
             74.1% 44.1%,
