@@ -42,21 +42,22 @@
         >
           <div class="lg:pr-4">
             <div class="lg:max-w-lg">
-              <p class="text-base/7 font-semibold text-indigo-600">
+              <p class="text-base/7 font-semibold text-primary">
                 Your best tutor to progress faster
               </p>
               <h1
                 class="mt-2 text-neutral text-4xl font-semibold tracking-tight text-pretty sm:text-5xl"
               >
-                A programm that adapts to your level
+                Targeted Lessons. Real Results.
               </h1>
               <p class="mt-6 text-xl/8 text-gray-700">
-                This platform uses algorithm that employs the latest language
-                model, to create a lesson tailored to your level. At the end of
-                each lesson, it tests your understanding, acknowledge your
-                progress and generate a new lesson targetting your weaknesses.
-                No need to learn several times what we know, we need to focus on
-                what we miss.
+                This platform evaluates your skillset to pinpoint specific areas
+                for improvement and delivers personalized lessons designed to
+                target those weaknesses. Following each lesson, your progress is
+                measured to continuously adapt and refine your learning
+                experience. The program is designed to help you achieve mastery
+                of essential grammar rules, verb tenses, and the most commonly
+                used vocabulary and expressions in the target language.
               </p>
             </div>
           </div>
@@ -65,8 +66,8 @@
           class="-mt-12 -ml-12 p-12 lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden"
         >
           <img
-            class="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-            src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
+            class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+            src="~/assets/img/platform_screens/2.png"
             alt=""
           />
         </div>
@@ -82,7 +83,7 @@
               <ul role="list" class="mt-8 space-y-8 text-gray-600">
                 <li class="flex gap-x-3">
                   <svg
-                    class="mt-1 size-5 flex-none text-indigo-600"
+                    class="mt-1 size-5 flex-none text-primary"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -105,7 +106,7 @@
                 </li>
                 <li class="flex gap-x-3">
                   <svg
-                    class="mt-1 size-5 flex-none text-indigo-600"
+                    class="mt-1 size-5 flex-none text-primary"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -127,7 +128,7 @@
                 </li>
                 <li class="flex gap-x-3">
                   <svg
-                    class="mt-1 size-5 flex-none text-indigo-600"
+                    class="mt-1 size-5 flex-none text-primary"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
