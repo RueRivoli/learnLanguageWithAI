@@ -12,5 +12,6 @@
       <NuxtPage />
       <!-- <div class="flex justify-between"></div> -->
     </main>
+    <LayoutFooter />
   </div>
 </template>

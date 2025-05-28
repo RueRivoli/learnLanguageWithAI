@@ -4,5 +4,6 @@
   <div>
     <LayoutNavBar />
     <NuxtPage />
+    <LayoutFooter />
   </div>
 </template>

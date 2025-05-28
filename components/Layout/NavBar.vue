@@ -1,20 +1,42 @@
 <script setup lang="ts">
-const client = useSupabaseClient();
-const user = useSupabaseUser();
-
-const handleSignOut = async () => {
-  const { error } = await client.auth.signOut();
-};
+import { ArrowLongRightIcon } from "@heroicons/vue/24/solid";
+const showVoucherPromo = ref<boolean>(true);
 </script>
 
 <template>
-  <div class="h-16">
+  <div class="w-full fixed z-50 font-semibold shadow bg-primary text-white/80">
+    <div
+      v-if="showVoucherPromo"
+      class="bg-secondary text-primary relative inset-0 bottom-auto border-b border-secondary -mb-2 px-8 py-1.5 text-center text-xs transition-all duration-200"
+    >
+      <a class="block font-normal" href="/#pricing"
+        >Use the voucher with the code <b>🙂 7590</b> until the 15th June to get
+        <b>30%</b> discount.</a
+      >
+      <button
+        class="inline-flex items-center justify-center text-sm font-semibold tracking-wide transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 underline-offset-4 hover:underline rounded-xl text-primary absolute right-0 top-0 h-7 w-7 p-0 opacity-60 hover:opacity-80"
+        type="button"
+        @click="showVoucherPromo = false"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-x size-6"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+    </div>
     <div class="w-full navbar shadow-sm">
-      <div class="navbar-start logo">
-        <NuxtLink to="/">
-          <span class="ml-2">GrammIA</span>
-        </NuxtLink>
-      </div>
+      <LayoutLogo />
       <div class="navbar-center">
         <NuxtLink to="/marketing/working-explanation">
           <div class="cursor ml-20 mr-10">How does it work ?</div>
@@ -23,9 +45,10 @@ const handleSignOut = async () => {
           <div class="cursor">Which language is supported ?</div>
         </NuxtLink>
       </div>
-      <div class="navbar-end">
-        <NuxtLink to="/authorization/auth">
-          <span>Log In</span>
+      <div class="navbar-end grow">
+        <NuxtLink class="flex items-center w-20" to="/authorization/auth">
+          <div class="flex-1 text-right">Log In</div>
+          <ArrowLongRightIcon class="ml-2 h-5 w-5" />
         </NuxtLink>
       </div>
     </div>

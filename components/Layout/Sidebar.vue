@@ -67,13 +67,14 @@ const sideBarOpened = ref(false);
                 class="h-5 w-5 text-purple-400 group-hover:text-blue-600"
               />
             </button>
-            <div class="pt-8 pb-4 px-6 text-gray-800 font-bold logo">
+            <!-- <div class="pt-8 pb-4 px-6 text-gray-800 font-bold logo">
               <NuxtLink to="/">
                 <span class="ml-2">
-                  <span class="text-indigo-400 dark:text-white">Gramm</span>IA
+                  <span class="text-indigo-400 dark:text-white">Lingua</span>Lab
                 </span>
               </NuxtLink>
-            </div>
+            </div> -->
+            <LayoutLogo/>
             <div class="overflow-y-auto flex-1">
               <div class="mt-10 mb-10">
                 <h3
@@ -183,7 +184,7 @@ const sideBarOpened = ref(false);
     <div class="py-6 px-8 text-xl text-gray-800 dark:text-white logo">
       <NuxtLink to="/">
         <span class="ml-2">
-          <span class="font-bold text-indigo-400 dark:text-white">Gramm</span>IA
+          <span class="font-bold text-neutral">Lingua</span>Lab
         </span>
       </NuxtLink>
     </div>
@@ -202,10 +203,9 @@ const sideBarOpened = ref(false);
           to="/learning/newlesson"
         >
           <PlusIcon
-            class="h-5 w-5 font-semibold text-stone-700 dark:text-white group-hover:text-white"
+            class="h-5 w-5 font-semibold text-neutral group-hover:text-neutral"
           />
-          <span
-            class="text-stone-700 dark:text-white font-semibold group-hover:text-white ml-2"
+          <span class="text-neutral font-semibold group-hover:text-neutral ml-2"
             >New Story</span
           >
         </NuxtLink>
@@ -216,10 +216,9 @@ const sideBarOpened = ref(false);
           to="/learning/lessons"
         >
           <DocumentIcon
-            class="h-5 w-5 font-semibold text-stone-700 dark:text-white group-hover:text-white"
+            class="h-5 w-5 font-semibold text-neutral group-hover:text-neutral"
           />
-          <span
-            class="text-stone-700 dark:text-white font-semibold group-hover:text-white ml-2"
+          <span class="text-neutral font-semibold group-hover:text-neutral ml-2"
             >Lessons</span
           >
         </NuxtLink>
@@ -231,10 +230,9 @@ const sideBarOpened = ref(false);
           to="/learning/grammar"
         >
           <Cog8ToothIcon
-            class="h-5 w-5 font-semibold dark:text-white text-stone-700 group-hover:text-white"
+            class="h-5 w-5 font-semibold text-neutral group-hover:text-neutral"
           />
-          <span
-            class="font-semibold ml-2 dark:text-white text-stone-700 group-hover:text-white"
+          <span class="font-semibold ml-2 text-neutral group-hover:text-neutral"
             >Grammar</span
           >
         </NuxtLink>
