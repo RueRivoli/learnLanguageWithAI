@@ -6,27 +6,24 @@
 
 <template>
   <footer
-    class="w-full footer sm:footer-horizontal bg-neutral text-neutral-content p-10"
+    class="w-full text-center footer sm:footer-horizontal bg-primary text-neutral-content p-10"
   >
+    <div>
+      <LayoutLogo />
+    </div>
+
     <nav>
-      <h6 class="footer-title">Services</h6>
-      <a class="link link-hover">Branding</a>
-      <a class="link link-hover">Design</a>
-      <a class="link link-hover">Marketing</a>
-      <a class="link link-hover">Advertisement</a>
+      <h6 class="footer-title">The platform</h6>
+      <a class="link link-hover">Blog</a>
+      <a class="link link-hover">How does it work</a>
+      <a class="link link-hover">Languages supported</a>
+      <a class="link link-hover">Request a language</a>
     </nav>
     <nav>
-      <h6 class="footer-title">Company</h6>
-      <a class="link link-hover">About us</a>
+      <h6 class="footer-title">About</h6>
+      <a class="link link-hover">Pricing</a>
+      <a class="link link-hover">Refunds & Cancellation policy</a>
       <a class="link link-hover">Contact</a>
-      <a class="link link-hover">Jobs</a>
-      <a class="link link-hover">Press kit</a>
-    </nav>
-    <nav>
-      <h6 class="footer-title">Legal</h6>
-      <a class="link link-hover">Terms of use</a>
-      <a class="link link-hover">Privacy policy</a>
-      <a class="link link-hover">Cookie policy</a>
     </nav>
   </footer>
 </template>
