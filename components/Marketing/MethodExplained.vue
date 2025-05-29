@@ -18,7 +18,7 @@ import {
               Accelerate your language learning with AI
             </h2>
             <p
-              class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl"
+              class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-neutral sm:text-5xl"
             >
               A program designed to evaluate your proficiency and target areas
               for improvement

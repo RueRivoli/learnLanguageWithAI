@@ -41,49 +41,64 @@ function toggle(index) {
 </script>
 
 <template>
-  <section class="inset-0 z-[-1] bg-cover bg-primary/40 px-4 py-12">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-4xl font-extrabold text-neutral text-center mb-10">
-        Frequently Asked Questions
-      </h2>
-      <div class="space-y-4">
-        <div
-          v-for="(item, index) in faqs"
-          :key="index"
-          class="bg-primary/40 border border-gray-300 rounded-lg"
+  <section class="bg-primary/50 relative px-4 py-20">
+    <div class="absolute inset-0 z-[-1]" />
+    <div
+      class="absolute inset-0 z-[-2] bg-cover overflow-hidden bg-top bg-no-repeat opacity-20 dark:opacity-80 bg-[url('/_nuxt/assets/img/test11.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
+    />
+    <div class="max-w-7xl mx-auto grid grid-cols-3 gap-8 items-center">
+      <div class="col-span-1">
+        <Vue3Lottie
+          animation-link="_nuxt/assets/lottie/toucan-logo.json"
+          :height="400"
+          :width="400"
+        />
+      </div>
+      <div class="col-span-2 relative z-10">
+        <h2
+          class="text-4xl font-semibold tracking-tight text-pretty text-center text-neutral mb-8"
         >
-          <button
-            :id="'faq-header-' + index"
-            class="w-full flex justify-between cursor-pointer items-center px-6 py-4 text-left text-lg font-semibold text-neutral hover:bg-primary/50 focus:outline-none focus-visible:ring focus-visible:ring-primary rounded-lg"
-            :aria-expanded="openIndex === index"
-            :aria-controls="'faq-panel-' + index"
-            @click="toggle(index)"
+          Frequently Asked Questions
+        </h2>
+        <div class="space-y-4">
+          <div
+            v-for="(item, index) in faqs"
+            :key="index"
+            class="bg-primary border rounded-lg relative"
           >
-            <span>{{ item.question }}</span>
-            <MinusIcon
-              v-if="openIndex === index"
-              class="cursor-pointer ml-2 h-5 w-5"
-            />
-            <PlusIcon v-else class="cursor-pointer h-5 w-5" />
-          </button>
-          <transition
-            enter-active-class="transition duration-300 ease-out"
-            enter-from-class="opacity-0 max-h-0"
-            enter-to-class="opacity-100 max-h-screen"
-            leave-active-class="transition duration-200 ease-in"
-            leave-from-class="opacity-100 max-h-screen"
-            leave-to-class="opacity-0 max-h-0"
-          >
-            <div
-              v-show="openIndex === index"
-              :id="'faq-panel-' + index"
-              class="px-6 py-3 text-neutral prose max-w-none font-medium text-pretty"
-              :aria-labelledby="'faq-header-' + index"
-              role="region"
+            <button
+              :id="'faq-header-' + index"
+              class="w-full flex justify-between cursor-pointer items-center px-6 py-4 text-left text-lg font-semibold text-secondary/90 hover:bg-primary/50 focus:outline-none focus-visible:ring focus-visible:ring-primary rounded-lg"
+              :aria-expanded="openIndex === index"
+              :aria-controls="'faq-panel-' + index"
+              @click="toggle(index)"
             >
-              <p>{{ item.answer }}</p>
-            </div>
-          </transition>
+              <span>{{ item.question }}</span>
+              <MinusIcon
+                v-if="openIndex === index"
+                class="cursor-pointer ml-2 h-5 w-5"
+              />
+              <PlusIcon v-else class="cursor-pointer h-5 w-5" />
+            </button>
+            <transition
+              enter-active-class="transition duration-300 ease-out"
+              enter-from-class="opacity-0 max-h-0"
+              enter-to-class="opacity-100 max-h-screen"
+              leave-active-class="transition duration-200 ease-in"
+              leave-from-class="opacity-100 max-h-screen"
+              leave-to-class="opacity-0 max-h-0"
+            >
+              <div
+                v-show="openIndex === index"
+                :id="'faq-panel-' + index"
+                class="px-6 py-3 text-secondary/90 prose max-w-none font-medium text-pretty"
+                :aria-labelledby="'faq-header-' + index"
+                role="region"
+              >
+                <p>{{ item.answer }}</p>
+              </div>
+            </transition>
+          </div>
         </div>
       </div>
     </div>
