@@ -6,27 +6,14 @@ const supabase = createClient(
   process.env.SERVICE_SUPABASE_KEY,
 );
 
-export const getRandomQuizzes = async (
-  ruleId: string,
-  difficulty: number,
-  quantity: number,
-) => {
-  const { data, error } = await supabase
-    .from("turkish_grammar_quizzes")
-    .select("id")
-    .eq("grammar_rule_id", Number(ruleId))
-    .eq("difficulty_status", Number(difficulty))
-    .range(0, Number(quantity));
-  // console.log("GR data", ruleId, difficulty, quantity);
-  // console.log("GR data", data);
-  if (error) throw error;
-  return data;
-};
-
 export default defineEventHandler(async (event) => {
   const ruleId = getRouterParam(event, "id");
-  const difficultyClass = Number(getRouterParam(event, "difficultyClass"));
-  const quantity = Number(getRouterParam(event, "quantity"));
 
-  return getRandomQuizzes(ruleId, difficultyClass, quantity);
+  const { data, error } = await supabase
+    .from("turkish_result_quizzes")
+    .select("id, created_at, score")
+    .eq("grammar_rule_id", ruleId);
+
+  if (error) throw error;
+  return data;
 });

@@ -1,5 +1,5 @@
 import { defineEventHandler, getRouterParam } from "h3";
-import { getRandomQuizzes } from "./../quizzes/[id].get";
+import { getRandomQuizzes } from "../quiz-models/[id].get";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -44,7 +44,8 @@ export default defineEventHandler(async (event) => {
         question_4: Number(finalQuiz[3].id),
         question_5: Number(finalQuiz[4].id),
       })
-      .select("id");
+      .select("id")
+      .single();
     return { data };
   } catch (error) {
     if (error) throw error;
