@@ -34,19 +34,32 @@ export default defineEventHandler(async (event) => {
 
     // register new quiz in result_quizzes
     const { data, error } = await supabase
-      .from("turkish_result_quizzes")
+      .from("turkish_quizzes_result")
       .upsert({
-        grammar_rule_id: ruleId,
-        user_id: 1,
-        question_1: Number(finalQuiz[0].id),
-        question_2: Number(finalQuiz[1].id),
-        question_3: Number(finalQuiz[2].id),
-        question_4: Number(finalQuiz[3].id),
-        question_5: Number(finalQuiz[4].id),
+        score_global: 0,
       })
       .select("id")
       .single();
-    return { data };
+    if (error) throw error;
+
+    const quizId = data.id;
+    const quizQuestionIds = [
+      Number(finalQuiz[0].id),
+      Number(finalQuiz[1].id),
+      Number(finalQuiz[2].id),
+      Number(finalQuiz[3].id),
+      Number(finalQuiz[4].id),
+    ];
+    const rowsToUpsert = quizQuestionIds.map((id) => ({
+      quiz_id: quizId,
+      question_id: id,
+    }));
+
+    const { errorUpsert} = await supabase
+      .from("turkish_quizzes_series")
+      .upsert(rowsToUpsert);
+    if (errorUpsert) throw errorUpsert;
+    return { data: quizId };
   } catch (error) {
     if (error) throw error;
   }

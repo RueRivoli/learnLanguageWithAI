@@ -7,8 +7,12 @@ const supabase = createClient(
 );
 
 export default defineEventHandler(async () => {
-  const { data, error } = await supabase.from("turkish_words").select("id, word, translation, function");
-  console.log("data", data);
+  const { data, error } = await supabase
+    .from("turkish_words")
+    .select(
+      "id, text, translation, role, word_sentence, word_sentence_translation, word_sentence_2, word_sentence_2_translation",
+    )
+    .order("id", { ascending: true });
   if (error) throw error;
   return data;
 });

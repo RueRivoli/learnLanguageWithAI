@@ -9,8 +9,10 @@ const supabase = createClient(
 export default defineEventHandler(async () => {
   const { data, error } = await supabase
     .from("turkish_expressions")
-    .select("id, text, translation");
-  console.log("data", data);
+    .select(
+      "id, text, translation, expression_sentence, expression_sentence_translation, expression_sentence_2, expression_sentence_2_translation",
+    )
+    .order("id", { ascending: true });
   if (error) throw error;
   return data;
 });

@@ -7,13 +7,12 @@ const supabase = createClient(
 );
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, "id");
+  const ruleId = getRouterParam(event, "ruleId");
+
   const { data, error } = await supabase
-    .from("turkish_quizzes_series")
-    .select(
-      "question_id, quiz_id, turkish_grammar_quizzes ( difficulty_status, question_type, option_1, option_2, option_3, option_4, text, translation )",
-    )
-    .eq("quiz_id", id);
+    .from("turkish_result_quizzes")
+    .select("id, created_at, score")
+    .eq("grammar_rule_id", ruleId);
 
   if (error) throw error;
   return data;
