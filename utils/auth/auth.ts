@@ -10,9 +10,9 @@ const schema = z.object({
     }),
 });
 
-type Schema = z.InferOutput<typeof schema>;
+export type Schema = z.InferOutput<typeof schema>;
 
-export const checkIfEmailPasswordCorrectFormat = (
+export const getEmailPasswordInvalidityMessage = (
   state: Schema,
 ): null | string => {
   console.log("Auth.ts ==> check email and password");
@@ -30,3 +30,24 @@ export const checkIfEmailPasswordCorrectFormat = (
     }
   }
 };
+
+// Probably to delete, same function as above
+export const testValidEmailPassword = (state: Schema) => {
+    console.log("test email and password");
+    if (schema.safeParse(state).success) {
+      console.log("email/pswd correct");
+      return true;
+    } else {
+      console.log("sth invalid");
+      if (!z.string().email().safeParse(state.email).success) {
+        console.log("email invalid");
+        connexionError.value = "Please input a valid email";
+      } else {
+        console.log("psswd invalid");
+        connexionError.value =
+          "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
+      }
+  
+      return false;
+    }
+  };

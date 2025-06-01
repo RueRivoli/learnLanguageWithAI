@@ -1,79 +1,27 @@
 <script setup lang="ts">
-import * as z from "zod";
-import { checkIfEmailPasswordCorrectFormat } from "~/utils/auth/auth";
+import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
+import type { Schema } from "~/utils/auth/auth";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const router = useRouter();
-const schema = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{8,}$/, {
-      message:
-        "Invalid password : 8 caractères min., at least one letter, one number and a special character are required",
-    }),
-});
-
-type Schema = z.InferOutput<typeof schema>;
-
-const state: Schema = reactive({
+const state = reactive<Schema>({
   email: "",
   password: "",
 });
 
 watchEffect(() => {
   if (user.value) {
-    router.push("/account/home");
+    router.push("/learning/dashboard");
   }
 });
 
-const connexionError: null | string = ref(null);
-const isLoading: boolean = ref(false);
-const createAccountActivated: boolean | null = ref(false);
-
-const testValidEmailPassword = () => {
-  if (schema.safeParse(state).success) {
-    console.log("email/pswd correct");
-    return true;
-  } else {
-    if (!z.string().email().safeParse(state.email).success)
-      connexionError.value = "Please input a valid email";
-    else
-      connexionError.value =
-        "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
-    return false;
-  }
-};
-
-const signUp = async () => {
-  connexionError.value = null;
-  if (!testValidEmailPassword()) return;
-  isLoading.value = true;
-  try {
-    const { data, error } = await client.auth.signUp({
-      email: state.email,
-      password: state.password,
-    });
-    if (error) {
-      console.log("error", error);
-      connexionError.value = error.message;
-      throw error;
-    } else if (data) {
-      console.log("data", data);
-    }
-    isLoading.value = false;
-  } catch (error) {
-    console.log("error", error);
-    connexionError.value = error.message;
-    console.log(error);
-    isLoading.value = false;
-  }
-};
+const connexionError = ref<null | string>(null);
+const isLoading = ref<boolean>(false);
 
 const handleSignIn = async () => {
   connexionError.value = null;
-  const errorFromCheck = checkIfEmailPasswordCorrectFormat(state);
+  const errorFromCheck = getEmailPasswordInvalidityMessage(state);
   if (errorFromCheck !== null) {
     connexionError.value = errorFromCheck;
     return;
@@ -92,7 +40,7 @@ const handleSignInWithGoogle = async () => {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: window.location.origin + "/account/home",
+      redirectTo: window.location.origin + "/learning/dashboard",
     },
   });
   if (data.url) {

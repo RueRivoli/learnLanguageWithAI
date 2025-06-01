@@ -1,90 +1,58 @@
 <script setup lang="ts">
 import { watchEffect } from "vue";
-import * as z from "zod";
-import { checkIfEmailPasswordCorrectFormat } from "../../utils/auth/auth";
+import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
+import type { Schema } from "~/utils/auth/auth";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const router = useRouter();
-const schema = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{8,}$/, {
-      message:
-        "Invalid password : 8 caractères min., at least one letter, one number and a special character are required",
-    }),
-});
 
-type Schema = z.InferOutput<typeof schema>;
-
-const state: Schema = reactive({
+const state = reactive<Schema>({
   email: "",
   password: "",
 });
 
 watchEffect(() => {
   if (user.value) {
-    router.push("/account/home");
+    router.push("/learning/dashboard");
   }
 });
 
 const connexionError = ref<null | string>(null);
-const isLoading: boolean = ref(false);
-
-// const testValidEmailPassword = () => {
-//   console.log("test email and password");
-//   if (schema.safeParse(state).success) {
-//     console.log("email/pswd correct");
-//     return true;
-//   } else {
-//     console.log("sth invalid");
-//     if (!z.string().email().safeParse(state.email).success) {
-//       console.log("email invalid");
-//       connexionError.value = "Please input a valid email";
-//     } else {
-//       console.log("psswd invalid");
-//       connexionError.value =
-//         "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
-//     }
-
-//     return false;
-//   }
-// };
+const isLoading = ref<boolean>(false);
 
 const handleSignUpWithGoogle = async () => {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: window.location.origin + "/account/home",
+      redirectTo: window.location.origin + "/learning/dashboard",
     },
   });
-  if (data?.url) {
+  if (error) throw error;
+  else if (data?.url) {
     console.log("data, url", data.url);
     // redirect the user to the identity provider's authentication flow
     //  window.location.href = data.url;
-    // router.push("/account/home");
+    // router.push("/learning/dashboard");
   }
 };
 
 const handleSignUp = async () => {
   connexionError.value = null;
-  const errorFromCheck = checkIfEmailPasswordCorrectFormat(state);
-  if (errorFromCheck !== null) {
-    connexionError.value = errorFromCheck;
+  const emailOrPasswordError = getEmailPasswordInvalidityMessage(state);
+  if (emailOrPasswordError !== null) {
+    connexionError.value = emailOrPasswordError;
     return;
   }
-  if (!testValidEmailPassword(state)) return;
   isLoading.value = true;
   try {
     return router.push({
       name: "message-text",
       params: { text: "Please check your mailbox to confirm your account" },
     });
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: unknown) {
+    console.log("Error From handleSignup", error);
     connexionError.value = error.message;
-    console.log(error);
     isLoading.value = false;
   }
 };
@@ -115,7 +83,7 @@ const handleSignUp = async () => {
 
       <div
         v-if="connexionError"
-        class="bg-error mb-2 w-full border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+        class="bg-error mb-2 w-full border text-white border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
         {{ connexionError }}
       </div>
@@ -128,7 +96,7 @@ const handleSignUp = async () => {
             id="email"
             v-model="state.email"
             type="email"
-            class="bg-base-200 border rounded-lg focus:primary focus:border-primary block w-full p-2.5 placeholder-base-20"
+            class="w-full bg-base-200 border rounded-lg focus:primary focus:border-primary block p-2.5 placeholder-base-20"
             placeholder="email"
             required
           />
@@ -141,11 +109,12 @@ const handleSignUp = async () => {
             id="password"
             v-model="state.password"
             type="password"
-            class="bg-base-200 border rounded-lg focus:primary focus:border-primary block w-full p-2.5 placeholder-base-20"
+            class="w-full bg-base-200 border rounded-lg focus:primary focus:border-primary block p-2.5 placeholder-base-20"
             placeholder="password"
             required
           />
         </div>
+        <!-- Remember Me Feature -->
         <!-- <div class="flex items-start mb-5">
             <div class="flex items-center h-5">
               <input
