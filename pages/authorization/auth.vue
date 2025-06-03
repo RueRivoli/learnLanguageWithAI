@@ -12,9 +12,9 @@ const createAccountActivated = ref<boolean | null>(props.toCreateAccount);
 </script>
 
 <template>
-  <div class="h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center">
-    <div class="w-full flex flex-col justify-center items-center">
-      <div class="w-full h-full flex justify-center">
+  <div class="h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
+    <div class="flex flex-col justify-center items-center">
+      <div class="h-full flex justify-center">
         <label class="label">
           <span
             :class="{

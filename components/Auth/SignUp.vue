@@ -1,40 +1,25 @@
 <script setup lang="ts">
-import { watchEffect } from "vue";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
 import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
 import type { Schema } from "~/utils/auth/auth";
 
 const client = useSupabaseClient();
-const user = useSupabaseUser();
-const router = useRouter();
-
+const showPassword = ref<boolean>(false);
 const state = reactive<Schema>({
   email: "",
   password: "",
-});
-
-watchEffect(() => {
-  if (user.value) {
-    router.push("/learning/dashboard");
-  }
 });
 
 const connexionError = ref<null | string>(null);
 const isLoading = ref<boolean>(false);
 
 const handleSignUpWithGoogle = async () => {
-  const { data, error } = await client.auth.signInWithOAuth({
+  await client.auth.signInWithOAuth({
     provider: "github",
     options: {
       redirectTo: window.location.origin + "/learning/dashboard",
     },
   });
-  if (error) throw error;
-  else if (data?.url) {
-    console.log("data, url", data.url);
-    // redirect the user to the identity provider's authentication flow
-    //  window.location.href = data.url;
-    // router.push("/learning/dashboard");
-  }
 };
 
 const handleSignUp = async () => {
@@ -46,10 +31,22 @@ const handleSignUp = async () => {
   }
   isLoading.value = true;
   try {
-    return router.push({
-      name: "message-text",
-      params: { text: "Please check your mailbox to confirm your account" },
+    console.log("email/pswd", state.email, state.password);
+    const { data, error } = await client.auth.signUp({
+      email: state.email,
+      password: state.password,
     });
+    if (error) throw error;
+    console.log("data", data, data.value);
+    console.log("error", error);
+    console.log("state", state, data);
+    if (data.user)
+      await navigateTo({
+        path: "/message",
+        query: {
+          text: "Please check your mailbox to confirm your account",
+        },
+      });
   } catch (error: unknown) {
     console.log("Error From handleSignup", error);
     connexionError.value = error.message;
@@ -88,7 +85,7 @@ const handleSignUp = async () => {
         {{ connexionError }}
       </div>
       <form :state="state" @submit.prevent="handleSignUp">
-        <div class="mb-5">
+        <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
             >Your email</label
           >
@@ -101,18 +98,34 @@ const handleSignUp = async () => {
             required
           />
         </div>
-        <div class="mb-5">
+        <div class="mb-4">
           <label for="password" class="block mb-2 text-sm font-medium"
             >Your password</label
           >
-          <input
-            id="password"
-            v-model="state.password"
-            type="password"
-            class="w-full bg-base-200 border rounded-lg focus:primary focus:border-primary block p-2.5 placeholder-base-20"
-            placeholder="password"
-            required
-          />
+          <div class="relative">
+            <input
+              id="password"
+              v-model="state.password"
+              :type="showPassword ? 'text' : 'password'"
+              class="w-full bg-base-200 border rounded-lg focus:primary focus:border-primary block p-2.5 placeholder-base-20"
+              placeholder="password"
+              required
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 flex items-center pr-3"
+              @click="showPassword = !showPassword"
+            >
+              <EyeIcon
+                v-if="showPassword"
+                class="h-5 w-5 cursor-pointer text-gray-500 hover:text-gray-700"
+              />
+              <EyeSlashIcon
+                v-else
+                class="h-5 w-5 cursor-pointer text-gray-500 hover:text-gray-700"
+              />
+            </button>
+          </div>
         </div>
         <!-- Remember Me Feature -->
         <!-- <div class="flex items-start mb-5">
