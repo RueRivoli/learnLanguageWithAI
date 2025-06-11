@@ -1,7 +1,7 @@
 
 
 <p align="center" style="font-family: Georgia, serif;">
-Learn languages faster with AI
+<h2>Learn languages faster with AI</h2> 
 </p>
 
 <p align="center">
