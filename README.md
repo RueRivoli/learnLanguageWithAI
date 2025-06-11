@@ -1,5 +1,9 @@
 
-# LinguaLAB
+# 🌍 LinguaLAB
+
+<p align="center">
+  <em>Learn languages faster with AI</em>
+</p>
 
 <p align="center">
   <img width="365" alt="Capture d’écran 2025-06-11 à 15 49 59" src="https://github.com/user-attachments/assets/36632eac-6b16-455f-9ac1-994e8e92092c" />
@@ -9,45 +13,44 @@
 * * * * * * * * * * * * * * * * *
 
 
+## 🚀 Overview
 
-# Learn languages faster with AI
+**LinguaLAB** is a fast and intelligent language learning web app built with **Nuxt 3** and powered by **AI**.  
+It dynamically generates lessons (or short stories) with:
 
-This Nuxt website is a fast language learning app. It generates lessons (or stories) with the words that you don't know and focused on one of the grammar rule that you don't master.
+- 🧠 The **top 8K words** you don’t know yet
+- 🧩 A specific **grammar rule** you need to master
 
+Each lesson ends with a quiz to evaluate your progress. Based on your answers, your personal knowledge base is updated.
 
-In each new lesson, we generate for you a story containing: 
-- 10 of the most 8K used words that you don't know
-- an application of the grammar rule you need to improve
+## 📊 What It Tracks
 
-After reading that lesson, the user is asked to fill out a quiz.
-This evaluates the progress and update the score associated to that grammar rule.
+A personal dashboard monitors your proficiency in:
 
-A dashboard keeps track of your knowledge of
-- the 8K most used words in the targeted language
-- the 1K most used expressions in the targeted language
-- your skills in the different grammar rules that you need to master
-
+- ✅ The **8,000 most common words** in the language
+- ✅ The **1,000 most useful expressions**
+- ✅ ✅ Your **grammar mastery** across different rules
 
 ##  Welcoming page
 
-<img width="1512" alt="Capture d’écran 2025-05-30 à 00 45 04" src="https://github.com/user-attachments/assets/7214d00b-3e0c-42a2-99a3-05af943a200e" />
+<img width="1512" alt="Welcoming Page" src="https://github.com/user-attachments/assets/7214d00b-3e0c-42a2-99a3-05af943a200e" />
 
 ## The program
 
-<img width="1512" alt="Capture d’écran 2025-05-30 à 00 45 29" src="https://github.com/user-attachments/assets/99142540-6453-4de1-953c-be510a03101b" />
+<img width="1512" alt="The Program" src="https://github.com/user-attachments/assets/99142540-6453-4de1-953c-be510a03101b" />
 
 
+## 🛠️ Built With
 
-## Tools
+- 🎨 [TailwindCSS](https://tailwindcss.com/)
+- 🌸 [DaisyUI](https://daisyui.com/)
+- ⚡ [Nuxt 3](https://nuxt.com/)
+- 🧑‍💻 Typescript
+- 🗃️ [Supabase](https://supabase.com/)
 
-- TailwindCSS
-- DaisyUI
-- Nuxt 3
-- Typescript
-- Supabase
+---
 
-
-## Development Server
+## 🧪 Development Server
 
 Start the development server on `http://localhost:3000`:
 
