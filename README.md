@@ -1,6 +1,6 @@
 # Learn languages faster with AI
 
-This Nuxt website is a fast language learning app. It generates lessons (or stories) with the words that you don't know and using the grammar rule that you don't master.
+This Nuxt website is a fast language learning app. It generates lessons (or stories) with the words that you don't know and focused on one of the grammar rule that you don't master.
 
 
 In each new lesson, we generate for you a story containing: 
@@ -16,8 +16,13 @@ A dashboard keeps track of your knowledge of
 - your skills in the different grammar rules that you need to master
 
 
-![Uploading Capture d’écran 2025-05-30 à 00.45.04.png…]()
+##  Welcoming page
 
+<img width="1512" alt="Capture d’écran 2025-05-30 à 00 45 04" src="https://github.com/user-attachments/assets/7214d00b-3e0c-42a2-99a3-05af943a200e" />
+
+## Page second
+
+<img width="1512" alt="Capture d’écran 2025-05-30 à 00 45 29" src="https://github.com/user-attachments/assets/99142540-6453-4de1-953c-be510a03101b" />
 
 
 
