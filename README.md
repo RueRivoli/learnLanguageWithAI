@@ -1,10 +1,3 @@
-
-
-<p align="center">
-  <img src="https://your-image-url.com/banner.png" alt="LinguaLAB banner" />
-</p>
-
-
 ![logo2](https://github.com/user-attachments/assets/b271581d-9f33-4e44-91cf-71618e287ea3)
 
 
