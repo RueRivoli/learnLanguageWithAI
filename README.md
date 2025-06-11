@@ -1,6 +1,6 @@
 
 
-<p align="center" style="font-family: Georgia, serif;">
+<p align="center" style="font-family: Georgia, serif; color:purple;font-weight:bold">
 <h2>Learn languages faster with AI</h2> 
 </p>
 
