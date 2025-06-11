@@ -18,7 +18,7 @@ A personal dashboard monitors your proficiency in:
 
 - ✅ The **8,000 most common words** in the language
 - ✅ The **1,000 most useful expressions**
-- ✅ ✅ Your **grammar mastery** across different rules
+- ✅ Your **grammar mastery** across different rules
 
 ##  Welcoming page
 
