@@ -2,7 +2,7 @@
 # 🌍 LinguaLAB
 
 <p align="center">
-  <em>Learn languages faster with AI</em>
+  Learn languages faster with AI
 </p>
 
 <p align="center">
