@@ -20,7 +20,7 @@ A dashboard keeps track of your knowledge of
 
 <img width="1512" alt="Capture d’écran 2025-05-30 à 00 45 04" src="https://github.com/user-attachments/assets/7214d00b-3e0c-42a2-99a3-05af943a200e" />
 
-## Page second
+## The program
 
 <img width="1512" alt="Capture d’écran 2025-05-30 à 00 45 29" src="https://github.com/user-attachments/assets/99142540-6453-4de1-953c-be510a03101b" />
 
