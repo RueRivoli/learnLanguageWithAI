@@ -1,12 +1,11 @@
 
 
-<p align="center" style="font-family: Georgia, serif; color:purple;font-weight:bold">
-<h2>Learn languages faster with AI</h2> 
+<p align="center">
+  <img src="https://your-image-url.com/banner.png" alt="LinguaLAB banner" />
 </p>
 
-<p align="center">
-  <img width="365" alt="Capture d’écran 2025-06-11 à 15 49 59" src="https://github.com/user-attachments/assets/36632eac-6b16-455f-9ac1-994e8e92092c" />
-</p>
+
+![logo2](https://github.com/user-attachments/assets/b271581d-9f33-4e44-91cf-71618e287ea3)
 
 
 
