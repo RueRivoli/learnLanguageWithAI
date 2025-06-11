@@ -1,7 +1,6 @@
 
-# 🌍 LinguaLAB
 
-<p align="center" style="font-family: 'Comic Sans MS';">
+<p align="center" style="font-family: Georgia, serif;">
 Learn languages faster with AI
 </p>
 
