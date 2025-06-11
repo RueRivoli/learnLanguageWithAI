@@ -1,3 +1,15 @@
+
+# LinguaLAB
+
+
+<img width="365" alt="Capture d’écran 2025-06-11 à 15 49 59" src="https://github.com/user-attachments/assets/36632eac-6b16-455f-9ac1-994e8e92092c" />
+
+
+
+
+
+
+
 # Learn languages faster with AI
 
 This Nuxt website is a fast language learning app. It generates lessons (or stories) with the words that you don't know and focused on one of the grammar rule that you don't master.
