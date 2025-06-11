@@ -1,15 +1,14 @@
 # Learn languages faster with AI
 
-This Nuxt.js website is about learning languages. But faster.
+This Nuxt website is a fast language learning app. It generates lessons (or stories) with the words that you don't know and using the grammar rule that you don't master.
 
-AI helps us to detect where stands room for improvement.
 
-In each new lesson, we generate for you a lesson containing: 
+In each new lesson, we generate for you a story containing: 
 - 10 of the most 8K used words that you don't know
-- a notion that you need to improve
+- an application of the grammar rule you need to improve
 
-At the end of a lesson, the user needs to fill out a quiz.
-This evaluates your progess
+After reading that lesson, the user is asked to fill out a quiz.
+This evaluates the progress and update the score associated to that grammar rule.
 
 A dashboard keeps track of your knowledge of
 - the 8K most used words in the targeted language
