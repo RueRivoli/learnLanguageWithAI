@@ -17,7 +17,8 @@ A dashboard keeps track of your knowledge of
 - your skills in the different grammar rules that you need to master
 
 
-<img width="1512" alt="Capture d’écran 2025-05-30 à 00 44 36" src="https://github.com/user-attachments/assets/0874f08e-866e-4b08-a930-8d9750cc0c73" />
+![Uploading Capture d’écran 2025-05-30 à 00.45.04.png…]()
+
 
 
 
