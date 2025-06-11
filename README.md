@@ -17,6 +17,10 @@ A dashboard keeps track of your knowledge of
 - your skills in the different grammar rules that you need to master
 
 
+<img width="1512" alt="Capture d’écran 2025-05-30 à 00 44 36" src="https://github.com/user-attachments/assets/0874f08e-866e-4b08-a930-8d9750cc0c73" />
+
+
+
 ## Tools
 
 - TailwindCSS
@@ -25,24 +29,6 @@ A dashboard keeps track of your knowledge of
 - Typescript
 - Supabase
 
-
-## Setup
-
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
 
 ## Development Server
 
@@ -62,38 +48,5 @@ yarn dev
 bun run dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
