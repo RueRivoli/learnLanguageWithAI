@@ -1,17 +1,17 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="h-full flex min-h-screen">
-    <LayoutSidebar />
-    <!-- Main content -->
-    <main class="p-3 w-full">
-      <div class="h-10 border-b border-zinc-200">
-        <LayoutHeader />
-      </div>
-      <!-- <slot /> -->
-      <NuxtPage />
-      <!-- <div class="flex justify-between"></div> -->
-    </main>
-    <LayoutFooter />
+  <div class="h-full min-h-screen flex flex-col">
+    <div class="flex">
+      <LayoutSidebar />
+      <!-- Main content -->
+      <main class="max-h-screen p-4 w-full bg-base-200">
+        <!-- <div class="h-10 border-b border-primary/20">
+          <LayoutHeader />
+        </div> -->
+        <NuxtPage />
+        <!-- <div class="flex justify-between"></div> -->
+      </main>
+    </div>
   </div>
 </template>
