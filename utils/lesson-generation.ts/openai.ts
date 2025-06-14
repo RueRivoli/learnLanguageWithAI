@@ -1,13 +1,10 @@
 const getPromptForStoryGeneration = (grammarRule: string, listWords: string[], listExpressions: string[], level: string, nbLines: number) => {
-  console.log("listwords", listWords)
   const words = listWords.join(",")
-  console.log("words", words)
   const expressions = listExpressions.join(',')
   return `Create a ${nbLines} lines interesting story in the Turkish language of a ${level} level containing the following words: ${words}, the following expressions: ${expressions} and employing at least 3 usages of the following rule: ${grammarRule}. Give also the english translation for each sentence. Give it a title and translate it.`
 }
 
 const generateStory = async (ruleId: number, prompt: string, wordIds: number[], expressionIds: number[]) => {
-  console.log('prompt', prompt)
   const { data } = await useFetch("/api/gpt/generate", {
     method: 'POST',
     body: { message: prompt, ruleId, wordIds, expressionIds}
