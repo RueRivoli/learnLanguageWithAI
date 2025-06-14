@@ -18,8 +18,10 @@
     "@compodium/nuxt": "^0.1.0-beta.9",
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
+    "@lottiefiles/dotlottie-vue": "^0.6.3",
     "@nuxt/eslint": "^1.3.0",
     "@nuxt/ui": "^3.1.0",
+    "@pinia/nuxt": "^0.11.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/vite": "^4.1.5",
@@ -30,10 +32,13 @@
     "nuxt": "^3.17.1",
     "nuxt-storage": "^1.2.2",
     "nuxt-stripe-module": "^3.2.0",
+    "openai": "^5.3.0",
+    "pinia": "^3.0.2",
     "tailwindcss": "^4.1.6",
     "valibot": "^1.0.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1",
+    "vue3-lottie": "^3.3.1",
     "zod": "^3.24.3"
   },
   "devDependencies": {
@@ -42,6 +47,7 @@
     "@nuxtjs/tailwindcss": "^6.14.0",
     "nuxt-headlessui": "^1.2.0",
     "prettier": "3.5.3",
+    "supabase": "^2.23.4",
     "vue-tsc": "^2.2.10"
   }
 }

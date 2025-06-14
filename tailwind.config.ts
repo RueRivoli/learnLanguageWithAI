@@ -1,6 +1,5 @@
 // Example `tailwind.config.js` file
 import type { Config } from "tailwindcss";
-const colors = require("tailwindcss/colors");
 
 const config: Config = {
   content: [
@@ -10,14 +9,20 @@ const config: Config = {
   ],
   darkMode: "class",
   theme: {
-    darkMode: "class",
     fontFamily: {
-      //   sans: ["Graphik", "sans-serif"],
-      //   serif: ["Merriweather", "serif"],
+        sans: ["Graphik", "sans-serif"],
+        serif: ["Merriweather", "serif"],
     },
     extend: {
-      darkMode: "class",
-      colors: {
+      colors: {},
+      keyframes: {
+        "bounce-slight": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
+      },
+      animation: {
+        "bounce-slight": "bounce-slight 2s ease-in-out infinite",
       },
     },
   },

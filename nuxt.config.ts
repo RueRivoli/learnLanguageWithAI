@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
-// import { resolve } from "path";
 
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
@@ -8,16 +7,9 @@ export default defineNuxtConfig({
   components: [
     {
       path: "~/components",
-      pathPrefix: false,
+      pathPrefix: true,
     },
   ],
-  // components: [
-  //   {
-  //     prefix: "Layout",
-  //     path: resolve("./components/layouts"),
-  //     global: true,
-  //   },
-  // ],
   debug: true,
   devtools: { enabled: true },
   modules: [
@@ -27,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@compodium/nuxt",
     "@unlok-co/nuxt-stripe",
+    "@pinia/nuxt",
   ],
   vite: {
     plugins: [tailwindcss()],
@@ -35,13 +28,17 @@ export default defineNuxtConfig({
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseKey: process.env.SUPABASE_KEY,
+      openaiApiKey: process.env.OPENAI_API_KEY,
+      openaiApiUrl: process.env.OPENAI_API_URL,
     },
   },
   supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
     redirect: false,
     redirectOptions: {
-      login: "/auth/",
-      callback: "/account/home",
+      login: "/auth/auth/",
+      callback: "/learning/dashboard",
       include: undefined,
       exclude: [],
       saveRedirectToCookie: false,
