@@ -1,37 +1,44 @@
 <script setup lang="ts">
 import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
-const user = useSupabaseUser();
-const client = useSupabaseClient();
-const userStore = useUserStore();
+
 definePageMeta({
   layout: "authenticated",
 });
 
+const user = useSupabaseUser();
+const client = useSupabaseClient();
+const userStore = useUserStore();
+const languageSelectionModal = ref(null);
+const pseudoDefinitionModal = ref(null);
+
 watchEffect(async () => {
   if (user.value) {
-    // Connexion
-    console.log("USER", user.value);
     const userId = user.value.id;
     try {
-      const { data, error } = await $fetch(`/api/profiles/${userId}`, {
+      const profile = await $fetch(`/api/profiles/${userId}`, {
         method: "GET",
       });
-      if (error) throw error;
-      if (data) userStore.setProfile(data);
+      if (profile && !profile[0].language_learned) {
+        languageSelectionModal.value?.openModal();
+        userStore.setProfile(profile);
+      }
     } catch (error) {
       console.log(error);
     }
   }
 });
 
-const getInfo = async () => {
+const handleProfileUpdated = () => {
+  pseudoDefinitionModal.value.openModal();
+};
+const getInfoUser = async () => {
   const {
     data: { user },
   } = await client.auth.getUser();
-  console.log("www data", user);
 };
-getInfo();
+
+getInfoUser();
 </script>
 
 <template>
@@ -48,13 +55,23 @@ getInfo();
             </div>
           </div>
         </div>
-        <div class="p-3">Metrics</div>
-        <div class="p-3">Words known</div>
+        <div class="p-3">Metrics on grammar rules</div>
+        <div class="p-3">Vocabulary statistics</div>
       </div>
     </div>
 
     <div class="col-span-1 flex flex-col grow-1 border-l border-zinc-950/5">
       side panel
     </div>
+    <AccountSelectionLanguageModal
+      ref="languageSelectionModal"
+      :user-id="user?.id"
+      @language-updated="handleProfileUpdated"
+    />
+    <AccountPseudoDefinitionModal
+      ref="pseudoDefinitionModal"
+      :user-id="user?.id"
+      :full-name="user?.user_metadata.full_name"
+    />
   </div>
 </template>
