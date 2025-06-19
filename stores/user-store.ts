@@ -1,0 +1,42 @@
+import { defineStore } from "pinia";
+import type { DatabaseUserProfile, User } from "~/stores/user.ts";
+
+export const useUserStore = defineStore("user", {
+  state: (): User => {
+    return {
+      id: null,
+      fullName: null,
+      pseudo: null,
+      email: null,
+      initials: null,
+      isSubscribed: false,
+      languageLearned: null,
+      hasFilledInitialForm: false,
+      // avatar: null,
+      // memberSince: null,
+    };
+  },
+  getters: {
+    getInitials(state: User): string {
+      if (!state.fullName) return '';
+      const names = state.fullName.trim().split(" ");
+      const initials = names.map(n => n[0]?.toUpperCase() || '').join('');
+      return initials;
+    }
+  },
+  actions: {
+    setProfile(profile: DatabaseUserProfile) {
+      this.id = profile.id;
+      this.fullName = profile.full_name;
+      this.isSubscribed = profile.subscribed;
+      this.languageLearned = profile.language_learned;
+      this.pseudo = profile.pseudo;
+      this.initials = profile.initials;
+      this.email = profile.email;
+      this.isSubscribed = profile.subscribed;
+      this.hasFilledInitialForm = profile.has_filled_initial_form;
+      // this.avatar = profile.avatar;
+      //  this.memberSince = profile.memberSince;
+    }
+  },
+});
