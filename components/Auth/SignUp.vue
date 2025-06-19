@@ -73,7 +73,7 @@ const handleSignUp = async () => {
             loading="lazy"
             height="24"
             width="24"
-            src="./../../assets/img/google.svg"
+            src="./../../assets/img/oauth/google.svg"
           />
           <span>Sign Up With Google</span>
         </button>

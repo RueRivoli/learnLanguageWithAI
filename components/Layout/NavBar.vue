@@ -7,7 +7,7 @@ const showVoucherPromo = ref<boolean>(true);
   <div class="w-full fixed z-50 font-semibold shadow bg-primary text-white/80">
     <div
       v-if="showVoucherPromo"
-      class="bg-secondary text-primary relative inset-0 bottom-auto border-b border-secondary -mb-2 px-8 py-1.5 text-center text-xs transition-all duration-200"
+      class="bg-secondary text-primary relative inset-0 bottom-auto border-b border-secondary px-8 py-1.5 text-center text-xs transition-all duration-200"
     >
       <a class="block font-normal" href="/#pricing"
         >Use the voucher with the code <b>🙂 7590</b> until the 15th June to get
@@ -46,7 +46,7 @@ const showVoucherPromo = ref<boolean>(true);
         </NuxtLink>
       </div>
       <div class="navbar-end grow">
-        <NuxtLink class="flex items-center w-20" to="/authorization/auth">
+        <NuxtLink class="flex items-center w-20" to="/authorization/auth/?toCreateAccount=false">
           <div class="flex-1 text-right">Log In</div>
           <ArrowLongRightIcon class="ml-2 h-5 w-5" />
         </NuxtLink>
@@ -54,8 +54,7 @@ const showVoucherPromo = ref<boolean>(true);
     </div>
 
     <!-- Mobile menu, show/hide based on menu open state. -->
-    <div class="lg:hidden" role="dialog" aria-modal="true">
-      <!-- Background backdrop, show/hide based on slide-over state. -->
+    <!-- <div class="lg:hidden" role="dialog" aria-modal="true">
       <div class="fixed inset-0 z-50" />
       <div
         class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
@@ -99,7 +98,7 @@ const showVoucherPromo = ref<boolean>(true);
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -1,17 +1,25 @@
 <script setup lang="ts">
+import { CheckBadgeIcon as CheckBadgeIconSolid } from "@heroicons/vue/24/solid";
 import {
   ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+  ArrowLeftStartOnRectangleIcon,
+  ArrowUturnRightIcon,
   Bars3Icon,
-  ChartBarIcon,
+  CheckBadgeIcon,
   ChevronUpIcon,
+  ChevronDoubleLeftIcon,
   ChevronDownIcon,
   Cog6ToothIcon,
   Cog8ToothIcon,
-  DocumentIcon,
+  LanguageIcon,
   ListBulletIcon,
   PlusIcon,
   XMarkIcon,
-} from "@heroicons/vue/24/solid";
+  ChartBarIcon,
+  DocumentIcon,
+  Square2StackIcon,
+} from "@heroicons/vue/24/outline";
 import {
   Dialog,
   DialogOverlay,
@@ -25,7 +33,10 @@ import {
 
 const client = useSupabaseClient();
 const router = useRouter();
+const userStore = useUserStore();
+const route = useRoute();
 
+console.log("userStore", userStore.$state);
 const handleSignOut = async () => {
   console.log("handleSignOut");
   const { error } = await client.auth.signOut();
@@ -33,11 +44,20 @@ const handleSignOut = async () => {
   router.push("/");
 };
 
+const userPseudo = computed(() => userStore.$state.pseudo);
+const userEmail = computed(() => userStore.$state.email);
+const userInitials = computed(() => userStore.$state.initials);
+const isUserSubscribed = computed(() => userStore.$state.isSubscribed);
 const sideBarOpened = ref(false);
+const isSideBarMinifiedForDesktopVersion = ref(false);
+
+const isActive = (path: string) => {
+  return route.path.startsWith(path);
+};
 </script>
 
 <template>
-  <div class="min-h-screen flex bg-gray-200">
+  <div class="min-h-screen flex">
     <!-- Mobile NavBar -->
     <TransitionRoot :show="sideBarOpened">
       <Dialog
@@ -55,96 +75,211 @@ const sideBarOpened = ref(false);
           leave-to=" -translate-x-full"
         >
           <div
-            class="md:hidden z-10 h-full flex flex-col w-64 bg-gray-200 border-r border-gray-200"
+            class="md:hidden z-10 h-full flex flex-col w-72 bg-white border-r border-gray-200 shadow-xl"
           >
-            <button
-              class="absolute top-2 right-2 flex items-center justify-center w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-600"
-              type="button"
-              value="closeSideBar"
-              @click="sideBarOpened = false"
+            <div
+              class="flex items-center justify-between p-4 border-b border-gray-200"
             >
-              <XMarkIcon
-                class="h-5 w-5 text-purple-400 group-hover:text-blue-600"
-              />
-            </button>
-            <!-- <div class="pt-8 pb-4 px-6 text-gray-800 font-bold logo">
-              <NuxtLink to="/">
-                <span class="ml-2">
-                  <span class="text-indigo-400 dark:text-white">Lingua</span>Lab
-                </span>
+              <NuxtLink to="/" class="flex items-center">
+                <img
+                  alt="LinguaLab Logo"
+                  class="h-8 w-auto"
+                  src="~/assets/img/logotransblack.png"
+                />
               </NuxtLink>
-            </div> -->
-            <LayoutLogo/>
+              <button
+                class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors duration-200"
+                type="button"
+                value="closeSideBar"
+                @click="sideBarOpened = false"
+              >
+                <XMarkIcon class="h-5 w-5 text-neutral" />
+              </button>
+            </div>
             <div class="overflow-y-auto flex-1">
-              <div class="mt-10 mb-10">
-                <h3
-                  class="mx-6 mb-2 text-xs text-gray-800 uppercase tracking-widest font-bold"
+              <div class="p-4">
+                <NuxtLink
+                  class="flex items-center justify-center w-full px-4 py-3 mb-6 rounded-lg bg-warning hover:bg-warning/90 transition-all duration-200 ease-in-out group"
+                  to="/learning/lessons/new"
                 >
-                  My learnings
-                </h3>
-                <div class="px-1">
-                  <NuxtLink
-                    class="flex items-center px-6 py-2.5 text-indigo-600 group-hover:text-indigo-800 group"
-                    to="/learning/new-lesson"
+                  <ArrowUturnRightIcon class="h-4 w-4 text-neutral" />
+                  <span class="font-semibold text-neutral ml-2"
+                    >Create Story</span
                   >
-                    <PlusIcon
-                      class="h-5 w-5 text-indigo-600 group-hover:text-indigo-800"
-                    />
-                    <span class="ml-2">New Lesson</span>
-                  </NuxtLink>
-                </div>
-                <div class="px-1">
+                </NuxtLink>
+
+                <h3
+                  class="mb-4 text-xs text-gray-800 uppercase tracking-widest font-bold"
+                >
+                  Learning
+                </h3>
+                <div class="space-y-1">
                   <NuxtLink
-                    class="flex items-center px-6 py-2.5 text-indigo-600 group-hover:text-indigo-800 group"
-                    to="/learning/lessons"
+                    class="flex items-center w-full px-4 py-3.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
+                    :class="{
+                      'bg-indigo-50 rounded-lg': isActive(
+                        '/learning/dashboard',
+                      ),
+                    }"
+                    to="/learning/dashboard"
+                    @click="sideBarOpened = false"
+                  >
+                    <ChartBarIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/dashboard'),
+                      }"
+                    />
+                    <span
+                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/dashboard'),
+                      }"
+                      >Dashboard</span
+                    >
+                  </NuxtLink>
+
+                  <NuxtLink
+                    class="flex items-center w-full px-4 py-3.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
+                    :class="{
+                      'bg-indigo-50 rounded-lg': isActive('/learning/stories'),
+                    }"
+                    to="/learning/stories"
+                    @click="sideBarOpened = false"
                   >
                     <DocumentIcon
-                      class="h-5 w-5 text-indigo-600 group-hover:text-indigo-800"
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/stories'),
+                      }"
                     />
-                    <span class="ml-2">My lessons</span>
+                    <span
+                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/stories'),
+                      }"
+                      >Stories</span
+                    >
                   </NuxtLink>
-                </div>
-                <div class="px-1">
+
                   <NuxtLink
-                    class="flex items-center px-6 py-2.5 text-indigo-600 group-hover:text-indigo-800 group"
-                    to="/learning/my-grammar"
+                    class="flex items-center w-full px-4 py-3.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
+                    :class="{
+                      'bg-indigo-50 rounded-lg': isActive('/learning/grammar'),
+                    }"
+                    to="/learning/grammar"
+                    @click="sideBarOpened = false"
                   >
-                    <Cog8ToothIcon
-                      class="h-5 w-5 text-indigo-600 group-hover:text-indigo-800"
+                    <Square2StackIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/grammar'),
+                      }"
                     />
-                    <span class="ml-2">My grammar</span>
+                    <span
+                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/grammar'),
+                      }"
+                      >Modules</span
+                    >
                   </NuxtLink>
-                </div>
-                <div class="px-1">
+
                   <NuxtLink
-                    class="flex items-center px-6 py-2.5 text-indigo-600 group-hover:text-indigo-800 group"
-                    to="/learning/my-conjugation"
+                    class="flex items-center w-full px-4 py-3.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
+                    :class="{
+                      'bg-indigo-50 rounded-lg': isActive(
+                        '/learning/vocabulary',
+                      ),
+                    }"
+                    to="/learning/vocabulary"
+                    @click="sideBarOpened = false"
                   >
-                    <ListBulletIcon
-                      class="h-5 w-5 text-indigo-600 group-hover:text-indigo-800"
+                    <LanguageIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/vocabulary'),
+                      }"
                     />
-                    <span class="ml-2">My conjugation</span>
+                    <span
+                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/learning/vocabulary'),
+                      }"
+                      >Vocabulary</span
+                    >
                   </NuxtLink>
                 </div>
-              </div>
-              <div>
-                <h3
-                  class="mx-6 mb-2 text-xs text-gray-800 uppercase tracking-widest font-bold"
-                >
-                  My dashboard
-                </h3>
               </div>
 
-              <div class="px-1">
-                <NuxtLink
-                  class="flex items-center px-6 py-2.5 text-indigo-600 group-hover:text-indigo-800 group"
-                  to="/learning/my-dashboard"
-                >
-                  <ChartBarIcon
-                    class="h-5 w-5 text-indigo-600 group-hover:text-indigo-800"
-                  />
-                  <span class="ml-2">Progress</span>
-                </NuxtLink>
+              <!-- User Menu Section for Mobile -->
+              <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center mb-4">
+                  <div class="avatar">
+                    <div class="avatar avatar-placeholder">
+                      <div
+                        class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
+                      >
+                        <span class="text-xl">{{ userInitials }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ml-3">
+                    <div class="flex items-center">
+                      <div class="font-semibold text-neutral">
+                        {{ userPseudo }}
+                      </div>
+                      <div>
+                        <CheckBadgeIconSolid
+                          v-if="isUserSubscribed"
+                          class="h-4 w-4 ml-2 text-indigo-600"
+                        />
+                        <CheckBadgeIcon
+                          v-else
+                          class="h-4 w-4 ml-2 text-indigo-600"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-y-1">
+                  <NuxtLink
+                    class="flex items-center w-full px-4 py-3 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
+                    :class="{
+                      'bg-indigo-50 rounded-lg': isActive('/account/settings'),
+                    }"
+                    to="/account/settings"
+                    @click="sideBarOpened = false"
+                  >
+                    <Cog6ToothIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/account/settings'),
+                      }"
+                    />
+                    <span
+                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/account/settings'),
+                      }"
+                      >Settings</span
+                    >
+                  </NuxtLink>
+
+                  <button
+                    class="flex items-center w-full px-4 py-3 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
+                    @click="handleSignOut"
+                  >
+                    <ArrowLeftStartOnRectangleIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                    />
+                    <span
+                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      >Log out</span
+                    >
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -159,13 +294,13 @@ const sideBarOpened = ref(false);
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-gray-600 bg-opacity-50" />
+          <DialogOverlay class="fixed inset-0 bg-opacity-50" />
         </TransitionChild>
       </Dialog>
     </TransitionRoot>
   </div>
   <!-- Menu Icon opening the navbar for mobile views -->
-  <div :open="!sideBarOpened" class="flex flex-col w-full md:hidden">
+  <div :open="!sideBarOpened" class="flex flex-col block md:hidden">
     <button
       class="flex-shrink-0 flex items-center justify-center px-2 py-2 w-10 h-10 rounded-full hover:ring-2 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
       @click="sideBarOpened = true"
@@ -178,217 +313,243 @@ const sideBarOpened = ref(false);
 
   <!-- Desktop NavBar -->
   <div
-    class="hidden md:block h-full w-72 flex-col justify-between bg-slate-100 dark:bg-indigo-800 border-r border-gray-200 dark:border-indigo-800"
-    style="display: flex"
+    class="h-full hidden md:flex flex-col justify-between bg-white border-r border-primary/20 transition-all duration-300 ease-in-out"
+    :class="{
+      'w-20': isSideBarMinifiedForDesktopVersion,
+      'w-72': !isSideBarMinifiedForDesktopVersion,
+    }"
   >
-    <div class="py-6 px-8 text-xl text-gray-800 dark:text-white logo">
-      <NuxtLink to="/">
-        <span class="ml-2">
-          <span class="font-bold text-neutral">Lingua</span>Lab
-        </span>
+    <div class="flex flex-col items-center py-6 px-4 text-xl text-neutral logo">
+      <div 
+        class="w-full flex justify-end mb-4 cursor-pointer hover:text-indigo-600 transition-colors duration-200"
+        @click="isSideBarMinifiedForDesktopVersion = !isSideBarMinifiedForDesktopVersion"
+      >
+        <ChevronDoubleLeftIcon 
+          class="h-5 w-5 text-neutral"
+          :class="{ 'transform rotate-180': isSideBarMinifiedForDesktopVersion }"
+        />
+      </div>
+      <NuxtLink to="/" class="flex justify-center">
+        <img
+          v-if="!isSideBarMinifiedForDesktopVersion"
+          alt="LinguaLab Logo"
+          class="h-15 w-auto m-auto"
+          src="~/assets/img/logotransblack.png"
+        />
+        <img
+          v-else
+          alt="LinguaLab Logo"
+          class="h-8 w-auto"
+          src="~/assets/img/logotransblack.png"
+        />
       </NuxtLink>
     </div>
 
-    <div>
-      <div class="px-4">
-        <h3
-          class="mx-6 mb-2 text-xs text-gray-800 dark:text-black uppercase tracking-widest font-bold"
-        >
-          My learnings
-        </h3>
-      </div>
+    <div class="flex-1">
       <div class="px-4">
         <NuxtLink
-          class="flex items-center px-6 py-2 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-          to="/learning/newlesson"
+          class="btn btn-warning btn-sm mx-6 group"
+          to="/learning/lessons/new"
         >
-          <PlusIcon
-            class="h-5 w-5 font-semibold text-neutral group-hover:text-neutral"
-          />
-          <span class="text-neutral font-semibold group-hover:text-neutral ml-2"
-            >New Story</span
-          >
-        </NuxtLink>
-      </div>
-      <div class="px-4">
-        <NuxtLink
-          class="flex items-center px-6 py-2 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-          to="/learning/lessons"
-        >
-          <DocumentIcon
-            class="h-5 w-5 font-semibold text-neutral group-hover:text-neutral"
-          />
-          <span class="text-neutral font-semibold group-hover:text-neutral ml-2"
-            >Lessons</span
+          <ArrowUturnRightIcon class="h-4 w-4 text-neutral group-hover:text-neutral" />
+          <span
+            v-if="!isSideBarMinifiedForDesktopVersion"
+            class="font-semibold text-neutral ml-2"
+            >Create Story</span
           >
         </NuxtLink>
       </div>
 
       <div class="px-4">
-        <NuxtLink
-          class="flex items-center px-6 py-2 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-          to="/learning/grammar"
-        >
-          <Cog8ToothIcon
-            class="h-5 w-5 font-semibold text-neutral group-hover:text-neutral"
-          />
-          <span class="font-semibold ml-2 text-neutral group-hover:text-neutral"
-            >Grammar</span
-          >
-        </NuxtLink>
-      </div>
-      <!-- <div class="px-4">
-        <NuxtLink
-          class="flex items-center px-6 py-2 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-          to="/learning/myconjugation"
-        >
-          <ListBulletIcon
-            class="h-5 w-5 font-semibold dark:text-white text-stone-700 group-hover:text-white"
-          />
-          <span
-            class="font-semibold ml-2 dark:text-white text-stone-700 group-hover:text-white"
-            >Conjugation</span
-          >
-        </NuxtLink>
-      </div> -->
-    </div>
-
-    <div>
-      <div class="px-4">
         <h3
-          class="mx-6 mb-2 text-xs text-gray-800 dark:text-black uppercase tracking-widest font-bold"
+          v-if="!isSideBarMinifiedForDesktopVersion"
+          class="mx-6 mt-4 mb-2 text-xs text-gray-800 dark:text-black uppercase tracking-widest font-bold"
         >
-          My dashboard
+          Learning
         </h3>
-      </div>
-      <div class="px-4">
-        <NuxtLink
-          class="flex items-center px-6 py-2 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-          to="/learning/dashboard"
-        >
-          <ChartBarIcon
-            class="h-5 w-5 font-semibold text-stone-700 dark:text-white group-hover:text-white"
-          />
-          <span
-            class="font-semibold ml-2 text-stone-700 dark:text-white group-hover:text-white"
-            >Progress</span
+        <div class="space-y-1">
+          <NuxtLink
+            class="flex items-center py-2 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+            :class="{
+              'bg-indigo-50 rounded-lg': isActive('/learning/dashboard'),
+              'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+              'px-6': !isSideBarMinifiedForDesktopVersion,
+            }"
+            to="/learning/dashboard"
           >
-        </NuxtLink>
-      </div>
-    </div>
-    <div class="h-50" />
-    <div class="cursor-pointer relative focus:outline-hidden">
-      <Menu v-slot="{ open }">
-        <MenuButton>
-          <div
-            class="flex items-center px-4 py-2 cursor-pointer bg-slate-100 focus:outline-hidden hover:outline-none"
-          >
-            <!-- TODO: if user upload img
-            <div class="avatar m-auto">
-              <div class="h-10 w-10 rounded-full">
-                <img
-                  src="img"
-                />
-              </div>
-            </div> -->
-            <div class="avatar">
-              <div class="avatar avatar-placeholder">
-                <div
-                  class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
-                >
-                  <span class="text-xl">SD</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="font-bold ml-4 text-indigo-600 dark:text-white grow flex flex-col"
+            <ChartBarIcon
+              class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/dashboard'),
+              }"
+            />
+            <span
+              v-if="!isSideBarMinifiedForDesktopVersion"
+              class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/dashboard'),
+              }"
+              >Dashboard</span
             >
-              <div class="text-base">Sylvie Dur.</div>
-              <div class="text-xs font-semibold text-gray-600">
-                sylviedura@gmail.com
-              </div>
+          </NuxtLink>
+
+          <NuxtLink
+            class="flex items-center py-2 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+            :class="{
+              'bg-indigo-50 rounded-lg': isActive('/learning/stories'),
+              'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+              'px-6': !isSideBarMinifiedForDesktopVersion,
+            }"
+            to="/learning/stories"
+          >
+            <DocumentIcon
+              class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/stories'),
+              }"
+            />
+            <span
+              v-if="!isSideBarMinifiedForDesktopVersion"
+              class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/stories'),
+              }"
+              >Stories</span
+            >
+          </NuxtLink>
+
+          <NuxtLink
+            class="flex items-center py-2 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+            :class="{
+              'bg-indigo-50 rounded-lg': isActive('/learning/grammar'),
+              'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+              'px-6': !isSideBarMinifiedForDesktopVersion,
+            }"
+            to="/learning/grammar"
+          >
+            <Square2StackIcon
+              class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/grammar'),
+              }"
+            />
+            <span
+              v-if="!isSideBarMinifiedForDesktopVersion"
+              class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/grammar'),
+              }"
+              >Modules</span
+            >
+          </NuxtLink>
+
+          <NuxtLink
+            class="flex items-center py-2 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+            :class="{
+              'bg-indigo-50 rounded-lg': isActive('/learning/vocabulary'),
+              'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+              'px-6': !isSideBarMinifiedForDesktopVersion,
+            }"
+            to="/learning/vocabulary"
+          >
+            <LanguageIcon
+              class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/vocabulary'),
+              }"
+            />
+            <span
+              v-if="!isSideBarMinifiedForDesktopVersion"
+              class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+              :class="{
+                'text-indigo-600': isActive('/learning/vocabulary'),
+              }"
+              >Vocabulary</span
+            >
+          </NuxtLink>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Menu Section -->
+    <div class="p-4 border-t border-gray-200">
+      <div class="flex items-center" :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion }">
+        <div class="avatar">
+          <div class="avatar avatar-placeholder">
+            <div
+              class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
+            >
+              <span class="text-xl">{{ userInitials }}</span>
             </div>
-            <div class="ml-4">
-              <ChevronUpIcon
-                v-if="!open"
-                class="h-4 w-4 text-md font-bold text-indigo-600 dark:text-white group-hover:text-white"
+          </div>
+        </div>
+        <div v-if="!isSideBarMinifiedForDesktopVersion" class="ml-3">
+          <div class="flex items-center">
+            <div class="font-semibold text-neutral">{{ userPseudo }}</div>
+            <div>
+              <CheckBadgeIconSolid
+                v-if="isUserSubscribed"
+                class="h-4 w-4 ml-2 text-indigo-600"
               />
-              <ChevronDownIcon
+              <CheckBadgeIcon
                 v-else
-                class="h-4 w-4 font-bold text-indigo-600 dark:text-white group-hover:text-white"
+                class="h-4 w-4 ml-2 text-indigo-600"
               />
             </div>
           </div>
-        </MenuButton>
-        <transition
-          enter-active-class="transition duration-100 ease-out"
-          enter-from-class="transform scale-95 opacity-0"
-          enter-to-class="transform scale-100 opacity-100"
-          leave-active-class="transition duration-75 ease-out"
-          leave-from-class="transform scale-100 opacity-100"
-          leave-to-class="transform scale-95 opacity-0"
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-1">
+        <NuxtLink
+          class="flex items-center py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+          :class="{
+            'bg-indigo-50 rounded-lg': isActive('/account/settings'),
+            'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+            'px-4': !isSideBarMinifiedForDesktopVersion,
+          }"
+          to="/account/settings"
         >
-          <MenuItems
-            class="absolute bg-slate-100 mt-2 p-2 w-64 bottom-full mb-2 mr-2 origin-bottom-right right-0 divide-y divide-gray-100 rounded-b-2xl rounded-t-2xl shadow-lg ring-1 ring-black/5 focus:outline-none"
+          <Cog6ToothIcon
+            class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            :class="{
+              'text-indigo-600': isActive('/account/settings'),
+            }"
+          />
+          <span
+            v-if="!isSideBarMinifiedForDesktopVersion"
+            class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            :class="{
+              'text-indigo-600': isActive('/account/settings'),
+            }"
+            >Settings</span
           >
-            <!-- Use the `active` state to conditionally style the active item. -->
-            <MenuItem
-              key="home"
-              v-slot="{ active }"
-              class="bg-slate-100 rounded-lg ui-active:text-white ui-not-active:text-black"
-              as="template"
-            >
-              <NuxtLink
-                class="flex items-center p-3 group hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-                to="/account/settings"
-              >
-                <Cog6ToothIcon
-                  class="h-5 w-5 font-bold text-stone-700 dark:text-white group-hover:text-white"
-                  :class="{
-                    'text-white': active,
-                    'bg-slate-100 dark:bg-indigo-600  text-black': !active,
-                  }"
-                />
-                <span
-                  class="font-bold ml-2 text-stone-700 dark:text-white group-hover:text-white"
-                  >Settings</span
-                >
-              </NuxtLink>
-            </MenuItem>
-            <MenuItem
-              key="home"
-              v-slot="{ active }"
-              class="bg-slate-100 rounded-lg ui-active:text-white ui-not-active:text-black"
-              as="template"
-            >
-              <button
-                class="flex items-center w-full p-3 group cursor-pointer hover:rounded-2xl hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-600"
-                @click.prevent="handleSignOut"
-              >
-                <ArrowLeftCircleIcon
-                  class="h-5 w-5 font-bold text-stone-700 dark:text-white group-hover:text-white"
-                  :class="{
-                    ' text-white': active,
-                    'bg-slate-100 dark:bg-indigo-600  text-black': !active,
-                  }"
-                />
-                <span
-                  class="font-bold ml-2 text-stone-700 dark:text-white group-hover:text-white"
-                  >Log out</span
-                >
-              </button>
-            </MenuItem>
-          </MenuItems>
-        </transition>
-      </Menu>
+        </NuxtLink>
+
+        <button
+          class="flex items-center cursor-pointer w-full py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+          :class="{
+            'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+            'px-4': !isSideBarMinifiedForDesktopVersion,
+          }"
+          @click="handleSignOut"
+        >
+          <ArrowLeftStartOnRectangleIcon
+            class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+          />
+          <span
+            v-if="!isSideBarMinifiedForDesktopVersion"
+            class="font-semibold  ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            >Log out</span
+          >
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.button {
+/* .button {
   width: 100%;
-}
-/* font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif; */
+} */
 </style>
