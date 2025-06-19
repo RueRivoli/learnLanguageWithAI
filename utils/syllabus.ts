@@ -6,12 +6,12 @@ import japaneseFlag from "~/assets/img/japanese.png";
 import russianFlag from "~/assets/img/russian.png";
 
 export const languages = [
-  { code: "tr", label: "Turkish", imgSrc: turkeyFlag },
-  { code: "fr", label: "French", imgSrc: franceFlag },
-  { code: "es", label: "Spanish", imgSrc: spanishFlag },
-  { code: "it", label: "Italian", imgSrc: italianFlag },
-  { code: "rs", label: "Russian", imgSrc: russianFlag },
-  { code: "jp", label: "Japanese", imgSrc: japaneseFlag },
+  { code: "tr", label: "Turkish", imgSrc: turkeyFlag, activated: true },
+  { code: "fr", label: "French", imgSrc: franceFlag, activated: true },
+  { code: "es", label: "Spanish", imgSrc: spanishFlag, activated: true },
+  { code: "it", label: "Italian", imgSrc: italianFlag, activated: false },
+  { code: "rs", label: "Russian", imgSrc: russianFlag, activated: false },
+  { code: "jp", label: "Japanese", imgSrc: japaneseFlag, activated: false },
 ];
 
 export const rulesNames = {
