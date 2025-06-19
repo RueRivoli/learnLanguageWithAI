@@ -5,6 +5,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronDownIcon, PlayIcon } from "@heroicons/vue/24/solid";
 
 import { getLevelText } from "~/utils/learning/grammar";
+const router = useRouter();
 
 definePageMeta({
   layout: "authenticated",
@@ -49,7 +50,7 @@ const getGrammarRule = async () => {
 const getLastQuizs = async () => {
   console.log("grammarRuleId", route.params.id);
   const { data, error } = await useFetch(
-    `/api/result-quizzes/${route.params.id}`,
+    `/api/quizzes/rules/${route.params.id}`,
   );
   if (data) {
     lastQuizs.value = data.value?.map(({ id, created_at, score }) => ({
@@ -57,7 +58,6 @@ const getLastQuizs = async () => {
       createdAt: created_at,
       score,
     }));
-    console.log("LR", lastQuizs.value);
     isLoading.value = false;
   }
 };
@@ -67,10 +67,13 @@ await getLastQuizs();
 
 const handleGenerateQuiz = async () => {
   console.log("handleGenerateQuiz");
-  const quiz = await $fetch(`/api/result-quizzes/${grammarRuleId}`, {
+  const { data, error } = await $fetch(`/api/quizzes/${grammarRuleId}`, {
     method: "PUT",
   });
-  console.log("quiz", quiz);
+  if (error) throw error;
+  else if (data) {
+    router.push(`/learning/quizzes/${data}`);
+  }
 };
 </script>
 
@@ -91,7 +94,7 @@ const handleGenerateQuiz = async () => {
                       <span class="loading loading-bars loading-xl" />
                     </div>
                     <div v-else class="p-5">
-                      <LayoutHeading
+                      <LayoutHeadingHighlight
                         :highlighted-text="grammarRule.nameEn"
                         :end-title="grammarRule.name"
                       />

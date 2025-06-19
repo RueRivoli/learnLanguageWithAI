@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { CheckIcon } from "@heroicons/vue/24/solid";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+
+import type { QuizQuestion, FormQuizState } from "~/types/quiz.ts";
+import { parseQuestions } from "~/utils/learning/quiz";
 
 definePageMeta({
   layout: "authenticated",
@@ -7,28 +11,55 @@ definePageMeta({
 
 const route = useRoute();
 const quizId = route.params.id;
-const isLoading = ref<boolean>(false);
-const quiz = ref([]);
+const isLoading = ref<boolean>(true);
+const quiz = ref<QuizQuestion[]>([]);
+const formQuiz = ref<FormQuizState>({});
+const isQuizComplete = computed(() => {
+  let complete = true;
+  Object.keys(formQuiz.value).forEach((key: number) => {
+    complete = complete && formQuiz.value[key].selectedOption !== null;
+  });
+  return complete;
+});
+const correctAnswers = ref(null);
 
-const parseRuleData = (data: any) => {
-  return {
-    name: data.rule_name ?? null,
-    nameEn: data.rule_name_translation ?? null,
-    difficulty: data.difficulty_class ?? null,
-    description: data.description ?? null,
-    sentenceExample: data.sentence_example ?? null,
-    sentenceExampleTranslation: data.sentence_example_translation ?? null,
-    sentenceExample2: data.sentence_example_2 ?? null,
-    sentenceExampleTranslation2: data.sentence_example_2_translation ?? null,
-  };
+const calculateScoreTotal = () => {
+  return Object.keys(formQuiz.value).reduce((acc: number, key: number, _) => {
+    const isCorrect =
+      formQuiz.value[key].correctAnswer === formQuiz.value[key].selectedOption;
+    return isCorrect ? acc + 1 : acc;
+  }, 0);
 };
+
+const initializeFormQuiz = (questions: QuizQuestion[]): void => {
+  formQuiz.value = questions.reduce(
+    (acc: FormQuizState, currentValue: QuizQuestion, index: number) => {
+      acc[index + 1] = {
+        selectedOption: null,
+        correctAnswer: currentValue.correctAnswer,
+      };
+      return acc;
+    },
+    {},
+  );
+};
+
+const getFinalScoreQuiz = () => {};
 const getQuizData = async () => {
-  console.log("quizDataId", route.params.id);
-  const { data, error } = await useFetch(`/api/grammar/${quizId}`);
-  if (data) {
-    quiz.value = parseRuleData(data.value);
+  const { data } = await useFetch(`/api/quizzes/${quizId}`);
+  const questionnary = data.value;
+  if (questionnary) {
+    quiz.value = questionnary.map((question) => parseQuestions(question));
+    initializeFormQuiz(quiz.value);
     isLoading.value = false;
   }
+};
+
+const handleSubmit = () => {
+  console.log("Form submitted:", formQuiz.value);
+  const score = calculateScoreTotal();
+  console.log("score", score);
+  // Add your submission logic here
 };
 
 await getQuizData();
@@ -36,46 +67,108 @@ await getQuizData();
 
 <template>
   <div>
-    <div class="grid grid-cols-5 gap-2 w-full mt-2">
+    <div class="w-full mt-2 grid grid-cols-4 gap-2">
       <div class="col-span-3">
-        <div>
+        <div class="border-b border-zinc-200">
           <div>
-            <div class="border-b border-zinc-200">
-              <div>
-                <div>
-                  <div class="list bg-base-100 rounded-box shadow-md">
-                    <div
-                      v-if="isLoading"
-                      class="w-full h-72 flex justify-center items-center"
-                    >
-                      <span class="loading loading-bars loading-xl" />
+            <div>
+              <div class="list bg-base-100 rounded-box shadow-md">
+                <div
+                  v-if="isLoading"
+                  class="w-full h-72 flex justify-center items-center"
+                >
+                  <span class="loading loading-bars loading-xl" />
+                </div>
+                <div v-else class="p-4 bg-white/20">
+                  <LayoutHeadingPlus
+                    title="Quiz"
+                    description="Track your learning progress"
+                  >
+                    <QuestionMarkCircleIcon class="h-6 w-6 text-primary" />
+                  </LayoutHeadingPlus>
+
+                  <div class="p-3">
+                    <div class="pb-4">
+                      <span class="text-xl font-bold"
+                        >Choose the right answer</span
+                      >
                     </div>
-                    <div v-else class="p-5">
-                      <LayoutHeading highlighted-text="quiz" end-title="test" />
+                    <form @submit.prevent="handleSubmit">
+                      <div class="form-control">
+                        <div
+                          v-for="(q, n) in quiz"
+                          :key="n"
+                          class="mb-4 text-pretty text-neutral"
+                        >
+                          <div class="mb-2">
+                            <label>
+                              <span class="font-semibold text-lg"
+                                >{{ n + 1 }}. {{ q.question }}</span
+                              >
+                            </label>
+                          </div>
+                          <div class="flex gap-5">
+                            <label
+                              class="label cursor-pointer gap-2 text-neutral"
+                            >
+                              <input
+                                v-model="formQuiz[n + 1].selectedOption"
+                                type="radio"
+                                :name="`question-${n + 1}`"
+                                class="radio radio-xs"
+                                value="1"
+                              />
+                              <span class="label-text">{{ q.option1 }}</span>
+                            </label>
+                            <label
+                              class="label cursor-pointer gap-2 text-neutral"
+                            >
+                              <input
+                                v-model="formQuiz[n + 1].selectedOption"
+                                type="radio"
+                                :name="`question-${n + 1}`"
+                                class="radio radio-xs"
+                                value="2"
+                              />
+                              <span class="label-text">{{ q.option2 }}</span>
+                            </label>
+                            <label
+                              class="label cursor-pointer gap-2 text-neutral"
+                            >
+                              <input
+                                v-model="formQuiz[n + 1].selectedOption"
+                                type="radio"
+                                :name="`question-${n + 1}`"
+                                class="radio radio-xs"
+                                value="3"
+                              />
+                              <span class="label-text">{{ q.option3 }}</span>
+                            </label>
+                            <label
+                              class="label cursor-pointer gap-2 text-neutral"
+                            >
+                              <input
+                                v-model="formQuiz[n + 1].selectedOption"
+                                type="radio"
+                                :name="`question-${n + 1}`"
+                                class="radio radio-xs"
+                                value="4"
+                              />
+                              <span class="label-text">{{ q.option4 }}</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
 
-                      <div class="mt-2 flex items-center">
-                        <span class="font-semibold">Difficulty </span>
-                        <mark class="ml-2 p-1 text-white bg-accent rounded-lg">
-                          <span>fggggg </span>
-                        </mark>
-                      </div>
-                      <div class="w-full rounded-2xl mt-8">
-                        <p>fezezf</p>
-                      </div>
-
-                      <div class="w-full rounded-2xl mt-8">
-                        <div class="font-semibold">fezfez</div>
-                        <div>fzeefz</div>
-                      </div>
-                      <div class="w-full rounded-2xl mt-8">
-                        <div class="font-semibold">fzefze</div>
-                        <div>fezfez</div>
-                      </div>
-                      <button class="btn btn-primary">
+                      <button
+                        type="submit"
+                        :disabled="!isQuizComplete"
+                        class="btn btn-primary mt-4"
+                      >
                         <CheckIcon class="h-5 w-5 font-bold" />
-                        Validate
+                        <span>Get your score</span>
                       </button>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
