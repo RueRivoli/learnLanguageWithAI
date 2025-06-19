@@ -1,4 +1,4 @@
-import { defineEventHandler, getRouterParam } from "h3";
+import { defineEventHandler } from "h3";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -19,67 +19,67 @@ const lessonFormat = { "type": "json_schema", "json_schema": {
       "title": {
         "type": "string"
       },
-      "titleEn": {
+      "title_en": {
         "type": "string"
       },
-      "sentence1": {
+      "sentence_1": {
         "type": "string"
       },
-      "sentence1En": {
+      "sentence_1_en": {
         "type": "string"
       },
-      "sentence2": {
+      "sentence_2": {
         "type": "string"
       },
-      "sentence2En": {
+      "sentence_2_en": {
         "type": "string"
       },
-      "sentence3": {
+      "sentence_3": {
         "type": "string"
       },
-      "sentence3En": {
+      "sentence_3_en": {
         "type": "string"
       },
-      "sentence4": {
+      "sentence_4": {
         "type": "string"
       },
-      "sentence4En": {
+      "sentence_4_en": {
         "type": "string"
       },
-      "sentence5": {
+      "sentence_5": {
         "type": "string"
       },
-      "sentence5En": {
+      "sentence_5_en": {
         "type": "string"
       },
-      "sentence6": {
+      "sentence_6": {
         "type": "string"
       },
-      "sentence6En": {
+      "sentence_6_en": {
         "type": "string"
       },
-      "sentence7": {
+      "sentence_7": {
         "type": "string"
       },
-      "sentence7En": {
+      "sentence_7_en": {
         "type": "string"
       },
-      "sentence8": {
+      "sentence_8": {
         "type": "string"
       },
-      "sentence8En": {
+      "sentence_8_en": {
         "type": "string"
       },
-      "sentence9": {
+      "sentence_9": {
         "type": "string"
       },
-      "sentence9En": {
+      "sentence_9_en": {
         "type": "string"
       },
-      "sentence10": {
+      "sentence_10": {
         "type": "string"
       },
-      "sentence10En": {
+      "sentence_10_en": {
         "type": "string"
       },
     }
@@ -106,7 +106,7 @@ const linkWordsToLesson = async (wordIds: number[], lessonId: number) => {
 const linkExpressionsToLesson = async (expressionIds: number[], lessonId: number) => {
   const inserts = expressionIds.map((expId) => ({
     lesson_id: lessonId,
-    word_id: expId,
+    expression_id: expId,
   }));
   // Link expressions to that lesson
   const { error: errorExpressions } = await supabase
@@ -120,15 +120,16 @@ const linkExpressionsToLesson = async (expressionIds: number[], lessonId: number
 }
 
 const saveNewLesson = async (content: string, ruleId: number) => {
-  console.log("content", content)
+  console.log("content >> ", content)
   const newLessonRow = parseModelResponse(content, ruleId)
       console.log("newLessonRow", newLessonRow)
       // Save new lesson
-      const { data, error: errorLessons } = await supabase
+      const { data: newLesson, error: errorLessons } = await supabase
       .from("turkish_lessons")
-      .insert(newLessonRow)
+      .insert(newLessonRow).select()
+      console.log("new lesson", newLesson)
       if (errorLessons) throw(errorLessons)
-      return data
+      return newLesson
 }
 
 export default defineEventHandler(async (event) => {
@@ -156,13 +157,14 @@ export default defineEventHandler(async (event) => {
     })
      
     if (result && result.choices[0].message.content) {
+      console.log("cont", result.choices[0].message.content)
       const lesson = await saveNewLesson(result.choices[0].message.content, body.ruleId)
-      
+      console.log("body.expressionIds", body.expressionIds)
       if (lesson) {
-        linkWordsToLesson(body.wordIds, lesson.value.id)
-        linkExpressionsToLesson(body.expressionIds, lesson.value.id)
+        linkWordsToLesson(body.wordIds, lesson[0].id)
+        linkExpressionsToLesson(body.expressionIds, lesson[0].id)
       }
-        return lesson
+        return lesson[0].id
       }
     } catch (error) {
       console.error('Error API OpenAI:', error)
