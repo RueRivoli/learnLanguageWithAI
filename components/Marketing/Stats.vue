@@ -1,11 +1,5 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
-// import CallToAction from "./CallToAction.vue";
-// import NavBar from "./NavBar.vue";
-
 defineProps<{ msg: string }>();
-
-// const count = ref(0)
 </script>
 
 <template>

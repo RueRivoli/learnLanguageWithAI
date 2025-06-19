@@ -1,9 +1,9 @@
 <template>
   <div>
     <MarketingCallToAction />
-    <div>
-      <MarketingMethodExplained />
-    </div>
+    <MarketingMethodExplained />
+    <MarketingSyllabus />
+    <MarketingFAQ />
   </div>
 </template>
 

@@ -20,7 +20,7 @@
                 <h2 class="text-3xl text-black font-bold">Turkish</h2>
                 <img
                   class="h-14 w-auto"
-                  src="~/assets/img/turkish.png"
+                  src="~/assets/img/language/turkish.png"
                   alt=""
                 />
               </div>
@@ -32,7 +32,7 @@
                 <h2 class="text-3xl text-black text-black font-bold">French</h2>
                 <img
                   class="h-14 w-auto"
-                  src="~/assets/img/french.png"
+                  src="~/assets/img/language/french.png"
                   alt="learn french"
                 />
               </div>
@@ -45,7 +45,7 @@
                 <h2 class="text-3xl text-black font-bold">Spanish</h2>
                 <img
                   class="h-14 w-auto"
-                  src="~/assets/img/spanish.png"
+                  src="~/assets/img/language/spanish.png"
                   alt=""
                 />
               </div>
@@ -56,7 +56,11 @@
             <div class="card-body">
               <div class="flex items-center justify-between">
                 <h2 class="text-3xl text-black font-bold">Japanese</h2>
-                <img class="h-14 w-auto" src="~/assets/img/japan.png" alt="" />
+                <img
+                  class="h-14 w-auto"
+                  src="~/assets/img/language/japanese.png"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -66,7 +70,7 @@
                 <h2 class="text-3xl text-black font-bold">Italian</h2>
                 <img
                   class="h-14 w-auto"
-                  src="~/assets/img/italian.png"
+                  src="~/assets/img/language/italian.png"
                   alt=""
                 />
               </div>
@@ -79,7 +83,7 @@
                 <h2 class="text-3xl text-black font-bold">Russian</h2>
                 <img
                   class="h-14 w-auto"
-                  src="~/assets/img/russian.png"
+                  src="~/assets/img/language/russian.png"
                   alt=""
                 />
               </div>

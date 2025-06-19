@@ -60,11 +60,10 @@ import {
         <p
           class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"
         >
-          Have acess to stories tailored to your specific level
+          Make progress faster by training on lessons tailored to your weaknesses.
         </p>
         <p class="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-          containing the concepts you don't master and the vocabulary you need
-          to know
+          Train on vocabulary to know the most used words and expressions
         </p>
 
         <div class="mt-10 z-[100] flex items-center justify-center gap-x-6">
