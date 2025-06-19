@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const emit = defineEmits(["pseudoUpdated"]);
+import { getInitials } from "~/utils/account/profile";
+
 const props = withDefaults(
   defineProps<{
     userId: any;
@@ -10,6 +11,7 @@ const props = withDefaults(
     fullName: null,
   },
 );
+const userStore = useUserStore();
 
 const pseudo = ref(props.fullName);
 const pseudoDefinitionModal = ref(null);
@@ -21,10 +23,10 @@ const handleDefinePseudo = async () => {
     method: "PUT",
     body: {
       pseudo: pseudo.value,
+      initials: getInitials(pseudo.value),
     },
   });
-  console.log("profile", profile[0]);
-  // emit('pseudoUpdated', profile[0])
+  userStore.setProfile(profile[0]);
   isSavingPseudo.value = false;
 };
 

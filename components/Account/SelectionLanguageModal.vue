@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { languages } from "~/utils/syllabus";
-const emit = defineEmits(['languageUpdated']);
+const emit = defineEmits(["languageUpdated"]);
 const props = withDefaults(
   defineProps<{
-    userId: any;
+    userId: string | null;
   }>(),
   {
     userId: null,
@@ -23,8 +23,7 @@ const handleSelectLanguage = async () => {
       language_learned: selectedLanguage.value,
     },
   });
-  console.log('profile', profile[0])
-  emit('languageUpdated', profile[0])
+  emit("languageUpdated", profile[0]);
   isSavingLanguageLearned.value = false;
 };
 const openModal = () => {
