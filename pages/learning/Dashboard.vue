@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ChartBarIcon } from "@heroicons/vue/24/outline";
+import type { Database } from "~/supabase/types";
+import { dashboardFirstTab, dashboardSecondTab } from "~/utils/dashboard/tabs";
+import {
+  ChartBarIcon,
+} from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
 
 definePageMeta({
@@ -9,8 +13,11 @@ definePageMeta({
 const user = useSupabaseUser();
 const client = useSupabaseClient();
 const userStore = useUserStore();
-const languageSelectionModal = ref(null);
-const pseudoDefinitionModal = ref(null);
+const languageSelectionModal = ref<{ openModal: () => void } | null>(null);
+const pseudoDefinitionModal = ref<{ openModal: () => void } | null>(null);
+
+// 1 = Vocabulary, 2 = Grammar
+const activeTab = ref(1);
 
 watchEffect(async () => {
   if (user.value) {
@@ -21,17 +28,29 @@ watchEffect(async () => {
       });
       if (profile && !profile[0].language_learned) {
         languageSelectionModal.value?.openModal();
-        userStore.setProfile(profile);
       }
+      userStore.setProfile(profile[0]);
     } catch (error) {
       console.log(error);
     }
   }
 });
 
-const handleProfileUpdated = () => {
-  pseudoDefinitionModal.value.openModal();
+const handleLanguageUpdated = async (
+  profile: Database["public"]["Tables"]["profiles"]["Row"],
+) => {
+  userStore.setProfile(profile);
+  pseudoDefinitionModal.value?.openModal();
+  if (user.value) {
+    await $fetch(`/api/grammar-scores/fill/${user.value.id}`, {
+      method: "POST",
+      body: {
+        language_learned: profile.language_learned,
+      },
+    });
+  }
 };
+
 const getInfoUser = async () => {
   const {
     data: { user },
@@ -42,36 +61,64 @@ getInfoUser();
 </script>
 
 <template>
-  <div class="w-full grid grid-cols-4 gap-2">
-    <div class="col-span-3">
-      <div class="list bg-white rounded-box shadow-md">
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <ChartBarIcon
-                class="h-5 w-5 mr-2 text-neutral group-hover:text-indigo-800"
-              />
-              <LayoutHeadingPlus title="Dashboard" />
-            </div>
-          </div>
+  <div class="min-h-screen bg-gray-50 p-6">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header Section -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between">
+          <LayoutHeadingPlus
+            title="Dashboard"
+            description="Track your learning progress"
+          >
+            <ChartBarIcon class="h-6 w-6 text-primary" />
+          </LayoutHeadingPlus>
+          <LayoutTabs
+            :first-tab="dashboardFirstTab"
+            :second-tab="dashboardSecondTab"
+            @tab-active-changed="(activeT) => (activeTab = activeT)"
+          />
         </div>
-        <div class="p-3">Metrics on grammar rules</div>
-        <div class="p-3">Vocabulary statistics</div>
+      </div>
+
+      <!-- Stats Highlights Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <template v-if="activeTab === 1">
+          <DashboardVocabularyStatsHighlights />
+        </template>
+        <template v-else>
+          <DashboardGrammarStatsHighlights />
+        </template>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <template v-if="activeTab === 1">
+          <DashboardVocabularyStats />
+        </template>
+        <template v-else>
+          <DashboardGrammarStats />
+        </template>
       </div>
     </div>
 
-    <div class="col-span-1 flex flex-col grow-1 border-l border-zinc-950/5">
-      side panel
-    </div>
+    <!-- Modals -->
     <AccountSelectionLanguageModal
       ref="languageSelectionModal"
       :user-id="user?.id"
-      @language-updated="handleProfileUpdated"
+      @language-updated="(profile) => handleLanguageUpdated(profile)"
     />
     <AccountPseudoDefinitionModal
       ref="pseudoDefinitionModal"
       :user-id="user?.id"
-      :full-name="user?.user_metadata.full_name"
+      :full-name="user?.user_metadata?.full_name || ''"
     />
   </div>
 </template>
+
+<style scoped>
+/* Custom styles for better chart appearance */
+:deep(.echarts-tooltip) {
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+</style>
