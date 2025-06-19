@@ -1,9 +1,9 @@
-import turkeyFlag from "~/assets/img/turkish.png";
-import franceFlag from "~/assets/img/french.png";
-import spanishFlag from "~/assets/img/spanish.png";
-import italianFlag from "~/assets/img/italian.png";
-import japaneseFlag from "~/assets/img/japanese.png";
-import russianFlag from "~/assets/img/russian.png";
+import turkeyFlag from "~/assets/img/language/turkish.png";
+import franceFlag from "~/assets/img/language/french.png";
+import spanishFlag from "~/assets/img/language/spanish.png";
+import italianFlag from "~/assets/img/language/italian.png";
+import japaneseFlag from "~/assets/img/language/japanese.png";
+import russianFlag from "~/assets/img/language/russian.png";
 
 export const languages = [
   { code: "tr", label: "Turkish", imgSrc: turkeyFlag, activated: true },
