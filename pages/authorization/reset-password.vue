@@ -58,8 +58,14 @@ const handleResetPassword = async () => {
                   class="absolute inset-y-0 right-0 flex items-center pr-3"
                   @click="showPassword = !showPassword"
                 >
-                  <EyeIcon v-if="showPassword" class="h-5 w-5 text-gray-500 hover:text-gray-700" />
-                  <EyeSlashIcon v-else class="h-5 w-5 text-gray-500 hover:text-gray-700" />
+                  <EyeIcon
+                    v-if="showPassword"
+                    class="h-5 w-5 text-gray-500 hover:text-gray-700"
+                  />
+                  <EyeSlashIcon
+                    v-else
+                    class="h-5 w-5 text-gray-500 hover:text-gray-700"
+                  />
                 </button>
               </div>
             </div>
@@ -80,8 +86,14 @@ const handleResetPassword = async () => {
                   class="absolute inset-y-0 right-0 flex items-center pr-3"
                   @click="showConfirmPassword = !showConfirmPassword"
                 >
-                  <EyeIcon v-if="showConfirmPassword" class="h-5 w-5 text-gray-500 hover:text-gray-700" />
-                  <EyeSlashIcon v-else class="h-5 w-5 text-gray-500 hover:text-gray-700" />
+                  <EyeIcon
+                    v-if="showConfirmPassword"
+                    class="h-5 w-5 text-gray-500 hover:text-gray-700"
+                  />
+                  <EyeSlashIcon
+                    v-else
+                    class="h-5 w-5 text-gray-500 hover:text-gray-700"
+                  />
                 </button>
               </div>
             </div>

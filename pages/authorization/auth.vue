@@ -1,14 +1,21 @@
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    toCreateAccount?: boolean;
-  }>(),
-  {
-    toCreateAccount: false,
-  },
-);
+const route = useRoute();
+// const props = withDefaults(
+//   defineProps<{
+//     toCreateAccount?: boolean;
+//   }>(),
+//   {
+//     toCreateAccount: false,
+//   },
+// );
+const createAccountActivated = ref<boolean | null>(false);
 
-const createAccountActivated = ref<boolean | null>(props.toCreateAccount);
+watchEffect(() => {
+  console.log("props.query", route.query.toCreateAccount);
+  if (route.query.toCreateAccount === "true")
+    createAccountActivated.value = true;
+  else createAccountActivated.value = false;
+});
 </script>
 
 <template>
