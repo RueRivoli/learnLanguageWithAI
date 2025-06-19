@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
+import { EyeIcon, EyeSlashIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
 import type { Schema } from "~/utils/auth/auth";
 
@@ -16,15 +16,26 @@ const showPassword = ref<boolean>(false);
 const handleSignIn = async () => {
   connexionError.value = null;
   const errorFromCheck = getEmailPasswordInvalidityMessage(state);
+  console.log("errorFromCheck", errorFromCheck);
   if (errorFromCheck !== null) {
     connexionError.value = errorFromCheck;
     return;
   }
-  const { data, error } = await client.auth.signInWithPassword({
-    email: state.value.email,
-    password: state.value.password,
-  });
-  console.log("LOGIN: data", data, data.value);
+  console.log("email", state, state.email);
+  try {
+    const { data, error } = await client.auth.signInWithPassword({
+      email: state.email,
+      password: state.password,
+    });
+    console.log("LOGIN", data, data.value);
+    if (error) throw error;
+  } catch (error) {
+    console.log("error", error);
+    if (error.code === "email_not_confirmed") {
+      connexionError.value =
+        "Please confirm your email to log in.<br/> If the confirmation link has expired, sign up again";
+    } else connexionError.value = "Invalid email or password";
+  }
 };
 
 //TO DO: change to google
@@ -63,13 +74,22 @@ const handleSignInWithGoogle = async () => {
       <div class="divider divider-neutral text-sm">OR</div>
       <br />
 
-      <div
+      <!-- <div
         v-if="connexionError"
         class="w-full bg-error mb-2 border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
       >
         {{ connexionError }}
+      </div> -->
+      <div
+        v-if="connexionError"
+        role="alert"
+        class="w-full alert alert-error mb-2"
+      >
+        <XCircleIcon class="h-5 w-5 cursor-pointer text-white" />
+        <span class="text-white" v-html="connexionError" />
       </div>
-      <form :state="state">
+      {{ state }}
+      <form :state="state" novalidate @submit.prevent="handleSignIn">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
             >Your email</label
@@ -123,7 +143,6 @@ const handleSignInWithGoogle = async () => {
           type="submit"
           :disabled="isLoading"
           class="btn btn-primary w-full h-12 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          @click="handleSignIn"
         >
           Sign In
         </button>

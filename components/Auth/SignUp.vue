@@ -35,18 +35,22 @@ const handleSignUp = async () => {
     const { data, error } = await client.auth.signUp({
       email: state.email,
       password: state.password,
+      options: {
+        emailRedirectTo:
+          window.location.origin + "/authorization/confirmation-account",
+      },
     });
     if (error) throw error;
     console.log("data", data, data.value);
     console.log("error", error);
-    console.log("state", state, data);
-    if (data.user)
+    if (data?.user?.id) {
       await navigateTo({
-        path: "/message",
+        path: "/successful-message",
         query: {
           text: "Please check your mailbox to confirm your account",
         },
       });
+    }
   } catch (error: unknown) {
     console.log("Error From handleSignup", error);
     connexionError.value = error.message;
@@ -145,9 +149,10 @@ const handleSignUp = async () => {
         <button
           type="submit"
           :disabled="isLoading"
-          class="btn btn-warning w-full h-12 border focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
+          :loading="isLoading"
+          class="btn btn-warning w-full h-12 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
         >
-          Sign Up
+          <span>Sign Up</span>
         </button>
       </form>
     </div>
