@@ -12,6 +12,12 @@ export default defineNuxtConfig({
   ],
   debug: true,
   devtools: { enabled: true },
+  echarts: {
+    charts: ['BarChart', 'LineChart', 'PieChart'],
+    components: ['DatasetComponent', 'LegendComponent', 'GridComponent', 'TitleComponent', 'TooltipComponent'],
+    features: ['LabelLayout', 'UniversalTransition'],
+    renderer: ['svg', 'canvas'],
+  },
   modules: [
     "@nuxt/eslint",
     "@nuxt/ui",
@@ -20,6 +26,7 @@ export default defineNuxtConfig({
     "@compodium/nuxt",
     "@unlok-co/nuxt-stripe",
     "@pinia/nuxt",
+    "nuxt-echarts",
   ],
   vite: {
     plugins: [tailwindcss()],
