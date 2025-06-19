@@ -1,4 +1,4 @@
-import { LanguagesTableKey } from "~/types/languages";
+import { LanguagesTableKey } from "~/utils/languages/tables";
 import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getRouterParam } from "h3";
 
