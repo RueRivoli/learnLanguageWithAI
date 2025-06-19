@@ -44,7 +44,7 @@ const props = withDefaults(
             'flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150',
             props.currentPage === 1
               ? 'text-gray-400 cursor-not-allowed'
-              : 'text-gray-700 hover:text-primary hover:bg-gray-100',
+              : 'text-gray-700 cursor-pointer hover:text-primary hover:bg-gray-100',
           ]"
           @click="emit('goToPreviousPage')"
         >
@@ -58,7 +58,7 @@ const props = withDefaults(
             v-for="page in props.pageNumbers"
             :key="page"
             :class="[
-              'px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150',
+              'px-3 py-2 text-sm cursor-pointer font-medium rounded-lg transition-all duration-150',
               typeof page === 'number'
                 ? page === props.currentPage
                   ? 'bg-primary text-white'
@@ -79,7 +79,7 @@ const props = withDefaults(
             'flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150',
             props.currentPage === props.totalPages
               ? 'text-gray-400 cursor-not-allowed'
-              : 'text-gray-700 hover:text-primary hover:bg-gray-100',
+              : 'text-gray-700 cursor-pointer hover:text-primary hover:bg-gray-100',
           ]"
           @click="emit('goToNextPage')"
         >

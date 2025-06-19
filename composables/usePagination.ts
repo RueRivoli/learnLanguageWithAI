@@ -1,6 +1,6 @@
-export const usePagination = () => {
+export const usePagination = (totalItems: Ref<number>) => {
     const currentPage = ref(1);
-    const totalItems = ref(0);
+    // const totalItems = ref(0);
     const itemsPerPage = ref(10);
 
     const goToPreviousPage = () => {
@@ -14,12 +14,12 @@ export const usePagination = () => {
         }
       };
       // Pagination methods
-const goToPage = (page: number) => {
-    if (page >= 1 && page <= totalPages.value) {
-      currentPage.value = page;
-    }
-  };
-      const totalPages = computed(() =>
+    const goToPage = (page: number) => {  
+      if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+      }
+    };
+    const totalPages = computed(() =>
         Math.ceil(totalItems.value / itemsPerPage.value),
       );
       const startItem = computed(
@@ -38,6 +38,7 @@ const pageNumbers = computed(() => {
       for (let i = 1; i <= totalPages.value; i++) {
         pages.push(i);
       }
+      console.log("totalPages", totalPages.value)
     } else {
       if (currentPage.value <= 3) {
         for (let i = 1; i <= 4; i++) {
@@ -60,10 +61,12 @@ const pageNumbers = computed(() => {
         pages.push("...");
         pages.push(totalPages.value);
       }
+      console.log("pages", pages)
     }
-  
+ 
     return pages;
   });
+
     return {
         currentPage,
         endItem,

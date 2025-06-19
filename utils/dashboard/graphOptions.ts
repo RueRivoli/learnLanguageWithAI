@@ -4,7 +4,8 @@ export const grammarLevelTabs = {
   thirdTab : { title: 'Advanced', icon: 'rocket'}
 }
 function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'diagonal') {
-  const canvas = document.createElement('canvas');
+  if (!document) return 
+  const canvas = document?.createElement('canvas');
   canvas.width = 16;
   canvas.height = 16;
   const ctx = canvas.getContext('2d')!;
