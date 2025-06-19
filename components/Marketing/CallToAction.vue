@@ -8,7 +8,7 @@ import {
 <template>
   <div class="relative px-6 pt-14 lg:px-8">
     <div
-      class="absolute inset-0 z-[-10] bg-cover overflow-hidden bg-top bg-no-repeat opacity-30 dark:opacity-80 bg-[url('/_nuxt/assets/img/test11.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
+      class="absolute inset-0 z-[-10] bg-cover overflow-hidden bg-top bg-no-repeat opacity-30 dark:opacity-80 bg-[url('/_nuxt/assets/img/grid/home.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
     />
     <div
       class="absolute inset-x-0 -top-40 transform-gpu overflow-hidden blur-[85px] sm:-top-80"

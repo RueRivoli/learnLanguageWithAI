@@ -16,7 +16,7 @@
       <img
         alt="LinguaLab Logo"
         class="h-10 w-auto"
-        src="~/assets/img/logonav.png"
+        src="~/assets/img/navbar/logo.png"
       />
     </NuxtLink>
   </div>

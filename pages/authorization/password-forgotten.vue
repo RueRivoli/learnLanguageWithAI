@@ -47,7 +47,7 @@ const handleResetPassword = async () => {
               <img
                 alt="LinguaLab Logo"
                 class="h-30 m-auto"
-                src="~/assets/img/translogomail.png"
+                src="~/assets/logo/banner/logo1.png"
               />
             </div>
             <label class="label text-neutral mb-2 text-xl">

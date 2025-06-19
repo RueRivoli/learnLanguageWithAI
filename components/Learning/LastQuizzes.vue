@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import type { Quiz } from "~/types/quiz.ts";
-import { formatDate } from "~/utils/date/date.ts";
+import { formatDate } from "~/utils/date/date";
 const props = withDefaults(
   defineProps<{
     loading: boolean;
@@ -43,7 +43,14 @@ const props = withDefaults(
             </thead>
             <tbody>
               <tr v-if="!props.quizs.length">
-                <td class="font-semibold" align="center" valign="middle" colspan="3">no quiz done yet</td>
+                <td
+                  class="font-semibold"
+                  align="center"
+                  valign="middle"
+                  colspan="3"
+                >
+                  no quiz done yet
+                </td>
               </tr>
               <tr v-for="(quiz, n) in props.quizs" v-else :key="n">
                 <td>

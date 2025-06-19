@@ -67,7 +67,7 @@
         >
           <img
             class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-            src="~/assets/img/platform_screens/2.png"
+            src="~/assets/img/platform/screen2.png"
             alt=""
           />
         </div>

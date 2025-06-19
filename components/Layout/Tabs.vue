@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const emit = defineEmits(["tabActiveChanged"]);
 import {
   AcademicCapIcon,
   BookOpenIcon,
@@ -7,6 +6,9 @@ import {
   RocketLaunchIcon,
   TrophyIcon,
 } from "@heroicons/vue/24/outline";
+
+const emit = defineEmits(["tabActiveChanged"]);
+
 const icons = {
   book: BookOpenIcon,
   language: LanguageIcon,
@@ -33,13 +35,12 @@ const props = withDefaults(
   },
 );
 
-
 const tabItemActive = ref(props.activatedTab ?? 1);
 
 const handleTabActiveChanged = (id: number) => {
-  tabItemActive.value = id,
-  emit('tabActiveChanged', id)
-}
+  tabItemActive.value = id;
+  emit("tabActiveChanged", id);
+};
 </script>
 
 <template>

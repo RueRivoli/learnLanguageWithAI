@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { Database } from "~/supabase/types";
 import { dashboardFirstTab, dashboardSecondTab } from "~/utils/dashboard/tabs";
-import {
-  ChartBarIcon,
-} from "@heroicons/vue/24/outline";
+import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
 
 definePageMeta({
@@ -91,14 +89,12 @@ getInfoUser();
       </div>
 
       <!-- Charts Section -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <template v-if="activeTab === 1">
           <DashboardVocabularyStats />
         </template>
         <template v-else>
           <DashboardGrammarStats />
         </template>
-      </div>
     </div>
 
     <!-- Modals -->

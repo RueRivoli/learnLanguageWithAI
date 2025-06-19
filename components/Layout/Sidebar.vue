@@ -84,7 +84,7 @@ const isActive = (path: string) => {
                 <img
                   alt="LinguaLab Logo"
                   class="h-8 w-auto"
-                  src="~/assets/img/logotransblack.png"
+                  src="~/assets/logo/transparent/black.png"
                 />
               </NuxtLink>
               <button
@@ -320,13 +320,18 @@ const isActive = (path: string) => {
     }"
   >
     <div class="flex flex-col items-center py-6 px-4 text-xl text-neutral logo">
-      <div 
+      <div
         class="w-full flex justify-end mb-4 cursor-pointer hover:text-indigo-600 transition-colors duration-200"
-        @click="isSideBarMinifiedForDesktopVersion = !isSideBarMinifiedForDesktopVersion"
+        @click="
+          isSideBarMinifiedForDesktopVersion =
+            !isSideBarMinifiedForDesktopVersion
+        "
       >
-        <ChevronDoubleLeftIcon 
+        <ChevronDoubleLeftIcon
           class="h-5 w-5 text-neutral"
-          :class="{ 'transform rotate-180': isSideBarMinifiedForDesktopVersion }"
+          :class="{
+            'transform rotate-180': isSideBarMinifiedForDesktopVersion,
+          }"
         />
       </div>
       <NuxtLink to="/" class="flex justify-center">
@@ -334,13 +339,13 @@ const isActive = (path: string) => {
           v-if="!isSideBarMinifiedForDesktopVersion"
           alt="LinguaLab Logo"
           class="h-15 w-auto m-auto"
-          src="~/assets/img/logotransblack.png"
+          src="~/assets/logo/transparent/black.png"
         />
         <img
           v-else
           alt="LinguaLab Logo"
           class="h-8 w-auto"
-          src="~/assets/img/logotransblack.png"
+          src="~/assets/logo/transparent/black.png"
         />
       </NuxtLink>
     </div>
@@ -351,7 +356,9 @@ const isActive = (path: string) => {
           class="btn btn-warning btn-sm mx-6 group"
           to="/learning/lessons/new"
         >
-          <ArrowUturnRightIcon class="h-4 w-4 text-neutral group-hover:text-neutral" />
+          <ArrowUturnRightIcon
+            class="h-4 w-4 text-neutral group-hover:text-neutral"
+          />
           <span
             v-if="!isSideBarMinifiedForDesktopVersion"
             class="font-semibold text-neutral ml-2"
@@ -473,7 +480,10 @@ const isActive = (path: string) => {
 
     <!-- User Menu Section -->
     <div class="p-4 border-t border-gray-200">
-      <div class="flex items-center" :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion }">
+      <div
+        class="flex items-center"
+        :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion }"
+      >
         <div class="avatar">
           <div class="avatar avatar-placeholder">
             <div
@@ -491,10 +501,7 @@ const isActive = (path: string) => {
                 v-if="isUserSubscribed"
                 class="h-4 w-4 ml-2 text-indigo-600"
               />
-              <CheckBadgeIcon
-                v-else
-                class="h-4 w-4 ml-2 text-indigo-600"
-              />
+              <CheckBadgeIcon v-else class="h-4 w-4 ml-2 text-indigo-600" />
             </div>
           </div>
         </div>
@@ -539,7 +546,7 @@ const isActive = (path: string) => {
           />
           <span
             v-if="!isSideBarMinifiedForDesktopVersion"
-            class="font-semibold  ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
             >Log out</span
           >
         </button>

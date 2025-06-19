@@ -1,4 +1,4 @@
-import { languages } from './../../../utils/syllabus';
+import { languages } from '~/utils/syllabus';
 import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getRouterParam } from "h3";
 
