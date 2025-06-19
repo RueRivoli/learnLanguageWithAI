@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam } from "h3";
+import { defineEventHandler, getQuery, getRouterParam } from "h3";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -8,7 +8,6 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
-
   const { data, error } = await supabase
     .from("turkish_lessons")
     .select(
