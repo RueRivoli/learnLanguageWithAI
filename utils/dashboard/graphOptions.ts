@@ -3,6 +3,53 @@ export const grammarLevelTabs = {
   secondTab : { title: 'Intermediate', icon: 'trophy'},
   thirdTab : { title: 'Advanced', icon: 'rocket'}
 }
+function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'diagonal') {
+  const canvas = document.createElement('canvas');
+  canvas.width = 16;
+  canvas.height = 16;
+  const ctx = canvas.getContext('2d')!;
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.globalAlpha = 0.18;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2;
+
+  if (type === 'diagonal') {
+    // Diagonal lines
+    ctx.beginPath();
+    ctx.moveTo(0, 16);
+    ctx.lineTo(16, 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(8, 16);
+    ctx.lineTo(16, 8);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, 8);
+    ctx.lineTo(8, 0);
+    ctx.stroke();
+  } else if (type === 'dots') {
+    // Dots
+    for (let x = 4; x < 16; x += 8) {
+      for (let y = 4; y < 16; y += 8) {
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+    }
+  } else if (type === 'cross') {
+    // Crosshatch
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(16, 16);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(16, 0);
+    ctx.lineTo(0, 16);
+    ctx.stroke();
+  }
+  return canvas;
+}
 
 export const optionWords: ECOption = {
     animation:false,
@@ -58,10 +105,10 @@ export const optionWords: ECOption = {
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 8,
-          borderColor: "#ffffff",
-          borderWidth: 1,
-          shadowBlur: 10,
-          shadowColor: "rgba(0, 0, 0, 0.1)"
+          borderColor: "#f9fafb",
+          borderWidth: 2,
+          shadowBlur: 8,
+          shadowColor: "rgba(0,0,0,0.06)"
         },
         label: {
           show: false
@@ -69,7 +116,7 @@ export const optionWords: ECOption = {
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(0, 0, 0, 0.2)"
+            shadowColor: "rgba(0, 0, 0, 0.13)"
           }
         },
         labelLine: {
@@ -79,25 +126,28 @@ export const optionWords: ECOption = {
           {
             value: 1048,
             name: "Mastered",
-            itemStyle: { 
-              color: "oklch(69% 0.17 162.48)",
-              shadowColor: "rgba(16, 185, 129, 0.3)"
+            itemStyle: {
+              color: { image: createPattern('oklch(72% 0.16 162.48)', 'diagonal'), repeat: 'repeat' },
+              borderColor: 'oklch(72% 0.16 162.48)',
+              borderWidth: 2
             }
           },
           {
             value: 735,
             name: "Learning",
-            itemStyle: { 
-              color: "oklch(68% 0.169 237.323)",
-              shadowColor: "rgba(245, 158, 11, 0.3)"
+            itemStyle: {
+              color: { image: createPattern('oklch(71% 0.14 237.323)', 'dots'), repeat: 'repeat' },
+              borderColor: 'oklch(71% 0.14 237.323)',
+              borderWidth: 2
             }
           },
           {
             value: 580,
             name: "To Learn",
-            itemStyle: { 
-              color: "oklch(75% 0.183 55.934)",
-              shadowColor: "rgba(239, 68, 68, 0.3)"
+            itemStyle: {
+              color: { image: createPattern('oklch(78% 0.13 55.934)', 'cross'), repeat: 'repeat' },
+              borderColor: 'oklch(78% 0.13 55.934)',
+              borderWidth: 2
             }
           },
         ],
@@ -159,10 +209,10 @@ export const optionExpressions: ECOption = {
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 8,
-          borderColor: "#ffffff",
-          borderWidth: 1,
-          shadowBlur: 10,
-          shadowColor: "rgba(0, 0, 0, 0.1)"
+          borderColor: "#f9fafb",
+          borderWidth: 2,
+          shadowBlur: 8,
+          shadowColor: "rgba(0,0,0,0.06)"
         },
         label: {
           show: false
@@ -170,7 +220,7 @@ export const optionExpressions: ECOption = {
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(0, 0, 0, 0.2)"
+            shadowColor: "rgba(0, 0, 0, 0.13)"
           }
         },
         labelLine: {
@@ -180,25 +230,28 @@ export const optionExpressions: ECOption = {
           {
             value: 648,
             name: "Mastered",
-            itemStyle: { 
-              color: "oklch(69% 0.17 162.48)",
-              shadowColor: "rgba(139, 92, 246, 0.3)"
+            itemStyle: {
+              color: { image: createPattern('oklch(72% 0.16 162.48)', 'diagonal'), repeat: 'repeat' },
+              borderColor: 'oklch(72% 0.16 162.48)',
+              borderWidth: 2
             }
           },
           {
             value: 435,
             name: "Learning",
-            itemStyle: { 
-              color: "oklch(68% 0.169 237.323)",
-              shadowColor: "rgba(6, 182, 212, 0.3)"
+            itemStyle: {
+              color: { image: createPattern('oklch(71% 0.14 237.323)', 'dots'), repeat: 'repeat' },
+              borderColor: 'oklch(71% 0.14 237.323)',
+              borderWidth: 2
             }
           },
           {
             value: 380,
             name: "To Learn",
-            itemStyle: { 
-              color: "oklch(75% 0.183 55.934)",
-              shadowColor: "rgba(249, 115, 22, 0.3)"
+            itemStyle: {
+              color: { image: createPattern('oklch(78% 0.13 55.934)', 'cross'), repeat: 'repeat' },
+              borderColor: 'oklch(78% 0.13 55.934)',
+              borderWidth: 2
             }
           },
         ],
