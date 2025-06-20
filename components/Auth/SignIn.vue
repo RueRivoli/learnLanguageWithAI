@@ -14,6 +14,7 @@ const isLoading = ref<boolean>(false);
 const showPassword = ref<boolean>(false);
 
 const handleSignIn = async () => {
+  console.log("handleSignIn");
   connexionError.value = null;
   const errorFromCheck = getEmailPasswordInvalidityMessage(state);
   console.log("errorFromCheck", errorFromCheck);
@@ -21,13 +22,18 @@ const handleSignIn = async () => {
     connexionError.value = errorFromCheck;
     return;
   }
-  console.log("email", state, state.email);
+  console.log("email", state, state.email, state.password);
   try {
     const { data, error } = await client.auth.signInWithPassword({
       email: state.email,
       password: state.password,
     });
-    console.log("LOGIN", data, data.value);
+    console.log("data", data);
+    if (data.user?.id) {
+      await navigateTo({
+        path: "/learning/dashboard",
+      });
+    }
     if (error) throw error;
   } catch (error) {
     console.log("error", error);
@@ -141,10 +147,11 @@ const handleSignInWithGoogle = async () => {
         </div>
         <button
           type="submit"
-          :disabled="isLoading"
-          class="btn btn-primary w-full h-12 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          class="btn btn-primary w-full h-12 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
+          :class="{ 'btn-disabled': isLoading }"
         >
-          Sign In
+          <span v-if="isLoading" class="loading loading-spinner" />
+          <span>Sign In</span>
         </button>
       </form>
     </div>

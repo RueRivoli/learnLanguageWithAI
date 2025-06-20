@@ -44,7 +44,7 @@ function toggle(index) {
   <section class="bg-primary/50 relative px-4 py-20">
     <div class="absolute inset-0 z-[-1]" />
     <div
-      class="absolute inset-0 z-[-2] bg-cover overflow-hidden bg-top bg-no-repeat opacity-20 dark:opacity-80 bg-[url('/_nuxt/assets/img/test11.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
+      class="absolute inset-0 z-[-2] bg-cover overflow-hidden bg-top bg-no-repeat opacity-20 dark:opacity-80 bg-[url('/_nuxt/assets/img/grid/home.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
     />
     <div class="max-w-7xl mx-auto grid grid-cols-3 gap-8 items-center">
       <div class="col-span-1">

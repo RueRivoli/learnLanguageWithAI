@@ -56,7 +56,7 @@ const handleConfirmationMailResend = async () => {
           <img
             alt="LinguaLab Logo"
             class="h-50 w-auto"
-            src="~/assets/img/translogomail.png"
+            src="~/assets/logo/banner/logo1.png"
           />
           <div role="alert" class="alert alert-success">
             <CheckCircleIcon
@@ -75,12 +75,12 @@ const handleConfirmationMailResend = async () => {
           </NuxtLink>
         </div>
       </div>
-      <div class="p-5" v-else-if="messageCode">
+      <div v-else-if="messageCode" class="p-5">
         <div class="flex flex-col justify-between items-center">
           <img
             alt="LinguaLab Logo"
             class="h-30 w-auto"
-            src="~/assets/img/translogomail.png"
+            src="~/assets/logo/banner/logo1.png"
           />
           <div role="alert" class="alert alert-success alert-soft">
             <CheckCircleIcon class="h-5 w-5 group-hover:text-indigo-800" />

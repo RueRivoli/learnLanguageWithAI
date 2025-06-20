@@ -1,4 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const userStore = useUserStore();
+const user = useSupabaseUser();
+watchEffect(async () => {
+  console.log("watchEffect");
+  if (!userStore.$state.isLoaded && user.value?.id) {
+    console.log("userStore is not loaded, we fetch profile again");
+    const profile = await $fetch(`/api/profiles/${user.value.id}`, {
+      method: "GET",
+    });
+    // if (profile && !profile[0].language_learned) {
+    //   languageSelectionModal.value?.openModal();
+    // }
+    userStore.setProfile(profile[0]);
+  }
+});
+</script>
 
 <template>
   <div class="h-full min-h-screen flex flex-col">

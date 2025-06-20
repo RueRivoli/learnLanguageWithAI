@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
+import {
+  CpuChipIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  XCircleIcon,
+} from "@heroicons/vue/24/outline";
 import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
 import type { Schema } from "~/utils/auth/auth";
 
@@ -40,8 +45,19 @@ const handleSignUp = async () => {
           window.location.origin + "/authorization/confirmation-account",
       },
     });
+    console.log("HERE", data);
+    // const res = await fetch(
+    //   "https://dmwvccsjbfhzjyoajgyw.supabase.co/check-email-confirmed",
+    //   {
+    //     method: "POST",
+    //     headers: {  "Content-Type": "application/json" },
+    //     body: JSON.stringify({ user_id: data?.user?.id }),
+    //   },
+    // );
+    // console.log("resXX", res);
+    console.log("error", error);
     if (error) throw error;
-    console.log("data", data, data.value);
+
     console.log("error", error);
     if (data?.user?.id) {
       await navigateTo({
@@ -84,11 +100,13 @@ const handleSignUp = async () => {
 
       <div
         v-if="connexionError"
-        class="bg-error mb-2 w-full border text-white border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+        role="alert"
+        class="w-full alert alert-error mb-2"
       >
-        {{ connexionError }}
+        <XCircleIcon class="h-5 w-5 cursor-pointer text-white" />
+        <span class="text-white" v-html="connexionError" />
       </div>
-      <form :state="state" @submit.prevent="handleSignUp">
+      <form :state="state" novalidate @submit.prevent="handleSignUp">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
             >Your email</label
@@ -148,10 +166,10 @@ const handleSignUp = async () => {
           </div> -->
         <button
           type="submit"
-          :disabled="isLoading"
-          :loading="isLoading"
           class="btn btn-warning w-full h-12 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
+          :class="{ 'btn-disabled': isLoading }"
         >
+          <span v-if="isLoading" class="loading loading-spinner" />
           <span>Sign Up</span>
         </button>
       </form>

@@ -14,6 +14,7 @@ definePageMeta({
 });
 
 const userStore = useUserStore();
+const isDataLoading = ref(false);
 const moduleOptions = ref([]);
 const wordList = ref([]);
 const expressionList = ref([]);
@@ -22,6 +23,8 @@ const moduleToTrainId = ref<number>(0);
 const ruleNames = ref([]);
 const router = useRouter();
 const isGeneratingLesson = ref(false);
+const userId = computed(() => userStore.$state.id);
+
 const getRuleNameFromSelectedId = computed(() => {
   const module = ruleNames.value.find(({ id }) => id === moduleToTrainId.value);
   if (module) return module.name;
@@ -29,47 +32,59 @@ const getRuleNameFromSelectedId = computed(() => {
 });
 
 const getModulesWithLowScores = async () => {
-  console.log("userStore", userStore);
-  const { data } = await useFetch(
-    `/api/grammar-scores/${userStore.$state.id}?order_by=score`,
-  );
-  if (data.value) {
-    moduleOptions.value = data.value.map(
-      ({ rule_id, score, turkish_grammar_rules }) => ({
-        value: rule_id,
-        label: `${turkish_grammar_rules.rule_name} | ${turkish_grammar_rules.rule_name_translation}     ${score}/100`,
-      }),
+  if (userId.value) {
+    const modules = await $fetch(
+      `/api/grammar-scores/${userId.value}?order_by=score`,
     );
-    ruleNames.value = data.value.map(({ rule_id, turkish_grammar_rules }) => ({
-      id: rule_id,
-      name: turkish_grammar_rules.rule_name_translation,
-    }));
-    moduleToTrainId.value = data.value[0].rule_id;
+    if (modules.error) throw modules.error;
+    else if (modules) {
+      moduleOptions.value = modules.map(
+        ({ rule_id, score, turkish_grammar_rules }) => ({
+          value: rule_id,
+          label: `${turkish_grammar_rules.rule_name} | ${turkish_grammar_rules.rule_name_translation}     ${score}/100`,
+        }),
+      );
+      ruleNames.value = modules.map(({ rule_id, turkish_grammar_rules }) => ({
+        id: rule_id,
+        name: turkish_grammar_rules.rule_name_translation,
+      }));
+      moduleToTrainId.value = modules[0].rule_id;
+    }
   }
 };
-await getModulesWithLowScores();
 
 const getWordsWithLowScores = async () => {
-  const { data, error } = await useFetch(
-    `/api/words/levels/${userStore.$state.id}`,
-  );
-  if (error.value) console.log("error", error.value);
-  else if (data.value) {
-    wordList.value = [...data.value];
+  if (userId.value) {
+    const words = await $fetch(`/api/words/levels/${userId.value}?limit=50`);
+    if (words.error) console.log("error", words.error);
+    else if (words) {
+      wordList.value = [...words];
+    }
   }
 };
-await getWordsWithLowScores();
 
 const getExpressionsWithLowScores = async () => {
-  const { data, error } = await useFetch(
-    `/api/expressions/levels/${userStore.$state.id}`,
-  );
-  if (error.value) console.log("error", error.value);
-  else if (data.value) {
-    expressionList.value = [...data.value];
+  if (userId.value) {
+    const expressions = await $fetch(
+      `/api/expressions/levels/${userId.value}?limit=50`,
+    );
+    if (expressions.error) console.log("error", expressions.error);
+    else if (expressions) {
+      expressionList.value = [...expressions];
+    }
   }
 };
-await getExpressionsWithLowScores();
+
+watchEffect(async () => {
+  console.log("IN WATCH FETCHING");
+  if (userId.value) {
+    isDataLoading.value = true;
+    await getModulesWithLowScores();
+    await getWordsWithLowScores();
+    await getExpressionsWithLowScores();
+    isDataLoading.value = false;
+  }
+});
 
 const handleModifyWordList = () => {
   my_modal_to_change_word_list.showModal();
@@ -95,16 +110,18 @@ const handleCancelModal = () => {
 };
 
 const handleGenerateStory = async () => {
+  let newLessonId;
   isGeneratingLesson.value = true;
-  const newLessonId = await generateAIPoweredStoryWithParameters(
-    userStore.$state.id,
-    moduleToTrainId.value,
-    getRuleNameFromSelectedId.value,
-    wordList.value.slice(0, 10),
-    expressionList.value.slice(0, 3),
-    "beginner",
-    10,
-  );
+  if (userId.value)
+    newLessonId = await generateAIPoweredStoryWithParameters(
+      userId.value,
+      moduleToTrainId.value,
+      getRuleNameFromSelectedId.value,
+      wordList.value.slice(0, 10),
+      expressionList.value.slice(0, 3),
+      "beginner",
+      10,
+    );
   router.push(`/learning/lessons/${newLessonId}`);
   isGeneratingLesson.value = false;
 };
@@ -232,6 +249,7 @@ const handleGenerateStory = async () => {
                             <div class="mt-8">
                               <button
                                 class="btn btn-primary"
+                                :class="{ 'btn-disabled': !userId }"
                                 @click="handleGenerateStory"
                               >
                                 <span
