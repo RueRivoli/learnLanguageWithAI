@@ -4,14 +4,14 @@ import type { DatabaseUserProfile, User } from "~/stores/user.ts";
 export const useUserStore = defineStore("user", {
   state: (): User => {
     return {
-      id: null,
-      fullName: null,
-      pseudo: null,
       email: null,
+      fullName: null,
+      hasFilledInitialForm: false,
+      id: null,
       initials: null,
       isSubscribed: false,
       languageLearned: null,
-      hasFilledInitialForm: false,
+      pseudo: null,
       // avatar: null,
       // memberSince: null,
     };

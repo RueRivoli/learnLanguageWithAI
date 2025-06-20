@@ -1,36 +1,39 @@
 <script setup lang="ts">
-import { optionExpressions, optionWords } from "~/utils/dashboard/graphOptions";
-import {
-  ChartBarIcon,
-  BookOpenIcon,
-  LanguageIcon,
-} from "@heroicons/vue/24/outline";
+import { useUserScoreStore } from "~/stores/user-score-store";
+import { BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 
-// Calculated Stats
-const totalWords = computed(() => {
-  const data = (optionWords.series as any[])[0]?.data || [];
-  return data.reduce((sum: number, item: any) => sum + item.value, 0);
+const TOTAL_WORDS = 3000;
+const TOTAL_EXPRESSIONS = 2000;
+const userScoreStore = useUserScoreStore();
+
+const totalWordsMastered = computed(() => {
+  return userScoreStore.$state.totalWordsMastered ?? 0;
 });
 
-const totalExpressions = computed(() => {
-  const data = (optionExpressions.series as any[])[0]?.data || [];
-  return data.reduce((sum: number, item: any) => sum + item.value, 0);
+const totalWordsMasteredPercentage = computed(() => {
+  return Math.trunc((totalWordsMastered.value / TOTAL_WORDS) * 100);
 });
 
-const wordsProgress = computed(() => {
-  const data = (optionWords.series as any[])[0]?.data || [];
-  const mastered = data[0]?.value || 0;
-  return totalWords.value > 0
-    ? Math.round((mastered / totalWords.value) * 100)
-    : 0;
+const totalWordsLearned = computed(() => {
+  return userScoreStore.$state.totalWordsLearned ?? 0;
+});
+const totalWordsLearnedPercentage = computed(() => {
+  return Math.trunc((totalWordsLearned.value / TOTAL_WORDS) * 100);
 });
 
-const expressionsProgress = computed(() => {
-  const data = (optionExpressions.series as any[])[0]?.data || [];
-  const mastered = data[0]?.value || 0;
-  return totalExpressions.value > 0
-    ? Math.round((mastered / totalExpressions.value) * 100)
-    : 0;
+const totalExpressionsMastered = computed(() => {
+  return userScoreStore.$state.totalExpressionsMastered ?? 0;
+});
+
+const totalExpressionsMasteredPercentage = computed(() => {
+  return Math.trunc((totalExpressionsMastered.value / TOTAL_EXPRESSIONS) * 100);
+});
+
+const totalExpressionsLearned = computed(() => {
+  return userScoreStore.$state.totalExpressionsLearned ?? 0;
+});
+const totalExpressionsLearnedPercentage = computed(() => {
+  return Math.trunc((totalExpressionsLearned.value / TOTAL_EXPRESSIONS) * 100);
 });
 </script>
 
@@ -42,7 +45,7 @@ const expressionsProgress = computed(() => {
       <div>
         <p class="text-sm font-medium text-gray-600">Total Words Mastered</p>
         <p class="text-2xl font-bold text-gray-900">
-          {{ totalWords.toLocaleString() }}
+          {{ totalWordsMastered.toLocaleString() }}
         </p>
       </div>
       <div class="p-3 bg-white rounded-lg">
@@ -52,12 +55,16 @@ const expressionsProgress = computed(() => {
     <div class="mt-4">
       <div class="flex flex-col">
         <div class="flex items-center text-sm text-gray-600">
-          <span class="text-success font-medium">{{ wordsProgress }}%</span>
+          <span class="text-success font-medium"
+            >{{ totalWordsMasteredPercentage }}%</span
+          >
           <span class="mx-1">mastered</span>
           <span>out of 3K</span>
         </div>
         <div class="flex items-center text-sm text-gray-600">
-          <span class="text-warning font-medium">{{ wordsProgress }}%</span>
+          <span class="text-warning font-medium"
+            >{{ totalWordsLearnedPercentage }}%</span
+          >
           <span class="mx-1">being learned</span>
           <span>out of 2K</span>
         </div>
@@ -70,9 +77,11 @@ const expressionsProgress = computed(() => {
   >
     <div class="flex items-center justify-between">
       <div>
-        <p class="text-sm font-medium text-gray-600">Total Expressions Mastered</p>
+        <p class="text-sm font-medium text-gray-600">
+          Total Expressions Mastered
+        </p>
         <p class="text-2xl font-bold text-gray-900">
-          {{ totalExpressions.toLocaleString() }}
+          {{ totalExpressionsMastered.toLocaleString() }}
         </p>
       </div>
       <div class="p-3 bg-white rounded-lg">
@@ -83,14 +92,14 @@ const expressionsProgress = computed(() => {
       <div class="flex flex-col">
         <div class="flex items-center text-sm text-gray-600">
           <span class="text-success font-medium"
-            >{{ expressionsProgress }}%</span
+            >{{ totalExpressionsMasteredPercentage }}%</span
           >
           <span class="mx-1">mastered</span>
-          <span>out of 3K</span>
+          <span>out of 2K</span>
         </div>
         <div class="flex items-center text-sm text-gray-600">
           <span class="text-warning font-medium"
-            >{{ expressionsProgress }}%</span
+            >{{ totalExpressionsLearnedPercentage }}%</span
           >
           <span class="mx-1">being learned</span>
           <span>out of 2K</span>

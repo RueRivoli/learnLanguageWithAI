@@ -52,8 +52,10 @@ function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'di
   return canvas;
 }
 
-export const optionWords: ECOption = {
-    animation:false,
+export const optionWords = (totalWordsMastered: number, totalWordsLearned: number, totalWords: number): ECOption => { 
+  const totalWordsToLearn = totalWords - (totalWordsMastered + totalWordsLearned)
+  return  {
+    animation: false,
     title: {
       text: "Out of 3K words",
       // subtext: "5K most common words",
@@ -91,11 +93,11 @@ export const optionWords: ECOption = {
         fontSize: 12,
         color: "#6b7280"
       },
-      formatter: function(name) {
-        const data = (optionWords.series as any[])[0]?.data || [];
-        const item = data.find((item: any) => item.name === name);
-        return item ? `${name}: ${item.value}` : name;
-      }
+      // formatter: function(name) {
+      //   const data = (optionWords.series as any[])[0]?.data || [];
+      //   const item = data.find((item: any) => item.name === name);
+      //   return item ? `${name}: ${item.value}` : name;
+      // }
     },
     series: [
       {
@@ -125,7 +127,7 @@ export const optionWords: ECOption = {
         },
         data: [
           {
-            value: 1048,
+            value: totalWordsMastered,
             name: "Mastered",
             itemStyle: {
               color: { image: createPattern('oklch(72% 0.16 162.48)', 'diagonal'), repeat: 'repeat' },
@@ -134,7 +136,7 @@ export const optionWords: ECOption = {
             }
           },
           {
-            value: 735,
+            value: totalWordsLearned,
             name: "Learning",
             itemStyle: {
               color: { image: createPattern('oklch(71% 0.14 237.323)', 'dots'), repeat: 'repeat' },
@@ -143,7 +145,7 @@ export const optionWords: ECOption = {
             }
           },
           {
-            value: 580,
+            value: totalWordsToLearn,
             name: "To Learn",
             itemStyle: {
               color: { image: createPattern('oklch(78% 0.13 55.934)', 'cross'), repeat: 'repeat' },
@@ -155,9 +157,12 @@ export const optionWords: ECOption = {
       },
     ],
   };
+};
   
-export const optionExpressions: ECOption = {
-    animation:false,
+export const optionExpressions = (totalExpressionsMastered: number, totalExpressionsLearned: number, totalExpressions: number): ECOption => {
+  const totalExpressionsToLearn = totalExpressions - (totalExpressionsMastered + totalExpressionsLearned)
+  return {
+    animation: false,
     title: {
       text: "Out of 2K expressions",
       // subtext: "3K most common expressions",
@@ -195,11 +200,11 @@ export const optionExpressions: ECOption = {
         fontSize: 12,
         color: "#6b7280"
       },
-      formatter: function(name) {
-        const data = (optionExpressions.series as any[])[0]?.data || [];
-        const item = data.find((item: any) => item.name === name);
-        return item ? `${name}: ${item.value}` : name;
-      }
+      // formatter: function(name) {
+      //   const data = (optionExpressions.series as any[])[0]?.data || [];
+      //   const item = data.find((item: any) => item.name === name);
+      //   return item ? `${name}: ${item.value}` : name;
+      // }
     },
     series: [
       {
@@ -229,7 +234,7 @@ export const optionExpressions: ECOption = {
         },
         data: [
           {
-            value: 648,
+            value: totalExpressionsMastered,
             name: "Mastered",
             itemStyle: {
               color: { image: createPattern('oklch(72% 0.16 162.48)', 'diagonal'), repeat: 'repeat' },
@@ -238,7 +243,7 @@ export const optionExpressions: ECOption = {
             }
           },
           {
-            value: 435,
+            value: totalExpressionsLearned,
             name: "Learning",
             itemStyle: {
               color: { image: createPattern('oklch(71% 0.14 237.323)', 'dots'), repeat: 'repeat' },
@@ -247,7 +252,7 @@ export const optionExpressions: ECOption = {
             }
           },
           {
-            value: 380,
+            value: totalExpressionsToLearn,
             name: "To Learn",
             itemStyle: {
               color: { image: createPattern('oklch(78% 0.13 55.934)', 'cross'), repeat: 'repeat' },
@@ -259,10 +264,12 @@ export const optionExpressions: ECOption = {
       },
     ],
   };
+}
   
 
 // Grammar options
-export const optionBeginnerGrammar: ECOption = {
+export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+  return {
     title: {
       text: "Beginner topics",
       // subtext: "Weekly grammar exercises completed",
@@ -302,7 +309,7 @@ export const optionBeginnerGrammar: ECOption = {
     },
     xAxis: {
       type: "category",
-      data: ["Rule1", "Rule2", "Rule3", "Rule4", "Rule5", "Rule6", "Rule7", "Rule8", "Rule9", "Rule10"],
+      data: names,
       axisLine: {
         lineStyle: {
           color: "#e5e7eb"
@@ -344,7 +351,7 @@ export const optionBeginnerGrammar: ECOption = {
       {
         name: "Grammar Exercises",
         type: "bar",
-        data: [10, 40, 50, 30, 70, 0, 25, 20, 80, 55],
+        data: scores,
         showBackground: true,
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
@@ -380,9 +387,12 @@ export const optionBeginnerGrammar: ECOption = {
         }
       }
     ]
+  }
+    
   };
   
-  export const optionIntermediateGrammar: ECOption = {
+  export const optionIntermediateGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+    return {
     title: {
       text: "Intermediate topics",
       // subtext: "Weekly grammar exercises completed",
@@ -422,7 +432,7 @@ export const optionBeginnerGrammar: ECOption = {
     },
     xAxis: {
       type: "category",
-      data: ["Rule1", "Rule2", "Rule3", "Rule4", "Rule5", "Rule6", "Rule7", "Rule8", "Rule9", "Rule10"],
+      data: names,
       axisLine: {
         lineStyle: {
           color: "#e5e7eb"
@@ -464,7 +474,7 @@ export const optionBeginnerGrammar: ECOption = {
       {
         name: "Grammar Exercises",
         type: "bar",
-        data: [10, 10, 0, 0, 15, 20, 30, 50, 40, 65],
+        data: scores,
         showBackground: true,
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
@@ -500,10 +510,12 @@ export const optionBeginnerGrammar: ECOption = {
         }
       }
     ]
+  }
   };
   
     
-  export const optionAdvancedGrammar: ECOption = {
+  export const optionAdvancedGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+    return {
     title: {
       text: "Advanced topics",
       // subtext: "Weekly grammar exercises completed",
@@ -543,7 +555,7 @@ export const optionBeginnerGrammar: ECOption = {
     },
     xAxis: {
       type: "category",
-      data: ["Rule1", "Rule2", "Rule3", "Rule4", "Rule5", "Rule6", "Rule7", "Rule8", "Rule9", "Rule10"],
+      data: names,
       axisLine: {
         lineStyle: {
           color: "#e5e7eb"
@@ -585,7 +597,7 @@ export const optionBeginnerGrammar: ECOption = {
       {
         name: "Grammar Exercises",
         type: "bar",
-        data: [0, 10, 0, 0, 0, 0, 0, 5, 10, 25],
+        data: scores,
         showBackground: true,
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
@@ -621,5 +633,6 @@ export const optionBeginnerGrammar: ECOption = {
         }
       }
     ]
+  }
   };
   

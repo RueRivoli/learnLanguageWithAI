@@ -8,15 +8,34 @@ import {
 // 1 = Beginner, 2 = Intermediate, 3 = Advanced,
 
 const activeTab = ref(1);
+const userScoreStore = useUserScoreStore();
 // Grammar statistics
+const optionBeginnerRulesGrammar = computed(() => {
+  return optionBeginnerGrammar(
+    userScoreStore.beginnerGrammarRulesScores,
+    userScoreStore.beginnerGrammarRulesNames,
+  );
+});
+const optionIntermediateRulesGrammar = computed(() => {
+  return optionIntermediateGrammar(
+    userScoreStore.intermediateGrammarRulesScores,
+    userScoreStore.intermediateGrammarRulesNames,
+  );
+});
+const optionAdvancedRulesGrammar = computed(() => {
+  return optionIntermediateGrammar(
+    userScoreStore.advancedGrammarRulesScores,
+    userScoreStore.advancedGrammarRulesNames,
+  );
+});
 const currentGrammarOption = computed(() => {
   switch (activeTab.value) {
     case 1:
-      return optionBeginnerGrammar;
+      return optionBeginnerRulesGrammar.value;
     case 2:
-      return optionIntermediateGrammar;
+      return optionIntermediateRulesGrammar.value;
     case 3:
-      return optionAdvancedGrammar;
+      return optionAdvancedRulesGrammar.value;
     default:
       return optionBeginnerGrammar;
   }

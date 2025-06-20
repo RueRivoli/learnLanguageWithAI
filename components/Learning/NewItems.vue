@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Word } from "~/types/word.ts";
-import { LanguageIcon, RadioIcon } from "@heroicons/vue/24/outline";
+import { BookOpenIcon, LanguageIcon  } from "@heroicons/vue/24/outline";
 const props = withDefaults(
   defineProps<{
     loading: boolean;
@@ -26,18 +26,21 @@ console.log("Valeur reçue :", props.items);
         <span class="loading loading-bars loading-xl" />
       </div>
       <div v-else class="flex flex-col items-center justify-between">
-        <div class="flex items-center self-start mb-3">
-            <LanguageIcon
-              v-if="props.title == 'New Words'"
-              class="h-5 w-5 mr-2 font-bold text-black dark:text-white group-hover:text-white"
-            />
-            <RadioIcon
-              v-else="props.title == 'New Expressions'"
-              class="h-5 w-5 mr-2 font-bold text-black dark:text-white group-hover:text-white"
-            />
-          <LayoutHeadingPlus :title="props.title" />
-        </div>
-        <div class="w-full">
+        <LayoutHeadingPlus
+          v-if="props.title == 'New Words'"
+          title="New Words"
+          description=""
+        >
+          <BookOpenIcon class="h-6 w-6 text-primary" />
+        </LayoutHeadingPlus>
+        <LayoutHeadingPlus
+          v-else-if="props.title == 'New Expressions'"
+          title="New Expressions"
+          description=""
+        >
+          <LanguageIcon class="h-6 w-6 text-primary" />
+        </LayoutHeadingPlus>
+        <div class="w-full mt-3">
           <LearningWordDefinition
             v-for="w in props.items"
             class="mb-2"

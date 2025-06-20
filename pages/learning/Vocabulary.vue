@@ -93,10 +93,10 @@ selectedExpression.value = expressions.value[0];
             />
           </LayoutHeadingPlus>
         </div>
-        <div class="overflow-x-auto h-96 w-auto">
+        <div class="overflow-auto max-h-full w-auto">
           <div class="px-4 max-h-full">
             <table class="table table-pin-rows table-pin-cols">
-              <thead class="bg-primary">
+              <thead>
                 <tr>
                   <th />
                   <th>Word</th>
@@ -106,7 +106,8 @@ selectedExpression.value = expressions.value[0];
               </thead>
               <tbody>
                 <tr
-                  v-for="(w, n) in words"
+                  v-for="(w, index) in words"
+                  :key="index"
                   class="cursor-pointer hover:opacity-60 text-pretty font-semibold"
                   @click="selectedWord = w"
                 >

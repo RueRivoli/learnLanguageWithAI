@@ -1,20 +1,13 @@
 <script setup lang="ts">
 import { CheckBadgeIcon as CheckBadgeIconSolid } from "@heroicons/vue/24/solid";
 import {
-  ArrowLeftCircleIcon,
-  ArrowRightCircleIcon,
   ArrowLeftStartOnRectangleIcon,
   ArrowUturnRightIcon,
   Bars3Icon,
   CheckBadgeIcon,
-  ChevronUpIcon,
   ChevronDoubleLeftIcon,
-  ChevronDownIcon,
   Cog6ToothIcon,
-  Cog8ToothIcon,
   LanguageIcon,
-  ListBulletIcon,
-  PlusIcon,
   XMarkIcon,
   ChartBarIcon,
   DocumentIcon,
@@ -25,10 +18,6 @@ import {
   DialogOverlay,
   TransitionRoot,
   TransitionChild,
-  Menu,
-  MenuButton,
-  MenuItems,
-  MenuItem,
 } from "@headlessui/vue";
 
 const client = useSupabaseClient();
@@ -36,16 +25,14 @@ const router = useRouter();
 const userStore = useUserStore();
 const route = useRoute();
 
-console.log("userStore", userStore.$state);
 const handleSignOut = async () => {
-  console.log("handleSignOut");
   const { error } = await client.auth.signOut();
   if (error) return;
   router.push("/");
 };
 
 const userPseudo = computed(() => userStore.$state.pseudo);
-const userEmail = computed(() => userStore.$state.email);
+// const userEmail = computed(() => userStore.$state.email);
 const userInitials = computed(() => userStore.$state.initials);
 const isUserSubscribed = computed(() => userStore.$state.isSubscribed);
 const sideBarOpened = ref(false);

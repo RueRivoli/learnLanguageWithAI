@@ -3,7 +3,7 @@ import { languages } from "~/utils/syllabus";
 const emit = defineEmits(["languageUpdated"]);
 const props = withDefaults(
   defineProps<{
-    userId: string | null;
+    userId?: string | null;
   }>(),
   {
     userId: null,

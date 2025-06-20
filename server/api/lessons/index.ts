@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
             word_sentence_translation
           )
         )
-      `)
+      `).order('created_at', {ascending: false})
       .range(from, to)
   ])
   const error = countResult.error || dataResult.error
