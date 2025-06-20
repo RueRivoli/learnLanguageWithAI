@@ -27,26 +27,40 @@ useHead({
 
 const router = useRouter();
 const grammarRules = ref<GrammarRule[]>([]);
+const activeTab = ref(1);
 
-const { data } = await useFetch("/api/grammar");
-if (data) grammarRules.value = data.value;
-
-// const getGrammarRules = async () => {
-
-// };
-
-// getGrammarRules();
-
-const getLeveledGrammarRules = async (difficultyClass: number) => {
-  const { data } = await useFetch("/api/grammar-rules", {
-    query: { difficulty_class: difficultyClass },
-  });
-  if (data) grammarRules.value = data.value;
+const getDifficultyClass = (tab: number) => {
+  switch (tab) {
+    case 1:
+      return {
+        difficulty_class: 1,
+      };
+    case 2:
+      return {
+        difficulty_class: 2,
+      };
+    case 3:
+      return {
+        difficulty_class: 3,
+      };
+    default:
+      return {};
+  }
 };
-
-const handleChange = (_: Event, level: number) => {
-  getLeveledGrammarRules(level);
-};
+watchEffect(async () => {
+  try {
+    const query = getDifficultyClass(activeTab.value);
+    query.limit = 10;
+    const grammarModules = await $fetch("/api/grammar", {
+      query,
+    });
+    if (grammarModules.error) throw grammarModules.error;
+    else if (grammarModules) grammarRules.value = grammarModules;
+    console.log("grammar rules", grammarModules);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const fakeProgressBar = (n: number) => {
   if (n == 0) return 60;
@@ -56,6 +70,11 @@ const fakeProgressBar = (n: number) => {
   else if (n == 4) return 50;
   else if (n == 5) return 100;
   else if (n == 6) return 48;
+  else if (n == 7) return 50;
+  else if (n == 8) return 20;
+  else if (n == 9) return 28;
+  else if (n == 10) return 80;
+  else if (n == 11) return 78;
 };
 </script>
 
@@ -75,42 +94,21 @@ const fakeProgressBar = (n: number) => {
               :first-tab="modulesFirstTab"
               :second-tab="modulesSecondTab"
               :third-tab="modulesThirdTab"
+              @tab-active-changed="(activeT) => (activeTab = activeT)"
             />
-
-            <!-- <div class="tabs tabs-box tabs-sm">
-              <input
-                type="radio"
-                name="my_tabs_1"
-                class="tab"
-                aria-label="All levels"
-                checked="checked"
-                @change="(_) => getGrammarRules()"
-              />
-              <input
-                type="radio"
-                name="my_tabs_1"
-                class="tab"
-                aria-label="Beginner"
-                @change="(_) => handleChange(_, 1)"
-              />
-              <input
-                type="radio"
-                name="my_tabs_1"
-                class="tab"
-                aria-label="Intermediate"
-                @change="(_) => handleChange(_, 2)"
-              />
-              <input
-                type="radio"
-                name="my_tabs_1"
-                class="tab"
-                aria-label="Advanced"
-                @change="(_) => handleChange(_, 3)"
-              />
-            </div> -->
           </div>
         </div>
         <div class="p-3">
+          <div class="w-full border " v-for="(rule, n) in grammarRules" :key="n">
+            <div>
+              <span>{{ rule.id }}</span>
+              <div class="font-bold">{{ rule.rule_name }}</div>
+              <div class="text-sm opacity-50">
+                {{ rule.rule_name_translation }}
+              </div>
+              <div>20%</div>
+            </div>
+          </div>
           <table class="table table-pin-rows table-pin-cols">
             <thead>
               <tr>

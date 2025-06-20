@@ -26,20 +26,30 @@ const {
 
 const fetchLessons = async () => {
   isFetchingData.value = true;
-  const { data, error } = await useAsyncData("lessons", () =>
-    $fetch(`/api/lessons?page=${currentPage.value}&size=10`),
+  console.log("fetchLesson");
+  // const { data, error } = await useAsyncData("lessons", () =>
+  //   $fetch(`/api/lessons?page=${currentPage.value}&size=10`),
+  // );
+  // isFetchingData.value = false;
+  // if (error.value) throw error.value;
+  // else if (data.value) {
+  //   lessons.value = data.value?.dataResult.data || [];
+  //   count.value = data.value?.countResult.count || 0;
+  // }
+  const results = await $fetch(
+    `/api/lessons?page=${currentPage.value}&size=10`,
   );
-  isFetchingData.value = false;
-  if (error.value) throw error.value;
-  else if (data.value) {
-    lessons.value = data.value?.dataResult.data || [];
-    count.value = data.value?.countResult.count || 0;
+  if (results.error) throw results.error;
+  else if (results) {
+    lessons.value = results?.dataResult.data || [];
+    count.value = results?.countResult.count || 0;
   }
+  isFetchingData.value = false;
 };
 
 watchEffect(async () => {
   console.log("currentPage", currentPage.value);
-  await fetchLessons();
+  if (currentPage.value) await fetchLessons();
 });
 
 const handleDeleteLesson = async () => {
@@ -76,7 +86,10 @@ const handleCancel = () => {
           </LayoutHeadingPlus>
 
           <div class="mt-3 max-h-full overflow-auto">
-            <div v-if="isFetchingData" class="h-full flex w-full flex-col gap-4">
+            <div
+              v-if="isFetchingData"
+              class="h-full flex w-full flex-col gap-4"
+            >
               <div class="skeleton h-32 w-full" />
               <div class="skeleton h-32 w-full" />
               <div class="skeleton h-4 w-28" />
@@ -89,19 +102,30 @@ const handleCancel = () => {
               <div class="skeleton h-4 w-full" />
               <div class="skeleton h-4 w-full" />
             </div>
+
             <table v-else class="table max-h-full border-collapse">
               <thead>
-                <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                  <th class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <tr
+                  class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                >
+                  <th
+                    class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  >
                     #
                   </th>
-                  <th class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Lesson name
+                  <th
+                    class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  >
+                    Lesson name {{ currentPage }}
                   </th>
-                  <th class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th
+                    class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  >
                     Content
                   </th>
-                  <th class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th
+                    class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  >
                     Actions
                   </th>
                 </tr>
@@ -110,7 +134,9 @@ const handleCancel = () => {
                 <tr v-for="lesson in lessons">
                   <td class="px-4 py-3">
                     <div class="flex items-center justify-center">
-                      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700 shadow-sm">
+                      <span
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700 shadow-sm"
+                      >
                         {{ lesson.id }}
                       </span>
                     </div>
@@ -168,18 +194,22 @@ const handleCancel = () => {
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                       <button
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg  hover:bg-green-100 hover:text-green-700 transition-all duration-200 group"
-                        @click="router.push(`/learning/lessons/${lesson.id}`)"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-green-100 hover:text-green-700 transition-all duration-200 group"
                         title="View lesson"
+                        @click="router.push(`/learning/lessons/${lesson.id}`)"
                       >
-                        <EyeIcon class="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
+                        <EyeIcon
+                          class="h-4 w-4 group-hover:scale-110 transition-transform duration-200"
+                        />
                       </button>
                       <button
                         class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 transition-all duration-200 group"
-                        @click="handleLessonToDelete(lesson.id, lesson.title)"
                         title="Delete lesson"
+                        @click="handleLessonToDelete(lesson.id, lesson.title)"
                       >
-                        <TrashIcon class="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
+                        <TrashIcon
+                          class="h-4 w-4 group-hover:scale-110 transition-transform duration-200"
+                        />
                       </button>
                     </div>
                   </td>

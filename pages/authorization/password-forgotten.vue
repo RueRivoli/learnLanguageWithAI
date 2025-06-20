@@ -12,13 +12,24 @@ const handleResetPassword = async () => {
   console.log("handlePasswordForgotten");
   // Test if email correct
   try {
-    const { error } = await client.auth.resetPasswordForEmail(
-      state.value.email,
-      {
-        redirectTo: window.location.origin + "/authorization/reset-password",
-      },
-    );
-    if (error) throw error;
+    if (state.value.email) {
+      console.log(
+        "VALUES",
+        state.value.email,
+        window.location.origin + "/authorization/reset-password/",
+      );
+      isLoading.value = true;
+      const { data, error } = await client.auth.resetPasswordForEmail(
+        state.value.email,
+        {
+          redirectTo: window.location.origin + "/authorization/reset-password/",
+        },
+      );
+      isLoading.value = false;
+      if (data) console.log("data", data);
+      if (error) console.log("error", error);
+      if (error) throw error;
+    }
   } catch (error) {
     passwordForgottenError.value = error;
   }
@@ -75,11 +86,12 @@ const handleResetPassword = async () => {
             </div>
             <button
               type="submit"
-              :disabled="isLoading"
               class="btn btn-primary w-full h-12 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              :class="{ 'btn-disabled': isLoading }"
               @click="handleResetPassword"
             >
-              Reset Your Password
+              <span v-if="isLoading" class="loading loading-spinner" />
+              <span>Reset Your Password</span>
             </button>
           </form>
         </div>
