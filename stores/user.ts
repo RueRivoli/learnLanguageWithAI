@@ -4,6 +4,7 @@ export type DatabaseUserProfile = Database["public"]["Tables"]["profiles"]["Row"
 
 export interface User {
     id: Database["public"]["Tables"]["profiles"]["Row"]["id"] | null
+    isLoaded: boolean
     email: Database["public"]["Tables"]["profiles"]["Row"]["email"] | null
     pseudo: Database["public"]["Tables"]["profiles"]["Row"]["pseudo"] | null
     fullName: Database["public"]["Tables"]["profiles"]["Row"]["full_name"] | null

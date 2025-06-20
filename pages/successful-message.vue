@@ -13,7 +13,7 @@ const messageText = ref<string | null>(route.query.text);
           <img
             alt="LinguaLab Logo"
             class="h-30 w-auto"
-            src="~/assets/img/translogomail.png"
+            src="~/assets/logo/banner/logo1.png"
           />
           <div role="alert" class="alert alert-success alert-soft text-white">
             <CheckCircleIcon

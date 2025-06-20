@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam } from "h3";
+import { defineEventHandler, getRouterParam, getQuery } from "h3";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -8,25 +8,28 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, "id");
+  const query = getQuery(event);
+  const limitItems = Number(query.limit)
+  console.log("limit", limitItems)
   console.log('userId', userId)
   const { data: knownWords, error } = await supabase
     .from("turkish_words_knowledge")
     .select(
       "word_id",
-    ).eq('user_id', userId).eq('master_word', true);
+    ).eq('user_id', userId).eq('word_mastered', true);
     if (error) throw error;
    const knownWordIdsToExclude = knownWords.map(w =>  w.word_id);
    console.log("knownWordIdsToExclude", knownWordIdsToExclude)
-   let query = supabase
+   let req = supabase
   .from('turkish_words')
   .select('id, text, translation')
   .order('id', { ascending: true })
 
 if (knownWordIdsToExclude.length > 0) {
-  query = query.not('id', 'in', `(${knownWordIdsToExclude.join(',')})`);
+  req = req.not('id', 'in', `(${knownWordIdsToExclude.join(',')})`);
 }
 
-const { data: unknownWords, error: unknownWordsError } = await query.limit(30);
+const { data: unknownWords, error: unknownWordsError } = await req.limit(limitItems);
 
   if (unknownWordsError) throw unknownWordsError;
   return unknownWords;

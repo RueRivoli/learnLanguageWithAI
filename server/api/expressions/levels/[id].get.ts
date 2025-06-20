@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam } from "h3";
+import { defineEventHandler, getRouterParam, getQuery } from "h3";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -8,25 +8,26 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, "id");
+  const query = getQuery(event);
   console.log('userId', userId)
   const { data: knownExpressions, error } = await supabase
     .from("turkish_expressions_knowledge")
     .select(
       "expression_id",
-    ).eq('user_id', userId).eq('master_expression', true);
+    ).eq('user_id', userId).eq('expression_mastered', true);
     if (error) throw error;
    const knownExpressionIdsToExclude = knownExpressions.map(w =>  w.expression_id);
    console.log("knownWordIdsToExclude", knownExpressionIdsToExclude)
-   let query = supabase
+   let req = supabase
   .from('turkish_expressions')
   .select('id, text, translation')
   .order('id', { ascending: true })
 
 if (knownExpressionIdsToExclude.length > 0) {
-  query = query.not('id', 'in', `(${knownExpressionIdsToExclude.join(',')})`);
+  req = req.not('id', 'in', `(${knownExpressionIdsToExclude.join(',')})`);
 }
 
-const { data: unknownExpressions, error: unknownExpressionsError } = await query.limit(30);
+const { data: unknownExpressions, error: unknownExpressionsError } = await req.limit(Number(query.limit));
 
   if (unknownExpressionsError) throw unknownExpressionsError;
   return unknownExpressions;

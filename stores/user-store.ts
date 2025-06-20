@@ -4,6 +4,7 @@ import type { DatabaseUserProfile, User } from "~/stores/user.ts";
 export const useUserStore = defineStore("user", {
   state: (): User => {
     return {
+      isLoaded: false,
       email: null,
       fullName: null,
       hasFilledInitialForm: false,
@@ -27,6 +28,7 @@ export const useUserStore = defineStore("user", {
   actions: {
     setProfile(profile: DatabaseUserProfile) {
       this.id = profile.id;
+      this.isLoaded = true,
       this.fullName = profile.full_name;
       this.isSubscribed = profile.subscribed;
       this.languageLearned = profile.language_learned;
