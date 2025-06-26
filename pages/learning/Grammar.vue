@@ -15,6 +15,7 @@ import {
   getRadialGradientEnd,
   getRadialTextClass,
   getRadialGlowClass,
+  getTypeBadgeClass,
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
 
@@ -60,7 +61,11 @@ watchEffect(async () => {
       query,
     });
     if (grammarModules.error) throw grammarModules.error;
-    else if (grammarModules) grammarRules.value = grammarModules;
+    else if (grammarModules)
+      grammarRules.value = grammarModules.map((rule) => ({
+        ...rule,
+        score: rule.turkish_grammar_scores,
+      }));
     console.log("grammar rules", grammarModules);
   } catch (error) {
     console.log(error);
@@ -84,9 +89,9 @@ const fakeProgressBar = (n: number) => {
 </script>
 
 <template>
-  <div class="w-full grid grid-cols-4 gap-2">
-    <div class="col-span-3">
-      <div class="list bg-white rounded-box shadow-md">
+  <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
+    <div class="max-h-screen col-span-3">
+      <div class="max-h-full bg-white rounded-box shadow-md">
         <div class="p-5">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
@@ -103,214 +108,110 @@ const fakeProgressBar = (n: number) => {
             />
           </div>
         </div>
-        <div class="p-3">
-          <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <article
-                v-for="(rule, n) in grammarRules"
-                :key="n"
-                class="group relative bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden"
-              >
-                <!-- Compact Header -->
-                <div
-                  class="relative h-20 bg-gradient-to-r from-indigo-400 to-indigo-500"
-                >
-                  <div class="absolute inset-0 bg-black/5" />
-                  <div class="relative p-4 flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                      <div
-                        class="w-8 h-8 rounded-lg bg-white/25 flex items-center justify-center shadow-sm"
-                      >
-                        <span class="text-sm font-bold text-white">
-                          {{ getGrammarRuleInitialLetters(rule.rule_name) }}
-                        </span>
-                      </div>
-                      <div class="min-w-0 flex-1">
-                        <h3
-                          class="text-sm font-semibold text-white leading-tight truncate"
-                        >
-                          {{ rule.rule_name_translation }}
-                        </h3>
-                        <p class="text-indigo-100 text-xs truncate">
-                          {{ rule.rule_name }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                      <component
-                        :is="getLevelLabel(rule.difficulty_class)"
-                        class="bg-white/20 rounded-full px-2 py-1 text-xs"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Compact Content -->
-                <div class="p-4">
-                  <!-- Progress Section -->
-                  <div class="mb-4">
-                    <!-- <div class="flex items-center justify-between mb-1">
-                      <span class="text-xs font-medium text-gray-600"
-                        >Progress</span
-                      >
-                      <span
-                        class="text-xs font-bold"
-                        :class="getPercentageStyleClass(fakeProgressBar(n))"
-                      >
-                        {{ fakeProgressBar(n) }}%
-                      </span>
-                    </div> -->
-                    <div class="relative">
-                      <div class="w-full">
-                        <p v-html="rule.intro" />
-                        <!-- <div 
-                        class="h-1.5 rounded-full transition-all duration-300 ease-out"
-                        :class="getProgressBarStyleClass(fakeProgressBar(n))"
-                        :style="{ width: `${fakeProgressBar(n)}%` }"
-                      ></div> -->
-                        <progress
-                          class="h-1.5 rounded-full transition-all duration-300 ease-out progress w-56"
-                          :class="getProgressBarStyleClass(fakeProgressBar(n))"
-                          :value="fakeProgressBar(n)"
-                          max="100"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Quick Description -->
-                  <div class="mb-4">
-                    <!-- <p
-                      class="text-gray-600 text-xs leading-relaxed line-clamp-2"
-                      v-html="rule.intro"
-                    >
+        <div class="max-h-full mt-2 px-6">
+          <div
+            class="max-h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto"
+          >
+            <div
+              v-for="(rule, n) in grammarRules"
+              :key="n"
+              class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200"
+            >
+              <!-- Header -->
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold"
+                    :class="getGrammarRuleStyleClass(rule)"
+                  >
+                    <span class="text-lg">
                       {{
-                        rule.description ||
-                        "Master this grammar rule to improve your skills."
+                        getGrammarRuleInitialLetters(rule.rule_name_translation)
                       }}
-                    </p> -->
+                    </span>
                   </div>
-
-                  <!-- Compact Action Buttons -->
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                      <button
-                        class="btn btn-xs btn-ghost btn-secondary inline-flex items-center transition-colors duration-200"
-                        @click="router.push(`/learning/grammar/${rule.id}`)"
-                      >
-                        <EyeIcon class="h-3 w-3 mr-1" />
-                        <span>View</span>
-                      </button>
-                      <button
-                        class="btn btn-xs btn-ghost btn-warning inline-flex items-center px-3 py-1.5 rounded-md transition-colors duration-200"
-                      >
-                        <ArrowTrendingUpIcon class="h-3 w-3 mr-1" />
-                        <span>Practice</span>
-                      </button>
-                    </div>
-
-                    <!-- Awesome Radial Progress Bar -->
-                    <div class="relative">
-                      <div class="relative w-8 h-8">
-                        <!-- Background Circle -->
-                        <svg
-                          class="w-8 h-8 transform -rotate-90"
-                          viewBox="0 0 36 36"
-                        >
-                          <path
-                            class="text-gray-200"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            fill="none"
-                            d="M18 2.0845
-                              a 15.9155 15.9155 0 0 1 0 31.831
-                              a 15.9155 15.9155 0 0 1 0 -31.831"
-                          />
-                          <!-- Progress Circle with Gradient -->
-                          <path
-                            class="transition-all duration-1000 ease-out"
-                            :class="getRadialProgressClass(fakeProgressBar(n))"
-                            stroke="url(#gradient)"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            fill="none"
-                            :stroke-dasharray="`${fakeProgressBar(n) * 1.01}, 100`"
-                            d="M18 2.0845
-                              a 15.9155 15.9155 0 0 1 0 31.831
-                              a 15.9155 15.9155 0 0 1 0 -31.831"
-                          />
-                          <!-- Gradient Definition -->
-                          <defs>
-                            <linearGradient
-                              id="gradient"
-                              x1="0%"
-                              y1="0%"
-                              x2="100%"
-                              y2="0%"
-                            >
-                              <stop
-                                offset="0%"
-                                :stop-color="
-                                  getRadialGradientStart(fakeProgressBar(n))
-                                "
-                              />
-                              <stop
-                                offset="100%"
-                                :stop-color="
-                                  getRadialGradientEnd(fakeProgressBar(n))
-                                "
-                              />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-
-                        <!-- Center Content -->
-                        <div
-                          class="absolute inset-0 flex items-center justify-center"
-                        >
-                          <div class="text-center">
-                            <div
-                              class="text-xs font-bold leading-none"
-                              :class="getRadialTextClass(fakeProgressBar(n))"
-                            >
-                              {{ fakeProgressBar(n) }}%
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Glow Effect -->
-                        <div
-                          class="absolute inset-0 rounded-full opacity-20 blur-sm transition-all duration-300"
-                          :class="getRadialGlowClass(fakeProgressBar(n))"
-                        />
-                      </div>
-                    </div>
+                  <div>
+                    <h3 class="font-semibold text-gray-900 text-sm">
+                      {{ rule.rule_name_translation }}
+                    </h3>
+                    <p class="text-gray-500 text-xs">
+                      {{ rule.rule_name }}
+                    </p>
                   </div>
                 </div>
-
-                <!-- Subtle hover effect -->
-                <div
-                  class="absolute inset-0 bg-gradient-to-r from-indigo-400/3 to-purple-400/3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                />
-              </article>
-            </div>
-
-            <!-- Compact Empty State -->
-            <div v-if="grammarRules.length === 0" class="text-center py-8">
-              <div
-                class="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center"
-              >
-                <Square2StackIcon class="h-6 w-6 text-gray-400" />
+                <!-- <component
+                    :is="getLevelLabel(rule.difficulty_class)"
+                    class="text-xs"
+                  /> -->
+                <div />
               </div>
-              <h3 class="text-base font-medium text-gray-900 mb-1">
-                No grammar rules found
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Try selecting a different difficulty level.
-              </p>
+
+              <!-- Progress -->
+              <div class="mb-3">
+                <div class="flex items-center justify-between" />
+                <div class="max-w-full flex items-center justify-between">
+                  <progress
+                    class="progress progress-accent max-w-full mr-2"
+                    :class="getProgressBarStyleClass(rule.score[0].score)"
+                    :value="rule.score[0].score"
+                    max="100"
+                  />
+                  <span
+                    class="text-xs font-semibold"
+                    :class="getPercentageStyleClass(rule.score[0].score)"
+                  >
+                    {{ rule.score[0].score }}%
+                  </span>
+                </div>
+              </div>
+
+              <!-- Highlight -->
+              <div v-if="rule.highlights" class="mb-4">
+                <div class="pb-4">
+                  <div class="flex items-start gap-3">
+                    <div
+                      class="text-gray-700 text-pretty font-semibold leading-relaxed bg-gradient-to-r from-gray-50 to-blue-50 border-l-4 border-blue-300 px-4 py-3 rounded-r-lg shadow-sm"
+                      v-text="rule.highlights"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex items-center justify-between">
+                <div class="flex space-x-2">
+                  <button
+                    class="btn btn-xs btn-primary"
+                    @click="router.push(`/learning/grammar/${rule.id}`)"
+                  >
+                    <EyeIcon class="h-3 w-3 mr-1" />
+                    View
+                  </button>
+                  <button class="btn btn-xs btn-outline btn-warning">
+                    <ArrowTrendingUpIcon class="h-3 w-3 mr-1" />
+                    Practice
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <table class="table table-pin-rows table-pin-cols">
+
+          <!-- Empty State -->
+          <div v-if="grammarRules.length === 0" class="text-center py-8">
+            <div
+              class="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center"
+            >
+              <Square2StackIcon class="h-6 w-6 text-gray-400" />
+            </div>
+            <h3 class="text-base font-medium text-gray-900 mb-1">
+              No grammar rules found
+            </h3>
+            <p class="text-gray-500 text-sm">
+              Try selecting a different difficulty level.
+            </p>
+          </div>
+
+          <!-- <table class="table table-pin-rows table-pin-cols">
             <thead>
               <tr>
                 <th />
@@ -390,7 +291,7 @@ const fakeProgressBar = (n: number) => {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
         </div>
       </div>
     </div>
