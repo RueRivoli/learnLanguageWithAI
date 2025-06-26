@@ -2,7 +2,7 @@
 import { regex } from "valibot";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 
-import { ChevronDownIcon, PlayIcon } from "@heroicons/vue/24/solid";
+import { LightBulbIcon, PlayIcon } from "@heroicons/vue/24/outline";
 
 import { getLevelText } from "~/utils/learning/grammar";
 const router = useRouter();
@@ -19,11 +19,9 @@ const grammarRule = ref({
   name: null,
   nameEn: null,
   difficulty: null,
+  intro: null,
   description: null,
-  sentenceExample: null,
-  sentenceExampleTranslation: null,
-  sentenceExample2: null,
-  sentenceExampleTranslation2: null,
+  extendedDescription: null,
 });
 
 const parseRuleData = (data: any) => {
@@ -32,10 +30,8 @@ const parseRuleData = (data: any) => {
     nameEn: data.rule_name_translation ?? null,
     difficulty: data.difficulty_class ?? null,
     description: data.description ?? null,
-    sentenceExample: data.sentence_example ?? null,
-    sentenceExampleTranslation: data.sentence_example_translation ?? null,
-    sentenceExample2: data.sentence_example_2 ?? null,
-    sentenceExampleTranslation2: data.sentence_example_2_translation ?? null,
+    extendedDescription: data.extended_description ?? null,
+    intro: data.intro ?? null,
   };
 };
 const getGrammarRule = async () => {
@@ -63,7 +59,7 @@ const getLastQuizs = async () => {
 };
 
 await getGrammarRule();
-await getLastQuizs();
+// await getLastQuizs();
 
 const handleGenerateQuiz = async () => {
   console.log("handleGenerateQuiz");
@@ -94,10 +90,17 @@ const handleGenerateQuiz = async () => {
                       <span class="loading loading-bars loading-xl" />
                     </div>
                     <div v-else class="p-5">
-                      <LayoutHeadingHighlight
+                      <LayoutHeadingPlus
+                        :title="grammarRule.nameEn"
+                        :description="grammarRule.name"
+                      >
+                        <LightBulbIcon class="h-6 w-6 text-accent" />
+                      </LayoutHeadingPlus>
+
+                      <!-- <LayoutHeadingHighlight
                         :highlighted-text="grammarRule.nameEn"
                         :end-title="grammarRule.name"
-                      />
+                      /> -->
 
                       <!-- <div>
                         Difficulty :
@@ -106,36 +109,18 @@ const handleGenerateQuiz = async () => {
                         />
                       </div> -->
 
-                      <div class="mt-2 flex items-center">
-                        <span class="font-semibold">Difficulty </span>
-                        <mark class="ml-2 p-1 text-white bg-accent rounded-lg">
-                          <span
-                            >{{ getLevelText(grammarRule.difficulty) }}
-                          </span>
-                        </mark>
-                      </div>
-                      <div class="w-full rounded-2xl mt-8">
-                        <p>
-                          {{ grammarRule.description }}
-                        </p>
+                      <!-- Test templates:  -->
+                      <RulesPastTenseTemplate />
+                      <!-- <RulesPossessivePronounsTemplate /> -->
+                      <!-- <RulesPresentContinuousTemplate /> -->
+                      <!-- <RulesPresentTenseTemplate /> -->
+
+                      <div class="max-w-4xl mx-auto p-6 space-y-6">
+                        <p v-html="grammarRule.intro" />
+                        <p v-html="grammarRule.description" />
+                        <p v-html="grammarRule.extended_description" />
                       </div>
 
-                      <div class="w-full rounded-2xl mt-8">
-                        <div class="font-semibold">
-                          {{ grammarRule.sentenceExample }}
-                        </div>
-                        <div>
-                          {{ grammarRule.sentenceExampleTranslation }}
-                        </div>
-                      </div>
-                      <div class="w-full rounded-2xl mt-8">
-                        <div class="font-semibold">
-                          {{ grammarRule.sentenceExample2 }}
-                        </div>
-                        <div>
-                          {{ grammarRule.sentenceExampleTranslation2 }}
-                        </div>
-                      </div>
                       <button
                         class="btn btn-secondary"
                         type="submit"
