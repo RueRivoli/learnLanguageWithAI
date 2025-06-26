@@ -5,17 +5,9 @@ import {
   modulesFirstTab,
   modulesSecondTab,
   modulesThirdTab,
-  getLevelLabel,
-  getGrammarRuleInitialLetters,
-  getGrammarRuleStyleClass,
   getProgressBarStyleClass,
   getPercentageStyleClass,
-  getRadialProgressClass,
-  getRadialGradientStart,
-  getRadialGradientEnd,
-  getRadialTextClass,
-  getRadialGlowClass,
-  getTypeBadgeClass,
+  getGrammarRuleStyleClass,
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
 
@@ -60,32 +52,18 @@ watchEffect(async () => {
     const grammarModules = await $fetch("/api/grammar", {
       query,
     });
+    console.log("grammarModules", grammarModules);
     if (grammarModules.error) throw grammarModules.error;
     else if (grammarModules)
       grammarRules.value = grammarModules.map((rule) => ({
         ...rule,
         score: rule.turkish_grammar_scores,
       }));
-    console.log("grammar rules", grammarModules);
+    console.log("grammarRules", grammarRules.value);
   } catch (error) {
     console.log(error);
   }
 });
-
-const fakeProgressBar = (n: number) => {
-  if (n == 0) return 60;
-  else if (n == 1) return 25;
-  else if (n == 2) return 45;
-  else if (n == 3) return 95;
-  else if (n == 4) return 50;
-  else if (n == 5) return 100;
-  else if (n == 6) return 48;
-  else if (n == 7) return 50;
-  else if (n == 8) return 20;
-  else if (n == 9) return 28;
-  else if (n == 10) return 80;
-  else if (n == 11) return 78;
-};
 </script>
 
 <template>
@@ -125,9 +103,7 @@ const fakeProgressBar = (n: number) => {
                     :class="getGrammarRuleStyleClass(rule)"
                   >
                     <span class="text-lg">
-                      {{
-                        getGrammarRuleInitialLetters(rule.rule_name_translation)
-                      }}
+                      {{ rule.symbol }}
                     </span>
                   </div>
                   <div>
