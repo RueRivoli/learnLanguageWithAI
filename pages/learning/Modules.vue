@@ -69,7 +69,7 @@ watchEffect(async () => {
 <template>
   <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
     <div class="max-h-screen col-span-3">
-      <div class="max-h-full bg-white rounded-box shadow-md">
+      <div class="h-full bg-white rounded-box shadow-md">
         <div class="p-5">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
@@ -86,9 +86,9 @@ watchEffect(async () => {
             />
           </div>
         </div>
-        <div class="max-h-full mt-2 px-6">
+        <div class="h-full px-6 overflow-auto">
           <div
-            class="max-h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto"
+            class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
             <div
               v-for="(rule, n) in grammarRules"
