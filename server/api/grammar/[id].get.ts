@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const { data, error } = await supabase
     .from("turkish_grammar_rules")
     .select(
-      "id, rule_name, rule_name_translation, difficulty_class, description, sentence_example, sentence_example_translation, sentence_example_2_translation",
+      "id, rule_name, rule_name_translation, difficulty_class, intro, description, extended_description",
     )
     .eq("id", id)
     .single();

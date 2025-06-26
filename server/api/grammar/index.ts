@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   console.log('query', query)
   let request = supabase
     .from("turkish_grammar_rules")
-    .select("id, rule_name, rule_name_translation, difficulty_class, turkish_grammar_scores (score)")
+    .select("id, rule_name, rule_name_translation, type, intro, difficulty_class, turkish_grammar_scores (score)")
   if (query.difficulty_class) {
     request = request.eq("difficulty_class", query.difficulty_class);
   }

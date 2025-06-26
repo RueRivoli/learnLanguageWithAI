@@ -26,11 +26,9 @@ export default defineEventHandler(async (event) => {
         turkish_grammar_rules (
           rule_name,
           rule_name_translation,
+          intro,
           description,
-          sentence_example,
-          sentence_example_translation,
-          sentence_example_2,
-          sentence_example_2_translation
+          extended_description,
         ),
         turkish_lesson_words (
           turkish_words (
