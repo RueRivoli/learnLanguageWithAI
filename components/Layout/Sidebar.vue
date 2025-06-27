@@ -72,7 +72,7 @@ const isActive = (path: string) => {
                   alt="LinguaLab Logo"
                   class="h-8 w-auto"
                   src="~/assets/logo/transparent/black.png"
-                />
+                >
               </NuxtLink>
               <button
                 class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors duration-200"
@@ -287,13 +287,13 @@ const isActive = (path: string) => {
     </TransitionRoot>
   </div>
   <!-- Menu Icon opening the navbar for mobile views -->
-  <div :open="!sideBarOpened" class="flex flex-col block md:hidden">
+  <div :open="!sideBarOpened" class="flex flex-col md:hidden">
     <button
       class="flex-shrink-0 flex items-center justify-center px-2 py-2 w-10 h-10 rounded-full hover:ring-2 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
       @click="sideBarOpened = true"
     >
       <Bars3Icon
-        class="h-6 w-6 text-gray-400 text-indigo-600 group-hover:text-indigo-8000"
+        class="h-6 w-6 text-indigo-600 group-hover:text-indigo-8000"
       />
     </button>
   </div>
@@ -333,7 +333,7 @@ const isActive = (path: string) => {
           alt="LinguaLab Logo"
           class="h-8 w-auto"
           src="~/assets/logo/transparent/black.png"
-        />
+        >
       </NuxtLink>
     </div>
 
@@ -415,23 +415,23 @@ const isActive = (path: string) => {
           <NuxtLink
             class="flex items-center py-2 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
             :class="{
-              'bg-indigo-50 rounded-lg': isActive('/learning/grammar'),
+              'bg-indigo-50 rounded-lg': isActive('/learning/modules'),
               'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
               'px-6': !isSideBarMinifiedForDesktopVersion,
             }"
-            to="/learning/grammar"
+            to="/learning/modules"
           >
             <Square2StackIcon
               class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
               :class="{
-                'text-indigo-600': isActive('/learning/grammar'),
+                'text-indigo-600': isActive('/learning/modules'),
               }"
             />
             <span
               v-if="!isSideBarMinifiedForDesktopVersion"
               class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
               :class="{
-                'text-indigo-600': isActive('/learning/grammar'),
+                'text-indigo-600': isActive('/learning/modules'),
               }"
               >Modules</span
             >
