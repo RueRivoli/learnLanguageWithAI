@@ -189,7 +189,7 @@ const handleGenerateStory = async () => {
                               :key="m.value"
                               :value="m.value"
                             >
-                              <span>{{ m.label }}</span>
+                              {{ m.label }}
                             </option>
                           </select>
                           <div id="targeted_words" class="mt-5">
