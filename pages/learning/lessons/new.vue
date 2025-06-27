@@ -41,7 +41,7 @@ const getModulesWithLowScores = async () => {
       moduleOptions.value = modules.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({
           value: rule_id,
-          label: `${turkish_grammar_rules.rule_name} | ${turkish_grammar_rules.rule_name_translation}     ${score}/100`,
+          label: `${turkish_grammar_rules.rule_name_translation} | ${turkish_grammar_rules.rule_name}     Score: ${score} %`,
         }),
       );
       ruleNames.value = modules.map(({ rule_id, turkish_grammar_rules }) => ({
