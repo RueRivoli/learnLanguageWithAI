@@ -66,20 +66,19 @@ await getQuizData();
 </script>
 
 <template>
-  <div>
-    <div class="w-full mt-2 grid grid-cols-4 gap-2">
+    <div class="w-full bg-white rounded-lg mt-2 grid grid-cols-4 gap-2">
       <div class="col-span-3">
-        <div class="border-b border-zinc-200">
+        <div class="">
           <div>
             <div>
-              <div class="list bg-base-100 rounded-box shadow-md">
+              <div class="list rounded-box shadow-md">
                 <div
                   v-if="isLoading"
                   class="w-full h-72 flex justify-center items-center"
                 >
                   <span class="loading loading-bars loading-xl" />
                 </div>
-                <div v-else class="p-4 bg-white/20">
+                <div v-else class="p-4">
                   <LayoutHeadingPlus
                     title="Quiz"
                     description="Track your learning progress"
@@ -176,7 +175,6 @@ await getQuizData();
           </div>
         </div>
       </div>
-      <div class="col-span-2 border-l border-zinc-950/5">side text</div>
+      <div class="col-span-2">side text</div>
     </div>
-  </div>
 </template>

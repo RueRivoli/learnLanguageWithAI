@@ -77,27 +77,26 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 </script>
 
 <template>
-  <div>
-    <div class="grid grid-cols-5 gap-2 w-full mt-2">
-      <div class="col-span-3">
+  <div class="w-full grid grid-cols-5 gap-2">
+    <div class="col-span-3 bg-white rounded-lg">
+      <div>
         <div>
-          <div>
-            <div class="border-b border-zinc-200">
+          <div class="border-b border-zinc-200">
+            <div>
               <div>
-                <div>
-                  <div class="list bg-base-100 rounded-box shadow-md">
-                    <div
-                      v-if="isLoading"
-                      class="w-full h-72 flex justify-center items-center"
-                    >
-                      <span class="loading loading-bars loading-xl" />
-                    </div>
-                    <div v-else class="p-5">
-                      <LayoutHeadingRuleTitle
-                        :rule="grammarRule"
-                        :main-title="true"
-                      />
-                      <!-- <LayoutHeadingPlus
+                <div class="list rounded-box shadow-md">
+                  <div
+                    v-if="isLoading"
+                    class="w-full h-72 flex justify-center items-center"
+                  >
+                    <span class="loading loading-bars loading-xl" />
+                  </div>
+                  <div v-else class="p-5">
+                    <LayoutHeadingRuleTitle
+                      :rule="grammarRule"
+                      :main-title="true"
+                    />
+                    <!-- <LayoutHeadingPlus
                         :title="grammarRule.ruleNameTranslation"
                         :description="grammarRule.name"
                         text-color="text-sucess"
@@ -109,44 +108,34 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </span>
                       </LayoutHeadingPlus> -->
 
-                      <!-- <LayoutHeadingHighlight
+                    <!-- <LayoutHeadingHighlight
                         :highlighted-text="grammarRule.ruleNameTranslation"
                         :end-title="grammarRule.name"
                       /> -->
 
-                      <!-- <div>
+                    <!-- <div>
                         Difficulty :
                         <component
                           :is="getLevelLabel(grammarRule.difficulty)"
                         />
                       </div> -->
 
-                      <!-- Test templates:  -->
-                      <!-- <RulesPresentTenseTemplate /> -->
-                      <!-- <RulesYesNoQuestionsTemplate /> -->
-                      <!-- <RulesPastTenseTemplate /> -->
-                      <!-- <RulesPossessivePronounsTemplate /> -->
-                      <!-- <RulesTestTemplate /> -->
-                      <!-- <RulesVowelHarmonyTemplate /> -->
-                      <!-- <RulesAsSoonAsTemplate /> -->
-                      <!-- <RulesVarAndYokTemplate /> -->
-                      <!-- <RulesConsonantMutationTemplate /> -->
-                      <!-- <RulesIamYouareTemplate /> -->
-                      <!-- <RulesPronounsTemplate /> -->
-                      <div class="max-w-4xl mx-auto p-6 space-y-6">
-                        <p v-html="sanitizedIntroTemplate" />
-                        <p v-html="sanitizedDescriptionTemplate" />
-                        <p v-html="sanitizedExtendedDescriptionTemplate" />
-                      </div>
-
-                      <button
-                        class="btn btn-secondary"
-                        type="submit"
-                        @click="handleGenerateQuiz"
-                      >
-                        <PlayIcon class="h-5 w-5 font-bold" />
-                        <span>Start a quiz to improve your score</span>
-                      </button>
+                    <!-- Test templates:  -->
+                    <!-- <RulesPresentTenseTemplate /> -->
+                    <!-- <RulesYesNoQuestionsTemplate /> -->
+                    <!-- <RulesPastTenseTemplate /> -->
+                    <!-- <RulesPossessivePronounsTemplate /> -->
+                    <!-- <RulesTestTemplate /> -->
+                    <!-- <RulesVowelHarmonyTemplate /> -->
+                    <!-- <RulesAsSoonAsTemplate /> -->
+                    <!-- <RulesVarAndYokTemplate /> -->
+                    <!-- <RulesConsonantMutationTemplate /> -->
+                    <!-- <RulesIamYouareTemplate /> -->
+                    <!-- <RulesPronounsTemplate /> -->
+                    <div class="max-w-4xl mx-auto p-6 space-y-6">
+                      <p v-html="sanitizedIntroTemplate" />
+                      <p v-html="sanitizedDescriptionTemplate" />
+                      <p v-html="sanitizedExtendedDescriptionTemplate" />
                     </div>
                   </div>
                 </div>
@@ -155,13 +144,13 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           </div>
         </div>
       </div>
-      <div class="col-span-2 border-l border-zinc-950/5">
-        <LearningLastQuizzes
-          :loading="false"
-          :rule-name="grammarRule.ruleNameTranslation"
-          :quizs="lastQuizs"
-        />
-      </div>
+    </div>
+    <div class="col-span-2">
+      <LearningLastQuizzes
+        :loading="false"
+        :rule-name="grammarRule.ruleNameTranslation"
+        :quizs="lastQuizs"
+      />
     </div>
   </div>
 </template>
