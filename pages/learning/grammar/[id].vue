@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { regex } from "valibot";
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import DOMPurify from "dompurify";
+import { PlayIcon } from "@heroicons/vue/24/outline";
+import type { GrammarRule } from "~/types/grammar-rule";
 
-import { LightBulbIcon, PlayIcon } from "@heroicons/vue/24/outline";
-
-import { getLevelText } from "~/utils/learning/grammar";
 const router = useRouter();
 
 definePageMeta({
@@ -15,32 +13,26 @@ const route = useRoute();
 const grammarRuleId = route.params.id;
 const isLoading = ref<boolean>(true);
 const lastQuizs = ref([]);
-const grammarRule = ref({
-  name: null,
-  nameEn: null,
-  difficulty: null,
-  intro: null,
-  description: null,
-  extendedDescription: null,
-});
+const grammarRule = ref<GrammarRule | null>(null);
 
 const parseRuleData = (data: any) => {
   return {
-    name: data.rule_name ?? null,
-    nameEn: data.rule_name_translation ?? null,
-    difficulty: data.difficulty_class ?? null,
+    ruleNameTranslation: data.rule_name_translation ?? null,
+    ruleName: data.rule_name ?? null,
+    difficultyClass: data.difficulty_class ?? null,
+    symbol: data.symbol ?? null,
     description: data.description ?? null,
     extendedDescription: data.extended_description ?? null,
     intro: data.intro ?? null,
   };
 };
 const getGrammarRule = async () => {
-  console.log("grammarRuleId", route.params.id);
   const { data, error } = await useFetch(`/api/grammar/${route.params.id}`);
   if (data) {
     grammarRule.value = parseRuleData(data.value);
     isLoading.value = false;
   }
+  console.log("grammarRule", grammarRule.value);
 };
 
 const getLastQuizs = async () => {
@@ -71,6 +63,17 @@ const handleGenerateQuiz = async () => {
     router.push(`/learning/quizzes/${data}`);
   }
 };
+
+const sanitizedIntroTemplate = computed(() =>
+  DOMPurify.sanitize(grammarRule.value.intro || ""),
+);
+
+const sanitizedDescriptionTemplate = computed(() =>
+  DOMPurify.sanitize(grammarRule.value.description || ""),
+);
+const sanitizedExtendedDescriptionTemplate = computed(() =>
+  DOMPurify.sanitize(grammarRule.value.extendedDescription || ""),
+);
 </script>
 
 <template>
@@ -90,15 +93,24 @@ const handleGenerateQuiz = async () => {
                       <span class="loading loading-bars loading-xl" />
                     </div>
                     <div v-else class="p-5">
-                      <LayoutHeadingPlus
-                        :title="grammarRule.nameEn"
+                      <LayoutHeadingRuleTitle
+                        :rule="grammarRule"
+                        :main-title="true"
+                      />
+                      <!-- <LayoutHeadingPlus
+                        :title="grammarRule.ruleNameTranslation"
                         :description="grammarRule.name"
+                        text-color="text-sucess"
+                        background-color="bg-success"
+                        description-text-color="text-neutral"
                       >
-                        <LightBulbIcon class="h-6 w-6 text-accent" />
-                      </LayoutHeadingPlus>
+                        <span class="text-lg text-white">
+                          {{ (grammarRule as any).symbol }}
+                        </span>
+                      </LayoutHeadingPlus> -->
 
                       <!-- <LayoutHeadingHighlight
-                        :highlighted-text="grammarRule.nameEn"
+                        :highlighted-text="grammarRule.ruleNameTranslation"
                         :end-title="grammarRule.name"
                       /> -->
 
@@ -110,15 +122,21 @@ const handleGenerateQuiz = async () => {
                       </div> -->
 
                       <!-- Test templates:  -->
-                      <RulesPastTenseTemplate />
-                      <!-- <RulesPossessivePronounsTemplate /> -->
-                      <!-- <RulesPresentContinuousTemplate /> -->
                       <!-- <RulesPresentTenseTemplate /> -->
-
+                      <!-- <RulesYesNoQuestionsTemplate /> -->
+                      <!-- <RulesPastTenseTemplate /> -->
+                      <!-- <RulesPossessivePronounsTemplate /> -->
+                      <!-- <RulesTestTemplate /> -->
+                      <!-- <RulesVowelHarmonyTemplate /> -->
+                      <!-- <RulesAsSoonAsTemplate /> -->
+                      <!-- <RulesVarAndYokTemplate /> -->
+                      <!-- <RulesConsonantMutationTemplate /> -->
+                      <!-- <RulesIamYouareTemplate /> -->
+                      <!-- <RulesPronounsTemplate /> -->
                       <div class="max-w-4xl mx-auto p-6 space-y-6">
-                        <p v-html="grammarRule.intro" />
-                        <p v-html="grammarRule.description" />
-                        <p v-html="grammarRule.extended_description" />
+                        <p v-html="sanitizedIntroTemplate" />
+                        <p v-html="sanitizedDescriptionTemplate" />
+                        <p v-html="sanitizedExtendedDescriptionTemplate" />
                       </div>
 
                       <button
@@ -140,10 +158,16 @@ const handleGenerateQuiz = async () => {
       <div class="col-span-2 border-l border-zinc-950/5">
         <LearningLastQuizzes
           :loading="false"
-          :rule-name="grammarRule.nameEn"
+          :rule-name="grammarRule.ruleNameTranslation"
           :quizs="lastQuizs"
         />
       </div>
     </div>
   </div>
 </template>
+
+<style>
+.flex {
+  display: flex;
+}
+</style>
