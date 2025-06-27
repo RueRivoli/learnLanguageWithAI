@@ -12,6 +12,7 @@ export type GrammarRule = {
   highlights: GrammarRow['highlights'];
   extendedDescription: GrammarRow['extended_description'];
   symbol: GrammarRow['rule_name'];
+  bookmarked: GrammarRow['bookmarked'];
   type: GrammarRow['type'];
 };
 
@@ -29,6 +30,7 @@ export const parseRules = (modules: Array<Database['public']['Tables']['turkish_
       symbol: module.symbol,
       score: module.turkish_grammar_scores,
       type: module.type,
+      bookmarked: module.bookmarked,
     }))
 }
 
@@ -39,6 +41,7 @@ export const parseRuleData = (data: Database['public']['Tables']['turkish_gramma
     ruleNameTranslation: data.rule_name_translation,
     difficultyClass: data.difficulty_class,
     symbol: data.symbol,
+    bookmarked: data.bookmarked,
     description: data.description,
     highlights: data.highlights,
     type: data.type,
