@@ -2,7 +2,7 @@
 
 <template>
   <div class="w-full">
-    <div class="bg-base-100 rounded-box shadow-md">
+    <div class="bg-white rounded-box shadow-md rounded-lg">
       <div class="flex flex-col items-center justify-between">
         <div class="p-5">
           <LayoutHeadingSide title="Last learnings" />

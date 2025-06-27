@@ -5,7 +5,6 @@ import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
 
-
 definePageMeta({
   layout: "authenticated",
 });
@@ -37,7 +36,12 @@ onMounted(async () => {
       }),
     );
     const vocabScores = scores.vocabScores.data.map(
-      ({ expressions_learned_count, expressions_mastered_count, words_learned_count, words_mastered_count }) => ({
+      ({
+        expressions_learned_count,
+        expressions_mastered_count,
+        words_learned_count,
+        words_mastered_count,
+      }) => ({
         totalWordsMastered: expressions_learned_count,
         totalWordsLearned: expressions_mastered_count,
         totalExpressionsMastered: words_learned_count,
@@ -45,7 +49,7 @@ onMounted(async () => {
       }),
     );
     console.log("vocabScores", vocabScores);
-    userScoreStore.setScores(grammarScores, vocabScores[0])
+    userScoreStore.setScores(grammarScores, vocabScores[0]);
     console.log("userScoreStore.state", userScoreStore.$state);
   }
 });
@@ -91,7 +95,7 @@ getInfoUser();
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
+  <div class="min-h-screen rounded-lg bg-white p-5">
     <div class="max-w-7xl mx-auto">
       <!-- Header Section -->
       <div class="mb-4">

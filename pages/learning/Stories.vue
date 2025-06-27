@@ -75,9 +75,9 @@ const handleCancel = () => {
 
 <template>
   <div>
-    <div class="max-w-full max-h-screen grid grid-cols-4 gap-2 ">
+    <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
       <div class="col-span-3 max-h-screen">
-        <div class="list bg-white rounded-box shadow-md h-[95%] p-6">
+        <div class="list bg-white rounded-lg shadow-md h-[95%] p-5">
           <LayoutHeadingPlus
             title="Lessons"
             description="Your list of tailored lessons"
