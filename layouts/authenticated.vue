@@ -41,7 +41,7 @@ watchEffect(async () => {
     <div class="flex">
       <LayoutSidebar />
       <!-- Main content -->
-      <main v-if="!loading" class="max-h-screen p-4 w-full bg-base-200">
+      <main v-if="!loading" class="max-h-screen w-full bg-base-200">
         <!-- <div class="h-10 border-b border-primary/20">
           <LayoutHeader />
         </div> -->

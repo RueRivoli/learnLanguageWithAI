@@ -1,9 +1,9 @@
 <script setup lang="ts">
-// import type { Quiz } from "~/types/quiz.ts";
-import { PlayIcon, EyeIcon } from "@heroicons/vue/24/outline";
+import { PlayIcon } from "@heroicons/vue/24/outline";
 import { formatDate } from "~/utils/date/date";
 import { useRouter } from "vue-router";
 import type { GrammarRule } from "~/types/grammar-rule";
+import { getColorStyleClass } from "~/utils/learning/grammar";
 
 const router = useRouter();
 const isLoading = ref(false);
@@ -24,18 +24,15 @@ const handleGenerateQuiz = async () => {
   try {
     isLoading.value = true;
     // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
-    const { quizId: newGeneratedQuizId } = await $fetch(
-      `/api/quizzes/${props.rule?.id}`,
-      {
-        method: "PUT",
-      },
-    );
-    console.log("has generated a quizz with the id: ", newGeneratedQuizId);
-    // newGeneratedQuizId is the id of the new generated quiz
-    if (newGeneratedQuizId) {
+    const response = await $fetch(`/api/quizzes/${props.rule?.id}`, {
+      method: "PUT",
+    });
+    console.log("has generated a quizz with the id: ", response);
+    // response is the id of the new generated quiz
+    if (response) {
       // router.push(`/learning/quizzes/${response}`);
       await navigateTo({
-        path: `/learning/quizzes/${newGeneratedQuizId}`,
+        path: `/learning/quizzes/${response}`,
       });
     }
     isLoading.value = false;
@@ -68,98 +65,103 @@ const handleGenerateQuiz = async () => {
           <p class="text-sm text-gray-600">
             Last attempts on
             <span class="font-medium text-primary">{{
-              props.rule.ruleNameTranslation
+              props.rule?.ruleNameTranslation || "this rule"
             }}</span>
           </p>
         </div>
 
         <!-- Quiz List -->
-        <div class="space-y-3">
-          <div v-if="!props.quizs.length" class="text-center py-8">
+        <div class="space-y-4">
+          <div v-if="!props.quizs.length" class="text-center py-12">
             <div
-              class="w-16 h-16 mx-auto mb-4 bg-gray-50 rounded-full flex items-center justify-center"
+              class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-full flex items-center justify-center shadow-sm"
             >
-              <PlayIcon class="w-8 h-8 text-gray-400" />
+              <PlayIcon class="w-10 h-10 text-gray-400" />
             </div>
-            <p class="text-gray-500 text-sm font-medium">
+            <p class="text-gray-600 text-base font-medium mb-2">
               No quizzes completed yet
             </p>
-            <p class="text-gray-400 text-xs mt-1">
+            <p class="text-gray-500 text-sm">
               Start your first quiz to track progress
             </p>
           </div>
 
-          <div v-else class="space-y-3">
+          <div v-else class="space-y-4">
             <div
               v-for="(quiz, index) in props.quizs"
               :key="index"
-              class="bg-gray-50 rounded-lg p-4 border border-gray-100 hover:border-gray-200 transition-colors duration-200"
+              class="group bg-white rounded-xl p-5 border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-300 cursor-pointer"
+              @click="router.push(`/learning/quiz/${quiz.id}`)"
             >
-              <div class="flex items-center justify-between">
-                <div class="flex-1">
-                  <div class="flex items-center gap-3 mb-2">
-                    <div
-                      class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center"
-                    >
-                      <span class="text-xs font-semibold text-primary"
-                        >#{{ quiz.id }}</span
+              <div class="flex items-start justify-between">
+                <!-- Left Content -->
+                <div class="flex-1 min-w-0">
+                  <!-- Quiz ID and Date -->
+                  <div class="flex items-center gap-4 mb-2">
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="w-10 h-10 bg-gradient-to-br from-primary/10 to-primary/20 rounded-xl flex items-center justify-center shadow-sm"
                       >
-                    </div>
-                    <div class="text-sm text-gray-600">
-                      {{ formatDate(quiz.createdAt) }}
-                    </div>
-                  </div>
-
-                  <div class="flex items-center gap-3">
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2">
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                          <div
-                            class="h-2 rounded-full transition-all duration-300"
-                            :class="
-                              quiz.score >= 80
-                                ? 'bg-green-500'
-                                : quiz.score >= 60
-                                  ? 'bg-yellow-500'
-                                  : 'bg-red-500'
-                            "
-                            :style="{ width: `${quiz.score}%` }"
-                          />
-                        </div>
-                        <span
-                          class="text-sm font-semibold text-gray-700 min-w-[3rem]"
+                        <span class="text-sm font-bold text-primary"
+                          >#{{ quiz.id }}</span
                         >
-                          {{ quiz.score }}%
-                        </span>
                       </div>
                     </div>
 
-                    <button
-                      class="p-2 text-gray-400 hover:text-gray-600 hover:bg-white rounded-lg transition-colors duration-200"
-                      title="View quiz details"
-                      @click="router.push(`/learning/quiz/${quiz.id}`)"
+                    <div class="flex flex-col">
+                      <span
+                        class="text-xs font-medium text-gray-500 uppercase tracking-wide"
+                      >
+                        Completed
+                      </span>
+                      <span class="text-sm font-medium text-gray-700">
+                        {{ formatDate(quiz.createdAt) }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Score Section -->
+                  <div class="flex items-center justify-end">
+                    <span
+                      class="font-medium mr-2"
+                      :class="getColorStyleClass(quiz.score)"
+                      >Score</span
                     >
-                      <EyeIcon class="w-4 h-4" />
-                    </button>
+                    <span
+                      class="font-bold"
+                      :class="getColorStyleClass(quiz.score)"
+                    >
+                      {{ quiz.score }}%
+                    </span>
+                  </div>
+
+                  <!-- Progress Bar -->
+                  <div class="w-full">
+                    <progress
+                      class="progress w-full"
+                      :class="getColorStyleClass(quiz.score)"
+                      :value="quiz.score"
+                      max="100"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Action Button -->
-        <div class="pt-4 border-t border-gray-100">
-          <button
-            class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-            type="submit"
-            :class="{ 'btn-disabled': isLoading }"
-            @click="handleGenerateQuiz"
-          >
-            <span v-if="isLoading" class="loading loading-spinner" />
-            <PlayIcon v-else class="w-5 h-5" />
-            <span>Start New Quiz</span>
-          </button>
+          <!-- Action Button -->
+          <div class="pt-4 border-t border-gray-100">
+            <button
+              class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+              type="submit"
+              :class="{ 'btn-disabled': isLoading }"
+              @click="handleGenerateQuiz"
+            >
+              <span v-if="isLoading" class="loading loading-spinner" />
+              <PlayIcon v-else class="w-5 h-5" />
+              <span>Start New Quiz</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

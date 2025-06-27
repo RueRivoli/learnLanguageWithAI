@@ -15,7 +15,6 @@ const isLoading = ref<boolean>(true);
 const lastQuizzes = ref([]);
 const grammarRule = ref<GrammarRule | null>(null);
 
-
 const getGrammarRule = async () => {
   const { data, error } = await useFetch(`/api/grammar/${route.params.id}`);
   if (data) {
@@ -30,12 +29,12 @@ const getlastQuizzes = async () => {
   const { data, error } = await useFetch(
     `/api/quizzes/rules/${route.params.id}`,
   );
-  console.log("last quizzes", data.value)
+  console.log("last quizzes", data.value);
   if (data) {
-    lastQuizzes.value = data.value?.map(({ id, created_at, score }) => ({
+    lastQuizzes.value = data.value?.map(({ id, created_at, score_global }) => ({
       id,
       createdAt: created_at,
-      score,
+      score: score_global,
     }));
     isLoading.value = false;
   }
