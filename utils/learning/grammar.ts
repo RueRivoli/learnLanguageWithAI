@@ -13,39 +13,39 @@ const enum RuleDifficulty {
   "EXPERT" = 4,
 }
 
-export function getLevelText(level: string): string {
+export function getLevelText(level: RuleDifficulty): string {
   switch (level) {
-    case "1":
+    case RuleDifficulty.BEGINNER:
       return "beginner";
-    case "2":
+    case RuleDifficulty.INTERMEDIATE:
       return "intermediate";
-    case "3":
+    case RuleDifficulty.ADVANCED:
       return "advanced";
-    case "4":
+    case RuleDifficulty.EXPERT:
       return "expert";
     default:
       return "beginner";
   }
 }
 
-export function getLevelLabel(level: string): VNode {
+export function getLevelLabel(level: RuleDifficulty): VNode {
   switch (level) {
-    case "1":
+    case RuleDifficulty.BEGINNER:
       return h("div", { class: "flex items-center" }, [
         h("div", { class: "status status-success mr-2" }),
         h("div", "beginner"),
       ]);
-    case "2":
+    case RuleDifficulty.INTERMEDIATE:
       return h("div", { class: "flex items-center" }, [
         h("div", { class: "status status-warning mr-2" }),
         h("div", "intermediate"),
       ]);
-    case "3":
+    case RuleDifficulty.ADVANCED:
       return h("div", { class: "flex items-center" }, [
         h("div", { class: "status status-error mr-2" }),
         h("div", "advanced"),
       ]);
-    case "4":
+    case RuleDifficulty.EXPERT:
       return h("div", { class: "flex items-center" }, [
         h("div", { class: "status status-success mr-2" }),
         h("div", "expert"),
@@ -53,7 +53,7 @@ export function getLevelLabel(level: string): VNode {
     default:
       return h("div", { class: "flex items-center" }, [
         h("div", { class: "status status-neutral mr-2" }),
-        h("div", "unknown"),
+        h("div", "unkown"),
       ]);
   }
 }
@@ -86,13 +86,13 @@ export function getGrammarRuleInitialLetters(level: string): string {
 export function getGrammarRuleStyleClass(rule: GrammarRule): string {
   // TODO: find better styling idea
   switch (rule.difficulty_class) {
-    case "1":
+    case RuleDifficulty.BEGINNER:
       return "bg-success";
-    case "2":
+    case RuleDifficulty.INTERMEDIATE:
       return "bg-warning";
-    case "3":
+    case RuleDifficulty.ADVANCED:
       return "bg-error";
-    case "4":
+    case RuleDifficulty.EXPERT:
       return "bg-neutral";
     default:
       return "bg-neutral";
@@ -100,115 +100,51 @@ export function getGrammarRuleStyleClass(rule: GrammarRule): string {
 }
 
 export function getProgressBarStyleClass(progress: number): string {
+  // return "progress-neutral";
   if (progress < 30) {
-    return "progress-error"; // Red for low progress
+    return "text-error";
   } else if (progress < 50) {
-    return "progress-warning"; // Yellow for moderate progress
+    return "text-warning";
   } else if (progress < 70) {
-    return "progress-info"; // Blue for good progress
+    return "text-middle-progress";
   } else if (progress < 100) {
-    return "progress-primary"; // Indigo for great progress
+    return "text-accent";
   } else if (progress === 100) {
-    return "progress-success"; // Green for complete
+    return "text-success";
   } else {
-    return "progress-neutral"; // Gray for unknown
+    return "text-neutral";
+  }
+}
+
+export function getColorStyleClass(progress: number): string {
+  // return "progress-neutral";
+  if (progress < 30) {
+    return "text-error";
+  } else if (progress < 50) {
+    return "text-warning";
+  } else if (progress < 70) {
+    return "text-middle-progress";
+  } else if (progress < 100) {
+    return "text-accent";
+  } else if (progress === 100) {
+    return "text-success";
+  } else {
+    return "text-neutral";
   }
 }
 
 export function getPercentageStyleClass(progress: number): string {
-  return "text-neutral";
-  // if (progress < 30) {
-  //   return "text-error";
-  // } else if (progress < 50) {
-  //   return "text-warning";
-  // } else if (progress < 70) {
-  //   return "text-middle-progress";
-  // } else if (progress < 100) {
-  //   return "text-accent";
-  // } else if (progress === 100) {
-  //   return "text-success";
-  // } else {
-  //   return "text-neutral";
-  // }
-}
-
-// Radial Progress Bar Utility Functions
-export function getRadialProgressClass(progress: number): string {
   if (progress < 30) {
-    return "text-red-500";
+    return "text-error";
   } else if (progress < 50) {
-    return "text-yellow-500";
+    return "text-warning";
   } else if (progress < 70) {
-    return "text-blue-500";
+    return "text-middle-progress";
   } else if (progress < 100) {
-    return "text-indigo-500";
+    return "text-accent";
   } else if (progress === 100) {
-    return "text-green-500";
+    return "text-success";
   } else {
-    return "text-gray-500";
-  }
-}
-
-export function getRadialGradientStart(progress: number): string {
-  if (progress < 30) {
-    return "#ef4444"; // red-500
-  } else if (progress < 50) {
-    return "#eab308"; // yellow-500
-  } else if (progress < 70) {
-    return "#3b82f6"; // blue-500
-  } else if (progress < 100) {
-    return "#6366f1"; // indigo-500
-  } else if (progress === 100) {
-    return "#22c55e"; // green-500
-  } else {
-    return "#6b7280"; // gray-500
-  }
-}
-
-export function getRadialGradientEnd(progress: number): string {
-  if (progress < 30) {
-    return "#dc2626"; // red-600
-  } else if (progress < 50) {
-    return "#ca8a04"; // yellow-600
-  } else if (progress < 70) {
-    return "#2563eb"; // blue-600
-  } else if (progress < 100) {
-    return "#4f46e5"; // indigo-600
-  } else if (progress === 100) {
-    return "#16a34a"; // green-600
-  } else {
-    return "#4b5563"; // gray-600
-  }
-}
-
-export function getRadialTextClass(progress: number): string {
-  if (progress < 30) {
-    return "text-red-600";
-  } else if (progress < 50) {
-    return "text-yellow-600";
-  } else if (progress < 70) {
-    return "text-blue-600";
-  } else if (progress < 100) {
-    return "text-indigo-600";
-  } else if (progress === 100) {
-    return "text-green-600";
-  } else {
-    return "text-gray-600";
-  }
-}
-
-export function getRadialGlowClass(progress: number): string {
-  if (progress < 30) {
-    return "bg-red-500";
-  } else if (progress < 50) {
-    return "bg-yellow-500";
-  } else if (progress < 70) {
-    return "bg-blue-500";
-  } else if (progress < 100) {
-    return "bg-indigo-500";
-  } else if (progress === 100) {
-    return "bg-green-500";
-  } else {
-    return "bg-gray-500";
+    return "text-neutral";
   }
 }
