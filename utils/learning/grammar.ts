@@ -84,8 +84,7 @@ export function getGrammarRuleInitialLetters(level: string): string {
 }
 
 export function getGrammarRuleStyleClass(rule: GrammarRule): string {
-  // TODO: find better styling idea
-  switch (rule.difficulty_class) {
+  switch (rule.difficultyClass) {
     case RuleDifficulty.BEGINNER:
       return "bg-success";
     case RuleDifficulty.INTERMEDIATE:
@@ -100,7 +99,6 @@ export function getGrammarRuleStyleClass(rule: GrammarRule): string {
 }
 
 export function getProgressBarStyleClass(progress: number): string {
-  // return "progress-neutral";
   if (progress < 30) {
     return "text-error";
   } else if (progress < 50) {

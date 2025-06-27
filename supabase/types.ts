@@ -7,37 +7,68 @@ export type Json =
   | Json[]
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       profiles: {
         Row: {
-          created_at: string
           email: string | null
+          first_name: string | null
           full_name: string | null
           has_filled_initial_form: boolean | null
           id: string
           initials: string | null
           language_learned: string | null
+          last_name: string | null
+          pseudo: string | null
           subscribed: boolean | null
         }
         Insert: {
-          created_at?: string
           email?: string | null
+          first_name?: string | null
           full_name?: string | null
           has_filled_initial_form?: boolean | null
-          id?: string
+          id: string
           initials?: string | null
           language_learned?: string | null
+          last_name?: string | null
+          pseudo?: string | null
           subscribed?: boolean | null
         }
         Update: {
-          created_at?: string
           email?: string | null
+          first_name?: string | null
           full_name?: string | null
           has_filled_initial_form?: boolean | null
           id?: string
           initials?: string | null
           language_learned?: string | null
+          last_name?: string | null
+          pseudo?: string | null
           subscribed?: boolean | null
         }
         Relationships: []
@@ -49,6 +80,7 @@ export type Database = {
           expression_sentence_2: string | null
           expression_sentence_2_translation: string | null
           expression_sentence_translation: string | null
+          family: string | null
           id: number
           text: string | null
           translation: string | null
@@ -59,6 +91,7 @@ export type Database = {
           expression_sentence_2?: string | null
           expression_sentence_2_translation?: string | null
           expression_sentence_translation?: string | null
+          family?: string | null
           id?: number
           text?: string | null
           translation?: string | null
@@ -69,40 +102,51 @@ export type Database = {
           expression_sentence_2?: string | null
           expression_sentence_2_translation?: string | null
           expression_sentence_translation?: string | null
+          family?: string | null
           id?: number
           text?: string | null
           translation?: string | null
         }
         Relationships: []
       }
-      turkish_grammar_knowledge: {
+      turkish_expressions_knowledge: {
         Row: {
           created_at: string
-          grammar_rule_id: number | null
+          expression_id: number | null
+          expression_learned: boolean | null
+          expression_mastered: boolean | null
           id: number
-          status: number | null
-          user_id: number | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
-          grammar_rule_id?: number | null
+          expression_id?: number | null
+          expression_learned?: boolean | null
+          expression_mastered?: boolean | null
           id?: number
-          status?: number | null
-          user_id?: number | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
-          grammar_rule_id?: number | null
+          expression_id?: number | null
+          expression_learned?: boolean | null
+          expression_mastered?: boolean | null
           id?: number
-          status?: number | null
-          user_id?: number | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "turkish_grammar_knowledge_grammar_rule_id_fkey"
-            columns: ["grammar_rule_id"]
+            foreignKeyName: "turkish_expressions_knowledge_expression_id_fkey"
+            columns: ["expression_id"]
             isOneToOne: false
-            referencedRelation: "turkish_grammar_rules"
+            referencedRelation: "turkish_expressions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turkish_expressions_knowledge_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -165,37 +209,40 @@ export type Database = {
           created_at: string
           description: string | null
           difficulty_class: number | null
+          extended_description: string | null
+          highlights: string | null
           id: number
+          intro: string | null
           rule_name: string | null
           rule_name_translation: string | null
-          sentence_example: string | null
-          sentence_example_2: string | null
-          sentence_example_2_translation: string | null
-          sentence_example_translation: string | null
+          symbol: string | null
+          type: string | null
         }
         Insert: {
           created_at?: string
           description?: string | null
           difficulty_class?: number | null
+          extended_description?: string | null
+          highlights?: string | null
           id?: number
+          intro?: string | null
           rule_name?: string | null
           rule_name_translation?: string | null
-          sentence_example?: string | null
-          sentence_example_2?: string | null
-          sentence_example_2_translation?: string | null
-          sentence_example_translation?: string | null
+          symbol?: string | null
+          type?: string | null
         }
         Update: {
           created_at?: string
           description?: string | null
           difficulty_class?: number | null
+          extended_description?: string | null
+          highlights?: string | null
           id?: number
+          intro?: string | null
           rule_name?: string | null
           rule_name_translation?: string | null
-          sentence_example?: string | null
-          sentence_example_2?: string | null
-          sentence_example_2_translation?: string | null
-          sentence_example_translation?: string | null
+          symbol?: string | null
+          type?: string | null
         }
         Relationships: []
       }
@@ -227,6 +274,42 @@ export type Database = {
             columns: ["rule_id"]
             isOneToOne: false
             referencedRelation: "turkish_grammar_rules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      turkish_lesson_expressions: {
+        Row: {
+          created_at: string
+          expression_id: number | null
+          id: number
+          lesson_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          expression_id?: number | null
+          id?: number
+          lesson_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          expression_id?: number | null
+          id?: number
+          lesson_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "turkish_lesson_expressions_expression_id_fkey"
+            columns: ["expression_id"]
+            isOneToOne: false
+            referencedRelation: "turkish_expressions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turkish_lesson_expressions_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "turkish_lessons"
             referencedColumns: ["id"]
           },
         ]
@@ -269,37 +352,151 @@ export type Database = {
       }
       turkish_lessons: {
         Row: {
-          content: string | null
-          content_en: string | null
           created_at: string
           grammar_rule_id: number | null
           id: number
           quiz_id: number | null
+          sentence_1: string | null
+          sentence_1_en: string | null
+          sentence_10: string | null
+          sentence_10_en: string | null
+          sentence_11: string | null
+          sentence_11_en: string | null
+          sentence_12: string | null
+          sentence_12_en: string | null
+          sentence_13: string | null
+          sentence_13_en: string | null
+          sentence_14: string | null
+          sentence_14_en: string | null
+          sentence_15: string | null
+          sentence_15_en: string | null
+          sentence_16: string | null
+          sentence_16_en: string | null
+          sentence_17: string | null
+          sentence_17_en: string | null
+          sentence_18: string | null
+          sentence_18_en: string | null
+          sentence_19: string | null
+          sentence_19_en: string | null
+          sentence_2: string | null
+          sentence_2_en: string | null
+          sentence_20: string | null
+          sentence_20_en: string | null
+          sentence_3: string | null
+          sentence_3_en: string | null
+          sentence_4: string | null
+          sentence_4_en: string | null
+          sentence_5: string | null
+          sentence_5_en: string | null
+          sentence_6: string | null
+          sentence_6_en: string | null
+          sentence_7: string | null
+          sentence_7_en: string | null
+          sentence_8: string | null
+          sentence_8_en: string | null
+          sentence_9: string | null
+          sentence_9_en: string | null
           title: string | null
           title_en: string | null
-          user_id: number | null
+          user_id: string | null
         }
         Insert: {
-          content?: string | null
-          content_en?: string | null
           created_at?: string
           grammar_rule_id?: number | null
           id?: number
           quiz_id?: number | null
+          sentence_1?: string | null
+          sentence_1_en?: string | null
+          sentence_10?: string | null
+          sentence_10_en?: string | null
+          sentence_11?: string | null
+          sentence_11_en?: string | null
+          sentence_12?: string | null
+          sentence_12_en?: string | null
+          sentence_13?: string | null
+          sentence_13_en?: string | null
+          sentence_14?: string | null
+          sentence_14_en?: string | null
+          sentence_15?: string | null
+          sentence_15_en?: string | null
+          sentence_16?: string | null
+          sentence_16_en?: string | null
+          sentence_17?: string | null
+          sentence_17_en?: string | null
+          sentence_18?: string | null
+          sentence_18_en?: string | null
+          sentence_19?: string | null
+          sentence_19_en?: string | null
+          sentence_2?: string | null
+          sentence_2_en?: string | null
+          sentence_20?: string | null
+          sentence_20_en?: string | null
+          sentence_3?: string | null
+          sentence_3_en?: string | null
+          sentence_4?: string | null
+          sentence_4_en?: string | null
+          sentence_5?: string | null
+          sentence_5_en?: string | null
+          sentence_6?: string | null
+          sentence_6_en?: string | null
+          sentence_7?: string | null
+          sentence_7_en?: string | null
+          sentence_8?: string | null
+          sentence_8_en?: string | null
+          sentence_9?: string | null
+          sentence_9_en?: string | null
           title?: string | null
           title_en?: string | null
-          user_id?: number | null
+          user_id?: string | null
         }
         Update: {
-          content?: string | null
-          content_en?: string | null
           created_at?: string
           grammar_rule_id?: number | null
           id?: number
           quiz_id?: number | null
+          sentence_1?: string | null
+          sentence_1_en?: string | null
+          sentence_10?: string | null
+          sentence_10_en?: string | null
+          sentence_11?: string | null
+          sentence_11_en?: string | null
+          sentence_12?: string | null
+          sentence_12_en?: string | null
+          sentence_13?: string | null
+          sentence_13_en?: string | null
+          sentence_14?: string | null
+          sentence_14_en?: string | null
+          sentence_15?: string | null
+          sentence_15_en?: string | null
+          sentence_16?: string | null
+          sentence_16_en?: string | null
+          sentence_17?: string | null
+          sentence_17_en?: string | null
+          sentence_18?: string | null
+          sentence_18_en?: string | null
+          sentence_19?: string | null
+          sentence_19_en?: string | null
+          sentence_2?: string | null
+          sentence_2_en?: string | null
+          sentence_20?: string | null
+          sentence_20_en?: string | null
+          sentence_3?: string | null
+          sentence_3_en?: string | null
+          sentence_4?: string | null
+          sentence_4_en?: string | null
+          sentence_5?: string | null
+          sentence_5_en?: string | null
+          sentence_6?: string | null
+          sentence_6_en?: string | null
+          sentence_7?: string | null
+          sentence_7_en?: string | null
+          sentence_8?: string | null
+          sentence_8_en?: string | null
+          sentence_9?: string | null
+          sentence_9_en?: string | null
           title?: string | null
           title_en?: string | null
-          user_id?: number | null
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -309,6 +506,13 @@ export type Database = {
             referencedRelation: "turkish_grammar_rules"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "turkish_lessons_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "turkish_quizzes_result"
+            referencedColumns: ["id"]
+          },
         ]
       }
       turkish_quizzes_result: {
@@ -316,16 +520,19 @@ export type Database = {
           created_at: string
           id: number
           score_global: number | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           id?: number
           score_global?: number | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: number
           score_global?: number | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -364,6 +571,47 @@ export type Database = {
             columns: ["quiz_id"]
             isOneToOne: false
             referencedRelation: "turkish_quizzes_result"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      turkish_vocabulary_scores: {
+        Row: {
+          created_at: string
+          expressions_learned_count: number | null
+          expressions_mastered_count: number | null
+          id: number
+          language: string | null
+          user_id: string | null
+          words_learned_count: number | null
+          words_mastered_count: number | null
+        }
+        Insert: {
+          created_at?: string
+          expressions_learned_count?: number | null
+          expressions_mastered_count?: number | null
+          id?: number
+          language?: string | null
+          user_id?: string | null
+          words_learned_count?: number | null
+          words_mastered_count?: number | null
+        }
+        Update: {
+          created_at?: string
+          expressions_learned_count?: number | null
+          expressions_mastered_count?: number | null
+          id?: number
+          language?: string | null
+          user_id?: string | null
+          words_learned_count?: number | null
+          words_mastered_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "turkish_vocabulary_scores_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -411,28 +659,43 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          know_word: boolean | null
-          master_word: boolean | null
           user_id: string | null
           word_id: number | null
+          word_learned: boolean | null
+          word_mastered: boolean | null
         }
         Insert: {
           created_at?: string
           id?: number
-          know_word?: boolean | null
-          master_word?: boolean | null
           user_id?: string | null
           word_id?: number | null
+          word_learned?: boolean | null
+          word_mastered?: boolean | null
         }
         Update: {
           created_at?: string
           id?: number
-          know_word?: boolean | null
-          master_word?: boolean | null
           user_id?: string | null
           word_id?: number | null
+          word_learned?: boolean | null
+          word_mastered?: boolean | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "turkish_words_knowledge_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turkish_words_knowledge_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "turkish_words"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -556,6 +819,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
