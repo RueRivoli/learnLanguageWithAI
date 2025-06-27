@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
       .from("turkish_quizzes_result")
       .upsert({
         score_global: 0,
+        rule_id: ruleId,
       })
       .select("id")
       .single();
@@ -55,11 +56,11 @@ export default defineEventHandler(async (event) => {
       question_id: id,
     }));
 
-    const { errorUpsert} = await supabase
+    const { errorUpsert } = await supabase
       .from("turkish_quizzes_series")
       .upsert(rowsToUpsert);
     if (errorUpsert) throw errorUpsert;
-    return { data: quizId };
+    return { quizId };
   } catch (error) {
     if (error) throw error;
   }
