@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ArrowTrendingUpIcon, EyeIcon } from "@heroicons/vue/24/solid";
-import { Square2StackIcon } from "@heroicons/vue/24/outline";
+import {
+  ArrowTrendingUpIcon,
+  BookmarkIcon as BookmarkSolidIcon,
+  EyeIcon,
+} from "@heroicons/vue/24/solid";
+import { BookmarkIcon, Square2StackIcon } from "@heroicons/vue/24/outline";
 import {
   modulesFirstTab,
   modulesSecondTab,
@@ -46,7 +50,7 @@ const getDifficultyClassQuery = (tab: number) => {
 watchEffect(async () => {
   try {
     const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
-    const grammarModules = await $fetch("/api/grammar", {
+    const grammarModules = await $fetch("/api/grammar?order_by=bookmarked", {
       query,
     });
     if (grammarModules && Array.isArray(grammarModules))
@@ -90,7 +94,12 @@ watchEffect(async () => {
               class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200"
               @click="router.push(`/learning/grammar/${rule.id}`)"
             >
-              <LayoutHeadingRuleTitle :rule="rule" />
+              <div class="flex items-start justify-between">
+                <LayoutHeadingRuleTitle :rule="rule" />
+                <BookmarkSolidIcon v-if="rule.bookmarked" class="h-5 w-5" />
+                <BookmarkIcon v-else class="h-5 w-5" />
+              </div>
+
               <!-- <component
                     :is="getLevelLabel(rule.difficulty_class)"
                     class="text-xs"

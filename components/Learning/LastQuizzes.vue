@@ -3,33 +3,48 @@
 import { PlayIcon, EyeIcon } from "@heroicons/vue/24/outline";
 import { formatDate } from "~/utils/date/date";
 import { useRouter } from "vue-router";
+import type { GrammarRule } from "~/types/grammar-rule";
 
 const router = useRouter();
-
+const isLoading = ref(false);
 const props = withDefaults(
   defineProps<{
-    loading: boolean;
-    ruleName: string | null;
-    quizs: any[];
+    loading?: boolean;
+    rule?: GrammarRule | null;
+    quizs?: any[];
   }>(),
   {
     loading: false,
-    ruleName: "",
+    rule: null,
     quizs: () => [],
   },
 );
 
 const handleGenerateQuiz = async () => {
-  console.log("handleGenerateQuiz");
   try {
-    const response = await $fetch(`/api/quizzes/${1}`, {
-      method: "PUT",
-    });
-    if (response) {
-      router.push(`/learning/quizzes/${response}`);
+    isLoading.value = true;
+    // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
+    const { quizId: newGeneratedQuizId } = await $fetch(
+      `/api/quizzes/${props.rule?.id}`,
+      {
+        method: "PUT",
+      },
+    );
+    console.log("has generated a quizz with the id: ", newGeneratedQuizId);
+    // newGeneratedQuizId is the id of the new generated quiz
+    if (newGeneratedQuizId) {
+      // router.push(`/learning/quizzes/${response}`);
+      await navigateTo({
+        path: `/learning/quizzes/${newGeneratedQuizId}`,
+      });
     }
+    isLoading.value = false;
   } catch (err) {
-    console.error("Error generating quiz:", err);
+    console.error(
+      "An error occured while generating a new quiz, please try again.",
+      err,
+    );
+    isLoading.value = false;
   }
 };
 </script>
@@ -52,7 +67,9 @@ const handleGenerateQuiz = async () => {
           </h3>
           <p class="text-sm text-gray-600">
             Last attempts on
-            <span class="font-medium text-primary">{{ ruleName }}</span>
+            <span class="font-medium text-primary">{{
+              props.rule.ruleNameTranslation
+            }}</span>
           </p>
         </div>
 
@@ -75,7 +92,7 @@ const handleGenerateQuiz = async () => {
           <div v-else class="space-y-3">
             <div
               v-for="(quiz, index) in props.quizs"
-              :key="quiz.id"
+              :key="index"
               class="bg-gray-50 rounded-lg p-4 border border-gray-100 hover:border-gray-200 transition-colors duration-200"
             >
               <div class="flex items-center justify-between">
@@ -136,9 +153,11 @@ const handleGenerateQuiz = async () => {
           <button
             class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
             type="submit"
+            :class="{ 'btn-disabled': isLoading }"
             @click="handleGenerateQuiz"
           >
-            <PlayIcon class="w-5 h-5" />
+            <span v-if="isLoading" class="loading loading-spinner" />
+            <PlayIcon v-else class="w-5 h-5" />
             <span>Start New Quiz</span>
           </button>
         </div>
@@ -146,4 +165,3 @@ const handleGenerateQuiz = async () => {
     </div>
   </div>
 </template>
-

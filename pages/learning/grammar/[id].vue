@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/outline";
-import type { GrammarRule } from "~/types/grammar-rule";
+import { parseRuleData, type GrammarRule } from "~/types/grammar-rule";
 
 const router = useRouter();
 
@@ -12,20 +12,10 @@ definePageMeta({
 const route = useRoute();
 const grammarRuleId = route.params.id;
 const isLoading = ref<boolean>(true);
-const lastQuizs = ref([]);
+const lastQuizzes = ref([]);
 const grammarRule = ref<GrammarRule | null>(null);
 
-const parseRuleData = (data: any) => {
-  return {
-    ruleNameTranslation: data.rule_name_translation ?? null,
-    ruleName: data.rule_name ?? null,
-    difficultyClass: data.difficulty_class ?? null,
-    symbol: data.symbol ?? null,
-    description: data.description ?? null,
-    extendedDescription: data.extended_description ?? null,
-    intro: data.intro ?? null,
-  };
-};
+
 const getGrammarRule = async () => {
   const { data, error } = await useFetch(`/api/grammar/${route.params.id}`);
   if (data) {
@@ -35,13 +25,14 @@ const getGrammarRule = async () => {
   console.log("grammarRule", grammarRule.value);
 };
 
-const getLastQuizs = async () => {
+const getlastQuizzes = async () => {
   console.log("grammarRuleId", route.params.id);
   const { data, error } = await useFetch(
     `/api/quizzes/rules/${route.params.id}`,
   );
+  console.log("last quizzes", data.value)
   if (data) {
-    lastQuizs.value = data.value?.map(({ id, created_at, score }) => ({
+    lastQuizzes.value = data.value?.map(({ id, created_at, score }) => ({
       id,
       createdAt: created_at,
       score,
@@ -51,7 +42,7 @@ const getLastQuizs = async () => {
 };
 
 await getGrammarRule();
-// await getLastQuizs();
+await getlastQuizzes();
 
 const handleGenerateQuiz = async () => {
   console.log("handleGenerateQuiz");
@@ -148,8 +139,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
     <div class="col-span-2">
       <LearningLastQuizzes
         :loading="false"
-        :rule-name="grammarRule.ruleNameTranslation"
-        :quizs="lastQuizs"
+        :rule="grammarRule"
+        :quizs="lastQuizzes"
       />
     </div>
   </div>
