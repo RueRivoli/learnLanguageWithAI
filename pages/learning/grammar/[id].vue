@@ -67,35 +67,18 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 <template>
   <div class="w-full grid grid-cols-5 gap-2">
     <div class="col-span-3 bg-white rounded-lg">
-      <div>
-        <div>
-          <div class="border-b border-zinc-200">
-            <div>
-              <div>
-                <div class="list rounded-box shadow-md">
-                  <div
-                    v-if="isLoading"
-                    class="w-full h-72 flex justify-center items-center"
-                  >
-                    <span class="loading loading-bars loading-xl" />
-                  </div>
-                  <div v-else class="p-5">
-                    <LayoutHeadingRuleTitle
-                      :rule="grammarRule"
-                      :main-title="true"
-                    />
-
-                    <!-- Test template:  -->
-                    <div class="max-w-4xl mx-auto p-6">
-                      <p v-html="sanitizedIntroTemplate" />
-                      <p v-html="sanitizedDescriptionTemplate" />
-                      <p v-html="sanitizedExtendedDescriptionTemplate" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div
+        v-if="isLoading"
+        class="w-full h-72 flex justify-center items-center"
+      >
+        <span class="loading loading-bars loading-xl" />
+      </div>
+      <div v-else class="p-5">
+        <LayoutHeadingRuleTitle :rule="grammarRule" :main-title="true" />
+        <div class="max-w-4xl mx-auto p-6">
+          <p v-html="sanitizedIntroTemplate" />
+          <p v-html="sanitizedDescriptionTemplate" />
+          <p v-html="sanitizedExtendedDescriptionTemplate" />
         </div>
       </div>
     </div>
@@ -108,9 +91,3 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
     </div>
   </div>
 </template>
-
-<style>
-.flex {
-  display: flex;
-}
-</style>

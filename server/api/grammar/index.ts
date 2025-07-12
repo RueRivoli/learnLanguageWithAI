@@ -6,7 +6,6 @@ const supabase = createClient(
 );
 
 export default defineEventHandler(async (event) => {
-  console.log('LA')
   const query = getQuery(event);
   console.log('query', query)
   let request = supabase

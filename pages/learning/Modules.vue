@@ -65,7 +65,7 @@ watchEffect(async () => {
 <template>
   <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
     <div class="max-h-screen col-span-3">
-      <div class="h-full bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md">
         <div class="p-5">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
@@ -159,7 +159,7 @@ watchEffect(async () => {
               Try selecting a different difficulty level.
             </p>
           </div>
-
+          <br/>
           <!-- <table class="table table-pin-rows table-pin-cols">
             <thead>
               <tr>
