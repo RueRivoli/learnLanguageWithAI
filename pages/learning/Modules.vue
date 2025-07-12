@@ -50,7 +50,7 @@ const getDifficultyClassQuery = (tab: number) => {
 watchEffect(async () => {
   try {
     const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
-    const grammarModules = await $fetch("/api/grammar?order_by=bookmarked", {
+    const grammarModules = await $fetch("/api/grammar?order_by=id", {
       query,
     });
     if (grammarModules && Array.isArray(grammarModules))
@@ -107,12 +107,17 @@ watchEffect(async () => {
 
               <!-- Highlights -->
               <div v-if="(rule as any).highlights" class="mb-4">
-                <div class="pb-4">
-                  <div class="flex items-start gap-3">
-                    <div
-                      class="text-gray-700 text-pretty font-semibold leading-relaxed bg-gradient-to-r from-gray-50 to-blue-50 border-l-4 border-blue-300 px-4 py-3 rounded-r-lg shadow-sm"
-                      v-text="(rule as any).highlights"
-                    />
+                <div class="bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-200 rounded-xl p-4 shadow-sm">
+                  <div class="flex items-start">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-2 mb-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Key Point</span>
+                      </div>
+                      <p class="text-sm text-slate-800 font-medium leading-relaxed">
+                        {{ (rule as any).highlights }}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

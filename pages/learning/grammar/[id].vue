@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import DOMPurify from "dompurify";
-import { PlayIcon } from "@heroicons/vue/24/outline";
 import { parseRuleData, type GrammarRule } from "~/types/grammar-rule";
 
 const router = useRouter();
@@ -44,7 +43,6 @@ await getGrammarRule();
 await getlastQuizzes();
 
 const handleGenerateQuiz = async () => {
-  console.log("handleGenerateQuiz");
   const { data, error } = await $fetch(`/api/quizzes/${grammarRuleId}`, {
     method: "PUT",
   });
@@ -86,43 +84,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       :rule="grammarRule"
                       :main-title="true"
                     />
-                    <!-- <LayoutHeadingPlus
-                        :title="grammarRule.ruleNameTranslation"
-                        :description="grammarRule.name"
-                        text-color="text-sucess"
-                        background-color="bg-success"
-                        description-text-color="text-neutral"
-                      >
-                        <span class="text-lg text-white">
-                          {{ (grammarRule as any).symbol }}
-                        </span>
-                      </LayoutHeadingPlus> -->
 
-                    <!-- <LayoutHeadingHighlight
-                        :highlighted-text="grammarRule.ruleNameTranslation"
-                        :end-title="grammarRule.name"
-                      /> -->
-
-                    <!-- <div>
-                        Difficulty :
-                        <component
-                          :is="getLevelLabel(grammarRule.difficulty)"
-                        />
-                      </div> -->
-
-                    <!-- Test templates:  -->
-                    <!-- <RulesPresentTenseTemplate /> -->
-                    <!-- <RulesYesNoQuestionsTemplate /> -->
-                    <!-- <RulesPastTenseTemplate /> -->
-                    <!-- <RulesPossessivePronounsTemplate /> -->
-                    <!-- <RulesTestTemplate /> -->
-                    <!-- <RulesVowelHarmonyTemplate /> -->
-                    <!-- <RulesAsSoonAsTemplate /> -->
-                    <!-- <RulesVarAndYokTemplate /> -->
-                    <!-- <RulesConsonantMutationTemplate /> -->
-                    <!-- <RulesIamYouareTemplate /> -->
-                    <!-- <RulesPronounsTemplate /> -->
-                    <div class="max-w-4xl mx-auto p-6 space-y-6">
+                    <!-- Test template:  -->
+                    <div class="max-w-4xl mx-auto p-6">
                       <p v-html="sanitizedIntroTemplate" />
                       <p v-html="sanitizedDescriptionTemplate" />
                       <p v-html="sanitizedExtendedDescriptionTemplate" />
