@@ -287,7 +287,7 @@ const isActive = (path: string) => {
     </TransitionRoot>
   </div>
   <!-- Menu Icon opening the navbar for mobile views -->
-  <div :open="!sideBarOpened" class="flex flex-col md:hidden">
+  <div :open="!sideBarOpened" class="md:hidden">
     <button
       class="flex-shrink-0 flex items-center justify-center px-2 py-2 w-10 h-10 rounded-full hover:ring-2 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
       @click="sideBarOpened = true"
