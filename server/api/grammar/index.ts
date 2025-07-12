@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   }
   console.log("query.order_by", query, query.order_by)
   if (query.order_by) {
-    request = request.order(query.order_by, { ascending: false })
+    request = request.order(query.order_by, { ascending: true })
   }
   if (query.limit) request = request.range(0, Number(query.limit));
   const { data, error } = await request;
