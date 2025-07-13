@@ -27,6 +27,7 @@ useHead({
 
 const router = useRouter();
 const grammarRules = ref<GrammarRule[]>([]);
+const isFetchingGrammarRules = ref(false)
 const activeDifficultyLevelTab = ref(1);
 
 const getDifficultyClassQuery = (tab: number) => {
@@ -49,13 +50,14 @@ const getDifficultyClassQuery = (tab: number) => {
 };
 watchEffect(async () => {
   try {
+    isFetchingGrammarRules.value = true
     const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
     const grammarModules = await $fetch("/api/grammar?order_by=id", {
       query,
     });
     if (grammarModules && Array.isArray(grammarModules))
       grammarRules.value = parseRules(grammarModules);
-    console.log("grammarRules", grammarRules.value);
+      isFetchingGrammarRules.value = false
   } catch (error) {
     console.log(error);
   }
@@ -88,7 +90,12 @@ watchEffect(async () => {
           <div
             class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
+          <!-- Empty State -->
+           <div v-if="isFetchingGrammarRules" class="text-center py-8">
+            
+          </div>
             <div
+              v-else
               v-for="(rule, n) in grammarRules"
               :key="n"
               class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200"
@@ -140,22 +147,7 @@ watchEffect(async () => {
               </div>
             </div>
           </div>
-
-          <!-- Empty State -->
-          <div v-if="grammarRules.length === 0" class="text-center py-8">
-            <div
-              class="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center"
-            >
-              <Square2StackIcon class="h-6 w-6 text-gray-400" />
-            </div>
-            <h3 class="text-base font-medium text-gray-900 mb-1">
-              No grammar rules found
-            </h3>
-            <p class="text-gray-500 text-sm">
-              Try selecting a different difficulty level.
-            </p>
-          </div>
-          <br/>
+          <!-- Table layout if necessary -->
           <!-- <table class="table table-pin-rows table-pin-cols">
             <thead>
               <tr>
