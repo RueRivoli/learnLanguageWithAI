@@ -41,7 +41,7 @@ const getModulesWithLowScores = async () => {
       moduleOptions.value = modules.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({
           value: rule_id,
-          label: `${turkish_grammar_rules.rule_name_translation} | ${turkish_grammar_rules.rule_name}     Score: ${score} %`,
+          label: `${turkish_grammar_rules.rule_name_translation} | ${turkish_grammar_rules.rule_name}     Score: ${score}%`,
         }),
       );
       ruleNames.value = modules.map(({ rule_id, turkish_grammar_rules }) => ({
@@ -281,7 +281,7 @@ const handleGenerateStory = async () => {
                                 <SparklesIcon
                                   class="h-5 w-5 font-bold group-hover:text-neutral"
                                 />
-                                <span>Get a tailored lesson</span>
+                                <span>Get Tailored Lesson</span>
                               </button>
                             </div>
                           </div>

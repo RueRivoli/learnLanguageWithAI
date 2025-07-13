@@ -1,6 +1,6 @@
 export type Word = {
   id: number;
-  word: string;
+  text: string;
   translation: string;
   role: string;
   wordSentence: string | null;

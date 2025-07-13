@@ -194,21 +194,21 @@ const handleCancel = () => {
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                       <button
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-green-100 hover:text-green-700 transition-all duration-200 group"
+                        class="w-8 h-8 btn btn-circle btn-primary rounded-lg cursor-pointer group"
                         title="View lesson"
                         @click="router.push(`/learning/lessons/${lesson.id}`)"
                       >
                         <EyeIcon
-                          class="h-4 w-4 group-hover:scale-110 transition-transform duration-200"
+                          class="h-5 w-5"
                         />
                       </button>
                       <button
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 transition-all duration-200 group"
+                        class="w-8 h-8 btn btn-circle btn-error text-white rounded-lg cursor-pointer group"
                         title="Delete lesson"
                         @click="handleLessonToDelete(lesson.id, lesson.title)"
                       >
                         <TrashIcon
-                          class="h-4 w-4 group-hover:scale-110 transition-transform duration-200"
+                          class="h-5 w-5"
                         />
                       </button>
                     </div>

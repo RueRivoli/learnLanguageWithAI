@@ -1,0 +1,70 @@
+import type { Expression } from "~/types/expression.ts";
+import type { Word } from "~/types/word.ts";
+import type { Database } from "~/supabase/types";
+
+export const vocabularyFirstTab = { title: "Words", icon: "book" };
+export const vocabularySecondTab = { title: "Expressions", icon: "language" };
+
+export const wordsFirstTab = { title: "To Learn", icon: "book" };
+export const wordsSecondTab = { title: "Learned", icon: "language" };
+
+export const expressionsFirstTab = { title: "To Learn", icon: "book" };
+export const expressionsSecondTab = { title: "Learned", icon: "language" };
+
+export type DatabaseWords = Database['public']['Tables']['turkish_words']['Row']
+export type DatabaseExpressions = Database['public']['Tables']['turkish_expressions']['Row']
+
+export const getClassWordRole = (role: string) => {
+    switch(role) {
+        case 'v':
+            return 'badge badge-primary';
+        case 'n':
+            return 'badge badge-secondary';
+        case 'adj':
+            return 'badge badge-warning text-white';
+        default:
+            return 'badge badge-secondary';
+    }
+}
+
+type WordListFetched = Array<Database['public']['Tables']['turkish_words']['Row'] & {
+    turkish_words_knowledge: {
+      word_mastered: boolean;
+      word_learned: boolean;
+    } | null;
+  }>;
+
+export const parseWords = (words: WordListFetched): Array<Word> => {
+  return words.map((word) => (
+    {
+        id: word.id,
+        isMastered: word.turkish_words_knowledge && word.turkish_words_knowledge[0] ? word.turkish_words_knowledge[0].word_mastered : false,
+        text: word.text,
+        role: word.role,
+        translation: word.translation,
+        wordSentence: word.word_sentence,
+        wordSentenceEn: word.word_sentence_translation,
+        wordSentence2: word.word_sentence_2,
+        wordSentence2En: word.word_sentence_2_translation,
+    }))
+}
+
+type ExpressionListFetched = Array<Database['public']['Tables']['turkish_expressions']['Row'] & {
+    turkish_expressions_knowledge: {
+      expression_mastered: boolean;
+      expression_learned: boolean;
+    } | null;
+  }>;
+
+export const parseExpressions = (expressions: ExpressionListFetched) : Array<Expression> => {
+    return expressions.map((expr) => (
+      {
+        text: expr.text,
+        textEn: expr.translation,
+        isMastered: expr.turkish_expressions_knowledge && expr.turkish_expressions_knowledge[0] ? expr.turkish_expressions_knowledge[0].expression_mastered : false,
+        expressionSentence: expr.expression_sentence,
+        expressionSentenceEn: expr.expression_sentence_translation,
+        expressionSentence2: expr.expression_sentence_2,
+        expressionSentence2En: expr.expression_sentence_2_translation,
+      }))
+  }

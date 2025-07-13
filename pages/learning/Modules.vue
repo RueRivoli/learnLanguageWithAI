@@ -100,10 +100,6 @@ watchEffect(async () => {
                 <BookmarkIcon v-else class="h-5 w-5" />
               </div>
 
-              <!-- <component
-                    :is="getLevelLabel(rule.difficulty_class)"
-                    class="text-xs"
-                  /> -->
 
               <!-- Highlights -->
               <div v-if="(rule as any).highlights" class="mb-4">

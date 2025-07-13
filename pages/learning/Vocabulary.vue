@@ -1,226 +1,316 @@
 <script setup lang="ts">
-import { LanguageIcon, XMarkIcon } from "@heroicons/vue/24/solid";
-import { BookOpenIcon, TagIcon } from "@heroicons/vue/24/outline";
+import { BookOpenIcon, CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+
+import {
+  getClassWordRole,
+  parseExpressions,
+  parseWords,
+  vocabularyFirstTab,
+  vocabularySecondTab,
+} from "~/utils/learning/vocabulary";
+
 import type { Word } from "~/types/word.ts";
 import type { Expression } from "~/types/expression.ts";
+import type {
+  DatabaseExpressions,
+  DatabaseWords,
+} from "~/utils/learning/vocabulary.ts";
 
 definePageMeta({
   layout: "authenticated",
 });
 useHead({
-  title: "Words",
+  title: "Vocabulary",
   titleTemplate: "%s - Learn languages with AI",
-  meta: [{ name: "words", content: "width=device-width, initial-scale=1" }],
+  meta: [
+    { name: "vocabulary", content: "width=device-width, initial-scale=1" },
+  ],
   link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
 });
 
-const router = useRouter();
 const words = ref<Word[]>([]);
 const expressions = ref<Expression[]>([]);
-const selectedWord = ref(null);
-const selectedExpression = ref(null);
+const selectedWord = ref<Word | null>(null);
+const selectedExpression = ref<Expression | null>(null);
+const activeVocabularyTab = ref(1);
+const showLearnedWords = ref(false);
+const showLearnedExpressions = ref(false);
+const searchQuery = ref("");
+const isLoadingFetchingWords = ref(true);
+const isLoadingFetchingExpressions = ref(true);
 
-const { data } = await useFetch("/api/words/:id");
-console.log("data", data.value);
-if (data) {
-  words.value = data.value?.map(
-    ({
-      id,
-      text,
-      role,
-      translation,
-      word_sentence,
-      word_sentence_translation,
-      word_sentence_2,
-      word_sentence_2_translation,
-    }) => ({
-      id,
-      text,
-      role,
-      translation,
-      wordSentence: word_sentence,
-      wordSentenceEn: word_sentence_translation,
-      wordSentence2: word_sentence_2,
-      wordSentence2En: word_sentence_2_translation,
-    }),
-  );
-  selectedWord.value = words.value[0];
-}
-const { dataExpr } = await useFetch("/api/expressions/:id");
-if (dataExpr)
-  expressions.value = dataExpr.value?.map(
-    ({
-      id,
-      text,
-      translation,
-      expression_sentence,
-      expression_sentence_translation,
-      expression_sentence_2,
-      expression_sentence_2_translation,
-    }) => ({
-      id,
-      text,
-      translation,
-      wordSentence: expression_sentence,
-      wordSentenceEn: expression_sentence_translation,
-      wordSentence2: expression_sentence_2,
-      wordSentence2En: expression_sentence_2_translation,
-    }),
-  );
-selectedExpression.value = expressions.value[0];
+// Fetch data
+const getWordList = async () => {
+  isLoadingFetchingWords.value = true;
+  const { data } = await useFetch(`/api/words/`, {
+    query: { is_learned: showLearnedWords.value },
+    transform: (words: Array<DatabaseWords>) => {
+      return parseWords(words);
+    },
+  });
+  isLoadingFetchingWords.value = false;
+  if (data.value) {
+    words.value = data.value;
+  }
+};
 
-// const getWords = async () => {
+const getExpressionList = async () => {
+  const { data: dataExpr } = await useFetch(`/api/expressions/`, {
+    query: { is_learned: showLearnedExpressions.value },
+    transform: (expressions: Array<DatabaseExpressions>) => {
+      return parseExpressions(expressions);
+    },
+  });
+  isLoadingFetchingExpressions.value = false;
+  if (dataExpr.value) {
+    expressions.value = dataExpr.value;
+  }
+};
 
-// };
+watchEffect(async () => {
+  console.log("WatchEffet", showLearnedWords.value);
+  await getWordList();
+  await getExpressionList();
+});
 
-// const getExpressions = async () => {};
+watchEffect(async () => {
+  console.log("WatchEffet", showLearnedExpressions.value);
+  await getExpressionList();
+});
 
-// getWords();
-// getExpressions();
+const editStatusWord = (id: any, isLearned: boolean) => {
+  console.log("mark as learned", id, isLearned);
+};
 </script>
 
 <template>
-  <div class="w-full grid grid-cols-4 gap-2">
-    <div class="col-span-3">
-      <div class="list h-96 bg-white rounded-box shadow-md">
-        <div class="p-4">
-          <LayoutHeadingPlus
-            title="Words"
-            description="The most important words to learn"
-          >
-            <BookOpenIcon
-              class="h-6 w-6 text-primary"
-            />
-          </LayoutHeadingPlus>
-        </div>
-        <div class="overflow-auto max-h-full w-auto">
-          <div class="px-4 max-h-full">
-            <table class="table table-pin-rows table-pin-cols">
-              <thead>
-                <tr>
-                  <th />
-                  <th>Word</th>
-                  <th>Translation</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(w, index) in words"
-                  :key="index"
-                  class="cursor-pointer hover:opacity-60 text-pretty font-semibold"
-                  @click="selectedWord = w"
-                >
-                  <td>
-                    <div>{{ w.id }}</div>
-                  </td>
-                  <td>
-                    <div>{{ w.text }} ({{ w.role }})</div>
-                  </td>
-                  <td>
-                    <div>{{ w.translation }}</div>
-                  </td>
-                  <td class="flex items-center">
-                    <div
-                      class="tooltip tooltip-accent tooltip-bottom"
-                      data-tip="To give priority to this word"
-                    >
-                      <TagIcon
-                        class="h-5 w-5 mr-4 font-semibold text-neutral group-hover:text-white"
-                      />
-                    </div>
-                    <div
-                      class="tooltip tooltip-accent tooltip-bottom"
-                      data-tip="Mark this word if you know it"
-                    >
-                      <XMarkIcon
-                        class="h-5 w-5 font-semibold text-neutral group-hover:text-white"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="mt-2 h-96 list bg-white rounded-box shadow-md">
-        <div class="overflow-x-auto h-96 w-auto">
-          <div class="p-4">
+  <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
+    <div class="max-h-screen col-span-3">
+      <div class="bg-white rounded-lg shadow-md">
+        <!-- Header -->
+        <div
+          class="bg-gradient-to-r from-gray-50/50 to-white p-6 border-b border-gray-100/60"
+        >
+          <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
-              title="Expressions"
-              description="The most important expressions to learn"
+              title="Vocabulary"
+              description="Master Turkish words and expressions"
             >
-              <LanguageIcon
-                class="h-6 w-6 text-primary"
-              />
+              <BookOpenIcon class="h-6 w-6 text-primary" />
             </LayoutHeadingPlus>
+
+            <!-- Tab Navigation -->
+
+            <LayoutTabs
+              :first-tab="vocabularyFirstTab"
+              :second-tab="vocabularySecondTab"
+              @tab-active-changed="
+                (activeTab) => (activeVocabularyTab = activeTab)
+              "
+            />
           </div>
-          <div class="px-4">
-            <table class="table table-pin-rows table-pin-cols">
-              <thead>
-                <tr class="bg-primary">
-                  <th />
-                  <th>Expression</th>
-                  <th>Translation</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(expr, n) in expressions"
-                  class="cursor-pointer font-semibold"
-                  @click="selectedExpression = expr"
+
+          <!-- Controls -->
+          <div class="flex items-center justify-between">
+            <!-- Search -->
+            <!-- <div class="relative flex-1 max-w-md">
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Search words or expressions..."
+                class="w-full pl-12 pr-4 py-3 border border-gray-200/60 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-white/80 backdrop-blur-sm shadow-sm"
+              />
+              <FunnelIcon class="absolute left-4 top-3 h-5 w-5 text-gray-400" />
+            </div> -->
+            <div class="relative flex-1 max-w-md w-64">
+              <fieldset class="fieldset">
+                <input
+                  v-model="searchQuery"
+                  type="text"
+                  class="input"
+                  placeholder="Search words or expressions..."
+                />
+              </fieldset>
+            </div>
+            <div
+              v-if="activeVocabularyTab === 1"
+              class="h-full flex justify-center"
+            >
+              <label class="label">
+                <input
+                  v-model="showLearnedWords"
+                  type="checkbox"
+                  checked="checked"
+                  class="toggle toggle-primary"
+                />
+                <span
+                  :class="{
+                    'text-primary': showLearnedWords,
+                  }"
+                  >Show Learned Words</span
                 >
-                  <td>
-                    <div>{{ expr.id }}</div>
-                  </td>
-                  <td>
-                    <div>{{ expr.text }}</div>
-                  </td>
-                  <td>
-                    <div>{{ expr.translation }}</div>
-                  </td>
-                  <td class="flex items-center">
-                    <div
-                      class="tooltip tooltip-accent tooltip-bottom"
-                      data-tip="To give priority to this word"
-                    >
-                      <TagIcon
-                        class="h-5 w-5 mr-4 font-semibold text-black dark:text-white group-hover:text-white"
-                      />
+              </label>
+            </div>
+            <div v-else class="h-full flex justify-center">
+              <label class="label">
+                <input
+                  v-model="showLearnedExpressions"
+                  type="checkbox"
+                  checked="checked"
+                  class="toggle toggle-primary"
+                />
+                <span
+                  :class="{
+                    'text-primary': showLearnedExpressions,
+                  }"
+                  >Show Learned Expressions</span
+                >
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="h-full px-6 overflow-auto">
+          <!-- Words Tab -->
+          <div v-if="activeVocabularyTab === 1" class="py-6">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              <!-- flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 -->
+              <div
+                v-for="word in words"
+                :key="word.id"
+                class="group p-4 relative bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                :class="{
+                  'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
+                    selectedWord?.id === word.id,
+                  // 'opacity-75': learnedWords.has(word.id),
+                }"
+                @click="selectedWord = word"
+              >
+                <!-- Word content -->
+                <div>
+                  <div
+                    class="text-pretty flex items-start justify-between mb-2"
+                  >
+                    <h3 class="text-xl font-bold text-gray-900 leading-tight">
+                      {{ word.text }}
+                    </h3>
+                    <div :class="getClassWordRole(word.role)">
+                      {{ word.role }}
                     </div>
-                    <div
-                      class="tooltip tooltip-accent tooltip-bottom"
-                      data-tip="Mark this word if you know it"
-                    >
-                      <XMarkIcon
-                        class="h-5 w-5 font-semibold text-black dark:text-white group-hover:text-white"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                  <p class="italic font-medium">
+                    {{ word.translation }}
+                  </p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end pt-4">
+                  <div class="flex items-center gap-1">
+                    <button class="btn btn-ghost btn-xs mr-2">
+                      <div class="flex items-center" v-if="word.isMastered">
+                        <XMarkIcon class="h-4 w-4 mr-2" />
+                        <span >Move Back To Learn</span>
+                      </div>
+                      <div v-else class="flex items-center" >
+                        <CheckIcon class="h-4 w-4 mr-2" />
+                        <span >Mark as Learned</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty state -->
+            <!-- <div v-if="filteredWords.length === 0" class="text-center py-12"> -->
+            <!-- <div
+                class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center"
+              >
+                <BookOpenIcon class="h-8 w-8 text-gray-400" />
+              </div> -->
+            <!-- <h3 class="text-lg font-medium text-gray-900 mb-2">
+                {{ searchQuery ? "No words found" : "No words available" }}
+              </h3> -->
+            <!-- <p class="text-gray-500">
+                {{
+                  searchQuery
+                    ? "Try adjusting your search terms."
+                    : "Check back later for new words."
+                }}
+              </p> -->
+            <!-- </div> -->
+          </div>
+
+          <!-- Expressions Tab -->
+          <div v-if="activeVocabularyTab === 2" class="py-6">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              <div
+                v-for="expression in expressions"
+                :key="expression.text"
+                class="group p-4 relative bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                :class="{
+                  'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
+                    selectedExpression?.text === expression.text,
+                  // 'opacity-75': learnedExpressions.has(expression.text),
+                }"
+                @click="selectedExpression = expression"
+              >
+                <!-- Expression content -->
+                <div>
+                  <div class="mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 leading-tight">
+                      {{ expression.text }}
+                    </h3>
+                  </div>
+                  <p class="text-base text-gray-700 font-medium">
+                    {{ expression.textEn }}
+                  </p>
+                </div>
+
+                <!-- Actions -->
+                <div
+                  class="flex items-center justify-between pt-4 border-t border-gray-100/60"
+                >
+                  <div class="flex items-center gap-1">
+                    <button class="btn btn-ghost btn-xs mr-2">
+                      <div class="flex items-center" v-if="expression.isMastered">
+                        <XMarkIcon class="h-4 w-4 mr-2" />
+                        <span >Move Back To Learn</span>
+                      </div>
+                      <div v-else class="flex items-center" >
+                        <CheckIcon class="h-4 w-4 mr-2" />
+                        <span >Mark as Learned</span>
+                      </div>
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-span-1 h-full grid grid-rows-2 gap-4 grow-1">
-      <div class="row-span-1">
-        <LearningWordIllustration
-          v-if="selectedWord"
-          class="bg-white0 rounded-box shadow-md p-3"
-          :word="selectedWord"
-        />
-      </div>
-      <div class="row-span-1">
-        <LearningWordIllustration
-          v-if="selectedExpression"
-          class="bg-white0 rounded-box shadow-md p-4"
-          :word="selectedExpression"
-        />
+    <!-- Side Panel -->
+    <div class="col-span-1 flex flex-col grow-1 mt-2 mr-2">
+      <div class="h-full">
+          <LearningItemDefinition
+            v-if="activeVocabularyTab === 1"
+            class="bg-white rounded-lg shadow-md p-4"
+            :word="selectedWord"
+          />
+          <LearningItemDefinition
+            v-else
+            class="bg-white rounded-lg shadow-md p-4"
+            :expression="selectedExpression"
+            type="expression"
+          />
       </div>
     </div>
   </div>
