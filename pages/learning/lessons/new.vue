@@ -129,197 +129,178 @@ const handleGenerateStory = async () => {
 
 <template>
   <div>
-    <div class="grid grid-cols-4 gap-2 w-full">
-      <div class="col-span-3">
-        <div>
+    <div class="grid grid-cols-5 gap-2 w-full">
+      <div class="col-span-3 ">
+        <div class="list bg-white rounded-box shadow-md">
           <div>
-            <div>
-              <div>
+            <div class="p-5">
+              <LayoutHeadingPlus
+                title="Create a tailored lesson with AI"
+                description="use latest LLMM models to generate a tailored lesson"
+              >
+                <DocumentIcon class="h-6 w-6 text-primary" />
+              </LayoutHeadingPlus>
+            </div>
+            <div
+              v-if="isFetchingData"
+              class="h-full p-4 flex w-full flex-col gap-4"
+            >
+              <div class="skeleton h-32 w-full" />
+              <div class="skeleton h-32 w-full" />
+              <div class="skeleton h-4 w-28" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+              <div class="skeleton h-4 w-full" />
+            </div>
+            <div v-else>
+              <div id="targeted_module" class="p-5">
+                <div class="flex items-center">
+                  <BoltIcon
+                    class="h-5 w-5 mr-2 font-bold group-hover:text-neutral"
+                  />
+                  <span
+                    class="text-neutral text-lg text-pretty text-md font-semibold"
+                    >Focus on ...</span
+                  >
+                </div>
+
                 <div>
-                  <div class="list bg-white rounded-box shadow-md">
-                    <div>
-                      <div class="p-4">
-                        <LayoutHeadingPlus
-                          title="Create a tailored lesson with AI"
-                          description="use latest LLMM models to generate a tailored lesson"
-                        >
-                          <DocumentIcon class="h-6 w-6 text-primary" />
-                        </LayoutHeadingPlus>
-                      </div>
-                      <div
-                        v-if="isFetchingData"
-                        class="h-full p-4 flex w-full flex-col gap-4"
-                      >
-                        <div class="skeleton h-32 w-full" />
-                        <div class="skeleton h-32 w-full" />
-                        <div class="skeleton h-4 w-28" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                        <div class="skeleton h-4 w-full" />
-                      </div>
-                      <div v-else>
-                        <div id="targeted_module" class="p-5">
-                          <div class="flex items-center">
-                            <BoltIcon
-                              class="h-5 w-5 mr-2 font-bold group-hover:text-neutral"
-                            />
-                            <span
-                              class="text-neutral text-lg text-pretty text-md font-semibold"
-                              >Focus on ...</span
-                            >
-                          </div>
+                  <span class="italic"
+                    >We suggest you to target the module with the weakest
+                    score</span
+                  >
+                </div>
+                <select
+                  v-model="moduleToTrainId"
+                  class="select select-primary mt-2 mb-2"
+                >
+                  <option
+                    v-for="m in moduleOptions"
+                    :key="m.value"
+                    :value="m.value"
+                  >
+                    {{ m.label }}
+                  </option>
+                </select>
+                <div id="targeted_words" class="mt-5">
+                  <div class="flex items-center">
+                    <ListBulletIcon
+                      class="h-5 w-5 mr-2 font-bold group-hover:text-neutral"
+                    />
+                    <span class="text-neutral text-lg text-pretty font-semibold"
+                      >List of words to learn</span
+                    >
+                  </div>
 
-                          <div>
-                            <span class="italic"
-                              >We suggest you to target the module with the
-                              weakest score</span
-                            >
-                          </div>
-                          <select
-                            v-model="moduleToTrainId"
-                            class="select select-primary mt-2 mb-2"
-                          >
-                            <option
-                              v-for="m in moduleOptions"
-                              :key="m.value"
-                              :value="m.value"
-                            >
-                              {{ m.label }}
-                            </option>
-                          </select>
-                          <div id="targeted_words" class="mt-5">
-                            <div class="flex items-center">
-                              <ListBulletIcon
-                                class="h-5 w-5 mr-2 font-bold group-hover:text-neutral"
-                              />
-                              <span
-                                class="text-neutral text-lg text-pretty font-semibold"
-                                >List of words to learn</span
-                              >
-                            </div>
-
-                            <div>
-                              <span class="italic"
-                                >Modify the list below if some words are
-                                familiar to you</span
-                              >
-                            </div>
-                            <div id="word_list" class="pt-2">
-                              <div
-                                v-for="(w, n) in wordList.slice(0, 10)"
-                                class="badge badge-outline badge-primary mr-2 mb-2"
-                              >
-                                {{ w.text }}
-                              </div>
-                              <button
-                                class="btn btn-sm btn-ghost mr-2 mb-2"
-                                @click="handleModifyWordList"
-                              >
-                                <PencilSquareIcon
-                                  class="h-5 w-5 text-warning font-bold group-hover:text-neutral"
-                                />
-                                <!-- <span class="text-neutral text-md">Modify</span> -->
-                              </button>
-                            </div>
-                            <div id="targeted_expressions" class="mt-5">
-                              <div class="flex items-center">
-                                <QueueListIcon
-                                  class="h-5 w-5 mr-2 font-bold group-hover:text-neutral"
-                                />
-                                <span
-                                  class="text-lg text-neutral text-pretty font-semibold"
-                                  >List of expressions to learn</span
-                                >
-                              </div>
-
-                              <div>
-                                <span class="italic">
-                                  <span class="italic"
-                                    >Modify the list below if some expressions
-                                    are familiar to you</span
-                                  ></span
-                                >
-                              </div>
-                              <div class="pt-2">
-                                <div
-                                  v-for="(e, n) in expressionList.slice(0, 4)"
-                                  :key="n"
-                                  class="badge badge-outline badge-primary mr-2 mb-2"
-                                >
-                                  {{ e.text }}
-                                </div>
-                                <button
-                                  class="btn btn-sm btn-ghost mr-2 mb-2"
-                                  @click="handleModifyExpressionList"
-                                >
-                                  <PencilSquareIcon
-                                    class="h-5 w-5 text-warning font-bold group-hover:text-neutral"
-                                    @click="
-                                      handleDeleteSelectedExpression(e.text)
-                                    "
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <div class="mt-8">
-                              <button
-                                class="btn btn-primary"
-                                :class="{ 'btn-disabled': !userId }"
-                                @click="handleGenerateStory"
-                              >
-                                <span
-                                  v-if="isGeneratingLesson"
-                                  class="loading loading-spinner"
-                                />
-                                <SparklesIcon
-                                  class="h-5 w-5 font-bold group-hover:text-neutral"
-                                />
-                                <span>Get Tailored Lesson</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <ModalSelection
-                        id="my_modal_to_change_word_list"
-                        :key="openingModalId"
-                        title="Change word selection"
-                        :list="wordList"
-                        :limit="Number(5)"
-                        @apply-selection="
-                          (value) => handleWordSelectionChange(value)
-                        "
-                        @cancel="handleCancelModal"
-                      />
-                      <ModalSelection
-                        id="my_modal_to_change_expression_list"
-                        :key="openingModalId"
-                        title="Change expression selection"
-                        :list="expressionList"
-                        :limit="Number(5)"
-                        @apply-selection="
-                          (value) => handleExpressionSelectionChange(value)
-                        "
-                        @cancel="handleCancelModal"
-                      />
+                  <div>
+                    <span class="italic"
+                      >Modify the list below if some words are familiar to
+                      you</span
+                    >
+                  </div>
+                  <div id="word_list" class="pt-2">
+                    <div
+                      v-for="(w, n) in wordList.slice(0, 10)"
+                      class="badge badge-outline badge-primary mr-2 mb-2"
+                    >
+                      {{ w.text }}
                     </div>
+                    <button
+                      class="btn btn-sm btn-ghost mr-2 mb-2"
+                      @click="handleModifyWordList"
+                    >
+                      <PencilSquareIcon
+                        class="h-5 w-5 text-warning font-bold group-hover:text-neutral"
+                      />
+                      <!-- <span class="text-neutral text-md">Modify</span> -->
+                    </button>
+                  </div>
+                  <div id="targeted_expressions" class="mt-5">
+                    <div class="flex items-center">
+                      <QueueListIcon
+                        class="h-5 w-5 mr-2 font-bold group-hover:text-neutral"
+                      />
+                      <span
+                        class="text-lg text-neutral text-pretty font-semibold"
+                        >List of expressions to learn</span
+                      >
+                    </div>
+
+                    <div>
+                      <span class="italic">
+                        <span class="italic"
+                          >Modify the list below if some expressions are
+                          familiar to you</span
+                        ></span
+                      >
+                    </div>
+                    <div class="pt-2">
+                      <div
+                        v-for="(e, n) in expressionList.slice(0, 4)"
+                        :key="n"
+                        class="badge badge-outline badge-primary mr-2 mb-2"
+                      >
+                        {{ e.text }}
+                      </div>
+                      <button
+                        class="btn btn-sm btn-ghost mr-2 mb-2"
+                        @click="handleModifyExpressionList"
+                      >
+                        <PencilSquareIcon
+                          class="h-5 w-5 text-warning font-bold group-hover:text-neutral"
+                          @click="handleDeleteSelectedExpression(e.text)"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mt-8">
+                    <button
+                      class="btn btn-primary"
+                      :class="{ 'btn-disabled': !userId }"
+                      @click="handleGenerateStory"
+                    >
+                      <span
+                        v-if="isGeneratingLesson"
+                        class="loading loading-spinner"
+                      />
+                      <SparklesIcon
+                        class="h-5 w-5 font-bold group-hover:text-neutral"
+                      />
+                      <span>Get Tailored Lesson</span>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="col-span-1 border-l border-zinc-950/5">
-          <div />
+            <ModalSelection
+              id="my_modal_to_change_word_list"
+              :key="openingModalId"
+              title="Change word selection"
+              :list="wordList"
+              :limit="Number(5)"
+              @apply-selection="(value) => handleWordSelectionChange(value)"
+              @cancel="handleCancelModal"
+            />
+            <ModalSelection
+              id="my_modal_to_change_expression_list"
+              :key="openingModalId"
+              title="Change expression selection"
+              :list="expressionList"
+              :limit="Number(5)"
+              @apply-selection="
+                (value) => handleExpressionSelectionChange(value)
+              "
+              @cancel="handleCancelModal"
+            />
+          </div>
         </div>
       </div>
     </div>

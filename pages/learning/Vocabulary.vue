@@ -89,7 +89,7 @@ const editStatusWord = (id: any, isLearned: boolean) => {
       <div class="bg-white rounded-lg shadow-md">
         <!-- Header -->
         <div
-          class="bg-gradient-to-r from-gray-50/50 to-white p-6 border-b border-gray-100/60"
+          class="bg-gradient-to-r from-gray-50/50 to-white p-5 border-b border-gray-100/60"
         >
           <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
@@ -298,7 +298,7 @@ const editStatusWord = (id: any, isLearned: boolean) => {
     </div>
 
     <!-- Side Panel -->
-    <div class="col-span-1 flex flex-col grow-1 mt-2 mr-2">
+    <div class="col-span-1 flex flex-col grow-1 mt-3 mr-3">
       <div class="h-full">
           <LearningItemDefinition
             v-if="activeVocabularyTab === 1"

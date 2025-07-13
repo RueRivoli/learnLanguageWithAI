@@ -77,7 +77,7 @@ const handleCancel = () => {
   <div>
     <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
       <div class="col-span-3 max-h-screen">
-        <div class="list bg-white rounded-lg shadow-md h-[95%] p-5">
+        <div class="list bg-white shadow-md h-full p-5">
           <LayoutHeadingPlus
             title="Lessons"
             description="Your list of tailored lessons"
@@ -232,8 +232,8 @@ const handleCancel = () => {
         </div>
       </div>
 
-      <div class="col-span-1 border-l border-zinc-950/5">
-        <div>sidetext {{ lessonNameToDelete?.id }}</div>
+      <div class="col-span-1">
+        
       </div>
     </div>
     <LearningModalDelete

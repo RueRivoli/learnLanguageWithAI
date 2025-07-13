@@ -67,7 +67,7 @@ watchEffect(async () => {
 <template>
   <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
     <div class="max-h-screen col-span-3">
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white shadow-md">
         <div class="p-5">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
@@ -233,7 +233,7 @@ watchEffect(async () => {
       </div>
     </div>
 
-    <div class="col-span-1 flex flex-col grow-1 border-l border-zinc-950/5">
+    <div class="col-span-1 flex flex-col grow-1 mt-3 mr-3">
       <LearningSidePanel />
     </div>
   </div>
