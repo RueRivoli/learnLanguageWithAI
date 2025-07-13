@@ -86,7 +86,7 @@ watchEffect(async () => {
             />
           </div>
         </div>
-        <div class="h-full px-6 overflow-auto">
+        <div class="h-full px-6 overflow-auto pb-5">
           <div
             class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
