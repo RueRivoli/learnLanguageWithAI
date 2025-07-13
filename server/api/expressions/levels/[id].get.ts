@@ -9,7 +9,6 @@ const supabase = createClient(
 export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, "id");
   const query = getQuery(event);
-  console.log('userId', userId)
   const { data: knownExpressions, error } = await supabase
     .from("turkish_expressions_knowledge")
     .select(
@@ -17,7 +16,6 @@ export default defineEventHandler(async (event) => {
     ).eq('user_id', userId).eq('expression_mastered', true);
     if (error) throw error;
    const knownExpressionIdsToExclude = knownExpressions.map(w =>  w.expression_id);
-   console.log("knownWordIdsToExclude", knownExpressionIdsToExclude)
    let req = supabase
   .from('turkish_expressions')
   .select('id, text, translation')

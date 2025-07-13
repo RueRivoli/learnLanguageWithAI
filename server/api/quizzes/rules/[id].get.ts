@@ -8,7 +8,6 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
   const ruleId = getRouterParam(event, "id");
-  console.log('ruleId', ruleId)
   const { data, error } = await supabase
     .from("turkish_quizzes_result")
     .select("id, created_at, score_global")

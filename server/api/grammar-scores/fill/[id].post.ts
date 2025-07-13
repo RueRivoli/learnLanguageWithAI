@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
     throw ("Missing user ID");
   }
   const body = await readBody(event);
-  console.log("body", body)
   const languageLearned = body.language_learned
   if (!languageLearned) {
     throw ("Missing language name");

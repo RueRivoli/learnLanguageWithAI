@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
   const { data, error } = await supabase
     .from("turkish_lessons")
     .insert({ title: "title", title_en: 'title_en', grammar_rule_id: 2, content: "content", content_en: "english" })
-  console.log("data", data);
   if (error) throw error;
   return data;
 });

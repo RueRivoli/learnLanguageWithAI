@@ -23,12 +23,10 @@ export default defineEventHandler(async (event) => {
       }),
     })
     if (result) {
-      console.log("result",result)
       const { data, error } = await supabase
       .from("turkish_lessons")
       .insert({ title: "title", title_en: 'title_en', grammar_rule_id: body.ruleId, content: "content", content_en: "english" })
       if (error) throw error;
-      console.log('story id', data.id)
     }
 
     return result

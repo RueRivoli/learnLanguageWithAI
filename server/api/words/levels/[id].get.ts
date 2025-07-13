@@ -10,8 +10,6 @@ export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, "id");
   const query = getQuery(event);
   const limitItems = Number(query.limit)
-  console.log("limit", limitItems)
-  console.log('userId', userId)
   const { data: knownWords, error } = await supabase
     .from("turkish_words_knowledge")
     .select(
@@ -19,7 +17,6 @@ export default defineEventHandler(async (event) => {
     ).eq('user_id', userId).eq('word_mastered', true);
     if (error) throw error;
    const knownWordIdsToExclude = knownWords.map(w =>  w.word_id);
-   console.log("knownWordIdsToExclude", knownWordIdsToExclude)
    let req = supabase
   .from('turkish_words')
   .select('id, text, translation')

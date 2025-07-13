@@ -120,14 +120,11 @@ const linkExpressionsToLesson = async (expressionIds: number[], lessonId: number
 }
 
 const saveNewLesson = async (content: string, ruleId: number) => {
-  console.log("content >> ", content)
   const newLessonRow = parseModelResponse(content, ruleId)
-      console.log("newLessonRow", newLessonRow)
       // Save new lesson
       const { data: newLesson, error: errorLessons } = await supabase
       .from("turkish_lessons")
       .insert(newLessonRow).select()
-      console.log("new lesson", newLesson)
       if (errorLessons) throw(errorLessons)
       return newLesson
 }
@@ -157,9 +154,7 @@ export default defineEventHandler(async (event) => {
     })
      
     if (result && result.choices[0].message.content) {
-      console.log("cont", result.choices[0].message.content)
       const lesson = await saveNewLesson(result.choices[0].message.content, body.ruleId)
-      console.log("body.expressionIds", body.expressionIds)
       if (lesson) {
         linkWordsToLesson(body.wordIds, lesson[0].id)
         linkExpressionsToLesson(body.expressionIds, lesson[0].id)

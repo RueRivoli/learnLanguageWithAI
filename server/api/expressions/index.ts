@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
     ).eq("turkish_expressions_knowledge.expression_mastered", true)
     .order("id", { ascending: true });
   } else {
-    console.log('normal expressions')
     request = supabase
     .from("turkish_expressions")
     .select(

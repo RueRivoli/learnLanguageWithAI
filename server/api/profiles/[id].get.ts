@@ -8,7 +8,6 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, "id");
-  console.log('USER_ID', userId)
   if (!userId) {
     throw ({ statusCode: 400, statusMessage: "Missing user ID" });
   }
@@ -16,7 +15,6 @@ export default defineEventHandler(async (event) => {
     .from("profiles")
     .select()
     .eq("id", userId);
-    console.log('data', data)
   if (error) throw error;
   return data;
 });
