@@ -84,7 +84,7 @@ const editStatusWord = (id: any, isLearned: boolean) => {
 </script>
 
 <template>
-  <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
+  <div class="max-w-full max-h-screen grid grid-cols-4">
     <div class="max-h-screen col-span-3">
       <div class="bg-white rounded-lg shadow-md">
         <!-- Header -->
@@ -122,7 +122,7 @@ const editStatusWord = (id: any, isLearned: boolean) => {
               />
               <FunnelIcon class="absolute left-4 top-3 h-5 w-5 text-gray-400" />
             </div> -->
-            <div class="relative flex-1 max-w-md w-64">
+            <!-- <div class="relative flex-1 max-w-md w-64">
               <fieldset class="fieldset">
                 <input
                   v-model="searchQuery"
@@ -131,7 +131,7 @@ const editStatusWord = (id: any, isLearned: boolean) => {
                   placeholder="Search words or expressions..."
                 />
               </fieldset>
-            </div>
+            </div> -->
             <div
               v-if="activeVocabularyTab === 1"
               class="h-full flex justify-center"
@@ -298,16 +298,16 @@ const editStatusWord = (id: any, isLearned: boolean) => {
     </div>
 
     <!-- Side Panel -->
-    <div class="col-span-1 flex flex-col grow-1 mt-3 mr-3">
+    <div class="col-span-1 flex flex-col grow-1">
       <div class="h-full">
           <LearningItemDefinition
             v-if="activeVocabularyTab === 1"
-            class="bg-white rounded-lg shadow-md p-4"
+            class="bg-white p-5 border-l border-primary/20"
             :word="selectedWord"
           />
           <LearningItemDefinition
             v-else
-            class="bg-white rounded-lg shadow-md p-4"
+            class="bg-white p-5 border-l border-primary/20"
             :expression="selectedExpression"
             type="expression"
           />

@@ -130,8 +130,8 @@ const handleGenerateStory = async () => {
 <template>
   <div>
     <div class="grid grid-cols-5 gap-2 w-full">
-      <div class="col-span-3 ">
-        <div class="list bg-white rounded-box shadow-md">
+      <div class="col-span-3 flex items-center">
+        <div class="bg-white rounded-box shadow-md ">
           <div>
             <div class="p-5">
               <LayoutHeadingPlus

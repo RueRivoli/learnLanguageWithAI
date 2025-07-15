@@ -194,7 +194,7 @@ const handleCancel = () => {
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                       <button
-                        class="w-8 h-8 btn btn-circle btn-primary rounded-lg cursor-pointer group"
+                        class="w-8 h-8 btn btn-soft btn-circle btn-primary rounded-lg cursor-pointer group"
                         title="View lesson"
                         @click="router.push(`/learning/lessons/${lesson.id}`)"
                       >
@@ -203,7 +203,7 @@ const handleCancel = () => {
                         />
                       </button>
                       <button
-                        class="w-8 h-8 btn btn-circle btn-error text-white rounded-lg cursor-pointer group"
+                        class="w-8 h-8 btn btn-soft btn-circle btn-error rounded-lg cursor-pointer group"
                         title="Delete lesson"
                         @click="handleLessonToDelete(lesson.id, lesson.title)"
                       >

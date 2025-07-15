@@ -2,9 +2,8 @@
 import {
   ArrowTrendingUpIcon,
   BookmarkIcon as BookmarkSolidIcon,
-  EyeIcon,
 } from "@heroicons/vue/24/solid";
-import { BookmarkIcon, Square2StackIcon } from "@heroicons/vue/24/outline";
+import { BookmarkIcon, EyeIcon, Square2StackIcon } from "@heroicons/vue/24/outline";
 import {
   modulesFirstTab,
   modulesSecondTab,
@@ -65,7 +64,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
+  <div class="max-w-full max-h-screen grid grid-cols-4">
     <div class="max-h-screen col-span-3">
       <div class="bg-white shadow-md">
         <div class="p-5">
@@ -127,16 +126,30 @@ watchEffect(async () => {
               <!-- Actions -->
               <div class="flex items-center justify-between">
                 <div>
+
+                  <!-- <button
+                        class="w-8 h-8 btn btn-soft btn-circle btn-primary rounded-lg cursor-pointer group"
+                        title="View lesson"
+                        @click="router.push(`/learning/lessons/${lesson.id}`)"
+                      >
+                        <EyeIcon
+                          class="h-5 w-5"
+                        />
+                      </button> -->
+
                   <button
-                    class="btn btn-ghost btn-sm btn-primary mr-2"
+                    class="btn btn-sm btn-ghost rounded-lg cursor-pointer group mr-2"
                     @click="router.push(`/learning/grammar/${rule.id}`)"
                   >
-                    <EyeIcon class="h-3 w-3" />
-                    View
+                    <EyeIcon class="h-4 w-4" />
+                    <span>View</span>
                   </button>
-                  <button class="btn btn-sm btn-secondary">
-                    <ArrowTrendingUpIcon class="h-3 w-3" />
-                    Practice
+                  <button
+                    class="btn btn-sm btn-soft btn-primary rounded-lg cursor-pointer group mr-2"
+                    @click="router.push(`/learning/grammar/${rule.id}`)"
+                  >
+                    <ArrowTrendingUpIcon class="h-4 w-4" />
+                    <span>Practice</span>
                   </button>
                 </div>
 
@@ -233,7 +246,7 @@ watchEffect(async () => {
       </div>
     </div>
 
-    <div class="col-span-1 flex flex-col grow-1 mt-3 mr-3">
+    <div class="col-span-1 flex flex-col grow-1">
       <LearningSidePanel />
     </div>
   </div>
