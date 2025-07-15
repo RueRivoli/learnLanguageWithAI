@@ -174,9 +174,28 @@ const editStatusWord = (id: any, isLearned: boolean) => {
         <div class="h-full px-6 overflow-auto">
           <!-- Words Tab -->
           <div v-if="activeVocabularyTab === 1" class="py-6">
-            <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
+            <!-- Loading Skeleton for Words -->
+            <div v-if="isLoadingFetchingWords" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div v-for="i in 12" :key="i" class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse">
+                <!-- Word content skeleton -->
+                <div>
+                  <div class="flex items-start justify-between mb-2">
+                    <div class="skeleton h-6 w-24 rounded-md bg-gray-200"></div>
+                    <div class="skeleton h-5 w-16 rounded-full bg-gray-200"></div>
+                  </div>
+                  <div class="skeleton h-4 w-32 rounded bg-gray-200 mb-2"></div>
+                  <div class="skeleton h-4 w-28 rounded bg-gray-200"></div>
+                </div>
+
+                <!-- Actions skeleton -->
+                <div class="flex items-center justify-end pt-4">
+                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actual Words Content -->
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               <!-- flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 -->
               <div
                 v-for="word in words"
@@ -246,9 +265,28 @@ const editStatusWord = (id: any, isLearned: boolean) => {
 
           <!-- Expressions Tab -->
           <div v-if="activeVocabularyTab === 2" class="py-6">
-            <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
+            <!-- Loading Skeleton for Expressions -->
+            <div v-if="isLoadingFetchingExpressions" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div v-for="i in 12" :key="i" class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse">
+                <!-- Expression content skeleton -->
+                <div>
+                  <div class="mb-3">
+                    <div class="skeleton h-6 w-32 rounded-md bg-gray-200 mb-2"></div>
+                    <div class="skeleton h-5 w-28 rounded bg-gray-200"></div>
+                  </div>
+                  <div class="skeleton h-4 w-36 rounded bg-gray-200 mb-2"></div>
+                  <div class="skeleton h-4 w-24 rounded bg-gray-200"></div>
+                </div>
+
+                <!-- Actions skeleton -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100/60">
+                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actual Expressions Content -->
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               <div
                 v-for="expression in expressions"
                 :key="expression.text"

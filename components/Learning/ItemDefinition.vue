@@ -37,7 +37,7 @@ const emptyMessage = computed(() => {
 </script>
 
 <template>
-  <div v-if="isExistingItem" class="w-full text-pretty bg-white">
+  <div v-if="isExistingItem" class="w-full text-pretty shadow-md">
     <div class="text-2xl align-center">
       <!-- "font-bold mr-2 underline underline-offset-3" -->
       <span class="font-bold text-gray-900 leading-tight mr-2"

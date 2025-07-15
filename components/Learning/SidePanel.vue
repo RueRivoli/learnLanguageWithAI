@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChartBarIcon, StarIcon, AcademicCapIcon } from "@heroicons/vue/24/outline";
+import { ChartBarIcon, StarIcon, ExclamationCircleIcon } from "@heroicons/vue/24/outline";
 
 // Mock data - replace with actual props when available
 const progressData = {
@@ -12,9 +12,9 @@ const progressData = {
 
 <template>
   <div class="w-full">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white shadow-sm overflow-hidden">
       <!-- Header -->
-      <div class="bg-gradient-to-r from-primary/5 to-primary/10 px-6 py-4 border-b border-gray-100">
+      <div class="p-5 py-4 border-b border-gray-100">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
             <ChartBarIcon class="w-5 h-5 text-primary" />
@@ -29,7 +29,7 @@ const progressData = {
       <!-- Content -->
       <div class="p-6 space-y-6">
         <!-- Progress Highlight -->
-        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-100">
+        <!-- <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-100">
           <div class="flex items-start gap-3">
             <div class="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0">
               <ChartBarIcon class="w-4 h-4 text-green-600" />
@@ -44,7 +44,7 @@ const progressData = {
               </p>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Stats Grid -->
         <!-- <div class="grid grid-cols-2 gap-4">
@@ -71,16 +71,14 @@ const progressData = {
 
         <!-- Encouragement Message -->
         <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-          <div class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span class="text-xs font-bold text-primary">!</span>
-            </div>
+          <div class="flex items-center gap-3">
+            <ExclamationCircleIcon class="w-5 h-5 text-primary" />
             <div>
               <p class="text-sm font-medium text-gray-800 mb-1">
                 Keep up the great work!
               </p>
               <p class="text-xs text-gray-600 leading-relaxed">
-                Your consistent practice is paying off. You're making excellent progress in your Turkish learning journey.
+                Start improving your skills. 
               </p>
             </div>
           </div>
