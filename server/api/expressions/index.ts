@@ -8,23 +8,34 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
+  const page = query.page
+  const size = query.size
+  const from = (Number(page) - 1) * Number(size)
+  const to = (Number(page) * Number(size) - 1)
   let request
   if (query.is_learned === 'true') {
     request = supabase
     .from("turkish_expressions")
     .select(
-      "id, text, translation, expression_sentence, expression_sentence_translation, expression_sentence_2, expression_sentence_2_translation, turkish_expressions_knowledge!inner(expression_learned, expression_mastered)",
+      "id, text, translation, expression_sentence, expression_sentence_translation, expression_sentence_2, expression_sentence_2_translation, turkish_expressions_knowledge!inner(expression_mastered)", { count: "exact"}
     ).eq("turkish_expressions_knowledge.expression_mastered", true)
-    .order("id", { ascending: true });
+    .order("id", { ascending: true }).range(from, to)
   } else {
-    request = supabase
+    const {data} = await supabase
     .from("turkish_expressions")
     .select(
-      "id, text, translation, expression_sentence, expression_sentence_translation, expression_sentence_2, expression_sentence_2_translation, turkish_expressions_knowledge!left(expression_learned, expression_mastered)",
-    )
-    .order("id", { ascending: true });
+      "id, turkish_expressions_knowledge!inner(expression_mastered)").eq("turkish_expressions_knowledge.expression_mastered", true)
+      console.log('data', data)
+      if (data) {
+        const learnedExpressionIdsToExclude = data.map(({id}) => id)
+        const IdToExclude = `(${learnedExpressionIdsToExclude.join(',')})`
+        console.log('IdToExclude', IdToExclude)
+        request = supabase
+        .from("turkish_expressions")
+        .select("id, text, translation, expression_sentence, expression_sentence_translation, expression_sentence_2, expression_sentence_2_translation", { count: "exact"}).not('id', 'in', IdToExclude).range(from, to).order("id", { ascending: true })
+      }
   }
-  const { data, error } = await request;
+  const { data, count, error } = await request;
   if (error) throw error;
-  return data;
+  return {data, count};
 });

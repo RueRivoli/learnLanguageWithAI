@@ -38,7 +38,6 @@ export const parseWords = (words: WordListFetched): Array<Word> => {
   return words.map((word) => (
     {
         id: word.id,
-        isMastered: word.turkish_words_knowledge && word.turkish_words_knowledge[0] ? word.turkish_words_knowledge[0].word_mastered : false,
         text: word.text,
         role: word.role,
         translation: word.translation,
@@ -49,19 +48,14 @@ export const parseWords = (words: WordListFetched): Array<Word> => {
     }))
 }
 
-type ExpressionListFetched = Array<Database['public']['Tables']['turkish_expressions']['Row'] & {
-    turkish_expressions_knowledge: {
-      expression_mastered: boolean;
-      expression_learned: boolean;
-    } | null;
-  }>;
+type ExpressionListFetched = Array<Database['public']['Tables']['turkish_expressions']['Row']>;
 
 export const parseExpressions = (expressions: ExpressionListFetched) : Array<Expression> => {
     return expressions.map((expr) => (
       {
+        id: expr.id,
         text: expr.text,
         textEn: expr.translation,
-        isMastered: expr.turkish_expressions_knowledge && expr.turkish_expressions_knowledge[0] ? expr.turkish_expressions_knowledge[0].expression_mastered : false,
         expressionSentence: expr.expression_sentence,
         expressionSentenceEn: expr.expression_sentence_translation,
         expressionSentence2: expr.expression_sentence_2,

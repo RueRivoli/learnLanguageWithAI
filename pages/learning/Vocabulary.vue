@@ -28,6 +28,8 @@ useHead({
   link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
 });
 
+const userStore = useUserStore();
+const userScoreStore = useUserScoreStore();
 const words = ref<Word[]>([]);
 const expressions = ref<Expression[]>([]);
 const selectedWord = ref<Word | null>(null);
@@ -35,58 +37,196 @@ const selectedExpression = ref<Expression | null>(null);
 const activeVocabularyTab = ref(1);
 const showLearnedWords = ref(false);
 const showLearnedExpressions = ref(false);
-const searchQuery = ref("");
+// const searchQuery = ref("");
 const isLoadingFetchingWords = ref(true);
 const isLoadingFetchingExpressions = ref(true);
+
+const countWords = ref<number>(0);
+const countExpr = ref<number>(0);
+const {
+  currentPage,
+  endItem,
+  goToNextPage,
+  goToPage,
+  goToPreviousPage,
+  itemsPerPage,
+  pageNumbers,
+  startItem,
+  totalItems,
+  totalPages,
+} = usePagination(countWords);
+
+const {
+  currentPage: currentPageExpr,
+  goToNextPage: goToNextPageExpr,
+  goToPage: goToPageExpr,
+  goToPreviousPage: goToPreviousPageExpr,
+  itemsPerPage: itemsPerPageExpr,
+  pageNumbers: pageNumbersExpr,
+  startItem: startItemExpr,
+  totalItems: totalItemsExpr,
+  totalPages: totalPagesExpr,
+} = usePagination(countExpr);
+
+// {
+//   query: { is_learned: showLearnedWords.value },
+//   transform: (words: Array<DatabaseWords>) => {
+//     return parseWords(words);
+//   },
+// },
 
 // Fetch data
 const getWordList = async () => {
   isLoadingFetchingWords.value = true;
-  const { data } = await useFetch(`/api/words/`, {
-    query: { is_learned: showLearnedWords.value },
-    transform: (words: Array<DatabaseWords>) => {
-      return parseWords(words);
+  const { data } = await useFetch(
+    `/api/words?page=${currentPage.value}&size=10`,
+    {
+      query: { is_learned: showLearnedWords.value },
+      transform: ({
+        data,
+        count,
+      }: {
+        data: Array<DatabaseWords>;
+        count: number;
+      }) => ({
+        words: parseWords(data),
+        count,
+      }),
     },
-  });
-  isLoadingFetchingWords.value = false;
+  );
   if (data.value) {
-    words.value = data.value;
+    words.value = data.value.words || [];
+    countWords.value = data.value.count || 0;
   }
+  isLoadingFetchingWords.value = false;
 };
 
 const getExpressionList = async () => {
-  const { data: dataExpr } = await useFetch(`/api/expressions/`, {
-    query: { is_learned: showLearnedExpressions.value },
-    transform: (expressions: Array<DatabaseExpressions>) => {
-      return parseExpressions(expressions);
+  isLoadingFetchingExpressions.value = true;
+  const { data: dataExpr } = await useFetch(
+    `/api/expressions?page=${currentPageExpr.value}&size=10`,
+    {
+      query: { is_learned: showLearnedExpressions.value },
+      transform: ({
+        data,
+        count,
+      }: {
+        data: Array<DatabaseExpressions>;
+        count: number;
+      }) => ({
+        expressions: parseExpressions(data),
+        count,
+      }),
     },
-  });
-  isLoadingFetchingExpressions.value = false;
+  );
   if (dataExpr.value) {
-    expressions.value = dataExpr.value;
+    expressions.value = dataExpr.value.expressions || [];
+    countExpr.value = dataExpr.value.count || 0;
   }
+  isLoadingFetchingExpressions.value = false;
 };
 
-watchEffect(async () => {
-  console.log("WatchEffet", showLearnedWords.value);
+getWordList();
+getExpressionList();
+
+const handleShowLearnWordsChange = async () => {
+  currentPage.value = 1;
   await getWordList();
-  await getExpressionList();
-});
-
-watchEffect(async () => {
-  console.log("WatchEffet", showLearnedExpressions.value);
-  await getExpressionList();
-});
-
-const editStatusWord = (id: any, isLearned: boolean) => {
-  console.log("mark as learned", id, isLearned);
 };
+
+const handleGoToPreviousPage = async () => {
+  goToPreviousPage();
+  await getWordList();
+};
+const handleGoToPage = async (page: number) => {
+  goToPage(page);
+  await getWordList();
+};
+const handleGoToNextPage = async () => {
+  goToNextPage();
+  await getWordList();
+};
+
+const handleShowLearnExpressionsChange = async () => {
+  currentPageExpr.value = 1;
+  await getExpressionList();
+};
+
+const handleGoToPreviousPageForExpressions = async () => {
+  goToPreviousPageExpr();
+  await getExpressionList();
+};
+const handleGoToPageForExpressions = async (page: number) => {
+  goToPageExpr(page);
+  await getExpressionList();
+};
+const handleGoToNextPageForExpressions = async () => {
+  goToNextPageExpr();
+  await getExpressionList();
+};
+
+const handleWordLearningStatus = async (wordId: number, isLearned: boolean) => {
+  console.log("edit learning status word", wordId, isLearned);
+  if (isLearned) {
+    await $fetch(`/api/words-knowledge/${wordId}`, {
+      method: "DELETE",
+    });
+  } else {
+    console.log("tere");
+    await $fetch(`/api/words-knowledge/${wordId}`, {
+      method: "PUT",
+      body: {
+        word_mastered: true,
+        user_id: userStore.$state.id,
+      },
+    });
+  }
+  getWordList();
+  userScoreStore.setVocabularyScores(userStore.$state.id);
+};
+
+const handleExpressionLearningStatus = async (
+  expressionId: number,
+  isLearned: boolean,
+) => {
+  if (isLearned) {
+    await $fetch(`/api/expressions-knowledge/${expressionId}`, {
+      method: "DELETE",
+    });
+  } else {
+    await $fetch(`/api/expressions-knowledge/${expressionId}`, {
+      method: "PUT",
+      body: {
+        expression_mastered: true,
+        user_id: userStore.$state.id,
+      },
+    });
+  }
+
+  getExpressionList();
+  userScoreStore.setVocabularyScores(userStore.$state.id);
+};
+// abandonned because
+// reset currentPage to 1 when switching showLearnedWords
+// trigger race conditions with watchEffect
+
+// watchEffect(async () => {
+//   console.log("WatchEffet", showLearnedWords.value);
+//   await getWordList();
+// });
+
+// watchEffect(async () => {
+//   console.log("WatchEffet", showLearnedExpressions.value);
+// await getExpressionList();
+// });
 </script>
 
 <template>
-  <div class="max-w-full max-h-screen grid grid-cols-4">
-    <div class="max-h-screen col-span-3">
-      <div class="bg-white rounded-lg shadow-md">
+  <div class="max-w-full min-h-screen grid grid-cols-4">
+    <div class="min-h-screen col-span-3">
+      <div
+        class="min-h-screen h-full flex flex-col bg-white rounded-lg shadow-md"
+      >
         <!-- Header -->
         <div
           class="bg-gradient-to-r from-gray-50/50 to-white p-5 border-b border-gray-100/60"
@@ -142,6 +282,7 @@ const editStatusWord = (id: any, isLearned: boolean) => {
                   type="checkbox"
                   checked="checked"
                   class="toggle toggle-primary"
+                  @change="handleShowLearnWordsChange"
                 />
                 <span
                   :class="{
@@ -151,13 +292,14 @@ const editStatusWord = (id: any, isLearned: boolean) => {
                 >
               </label>
             </div>
-            <div v-else class="h-full flex justify-center">
+            <div v-else class="h-full flex flex-col justify-between">
               <label class="label">
                 <input
                   v-model="showLearnedExpressions"
                   type="checkbox"
                   checked="checked"
                   class="toggle toggle-primary"
+                  @change="handleShowLearnExpressionsChange"
                 />
                 <span
                   :class="{
@@ -171,31 +313,44 @@ const editStatusWord = (id: any, isLearned: boolean) => {
         </div>
 
         <!-- Content -->
-        <div class="h-full px-6 overflow-auto">
+        <div class="h-full px-6">
           <!-- Words Tab -->
-          <div v-if="activeVocabularyTab === 1" class="py-6">
+          <div
+            v-if="activeVocabularyTab === 1"
+            class="pt-6 h-full flex flex-col justify-between"
+          >
             <!-- Loading Skeleton for Words -->
-            <div v-if="isLoadingFetchingWords" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              <div v-for="i in 12" :key="i" class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse">
+            <div
+              v-if="isLoadingFetchingWords"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              <div
+                v-for="i in 12"
+                :key="i"
+                class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse"
+              >
                 <!-- Word content skeleton -->
                 <div>
                   <div class="flex items-start justify-between mb-2">
-                    <div class="skeleton h-6 w-24 rounded-md bg-gray-200"></div>
-                    <div class="skeleton h-5 w-16 rounded-full bg-gray-200"></div>
+                    <div class="skeleton h-6 w-24 rounded-md bg-gray-200" />
+                    <div class="skeleton h-5 w-16 rounded-full bg-gray-200" />
                   </div>
-                  <div class="skeleton h-4 w-32 rounded bg-gray-200 mb-2"></div>
-                  <div class="skeleton h-4 w-28 rounded bg-gray-200"></div>
+                  <div class="skeleton h-4 w-32 rounded bg-gray-200 mb-2" />
+                  <div class="skeleton h-4 w-28 rounded bg-gray-200" />
                 </div>
 
                 <!-- Actions skeleton -->
                 <div class="flex items-center justify-end pt-4">
-                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200"></div>
+                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200" />
                 </div>
               </div>
             </div>
 
             <!-- Actual Words Content -->
-            <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div
+              v-else
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
               <!-- flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 -->
               <div
                 v-for="word in words"
@@ -228,21 +383,38 @@ const editStatusWord = (id: any, isLearned: boolean) => {
                 <!-- Actions -->
                 <div class="flex items-center justify-end pt-4">
                   <div class="flex items-center gap-1">
-                    <button class="btn btn-ghost btn-xs mr-2">
-                      <div class="flex items-center" v-if="word.isMastered">
+                    <button
+                      class="btn btn-ghost btn-xs mr-2"
+                      @click="
+                        handleWordLearningStatus(word.id, showLearnedWords)
+                      "
+                    >
+                      <div v-if="showLearnedWords" class="flex items-center">
                         <XMarkIcon class="h-4 w-4 mr-2" />
-                        <span >Move Back To Learn</span>
+                        <span>Move Back To Learn</span>
                       </div>
-                      <div v-else class="flex items-center" >
+                      <div v-else class="flex items-center">
                         <CheckIcon class="h-4 w-4 mr-2" />
-                        <span >Mark as Learned</span>
+                        <span>Mark as Learned</span>
                       </div>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-
+            <LayoutTablePagination
+              class="mt-2"
+              :current-page="currentPage"
+              :end-item="endItem"
+              :start-item="startItem"
+              :items-per-page="itemsPerPage"
+              :page-numbers="pageNumbers"
+              :total-items="totalItems"
+              :total-pages="totalPages"
+              @go-to-next-page="handleGoToNextPage"
+              @go-to-page="(page: number) => handleGoToPage(page)"
+              @go-to-previous-page="handleGoToPreviousPage"
+            />
             <!-- Empty state -->
             <!-- <div v-if="filteredWords.length === 0" class="text-center py-12"> -->
             <!-- <div
@@ -264,29 +436,46 @@ const editStatusWord = (id: any, isLearned: boolean) => {
           </div>
 
           <!-- Expressions Tab -->
-          <div v-if="activeVocabularyTab === 2" class="py-6">
+          <div
+            v-if="activeVocabularyTab === 2"
+            class="pt-6 h-full flex flex-col justify-between"
+          >
             <!-- Loading Skeleton for Expressions -->
-            <div v-if="isLoadingFetchingExpressions" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              <div v-for="i in 12" :key="i" class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse">
+            <div
+              v-if="isLoadingFetchingExpressions"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              <div
+                v-for="i in 12"
+                :key="i"
+                class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse"
+              >
                 <!-- Expression content skeleton -->
                 <div>
                   <div class="mb-3">
-                    <div class="skeleton h-6 w-32 rounded-md bg-gray-200 mb-2"></div>
-                    <div class="skeleton h-5 w-28 rounded bg-gray-200"></div>
+                    <div
+                      class="skeleton h-6 w-32 rounded-md bg-gray-200 mb-2"
+                    />
+                    <div class="skeleton h-5 w-28 rounded bg-gray-200" />
                   </div>
-                  <div class="skeleton h-4 w-36 rounded bg-gray-200 mb-2"></div>
-                  <div class="skeleton h-4 w-24 rounded bg-gray-200"></div>
+                  <div class="skeleton h-4 w-36 rounded bg-gray-200 mb-2" />
+                  <div class="skeleton h-4 w-24 rounded bg-gray-200" />
                 </div>
 
                 <!-- Actions skeleton -->
-                <div class="flex items-center justify-between pt-4 border-t border-gray-100/60">
-                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200"></div>
+                <div
+                  class="flex items-center justify-between pt-4 border-t border-gray-100/60"
+                >
+                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200" />
                 </div>
               </div>
             </div>
 
             <!-- Actual Expressions Content -->
-            <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div
+              v-else
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
               <div
                 v-for="expression in expressions"
                 :key="expression.text"
@@ -315,21 +504,44 @@ const editStatusWord = (id: any, isLearned: boolean) => {
                   class="flex items-center justify-between pt-4 border-t border-gray-100/60"
                 >
                   <div class="flex items-center gap-1">
-                    <button class="btn btn-ghost btn-xs mr-2">
-                      <div class="flex items-center" v-if="expression.isMastered">
+                    <button
+                      class="btn btn-ghost btn-xs mr-2"
+                      @click="
+                        handleExpressionLearningStatus(
+                          expression.id,
+                          showLearnedExpressions,
+                        )
+                      "
+                    >
+                      <div
+                        v-if="showLearnedExpressions"
+                        class="flex items-center"
+                      >
                         <XMarkIcon class="h-4 w-4 mr-2" />
-                        <span >Move Back To Learn</span>
+                        <span>Move Back To Learn</span>
                       </div>
-                      <div v-else class="flex items-center" >
+                      <div v-else class="flex items-center">
                         <CheckIcon class="h-4 w-4 mr-2" />
-                        <span >Mark as Learned</span>
+                        <span>Mark as Learned</span>
                       </div>
                     </button>
-
                   </div>
                 </div>
               </div>
             </div>
+            <LayoutTablePagination
+              class="mt-2"
+              :current-page="currentPageExpr"
+              :end-item="endItemExpr"
+              :start-item="startItemExpr"
+              :items-per-page="itemsPerPageExpr"
+              :page-numbers="pageNumbersExpr"
+              :total-items="totalItemsExpr"
+              :total-pages="totalPagesExpr"
+              @go-to-next-page="handleGoToNextPageForExpressions"
+              @go-to-page="(page: number) => handleGoToPageForExpressions(page)"
+              @go-to-previous-page="handleGoToPreviousPageForExpressions"
+            />
           </div>
         </div>
       </div>
@@ -338,17 +550,17 @@ const editStatusWord = (id: any, isLearned: boolean) => {
     <!-- Side Panel -->
     <div class="col-span-1 flex flex-col grow-1">
       <div class="h-full">
-          <LearningItemDefinition
-            v-if="activeVocabularyTab === 1"
-            class="bg-white p-5 border-l border-primary/20"
-            :word="selectedWord"
-          />
-          <LearningItemDefinition
-            v-else
-            class="bg-white p-5 border-l border-primary/20"
-            :expression="selectedExpression"
-            type="expression"
-          />
+        <LearningItemDefinition
+          v-if="activeVocabularyTab === 1"
+          class="bg-white p-5 border-l border-primary/20"
+          :word="selectedWord"
+        />
+        <LearningItemDefinition
+          v-else
+          class="bg-white p-5 border-l border-primary/20"
+          :expression="selectedExpression"
+          type="expression"
+        />
       </div>
     </div>
   </div>
