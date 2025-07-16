@@ -31,8 +31,8 @@ const isExistingItem = computed(() => {
 });
 const emptyMessage = computed(() => {
   return props.type === "word"
-    ? "Select a word to view details"
-    : "Select an expression to view details";
+    ? "Select a word to view its definition"
+    : "Select an expression to view its explanation";
 });
 </script>
 
@@ -43,6 +43,7 @@ const emptyMessage = computed(() => {
       <span class="font-bold text-gray-900 leading-tight mr-2"
         >{{ props.type === "word" ? props.word.text : props.expression.text }}
       </span>
+      <br v-if="props.type === 'expression'" />
       <span class="italic">
         {{ props.type === "word" ? word.translation : expression.textEn }}</span
       >
@@ -58,9 +59,9 @@ const emptyMessage = computed(() => {
               ? word.wordSentence
               : expression.expressionSentence
           "
-          class="font-semibold flex items-center"
+          class="font-semibold"
         >
-          <ArrowLongRightIcon class="h-5 w-5 mr-2" />
+          <ArrowLongRightIcon class="h-5 w-5 mr-2 inline" />
           <span>
             {{
               props.type === "word"

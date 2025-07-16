@@ -20,37 +20,10 @@ const pseudoDefinitionModal = ref<{ openModal: () => void } | null>(null);
 const activeTab = ref(1);
 
 onMounted(async () => {
-  console.log("userScoreStore", userScoreStore.$state.isLoaded);
+  console.log("is dashboard data loaded ?", userScoreStore.$state.isLoaded);
   if (!userScoreStore.$state.isLoaded) {
-    const scores = await $fetch(`/api/general-scores/${user.value?.id}`, {
-      method: "GET",
-    });
-    console.log("loading scores into userScoreStore", scores);
-    const grammarScores = scores.grammarScores.data.map(
-      ({ rule_id, score, turkish_grammar_rules }) => ({
-        ruleId: rule_id,
-        ruleName: turkish_grammar_rules.rule_name,
-        ruleNameEn: turkish_grammar_rules.rule_name_translation,
-        ruleScore: score,
-        ruleDifficulty: turkish_grammar_rules.difficulty_class,
-      }),
-    );
-    const vocabScores = scores.vocabScores.data.map(
-      ({
-        expressions_learned_count,
-        expressions_mastered_count,
-        words_learned_count,
-        words_mastered_count,
-      }) => ({
-        totalWordsMastered: expressions_learned_count,
-        totalWordsLearned: expressions_mastered_count,
-        totalExpressionsMastered: words_learned_count,
-        totalExpressionsLearned: words_mastered_count,
-      }),
-    );
-    console.log("vocabScores", vocabScores);
-    userScoreStore.setScores(grammarScores, vocabScores[0]);
-    console.log("userScoreStore.state", userScoreStore.$state);
+    console.log("fetch all dashboard data")
+    userScoreStore.setAllScores(user.value?.id);
   }
 });
 watchEffect(async () => {
