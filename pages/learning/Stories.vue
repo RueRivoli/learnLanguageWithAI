@@ -26,16 +26,6 @@ const {
 
 const fetchLessons = async () => {
   isFetchingData.value = true;
-  console.log("fetchLesson");
-  // const { data, error } = await useAsyncData("lessons", () =>
-  //   $fetch(`/api/lessons?page=${currentPage.value}&size=10`),
-  // );
-  // isFetchingData.value = false;
-  // if (error.value) throw error.value;
-  // else if (data.value) {
-  //   lessons.value = data.value?.dataResult.data || [];
-  //   count.value = data.value?.countResult.count || 0;
-  // }
   const results = await $fetch(
     `/api/lessons?page=${currentPage.value}&size=10`,
   );
@@ -80,7 +70,7 @@ const handleCancel = () => {
         <div class="list bg-white shadow-md h-full p-5">
           <LayoutHeadingPlus
             title="Lessons"
-            description="Your list of tailored lessons"
+            description="Your History of Tailored Lessons"
           >
             <DocumentIcon class="h-6 w-6 text-primary" />
           </LayoutHeadingPlus>

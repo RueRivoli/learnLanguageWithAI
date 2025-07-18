@@ -234,7 +234,7 @@ const handleExpressionLearningStatus = async (
           <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
               title="Vocabulary"
-              description="Master Turkish words and expressions"
+              description="Most Common Words and Expressions"
             >
               <BookOpenIcon class="h-6 w-6 text-primary" />
             </LayoutHeadingPlus>
@@ -288,7 +288,7 @@ const handleExpressionLearningStatus = async (
                   :class="{
                     'text-primary': showLearnedWords,
                   }"
-                  >Show Learned Words</span
+                  >See Words You Learned</span
                 >
               </label>
             </div>
@@ -305,7 +305,7 @@ const handleExpressionLearningStatus = async (
                   :class="{
                     'text-primary': showLearnedExpressions,
                   }"
-                  >Show Learned Expressions</span
+                  >See Expressions You Learned</span
                 >
               </label>
             </div>

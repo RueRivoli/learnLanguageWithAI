@@ -71,7 +71,7 @@ watchEffect(async () => {
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
               title="Modules"
-              description="The modules to target"
+              description="Area of Improvements"
             >
               <Square2StackIcon class="h-6 w-6 text-primary" />
             </LayoutHeadingPlus>
