@@ -6,9 +6,11 @@ const props = withDefaults(
     id: string;
     title: string;
     limit: number;
+    type: "word" | "expression";
   }>(),
   {
     list: [],
+    type: "word",
     id: "",
     title: "",
     limit: 10,
@@ -37,21 +39,26 @@ const handleDeleteSelectedItem = (text: string) => {
         <h3 class="text-lg font-semibold">{{ props.title }}</h3>
       </div>
 
-      <p class="py-4 italic">
-        Click on the words you know to remove them from the learning list.
-        <br>
-        <span>
-        The words you closed will be automatically stored as known words.
+      <p class="pt-2 pb-4 italic">
+        <span v-if="props.type === 'word'"
+          >Remove words you know from the list.
+        </span>
+        <span v-else-if="props.type === 'expression'">
+          Remove expressions you know from the list.
+          <!-- </span>
+        TODO: master learning word when closed here -->
+          <!-- <span>The expressions you closed will be automatically stored as learned
+          expressions.</span> -->
         </span>
       </p>
-     
+
       <!-- <form method="dialog">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
           ✕
         </button>
       </form> -->
       <div
-        v-for="(elt, n) in listItems.slice(0, 10)"
+        v-for="(elt, n) in listItems.slice(0, props.limit)"
         :key="n"
         class="btn btn-sm btn-neutral mr-2 mb-2"
       >

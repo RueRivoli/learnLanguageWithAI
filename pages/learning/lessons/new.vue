@@ -133,26 +133,24 @@ const handleGenerateStory = async () => {
 
 <template>
   <div class="min-h-screen relative py-8 overflow-hidden">
-    <!-- Stunning Light Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-gray-100"></div>
+    <!-- Professional Light Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
     
-    <!-- Animated gradient overlay -->
-    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-warning/3 to-primary/5 animate-pulse" style="animation-duration: 8s;"></div>
+    <!-- Subtle color hints overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-warning/3"></div>
     
-    <!-- Geometric shapes -->
-    <div class="absolute top-0 left-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl animate-bounce" style="animation-duration: 12s; animation-delay: 0s;"></div>
-    <div class="absolute top-20 right-0 w-80 h-80 bg-warning/6 rounded-full blur-3xl animate-bounce" style="animation-duration: 15s; animation-delay: 3s;"></div>
-    <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-bounce" style="animation-duration: 18s; animation-delay: 6s;"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-warning/4 rounded-full blur-3xl animate-bounce" style="animation-duration: 20s; animation-delay: 9s;"></div>
+    <!-- Professional geometric accents -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-primary/4 rounded-full blur-3xl"></div>
+    <div class="absolute top-20 right-0 w-80 h-80 bg-warning/3 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-black/2 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/2 rounded-full blur-3xl"></div>
     
-    <!-- Subtle grid pattern -->
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <!-- Subtle professional grid pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
     
-
-    
-    <!-- Wave effects -->
-    <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-primary/3 via-transparent to-transparent"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-warning/3 via-transparent to-transparent"></div>
+    <!-- Professional edge accents -->
+    <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/5 via-transparent to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/5 via-transparent to-transparent"></div>
     
     <!-- Content wrapper -->
     <div class="relative z-10">
@@ -263,7 +261,7 @@ const handleGenerateStory = async () => {
                   @click="handleModifyWordList"
                 >
                   <PencilSquareIcon class="h-4 w-4 mr-1" />
-                  Modify
+                  <span>Modify</span>
                 </button>
               </div>
               
@@ -308,7 +306,7 @@ const handleGenerateStory = async () => {
                   @click="handleModifyExpressionList"
                 >
                   <PencilSquareIcon class="h-4 w-4 mr-1" />
-                  Modify
+                  <span>Modify</span>
                 </button>
               </div>
               
@@ -351,7 +349,7 @@ const handleGenerateStory = async () => {
                 class="loading loading-spinner loading-md text-white mr-2"
               />
               <SparklesIcon class="h-5 w-5 mr-2" />
-              Generate Tailored Lesson
+              <span>Generate Tailored Lesson</span>
             </button>
           </div>
         </div>
@@ -363,7 +361,7 @@ const handleGenerateStory = async () => {
         :key="openingModalId"
         title="Customize Word Selection"
         :list="wordList"
-        :limit="Number(5)"
+        :limit="Number(10)"
         @apply-selection="(value) => handleWordSelectionChange(value)"
         @cancel="handleCancelModal"
       />
@@ -372,7 +370,8 @@ const handleGenerateStory = async () => {
         :key="openingModalId"
         title="Customize Expression Selection"
         :list="expressionList"
-        :limit="Number(5)"
+        :limit="Number(4)"
+        type="expression"
         @apply-selection="(value) => handleExpressionSelectionChange(value)"
         @cancel="handleCancelModal"
       />
