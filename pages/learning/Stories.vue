@@ -65,8 +65,8 @@ const handleCancel = () => {
 
 <template>
   <div>
-    <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
-      <div class="col-span-3 max-h-screen">
+    <div class="max-w-full max-h-screen flex justify-center">
+      <div class="w-full max-w-6xl max-h-screen">
         <div class="list bg-white shadow-md h-full p-5">
           <LayoutHeadingPlus
             title="Lessons"
@@ -220,10 +220,6 @@ const handleCancel = () => {
             @go-to-previous-page="goToPreviousPage"
           />
         </div>
-      </div>
-
-      <div class="col-span-1">
-        
       </div>
     </div>
     <LearningModalDelete
