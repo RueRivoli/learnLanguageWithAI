@@ -240,26 +240,26 @@ const handleGenerateStory = async () => {
 
             <!-- Stylish Separator 1 -->
             <div class="flex items-center justify-center">
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
               <div class="mx-4 flex items-center gap-2">
                 <div class="w-2 h-2 bg-primary rounded-full"></div>
                 <div class="w-1 h-1 bg-primary/60 rounded-full"></div>
                 <div class="w-1 h-1 bg-primary/40 rounded-full"></div>
               </div>
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
             </div>
 
             <!-- Words Section -->
             <div class="">
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center">
-                  <div class="bg-blue-500/10 p-2 rounded-lg mr-3">
-                    <BookOpenIcon class="h-5 w-5 text-blue-600" />
+                  <div class="bg-primary text-white p-2 rounded-lg mr-3">
+                    <BookOpenIcon class="h-5 w-5" />
                   </div>
                   <h3 class="text-xl font-semibold text-gray-900">Words To Learn</h3>
                 </div>
                 <button
-                  class="btn btn-sm btn-outline btn-primary"
+                  class="btn btn-primary btn-sm btn-outline"
                   @click="handleModifyWordList"
                 >
                   <PencilSquareIcon class="h-4 w-4 mr-1" />
@@ -275,7 +275,7 @@ const handleGenerateStory = async () => {
                 <div
                   v-for="(w, n) in wordList.slice(0, 10)"
                   :key="n"
-                  class="badge badge-primary badge-lg hover:bg-primary/90 cursor-pointer transition-colors"
+                  class="badge badge-primary badge-lg hover:bg-primary/90 cursor-pointer"
                 >
                   {{ w.text }}
                 </div>
@@ -284,13 +284,13 @@ const handleGenerateStory = async () => {
 
             <!-- Stylish Separator 2 -->
             <div class="flex items-center justify-center">
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
               <div class="mx-4 flex items-center gap-2">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div class="w-1 h-1 bg-blue-500/60 rounded-full"></div>
-                <div class="w-1 h-1 bg-blue-500/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-primary rounded-full"></div>
+                <div class="w-1 h-1 bg-primary/60 rounded-full"></div>
+                <div class="w-1 h-1 bg-primary/40 rounded-full"></div>
               </div>
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
             </div>
 
             <!-- Expressions Section -->
@@ -328,7 +328,7 @@ const handleGenerateStory = async () => {
             </div>
 
             <!-- Stylish Separator 3 -->
-            <div class="flex items-center justify-center">
+            <!-- <div class="flex items-center justify-center">
               <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
               <div class="mx-4 flex items-center gap-2">
                 <div class="w-2 h-2 bg-accent rounded-full"></div>
@@ -336,55 +336,23 @@ const handleGenerateStory = async () => {
                 <div class="w-1 h-1 bg-accent/40 rounded-full"></div>
               </div>
               <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-            </div>
+            </div> -->
           </div>
 
           <!-- Generate Button Section -->
-          <div class="text-center pt-4">
-            <div class="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-lg overflow-hidden">
-              <!-- Subtle background pattern -->
-              <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.02)_0%,transparent_50%)]"></div>
-              
-              <div class="relative z-10">
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Ready to Create Your Lesson?</h3>
-                <p class="text-gray-600 mb-6 text-sm max-w-2xl mx-auto leading-relaxed">
-                  Our AI will generate a personalized lesson combining your selected grammar focus, vocabulary, and expressions
-                </p>
-                
-                <!-- Stylish Button -->
-                <div class="relative inline-block">
-                  <!-- Button glow effect -->
-                  <div class="absolute inset-0 bg-gradient-to-r from-warning/20 to-warning/10 rounded-2xl blur-xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <!-- Main button -->
-                  <button
-                    class="relative btn btn-lg px-12 py-4 text-xl font-bold bg-gradient-to-r from-warning to-warning/90 text-white border-0 rounded-lg shadow-xl hover:shadow-2xl overflow-hidden group"
-                    :class="{ 'btn-disabled opacity-50 cursor-not-allowed': !userId }"
-                    @click="handleGenerateStory"
-                  >
-                    <!-- Elegant shimmer effect -->
-                    <!-- <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div> -->
-                    
-                    <!-- Content -->
-                    <div class="relative flex items-center justify-center gap-3">
-                      <span
-                        v-if="isGeneratingLesson"
-                        class="loading loading-spinner loading-md text-white"
-                      />
-                      <SparklesIcon class="h-6 w-6 text-white" />
-                      <span class="font-bold tracking-wide">
-                        Generate Tailored Lesson
-                      </span>
-                    </div>
-                  </button>
-                </div>
-                
-                <!-- Elegant decorative line -->
-                <div class="flex justify-center mt-6">
-                  <div class="w-24 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                </div>
-              </div>
-            </div>
+          <div class="text-center pt-8">
+            <button
+              class="btn btn-lg px-8 py-3 text-lg font-semibold bg-warning border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              :class="{ 'btn-disabled opacity-50 cursor-not-allowed': !userId }"
+              @click="handleGenerateStory"
+            >
+              <span
+                v-if="isGeneratingLesson"
+                class="loading loading-spinner loading-md text-white mr-2"
+              />
+              <SparklesIcon class="h-5 w-5 mr-2" />
+              Generate Tailored Lesson
+            </button>
           </div>
         </div>
       </div>
