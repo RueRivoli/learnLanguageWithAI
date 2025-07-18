@@ -135,34 +135,34 @@ const handleGenerateStory = async () => {
   <div class="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 py-8">
     <div class="max-w-4xl mx-auto px-4">
       <!-- Header Section -->
-      <div class="text-center mb-12 relative">
+      <div class="text-center mb-8 relative">
         <!-- Background decoration -->
         <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 rounded-3xl -z-10"></div>
         <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
         
-        <div class="max-w-3xl mx-auto px-6 py-8">
+        <div class="max-w-3xl mx-auto px-6 py-6">
           <!-- Main Title with Gradient -->
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent leading-tight">
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent leading-tight">
             Create a Tailored Lesson with AI
           </h1>
           
           <!-- Subtitle with better styling -->
-          <p class="text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto font-medium">
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed max-w-2xl mx-auto font-medium">
             Generate personalized lessons using the latest AI models, perfectly adapted to your progress
           </p>
           
           <!-- Feature highlights -->
-          <div class="flex flex-wrap justify-center gap-6 mb-8">
-            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <SparklesIcon class="h-5 w-5 text-primary" />
+          <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <SparklesIcon class="h-4 w-4 text-primary" />
               <span class="text-sm font-semibold text-gray-700">AI-Powered</span>
             </div>
-            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <DocumentIcon class="h-5 w-5 text-primary" />
+            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <DocumentIcon class="h-4 w-4 text-primary" />
               <span class="text-sm font-semibold text-gray-700">Personalized</span>
             </div>
-            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <BoltIcon class="h-5 w-5 text-primary" />
+            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <BoltIcon class="h-4 w-4 text-primary" />
               <span class="text-sm font-semibold text-gray-700">Instant</span>
             </div>
           </div>
