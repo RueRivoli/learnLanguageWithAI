@@ -189,101 +189,133 @@ const handleGenerateStory = async () => {
         <!-- Content -->
         <div v-else class="p-8 ">
           <div class="rounded-xl px-6 pb-6 space-y-10">
-                      <!-- Module Selection Section -->
-          <div class="">
-            <div class="flex items-center mb-3">
-              <div class="bg-primary/10 p-2 rounded-lg mr-3">
-                <ViewfinderCircleIcon class="h-5 w-5 text-primary" />
-              </div>
-              <h3 class="text-xl font-semibold text-gray-900">The Module You Target</h3>
-            </div>
-            
-            <p class="text-gray-600 mb-4 text-sm">
-              We suggest targeting the module with your weakest score for optimal learning
-            </p>
-            
-            <select
-              v-model="moduleToTrainId"
-              class="select select-primary w-full max-w-md bg-white border-primary/30 focus:border-primary"
-            >
-              <option
-                v-for="m in moduleOptions"
-                :key="m.value"
-                :value="m.value"
-              >
-                {{ m.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Words Section -->
-          <div class="">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center">
-                <div class="bg-blue-500/10 p-2 rounded-lg mr-3">
-                  <BookOpenIcon class="h-5 w-5 text-blue-600" />
+            <!-- Module Selection Section -->
+            <div class="">
+              <div class="flex items-center mb-3">
+                <div class="bg-primary/10 p-2 rounded-lg mr-3">
+                  <ViewfinderCircleIcon class="h-5 w-5 text-primary" />
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900">Words To Learn</h3>
+                <h3 class="text-xl font-semibold text-gray-900">The Module You Target</h3>
               </div>
-              <button
-                class="btn btn-sm btn-outline btn-primary"
-                @click="handleModifyWordList"
+              
+              <p class="text-gray-600 mb-4 text-sm">
+                We suggest targeting the module with your weakest score for optimal learning
+              </p>
+              
+              <select
+                v-model="moduleToTrainId"
+                class="select select-primary w-full max-w-md bg-white border-primary/30 focus:border-primary"
               >
-                <PencilSquareIcon class="h-4 w-4 mr-1" />
-                Modify
-              </button>
+                <option
+                  v-for="m in moduleOptions"
+                  :key="m.value"
+                  :value="m.value"
+                >
+                  {{ m.label }}
+                </option>
+              </select>
             </div>
-            
-            <p class="text-gray-600 mb-4 text-sm">
-              Customize the word list if some terms are already familiar to you
-            </p>
-            
-            <div class="flex flex-wrap gap-2">
-              <div
-                v-for="(w, n) in wordList.slice(0, 10)"
-                :key="n"
-                class="badge badge-primary badge-lg hover:bg-primary/90 cursor-pointer transition-colors"
-              >
-                {{ w.text }}
-              </div>
-            </div>
-          </div>
 
-          <!-- Expressions Section -->
-           <!-- bg-emerald-500/10 text-emerald-700 border-emerald-300 hover:bg-emerald-500/20 -->
-          <div class="">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center">
-                <div class="bg-accent p-2 rounded-lg mr-3">
-                  <LanguageIcon class="h-5 w-5 text-black" />
+            <!-- Stylish Separator 1 -->
+            <div class="flex items-center justify-center">
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="mx-4 flex items-center gap-2">
+                <div class="w-2 h-2 bg-primary rounded-full"></div>
+                <div class="w-1 h-1 bg-primary/60 rounded-full"></div>
+                <div class="w-1 h-1 bg-primary/40 rounded-full"></div>
+              </div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+
+            <!-- Words Section -->
+            <div class="">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                  <div class="bg-blue-500/10 p-2 rounded-lg mr-3">
+                    <BookOpenIcon class="h-5 w-5 text-blue-600" />
+                  </div>
+                  <h3 class="text-xl font-semibold text-gray-900">Words To Learn</h3>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900">Expressions To Learn</h3>
+                <button
+                  class="btn btn-sm btn-outline btn-primary"
+                  @click="handleModifyWordList"
+                >
+                  <PencilSquareIcon class="h-4 w-4 mr-1" />
+                  Modify
+                </button>
               </div>
-              <button
-                class="btn btn-sm btn-outline btn-accent text-black"
-                @click="handleModifyExpressionList"
-              >
-                <PencilSquareIcon class="h-4 w-4 mr-1" />
-                Modify
-              </button>
-            </div>
-            
-            <p class="text-gray-600 mb-4 text-sm">
-              Adjust the expression list based on your current knowledge
-            </p>
-            
-            <div class="flex flex-wrap gap-2">
-              <div
-                v-for="(e, n) in expressionList.slice(0, 4)"
-                :key="n"
-                class="badge badge-accent badge-lg cursor-pointer bg-accent/50 text-black border-accent transition-colors"
-              >
-                {{ e.text }}
+              
+              <p class="text-gray-600 mb-4 text-sm">
+                Customize the word list if some terms are already familiar to you
+              </p>
+              
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="(w, n) in wordList.slice(0, 10)"
+                  :key="n"
+                  class="badge badge-primary badge-lg hover:bg-primary/90 cursor-pointer transition-colors"
+                >
+                  {{ w.text }}
+                </div>
               </div>
             </div>
-          </div>
-          </div>
 
+            <!-- Stylish Separator 2 -->
+            <div class="flex items-center justify-center">
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="mx-4 flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <div class="w-1 h-1 bg-blue-500/60 rounded-full"></div>
+                <div class="w-1 h-1 bg-blue-500/40 rounded-full"></div>
+              </div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+
+            <!-- Expressions Section -->
+            <!-- bg-emerald-500/10 text-emerald-700 border-emerald-300 hover:bg-emerald-500/20 -->
+            <div class="">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                  <div class="bg-accent p-2 rounded-lg mr-3">
+                    <LanguageIcon class="h-5 w-5 text-black" />
+                  </div>
+                  <h3 class="text-xl font-semibold text-gray-900">Expressions To Learn</h3>
+                </div>
+                <button
+                  class="btn btn-sm btn-outline btn-accent"
+                  @click="handleModifyExpressionList"
+                >
+                  <PencilSquareIcon class="h-4 w-4 mr-1" />
+                  Modify
+                </button>
+              </div>
+              
+              <p class="text-gray-600 mb-4 text-sm">
+                Adjust the expression list based on your current knowledge
+              </p>
+              
+              <div class="flex flex-wrap gap-2">
+                <div
+                  v-for="(e, n) in expressionList.slice(0, 4)"
+                  :key="n"
+                  class="badge badge-accent badge-lg cursor-pointer bg-accent/50 text-black border-accent transition-colors"
+                >
+                  {{ e.text }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Stylish Separator 3 -->
+            <div class="flex items-center justify-center">
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div class="mx-4 flex items-center gap-2">
+                <div class="w-2 h-2 bg-accent rounded-full"></div>
+                <div class="w-1 h-1 bg-accent/60 rounded-full"></div>
+                <div class="w-1 h-1 bg-accent/40 rounded-full"></div>
+              </div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+          </div>
 
           <!-- Generate Button Section -->
           <div class="text-center pt-4">
