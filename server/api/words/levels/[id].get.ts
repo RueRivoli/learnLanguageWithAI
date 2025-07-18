@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, "id");
   const query = getQuery(event);
   const limitItems = Number(query.limit)
+  // TODO: Fetch some learned words to mix it ? 
   const { data: knownWords, error } = await supabase
     .from("turkish_words_knowledge")
     .select(

@@ -89,10 +89,52 @@ watchEffect(async () => {
           <div
             class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
-          <!-- Empty State -->
-           <div v-if="isFetchingGrammarRules" class="text-center py-8">
-            
-          </div>
+          <!-- Loading Skeletons -->
+          <template v-if="isFetchingGrammarRules">
+            <div
+              v-for="n in 12"
+              :key="`skeleton-${n}`"
+              class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 animate-pulse h-48"
+            >
+              <!-- Header skeleton -->
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                  <div class="skeleton h-6 w-3/4 mb-2"></div>
+                  <div class="skeleton h-4 w-1/2"></div>
+                </div>
+                <div class="skeleton h-5 w-5 rounded-full ml-3"></div>
+              </div>
+
+              <!-- Highlights skeleton (randomly shown) -->
+              <div v-if="n % 2 === 0" class="mb-4 flex-1">
+                <div class="bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-200 rounded-xl p-4 h-full">
+                  <div class="flex items-start h-full">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-2 mb-2">
+                        <div class="skeleton w-2 h-2 rounded-full"></div>
+                        <div class="skeleton h-3 w-16"></div>
+                      </div>
+                      <div class="skeleton h-4 w-full mb-1"></div>
+                      <div class="skeleton h-4 w-3/4 mb-1"></div>
+                      <div class="skeleton h-4 w-2/3"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spacer for cards without highlights -->
+              <div v-else class="flex-1"></div>
+
+              <!-- Actions skeleton -->
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex gap-2">
+                  <div class="skeleton h-8 w-16 rounded-lg"></div>
+                  <div class="skeleton h-8 w-20 rounded-lg"></div>
+                </div>
+                <div class="skeleton h-8 w-12 rounded-full"></div>
+              </div>
+            </div>
+          </template>
             <div
               v-else
               v-for="(rule, n) in grammarRules"
