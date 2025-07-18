@@ -268,7 +268,7 @@ export const optionExpressions = (totalExpressionsMastered: number, totalExpress
   
 
 // Grammar options
-export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+export const optionBeginnerGrammar = (scores: Array<any>, names: Array<string>, ruleNames: Array<string>): ECOption => {
   return {
     title: {
       text: "Beginner topics",
@@ -296,8 +296,10 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
       formatter: function(params: any) {
         const data = params[0];
-        return `<div class="font-semibold">${data.name}</div>
-                <div class="text-sm">Exercises: <span class="font-medium">${data.value}</span></div>`;
+        const ruleIndex = parseInt(data.name) - 1;
+        const ruleName = ruleNames[ruleIndex] || `Rule ${data.name}`;
+        return `<div class="font-semibold">${ruleName}</div>
+                <div class="text-sm">Score: <span class="font-medium">${data.value}%</span></div>`;
       }
     },
     grid: {
@@ -357,28 +359,6 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
           color: "rgba(180, 180, 180, 0.1)",
           borderRadius: [4, 4, 0, 0]
         },
-        itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "#8b5cf6"
-              },
-              {
-                offset: 1,
-                color: "#7c3aed"
-              }
-            ]
-          },
-          borderRadius: [4, 4, 0, 0],
-          shadowBlur: 10,
-          shadowColor: "rgba(139, 92, 246, 0.2)"
-        },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
@@ -391,7 +371,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
     
   };
   
-  export const optionIntermediateGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+  export const optionIntermediateGrammar = (scores: Array<any>, names: Array<string>, ruleNames: Array<string>): ECOption => {
     return {
     title: {
       text: "Intermediate topics",
@@ -419,8 +399,10 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
       formatter: function(params: any) {
         const data = params[0];
-        return `<div class="font-semibold">${data.name}</div>
-                <div class="text-sm">Exercises: <span class="font-medium">${data.value}</span></div>`;
+        const ruleIndex = parseInt(data.name) - 1;
+        const ruleName = ruleNames[ruleIndex] || `Rule ${data.name}`;
+        return `<div class="font-semibold">${ruleName}</div>
+                <div class="text-sm">Score: <span class="font-medium">${data.value}%</span></div>`;
       }
     },
     grid: {
@@ -480,28 +462,6 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
           color: "rgba(180, 180, 180, 0.1)",
           borderRadius: [4, 4, 0, 0]
         },
-        itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "#8b5cf6"
-              },
-              {
-                offset: 1,
-                color: "#7c3aed"
-              }
-            ]
-          },
-          borderRadius: [4, 4, 0, 0],
-          shadowBlur: 10,
-          shadowColor: "rgba(139, 92, 246, 0.2)"
-        },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
@@ -514,7 +474,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
   };
   
     
-  export const optionAdvancedGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+  export const optionAdvancedGrammar = (scores: Array<any>, names: Array<string>, ruleNames: Array<string>): ECOption => {
     return {
     title: {
       text: "Advanced topics",
@@ -542,8 +502,10 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
       formatter: function(params: any) {
         const data = params[0];
-        return `<div class="font-semibold">${data.name}</div>
-                <div class="text-sm">Exercises: <span class="font-medium">${data.value}</span></div>`;
+        const ruleIndex = parseInt(data.name) - 1;
+        const ruleName = ruleNames[ruleIndex] || `Rule ${data.name}`;
+        return `<div class="font-semibold">${ruleName}</div>
+                <div class="text-sm">Score: <span class="font-medium">${data.value}%</span></div>`;
       }
     },
     grid: {
@@ -602,28 +564,6 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
           borderRadius: [4, 4, 0, 0]
-        },
-        itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "#8b5cf6"
-              },
-              {
-                offset: 1,
-                color: "#7c3aed"
-              }
-            ]
-          },
-          borderRadius: [4, 4, 0, 0],
-          shadowBlur: 10,
-          shadowColor: "rgba(139, 92, 246, 0.2)"
         },
         emphasis: {
           itemStyle: {

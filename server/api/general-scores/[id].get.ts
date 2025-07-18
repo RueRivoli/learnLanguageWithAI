@@ -11,9 +11,9 @@ export default defineEventHandler(async (event) => {
   const reqGrammarScores = supabase
   .from("turkish_grammar_scores")
   .select(
-    "score, rule_id, turkish_grammar_rules ( rule_name, rule_name_translation, difficulty_class)",
+    "id, score, rule_id, turkish_grammar_rules ( position, rule_name, rule_name_translation, difficulty_class)",
   )
-  .eq("user_id", userId);
+  .eq("user_id", userId).order('id', {ascending: true});
   // if (query.order_by) reqGrammarScores.order(query.order_by, { ascending: true });
   const reqVocabularyScores = supabase
   .from("turkish_vocabulary_scores")
