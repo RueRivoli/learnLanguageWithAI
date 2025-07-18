@@ -148,11 +148,7 @@ const handleGenerateStory = async () => {
     <!-- Subtle grid pattern -->
     <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
     
-    <!-- Floating particles -->
-    <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-primary/40 rounded-full animate-ping" style="animation-duration: 4s;"></div>
-    <div class="absolute top-1/2 right-1/4 w-1 h-1 bg-warning/50 rounded-full animate-ping" style="animation-duration: 6s; animation-delay: 2s;"></div>
-    <div class="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-primary/30 rounded-full animate-ping" style="animation-duration: 8s; animation-delay: 4s;"></div>
-    <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-warning/40 rounded-full animate-ping" style="animation-duration: 5s; animation-delay: 1s;"></div>
+
     
     <!-- Wave effects -->
     <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-primary/3 via-transparent to-transparent"></div>
@@ -346,24 +342,49 @@ const handleGenerateStory = async () => {
 
           <!-- Generate Button Section -->
           <div class="text-center pt-4">
-            <div class="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20">
-              <h3 class="text-lg font-semibold text-gray-900 mb-3">Ready to Create Your Lesson?</h3>
-              <p class="text-gray-600 mb-6 text-sm">
-                Our AI will generate a personalized lesson combining your selected grammar focus, vocabulary, and expressions
-              </p>
+            <div class="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-lg overflow-hidden">
+              <!-- Subtle background pattern -->
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.02)_0%,transparent_50%)]"></div>
               
-              <button
-                class="btn btn-warning btn-lg px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                :class="{ 'btn-disabled': !userId }"
-                @click="handleGenerateStory"
-              >
-                <span
-                  v-if="isGeneratingLesson"
-                  class="loading loading-spinner loading-md mr-2"
-                />
-                <SparklesIcon class="h-6 w-6 mr-2" />
-                Generate Tailored Lesson
-              </button>
+              <div class="relative z-10">
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Ready to Create Your Lesson?</h3>
+                <p class="text-gray-600 mb-6 text-sm max-w-2xl mx-auto leading-relaxed">
+                  Our AI will generate a personalized lesson combining your selected grammar focus, vocabulary, and expressions
+                </p>
+                
+                <!-- Stylish Button -->
+                <div class="relative inline-block">
+                  <!-- Button glow effect -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-warning/20 to-warning/10 rounded-2xl blur-xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <!-- Main button -->
+                  <button
+                    class="relative btn btn-lg px-12 py-4 text-xl font-bold bg-gradient-to-r from-warning to-warning/90 text-white border-0 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden group"
+                    :class="{ 'btn-disabled opacity-50 cursor-not-allowed': !userId }"
+                    @click="handleGenerateStory"
+                  >
+                    <!-- Elegant shimmer effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    
+                    <!-- Content -->
+                    <div class="relative flex items-center justify-center gap-3">
+                      <span
+                        v-if="isGeneratingLesson"
+                        class="loading loading-spinner loading-md text-white"
+                      />
+                      <SparklesIcon class="h-6 w-6 text-white group-hover:animate-pulse" />
+                      <span class="text-white font-bold tracking-wide">
+                        Generate Tailored Lesson
+                      </span>
+                    </div>
+                  </button>
+                </div>
+                
+                <!-- Elegant decorative line -->
+                <div class="flex justify-center mt-6">
+                  <div class="w-24 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
