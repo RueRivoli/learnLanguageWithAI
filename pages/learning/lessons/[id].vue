@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import type { Lesson } from "~/types/lesson.ts";
+import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/solid";
-import { lessonMapping } from "~/utils/learning/lesson.ts";
+import {
+  lessonMapping,
+  lessonFirstTab,
+  lessonSecondTab,
+} from "~/utils/learning/lesson.ts";
 definePageMeta({
   layout: "authenticated",
 });
@@ -11,6 +16,7 @@ const lessonId = route.params.id;
 const isLoading = ref<boolean>(true);
 const lesson = ref<Lesson | null>(null);
 const showEnglishTranslations = ref(true);
+const activeLessonTab = ref(1);
 
 const getLesson = async () => {
   try {
@@ -27,8 +33,11 @@ const getLesson = async () => {
       lesson.value.grammarRuleName = data.value.turkish_grammar_rules.rule_name;
       lesson.value.grammarRuleNameEn =
         data.value.turkish_grammar_rules.rule_name_translation;
-      lesson.value.grammarRuleNameDescription =
+      lesson.value.grammarRuleIntro = data.value.turkish_grammar_rules.intro;
+      lesson.value.grammarRuleDescription =
         data.value.turkish_grammar_rules.description;
+      lesson.value.grammarRuleExtendedDescription =
+        data.value.turkish_grammar_rules.extended_description;
       lesson.value.newWords = data.value.turkish_lesson_words
         .map((w) => w.turkish_words)
         .map(
@@ -94,6 +103,16 @@ const sentences = computed(() => {
 const handleLessonDeletion = (id: number, title: string) => {
   lessonNameToDelete.value = { id, title };
 };
+
+const sanitizedIntroTemplate = computed(() =>
+  DOMPurify.sanitize(lesson.value.grammarRuleIntro || ""),
+);
+const sanitizedDescriptionTemplate = computed(() =>
+  DOMPurify.sanitize(lesson.value.grammarRuleDescription || ""),
+);
+const sanitizedExtendedDescriptionTemplate = computed(() =>
+  DOMPurify.sanitize(lesson.value.grammarRuleExtendedDescription || ""),
+);
 </script>
 
 <template>
@@ -112,25 +131,13 @@ const handleLessonDeletion = (id: number, title: string) => {
                     >
                       <span class="loading loading-bars loading-xl" />
                     </div>
-                    <div v-else class="p-5 h-[calc(100vh-30px)] flex flex-col">
+                    <div v-else class="p-5 min-h-screen flex flex-col">
                       <div class="shrink-0">
                         <div class="flex items-center justify-between">
                           <LayoutBreadcrumbs
                             first-section="Lessons"
                             :second-section="`Lesson${lesson?.id}`"
                           />
-                          <label
-                            class="label"
-                            :class="{
-                              'text-primary': showEnglishTranslations,
-                            }"
-                            >Show English
-                            <input
-                              v-model="showEnglishTranslations"
-                              type="checkbox"
-                              class="toggle toggle-primary"
-                            />
-                          </label>
                         </div>
                         <h2
                           class="font-bold text-xl tracking-widest text-center"
@@ -140,14 +147,38 @@ const handleLessonDeletion = (id: number, title: string) => {
                         <h2 class="text-xl tracking-widest italic text-center">
                           {{ lesson?.titleEn }}
                         </h2>
-                        <LearningModule
-                          :name="lesson?.grammarRuleName"
-                          :translation="lesson?.grammarRuleNameEn"
-                          :description="lesson?.grammarRuleNameDescription"
-                        />
+                        <div class="w-full flex items-center justify-between">
+                          <LayoutTabs
+                            :first-tab="lessonFirstTab"
+                            :second-tab="lessonSecondTab"
+                            @tab-active-changed="
+                              (activeTab) => (activeLessonTab = activeTab)
+                            "
+                          />
+                          <div>
+                            <label
+                              class="label"
+                              :class="{
+                                'text-primary': showEnglishTranslations,
+                              }"
+                              ><span>Show Translations</span>
+                              <input
+                                v-model="showEnglishTranslations"
+                                type="checkbox"
+                                class="toggle toggle-primary"
+                              />
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                      <div class="h-2"></div>
-                      <div class="h-80 overflow-auto grow">
+                      <!-- <LearningModule
+                        v-if="activeLessonTab === 2"
+                        :name="lesson?.grammarRuleName"
+                        :translation="lesson?.grammarRuleNameEn"
+                        :description="lesson?.grammarRuleNameDescription"
+                      /> -->
+
+                      <div v-if="activeLessonTab === 1" class="grow">
                         <div class="px-5 mb-5">
                           <div
                             v-for="(sentence, index) in sentences"
@@ -165,6 +196,11 @@ const handleLessonDeletion = (id: number, title: string) => {
                           <PlayIcon class="h-5 w-5 font-bold" />
                           Finish the lesson and test your level
                         </button>
+                      </div>
+                      <div v-else class="max-w-4xl mx-auto p-6">
+                        <p v-html="sanitizedIntroTemplate" />
+                        <p v-html="sanitizedDescriptionTemplate" />
+                        <p v-html="sanitizedExtendedDescriptionTemplate" />
                       </div>
                     </div>
                   </div>
