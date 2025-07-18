@@ -132,7 +132,34 @@ const handleGenerateStory = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 py-8">
+  <div class="min-h-screen relative py-8 overflow-hidden">
+    <!-- Stunning Light Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-gray-100"></div>
+    
+    <!-- Animated gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-warning/3 to-primary/5 animate-pulse" style="animation-duration: 8s;"></div>
+    
+    <!-- Geometric shapes -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl animate-bounce" style="animation-duration: 12s; animation-delay: 0s;"></div>
+    <div class="absolute top-20 right-0 w-80 h-80 bg-warning/6 rounded-full blur-3xl animate-bounce" style="animation-duration: 15s; animation-delay: 3s;"></div>
+    <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-bounce" style="animation-duration: 18s; animation-delay: 6s;"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-warning/4 rounded-full blur-3xl animate-bounce" style="animation-duration: 20s; animation-delay: 9s;"></div>
+    
+    <!-- Subtle grid pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    
+    <!-- Floating particles -->
+    <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-primary/40 rounded-full animate-ping" style="animation-duration: 4s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-1 h-1 bg-warning/50 rounded-full animate-ping" style="animation-duration: 6s; animation-delay: 2s;"></div>
+    <div class="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-primary/30 rounded-full animate-ping" style="animation-duration: 8s; animation-delay: 4s;"></div>
+    <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-warning/40 rounded-full animate-ping" style="animation-duration: 5s; animation-delay: 1s;"></div>
+    
+    <!-- Wave effects -->
+    <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-primary/3 via-transparent to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-warning/3 via-transparent to-transparent"></div>
+    
+    <!-- Content wrapper -->
+    <div class="relative z-10">
     <div class="max-w-4xl mx-auto px-4">
       <!-- Header Section -->
       <div class="text-center mb-8 relative">
@@ -173,7 +200,7 @@ const handleGenerateStory = async () => {
       </div>
 
       <!-- Main Content Card -->
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+      <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50 overflow-hidden">
         <!-- Loading State -->
         <div
           v-if="isFetchingData"
@@ -361,6 +388,7 @@ const handleGenerateStory = async () => {
         @apply-selection="(value) => handleExpressionSelectionChange(value)"
         @cancel="handleCancelModal"
       />
+    </div>
     </div>
   </div>
 </template>
