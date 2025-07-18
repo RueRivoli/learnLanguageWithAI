@@ -164,8 +164,8 @@ const handleGenerateStory = async () => {
         <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
         
         <div class="max-w-3xl mx-auto px-6 py-6">
-          <!-- Main Title with Gradient -->
-          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent leading-tight">
+          <!-- Main Title with Primary Color -->
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-primary leading-tight">
             Create a Tailored Lesson with AI
           </h1>
           
@@ -190,8 +190,7 @@ const handleGenerateStory = async () => {
             </div>
           </div>
           
-          <!-- Decorative line -->
-          <div class="w-32 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto rounded-full shadow-sm"></div>
+
         </div>
       </div>
 
@@ -359,12 +358,12 @@ const handleGenerateStory = async () => {
                   
                   <!-- Main button -->
                   <button
-                    class="relative btn btn-lg px-12 py-4 text-xl font-bold bg-gradient-to-r from-warning to-warning/90 text-white border-0 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden group"
+                    class="relative btn btn-lg px-12 py-4 text-xl font-bold bg-gradient-to-r from-warning to-warning/90 text-white border-0 rounded-lg shadow-xl hover:shadow-2xl overflow-hidden group"
                     :class="{ 'btn-disabled opacity-50 cursor-not-allowed': !userId }"
                     @click="handleGenerateStory"
                   >
                     <!-- Elegant shimmer effect -->
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <!-- <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div> -->
                     
                     <!-- Content -->
                     <div class="relative flex items-center justify-center gap-3">
@@ -372,8 +371,8 @@ const handleGenerateStory = async () => {
                         v-if="isGeneratingLesson"
                         class="loading loading-spinner loading-md text-white"
                       />
-                      <SparklesIcon class="h-6 w-6 text-white group-hover:animate-pulse" />
-                      <span class="text-white font-bold tracking-wide">
+                      <SparklesIcon class="h-6 w-6 text-white" />
+                      <span class="font-bold tracking-wide">
                         Generate Tailored Lesson
                       </span>
                     </div>

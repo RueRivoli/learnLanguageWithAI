@@ -42,9 +42,10 @@ const props = withDefaults(
         />
       </DisclosureButton>
 
-      <DisclosurePanel class="px-4 pb-2 pt-2 text-sm">
-        {{ props.description }}
-      </DisclosurePanel>
+      <DisclosurePanel
+        class="px-4 pb-2 pt-2 text-sm"
+        v-html="props.description"
+      />
     </Disclosure>
   </div>
 </template>
