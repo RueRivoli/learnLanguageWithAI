@@ -2,8 +2,10 @@
 import {
   AcademicCapIcon,
   BookOpenIcon,
+  EyeIcon,
   LanguageIcon,
   RocketLaunchIcon,
+  Square2StackIcon,
   TrophyIcon,
 } from "@heroicons/vue/24/outline";
 
@@ -14,10 +16,17 @@ const icons = {
   language: LanguageIcon,
   rocket: RocketLaunchIcon,
   academic: AcademicCapIcon,
+  eye: EyeIcon,
   trophy: TrophyIcon,
+  squareTwoStack: Square2StackIcon,
 };
 
-type TabItem = { title: string; icon: string | null };
+type TabItem = {
+  title: string;
+  icon: string | null;
+  activeBgColorClass: string;
+  activeTxtColorClass: string;
+};
 
 const props = withDefaults(
   defineProps<{
@@ -51,7 +60,9 @@ const handleTabActiveChanged = (id: number) => {
         class="px-4 py-2 cursor-pointer rounded-md text-sm font-medium transition-all duration-200"
         :class="
           tabItemActive === 1
-            ? 'bg-white text-indigo-600 shadow-sm'
+            ? props.firstTab?.activeBgColorClass
+              ? `shadow-sm ${props.firstTab?.activeBgColorClass} ${props.firstTab?.activeTxtColorClass}`
+              : `bg-white text-indigo-600 shadow-sm`
             : 'text-gray-600 hover:text-gray-900'
         "
         @click="handleTabActiveChanged(1)"
@@ -70,7 +81,9 @@ const handleTabActiveChanged = (id: number) => {
         class="px-4 py-2 cursor-pointer rounded-md text-sm font-medium transition-all duration-200"
         :class="
           tabItemActive === 2
-            ? 'bg-white text-indigo-600 shadow-sm'
+            ? props.secondTab?.activeBgColorClass
+              ? `shadow-sm ${props.secondTab?.activeBgColorClass} ${props.secondTab?.activeTxtColorClass}`
+              : 'bg-white text-indigo-600 shadow-sm'
             : 'text-gray-600 hover:text-gray-900'
         "
         @click="handleTabActiveChanged(2)"
@@ -89,7 +102,9 @@ const handleTabActiveChanged = (id: number) => {
         class="px-4 py-2 cursor-pointer rounded-md text-sm font-medium transition-all duration-200"
         :class="
           tabItemActive === 3
-            ? 'bg-white text-indigo-600 shadow-sm'
+            ? props.thirdTab?.activeBgColorClass
+              ? `shadow-sm ${props.thirdTab?.activeBgColorClass} ${props.thirdTab?.activeTxtColorClass}`
+              : 'bg-white text-indigo-600 shadow-sm'
             : 'text-gray-600 hover:text-gray-900'
         "
         @click="handleTabActiveChanged(3)"

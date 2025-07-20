@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {
-  grammarLevelTabs,
+  optionAdvancedGrammar,
   optionBeginnerGrammar,
   optionIntermediateGrammar,
-  optionAdvancedGrammar,
 } from "~/utils/dashboard/graphOptions";
+import { grammarLevelTabs } from "~/utils/learning/grammar";
 // 1 = Beginner, 2 = Intermediate, 3 = Advanced,
 
 const activeTab = ref(1);

@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { Database } from "~/supabase/types";
-import {
-  dashboardFirstTab,
-  dashboardSecondTab,
-  dashboardThirdTab,
-} from "~/utils/dashboard/tabs";
+import { grammarLevelTabs } from "~/utils/learning/grammar";
 import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
+import { dashboardCategoryTabs } from "~/utils/dashboard/tabs";
 
 definePageMeta({
   layout: "authenticated",
@@ -20,7 +17,7 @@ const userScoreStore = useUserScoreStore();
 const languageSelectionModal = ref<{ openModal: () => void } | null>(null);
 const pseudoDefinitionModal = ref<{ openModal: () => void } | null>(null);
 
-// 1 = Vocabulary, 2 = Grammar
+// 1 = Overview, 2 = Vocabulary,  3 = Modules
 const activeTab = ref(1);
 
 onMounted(async () => {
@@ -85,9 +82,9 @@ getInfoUser();
             <ChartBarIcon class="h-6 w-6 text-primary" />
           </LayoutHeadingPlus>
           <LayoutTabs
-            :first-tab="dashboardFirstTab"
-            :second-tab="dashboardSecondTab"
-            :third-tab="dashboardThirdTab"
+            :first-tab="dashboardCategoryTabs.firstTab"
+            :second-tab="dashboardCategoryTabs.secondTab"
+            :third-tab="dashboardCategoryTabs.thirdTab"
             @tab-active-changed="(activeT) => (activeTab = activeT)"
           />
         </div>
@@ -111,7 +108,7 @@ getInfoUser();
               </div>
             </div>
           </div> -->
-          <DashboardGeneralStatsHighlights />
+          <DashboardGeneralStatsHighlights :pseudo="userStore.$state.pseudo" />
         </template>
         <template v-else-if="activeTab === 2">
           <DashboardVocabularyStatsHighlights />

@@ -5,9 +5,7 @@ import {
 } from "@heroicons/vue/24/solid";
 import { BookmarkIcon, EyeIcon, Square2StackIcon } from "@heroicons/vue/24/outline";
 import {
-  modulesFirstTab,
-  modulesSecondTab,
-  modulesThirdTab,
+  grammarLevelTabs,
   getGrammarRuleStyleClass,
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
@@ -92,9 +90,9 @@ watchEffect(async () => {
               <Square2StackIcon class="h-6 w-6 text-primary" />
             </LayoutHeadingPlus>
             <LayoutTabs
-              :first-tab="modulesFirstTab"
-              :second-tab="modulesSecondTab"
-              :third-tab="modulesThirdTab"
+              :first-tab="grammarLevelTabs.firstTab"
+              :second-tab="grammarLevelTabs.secondTab"
+              :third-tab="grammarLevelTabs.thirdTab"
               @tab-active-changed="
                 (activeTab) => (activeDifficultyLevelTab = activeTab)
               "

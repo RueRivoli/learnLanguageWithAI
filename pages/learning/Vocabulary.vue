@@ -355,7 +355,7 @@ const handleExpressionLearningStatus = async (
               <div
                 v-for="word in words"
                 :key="word.id"
-                class="group p-4 relative bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                class="group p-4 relative bg-base-100 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
                     selectedWord?.id === word.id,
@@ -479,7 +479,7 @@ const handleExpressionLearningStatus = async (
               <div
                 v-for="expression in expressions"
                 :key="expression.text"
-                class="group p-4 relative bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                class="group p-4 relative bg-base-100 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
                     selectedExpression?.text === expression.text,
