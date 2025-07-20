@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import type { GrammarRule } from "~/types/grammar-rule";
+import type { GrammarRow, GrammarRule } from "~/types/grammar-rule";
 import { getGrammarRuleStyleClass } from "~/utils/learning/grammar";
 const props = withDefaults(
   defineProps<{
-    rule?: GrammarRule | null;
+    rule?:
+      | GrammarRule
+      | {
+          difficultyClass: GrammarRow["difficulty_class"];
+          ruleName: GrammarRow["rule_name"];
+          ruleNameTranslation: GrammarRow["rule_name_translation"];
+          symbol: GrammarRow["rule_name"];
+        }
+      | null;
     mainTitle?: boolean;
   }>(),
   {
@@ -22,9 +30,15 @@ const props = withDefaults(
         :class="getGrammarRuleStyleClass(props.rule)"
       >
         <!-- Professional texture overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/20"></div>
-        <div class="absolute inset-0 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4px_4px]"></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/20"
+        />
+        <div
+          class="absolute inset-0 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"
+        />
+        <div
+          class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4px_4px]"
+        />
         <span
           :class="{ 'text-xl': props.mainTitle, 'text-lg': !props.mainTitle }"
           class="relative z-10"

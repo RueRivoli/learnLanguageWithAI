@@ -14,11 +14,17 @@ const userScoreStore = useUserScoreStore();
 const currentScores = computed(() => {
   switch (activeTab.value) {
     case 1:
-      return (userScoreStore as any).beginnerGrammarRulesScores;
+      return (userScoreStore as any).beginnerGrammarRulesInfo.map(
+        ({ score }) => score,
+      );
     case 2:
-      return (userScoreStore as any).intermediateGrammarRulesScores;
+      return (userScoreStore as any).intermediateGrammarRulesInfo.map(
+        ({ score }) => score,
+      );
     case 3:
-      return (userScoreStore as any).advancedGrammarRulesScores;
+      return (userScoreStore as any).advancedGrammarRulesInfo.map(
+        ({ score }) => score,
+      );
     default:
       return [];
   }
@@ -27,11 +33,17 @@ const currentScores = computed(() => {
 const currentNames = computed(() => {
   switch (activeTab.value) {
     case 1:
-      return (userScoreStore as any).beginnerGrammarRulesNames;
+      return (userScoreStore as any).beginnerGrammarRulesInfo.map(
+        ({ ruleName }) => ruleName,
+      );
     case 2:
-      return (userScoreStore as any).intermediateGrammarRulesNames;
+      return (userScoreStore as any).intermediateGrammarRulesInfo.map(
+        ({ ruleName }) => ruleName,
+      );
     case 3:
-      return (userScoreStore as any).advancedGrammarRulesNames;
+      return (userScoreStore as any).advancedGrammarRulesInfo.map(
+        ({ ruleName }) => ruleName,
+      );
     default:
       return [];
   }
@@ -51,18 +63,18 @@ const numberedScores = computed(() => {
         colorStops: [
           {
             offset: 0,
-            color: "#8b5cf6"
+            color: "#8b5cf6",
           },
           {
             offset: 1,
-            color: "#7c3aed"
-          }
-        ]
+            color: "#7c3aed",
+          },
+        ],
       },
       borderRadius: [4, 4, 0, 0],
       shadowBlur: 10,
-      shadowColor: "rgba(139, 92, 246, 0.2)"
-    }
+      shadowColor: "rgba(139, 92, 246, 0.2)",
+    },
   }));
 });
 
@@ -125,7 +137,10 @@ const levelTitle = computed(() => {
 // Calculate average score
 const averageScore = computed(() => {
   if (currentScores.value.length === 0) return 0;
-  return Math.round(currentScores.value.reduce((a: number, b: number) => a + b, 0) / currentScores.value.length);
+  return Math.round(
+    currentScores.value.reduce((a: number, b: number) => a + b, 0) /
+      currentScores.value.length,
+  );
 });
 </script>
 
@@ -151,7 +166,7 @@ const averageScore = computed(() => {
         />
       </div>
     </div>
-    
+
     <!-- Chart and Legend Container -->
     <div class="flex gap-6">
       <!-- Chart Section -->
@@ -164,7 +179,7 @@ const averageScore = computed(() => {
           />
         </div>
       </div>
-      
+
       <!-- Legend Section -->
       <div class="w-80 bg-gray-50 rounded-lg p-4 border border-gray-200">
         <div class="mb-4">
@@ -175,40 +190,44 @@ const averageScore = computed(() => {
             Click on bars to see detailed scores
           </p>
         </div>
-        
+
         <div class="space-y-3 max-h-80 overflow-y-auto">
-          <div 
-            v-for="(name, index) in currentNames" 
+          <div
+            v-for="(name, index) in currentNames"
             :key="index"
             class="flex items-center gap-3 p-2 rounded-md hover:bg-white transition-colors duration-200"
           >
             <!-- Number Badge -->
-            <div class="flex-shrink-0 w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold">
+            <div
+              class="flex-shrink-0 w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold"
+            >
               {{ index + 1 }}
             </div>
-            
             <!-- Rule Name -->
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-gray-900 truncate" :title="name">
+              <p
+                class="text-sm font-medium text-gray-900 truncate"
+                :title="name"
+              >
                 {{ name }}
               </p>
               <p class="text-xs text-gray-500">
                 Score: {{ currentScores[index] }}%
               </p>
             </div>
-            
+
             <!-- Score Indicator -->
             <div class="flex-shrink-0">
               <div class="w-12 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div 
+                <div
                   class="h-full bg-gradient-to-r from-primary to-primary/80 rounded-full transition-all duration-300"
                   :style="{ width: `${currentScores[index]}%` }"
-                ></div>
+                />
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- Legend Footer -->
         <div class="mt-4 pt-3 border-t border-gray-200">
           <div class="flex items-center justify-between text-xs text-gray-600">

@@ -2,23 +2,52 @@
 import { useUserScoreStore } from "~/stores/user-score-store";
 import { BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 
-const TOTAL_WORDS = 3000;
-const TOTAL_EXPRESSIONS = 2000;
 const userScoreStore = useUserScoreStore();
+
+const totalExpressions = computed(() => {
+  return userScoreStore.$state.totalExpressions ?? 0;
+});
+
+const totalExpressionsInK = computed(() => {
+  if (userScoreStore.$state.totalExpressions > 999) {
+    const nbK = Math.floor(userScoreStore.$state.totalExpressions / 100);
+    const nbKCent = Math.floor(
+      (userScoreStore.$state.totalExpressions - nbK * 100) / 10,
+    );
+    return nbKTen !== 0 ? `${nbK}${nbKCent} K` : `${nbK} K`;
+  } else {
+    return userScoreStore.$state.totalExpressions;
+  }
+});
+
+const totalWords = computed(() => {
+  return userScoreStore.$state.totalWords ?? 0;
+});
+const totalWordsInK = computed(() => {
+  const nbK = Math.floor(userScoreStore.$state.totalWords / 1000);
+  const nbKCent = Math.floor(
+    (userScoreStore.$state.totalWords - nbK * 1000) / 100,
+  );
+  return nbKCent !== 0 ? `${nbK}.${nbKCent} K` : `${nbK} K`;
+});
 
 const totalWordsMastered = computed(() => {
   return userScoreStore.$state.totalWordsMastered ?? 0;
 });
 
 const totalWordsMasteredPercentage = computed(() => {
-  return Math.trunc((totalWordsMastered.value / TOTAL_WORDS) * 100);
+  return Math.trunc(
+    (totalWordsMastered.value / userScoreStore.$state.totalWords) * 100,
+  ).toFixed(1);
 });
 
 const totalWordsLearned = computed(() => {
   return userScoreStore.$state.totalWordsLearned ?? 0;
 });
 const totalWordsLearnedPercentage = computed(() => {
-  return Math.trunc((totalWordsLearned.value / TOTAL_WORDS) * 100);
+  return Math.trunc(
+    (totalWordsLearned.value / userScoreStore.$state.totalWords) * 100,
+  ).toFixed(1);
 });
 
 const totalExpressionsMastered = computed(() => {
@@ -26,14 +55,20 @@ const totalExpressionsMastered = computed(() => {
 });
 
 const totalExpressionsMasteredPercentage = computed(() => {
-  return Math.trunc((totalExpressionsMastered.value / TOTAL_EXPRESSIONS) * 100);
+  return Math.trunc(
+    (totalExpressionsMastered.value / userScoreStore.$state.totalExpressions) *
+      100,
+  ).toFixed(1);
 });
 
 const totalExpressionsLearned = computed(() => {
   return userScoreStore.$state.totalExpressionsLearned ?? 0;
 });
 const totalExpressionsLearnedPercentage = computed(() => {
-  return Math.trunc((totalExpressionsLearned.value / TOTAL_EXPRESSIONS) * 100);
+  return Math.trunc(
+    (totalExpressionsLearned.value / userScoreStore.$state.totalExpressions) *
+      100,
+  ).toFixed(1);
 });
 </script>
 
@@ -45,7 +80,8 @@ const totalExpressionsLearnedPercentage = computed(() => {
       <div>
         <p class="text-sm font-medium text-gray-600">Total Words Mastered</p>
         <p class="text-2xl font-bold text-gray-900">
-          {{ totalWordsMastered.toLocaleString() }}
+          {{ totalWordsMastered.toLocaleString() }} /
+          {{ totalWords.toLocaleString() }}
         </p>
       </div>
       <div class="p-3 bg-white rounded-lg">
@@ -59,15 +95,17 @@ const totalExpressionsLearnedPercentage = computed(() => {
             >{{ totalWordsMasteredPercentage }}%</span
           >
           <span class="mx-1">mastered</span>
-          <span>out of 3K</span>
+          <span
+            >out of <strong>{{ totalWordsInK }}</strong></span
+          >
         </div>
-        <div class="flex items-center text-sm text-gray-600">
+        <!-- <div class="flex items-center text-sm text-gray-600">
           <span class="text-warning font-medium"
             >{{ totalWordsLearnedPercentage }}%</span
           >
           <span class="mx-1">being learned</span>
           <span>out of 2K</span>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -81,7 +119,8 @@ const totalExpressionsLearnedPercentage = computed(() => {
           Total Expressions Mastered
         </p>
         <p class="text-2xl font-bold text-gray-900">
-          {{ totalExpressionsMastered.toLocaleString() }}
+          {{ totalExpressionsMastered.toLocaleString() }} /
+          {{ totalExpressions.toLocaleString() }}
         </p>
       </div>
       <div class="p-3 bg-white rounded-lg">
@@ -95,15 +134,17 @@ const totalExpressionsLearnedPercentage = computed(() => {
             >{{ totalExpressionsMasteredPercentage }}%</span
           >
           <span class="mx-1">mastered</span>
-          <span>out of 2K</span>
+          <span
+            >out of <strong>{{ totalExpressionsInK }}</strong></span
+          >
         </div>
-        <div class="flex items-center text-sm text-gray-600">
+        <!-- <div class="flex items-center text-sm text-gray-600">
           <span class="text-warning font-medium"
             >{{ totalExpressionsLearnedPercentage }}%</span
           >
           <span class="mx-1">being learned</span>
           <span>out of 2K</span>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
