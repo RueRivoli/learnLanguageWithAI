@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { Database } from "~/supabase/types";
-import { dashboardFirstTab, dashboardSecondTab } from "~/utils/dashboard/tabs";
+import {
+  dashboardFirstTab,
+  dashboardSecondTab,
+  dashboardThirdTab,
+} from "~/utils/dashboard/tabs";
 import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
@@ -22,8 +26,9 @@ const activeTab = ref(1);
 onMounted(async () => {
   console.log("is dashboard data loaded ?", userScoreStore.$state.isLoaded);
   if (!userScoreStore.$state.isLoaded) {
-    console.log("fetch all dashboard data")
+    console.log("fetch all dashboard data");
     userScoreStore.setAllScores(user.value?.id);
+    userScoreStore.setCount();
   }
 });
 watchEffect(async () => {
@@ -82,6 +87,7 @@ getInfoUser();
           <LayoutTabs
             :first-tab="dashboardFirstTab"
             :second-tab="dashboardSecondTab"
+            :third-tab="dashboardThirdTab"
             @tab-active-changed="(activeT) => (activeTab = activeT)"
           />
         </div>
@@ -90,6 +96,24 @@ getInfoUser();
       <!-- Stats Highlights Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <template v-if="activeTab === 1">
+          <!-- <div
+            class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600">WELCOME!</p>
+                <p class="text-2xl font-bold text-gray-900">
+                  Start here with a short quiz to initiate your level
+                </p>
+              </div>
+              <div class="p-3 bg-white rounded-lg">
+                <BookOpenIcon class="h-6 w-6 text-neutral" />
+              </div>
+            </div>
+          </div> -->
+          <DashboardGeneralStatsHighlights />
+        </template>
+        <template v-else-if="activeTab === 2">
           <DashboardVocabularyStatsHighlights />
         </template>
         <template v-else>
@@ -99,9 +123,12 @@ getInfoUser();
 
       <!-- Charts Section -->
       <template v-if="activeTab === 1">
+        <DashboardGeneralStats />
+      </template>
+      <template v-else-if="activeTab === 2">
         <DashboardVocabularyStats />
       </template>
-      <template v-else>
+      <template v-else-if="activeTab === 3">
         <DashboardGrammarStats />
       </template>
     </div>

@@ -4,6 +4,8 @@ export const useUserScoreStore = defineStore("user-score", {
   state: (): UserScore => {
     return {
       isLoaded: false,
+      totalExpressions: null,
+      totalWords: null,
       totalWordsMastered: null,
       totalWordsLearned: null,
       totalExpressionsMastered: null,
@@ -12,6 +14,18 @@ export const useUserScoreStore = defineStore("user-score", {
     };
   },
   actions: {
+    async setCount () {
+      console.log("setCount")
+      const { count: totalWords }= await $fetch('/api/words/count/', {
+        method: "GET",
+      });
+      const { count: totalExpressions } = await $fetch('/api/expressions/count/', {
+        method: "GET",
+      });
+      this.totalWords = totalWords
+      this.totalExpressions = totalExpressions
+      console.log('score', totalWords, totalExpressions)
+    },
     setScores(grammarScores: GrammarScores, vocabScores: VocabularyScore) {
       this.isLoaded = true;
       this.totalWordsMastered = vocabScores.totalWordsMastered;
@@ -29,8 +43,9 @@ export const useUserScoreStore = defineStore("user-score", {
           ruleId: rule_id,
           ruleName: turkish_grammar_rules.rule_name,
           ruleNameEn: turkish_grammar_rules.rule_name_translation,
-          ruleScore: score,
-          ruleDifficulty: turkish_grammar_rules.difficulty_class,
+          score,
+          symbol: turkish_grammar_rules.symbol,
+          difficultyClass: turkish_grammar_rules.difficulty_class,
         }),
       );
       console.log('grammarScores', grammarScores)
@@ -64,8 +79,8 @@ export const useUserScoreStore = defineStore("user-score", {
           ruleId: rule_id,
           ruleName: turkish_grammar_rules.rule_name,
           ruleNameEn: turkish_grammar_rules.rule_name_translation,
-          ruleScore: score,
-          ruleDifficulty: turkish_grammar_rules.difficulty_class,
+          score,
+          difficultyClass: turkish_grammar_rules.difficulty_class,
         }),
       );
       this.isLoaded = true;
@@ -97,37 +112,46 @@ export const useUserScoreStore = defineStore("user-score", {
     }
   },
   getters: {
-    percentageLearnedWords(state: UserScore, totalWords: number): number {
-      if (state.totalWordsLearned) return Math.trunc((state.totalWordsLearned / totalWords) * 100);
-      return 0
+    advancedGrammarRulesInfo(state: UserScore): Array<any> {
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 3).map(({difficultyClass, ruleNameEn, ruleId, ruleName, score, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, ruleName, score, symbol})) ?? [];
     },
-    percentageMasterWords(state: UserScore, totalWords: number): number {
-      if (state.totalWordsMastered) return Math.trunc((state.totalWordsMastered / totalWords) * 100);
-      return 0
+    beginnerGrammarRulesInfo(state: UserScore): Array<any> {
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({difficultyClass, ruleNameEn, ruleId, score, ruleName, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, score, ruleName, symbol})) ?? [];
     },
-    beginnerGrammarRulesNames(state: UserScore): Array<string> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 1).map(({ruleNameEn}) => ruleNameEn) ?? [];
+    intermediateGrammarRulesInfo(state: UserScore): Array<any> {
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({difficultyClass, ruleNameEn, ruleId, ruleName, score, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, ruleName, score, symbol})) ?? [];
     },
-    intermediateGrammarRulesNames(state: UserScore): Array<string> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 2).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    },
-    advancedGrammarRulesNames(state: UserScore): Array<string> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 3).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    },
-    expertGrammarRulesNames(state: UserScore): Array<string> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 4).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    },
+    // advancedGrammarRulesNames(state: UserScore): Array<string> {
+    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 3).map(({ruleNameEn}) => ruleNameEn) ?? [];
+    // },
+    // beginnerGrammarRulesNames(state: UserScore): Array<string> {
+    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({ruleNameEn}) => ruleNameEn) ?? [];
+    // },
+    // intermediateGrammarRulesNames(state: UserScore): Array<string> {
+    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({ruleNameEn}) => ruleNameEn) ?? [];
+    // },
+    // expertGrammarRulesNames(state: UserScore): Array<string> {
+    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 4).map(({ruleNameEn}) => ruleNameEn) ?? [];
+    // },
     beginnerGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 1).map(({ruleScore}) => ruleScore) ?? [];
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({ruleScore, ruleId}) => ({ruleId, ruleScore})) ?? [];
     },
     intermediateGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 2).map(({ruleScore}) => ruleScore) ?? [];
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({ruleScore}) => ruleScore) ?? [];
     },
     advancedGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 3).map(({ruleScore}) => ruleScore) ?? [];
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 3).map(({ruleScore}) => ruleScore) ?? [];
     },
     expertGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.ruleDifficulty === 4).map(({ruleScore}) => ruleScore) ?? [];
+      return state.rulesScores?.filter((rule) => rule.difficultyClass === 4).map(({ruleScore}) => ruleScore) ?? [];
+    },
+    percentageLearnedWords(state: UserScore): number {
+      if (state.totalWordsLearned && state.totalWords) return Math.trunc((state.totalWordsLearned / state.totalWords) * 100).toFixed(1);
+      return 0
+    },
+    percentageMasterWords(state: UserScore): number {
+      if (state.totalWordsMastered && state.totalWords) return Math.trunc((state.totalWordsMastered / state.totalWords) * 100).toFixed(1);
+      return 0
     },
   },
 });

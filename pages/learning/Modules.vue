@@ -124,9 +124,9 @@ watchEffect(async () => {
               <!-- Highlights skeleton (randomly shown) -->
               <div v-if="n % 2 === 0" class="mb-4 flex-1">
                 <div class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50 h-full">
-                  <!-- Light background with success color tint -->
+                  <!-- Light background with neutral color tint -->
                   <div class="absolute inset-0 bg-white/90"></div>
-                  <div class="absolute inset-0 opacity-20 bg-success"></div>
+                  <div class="absolute inset-0 opacity-20 bg-slate-200"></div>
                   
                   <!-- Professional texture overlay with low opacity -->
                   <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"></div>
@@ -136,8 +136,8 @@ watchEffect(async () => {
                   <div class="flex items-start h-full relative z-10">
                     <div class="flex-1">
                       <div class="flex items-center gap-2 mb-2">
-                        <div class="skeleton w-2 h-2 rounded-full shadow-sm bg-success/60"></div>
-                        <div class="skeleton h-3 w-16 bg-success/60"></div>
+                        <div class="skeleton w-2 h-2 rounded-full shadow-sm bg-slate-300"></div>
+                        <div class="skeleton h-3 w-16 bg-slate-300"></div>
                       </div>
                       <div class="skeleton h-4 w-full mb-1"></div>
                       <div class="skeleton h-4 w-3/4 mb-1"></div>

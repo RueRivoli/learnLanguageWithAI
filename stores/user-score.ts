@@ -3,6 +3,8 @@ import type { Database } from "~/supabase/types";
 
 export interface UserScore {
     isLoaded: boolean,
+    totalExpressions: number | null,
+    totalWords: number | null,
     totalWordsMastered: number | null,
     totalWordsLearned: number | null,
     totalExpressionsMastered: number | null,
@@ -22,5 +24,6 @@ export interface UserScore {
     ruleName: string,
     ruleNameEn: string,
     ruleScore: number,
-    ruleDifficulty: number,
+    difficultyClass: number,
+    symbol: string,
  }>
