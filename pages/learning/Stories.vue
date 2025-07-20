@@ -65,9 +65,9 @@ const handleCancel = () => {
 
 <template>
   <div>
-    <div class="max-w-full max-h-screen flex justify-center">
-      <div class="w-full max-w-6xl max-h-screen">
-        <div class="list bg-white shadow-md h-full p-5">
+    <div class="max-w-full min-h-screen flex grid grid-cols-4">
+      <div class="min-h-screen col-span-3">
+        <div class="bg-white shadow-md h-full flex flex-col p-5">
           <LayoutHeadingPlus
             title="Lessons"
             description="Your History of Tailored Lessons"
@@ -75,7 +75,7 @@ const handleCancel = () => {
             <DocumentIcon class="h-6 w-6 text-primary" />
           </LayoutHeadingPlus>
 
-          <div class="mt-3 max-h-full overflow-auto">
+          <div class="mt-3 max-h-full grow overflow-auto">
             <div
               v-if="isFetchingData"
               class="h-full flex w-full flex-col gap-4"

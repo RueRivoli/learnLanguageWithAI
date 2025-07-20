@@ -8,6 +8,7 @@ import {
   modulesFirstTab,
   modulesSecondTab,
   modulesThirdTab,
+  getGrammarRuleStyleClass,
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
 import { parseRules } from "~/types/grammar-rule.ts";
@@ -28,6 +29,21 @@ const router = useRouter();
 const grammarRules = ref<GrammarRule[]>([]);
 const isFetchingGrammarRules = ref(false)
 const activeDifficultyLevelTab = ref(1);
+
+// Helper function to get text color class from background class
+const getTextColorClass = (rule: GrammarRule) => {
+  const bgClass = getGrammarRuleStyleClass(rule);
+  switch (bgClass) {
+    case 'bg-success':
+      return 'text-success';
+    case 'bg-warning':
+      return 'text-warning';
+    case 'bg-error':
+      return 'text-error';
+    default:
+      return 'text-slate-700';
+  }
+};
 
 const getDifficultyClassQuery = (tab: number) => {
   switch (tab) {
@@ -107,12 +123,21 @@ watchEffect(async () => {
 
               <!-- Highlights skeleton (randomly shown) -->
               <div v-if="n % 2 === 0" class="mb-4 flex-1">
-                <div class="bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-200 rounded-xl p-4 h-full">
-                  <div class="flex items-start h-full">
+                <div class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50 h-full">
+                  <!-- Light background with success color tint -->
+                  <div class="absolute inset-0 bg-white/90"></div>
+                  <div class="absolute inset-0 opacity-20 bg-success"></div>
+                  
+                  <!-- Professional texture overlay with low opacity -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"></div>
+                  <div class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"></div>
+                  <div class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"></div>
+                  
+                  <div class="flex items-start h-full relative z-10">
                     <div class="flex-1">
                       <div class="flex items-center gap-2 mb-2">
-                        <div class="skeleton w-2 h-2 rounded-full"></div>
-                        <div class="skeleton h-3 w-16"></div>
+                        <div class="skeleton w-2 h-2 rounded-full shadow-sm bg-success/60"></div>
+                        <div class="skeleton h-3 w-16 bg-success/60"></div>
                       </div>
                       <div class="skeleton h-4 w-full mb-1"></div>
                       <div class="skeleton h-4 w-3/4 mb-1"></div>
@@ -151,14 +176,23 @@ watchEffect(async () => {
 
               <!-- Highlights -->
               <div v-if="(rule as any).highlights" class="mb-4">
-                <div class="bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-200 rounded-xl p-4 shadow-sm">
-                  <div class="flex items-start">
+                <div class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50">
+                  <!-- Light background with difficulty-based color tint -->
+                  <div class="absolute inset-0 bg-white/90"></div>
+                  <div class="absolute inset-0 opacity-20" :class="getGrammarRuleStyleClass(rule)"></div>
+                  
+                  <!-- Professional texture overlay with low opacity -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"></div>
+                  <div class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"></div>
+                  <div class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"></div>
+                  
+                  <div class="flex items-start relative z-10">
                     <div class="flex-1">
                       <div class="flex items-center gap-2 mb-2">
-                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                        <span class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Key Point</span>
+                        <div class="w-2 h-2 rounded-full shadow-sm" :class="getGrammarRuleStyleClass(rule)"></div>
+                        <span class="text-xs font-semibold uppercase tracking-wide" :class="getTextColorClass(rule)">Key Point</span>
                       </div>
-                      <p class="text-sm text-slate-800 font-medium leading-relaxed">
+                      <p class="text-sm text-slate-700 font-medium leading-relaxed">
                         {{ (rule as any).highlights }}
                       </p>
                     </div>

@@ -79,7 +79,7 @@ const {
 const getWordList = async () => {
   isLoadingFetchingWords.value = true;
   const { data } = await useFetch(
-    `/api/words?page=${currentPage.value}&size=10`,
+    `/api/words?page=${currentPage.value}&size=16`,
     {
       query: { is_learned: showLearnedWords.value },
       transform: ({
