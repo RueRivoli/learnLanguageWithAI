@@ -6,7 +6,9 @@ export type Lesson = {
     newExpressions: Array<{text: string, textEn: string, sentence: string, sentenceEn: string, sentence2: string, sentence2En: string}>
     grammarRuleName: string,
     grammarRuleNameEn: string,
-    grammarRuleNameDescription: string,
+    grammarRuleIntro: string,
+    grammarRuleDescription: string,
+    grammarRuleExtendedDescription: string,
     sentence1: string | null;
     sentence1En: string | null;
     sentence2: string | null;

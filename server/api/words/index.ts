@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     request = supabase
     .from("turkish_words")
     .select(
-      "id, text, translation, role, word_sentence, word_sentence_translation, word_sentence_2, word_sentence_2_translation, turkish_words_knowledge!inner(word_mastered)", { count: "exact"}).eq("turkish_words_knowledge.word_mastered", true).order("id", { ascending: true }).range(from, to)
+      "id, text, role, translation, word_sentence, word_sentence_translation, role_2, translation_2, word_sentence_2, word_sentence_2_translation, role_3, translation_3, word_sentence_3, word_sentence_3_translation, turkish_words_knowledge!inner(word_mastered)", { count: "exact"}).eq("turkish_words_knowledge.word_mastered", true).order("id", { ascending: true }).range(from, to)
   } else {
     const {data} = await supabase
     .from("turkish_words")

@@ -88,3 +88,6 @@ export const lessonMapping = {
       // lesson.value.sentence19En = data.value.sentence_19_en;
       // lesson.value.sentence20 = data.value.sentence_20;
       // lesson.value.sentence20En = data.value.sentence_20_en;
+
+export const lessonFirstTab = { title: "Lesson", icon: "book" };
+export const lessonSecondTab = { title: "Rule", icon: "language" };

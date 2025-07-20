@@ -18,11 +18,16 @@ const props = withDefaults(
     <div class="flex items-center space-x-3">
       <div
         v-if="props.rule"
-        class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold"
+        class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold relative overflow-hidden shadow-lg"
         :class="getGrammarRuleStyleClass(props.rule)"
       >
+        <!-- Professional texture overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/20"></div>
+        <div class="absolute inset-0 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4px_4px]"></div>
         <span
           :class="{ 'text-xl': props.mainTitle, 'text-lg': !props.mainTitle }"
+          class="relative z-10"
         >
           {{ props.rule.symbol }}
         </span>
