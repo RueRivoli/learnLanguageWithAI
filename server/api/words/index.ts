@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
     if (data) {
       const learnedWordIdsToExclude = data.map(({id}) => id)
       const IdToExclude = `(${learnedWordIdsToExclude.join(',')})`
-      console.log('IdToExclude', IdToExclude)
       request = supabase
       .from("turkish_words")
       .select("id, text, translation, role, word_sentence, word_sentence_translation, word_sentence_2, word_sentence_2_translation", { count: "exact"}).not('id', 'in', IdToExclude).range(from, to).order("id", { ascending: true })

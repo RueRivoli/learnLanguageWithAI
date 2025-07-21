@@ -353,13 +353,16 @@ const handleExpressionLearningStatus = async (
             >
               <!-- flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 -->
               <div
-                v-for="word in words"
+                v-for="(word, index) in words"
                 :key="word.id"
-                class="group p-4 relative bg-base-100 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                class="group p-4 relative rounded-lg border hover:shadow-md transition-all duration-300 cursor-pointer"
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
                     selectedWord?.id === word.id,
                   // 'opacity-75': learnedWords.has(word.id),
+                  // Alternating backgrounds every 2 items
+                  'bg-gradient-to-br from-white via-gray-50/30 to-white border-gray-200/80 shadow-sm': Math.floor(index / 2) % 2 === 0,
+                  'bg-gradient-to-br from-slate-50/80 via-blue-50/20 to-indigo-50/30 border-slate-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
                 }"
                 @click="selectedWord = word"
               >
@@ -477,13 +480,16 @@ const handleExpressionLearningStatus = async (
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               <div
-                v-for="expression in expressions"
+                v-for="(expression, index) in expressions"
                 :key="expression.text"
-                class="group p-4 relative bg-base-100 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                class="group p-4 relative rounded-lg border hover:shadow-md transition-all duration-300 cursor-pointer"
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
                     selectedExpression?.text === expression.text,
                   // 'opacity-75': learnedExpressions.has(expression.text),
+                  // Alternating backgrounds every 2 items
+                  'bg-gradient-to-br from-white via-gray-50/30 to-white border-gray-200/80 shadow-sm': Math.floor(index / 2) % 2 === 0,
+                  'bg-gradient-to-br from-slate-50/80 via-blue-50/20 to-indigo-50/30 border-slate-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
                 }"
                 @click="selectedExpression = expression"
               >

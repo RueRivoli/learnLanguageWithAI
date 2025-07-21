@@ -133,33 +133,36 @@ const handleGenerateStory = async () => {
 
 <template>
   <div class="min-h-screen relative py-8 overflow-hidden">
-    <!-- Professional Light Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
+    <!-- Enhanced Professional Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40"></div>
     
-    <!-- Subtle color hints overlay -->
-    <div class="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-warning/3"></div>
+    <!-- Sophisticated color overlay with better blending -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
     
-    <!-- Professional geometric accents -->
-    <div class="absolute top-0 left-0 w-96 h-96 bg-primary/4 rounded-full blur-3xl"></div>
-    <div class="absolute top-20 right-0 w-80 h-80 bg-warning/3 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-black/2 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/2 rounded-full blur-3xl"></div>
+    <!-- Enhanced geometric accents with better positioning -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary/8 to-transparent rounded-full blur-3xl"></div>
+    <div class="absolute top-20 right-0 w-80 h-80 bg-gradient-to-bl from-accent/6 to-transparent rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-gradient-to-tr from-slate-400/4 to-transparent rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/3 to-accent/3 rounded-full blur-3xl"></div>
     
-    <!-- Subtle professional grid pattern -->
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <!-- Enhanced professional grid pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
     
-    <!-- Professional edge accents -->
-    <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/5 via-transparent to-transparent"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/5 via-transparent to-transparent"></div>
+    <!-- Subtle dot pattern overlay -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.015)_1px,transparent_0)] bg-[size:20px_20px]"></div>
+    
+    <!-- Enhanced edge accents -->
+    <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-slate-200/20 via-transparent to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-200/20 via-transparent to-transparent"></div>
     
     <!-- Content wrapper -->
     <div class="relative z-10">
     <div class="max-w-4xl mx-auto px-4">
       <!-- Header Section -->
       <div class="text-center mb-8 relative">
-        <!-- Background decoration -->
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 rounded-3xl -z-10"></div>
-        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+        <!-- Enhanced background decoration -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/8 rounded-3xl -z-10"></div>
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-gradient-to-br from-primary/15 to-accent/10 rounded-full blur-3xl -z-10"></div>
         
         <div class="max-w-3xl mx-auto px-6 py-6">
           <!-- Main Title with Primary Color -->
@@ -174,15 +177,15 @@ const handleGenerateStory = async () => {
           
           <!-- Feature highlights -->
           <div class="flex flex-wrap justify-center gap-4 mb-6">
-            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div class="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/80 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <SparklesIcon class="h-4 w-4 text-primary" />
               <span class="text-sm font-semibold text-gray-700">AI-Powered</span>
             </div>
-            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div class="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/80 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <DocumentIcon class="h-4 w-4 text-primary" />
               <span class="text-sm font-semibold text-gray-700">Personalized</span>
             </div>
-            <div class="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div class="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/80 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <BoltIcon class="h-4 w-4 text-primary" />
               <span class="text-sm font-semibold text-gray-700">Instant</span>
             </div>
@@ -192,12 +195,16 @@ const handleGenerateStory = async () => {
         </div>
       </div>
 
-      <!-- Main Content Card -->
-      <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50 overflow-hidden">
+      <!-- Enhanced Main Content Card -->
+      <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/60 overflow-hidden relative">
+        <!-- Enhanced card background texture -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white/80 via-white/90 to-slate-50/80"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_25%,rgba(255,255,255,0.1)_75%,transparent_75%)] bg-[size:20px_20px]"></div>
+        
         <!-- Loading State -->
         <div
           v-if="isFetchingData"
-          class="p-8 space-y-6"
+          class="p-8 space-y-6 relative z-10"
         >
           <div class="skeleton h-8 w-64 mx-auto" />
           <div class="skeleton h-32 w-full" />
@@ -207,12 +214,16 @@ const handleGenerateStory = async () => {
         </div>
 
         <!-- Content -->
-        <div v-else class="p-8 ">
+        <div v-else class="p-8 relative z-10">
           <div class="rounded-xl px-6 pb-6 space-y-10">
             <!-- Module Selection Section -->
-            <div class="">
+            <div class="relative">
+              <!-- Section background -->
+              <div class="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-primary/2 rounded-xl -z-10"></div>
+              <div class="absolute inset-0 bg-white/50 rounded-xl -z-10"></div>
+              
               <div class="flex items-center mb-3">
-                <div class="bg-primary/10 p-2 rounded-lg mr-3">
+                <div class="bg-gradient-to-br from-primary/20 to-primary/10 p-2 rounded-lg mr-3 border border-primary/20">
                   <ViewfinderCircleIcon class="h-5 w-5 text-primary" />
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900">The Module You Target</h3>
@@ -224,7 +235,7 @@ const handleGenerateStory = async () => {
               
               <select
                 v-model="moduleToTrainId"
-                class="select select-primary w-full max-w-md bg-white border-primary/30 focus:border-primary"
+                class="select select-primary w-full max-w-md bg-white/90 backdrop-blur-sm border-primary/30 focus:border-primary shadow-sm"
               >
                 <option
                   v-for="m in moduleOptions"
@@ -236,28 +247,32 @@ const handleGenerateStory = async () => {
               </select>
             </div>
 
-            <!-- Stylish Separator 1 -->
+            <!-- Enhanced Stylish Separator 1 -->
             <div class="flex items-center justify-center">
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
               <div class="mx-4 flex items-center gap-2">
-                <div class="w-2 h-2 bg-primary rounded-full"></div>
-                <div class="w-1 h-1 bg-primary/60 rounded-full"></div>
-                <div class="w-1 h-1 bg-primary/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-sm"></div>
+                <div class="w-1 h-1 bg-primary/70 rounded-full"></div>
+                <div class="w-1 h-1 bg-primary/50 rounded-full"></div>
               </div>
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
             </div>
 
             <!-- Words Section -->
-            <div class="">
+            <div class="relative">
+              <!-- Section background -->
+              <div class="absolute inset-0 bg-gradient-to-r from-blue-50/30 via-transparent to-blue-50/20 rounded-xl -z-10"></div>
+              <div class="absolute inset-0 bg-white/50 rounded-xl -z-10"></div>
+              
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center">
-                  <div class="bg-primary text-white p-2 rounded-lg mr-3">
+                  <div class="bg-gradient-to-br from-primary to-primary/90 text-white p-2 rounded-lg mr-3 shadow-sm">
                     <BookOpenIcon class="h-5 w-5" />
                   </div>
                   <h3 class="text-xl font-semibold text-gray-900">Words To Learn</h3>
                 </div>
                 <button
-                  class="btn btn-primary btn-sm btn-outline"
+                  class="btn btn-primary btn-sm btn-outline shadow-sm hover:shadow-md transition-all duration-200"
                   @click="handleModifyWordList"
                 >
                   <PencilSquareIcon class="h-4 w-4 mr-1" />
@@ -273,36 +288,39 @@ const handleGenerateStory = async () => {
                 <div
                   v-for="(w, n) in wordList.slice(0, 10)"
                   :key="n"
-                  class="badge badge-primary badge-lg hover:bg-primary/90 cursor-pointer"
+                  class="badge badge-primary badge-lg hover:bg-primary/90 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200"
                 >
                   {{ w.text }}
                 </div>
               </div>
             </div>
 
-            <!-- Stylish Separator 2 -->
+            <!-- Enhanced Stylish Separator 2 -->
             <div class="flex items-center justify-center">
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
               <div class="mx-4 flex items-center gap-2">
-                <div class="w-2 h-2 bg-primary rounded-full"></div>
-                <div class="w-1 h-1 bg-primary/60 rounded-full"></div>
-                <div class="w-1 h-1 bg-primary/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-sm"></div>
+                <div class="w-1 h-1 bg-primary/70 rounded-full"></div>
+                <div class="w-1 h-1 bg-primary/50 rounded-full"></div>
               </div>
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
             </div>
 
             <!-- Expressions Section -->
-            <!-- bg-emerald-500/10 text-emerald-700 border-emerald-300 hover:bg-emerald-500/20 -->
-            <div class="">
+            <div class="relative">
+              <!-- Section background -->
+              <div class="absolute inset-0 bg-gradient-to-r from-accent/20 via-transparent to-accent/15 rounded-xl -z-10"></div>
+              <div class="absolute inset-0 bg-white/50 rounded-xl -z-10"></div>
+              
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center">
-                  <div class="bg-accent p-2 rounded-lg mr-3">
+                  <div class="bg-gradient-to-br from-accent to-accent/90 p-2 rounded-lg mr-3 shadow-sm">
                     <LanguageIcon class="h-5 w-5 text-black" />
                   </div>
                   <h3 class="text-xl font-semibold text-gray-900">Expressions To Learn</h3>
                 </div>
                 <button
-                  class="btn btn-sm btn-outline btn-accent"
+                  class="btn btn-sm btn-outline btn-accent shadow-sm hover:shadow-md transition-all duration-200"
                   @click="handleModifyExpressionList"
                 >
                   <PencilSquareIcon class="h-4 w-4 mr-1" />
@@ -318,38 +336,29 @@ const handleGenerateStory = async () => {
                 <div
                   v-for="(e, n) in expressionList.slice(0, 4)"
                   :key="n"
-                  class="badge badge-accent badge-lg cursor-pointer bg-accent/50 text-black border-accent transition-colors"
+                  class="badge badge-accent badge-lg cursor-pointer bg-gradient-to-r from-accent/60 to-accent/80 text-black border-accent/50 shadow-sm hover:shadow-md transition-all duration-200"
                 >
                   {{ e.text }}
                 </div>
               </div>
             </div>
-
-            <!-- Stylish Separator 3 -->
-            <!-- <div class="flex items-center justify-center">
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-              <div class="mx-4 flex items-center gap-2">
-                <div class="w-2 h-2 bg-accent rounded-full"></div>
-                <div class="w-1 h-1 bg-accent/60 rounded-full"></div>
-                <div class="w-1 h-1 bg-accent/40 rounded-full"></div>
-              </div>
-              <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-            </div> -->
           </div>
 
-          <!-- Generate Button Section -->
+          <!-- Enhanced Generate Button Section -->
           <div class="text-center pt-8">
             <button
-              class="btn btn-lg px-8 py-3 text-lg font-semibold bg-warning border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              class="btn btn-lg px-8 py-3 text-lg font-semibold bg-gradient-to-r from-warning to-warning/90 border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden"
               :class="{ 'btn-disabled opacity-50 cursor-not-allowed': !userId }"
               @click="handleGenerateStory"
             >
+              <!-- Button background texture -->
+              <div class="absolute inset-0 bg-gradient-to-r from-warning/20 via-transparent to-warning/10"></div>
               <span
                 v-if="isGeneratingLesson"
-                class="loading loading-spinner loading-md text-white mr-2"
+                class="loading loading-spinner loading-md text-white mr-2 relative z-10"
               />
-              <SparklesIcon class="h-5 w-5 mr-2" />
-              <span>Generate Tailored Lesson</span>
+              <SparklesIcon class="h-5 w-5 mr-2 relative z-10" />
+              <span class="relative z-10">Generate Tailored Lesson</span>
             </button>
           </div>
         </div>

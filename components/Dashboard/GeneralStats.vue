@@ -39,11 +39,11 @@ const currentInfo = computed(() => {
       </div>
 
       <!-- Professional small rectangle grammar rules -->
-      <div class="space-y-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <div
           v-for="(rule, index) in currentInfo"
           :key="index"
-          class="group relative bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden"
+          class="group relative bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden h-24"
           :class="{
             'border-green-200 shadow-green-500/10': (rule.score || 0) >= 80,
             'border-gray-200': (rule.score || 0) < 80,
@@ -73,9 +73,9 @@ const currentInfo = computed(() => {
           />
 
           <!-- Content container -->
-          <div class="relative z-10 p-3">
+          <div class="relative z-10 p-3 h-full flex items-center">
             <!-- Compact row layout: RuleTitle + Radial Progress -->
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between w-full">
               <!-- Rule title (untouched) -->
               <div class="flex-1 min-w-0">
                 <LayoutHeadingRuleTitle :rule="rule" :main-title="false" />
@@ -83,20 +83,20 @@ const currentInfo = computed(() => {
 
               <!-- Radial progress -->
               <div class="flex-shrink-0 ml-4">
-                <div class="relative w-12 h-12">
+                <div class="relative w-10 h-10">
                   <!-- Background circle -->
                   <svg
-                    class="w-12 h-12 transform -rotate-90"
+                    class="w-10 h-10 transform -rotate-90"
                     viewBox="0 0 36 36"
                   >
                     <path
                       class="text-gray-200"
                       stroke="currentColor"
-                      stroke-width="2"
+                      stroke-width="3"
                       fill="none"
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
-                    <!-- Progress circle -->
+                    <!-- Progress circle - continuous standard -->
                     <path
                       class="transition-all duration-1000 ease-out"
                       :class="{
@@ -106,7 +106,7 @@ const currentInfo = computed(() => {
                         'text-red-500': (rule.score || 0) < 50,
                       }"
                       stroke="currentColor"
-                      stroke-width="2"
+                      stroke-width="3"
                       stroke-linecap="round"
                       fill="none"
                       :stroke-dasharray="`${(rule.score || 0) * 0.314}, 31.415`"
@@ -114,12 +114,12 @@ const currentInfo = computed(() => {
                     />
                   </svg>
 
-                  <!-- Center percentage -->
+                  <!-- Center percentage with more space -->
                   <div
                     class="absolute inset-0 flex items-center justify-center"
                   >
                     <span
-                      class="text-xs font-bold"
+                      class="text-xs font-bold px-1"
                       :class="{
                         'text-green-600': (rule.score || 0) >= 80,
                         'text-yellow-600':

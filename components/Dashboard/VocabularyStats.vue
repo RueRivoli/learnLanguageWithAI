@@ -21,7 +21,7 @@ const optionChartExpressions = computed(() => {
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Words Progress</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Word Learning Progress</h3>
         <!-- <p class="text-sm text-gray-600">
         Track your word mastery across difficulty levels
       </p> -->
@@ -40,7 +40,7 @@ const optionChartExpressions = computed(() => {
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div class="mb-4">
         <h3 class="text-lg font-semibold text-gray-900 mb-2">
-          Expressions Progress
+        Expression Learning Progress
         </h3>
         <!-- <p class="text-sm text-gray-600">
         Monitor your expression learning journey

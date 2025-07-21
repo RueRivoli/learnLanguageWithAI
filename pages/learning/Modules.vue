@@ -3,7 +3,11 @@ import {
   ArrowTrendingUpIcon,
   BookmarkIcon as BookmarkSolidIcon,
 } from "@heroicons/vue/24/solid";
-import { BookmarkIcon, EyeIcon, Square2StackIcon } from "@heroicons/vue/24/outline";
+import {
+  BookmarkIcon,
+  EyeIcon,
+  Square2StackIcon,
+} from "@heroicons/vue/24/outline";
 import {
   grammarLevelTabs,
   getGrammarRuleStyleClass,
@@ -25,21 +29,21 @@ useHead({
 
 const router = useRouter();
 const grammarRules = ref<GrammarRule[]>([]);
-const isFetchingGrammarRules = ref(false)
+const isFetchingGrammarRules = ref(false);
 const activeDifficultyLevelTab = ref(1);
 
 // Helper function to get text color class from background class
 const getTextColorClass = (rule: GrammarRule) => {
   const bgClass = getGrammarRuleStyleClass(rule);
   switch (bgClass) {
-    case 'bg-success':
-      return 'text-success';
-    case 'bg-warning':
-      return 'text-warning';
-    case 'bg-error':
-      return 'text-error';
+    case "bg-success":
+      return "text-success";
+    case "bg-warning":
+      return "text-warning";
+    case "bg-error":
+      return "text-error";
     default:
-      return 'text-slate-700';
+      return "text-slate-700";
   }
 };
 
@@ -63,14 +67,14 @@ const getDifficultyClassQuery = (tab: number) => {
 };
 watchEffect(async () => {
   try {
-    isFetchingGrammarRules.value = true
+    isFetchingGrammarRules.value = true;
     const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
     const grammarModules = await $fetch("/api/grammar?order_by=id", {
       query,
     });
     if (grammarModules && Array.isArray(grammarModules))
       grammarRules.value = parseRules(grammarModules);
-      isFetchingGrammarRules.value = false
+    isFetchingGrammarRules.value = false;
   } catch (error) {
     console.log(error);
   }
@@ -103,64 +107,74 @@ watchEffect(async () => {
           <div
             class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
-          <!-- Loading Skeletons -->
-          <template v-if="isFetchingGrammarRules">
-            <div
-              v-for="n in 12"
-              :key="`skeleton-${n}`"
-              class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 animate-pulse h-48"
-            >
-              <!-- Header skeleton -->
-              <div class="flex items-start justify-between mb-4">
-                <div class="flex-1">
-                  <div class="skeleton h-6 w-3/4 mb-2"></div>
-                  <div class="skeleton h-4 w-1/2"></div>
+            <!-- Loading Skeletons -->
+            <template v-if="isFetchingGrammarRules">
+              <div
+                v-for="n in 12"
+                :key="`skeleton-${n}`"
+                class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 animate-pulse h-48"
+              >
+                <!-- Header skeleton -->
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <div class="skeleton h-6 w-3/4 mb-2" />
+                    <div class="skeleton h-4 w-1/2" />
+                  </div>
+                  <div class="skeleton h-5 w-5 rounded-full ml-3" />
                 </div>
-                <div class="skeleton h-5 w-5 rounded-full ml-3"></div>
-              </div>
 
-              <!-- Highlights skeleton (randomly shown) -->
-              <div v-if="n % 2 === 0" class="mb-4 flex-1">
-                <div class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50 h-full">
-                  <!-- Light background with neutral color tint -->
-                  <div class="absolute inset-0 bg-white/90"></div>
-                  <div class="absolute inset-0 opacity-20 bg-slate-200"></div>
-                  
-                  <!-- Professional texture overlay with low opacity -->
-                  <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"></div>
-                  <div class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"></div>
-                  <div class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"></div>
-                  
-                  <div class="flex items-start h-full relative z-10">
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2 mb-2">
-                        <div class="skeleton w-2 h-2 rounded-full shadow-sm bg-slate-300"></div>
-                        <div class="skeleton h-3 w-16 bg-slate-300"></div>
+                <!-- Highlights skeleton (randomly shown) -->
+                <div v-if="n % 2 === 0" class="mb-4 flex-1">
+                  <div
+                    class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50 h-full"
+                  >
+                    <!-- Light background with neutral color tint -->
+                    <div class="absolute inset-0 bg-white/90" />
+                    <div class="absolute inset-0 opacity-20 bg-slate-200" />
+
+                    <!-- Professional texture overlay with low opacity -->
+                    <div
+                      class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"
+                    />
+                    <div
+                      class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"
+                    />
+                    <div
+                      class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"
+                    />
+
+                    <div class="flex items-start h-full relative z-10">
+                      <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                          <div
+                            class="skeleton w-2 h-2 rounded-full shadow-sm bg-slate-300"
+                          />
+                          <div class="skeleton h-3 w-16 bg-slate-300" />
+                        </div>
+                        <div class="skeleton h-4 w-full mb-1" />
+                        <div class="skeleton h-4 w-3/4 mb-1" />
+                        <div class="skeleton h-4 w-2/3" />
                       </div>
-                      <div class="skeleton h-4 w-full mb-1"></div>
-                      <div class="skeleton h-4 w-3/4 mb-1"></div>
-                      <div class="skeleton h-4 w-2/3"></div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Spacer for cards without highlights -->
-              <div v-else class="flex-1"></div>
+                <!-- Spacer for cards without highlights -->
+                <div v-else class="flex-1" />
 
-              <!-- Actions skeleton -->
-              <div class="flex items-center justify-between mt-auto">
-                <div class="flex gap-2">
-                  <div class="skeleton h-8 w-16 rounded-lg"></div>
-                  <div class="skeleton h-8 w-20 rounded-lg"></div>
+                <!-- Actions skeleton -->
+                <div class="flex items-center justify-between mt-auto">
+                  <div class="flex gap-2">
+                    <div class="skeleton h-8 w-16 rounded-lg" />
+                    <div class="skeleton h-8 w-20 rounded-lg" />
+                  </div>
+                  <div class="skeleton h-8 w-12 rounded-full" />
                 </div>
-                <div class="skeleton h-8 w-12 rounded-full"></div>
               </div>
-            </div>
-          </template>
+            </template>
             <div
-              v-else
               v-for="(rule, n) in grammarRules"
+              v-else
               :key="n"
               class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200"
               @click="router.push(`/learning/grammar/${rule.id}`)"
@@ -171,27 +185,46 @@ watchEffect(async () => {
                 <BookmarkIcon v-else class="h-5 w-5" />
               </div>
 
-
               <!-- Highlights -->
               <div v-if="(rule as any).highlights" class="mb-4">
-                <div class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50">
+                <div
+                  class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50"
+                >
                   <!-- Light background with difficulty-based color tint -->
-                  <div class="absolute inset-0 bg-white/90"></div>
-                  <div class="absolute inset-0 opacity-20" :class="getGrammarRuleStyleClass(rule)"></div>
-                  
+                  <div class="absolute inset-0 bg-white/90" />
+                  <div
+                    class="absolute inset-0 opacity-20"
+                    :class="getGrammarRuleStyleClass(rule)"
+                  />
+
                   <!-- Professional texture overlay with low opacity -->
-                  <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"></div>
-                  <div class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"></div>
-                  <div class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"></div>
-                  
+                  <div
+                    class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"
+                  />
+                  <div
+                    class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"
+                  />
+                  <div
+                    class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"
+                  />
+
                   <div class="flex items-start relative z-10">
                     <div class="flex-1">
                       <div class="flex items-center gap-2 mb-2">
-                        <div class="w-2 h-2 rounded-full shadow-sm" :class="getGrammarRuleStyleClass(rule)"></div>
-                        <span class="text-xs font-semibold uppercase tracking-wide" :class="getTextColorClass(rule)">Key Point</span>
+                        <div
+                          class="w-2 h-2 rounded-full shadow-sm"
+                          :class="getGrammarRuleStyleClass(rule)"
+                        />
+                        <span
+                          class="text-xs font-semibold uppercase tracking-wide"
+                          :class="getTextColorClass(rule)"
+                          >Key Point</span
+                        >
                       </div>
-                      <p class="text-sm text-slate-700 font-medium leading-relaxed">
-                        {{ (rule as any).highlights }}
+                      <p
+                        class="text-sm text-slate-700 font-medium leading-relaxed"
+                      >
+                        <span>{{ (rule as any).highlights }}</span>
                       </p>
                     </div>
                   </div>
@@ -200,7 +233,6 @@ watchEffect(async () => {
               <!-- Actions -->
               <div class="flex items-center justify-between">
                 <div>
-
                   <!-- <button
                         class="w-8 h-8 btn btn-soft btn-circle btn-primary rounded-lg cursor-pointer group"
                         title="View lesson"
