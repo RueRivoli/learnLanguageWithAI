@@ -32,7 +32,7 @@ const handleGenerateQuiz = async () => {
     if (response) {
       // router.push(`/learning/quizzes/${response}`);
       await navigateTo({
-        path: `/learning/quizzes/${response}`,
+        path: `/learning/quizzes/${response.quizId}`,
       });
     }
     isLoading.value = false;
