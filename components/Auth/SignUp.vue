@@ -20,7 +20,7 @@ const isLoading = ref<boolean>(false);
 
 const handleSignUpWithGoogle = async () => {
   await client.auth.signInWithOAuth({
-    provider: "github",
+    provider: "google",
     options: {
       redirectTo: window.location.origin + "/learning/dashboard",
     },
@@ -55,10 +55,8 @@ const handleSignUp = async () => {
     //   },
     // );
     // console.log("resXX", res);
-    console.log("error", error);
     if (error) throw error;
 
-    console.log("error", error);
     if (data?.user?.id) {
       await navigateTo({
         path: "/successful-message",

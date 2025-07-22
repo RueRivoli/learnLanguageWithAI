@@ -48,7 +48,7 @@ const handleSignIn = async () => {
 const handleSignInWithGoogle = async () => {
   console.log("handleSignInWithGoogle");
   await client.auth.signInWithOAuth({
-    provider: "github",
+    provider: "google",
     options: {
       redirectTo: window.location.origin + "/learning/dashboard",
     },
