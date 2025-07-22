@@ -66,8 +66,10 @@ const getQuizData = async () => {
     },
   });
   console.log("questions", data.value);
-  quiz.value = data.value;
-  if (data.value) initializeFormQuiz(data.value);
+  if (data.value) {
+    quiz.value = data.value;
+    initializeFormQuiz(data.value);
+  }
   isLoading.value = false;
 };
 
@@ -95,8 +97,8 @@ await getQuizData();
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 p-5 rounded-lg">
-    <div class="max-w-7xl px-4">
+  <div class="min-h-screen bg-gray-50 flex flex-col">
+    <div class="flex-1 max-w-7xl mx-auto px-4 py-5 w-full">
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center gap-3 mb-2">
@@ -115,147 +117,147 @@ await getQuizData();
       </div>
 
       <!-- Main Content -->
-      <div class="flex justify-center">
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full max-w-6xl">
-          <!-- Quiz Questions -->
-          <div class="lg:col-span-3">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Quiz Questions -->
+        <div class="flex-1 lg:max-w-none">
+          <div
+            class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+          >
+            <!-- Loading State -->
             <div
-              class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+              v-if="isLoading"
+              class="w-full h-96 flex flex-col justify-center items-center"
             >
-              <!-- Loading State -->
               <div
-                v-if="isLoading"
-                class="w-full h-96 flex flex-col justify-center items-center"
-              >
-                <div
-                  class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"
-                />
-                <p class="text-gray-500">Loading quiz questions...</p>
-              </div>
+                class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"
+              />
+              <p class="text-gray-500">Loading quiz questions...</p>
+            </div>
 
-              <!-- Quiz Content -->
-              <div v-else class="p-8">
-                <!-- Quiz Header -->
-                <div
-                  class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100"
-                >
-                  <div>
-                    <h2 class="text-xl font-semibold text-gray-900 mb-1">
-                      Choose the correct answer
-                    </h2>
-                    <p class="text-sm text-gray-600">
-                      {{ quiz.length }} questions • Read carefully and select
-                      the best option
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm text-gray-500">
-                    <ClockIcon class="w-4 h-4" />
-                    <span>No time limit</span>
-                  </div>
+            <!-- Quiz Content -->
+            <div v-else class="p-8">
+              <!-- Quiz Header -->
+              <div
+                class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100"
+              >
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900 mb-1">
+                    Choose the correct answer
+                  </h2>
+                  <p class="text-sm text-gray-600">
+                    {{ quiz.length }} questions • Read carefully and select the
+                    best option
+                  </p>
                 </div>
-                <!-- Questions Form -->
-                <form class="space-y-8" @submit.prevent="handleSubmit">
-                  <div
-                    v-for="(question, index) in quiz"
-                    :key="index"
-                    class="bg-gray-50 rounded-lg p-6 border border-gray-100"
-                  >
-                    <!-- Question -->
-                    <div class="mb-6">
-                      <div class="flex items-start gap-3">
-                        <div
-                          class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0"
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                  <ClockIcon class="w-4 h-4" />
+                  <span>No time limit</span>
+                </div>
+              </div>
+              <!-- Questions Form -->
+              <form class="space-y-8" @submit.prevent="handleSubmit">
+                <div
+                  v-for="(question, index) in quiz"
+                  :key="index"
+                  class="bg-gray-50 rounded-lg p-6 border border-gray-100"
+                >
+                  <!-- Question -->
+                  <div class="mb-6">
+                    <div class="flex items-start gap-3">
+                      <div
+                        class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0"
+                      >
+                        {{ index + 1 }}
+                      </div>
+                      <div class="flex-1">
+                        <h3
+                          class="text-lg font-medium text-gray-900 leading-relaxed"
                         >
-                          {{ index + 1 }}
-                        </div>
-                        <div class="flex-1">
-                          <h3
-                            class="text-lg font-medium text-gray-900 leading-relaxed"
-                          >
-                            {{ question.question }}
-                          </h3>
-                        </div>
+                          {{ question.question }}
+                        </h3>
                       </div>
                     </div>
+                  </div>
 
-                    <!-- Options -->
-                    <div class="space-y-3">
-                      <label
-                        v-for="(option, optionIndex) in [
-                          question.option1,
-                          question.option2,
-                          question.option3,
-                          question.option4,
-                        ]"
-                        :key="optionIndex"
-                        class="flex items-center p-4 bg-white rounded-lg border border-gray-200 hover:border-primary/30 hover:bg-primary/5 cursor-pointer transition-all duration-200"
+                  <!-- Options -->
+                  <div class="space-y-3">
+                    <label
+                      v-for="(option, optionIndex) in [
+                        question.option1,
+                        question.option2,
+                        question.option3,
+                        question.option4,
+                      ]"
+                      :key="optionIndex"
+                      class="flex items-center p-4 bg-white rounded-lg border border-gray-200 hover:border-primary/30 hover:bg-primary/5 cursor-pointer duration-200"
+                      :class="{
+                        'border-primary bg-primary/10':
+                          formQuiz[index + 1]?.selectedOption ===
+                          String(optionIndex + 1),
+                      }"
+                    >
+                      <input
+                        :id="`question-${index + 1}-option-${optionIndex + 1}`"
+                        v-model="formQuiz[index + 1].selectedOption"
+                        type="radio"
+                        :name="`question-${index + 1}`"
+                        :value="String(optionIndex + 1)"
+                        class="radio radio-md radio-primary"
+                      />
+                      <!-- <div
+                        class="w-6 h-6 border-2 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
                         :class="{
-                          'border-primary bg-primary/10':
+                          'border-primary':
                             formQuiz[index + 1]?.selectedOption ===
+                            String(optionIndex + 1),
+                          'border-gray-300':
+                            formQuiz[index + 1]?.selectedOption !==
                             String(optionIndex + 1),
                         }"
                       >
-                        <input
-                          v-model="formQuiz[index + 1].selectedOption"
-                          type="radio"
-                          :name="`question-${index + 1}`"
-                          :value="String(optionIndex + 1)"
-                          class="sr-only"
-                        />
                         <div
-                          class="w-6 h-6 border-2 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
-                          :class="{
-                            'border-primary':
-                              formQuiz[index + 1]?.selectedOption ===
-                              String(optionIndex + 1),
-                            'border-gray-300':
-                              formQuiz[index + 1]?.selectedOption !==
-                              String(optionIndex + 1),
-                          }"
+                          v-if="
+                            formQuiz[index + 1]?.selectedOption ===
+                            String(optionIndex + 1)
+                          "
+                          class="w-3 h-3 bg-primary rounded-full"
+                        />
+                      </div> -->
+                      <div class="flex items-center gap-3 flex-1">
+                        <span
+                          class="w-8 h-8 ml-2 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center text-sm font-semibold"
                         >
-                          <div
-                            v-if="
-                              formQuiz[index + 1]?.selectedOption ===
-                              String(optionIndex + 1)
-                            "
-                            class="w-3 h-3 bg-primary rounded-full"
-                          />
-                        </div>
-                        <div class="flex items-center gap-3 flex-1">
-                          <span
-                            class="w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center text-sm font-semibold"
-                          >
-                            {{ getOptionLabel(optionIndex) }}
-                          </span>
-                          <span class="text-gray-700 font-medium">{{
-                            option
-                          }}</span>
-                        </div>
-                      </label>
-                    </div>
+                          {{ getOptionLabel(optionIndex) }}
+                        </span>
+                        <span class="text-gray-700 font-medium">{{
+                          option
+                        }}</span>
+                      </div>
+                    </label>
                   </div>
+                </div>
 
-                  <!-- Submit Button -->
-                  <div class="pt-6 border-t border-gray-100">
-                    <button
-                      type="submit"
-                      :disabled="!isQuizComplete"
-                      class="w-full bg-primary hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-3"
-                    >
-                      <CheckIcon class="w-5 h-5" />
-                      <span>Submit Quiz & Get Results</span>
-                      <ArrowRightIcon class="w-5 h-5" />
-                    </button>
-                  </div>
-                </form>
-              </div>
+                <!-- Submit Button -->
+                <div class="pt-6 border-t border-gray-100">
+                  <button
+                    type="submit"
+                    :disabled="!isQuizComplete"
+                    class="w-full btn btn-primary btn-lg disabled:cursor-not-allowed font-semibold py-4 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-3"
+                  >
+                    <span>Submit Quiz & Get Results</span>
+                    <ArrowRightIcon class="w-5 h-5" />
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
+        </div>
 
-          <!-- Sidebar -->
-          <div class="lg:col-span-2">
+        <!-- Sidebar -->
+        <div class="lg:w-80 lg:flex-shrink-0">
+          <div class="lg:sticky lg:top-6">
             <div
-              class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-6"
+              class="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
             >
               <!-- Progress Overview -->
               <div class="mb-6">
@@ -274,7 +276,7 @@ await getQuizData();
                     <span class="text-sm font-semibold text-primary">
                       {{
                         Object.values(formQuiz).filter(
-                          (q) => q.selectedOption !== null,
+                          (q: any) => q.selectedOption !== null,
                         ).length
                       }}
                     </span>
@@ -285,7 +287,7 @@ await getQuizData();
                       {{
                         quiz.length -
                         Object.values(formQuiz).filter(
-                          (q) => q.selectedOption !== null,
+                          (q: any) => q.selectedOption !== null,
                         ).length
                       }}
                     </span>
@@ -303,7 +305,7 @@ await getQuizData();
                     {{
                       Math.round(
                         (Object.values(formQuiz).filter(
-                          (q) => q.selectedOption !== null,
+                          (q: any) => q.selectedOption !== null,
                         ).length /
                           quiz.length) *
                           100,
@@ -313,9 +315,9 @@ await getQuizData();
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
                   <div
-                    class="bg-primary h-2 rounded-full transition-all duration-300"
+                    class="bg-primary h-2 rounded-full duration-300"
                     :style="{
-                      width: `${(Object.values(formQuiz).filter((q) => q.selectedOption !== null).length / quiz.length) * 100}%`,
+                      width: `${(Object.values(formQuiz).filter((q: any) => q.selectedOption !== null).length / quiz.length) * 100}%`,
                     }"
                   />
                 </div>
