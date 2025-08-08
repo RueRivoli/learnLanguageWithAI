@@ -1,6 +1,6 @@
 import type { Database } from "~/supabase/types";
 
-type GrammarRow = Database['public']['Tables']['turkish_grammar_rules']['Row']
+export type GrammarRow = Database['public']['Tables']['turkish_grammar_rules']['Row']
 
 export type GrammarRule = {
   id: GrammarRow['id'];

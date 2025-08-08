@@ -121,18 +121,6 @@ export const useUserScoreStore = defineStore("user-score", {
     intermediateGrammarRulesInfo(state: UserScore): Array<any> {
       return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({difficultyClass, ruleNameEn, ruleId, ruleName, score, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, ruleName, score, symbol})) ?? [];
     },
-    // advancedGrammarRulesNames(state: UserScore): Array<string> {
-    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 3).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    // },
-    // beginnerGrammarRulesNames(state: UserScore): Array<string> {
-    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    // },
-    // intermediateGrammarRulesNames(state: UserScore): Array<string> {
-    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    // },
-    // expertGrammarRulesNames(state: UserScore): Array<string> {
-    //   return state.rulesScores?.filter((rule) => rule.difficultyClass === 4).map(({ruleNameEn}) => ruleNameEn) ?? [];
-    // },
     beginnerGrammarRulesScores(state: UserScore): Array<number> {
       return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({ruleScore, ruleId}) => ({ruleId, ruleScore})) ?? [];
     },
@@ -145,13 +133,29 @@ export const useUserScoreStore = defineStore("user-score", {
     expertGrammarRulesScores(state: UserScore): Array<number> {
       return state.rulesScores?.filter((rule) => rule.difficultyClass === 4).map(({ruleScore}) => ruleScore) ?? [];
     },
-    percentageLearnedWords(state: UserScore): number {
-      if (state.totalWordsLearned && state.totalWords) return Math.trunc((state.totalWordsLearned / state.totalWords) * 100).toFixed(1);
-      return 0
+    totalWordsMasteredInPercentage(state: UserScore): string {
+      const totalWords = state.totalWords ?? 0;
+      return totalWords > 0 ? Math.trunc(((state.totalWordsMastered ?? 0) / totalWords) * 100).toFixed(1) : '0.0';
     },
-    percentageMasterWords(state: UserScore): number {
-      if (state.totalWordsMastered && state.totalWords) return Math.trunc((state.totalWordsMastered / state.totalWords) * 100).toFixed(1);
-      return 0
+    totalExpressionsMasteredInPercentage(state: UserScore): string {
+      const totalExpressions = state.totalExpressions ?? 0;
+      return totalExpressions > 0 ? Math.trunc(((state.totalExpressionsMastered ?? 0) / totalExpressions) * 100).toFixed(1) : '0.0';
+    },
+    totalWordsInK(state: UserScore): string {
+      const total = state.totalWords ?? 0;
+      const nbK = Math.floor(total / 1000);
+      const nbKCent = Math.floor((total - nbK * 1000) / 100);
+      return nbKCent !== 0 ? `${nbK}.${nbKCent} K` : `${nbK} K`;
+    },
+    totalExpressionsInK(state: UserScore): string {
+      if (state.totalExpressions && state.totalExpressions > 999) {
+        console.log('expes > 999')
+        const nbK = Math.floor((state.totalExpressions ?? 0) / 1000);
+        const nbKCent = Math.floor(
+          ((state.totalExpressions ?? 0) - nbK * 1000) / 100,
+        );
+        return nbKCent !== 0 ? `${nbK}${nbKCent} K` : `${nbK} K`;
+      } else return state.totalExpressions?.toString() ?? '';
     },
   },
 });

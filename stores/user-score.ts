@@ -3,20 +3,20 @@ import type { Database } from "~/supabase/types";
 
 export interface UserScore {
     isLoaded: boolean,
-    totalExpressions: number | null,
     totalWords: number | null,
-    totalWordsMastered: number | null,
+    totalExpressions: number | null,
     totalWordsLearned: number | null,
-    totalExpressionsMastered: number | null,
+    totalWordsMastered: number | null,
     totalExpressionsLearned: number | null,
+    totalExpressionsMastered: number | null,
     rulesScores: GrammarScores | null,
  } 
 
  export type VocabularyScore = {
+   totalWordsLearned: number,
     totalWordsMastered: number,
-    totalWordsLearned: number,
-    totalExpressionsMastered: number,
     totalExpressionsLearned: number,
+    totalExpressionsMastered: number,
  } 
 
  export type GrammarScores = Array<{

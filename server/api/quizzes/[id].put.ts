@@ -10,6 +10,7 @@ const supabase = createClient(
 export default defineEventHandler(async (event) => {
   try {
     const ruleId = getRouterParam(event, "id");
+    console.log('ruleId', ruleId)
     // 1 = easy; 2 = intermediate; 3 = difficult
     const difficultyLevels = [
       { category: 1, quantity: 2 },
@@ -31,7 +32,7 @@ export default defineEventHandler(async (event) => {
     const allQuizzes = await Promise.all(quizPromises);
 
     const finalQuiz = allQuizzes.flat();
-
+    console.log('finalQuiz', finalQuiz[0], finalQuiz[1], finalQuiz[2], finalQuiz[3], finalQuiz[4])
     // register new quiz in result_quizzes
     const { data, error } = await supabase
       .from("turkish_quizzes_result")

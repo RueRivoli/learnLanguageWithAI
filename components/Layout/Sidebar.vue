@@ -62,7 +62,7 @@ const isActive = (path: string) => {
           leave-to=" -translate-x-full"
         >
           <div
-            class="md:hidden z-10 h-full flex flex-col w-72 bg-white border-r border-gray-200 shadow-xl"
+            class="md:hidden z-10 max-h-screen h-full flex flex-col w-72 bg-white border-r border-gray-200 shadow-xl"
           >
             <div
               class="flex items-center justify-between p-4 border-b border-gray-200"

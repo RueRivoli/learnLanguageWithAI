@@ -25,11 +25,9 @@ export default defineEventHandler(async (event) => {
     .from("turkish_expressions")
     .select(
       "id, turkish_expressions_knowledge!inner(expression_mastered)").eq("turkish_expressions_knowledge.expression_mastered", true)
-      console.log('data', data)
       if (data) {
         const learnedExpressionIdsToExclude = data.map(({id}) => id)
         const IdToExclude = `(${learnedExpressionIdsToExclude.join(',')})`
-        console.log('IdToExclude', IdToExclude)
         request = supabase
         .from("turkish_expressions")
         .select("id, text, translation, expression_sentence, expression_sentence_translation, expression_sentence_2, expression_sentence_2_translation", { count: "exact"}).not('id', 'in', IdToExclude).range(from, to).order("id", { ascending: true })

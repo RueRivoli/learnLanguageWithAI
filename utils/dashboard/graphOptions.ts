@@ -1,8 +1,3 @@
-export const grammarLevelTabs = {
-  firstTab : { title: 'Beginner', icon: 'academic'},
-  secondTab : { title: 'Intermediate', icon: 'trophy'},
-  thirdTab : { title: 'Advanced', icon: 'rocket'}
-}
 function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'diagonal') {
   if (!document) return 
   const canvas = document?.createElement('canvas');
@@ -52,12 +47,12 @@ function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'di
   return canvas;
 }
 
-export const optionWords = (totalWordsMastered: number, totalWordsLearned: number, totalWords: number): ECOption => { 
+export const optionWords = (totalWordsMastered: number, totalWordsLearned: number, totalWords: number, totalWordsInK: string): ECOption => { 
   const totalWordsToLearn = totalWords - (totalWordsMastered + totalWordsLearned)
   return  {
     animation: false,
     title: {
-      text: "Out of 3K words",
+      text: `Out of ${totalWordsInK} words`,
       // subtext: "5K most common words",
       left: "center",
       top: "5%",
@@ -159,12 +154,12 @@ export const optionWords = (totalWordsMastered: number, totalWordsLearned: numbe
   };
 };
   
-export const optionExpressions = (totalExpressionsMastered: number, totalExpressionsLearned: number, totalExpressions: number): ECOption => {
+export const optionExpressions = (totalExpressionsMastered: number, totalExpressionsLearned: number, totalExpressions: number, totalExpressionsInK: string): ECOption => {
   const totalExpressionsToLearn = totalExpressions - (totalExpressionsMastered + totalExpressionsLearned)
   return {
     animation: false,
     title: {
-      text: "Out of 2K expressions",
+      text: `Out of ${totalExpressionsInK} expressions`,
       // subtext: "3K most common expressions",
       left: "center",
       top: "5%",

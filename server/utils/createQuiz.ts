@@ -7,7 +7,6 @@
 
 // export default defineEventHandler(async (event) => {
 //   async function createQuiz(grammarRuleId: number) {
-//     console.log("grammarRuleId", grammarRuleId);
 //     const { data, error } = await supabase
 //       .from("turkish_grammar_quizzes")
 //       .select("text, translation, option_1, option_2, option_3, option_4")

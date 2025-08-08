@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Database } from "~/supabase/types";
-import { grammarLevelTabs } from "~/utils/learning/grammar";
 import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
@@ -24,7 +23,7 @@ onMounted(async () => {
   console.log("is dashboard data loaded ?", userScoreStore.$state.isLoaded);
   if (!userScoreStore.$state.isLoaded) {
     console.log("fetch all dashboard data");
-    userScoreStore.setAllScores(user.value?.id);
+    if (user.value?.id) userScoreStore.setAllScores(user.value?.id);
     userScoreStore.setCount();
   }
 });
@@ -93,21 +92,6 @@ getInfoUser();
       <!-- Stats Highlights Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <template v-if="activeTab === 1">
-          <!-- <div
-            class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
-          >
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm font-medium text-gray-600">WELCOME!</p>
-                <p class="text-2xl font-bold text-gray-900">
-                  Start here with a short quiz to initiate your level
-                </p>
-              </div>
-              <div class="p-3 bg-white rounded-lg">
-                <BookOpenIcon class="h-6 w-6 text-neutral" />
-              </div>
-            </div>
-          </div> -->
           <DashboardGeneralStatsHighlights :pseudo="userStore.$state.pseudo" />
         </template>
         <template v-else-if="activeTab === 2">

@@ -28,7 +28,7 @@ const currentInfo = computed(() => {
     >
       <div class="mb-4 flex items-center justify-between">
         <h3 class="text-lg font-semibold text-gray-900 mb-2">
-          Your Progress on the Different Themes
+          Your Progress on the Different Modules
         </h3>
         <LayoutTabs
           :first-tab="grammarLevelTabs.firstTab"
@@ -39,19 +39,80 @@ const currentInfo = computed(() => {
       </div>
 
       <!-- Professional small rectangle grammar rules -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+      >
+        <div v-if="!currentInfo.length" class="col-span-full">
+          <!-- Empty state placeholder -->
+          <div
+            class="flex flex-col items-center justify-center py-12 px-6 text-center"
+          >
+            <!-- Decorative icon -->
+            <div class="relative mb-6">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-8 h-8 text-blue-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <!-- Subtle background accent -->
+              <div
+                class="absolute inset-0 w-16 h-16 bg-gradient-to-br from-blue-200/30 to-indigo-200/30 rounded-full blur-xl"
+              />
+            </div>
+
+            <!-- Main message -->
+            <h4 class="text-lg font-semibold text-gray-800 mb-2">
+              No Progress Data Available
+            </h4>
+            <p class="text-gray-600 mb-6 max-w-md">
+              Start your learning journey by completing lessons and quizzes to
+              see your progress here.
+            </p>
+            <!-- Subtle decorative elements -->
+            <div class="mt-8 flex items-center gap-4 text-sm text-gray-400">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-400 rounded-full" />
+                <span>Complete lessons</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-400 rounded-full" />
+                <span>Track progress</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-purple-400 rounded-full" />
+                <span>See results</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div
           v-for="(rule, index) in currentInfo"
           :key="index"
           class="group relative bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden h-24"
           :class="{
-            'border-green-200 shadow-green-500/10': (rule.score || 0) >= 80,
+            'border-green-200 shadow-green-500/10 bg-gradient-to-br from-green-50/80 via-emerald-50/60 to-green-50/80':
+              (rule.score || 0) >= 80,
             'border-gray-200': (rule.score || 0) < 80,
           }"
         >
           <!-- Professional background pattern -->
           <div
             class="absolute inset-0 bg-gradient-to-br from-white via-gray-50/30 to-white opacity-60"
+            :class="{
+              'opacity-0': (rule.score || 0) >= 80,
+            }"
           />
 
           <!-- Success celebration for mastered rules -->
@@ -83,53 +144,18 @@ const currentInfo = computed(() => {
 
               <!-- Radial progress -->
               <div class="flex-shrink-0 ml-4">
-                <div class="relative w-10 h-10">
-                  <!-- Background circle -->
-                  <svg
-                    class="w-10 h-10 transform -rotate-90"
-                    viewBox="0 0 36 36"
-                  >
-                    <path
-                      class="text-gray-200"
-                      stroke="currentColor"
-                      stroke-width="3"
-                      fill="none"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                    <!-- Progress circle - continuous standard -->
-                    <path
-                      class="transition-all duration-1000 ease-out"
-                      :class="{
-                        'text-green-500': (rule.score || 0) >= 80,
-                        'text-yellow-500':
-                          (rule.score || 0) >= 50 && (rule.score || 0) < 80,
-                        'text-red-500': (rule.score || 0) < 50,
-                      }"
-                      stroke="currentColor"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      fill="none"
-                      :stroke-dasharray="`${(rule.score || 0) * 0.314}, 31.415`"
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                  </svg>
-
-                  <!-- Center percentage with more space -->
-                  <div
-                    class="absolute inset-0 flex items-center justify-center"
-                  >
-                    <span
-                      class="text-xs font-bold px-1"
-                      :class="{
-                        'text-green-600': (rule.score || 0) >= 80,
-                        'text-yellow-600':
-                          (rule.score || 0) >= 50 && (rule.score || 0) < 80,
-                        'text-red-600': (rule.score || 0) < 50,
-                      }"
-                    >
-                      {{ rule.score || 0 }}%
-                    </span>
-                  </div>
+                <div
+                  class="radial-progress text-xs"
+                  :class="{
+                    'text-success': rule.score > 80,
+                    'text-warning': rule.score > 40,
+                    'text-error': rule.score > 0,
+                  }"
+                  :style="`--value: ${rule.score};--size:2.5rem;`"
+                  aria-valuenow="70"
+                  role="progressbar"
+                >
+                  {{ rule.score }}%
                 </div>
               </div>
             </div>

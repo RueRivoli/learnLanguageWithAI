@@ -177,7 +177,7 @@ const handleWordLearningStatus = async (wordId: number, isLearned: boolean) => {
       method: "PUT",
       body: {
         word_mastered: true,
-        user_id: userStore.$state.id,
+        // user_id: userStore.$state.id,
       },
     });
   }

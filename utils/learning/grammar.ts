@@ -2,9 +2,12 @@ import type { VNode } from "vue";
 import { h } from "vue";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
 
-export const modulesFirstTab = { title: "Beginner", icon: "academic" };
-export const modulesSecondTab = { title: "Intermediate", icon: "trophy" };
-export const modulesThirdTab = { title: "Advanced", icon: "rocket" };
+
+export const grammarLevelTabs = {
+  firstTab : { title: 'Beginner', icon: 'academic', activeBgColorClass: 'bg-success/80', activeTxtColorClass: 'text-white'},
+  secondTab : { title: 'Intermediate', icon: 'trophy', activeBgColorClass: 'bg-warning/80', activeTxtColorClass: 'text-white'},
+  thirdTab : { title: 'Advanced', icon: 'rocket', activeBgColorClass: 'bg-error/80', activeTxtColorClass: 'text-white'}
+}
 
 const enum RuleDifficulty {
   "BEGINNER" = 1,

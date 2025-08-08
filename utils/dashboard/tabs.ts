@@ -1,2 +1,5 @@
-export const dashboardFirstTab = { title: "Vocabulary", icon: "book" };
-export const dashboardSecondTab = { title: "Grammar", icon: "language" };
+export const dashboardCategoryTabs = {
+    firstTab : { title: 'Overview', icon: 'eye', activeBgColorClass: 'bg-neutral/80', activeTxtColorClass: 'text-base-100'},
+    secondTab : { title: 'Vocabulary', icon: 'language', activeBgColorClass: 'bg-neutral/80', activeTxtColorClass: 'text-base-100'},
+    thirdTab : { title: 'Modules', icon: 'squareTwoStack', activeBgColorClass: 'bg-neutral/80', activeTxtColorClass: 'text-base-100'}
+  }
