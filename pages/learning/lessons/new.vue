@@ -132,68 +132,157 @@ const handleGenerateStory = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen relative py-8 overflow-hidden">
-    <!-- Enhanced Professional Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40"></div>
-    
-    <!-- Sophisticated color overlay with better blending -->
-    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
-    
-    <!-- Enhanced geometric accents with better positioning -->
-    <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary/8 to-transparent rounded-full blur-3xl"></div>
-    <div class="absolute top-20 right-0 w-80 h-80 bg-gradient-to-bl from-accent/6 to-transparent rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-gradient-to-tr from-slate-400/4 to-transparent rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/3 to-accent/3 rounded-full blur-3xl"></div>
-    
-    <!-- Enhanced professional grid pattern -->
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
-    
-    <!-- Subtle dot pattern overlay -->
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.015)_1px,transparent_0)] bg-[size:20px_20px]"></div>
-    
-    <!-- Enhanced edge accents -->
-    <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-slate-200/20 via-transparent to-transparent"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-200/20 via-transparent to-transparent"></div>
-    
-    <!-- Content wrapper -->
-    <div class="relative z-10">
-    <div class="max-w-4xl mx-auto px-4">
+  <div id="new_lesson_page" class="min-h-screen bg-gray-50 py-16">
+    <div class="max-w-4xl mx-auto px-6">
       <!-- Header Section -->
-      <div class="text-center mb-8 relative">
-        <!-- Enhanced background decoration -->
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/8 rounded-3xl -z-10"></div>
-        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-gradient-to-br from-primary/15 to-accent/10 rounded-full blur-3xl -z-10"></div>
-        
-        <div class="max-w-3xl mx-auto px-6 py-6">
-          <!-- Main Title with Primary Color -->
-          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-primary leading-tight">
-            Create a Tailored Lesson with AI
-          </h1>
-          
-          <!-- Subtitle with better styling -->
-          <p class="text-lg text-gray-600 mb-6 leading-relaxed max-w-2xl mx-auto font-medium">
-            Generate personalized lessons using the latest AI models, perfectly adapted to your progress
-          </p>
-          
-          <!-- Feature highlights -->
-          <div class="flex flex-wrap justify-center gap-4 mb-6">
-            <div class="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/80 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <SparklesIcon class="h-4 w-4 text-primary" />
-              <span class="text-sm font-semibold text-gray-700">AI-Powered</span>
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-wide">
+          Create a Personalized Lesson
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
+          Generate stories adapted to your level with artificial intelligence
+        </p>
+      </div>
+
+      <!-- Main Content Card -->
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        <!-- Card Content -->
+        <div class="p-10 space-y-12">
+          <!-- Module Selection Section -->
+          <div class="group">
+            <div class="flex items-center mb-6">
+              <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mr-5">
+                <ViewfinderCircleIcon class="h-6 w-6 text-gray-600" />
+              </div>
+              <div>
+                <h3 class="text-2xl font-light text-gray-900 mb-1">Module to Work On</h3>
+                <p class="text-gray-500 text-sm font-light">Choose the module you want to improve</p>
+              </div>
             </div>
-            <div class="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/80 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <DocumentIcon class="h-4 w-4 text-primary" />
-              <span class="text-sm font-semibold text-gray-700">Personalized</span>
+            
+            <select
+              v-model="moduleToTrainId"
+              class="w-full max-w-lg bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 text-gray-900 font-light text-lg focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:outline-none transition-all duration-200 hover:border-gray-300"
+            >
+              <option
+                v-for="m in moduleOptions"
+                :key="m.value"
+                :value="m.value"
+              >
+                {{ m.label }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Divider -->
+          <div class="flex items-center">
+            <div class="flex-1 h-px bg-gray-200"></div>
+            <div class="mx-6 w-1 h-1 bg-gray-300 rounded-full"></div>
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
+
+          <!-- Words Selection Section -->
+          <div class="group">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-gradient-to-br from-primary to-primary/90 text-white rounded-xl flex items-center justify-center mr-5">
+                  <BookOpenIcon class="h-6 w-6 text-gray-600" />
+                </div>
+                <!-- <div class="bg-gradient-to-br from-primary to-primary/90 text-white p-2 rounded-lg mr-3 shadow-sm">
+                    <BookOpenIcon class="h-6 w-6 text-gray-600" />
+                  </div> -->
+                <div>
+                  <h3 class="text-2xl font-light text-gray-900 mb-1">Words to Learn</h3>
+                  <p class="text-gray-500 text-sm font-light">Select up to 10 words for your lesson</p>
+                </div>
+              </div>
+              <button
+                class="px-6 py-3 bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-200 hover:border-gray-300 transition-all duration-200 font-light text-sm"
+                @click="handleModifyWordList"
+              >
+                <PencilSquareIcon class="h-4 w-4 inline mr-2" />
+                Modifier
+              </button>
             </div>
-            <div class="flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/80 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <BoltIcon class="h-4 w-4 text-primary" />
-              <span class="text-sm font-semibold text-gray-700">Instant</span>
+            
+            <div class="flex flex-wrap gap-3">
+              <div
+                v-for="(w, n) in wordList.slice(0, 10)"
+                :key="n"
+                class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 font-light text-sm hover:bg-gray-100 hover:border-gray-300 transition-all duration-200 cursor-pointer"
+              >
+                {{ w.text }}
+              </div>
             </div>
           </div>
-          
 
+          <!-- Divider -->
+          <div class="flex items-center">
+            <div class="flex-1 h-px bg-gray-200"></div>
+            <div class="mx-6 w-1 h-1 bg-gray-300 rounded-full"></div>
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
+
+          <!-- Expressions Selection Section -->
+          <div class="group">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mr-5">
+                  <LanguageIcon class="h-6 w-6 text-gray-600" />
+                </div>
+                <div>
+                  <h3 class="text-2xl font-light text-gray-900 mb-1">Expressions to Learn</h3>
+                  <p class="text-gray-500 text-sm font-light">Select up to 3 expressions for your lesson</p>
+                </div>
+              </div>
+              <button
+                class="px-6 py-3 bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-200 hover:border-gray-300 transition-all duration-200 font-light text-sm"
+                @click="handleModifyExpressionList"
+              >
+                <PencilSquareIcon class="h-4 w-4 inline mr-2" />
+                Modifier
+              </button>
+            </div>
+            
+            <div class="flex flex-wrap gap-3">
+              <div
+                v-for="(e, n) in expressionList.slice(0, 3)"
+                :key="n"
+                class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 font-light text-sm hover:bg-gray-100 hover:border-gray-300 transition-all duration-200 cursor-pointer"
+              >
+                {{ e.text }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Generate Button Section -->
+          <div class="text-center pt-8">
+            <button
+              class="group relative px-16 py-5 bg-gray-900 text-white text-xl font-light rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              :class="{ 'opacity-50 cursor-not-allowed': !userId }"
+              @click="handleGenerateStory"
+            >
+              <!-- Button Content -->
+              <div class="relative z-10 flex items-center justify-center">
+                <span
+                  v-if="isGeneratingLesson"
+                  class="loading loading-spinner loading-md text-white mr-4"
+                />
+                <SparklesIcon class="h-6 w-6 mr-4 group-hover:rotate-6 transition-transform duration-300" />
+                <span>Generate My Personalized Lesson</span>
+              </div>
+            </button>
+            
+            <p class="text-gray-500 text-sm mt-6 font-light">
+              AI will create a story adapted to your level and selections
+            </p>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="min-h-screen py-8">
+    <div class="max-w-4xl mx-auto px-4">
 
       <!-- Enhanced Main Content Card -->
       <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/60 overflow-hidden relative">
@@ -371,6 +460,7 @@ const handleGenerateStory = async () => {
         title="Customize Word Selection"
         :list="wordList"
         :limit="Number(10)"
+        type="word"
         @apply-selection="(value) => handleWordSelectionChange(value)"
         @cancel="handleCancelModal"
       />
@@ -384,7 +474,6 @@ const handleGenerateStory = async () => {
         @apply-selection="(value) => handleExpressionSelectionChange(value)"
         @cancel="handleCancelModal"
       />
-    </div>
     </div>
   </div>
 </template>

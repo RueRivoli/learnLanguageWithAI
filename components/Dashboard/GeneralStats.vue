@@ -24,7 +24,7 @@ const currentInfo = computed(() => {
   <!-- General Dashboard -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div
-      class="col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+      class="col-span-2"
     >
       <div class="mb-4 flex items-center justify-between">
         <div class="flex">
