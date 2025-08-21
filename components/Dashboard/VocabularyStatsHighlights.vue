@@ -21,7 +21,7 @@ const totalExpressions = computed(() => {
 });
 
 const totalWordsMasteredInPercentage = computed(() => {
-  return userScoreStore.totalWordsMasteredInPercentage;
+  return userScoreStore.totalWordsMasteredInPercentage ?? 0;
 });
 const totalExpressionsMasteredInPercentage = computed(() => {
   return userScoreStore.totalExpressionsMasteredInPercentage;
@@ -38,11 +38,11 @@ const totalExpressionsInK = computed(() => {
 <template>
   <!-- Total Words Mastered - Professional Design -->
   <div
-    class="group relative bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-lg overflow-hidden"
+    class="group relative bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/60 rounded-xl shadow-sm border border-blue-200/60 p-4 hover:shadow-lg overflow-hidden"
   >
     <!-- Professional background pattern -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/20 opacity-60"
+      class="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-white to-indigo-50/30 opacity-80"
     />
 
     <!-- Success celebration overlay -->
@@ -90,7 +90,7 @@ const totalExpressionsInK = computed(() => {
 
       <!-- Progress details -->
       <div
-        class="bg-gradient-to-r from-gray-50 to-blue-50/30 rounded-lg p-3 border border-gray-100"
+        class="bg-gradient-to-r from-blue-50/80 to-indigo-50/60 rounded-lg p-3 border border-blue-100/60"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -109,11 +109,11 @@ const totalExpressionsInK = computed(() => {
 
   <!-- Total Expressions Mastered - Professional Design -->
   <div
-    class="group relative bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-lg overflow-hidden"
+    class="group relative bg-gradient-to-br from-purple-50/80 via-white to-pink-50/60 rounded-xl shadow-sm border border-purple-200/60 p-4 hover:shadow-lg overflow-hidden"
   >
     <!-- Professional background pattern -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-purple-50/30 via-white to-pink-50/20 opacity-60"
+      class="absolute inset-0 bg-gradient-to-br from-purple-50/40 via-white to-pink-50/30 opacity-80"
     />
 
     <!-- Success celebration overlay -->
@@ -161,18 +161,17 @@ const totalExpressionsInK = computed(() => {
 
       <!-- Progress details -->
       <div
-        class="bg-gradient-to-r from-gray-50 to-purple-50/30 rounded-lg p-3 border border-gray-100"
+        class="bg-gradient-to-r from-purple-50/80 to-pink-50/60 rounded-lg p-3 border border-purple-100/60"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+            <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
             <span class="text-lg font-medium text-gray-700"
               >{{ totalExpressionsMasteredInPercentage }}%</span
             >
           </div>
           <span class="text-xs text-gray-600"
-            >out of <strong>{{ totalExpressionsInK }}</strong> total
-            expressions</span
+            >out of <strong>{{ totalExpressionsInK }}</strong> total expressions</span
           >
         </div>
       </div>

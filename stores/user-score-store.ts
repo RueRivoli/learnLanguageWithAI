@@ -35,9 +35,23 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setAllScores(userId: string) {
+      console.log("setAllScores")
+      
+      // Récupérer le token d'authentification
+      const { data: { session } } = await useSupabaseClient().auth.getSession()
+      
+      if (!session?.access_token) {
+        console.error('No access token found')
+        return
+      }
+      
       const scores = await $fetch(`/api/general-scores/${userId}`, {
         method: "GET",
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
       });
+      console.log('scores', scores)
       const grammarScores = scores.grammarScores.data.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({
           ruleId: rule_id,
@@ -62,6 +76,7 @@ export const useUserScoreStore = defineStore("user-score", {
           totalExpressionsLearned: expressions_learned_count,
         }),
       );
+      console.log('vocabScores', vocabScores)
       const score = vocabScores[0] || {};
       this.isLoaded = true;
       this.totalWordsMastered = score.totalWordsMastered;
@@ -71,8 +86,19 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setGrammarScores(userId: string) {
+      // Récupérer le token d'authentification
+      const { data: { session } } = await useSupabaseClient().auth.getSession()
+      
+      if (!session?.access_token) {
+        console.error('No access token found')
+        return
+      }
+      
       const scores = await $fetch(`/api/general-scores/${userId}`, {
         method: "GET",
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
       });
       const grammarScores = scores.grammarScores.data.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({
@@ -87,8 +113,21 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setVocabularyScores(userId: string) {
+      console.log("setVocabularyScores")
+      
+      // Récupérer le token d'authentification
+      const { data: { session } } = await useSupabaseClient().auth.getSession()
+      
+      if (!session?.access_token) {
+        console.error('No access token found')
+        return
+      }
+      
       const scores = await $fetch(`/api/general-scores/${userId}`, {
         method: "GET",
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
       });
       const vocabScores = scores.vocabScores.data.map(
         ({
@@ -103,7 +142,7 @@ export const useUserScoreStore = defineStore("user-score", {
           totalExpressionsLearned: expressions_learned_count,
         }))
       const score = vocabScores[0] || {};
-      console.log('WM', score.totalWordsMastered)
+      console.log('WM', vocabScores, score)
       this.isLoaded = true;
       this.totalWordsMastered = score.totalWordsMastered;
       this.totalWordsLearned = score.totalWordsLearned;
@@ -135,11 +174,22 @@ export const useUserScoreStore = defineStore("user-score", {
     },
     totalWordsMasteredInPercentage(state: UserScore): string {
       const totalWords = state.totalWords ?? 0;
-      return totalWords > 0 ? Math.trunc(((state.totalWordsMastered ?? 0) / totalWords) * 100).toFixed(1) : '0.0';
+      const totalWordsMastered = state.totalWordsMastered ?? 0;
+            
+      if (totalWords === 0) return '0.0';
+      
+      // Calculer le pourcentage exact : (mots maîtrisés / total mots) * 100
+      const percentage = (totalWordsMastered / totalWords) * 100;
+      
+      // Garder exactement 1 chiffre après la virgule sans arrondi
+      return percentage.toFixed(1);
     },
     totalExpressionsMasteredInPercentage(state: UserScore): string {
       const totalExpressions = state.totalExpressions ?? 0;
-      return totalExpressions > 0 ? Math.trunc(((state.totalExpressionsMastered ?? 0) / totalExpressions) * 100).toFixed(1) : '0.0';
+
+      if (totalExpressions === 0) return '0.0';
+      const percentage = ((state.totalExpressionsMastered ?? 0) / totalExpressions) * 100;
+      return percentage.toFixed(1);
     },
     totalWordsInK(state: UserScore): string {
       const total = state.totalWords ?? 0;

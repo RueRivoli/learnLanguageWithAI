@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-
+    <br/>
     <!-- How to Form -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
@@ -62,13 +62,13 @@
         <li class="flex items-start gap-2">
           <span
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
-          />
+          ></span>
           <span> <strong>Step 1:</strong> Obtain the verb's stem </span>
         </li>
         <li class="flex items-start gap-2">
           <span
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
-          />
+          ></span>
           <span>
             <strong>Step 2:</strong> Add the appropriate ending based on the
             last stem's vowel
@@ -118,7 +118,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >demek <em>(to say)</em> -> de<strong class="text-primary"
                     >r</strong
@@ -128,7 +128,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >başlamak <em>(to start)</em> -> başla<strong
                     class="text-primary"
@@ -139,7 +139,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >yürümek <em>(to walk)</em> -> yürü<strong
                     class="text-primary"
@@ -167,7 +167,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >yapmak <em>(to do)</em> -> yap<strong class="text-primary"
                     >ar</strong
@@ -177,7 +177,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >çıkmak <em>(to start)</em> -> çık<strong class="text-primary"
                     >ar</strong
@@ -187,7 +187,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >gitmek <em>(to go)</em> -> gid<strong class="text-primary"
                     >er</strong
@@ -215,7 +215,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >çalışmak <em>(to do)</em> -> çalış<strong
                     class="text-primary"
@@ -226,7 +226,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >gerekmek <em>(to be necessary)</em> -> gerek<strong
                     class="text-primary"
@@ -237,7 +237,7 @@
               <li class="flex items-start gap-2">
                 <span
                   class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-                />
+                ></span>
                 <span class=""
                   >düşünmek <em>(to think)</em> -> düşün<strong
                     class="text-primary"
@@ -250,11 +250,12 @@
         </div>
       </div>
     </div>
+    <br/>
     <div>
       <div>
         <div>
           <div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 mt-2">
               <svg
                 class="w-5 h-5 text-amber-600"
                 fill="none"
@@ -284,7 +285,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >olmak <em>(to be)</em> → ol<strong
@@ -297,7 +298,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >almak <em>(to buy)</em> → al<strong
@@ -310,7 +311,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >vermek <em>(to give)</em> → ver<strong
@@ -323,7 +324,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >görmek <em>(to see)</em> → gör<strong
@@ -336,7 +337,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >sanmak <em>(to assume)</em> → san<strong
@@ -349,7 +350,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >vurmak <em>(to hit)</em> → vur<strong
@@ -362,7 +363,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >ölmek <em>(to die)</em> → ol<strong
@@ -375,7 +376,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >bilmek <em>(to know)</em> → bil<strong
@@ -388,7 +389,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >kalmak <em>(to stay)</em> → kal<strong
@@ -401,7 +402,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >bulmak <em>(to find)</em> → bul<strong
@@ -414,7 +415,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >durmak <em>(to stop, stand)</em> → dur<strong
@@ -427,7 +428,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >varmak <em>(to arrive)</em> → var<strong
@@ -440,7 +441,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >gelmek <em>(to come)</em> → gel<strong
@@ -464,7 +465,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >denmek <em>(to be called)</em> → den<strong
@@ -477,7 +478,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >yenmek <em>(to be defeated)</em> → yen<strong
@@ -490,7 +491,7 @@
                   <li class="flex items-start gap-2">
                     <span
                       class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-                    />
+                    ></span>
                     <span>
                       <span class=""
                         >konmak <em>(to be placed/put)</em> → kon<strong
@@ -577,7 +578,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Ben</span
                         >
@@ -615,7 +616,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Sen</span
                         >
@@ -653,7 +654,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >O</span
                         >
@@ -687,7 +688,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                         <span
                           class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                           >Biz</span
@@ -726,7 +727,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Siz</span
                         >
@@ -764,7 +765,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Onlar</span
                         >
@@ -853,7 +854,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -877,7 +878,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -901,7 +902,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -921,7 +922,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -945,7 +946,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -969,7 +970,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -1023,7 +1024,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -1047,7 +1048,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -1071,7 +1072,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -1091,7 +1092,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -1115,7 +1116,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -1139,7 +1140,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -1193,7 +1194,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -1217,7 +1218,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -1241,7 +1242,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -1261,7 +1262,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -1285,7 +1286,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -1309,7 +1310,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -1368,7 +1369,7 @@
         <li class="flex items-start gap-2">
           <span
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
-          />
+          ></span>
           <span>
             <strong>If verb stem ends with a hard vowel :</strong>
             <div class="mt-2">
@@ -1383,7 +1384,7 @@
         <li class="flex items-start gap-2">
           <span
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
-          />
+          ></span>
           <span>
             <strong>If verb stem ends with a soft vowel :</strong>
             <div class="mt-2">
@@ -1445,7 +1446,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -1469,7 +1470,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -1493,7 +1494,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -1513,7 +1514,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -1537,7 +1538,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -1561,7 +1562,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >

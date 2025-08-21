@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-
+    <br/>
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
         <svg
@@ -466,7 +466,26 @@
     </div>
 <br>
     <div>
+      <div class="flex items-center gap-2 mb-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-5 w-5 text-success"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+
+              <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
+            </div>
       <div class="space-y-4">
+
         <!-- Proper Names -->
         <div class="border-l-4 border-success pl-4">
           <ul class="space-y-1 text-sm text-gray-700">
@@ -992,6 +1011,24 @@
                 </div>
               </div>
               <br />
+              <div class="flex items-center gap-2 mb-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-5 w-5 text-success"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+
+              <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
+            </div>
               <div class="space-y-4">
                 <!-- Proper Names -->
                 <div class="border-l-4 border-success pl-4">
@@ -1582,6 +1619,26 @@
                       </div>
                     </div>
                     <br>
+                    <div class="flex items-center gap-2 mb-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5 text-success"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                      />
+                    </svg>
+
+                    <h2 class="text-lg font-semibold text-gray-900">
+                      Examples
+                    </h2>
+                  </div>
                     <div class="space-y-4">
         <!-- Proper Names -->
         <div class="border-l-4 border-success pl-4">

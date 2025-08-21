@@ -20,6 +20,36 @@ A personal dashboard monitors your proficiency in:
 - ✅ The **1,000 most useful expressions**
 - ✅ Your **grammar mastery** across different rules
 
+## 📊 What Needs to Be Done
+
+# Finish MVP
+
+# Quiz établissement niveau
+# Quiz fin leçon
+# Page settings
+
+
+*Code
+- Dashboard
+- Display a pleasant visual dashboard
+- Improve display of grammar rules in dashboard
+- Canvas inside cards
+
+- Improve design stories
+- Generate Welcome Quizz
+- Quizz on words
+
+
+*Contenu
+- Content rules
+
+
+# Improvements
+- Display lessons as stories sections, better visual, remove array
+
+couleur intéressante:
+blue-500
+
 ##  Welcoming page
 
 <img width="1512" alt="Welcoming Page" src="https://github.com/user-attachments/assets/7214d00b-3e0c-42a2-99a3-05af943a200e" />

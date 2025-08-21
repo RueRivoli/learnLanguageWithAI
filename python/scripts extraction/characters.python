@@ -1,0 +1,12 @@
+#utxt = unicode(txt, 'utf-8')
+#stxt = utxt.encode('iso-8859-1')
+
+lines = ["erdoğan, ılıgal, g, j"]
+
+print("page_text",  lines[0])
+
+Ekoloji, dojanın yapısını ve ihlevini
+inceleyen bir bilim dalıdır. — Ecology is a science that studies the structure and function of nature.
+1402146 | 0.96
+
+ğ ş

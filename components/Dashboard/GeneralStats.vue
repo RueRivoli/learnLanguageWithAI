@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { grammarLevelTabs } from "~/utils/learning/grammar";
-
+import { Square2StackIcon } from "@heroicons/vue/24/outline";
 import { useUserScoreStore } from "~/stores/user-score-store";
 
 const userScoreStore = useUserScoreStore();
@@ -27,9 +27,23 @@ const currentInfo = computed(() => {
       class="col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6"
     >
       <div class="mb-4 flex items-center justify-between">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">
-          Your Progress on the Different Modules
-        </h3>
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-gray-300/20 to-slate-300/20 rounded-lg blur-sm"
+              />
+              <div
+                class="relative p-2 bg-white rounded-lg shadow-lg border border-gray-200"
+              >
+                <Square2StackIcon class="h-5 w-5 text-gray-600" />
+              </div>
+            </div>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 ml-3 flex items-center">
+            Progress on Modules
+          </h3>
+        </div>
         <LayoutTabs
           :first-tab="grammarLevelTabs.firstTab"
           :second-tab="grammarLevelTabs.secondTab"
@@ -97,8 +111,96 @@ const currentInfo = computed(() => {
             </div>
           </div>
         </div>
+        <div 
+          id="rules_overview" 
+          v-for="(rule, index) in currentInfo" 
+          :key="index"
+          class="group relative rounded-xl border shadow-sm overflow-hidden h-28 cursor-pointer"
+          :class="{
+            'border-emerald-200 shadow-emerald-500/10': activeLevelTab === 1,
+            'border-warning shadow-warning/10': activeLevelTab === 2,
+            'border-error shadow-error/10': activeLevelTab === 3,
+          }"
+          :style="{
+            backgroundColor: activeLevelTab === 1 
+              ? `rgba(16, 185, 129, ${(rule.score || 0) / 100 * 0.15 + 0.03})` 
+              : activeLevelTab === 2 
+              ? `rgba(251, 191, 36, ${(rule.score || 0) / 100 * 0.15 + 0.03})`
+              : `rgba(239, 68, 68, ${(rule.score || 0) / 100 * 0.15 + 0.03})`
+          }"
+        >
+
+
+
+
+          <!-- Content container -->
+          <div class="relative z-10 p-4 h-full flex items-center">
+            <div class="flex items-center justify-between w-full">
+              <!-- Rule information -->
+              <div class="flex items-center gap-4 flex-1 min-w-0">
+                                 <!-- Rule symbol with enhanced styling -->
+                 <div
+                   class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold relative overflow-hidden shadow-lg flex-shrink-0"
+                   :class="{
+                     'bg-emerald-500': activeLevelTab === 1,
+                     'bg-warning': activeLevelTab === 2,
+                     'bg-error': activeLevelTab === 3,
+                   }"
+                 >
+                  <!-- Professional texture overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/10" />
+                  <div class="absolute inset-0 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.3)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]" />
+                  <span class="relative z-10 text-lg">{{ rule.symbol }}</span>
+                </div>
+
+                <!-- Rule details -->
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-semibold text-gray-900 text-sm leading-tight mb-1 truncate">
+                    {{ rule.ruleNameTranslation }}
+                  </h4>
+                  <p class="text-gray-600 text-xs leading-tight truncate">
+                    {{ rule.ruleName }}
+                  </p>
+                  
+                  
+                </div>
+              </div>
+
+              <!-- Score section -->
+              <div class="flex flex-col items-end gap-2 flex-shrink-0 ml-4">
+                <!-- Score percentage -->
+                <div class="text-right">
+                  <div class="text-xs text-gray-500 mb-1 font-medium">Score</div>
+                                     <div class="text-2xl font-bold"
+                                                 :class="{
+                           'text-emerald-700': activeLevelTab === 1,
+                           'text-warning': activeLevelTab === 2,
+                           'text-error': activeLevelTab === 3,
+                         }">
+                    {{ rule.score || 0 }}%
+                  </div>
+                </div>
+
+                                 
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress bar at bottom -->
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-gray-200">
+            <div class="h-full transition-all duration-500 ease-out"
+                 :class="{
+                   'bg-emerald-500': activeLevelTab === 1,
+                   'bg-warning': activeLevelTab === 2,
+                   'bg-error': activeLevelTab === 3,
+                 }"
+                 :style="{ width: `${rule.score || 0}%` }">
+            </div>
+          </div>
+        </div>
         <div
           v-for="(rule, index) in currentInfo"
+          v-if="false"
           :key="index"
           class="group relative bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden h-24"
           :class="{

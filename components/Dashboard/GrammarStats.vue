@@ -5,6 +5,7 @@ import {
   optionIntermediateGrammar,
 } from "~/utils/dashboard/graphOptions";
 import { grammarLevelTabs } from "~/utils/learning/grammar";
+import { Square2StackIcon } from "@heroicons/vue/24/outline";
 // 1 = Beginner, 2 = Intermediate, 3 = Advanced,
 
 const activeTab = ref(1);
@@ -148,13 +149,25 @@ const averageScore = computed(() => {
   <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
     <div class="mb-6">
       <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="text-lg font-semibold text-gray-900 mb-2">
-            Grammar Progress
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-gray-300/20 to-slate-300/20 rounded-lg blur-sm"
+              />
+              <div
+                class="relative p-2 bg-gradient-to-br from-gray-400 to-slate-500 rounded-lg shadow-lg"
+              >
+                <Square2StackIcon class="h-5 w-5 text-white" />
+              </div>
+            </div>
+          </div>
+          <div clas="flex items-center ml-3">
+            <h3 class="text-lg font-semibold text-gray-900 ml-3">
+            Your Progress on the Different Modules
           </h3>
-          <p class="text-sm text-gray-600">
-            Track your grammar mastery by level
-          </p>
+          </div>
+
         </div>
 
         <!-- Grammar Level Switch -->
@@ -184,7 +197,7 @@ const averageScore = computed(() => {
       <div class="w-80 bg-gray-50 rounded-lg p-4 border border-gray-200">
         <div class="mb-4">
           <h4 class="text-sm font-semibold text-gray-900 mb-2">
-            {{ levelTitle }} Grammar Rules
+            {{ levelTitle }} Modules
           </h4>
           <p class="text-xs text-gray-600">
             Click on bars to see detailed scores

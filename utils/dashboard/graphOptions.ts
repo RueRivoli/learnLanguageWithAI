@@ -266,7 +266,7 @@ export const optionExpressions = (totalExpressionsMastered: number, totalExpress
 export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
   return {
     title: {
-      text: "Beginner topics",
+      text: "Beginner concepts",
       // subtext: "Weekly grammar exercises completed",
       left: "center",
       top: "5%",
@@ -389,7 +389,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
   export const optionIntermediateGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
     return {
     title: {
-      text: "Intermediate topics",
+      text: "Intermediate concepts",
       // subtext: "Weekly grammar exercises completed",
       left: "center",
       top: "5%",
@@ -512,7 +512,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
   export const optionAdvancedGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
     return {
     title: {
-      text: "Advanced topics",
+      text: "Advanced concepts",
       // subtext: "Weekly grammar exercises completed",
       left: "center",
       top: "5%",

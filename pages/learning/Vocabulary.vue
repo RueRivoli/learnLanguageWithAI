@@ -177,7 +177,7 @@ const handleWordLearningStatus = async (wordId: number, isLearned: boolean) => {
       method: "PUT",
       body: {
         word_mastered: true,
-        // user_id: userStore.$state.id,
+        user_id: userStore.$state.id,
       },
     });
   }
@@ -361,8 +361,8 @@ const handleExpressionLearningStatus = async (
                     selectedWord?.id === word.id,
                   // 'opacity-75': learnedWords.has(word.id),
                   // Alternating backgrounds every 2 items
-                  'bg-gradient-to-br from-white via-gray-50/30 to-white border-gray-200/80 shadow-sm': Math.floor(index / 2) % 2 === 0,
-                  'bg-gradient-to-br from-slate-50/80 via-blue-50/20 to-indigo-50/30 border-slate-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
+                  'bg-gradient-to-br from-blue-50/80 via-blue-100/40 to-indigo-50/60 border-blue-200/60 shadow-sm': Math.floor(index / 2) % 2 === 0,
+                  'bg-gradient-to-br from-indigo-50/60 via-blue-50/40 to-blue-100/30 border-indigo-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
                 }"
                 @click="selectedWord = word"
               >
@@ -488,8 +488,8 @@ const handleExpressionLearningStatus = async (
                     selectedExpression?.text === expression.text,
                   // 'opacity-75': learnedExpressions.has(expression.text),
                   // Alternating backgrounds every 2 items
-                  'bg-gradient-to-br from-white via-gray-50/30 to-white border-gray-200/80 shadow-sm': Math.floor(index / 2) % 2 === 0,
-                  'bg-gradient-to-br from-slate-50/80 via-blue-50/20 to-indigo-50/30 border-slate-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
+                  'bg-gradient-to-br from-purple-50/80 via-purple-100/40 to-pink-50/60 border-purple-200/60 shadow-sm': Math.floor(index / 2) % 2 === 0,
+                  'bg-gradient-to-br from-pink-50/60 via-purple-50/40 to-purple-100/30 border-pink-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
                 }"
                 @click="selectedExpression = expression"
               >
@@ -511,7 +511,11 @@ const handleExpressionLearningStatus = async (
                 >
                   <div class="flex items-center gap-1">
                     <button
-                      class="btn btn-ghost btn-xs mr-2"
+                      class="group relative overflow-hidden rounded-xl px-4 py-2 font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                      :class="{
+                        'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl focus:ring-red-500': showLearnedExpressions,
+                        'bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white shadow-lg hover:shadow-xl focus:ring-emerald-500': !showLearnedExpressions,
+                      }"
                       @click="
                         handleExpressionLearningStatus(
                           expression.id,
@@ -519,16 +523,21 @@ const handleExpressionLearningStatus = async (
                         )
                       "
                     >
-                      <div
-                        v-if="showLearnedExpressions"
-                        class="flex items-center"
-                      >
-                        <XMarkIcon class="h-4 w-4 mr-2" />
-                        <span>Move Back To Learn</span>
-                      </div>
-                      <div v-else class="flex items-center">
-                        <CheckIcon class="h-4 w-4 mr-2" />
-                        <span>Mark as Learned</span>
+                      <!-- Button background effect -->
+                      <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      <div class="relative z-10 flex items-center gap-2">
+                        <div
+                          v-if="showLearnedExpressions"
+                          class="flex items-center gap-2"
+                        >
+                          <XMarkIcon class="h-4 w-4" />
+                          <span class="text-sm font-semibold">Move Back</span>
+                        </div>
+                        <div v-else class="flex items-center gap-2">
+                          <CheckIcon class="h-4 w-4" />
+                          <span class="text-sm font-semibold">Mark Learned</span>
+                        </div>
                       </div>
                     </button>
                   </div>

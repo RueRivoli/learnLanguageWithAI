@@ -2,8 +2,18 @@ import type { Expression } from "~/types/expression.ts";
 import type { Word } from "~/types/word.ts";
 import type { Database } from "~/supabase/types";
 
-export const vocabularyFirstTab = { title: "Words", icon: "book" };
-export const vocabularySecondTab = { title: "Expressions", icon: "language" };
+export const vocabularyFirstTab = { 
+  title: "Words", 
+  icon: "book",
+  activeBgColorClass: "bg-gradient-to-r from-blue-500 to-indigo-600",
+  activeTxtColorClass: "text-white"
+};
+export const vocabularySecondTab = { 
+  title: "Expressions", 
+  icon: "language",
+  activeBgColorClass: "bg-gradient-to-br from-purple-500 to-pink-500",
+  activeTxtColorClass: "text-white"
+};
 
 export const wordsFirstTab = { title: "To Learn", icon: "book" };
 export const wordsSecondTab = { title: "Learned", icon: "language" };

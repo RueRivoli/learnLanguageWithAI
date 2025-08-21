@@ -25,16 +25,24 @@
         </div>
         <div>
           <p class="text-white/90 leading-relaxed font-semibold">
-            In Turkish, the way we express sentences like 'I am an engineer', 'You aren't
-            smart', or 'Is he tall?'
-            <span class="underline"
-              >differs significantly from how they're formed in English.</span
-            >
+            In Turkish, the way we express sentences such as:
+          </p>
+          
+          <ul class="text-white/90 leading-relaxed font-semibold mt-2 ml-4 list-disc list-inside">
+            <li>I am an engineer</li>
+            <li>You aren't smart</li>
+            <li>Is he tall?</li>
+          </ul>
+          
+          <p class="text-white/90 leading-relaxed font-semibold">
+            <span class="underline">
+              differs significantly from how they're formed in English.
+            </span>
           </p>
         </div>
       </div>
     </div>
-
+    <br />
     <!-- Basic Structure -->
     <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
       <h2 class="text-lg font-semibold text-gray-900 mb-3">Basic Structure</h2>
@@ -897,7 +905,7 @@
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben aktör müyüm ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Ben aktör müyüm?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -911,7 +919,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen aktör müsün ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Sen aktör müsün?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -925,7 +933,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O aktör mü ?</span>
+                      <span class="text-sm font-semibold text-gray-900">O aktör mü?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -938,7 +946,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz aktör müyüz ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Biz aktör müyüz?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -951,7 +959,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz aktör müsünüz ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Siz aktör müsünüz?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -964,7 +972,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar aktör mü ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Onlar aktör mü?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -996,7 +1004,7 @@
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben akıllı mıyım ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Ben akıllı mıyım?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1010,7 +1018,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen akıllı mısın ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Sen akıllı mısın?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1024,7 +1032,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O akıllı mı ? ?</span>
+                      <span class="text-sm font-semibold text-gray-900">O akıllı mı?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1037,7 +1045,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz akıllı mıyız  ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Biz akıllı mıyız?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1050,7 +1058,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz akıllı mısınız  ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Siz akıllı mısınız?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1063,7 +1071,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar akıllı mı</span>
+                      <span class="text-sm font-semibold text-gray-900">Onlar akıllı mı?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1141,7 +1149,7 @@
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="font-semibold rounded-lg text-gray-700">	değil miyiz</span>
+                      <span class="font-semibold rounded-lg text-gray-700">Biz</span>
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
@@ -1201,7 +1209,7 @@
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben hızlı değil miyim ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Ben hızlı değil miyim?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1215,7 +1223,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen hızlı değil misin ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Sen hızlı değil misin?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1229,7 +1237,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O hızlı değil mi ?</span>
+                      <span class="text-sm font-semibold text-gray-900">O hızlı değil mi?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1242,7 +1250,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz hızlı değil miyiz ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Biz hızlı değil miyiz?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1255,7 +1263,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz hızlı değil misiniz ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Siz hızlı değil misiniz?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1268,7 +1276,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar hızlı değiller mi ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Onlar hızlı değiller mi?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1300,7 +1308,7 @@
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben mimar değil miyim ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Ben mimar değil miyim?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1314,7 +1322,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen mimar değil misin ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Sen mimar değil misin?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1328,7 +1336,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O mimar değil mi ?</span>
+                      <span class="text-sm font-semibold text-gray-900">O mimar değil mi?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1341,7 +1349,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz mimar değil miyiz ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Biz mimar değil miyiz?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1354,7 +1362,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz mimar değil misiniz ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Siz mimar değil misiniz?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -1367,7 +1375,7 @@
                     <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar mimar değiller mi ?</span>
+                      <span class="text-sm font-semibold text-gray-900">Onlar mimar değiller mi?</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">

@@ -243,15 +243,9 @@ watchEffect(async () => {
                         />
                       </button> -->
 
+
                   <button
-                    class="btn btn-sm btn-ghost rounded-lg cursor-pointer group mr-2"
-                    @click="router.push(`/learning/grammar/${rule.id}`)"
-                  >
-                    <EyeIcon class="h-4 w-4" />
-                    <span>View</span>
-                  </button>
-                  <button
-                    class="btn btn-sm btn-soft btn-primary rounded-lg cursor-pointer group mr-2"
+                    class="btn btn-sm btn-outline btn-primary rounded-lg cursor-pointer group mr-2"
                     @click="router.push(`/learning/grammar/${rule.id}`)"
                   >
                     <ArrowTrendingUpIcon class="h-4 w-4" />

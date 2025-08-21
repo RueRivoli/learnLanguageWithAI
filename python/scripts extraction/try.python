@@ -1,0 +1,66 @@
+import re
+
+test = "77 gerek v, n (v) to be necessary (modal verb) (n) necessity"
+test2 = "86 aç v, adj (v) to open (adj) hungry"
+test3 = "12 dogru adj, posp (adj) correct (posp) towards"
+test4 = "1233 yüz n, v, adj (n) face (v) to swim; to skin (adj) elegant"
+
+obj = {"n": "book", "adv": "slowly"}
+
+def get_values(line):
+    return obj[list(line.keys())[0]]
+
+result = get_values(obj)
+
+print("result", result)
+
+line = "(a) example (b) test"
+print(line.count('('))
+
+def extraire_valeurs(line):
+    # Trouve tous les tags initiaux après le numéro
+    match_tags = re.match(r'^\d+\s+\w+\s+([\w,\s]+)', line)
+    if not match_tags:
+        return {}
+
+    tags = [tag.strip() for tag in match_tags.group(1).split(',')]
+    
+    # Trouve tous les blocs (clé) valeur, y compris optionnellement un commentaire entre parenthèses à l'intérieur
+    couples = re.findall(r'\((\w+)\)\s*([^\(]+(?:\([^)]+\))?)', line)
+
+    # Nettoyage des valeurs et création du dictionnaire
+    result = {}
+    for key, value in couples:
+        result[key] = value.strip()
+        
+    return result
+
+import re
+
+def extraire_infos(line):
+    # On récupère les tags initiaux (ex: "v, n")
+    match = re.match(r"^\d+\s+\w+\s+([\w,\s]+)", line)
+    if not match:
+        return {}
+
+    tags_initiaux = [tag.strip() for tag in match.group(1).split(',')]
+
+    # On extrait les paires (tag) valeur
+    couples = re.findall(r"\((\w+)\)\s*([^\(]+)", line)
+
+    # On crée un dictionnaire seulement pour les tags trouvés initialement
+    result = {tag: valeur.strip() for tag, valeur in couples if tag in tags_initiaux}
+    return result
+
+te = extraire_valeurs(test)
+te2 = extraire_valeurs(test2)
+
+tc = extraire_infos(test)
+tc2 = extraire_infos(test2)
+tc3 = extraire_infos(test3)
+tc4 = extraire_infos(test4)
+
+#print("te", tc)
+#print("te2", tc2)
+#print("te3", tc3)
+#print("te4", tc4)

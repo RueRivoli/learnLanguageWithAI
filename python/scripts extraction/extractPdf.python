@@ -1,0 +1,256 @@
+import fitz
+import pandas as pd
+from pprint import pprint
+import pymupdf
+import pdfplumber
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.pdfgen import canvas
+from PyPDF2 import PdfReader
+
+
+
+# Lire le texte du PDF avec pdfplumber
+with pdfplumber.open("./turkish_frecuency_dic.pdf") as pdf:
+    text = ""
+    for page in pdf.pages:
+        text += page.extract_text()
+    print("text", text)
+
+# Créer un nouveau PDF avec reportlab, en utilisant une police Unicode
+def create_pdf_with_unicode(text, filename):
+    c = canvas.Canvas(filename, pagesize=letter)
+    c.setFont("Helvetica", 12)  # Choisir une police Unicode
+    c.drawString(100, 750, text)
+    c.save()
+
+create_pdf_with_unicode(text, "output_unicode.pdf")
+
+# Utilisation de la fonction
+#create_pdf_with_unicode("output_unicode.pdf")
+
+def extract_pdf_text_with_pdfplumber(pdf_path):
+    lines = []
+    with fitz.open(pdf_path) as pdf:
+        for page in pdf.pages[20:268]:
+            text = page.extract_text()
+            if text:
+                for line in text.splitlines():
+                    #print("line", line)
+                    if line.strip() and "Frequency index" not in line:
+                        lines.append(line.strip())
+    return lines
+
+
+def extraire_infos(line):
+    # On récupère les tags initiaux (ex: "v, n")
+    match = re.match(r"^\d+\s+\w+\s+([\w,\s]+)", line)
+    if not match:
+        return {}
+
+    tags_initiaux = [tag.strip() for tag in match.group(1).split(',')]
+
+    # On extrait les paires (tag) valeur
+    couples = re.findall(r"\((\w+)\)\s*([^\(]+)", line)
+
+    # On crée un dictionnaire seulement pour les tags trouvés initialement
+    result = {tag: valeur.strip() for tag, valeur in couples if tag in tags_initiaux}
+    return result
+
+def extract_pdf_text_e(pdf_path):
+   doc = fitz.open(pdf_path, encoding="utf-8") 
+   text = ""
+   lines = []
+   for page in doc[20:267]:
+      text += page.get_text()
+      lines += text.splitlines()
+   return [l.strip() for l in lines if l.strip() and "Frequency index" not in l]
+
+def extract_pdf_text_try(pdf_path):
+    doc = pymupdf.open(pdf_path, filetype="txt")
+    lines = []
+    for page in doc[20:22]:  # pages 20 à 266 (car l'index s'arrête avant 267)
+        page_text = page.get_text("text")
+        # print("page_text",  page_text)
+        page_lines = page_text.splitlines()
+        lines += [l.strip() for l in page_lines if l.strip() and "Frequency index" not in l]
+        #print("lines", lines)
+    return lines
+
+
+def extract_pdf_text(pdf_path):
+    doc = fitz.open(pdf_path)
+    lines = []
+    for page in doc[20:268]:  # pages 20 à 266 (car l'index s'arrête avant 267)
+        page_text = page.get_text("text")
+        #print("page_text",  page_text)
+        page_lines = page_text.splitlines()
+        lines += [l.strip() for l in page_lines if l.strip() and "Frequency index" not in l]
+        #print("lines", lines)
+    return lines
+
+import re
+
+def parser_entrees(lines):
+    entrees = []
+    entree = {}
+    nb_sentence_starting_with_dot = 0
+    buffer_phrase = ""
+    numero = 0
+    for line in lines:
+        print("line", line)
+        #print("==> (new line / buffer_phrase)", line + " / ", buffer_phrase)
+        line = line.strip()
+        # 1️⃣ Détection de début d'entrée (ex: "1 bir det a, an")
+        match_entete = re.match(r'^(\d+)\s+(\S+)\s+(\S+)\s+(.+)$', line)
+        if match_entete:
+            numero += 1
+            nb_different_fonctions = 0
+            if entree:
+                entrees.append(entree)
+            nb_sentence_starting_with_dot = 0
+            buffer_phrase = line
+            continue
+
+        # 2️⃣ Ligne de phrase avec puce et traduction
+        if line.startswith("•"):
+            buffer_phrase += " " + line
+            nb_sentence_starting_with_dot += 1
+            word_description = buffer_phrase.split("•", 1)
+            print("nb sentence with dot", nb_sentence_starting_with_dot)
+            print("word_description[0]", word_description[0])
+            if nb_sentence_starting_with_dot == 1:
+                nb_different_fonctions = word_description[0].count('(')
+                print('word_description', word_description[0])
+                print('nb_different_fonctions', nb_different_fonctions)
+                if nb_different_fonctions == 0:
+                    match_entete_bis = re.match(r'^(\d+)\s+(\S+)\s+(\S+)\s+(.+)$', word_description[0].strip())
+                    entree = {
+                        "num": match_entete_bis.group(1),
+                        "mot": match_entete_bis.group(2),
+                        "categorie": match_entete_bis.group(3),
+                        "traduction": match_entete_bis.group(4).replace(";", ","),
+                        "phrase_tr": "",
+                        "phrase_en": "",
+                        "frequence": "",
+                        "indice": ""
+                    }
+                elif nb_different_fonctions == 2:
+                    match_with_different_fonctions = extraire_infos(word_description[0])
+                    keys = list(match_with_different_fonctions.keys())
+                    match_entete_bis = re.match(r'^(\d+)\s+(\S+)\s+(\S+)\s+(.+)$', word_description[0].strip())
+                    entree = {
+                        "num": match_entete_bis.group(1),
+                        "mot": match_entete_bis.group(2),
+                        "categorie": list(match_with_different_fonctions.keys())[0],
+                        "traduction": match_with_different_fonctions[list(match_with_different_fonctions.keys())[0]].replace(";", ","),
+                        "phrase_tr": "",
+                        "phrase_en": "",
+                        "categorie_2": list(match_with_different_fonctions.keys())[1],
+                        "traduction_2": match_with_different_fonctions[list(match_with_different_fonctions.keys())[1]].replace(";", ","),
+                        "phrase_2_tr": "",
+                        "phrase_2_en": "",
+                        "frequence": "",
+                        "indice": ""
+                    }
+                elif nb_different_fonctions == 3:
+                    print("nb_different_fonctions == 3")
+                    match_with_different_fonctions = extraire_infos(buffer_phrase)
+                    match_entete_ter = re.match(r'^(\d+)\s+(\S+)\s+(\S+)\s+(.+)$', word_description[0].strip())
+                    keys = list(match_with_different_fonctions.keys())
+                    
+                    print("match_entete_ter", match_entete_ter)
+                    entree = {
+                        "num": match_entete_ter.group(1),
+                        "mot": match_entete_ter.group(2),
+                        "categorie": list(match_with_different_fonctions.keys())[0],
+                        "traduction": match_with_different_fonctions[list(match_with_different_fonctions.keys())[0]].replace(";", ","),
+                        "phrase_tr": "",
+                        "phrase_en": "",
+                        "categorie_2": list(match_with_different_fonctions.keys())[1],
+                        "traduction_2": match_with_different_fonctions[list(match_with_different_fonctions.keys())[1]].replace(";", ","),
+                        "phrase_2_tr": "",
+                        "phrase_2_en": "",
+                        "categorie_3": list(match_with_different_fonctions.keys())[2],
+                        "traduction_3": match_with_different_fonctions[list(match_with_different_fonctions.keys())[2]].replace(";", ","),
+                        "phrase_3_tr": "",
+                        "phrase_3_en": "",
+                        "frequence": "",
+                        "indice": ""
+                    }
+                buffer_phrase = word_description[1].strip()
+                if "—" in line:
+                    parts = line.split("—", 1)
+                    if nb_sentence_starting_with_dot == 1:
+                        entree["phrase_tr"] = parts[0].replace("•", "").strip()
+                        buffer_phrase = parts[1].strip()
+                    elif nb_sentence_starting_with_dot == 2:
+                        entree["phrase_2_tr"] = parts[0].replace("•", "").strip()
+                        buffer_phrase = parts[1].strip()
+                    elif nb_sentence_starting_with_dot == 3:
+                        entree["phrase_3_tr"] = parts[0].replace("•", "").strip()
+                        buffer_phrase = parts[1].strip()
+                else:
+                    if nb_sentence_starting_with_dot == 2:
+                        entree["phrase_en"] = buffer_phrase.strip()
+                    elif nb_sentence_starting_with_dot == 3:
+                        entree["phrase_2_en"] = buffer_phrase.strip()
+                    buffer_phrase = line[1:].strip()
+                continue
+            elif nb_sentence_starting_with_dot == 2:
+                entree["phrase_en"] = word_description[0].strip()
+                buffer_phrase = word_description[1]
+            elif nb_sentence_starting_with_dot == 3:
+                entree["phrase_2_en"] = word_description[0].strip()
+                buffer_phrase = word_description[1]
+        elif "—" in line:
+            buffer_phrase += " " + line
+            if "—" in buffer_phrase:
+                parts = buffer_phrase.split("—", 1)
+                if nb_sentence_starting_with_dot == 1:
+                    entree["phrase_tr"] = parts[0].replace("•", "").strip()
+                    buffer_phrase = parts[1].strip()
+                elif nb_sentence_starting_with_dot == 2:
+                    entree["phrase_2_tr"] = parts[0].replace("•", "").strip()
+                    buffer_phrase = parts[1].strip()
+                elif nb_sentence_starting_with_dot == 3:
+                    entree["phrase_3_tr"] = parts[0].replace("•", "").strip()
+                    buffer_phrase = parts[1].strip()
+            continue
+
+        # 3️⃣ Ligne avec fréquence | indice
+        match_freq = re.match(r'^(\d+)\s*\|\s*([\d.]+)$', line)
+        if match_freq:
+            if nb_sentence_starting_with_dot == 1:
+              entree["phrase_en"] = buffer_phrase.strip()
+            elif nb_sentence_starting_with_dot == 2:
+              entree["phrase_2_en"] = buffer_phrase.strip()
+            entree["frequence"] = match_freq.group(1)
+            entree["indice"] = match_freq.group(2)
+            continue
+        else:
+            buffer_phrase += " " + line
+            continue
+
+    # Ajouter la dernière entrée si elle existe
+    if entree:
+        entrees.append(entree)
+    return entrees
+
+
+def export_csv(entrees, path_csv):
+    df = pd.DataFrame(entrees)
+    df.to_csv(path_csv, index=False, encoding="utf-8")
+
+#result = extract_pdf_text_with_pdfplumber("./turkish_frecuency_dic.pdf")
+#result = extract_pdf_text("./turkish_frecuency_dic_a.pdf")
+result = extract_pdf_text("./modifiedturkishdic2.pdf")
+#print(result[:50])
+parsedResult = parser_entrees(result)
+#print(parser_entrees(result[:50]))
+export_csv(parsedResult, 'pdfread.csv')
+
+#parsed_ent = result[:100]
+#parsed_ent = parser_entrees(result[:400])
+#export_csv(parsed_ent, 'output.csv')
+

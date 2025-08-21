@@ -86,11 +86,11 @@ const isActive = (path: string) => {
             <div class="overflow-y-auto flex-1">
               <div class="p-4">
                 <NuxtLink
-                  class="flex items-center justify-center w-full px-4 py-3 mb-6 rounded-lg bg-warning hover:bg-warning/90 transition-all duration-200 ease-in-out group"
+                  class="flex items-center justify-center w-full px-4 py-3 mb-6 rounded-lg bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 transition-all duration-200 ease-in-out group shadow-lg shadow-orange-500/25"
                   to="/learning/lessons/new"
                 >
-                  <ArrowUturnRightIcon class="h-4 w-4 text-neutral" />
-                  <span class="font-semibold text-neutral ml-2"
+                  <ArrowUturnRightIcon class="h-4 w-4 text-white" />
+                  <span class="font-semibold text-white ml-2"
                     >Create Story</span
                   >
                 </NuxtLink>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PlayIcon } from "@heroicons/vue/24/outline";
+import { PlayIcon, TrophyIcon, ClockIcon } from "@heroicons/vue/24/outline";
 import { formatDate } from "~/utils/date/date";
 import { useRouter } from "vue-router";
 import type { GrammarRule } from "~/types/grammar-rule";
@@ -44,41 +44,52 @@ const handleGenerateQuiz = async () => {
     isLoading.value = false;
   }
 };
+
+const getScoreColor = (score: number) => {
+  if (score >= 90) return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+  if (score >= 80) return 'bg-blue-100 text-blue-700 border-blue-200';
+  if (score >= 70) return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+  if (score >= 60) return 'bg-orange-100 text-orange-700 border-orange-200';
+  return 'bg-red-100 text-red-700 border-red-200';
+};
 </script>
 
 <template>
   <div class="w-full">
-    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <!-- Loading State -->
-      <div v-if="loading" class="w-full h-64 flex justify-center items-center">
-        <div
-          class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
-        />
+      <div v-if="loading" class="w-full h-32 flex justify-center items-center">
+        <div class="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent" />
       </div>
 
-      <div v-else class="space-y-6">
+      <div v-else class="space-y-5">
         <!-- Header -->
         <div class="border-b border-gray-100 pb-4">
-          <h3 class="text-lg font-semibold text-gray-900 mb-1">
-            Recent Quizzes
-          </h3>
-          <p class="text-sm text-gray-600">
-            Last attempts on
-            <span class="font-medium text-primary">{{
-              props.rule?.ruleNameTranslation || "this rule"
-            }}</span>
-          </p>
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg">
+              <TrophyIcon class="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">
+                Recent Quizzes
+              </h3>
+              <p class="text-sm text-gray-600">
+                Progress on
+                <span class="font-medium text-primary">
+                  {{ props.rule?.ruleNameTranslation || "this rule" }}
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- Quiz List -->
-        <div class="space-y-4">
-          <div v-if="!props.quizs.length" class="text-center py-12">
-            <div
-              class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-full flex items-center justify-center shadow-sm"
-            >
-              <PlayIcon class="w-10 h-10 text-gray-400" />
+        <div class="space-y-3">
+          <div v-if="!props.quizs.length" class="text-center py-8">
+            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-full flex items-center justify-center">
+              <PlayIcon class="w-8 h-8 text-gray-400" />
             </div>
-            <p class="text-gray-600 text-base font-medium mb-2">
+            <p class="text-gray-600 font-medium mb-1">
               No quizzes completed yet
             </p>
             <p class="text-gray-500 text-sm">
@@ -86,63 +97,47 @@ const handleGenerateQuiz = async () => {
             </p>
           </div>
 
-          <div v-else class="space-y-4">
+          <div v-else class="space-y-3">
             <div
               v-for="(quiz, index) in props.quizs"
               :key="index"
-              class="group bg-white rounded-xl p-5 border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-300 cursor-pointer"
+              class="group bg-gray-50 rounded-lg p-4 border border-gray-100 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all duration-200 cursor-pointer"
               @click="router.push(`/learning/quiz/${quiz.id}`)"
             >
-              <div class="flex items-start justify-between">
-                <!-- Left Content -->
-                <div class="flex-1 min-w-0">
-                  <!-- Quiz ID and Date -->
-                  <div class="flex items-center gap-4 mb-2">
-                    <div class="flex items-center gap-2">
-                      <div
-                        class="w-10 h-10 bg-gradient-to-br from-primary/10 to-primary/20 rounded-xl flex items-center justify-center shadow-sm"
-                      >
-                        <span class="text-sm font-bold text-primary"
-                          >#{{ quiz.id }}</span
-                        >
-                      </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                      <span
-                        class="text-xs font-medium text-gray-500 uppercase tracking-wide"
-                      >
-                        Completed
-                      </span>
-                      <span class="text-sm font-medium text-gray-700">
-                        {{ formatDate(quiz.createdAt) }}
-                      </span>
-                    </div>
+              <div class="flex items-center justify-between">
+                <!-- Quiz Info -->
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <span class="text-sm font-semibold text-primary">#{{ quiz.id }}</span>
                   </div>
-
-                  <!-- Score Section -->
-                  <div class="flex items-center justify-end">
-                    <span
-                      class="font-medium mr-2"
-                      :class="getColorStyleClass(quiz.score)"
-                      >Score</span
-                    >
-                    <span
-                      class="font-bold"
-                      :class="getColorStyleClass(quiz.score)"
-                    >
-                      {{ quiz.score }}%
-                    </span>
+                  
+                  <div class="flex items-center gap-2 text-sm text-gray-600">
+                    <ClockIcon class="w-4 h-4" />
+                    <span>{{ formatDate(quiz.createdAt) }}</span>
                   </div>
+                </div>
 
-                  <!-- Progress Bar -->
-                  <div class="w-full">
-                    <progress
-                      class="progress w-full"
-                      :class="getColorStyleClass(quiz.score)"
-                      :value="quiz.score"
-                      max="100"
-                    />
+                <!-- Score -->
+                <div class="flex items-center gap-3">
+                  <div class="text-right">
+                    <div class="text-xs text-gray-500 mb-1">Score</div>
+                    <div class="text-lg font-bold text-gray-900">{{ quiz.score }}%</div>
+                  </div>
+                  
+                  <!-- Score Badge -->
+                  <div class="px-3 py-1 rounded-full text-sm font-medium border"
+                       :class="getScoreColor(quiz.score)">
+                    {{ quiz.score >= 90 ? 'Excellent' : quiz.score >= 80 ? 'Good' : quiz.score >= 70 ? 'Fair' : quiz.score >= 60 ? 'Needs Work' : 'Review' }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Progress Bar -->
+              <div class="mt-3">
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="h-2 rounded-full transition-all duration-300"
+                       :class="getScoreColor(quiz.score).split(' ')[0].replace('bg-', 'bg-gradient-to-r from-').replace('-100', '-500') + ' to-' + getScoreColor(quiz.score).split(' ')[0].replace('bg-', '').replace('-100', '-600')"
+                       :style="{ width: `${quiz.score}%` }">
                   </div>
                 </div>
               </div>
@@ -152,12 +147,11 @@ const handleGenerateQuiz = async () => {
           <!-- Action Button -->
           <div class="pt-4 border-t border-gray-100">
             <button
-              class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-              type="submit"
-              :class="{ 'btn-disabled': isLoading }"
+              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              :disabled="isLoading"
               @click="handleGenerateQuiz"
             >
-              <span v-if="isLoading" class="loading loading-spinner" />
+              <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
               <PlayIcon v-else class="w-5 h-5" />
               <span>Start New Quiz</span>
             </button>

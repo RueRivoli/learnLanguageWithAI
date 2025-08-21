@@ -80,6 +80,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           <p v-html="sanitizedDescriptionTemplate" />
           <p v-html="sanitizedExtendedDescriptionTemplate" />
         </div>
+        <!-- <RulesPresentContinuousTemplate /> -->
+          <!-- <RulesPreciseLocationTemplate /> -->
       </div>
     </div>
     <div class="col-span-2">

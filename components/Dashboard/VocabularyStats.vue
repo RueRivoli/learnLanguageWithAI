@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { optionExpressions, optionWords } from "~/utils/dashboard/graphOptions";
 import { useUserScoreStore } from "~/stores/user-score-store";
+import { BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 const userScoreStore = useUserScoreStore();
 const optionChartWords = computed(() => {
   const totalWordsMastered = userScoreStore.$state.totalWordsMastered ?? 0;
@@ -30,8 +31,21 @@ const optionChartExpressions = computed(() => {
   <!-- Vocabulary Chart -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+      <div class="mb-4 flex">
+        <!-- Icon with professional styling -->
+        <div class="flex-shrink-0 ">
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-lg blur-sm"
+            />
+            <div
+              class="relative p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg"
+            >
+              <BookOpenIcon class="h-5 w-5 text-white" />
+            </div>
+          </div>
+        </div>
+        <h3 class="text-lg ml-3 font-semibold text-gray-900 flex items-center">
           Word Learning Progress
         </h3>
         <!-- <p class="text-sm text-gray-600">
@@ -50,8 +64,22 @@ const optionChartExpressions = computed(() => {
 
     <!-- Expressions Chart -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+      <div class="mb-4 flex">
+          <!-- Icon with professional styling -->
+         <!-- Icon with professional styling -->
+        <div class="flex-shrink-0">
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg blur-sm"
+            />
+            <div
+              class="relative p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg shadow-lg"
+            >
+              <LanguageIcon class="h-5 w-5 text-white" />
+            </div>
+          </div>
+        </div>
+        <h3 class="text-lg ml-3 font-semibold text-gray-900 flex items-center">
           Expression Learning Progress
         </h3>
         <!-- <p class="text-sm text-gray-600">

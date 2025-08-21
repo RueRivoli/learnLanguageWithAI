@@ -1,0 +1,25 @@
+import pdfplumber
+from fpdf import FPDF
+
+# Étape 1 : Extraction du texte
+texte = ""
+with pdfplumber.open("dictionnaryturkish.pdf") as pdf:
+    for page in pdf.pages:
+        texte += page.extract_text() or ""
+
+print("texte", texte)
+# Étape 2 : Création d'un nouveau PDF
+class PDF(FPDF):
+    def header(self):
+        self.set_font("Arial", size=12)
+
+pdf = PDF()
+pdf.add_page()
+pdf.add_font('Arial', '', 'arial.ttf', uni=True)  # Police Unicode
+pdf.set_font("Arial", size=12)
+
+# Ajoute le texte
+for ligne in texte.split('\n'):
+    pdf.multi_cell(0, 10, ligne)
+
+pdf.output("nouveau_turc.pdf")
