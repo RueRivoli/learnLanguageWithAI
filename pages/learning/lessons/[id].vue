@@ -15,7 +15,7 @@ const route = useRoute();
 const lessonId = route.params.id;
 const isLoading = ref<boolean>(true);
 const lesson = ref<Lesson | null>(null);
-const showEnglishTranslations = ref(true);
+const showEnglishTranslations = ref(false);
 const activeLessonTab = ref(1);
 const activeSentenceTranslation = ref(null);
 const showExpressionTranslations = ref(false);
@@ -227,15 +227,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               <div class="w-32 h-0.5 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 mx-auto mt-3 rounded-full"></div>
             </div>
             
-            <!-- Introduction Section -->
-            <div id="intro" class="text-center">
-              <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
-                {{ lesson?.introduction }}
-              </p>
-            </div>
-            
-            <!-- Main Content: Image on Left, Text on Right -->
-            <div class="flex gap-8 items-start">
+            <!-- Picture and Introduction Side by Side -->
+            <div class="flex gap-8 items-center">
               <!-- Left Side - Image -->
               <div id="picture" class="flex-shrink-0 w-96">
                 <div class="relative group">
@@ -248,54 +241,64 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 </div>
               </div>
               
-              <!-- Right Side - Text Content -->
-              <div id="story" class="flex-1">
-                <div id="story_content" class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-white/70">
-                  <!-- Header with Global Toggle -->
-                  <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50">
-                    <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
-                    <label class="flex items-center gap-3 cursor-pointer group">
-                      <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
-                        Show All Translations
-                      </span>
-                      <input
-                        v-model="showEnglishTranslations"
-                        type="checkbox"
-                        class="toggle toggle-primary toggle-sm"
-                      />
-                    </label>
-                  </div>
-                  
-                  <!-- Individual Sentences -->
-                  <div :class="showEnglishTranslations ? 'space-y-4' : 'space-y-1'">
-                    <!-- Compact spacing when translations are off, normal spacing when on -->
-                    <div
-                      v-for="(sentence, index) in sentences"
-                      :key="index"
-                      class="group relative border border-transparent hover:border-blue-200/50 rounded-xl p-3 transition-all duration-300"
+              <!-- Right Side - Introduction -->
+              <div id="intro" class="flex-1">
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-white/70">
+                  <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Introduction</h3>
+                  <p class="text-lg text-slate-600 leading-relaxed font-light tracking-wide">
+                    {{ lesson?.introduction }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Story Section (Full Width Below) -->
+            <div id="story" class="w-full">
+              <div id="story_content" class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-white/70">
+                <!-- Header with Global Toggle -->
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50">
+                  <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
+                  <label class="flex items-center gap-3 cursor-pointer group">
+                    <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
+                      Show All Translations
+                    </span>
+                    <input
+                      v-model="showEnglishTranslations"
+                      type="checkbox"
+                      class="toggle toggle-primary toggle-sm"
+                    />
+                  </label>
+                </div>
+                
+                <!-- Individual Sentences -->
+                <div :class="showEnglishTranslations ? 'space-y-4' : 'space-y-1'">
+                  <!-- Compact spacing when translations are off, normal spacing when on -->
+                  <div
+                    v-for="(sentence, index) in sentences"
+                    :key="index"
+                    class="group relative border border-transparent hover:border-blue-200/50 rounded-xl p-3 transition-all duration-300"
+                  >
+                    <!-- Original Sentence -->
+                    <p 
+                      class="text-xl font-light text-slate-700 leading-relaxed font-serif tracking-wide cursor-pointer hover:bg-primary/10 hover:rounded-lg px-2 py-1 transition-all duration-300"
+                      @click="toggleSentenceTranslation(index)"
                     >
-                      <!-- Original Sentence -->
-                      <p 
-                        class="text-xl font-light text-slate-700 leading-relaxed font-serif tracking-wide cursor-pointer hover:bg-primary/10 hover:rounded-lg px-2 py-1 transition-all duration-300"
-                        @click="toggleSentenceTranslation(index)"
-                      >
-                        <span class="inline-flex items-center gap-2">
-                          {{ sentence.original }}
-                          <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                          </svg>
-                        </span>
+                      <span class="inline-flex items-center gap-2">
+                        {{ sentence.original }}
+                        <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                        </svg>
+                      </span>
+                    </p>
+                    
+                    <!-- Translation (shows on click or global toggle) -->
+                    <div
+                      v-if="showEnglishTranslations || activeSentenceTranslation === index"
+                      class="mt-3 ml-4 p-4 bg-gradient-to-r from-blue-50/70 to-indigo-50/50 border-l-4 border-blue-300 rounded-r-xl shadow-sm animate-fade-in"
+                    >
+                      <p class="text-base text-slate-600 italic font-light leading-relaxed">
+                        {{ sentence.translation }}
                       </p>
-                      
-                      <!-- Translation (shows on click or global toggle) -->
-                      <div
-                        v-if="showEnglishTranslations || activeSentenceTranslation === index"
-                        class="mt-3 ml-4 p-4 bg-gradient-to-r from-blue-50/70 to-indigo-50/50 border-l-4 border-blue-300 rounded-r-xl shadow-sm animate-fade-in"
-                      >
-                        <p class="text-base text-slate-600 italic font-light leading-relaxed">
-                          {{ sentence.translation }}
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </div>
