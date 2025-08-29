@@ -19,14 +19,12 @@ const props = withDefaults(
 
 <template>
   <div class="flex items-center space-x-3">
-    <div class="p-2 rounded-lg" :class="props.backgroundColor">
-      <slot />
-    </div>
-    <div>
-      <h1 class="text-2xl font-bold" :class="props.textColor">
+    <slot></slot>
+    <div class="text-2xl font-light text-gray-900 mb-1">
+      <h1 class="text-2xl font-light" :class="props.textColor">
         {{ props.title }}
       </h1>
       <p :class="props.descriptionTextColor">{{ props.description }}</p>
     </div>
-  </div>
+</div>
 </template>

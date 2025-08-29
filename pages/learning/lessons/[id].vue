@@ -17,6 +17,22 @@ const isLoading = ref<boolean>(true);
 const lesson = ref<Lesson | null>(null);
 const showEnglishTranslations = ref(true);
 const activeLessonTab = ref(1);
+const activeSentenceTranslation = ref(null);
+const showExpressionTranslations = ref(false);
+const activeWordTranslation = ref(null);
+const activeExpressionTranslation = ref(null);
+
+const toggleWordTranslation = (index) => {
+  activeWordTranslation.value = activeWordTranslation.value === index ? null : index;
+};
+
+const toggleExpressionTranslation = (index) => {
+  activeExpressionTranslation.value = activeExpressionTranslation.value === index ? null : index;
+};
+
+const toggleSentenceTranslation = (index) => {
+  activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
+};
 
 const getLesson = async () => {
   try {
@@ -38,6 +54,8 @@ const getLesson = async () => {
         data.value.turkish_grammar_rules.description;
       lesson.value.grammarRuleExtendedDescription =
         data.value.turkish_grammar_rules.extended_description;
+      lesson.value.intro = data.value.intro;
+      lesson.value.conclusion = data.value.conclusion;
       lesson.value.newWords = data.value.turkish_lesson_words
         .map((w) => w.turkish_words)
         .map(
@@ -117,8 +135,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-    <div class="max-w-7xl mx-auto grid grid-cols-4 gap-6 p-6">
-      <div class="col-span-3">
+    <div class="max-w-7xl p-6">
+      <div class="max-w-6xl mx-auto">
         <div
           class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/50 overflow-hidden"
         >
@@ -191,11 +209,223 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               </div>
             </div>
           </div>
-
-          <div v-else class="p-8 min-h-screen flex flex-col">
-            <!-- Header Section -->
+          <div id="lesson_content" v-else class="space-y-8 p-6 bg-gradient-to-b from-slate-50/30 to-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-2xl shadow-slate-200/50">
+            <!-- Lesson Title Section -->
+            <div class="text-center">
+              <h1 class="text-4xl font-light text-slate-800 mb-2 font-serif tracking-tight">
+                {{ lesson?.title }}
+              </h1>
+              <h2 class="text-2xl font-light text-slate-600 italic tracking-wide">
+                {{ lesson?.titleEn }}
+              </h2>
+              <div class="w-32 h-0.5 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 mx-auto mt-3 rounded-full"></div>
+            </div>
+            
+            <!-- Introduction Section -->
+            <div id="intro" class="text-center">
+              <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
+              introduction of the lesson
+              </p>
+            </div>
+            
+            <!-- Main Content: Image on Left, Text on Right -->
+            <div class="flex gap-8 items-start">
+              <!-- Left Side - Image -->
+              <div id="picture" class="flex-shrink-0 w-72">
+                <div class="relative group">
+                  <div class="absolute -inset-4 bg-gradient-to-r from-blue-200/40 to-indigo-200/40 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <img 
+                    src="../../../public/toucan.png" 
+                    alt="Toucan illustration" 
+                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm transition-all duration-500 group-hover:scale-105"
+                  />
+                </div>
+              </div>
+              
+              <!-- Right Side - Text Content -->
+              <div id="story" class="flex-1">
+                <div id="story_content" class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-white/70">
+                  <!-- Header with Global Toggle -->
+                  <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50">
+                    <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                      <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
+                        Show All Translations
+                      </span>
+                      <input
+                        v-model="showEnglishTranslations"
+                        type="checkbox"
+                        class="toggle toggle-primary toggle-sm"
+                      />
+                    </label>
+                  </div>
+                  
+                  <!-- Individual Sentences -->
+                  <div :class="showEnglishTranslations ? 'space-y-4' : 'space-y-1'">
+                    <!-- Compact spacing when translations are off, normal spacing when on -->
+                    <div
+                      v-for="(sentence, index) in sentences"
+                      :key="index"
+                      class="group relative border border-transparent hover:border-blue-200/50 rounded-xl p-3 transition-all duration-300"
+                    >
+                      <!-- Original Sentence -->
+                      <p 
+                        class="text-xl font-light text-slate-700 leading-relaxed font-serif tracking-wide cursor-pointer hover:bg-primary/10 hover:rounded-lg px-2 py-1 transition-all duration-300"
+                        @click="toggleSentenceTranslation(index)"
+                      >
+                        <span class="inline-flex items-center gap-2">
+                          {{ sentence.original }}
+                          <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                          </svg>
+                        </span>
+                      </p>
+                      
+                      <!-- Translation (shows on click or global toggle) -->
+                      <div
+                        v-if="showEnglishTranslations || activeSentenceTranslation === index"
+                        class="mt-3 ml-4 p-4 bg-gradient-to-r from-blue-50/70 to-indigo-50/50 border-l-4 border-blue-300 rounded-r-xl shadow-sm animate-fade-in"
+                      >
+                        <p class="text-base text-slate-600 italic font-light leading-relaxed">
+                          {{ sentence.translation }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Key Words and Expressions Section -->
+            <div class="space-y-2">
+                            <!-- Key Words Section -->
+              <div class="p-5 bg-white/70 backdrop-blur-md rounded-3xl border border-white/60 shadow-lg">
+                <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Key Words</h3>
+                
+                <div class="grid grid-cols-1 gap-3">
+                  <div
+                    v-for="(word, index) in lesson?.newWords || []"
+                    :key="index"
+                    class="group relative"
+                  >
+                    <!-- Enhanced Word Card -->
+                    <div 
+                      class="bg-gradient-to-r from-primary/15 to-primary/25 border border-primary/20 rounded-2xl p-4 cursor-pointer transition-all duration-300"
+                      @click="toggleWordTranslation(index)"
+                    >
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                          <span class="text-base font-medium text-slate-800 font-serif">
+                            {{ word.text }}
+                          </span>
+                          <span class="text-sm text-slate-600 font-light italic">
+                            {{ word.textEn || 'Translation not available' }}
+                          </span>
+                        </div>
+                        <svg 
+                          class="w-4 h-4 text-slate-500 transition-all duration-300"
+                          :class="{ 'rotate-180': activeWordTranslation === index }"
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                      </div>
+                      
+                      <!-- Example Sentences (shows when clicked) -->
+                      <div
+                        v-if="activeWordTranslation === index && (word.sentence || word.sentenceEn)"
+                        class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
+                      >
+                        <div
+                          v-if="word.sentence"
+                          class="text-sm text-slate-700 bg-slate-50/50 p-3 rounded-lg"
+                        >
+                          <span class="font-medium text-slate-800">Example:</span> {{ word.sentence }}
+                        </div>
+                        <div
+                          v-if="word.sentenceEn"
+                          class="text-sm text-slate-600 italic pl-3"
+                        >
+                          {{ word.sentenceEn }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Key Expressions Section -->
+              <div class="p-5 bg-white/70 backdrop-blur-md rounded-3xl border border-white/60 shadow-lg">
+                <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Key Expressions</h3>
+                
+                <div class="grid grid-cols-1 gap-3">
+                  <div
+                    v-for="(expression, index) in lesson?.newExpressions || []"
+                    :key="index"
+                    class="group relative"
+                  >
+                    <!-- Enhanced Expression Card -->
+                    <div 
+                      class="bg-gradient-to-r from-primary/15 to-primary/25 border border-primary/20 rounded-2xl p-4 cursor-pointer transition-all duration-300"
+                      @click="toggleExpressionTranslation(index)"
+                    >
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                          <span class="text-base font-medium text-slate-800 font-serif">
+                            {{ expression.text }}
+                          </span>
+                          <span class="text-sm text-slate-600 font-light italic">
+                            {{ expression.textEn || expression.translation || expression.definition || 'Translation not available' }}
+                          </span>
+                        </div>
+                        <svg 
+                          class="w-4 h-4 text-slate-500 transition-all duration-300"
+                          :class="{ 'rotate-180': activeExpressionTranslation === index }"
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                      </div>
+                      
+                      <!-- Example Sentences (shows when clicked) -->
+                      <div
+                        v-if="activeExpressionTranslation === index && (expression.sentence || expression.sentenceEn)"
+                        class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
+                      >
+                        <div
+                          v-if="expression.sentence"
+                          class="text-sm text-slate-700 bg-slate-50/50 p-3 rounded-lg"
+                        >
+                          <span class="font-medium text-slate-800">Example:</span> {{ expression.sentence }}
+                        </div>
+                        <div
+                          v-if="expression.sentenceEn"
+                          class="text-sm text-slate-600 italic pl-3"
+                        >
+                          {{ expression.sentenceEn }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Conclusion Section -->
+            <div id="conclusion" class="text-center">
+              <div id="conclusion_content">
+                                  <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
+                conclusion of the lesson
+                  </p>
+              </div>
+            </div>
+          </div>
+          <!-- <div v-else class="p-8 min-h-screen flex flex-col">
             <div class="shrink-0 mb-8">
-              <!-- Breadcrumbs -->
               <div class="mb-6">
                 <LayoutBreadcrumbs
                   first-section="Lessons"
@@ -203,7 +433,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 />
               </div>
 
-              <!-- Lesson Title Section -->
+          
               <div class="text-center mb-8">
                 <div
                   class="bg-primary opacity-80 rounded-xl p-6 border border-gray-200"
@@ -218,8 +448,6 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   </h2>
                 </div>
               </div>
-
-              <!-- Controls Section -->
               <div class="flex items-center justify-between p-4">
                 <div class="flex-1">
                   <LayoutTabs
@@ -247,8 +475,6 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 </div>
               </div>
             </div>
-
-            <!-- Content Section -->
             <div v-if="activeLessonTab === 1" class="grow">
               <div class="bg-white rounded-xl p-8">
                 <div class="space-y-3">
@@ -284,7 +510,6 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 </div>
               </div>
             </div>
-            <!-- Action Button -->
             <div class="mt-8 text-center">
               <button
                 class="btn btn-primary btn-lg px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
@@ -293,11 +518,11 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 Finish the lesson and test your level
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
-      <div class="col-span-1">
+      <!-- <div class="col-span-1">
         <div class="space-y-6">
           <div class="bg-white rounded-xl shadow-sm">
             <LearningNewItems
@@ -315,7 +540,24 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             />
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+</style>

@@ -1,8 +1,10 @@
-const getPromptForStoryGeneration = (grammarRule: string, listWords: string[], listExpressions: string[], level: string, nbLines: number) => {
-  const words = listWords.join(",")
-  const expressions = listExpressions.join(',')
-  return `Create a ${nbLines} lines interesting story in the Turkish language of a ${level} level containing the following words: ${words}, the following expressions: ${expressions} and employing at least 3 usages of the following rule: ${grammarRule}. Give also the english translation for each sentence. Give it a title and translate it.`
-}
+// const getPromptForStoryGeneration = (grammarRule: string, listWords: string[], listExpressions: string[], level: string, nbLines: number) => {
+//   const words = listWords.join(",")
+//   const expressions = listExpressions.join(',')
+//   return `Create a ${nbLines} lines interesting story in the Turkish language of a ${level} level containing the following words: ${words}, the following expressions: ${expressions} and employing at least 3 usages of the following rule: ${grammarRule}. Give also the english translation for each sentence. Give it a title and translate it.`
+// }
+
+import { getPromptForStoryGeneration } from "../prompts/openai"
 
 const generateStory = async (userId: string, ruleId: number, prompt: string, wordIds: number[], expressionIds: number[]) => {
   const { data } = await useFetch("/api/gpt/generate", {
@@ -14,7 +16,7 @@ const generateStory = async (userId: string, ruleId: number, prompt: string, wor
 }
 
 export const generateAIPoweredStoryWithParameters = async (userId: string, grammarRuleId: number, grammarRule: string, listWords: any[], listExpressions: any[], level: string, nbLines: number) => {
-    const prompt = getPromptForStoryGeneration(grammarRule, listWords.map((w) => w.text), listExpressions.map((e) => e.text), level,nbLines)
+    const prompt = getPromptForStoryGeneration(grammarRule, listWords.map((w) => w.text), listExpressions.map((e) => e.text), level, nbLines)
     return generateStory(userId, grammarRuleId, prompt, listWords.map((w) => w.id), listExpressions.map((e) => e.id))
 }
 

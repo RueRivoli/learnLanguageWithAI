@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const req = supabase
   .from("turkish_grammar_scores")
   .select(
-    "score, rule_id, turkish_grammar_rules ( rule_name, rule_name_translation)",
+    "score, rule_id, turkish_grammar_rules ( rule_name, rule_name_translation, difficulty_class)",
   )
   .eq("user_id", userId);
   if (query.order_by) req.order(query.order_by, { ascending: true });

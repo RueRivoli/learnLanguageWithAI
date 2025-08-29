@@ -22,6 +22,9 @@ const lessonFormat = { "type": "json_schema", "json_schema": {
       "title_en": {
         "type": "string"
       },
+      "intro": {
+        "type": "string"
+      },
       "sentence_1": {
         "type": "string"
       },
@@ -80,6 +83,9 @@ const lessonFormat = { "type": "json_schema", "json_schema": {
         "type": "string"
       },
       "sentence_10_en": {
+        "type": "string"
+      },
+      "conclusion": {
         "type": "string"
       },
     }
@@ -144,7 +150,7 @@ export default defineEventHandler(async (event) => {
       body: {
         model: 'gpt-4o',
         messages: [
-          { role: 'system', content: 'You are a native experimented turkish teacher. Create a clear, helpful story to learn Turkish' },
+          { role: 'system', content: 'You are a native experimented turkish teacher. Create a clear, captivating andhelpful story to learn Turkish' },
           { role: 'user', content: body.message }
         ],
         response_format: lessonFormat,

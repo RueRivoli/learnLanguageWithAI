@@ -1,5 +1,7 @@
 export type Lesson = {
     id: number;
+    intro: string;
+    conclusion: string;
     title: string;
     titleEn: string;
     newWords: Array<{text: string, textEn: string, sentence: string, sentenceEn: string, sentence2: string, sentence2En: string}>

@@ -49,21 +49,50 @@ console.log("Valeur reçue :", props.items);
           </div>
         </div>
       </div>
-      <div v-else class="flex flex-col items-center justify-between">
-        <LayoutHeadingPlus
+      <div v-else class="flex flex-col items-center">
+        <LayoutHeadingCategory
           v-if="props.title == 'New Words'"
           title="New Words"
           description=""
         >
-          <BookOpenIcon class="h-6 w-6 text-primary" />
-        </LayoutHeadingPlus>
-        <LayoutHeadingPlus
+        <div class="flex-shrink-0 ml-3">
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-lg blur-sm"
+            />
+            <div
+              class="relative p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg"
+            >
+              <BookOpenIcon class="h-5 w-5 text-white" />
+            </div>
+          </div>
+        </div>
+        </LayoutHeadingCategory>
+        <LayoutHeadingCategory
+          v-if="props.title == 'New Expressions'"
+          title="New Expressions"
+          description=""
+        >
+        <div class="flex-shrink-0 ml-3">
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg blur-sm"
+            />
+            <div
+              class="relative p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg shadow-lg"
+            >
+              <LanguageIcon class="h-5 w-5 text-white" />
+            </div>
+          </div>
+        </div>
+        </LayoutHeadingCategory>
+        <!-- <LayoutHeadingPlus
           v-else-if="props.title == 'New Expressions'"
           title="New Expressions"
           description=""
         >
           <LanguageIcon class="h-6 w-6 text-primary" />
-        </LayoutHeadingPlus>
+        </LayoutHeadingPlus> -->
         <div class="w-full mt-3">
           <LearningWordDefinition
             v-for="w in props.items"
