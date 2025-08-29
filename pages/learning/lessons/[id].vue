@@ -30,6 +30,11 @@ const toggleExpressionTranslation = (index) => {
   activeExpressionTranslation.value = activeExpressionTranslation.value === index ? null : index;
 };
 
+const startQuiz = () => {
+  // Navigate to quiz for this lesson
+  navigateTo(`/learning/quizzes/${lessonId}`);
+};
+
 const toggleSentenceTranslation = (index) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
 };
@@ -46,6 +51,7 @@ const getLesson = async () => {
         ]),
       );
       // see lesson.ts for individual assignation
+      console.log('data', data.value)
       lesson.value.grammarRuleName = data.value.turkish_grammar_rules.rule_name;
       lesson.value.grammarRuleNameEn =
         data.value.turkish_grammar_rules.rule_name_translation;
@@ -54,7 +60,7 @@ const getLesson = async () => {
         data.value.turkish_grammar_rules.description;
       lesson.value.grammarRuleExtendedDescription =
         data.value.turkish_grammar_rules.extended_description;
-      lesson.value.intro = data.value.intro;
+      lesson.value.introduction = data.value.introduction;
       lesson.value.conclusion = data.value.conclusion;
       lesson.value.newWords = data.value.turkish_lesson_words
         .map((w) => w.turkish_words)
@@ -224,14 +230,14 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <!-- Introduction Section -->
             <div id="intro" class="text-center">
               <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
-              introduction of the lesson
+                {{ lesson?.introduction }}
               </p>
             </div>
             
             <!-- Main Content: Image on Left, Text on Right -->
             <div class="flex gap-8 items-start">
               <!-- Left Side - Image -->
-              <div id="picture" class="flex-shrink-0 w-72">
+              <div id="picture" class="flex-shrink-0 w-96">
                 <div class="relative group">
                   <div class="absolute -inset-4 bg-gradient-to-r from-blue-200/40 to-indigo-200/40 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
                   <img 
@@ -416,11 +422,33 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             </div>
             
             <!-- Conclusion Section -->
-            <div id="conclusion" class="text-center">
-              <div id="conclusion_content">
-                                  <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
-                conclusion of the lesson
-                  </p>
+            <div id="conclusion" class="bg-gradient-to-r from-slate-50/50 to-blue-50/30 rounded-3xl p-8 border border-slate-200/50">
+              <div class="max-w-4xl mx-auto">
+                <!-- Conclusion Header -->
+                <div class="text-center mb-6">
+                  <h2 class="text-2xl font-light text-slate-800 mb-3 font-serif">Lesson Summary</h2>
+                  <div class="w-20 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto rounded-full"></div>
+                </div>
+                
+                <!-- Content and Button Layout -->
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                  <!-- Conclusion Text -->
+                  <div class="flex-1">
+                    <p class="text-lg text-slate-700 leading-loose font-light tracking-wide text-left">
+                      {{ lesson?.conclusion }}
+                    </p>
+                  </div>
+                  
+                  <!-- Quiz Button -->
+                  <div class="flex-shrink-0">
+                    <button
+                class="btn btn-primary btn-lg px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                <PlayIcon class="h-6 w-6 mr-2" />
+                Finish the lesson and test your level
+              </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

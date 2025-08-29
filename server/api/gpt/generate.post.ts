@@ -22,7 +22,7 @@ const lessonFormat = { "type": "json_schema", "json_schema": {
       "title_en": {
         "type": "string"
       },
-      "intro": {
+      "introduction": {
         "type": "string"
       },
       "sentence_1": {

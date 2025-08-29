@@ -5,9 +5,9 @@ const openAiPrompt = (level: string, words: string, expressions: string, grammar
         Don't use this rule too often but use it at least 3 times.
         Give also the english translation for each sentence. 
         Give it a title to that storyand translate it.
-        Give it a nice introduction to that story/lesson by introducing in a few words the story and give to the reader a short tip to understand the rule.
+        Give it a nice introduction to that story/lesson in English by introducing in a few words the story and give to the reader a short tip to understand the focused rule.
         The intro should not be longer than 3 or 4 sentences.
-        The conclusion should be a few sentences summarizing the story and giving a few tips to the reader to learn the rule.
+        The conclusion should be a few sentences written in English summarizing the story and giving another tip on the focused rule.
         The conclusion should not be longer than 3 or 4 sentences.
         The story should be written in a way that is easy to understand and follow.
         `

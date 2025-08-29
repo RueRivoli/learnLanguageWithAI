@@ -85,7 +85,7 @@ watchEffect(async () => {
   <div class="max-w-full max-h-screen grid grid-cols-4">
     <div class="max-h-screen col-span-3">
       <div class="bg-white shadow-md">
-        <div class="p-5">
+        <div class="p-3">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
               title="Modules"
@@ -103,16 +103,16 @@ watchEffect(async () => {
             />
           </div>
         </div>
-        <div class="h-full px-6 overflow-auto pb-5">
+        <div class="h-full px-4 overflow-auto pb-3">
           <div
-            class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
+            class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-2"
           >
             <!-- Loading Skeletons -->
             <template v-if="isFetchingGrammarRules">
               <div
                 v-for="n in 12"
                 :key="`skeleton-${n}`"
-                class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 animate-pulse h-48"
+                class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-2 animate-pulse h-32"
               >
                 <!-- Header skeleton -->
                 <div class="flex items-start justify-between mb-4">
@@ -126,7 +126,7 @@ watchEffect(async () => {
                 <!-- Highlights skeleton (randomly shown) -->
                 <div v-if="n % 2 === 0" class="mb-4 flex-1">
                   <div
-                    class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50 h-full"
+                    class="rounded-xl p-2 shadow-sm relative overflow-hidden border border-slate-200/50 h-full"
                   >
                     <!-- Light background with neutral color tint -->
                     <div class="absolute inset-0 bg-white/90" />
@@ -176,7 +176,7 @@ watchEffect(async () => {
               v-for="(rule, n) in grammarRules"
               v-else
               :key="n"
-              class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200"
+              class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-2 hover:shadow-md transition-shadow duration-200"
               @click="router.push(`/learning/grammar/${rule.id}`)"
             >
               <div class="flex items-start justify-between">
@@ -188,7 +188,7 @@ watchEffect(async () => {
               <!-- Highlights -->
               <div v-if="(rule as any).highlights" class="mb-4">
                 <div
-                  class="rounded-xl p-4 shadow-sm relative overflow-hidden border border-slate-200/50"
+                  class="rounded-xl p-2 shadow-sm relative overflow-hidden border border-slate-200/50"
                 >
                   <!-- Light background with difficulty-based color tint -->
                   <div class="absolute inset-0 bg-white/90" />
