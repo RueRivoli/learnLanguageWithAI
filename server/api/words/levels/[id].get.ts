@@ -21,14 +21,28 @@ export default defineEventHandler(async (event) => {
    let req = supabase
   .from('turkish_words')
   .select('id, text, translation')
-  .order('id', { ascending: true })
 
 if (knownWordIdsToExclude.length > 0) {
   req = req.not('id', 'in', `(${knownWordIdsToExclude.join(',')})`);
 }
 
-const { data: unknownWords, error: unknownWordsError } = await req.limit(limitItems);
+// Get more words than needed to shuffle them
+const { data: allUnknownWords, error: unknownWordsError } = await req
+  .limit(limitItems * 3); // Get 3x more words to have a good pool for randomization
 
-  if (unknownWordsError) throw unknownWordsError;
+if (unknownWordsError) throw unknownWordsError;
+
+// Shuffle the array and take only the requested amount
+const shuffleArray = (array: any[]) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+const unknownWords = shuffleArray(allUnknownWords || []).slice(0, limitItems);
+
   return unknownWords;
 });
