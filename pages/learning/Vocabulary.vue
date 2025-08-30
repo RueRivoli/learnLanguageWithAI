@@ -359,10 +359,8 @@ const handleExpressionLearningStatus = async (
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
                     selectedWord?.id === word.id,
-                  // 'opacity-75': learnedWords.has(word.id),
-                  // Alternating backgrounds every 2 items
-                  'bg-gradient-to-br from-blue-50/80 via-blue-100/40 to-indigo-50/60 border-blue-200/60 shadow-sm': Math.floor(index / 2) % 2 === 0,
-                  'bg-gradient-to-br from-indigo-50/60 via-blue-50/40 to-blue-100/30 border-indigo-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
+                  // Apply the same styling as Key Words cards from lesson page
+                  'bg-gradient-to-r from-primary/15 to-primary/25 border-primary/20 rounded-2xl': true,
                 }"
                 @click="selectedWord = word"
               >
@@ -383,25 +381,24 @@ const handleExpressionLearningStatus = async (
                   </p>
                 </div>
 
-                <!-- Actions -->
-                <div class="flex items-center justify-end pt-4">
-                  <div class="flex items-center gap-1">
-                    <button
-                      class="btn btn-ghost btn-xs mr-2"
-                      @click="
-                        handleWordLearningStatus(word.id, showLearnedWords)
-                      "
-                    >
-                      <div v-if="showLearnedWords" class="flex items-center">
-                        <XMarkIcon class="h-4 w-4 mr-2" />
-                        <span>Move Back To Learn</span>
-                      </div>
-                      <div v-else class="flex items-center">
-                        <CheckIcon class="h-4 w-4 mr-2" />
-                        <span>Mark as Learned</span>
-                      </div>
-                    </button>
-                  </div>
+                <!-- Bottom section with ID and Learned button - no separator line -->
+                <div class="flex items-center justify-between mt-4">
+                  <!-- Word ID on the left -->
+                  <span class="text-xs text-slate-500 font-medium">
+                    #{{ word.id }}
+                  </span>
+                  
+                  <!-- Learned button on the right -->
+                  <!-- <button
+                    class="flex items-center cursor-pointer gap-1 px-1 py-1 bg-green-100 hover:bg-green-200 text-green-700 hover:text-green-800 text-xs font-medium rounded-lg transition-all duration-200 hover:shadow-sm"
+                    @click.stop="handleWordLearningStatus(word.id, showLearnedWords)"
+                  >
+                    <span v-if="showLearnedWords"></span>
+                    <span v-else></span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </button> -->
                 </div>
               </div>
             </div>
@@ -486,10 +483,8 @@ const handleExpressionLearningStatus = async (
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
                     selectedExpression?.text === expression.text,
-                  // 'opacity-75': learnedExpressions.has(expression.text),
-                  // Alternating backgrounds every 2 items
-                  'bg-gradient-to-br from-purple-50/80 via-purple-100/40 to-pink-50/60 border-purple-200/60 shadow-sm': Math.floor(index / 2) % 2 === 0,
-                  'bg-gradient-to-br from-pink-50/60 via-purple-50/40 to-purple-100/30 border-pink-200/60 shadow-sm': Math.floor(index / 2) % 2 === 1,
+                  // Apply the same styling as Key Expressions cards from lesson page
+                  'bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/20 border-purple-300/30 rounded-2xl': true,
                 }"
                 @click="selectedExpression = expression"
               >
@@ -505,42 +500,24 @@ const handleExpressionLearningStatus = async (
                   </p>
                 </div>
 
-                <!-- Actions -->
-                <div
-                  class="flex items-center justify-between pt-4 border-t border-gray-100/60"
-                >
-                  <div class="flex items-center gap-1">
-                    <button
-                      class="group relative overflow-hidden rounded-xl px-4 py-2 font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                      :class="{
-                        'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl focus:ring-red-500': showLearnedExpressions,
-                        'bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white shadow-lg hover:shadow-xl focus:ring-emerald-500': !showLearnedExpressions,
-                      }"
-                      @click="
-                        handleExpressionLearningStatus(
-                          expression.id,
-                          showLearnedExpressions,
-                        )
-                      "
-                    >
-                      <!-- Button background effect -->
-                      <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      <div class="relative z-10 flex items-center gap-2">
-                        <div
-                          v-if="showLearnedExpressions"
-                          class="flex items-center gap-2"
-                        >
-                          <XMarkIcon class="h-4 w-4" />
-                          <span class="text-sm font-semibold">Move Back</span>
-                        </div>
-                        <div v-else class="flex items-center gap-2">
-                          <CheckIcon class="h-4 w-4" />
-                          <span class="text-sm font-semibold">Mark Learned</span>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
+                <!-- Bottom section with ID and Learned button - no separator line -->
+                <div class="flex items-center justify-between mt-4">
+                  <!-- Expression ID on the left -->
+                  <span class="text-xs text-slate-500 font-medium">
+                    #{{ expression.id }}
+                  </span>
+                  
+                  <!-- Learned button on the right -->
+                  <button
+                    class="flex items-center gap-1 px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 hover:text-green-800 text-xs font-medium rounded-lg transition-all duration-200 hover:shadow-sm"
+                    @click.stop="handleExpressionLearningStatus(expression.id, showLearnedExpressions)"
+                  >
+                    <span v-if="showLearnedExpressions">Unlearn</span>
+                    <span v-else>Learned</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>

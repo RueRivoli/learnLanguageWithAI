@@ -25,6 +25,9 @@ const lessonFormat = { "type": "json_schema", "json_schema": {
       "introduction": {
         "type": "string"
       },
+      "promptForImageGeneration": {
+        "type": "string"
+      },
       "sentence_1": {
         "type": "string"
       },
@@ -85,9 +88,6 @@ const lessonFormat = { "type": "json_schema", "json_schema": {
       "sentence_10_en": {
         "type": "string"
       },
-      "conclusion": {
-        "type": "string"
-      },
     }
   }
 }
@@ -126,6 +126,7 @@ const linkExpressionsToLesson = async (expressionIds: number[], lessonId: number
 }
 
 const saveNewLesson = async (content: string, ruleId: number) => {
+  console.log('saveNewLesson', content, ruleId)
   const newLessonRow = parseModelResponse(content, ruleId)
       // Save new lesson
       const { data: newLesson, error: errorLessons } = await supabase
@@ -158,14 +159,16 @@ export default defineEventHandler(async (event) => {
         max_tokens: 1000
       }
     })
-     
+    console.log('result', result, result.choices[0].message.content)
     if (result && result.choices[0].message.content) {
+      console.log('test')
       const lesson = await saveNewLesson(result.choices[0].message.content, body.ruleId)
+      console.log('lesson', lesson)
       if (lesson) {
         linkWordsToLesson(body.wordIds, lesson[0].id)
         linkExpressionsToLesson(body.expressionIds, lesson[0].id)
       }
-        return lesson[0].id
+        return lesson[0]
       }
     } catch (error) {
       console.error('Error API OpenAI:', error)

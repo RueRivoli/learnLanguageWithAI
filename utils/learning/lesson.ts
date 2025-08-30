@@ -1,3 +1,26 @@
+export const parseLesson = (lesson: any): Array<Lesson> => {
+  return words.map((word) => (
+    {
+        id: word.id,
+        text: word.text,
+         // 1st meaning
+        role: word.role,
+        translation: word.translation,
+        wordSentence: word.word_sentence,
+        wordSentenceEn: word.word_sentence_translation,
+         // 2nd meaning
+         role2: word.role_2,
+         translation2: word.translation_2,
+         wordSentence2: word.word_sentence_2,
+         wordSentence2En: word.word_sentence_2_translation,
+         // 3rd meaning
+         role3: word.role_3,
+         translation3: word.translation_3,
+        wordSentence3: word.word_sentence_3,
+        wordSentence3En: word.word_sentence_3_translation,
+    }))
+}
+
 export const lessonMapping = {
     id: 'id',
     title: 'title',

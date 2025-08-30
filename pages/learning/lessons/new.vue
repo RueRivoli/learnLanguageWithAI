@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { PencilSquareIcon } from "@heroicons/vue/24/solid";
 import {
-  BoltIcon,
   BookOpenIcon,
-  DocumentIcon,
   LanguageIcon,
-  ListBulletIcon,
-  QueueListIcon,
   SparklesIcon,
   ViewfinderCircleIcon,
 } from "@heroicons/vue/24/outline";
-import { generateAIPoweredStoryWithParameters } from "~/utils/lesson-generation.ts/openai";
+import { generateAIPoweredStoryWithParameters, generateImageWithPrompt } from "~/utils/lesson-generation.ts/create";
 import { useUserStore } from "~/stores/user-store";
+import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 definePageMeta({
   layout: "authenticated",
 });
@@ -22,17 +19,13 @@ const moduleOptions = ref<Array<{value: number, label: string}>>([]);
 const wordList = ref([]);
 const expressionList = ref([]);
 const openingModalId = ref(0);
-const moduleToTrainId = ref<number>(0);
+const moduleToTrain = ref<{id: number, level: number, name: string}>({id: 0, level: 0, name: ""});
+const selectedModuleId = ref<number>(0);
 const ruleNames = ref<Array<{id: number, name: string}>>([]);
 const router = useRouter();
 const isGeneratingLesson = ref(false);
 const userId = computed(() => userStore.$state.id);
 
-const getRuleNameFromSelectedId = computed(() => {
-  const module = ruleNames.value.find(({ id }) => id === moduleToTrainId.value);
-  if (module) return module.name;
-  return null;
-});
 
 // Group modules by rule level and order by score within each group
 const groupedModuleOptions = computed(() => {
@@ -96,7 +89,10 @@ const getModulesWithLowScores = async () => {
         id: rule_id,
         name: turkish_grammar_rules.rule_name_translation,
       }));
-      moduleToTrainId.value = modules[0].rule_id;
+      moduleToTrain.value.id = modules[0].rule_id;
+      moduleToTrain.value.level = modules[0].turkish_grammar_rules.difficulty_class;
+      moduleToTrain.value.name = modules[0].turkish_grammar_rules.rule_name_translation;
+      selectedModuleId.value = modules[0].rule_id;
     }
   }
 };
@@ -122,6 +118,20 @@ const getExpressionsWithLowScores = async () => {
     }
   }
 };
+
+// Watch for module selection changes
+watch(selectedModuleId, (newModuleId) => {
+  if (newModuleId && originalModulesData.value) {
+    const selectedModule = originalModulesData.value.find(module => module.rule_id === newModuleId);
+    if (selectedModule) {
+      moduleToTrain.value = {
+        id: selectedModule.rule_id,
+        level: selectedModule.turkish_grammar_rules.difficulty_class,
+        name: selectedModule.turkish_grammar_rules.rule_name_translation
+      };
+    }
+  }
+});
 
 watchEffect(async () => {
   console.log("IN WATCH FETCHING");
@@ -158,19 +168,28 @@ const handleCancelModal = () => {
 };
 
 const handleGenerateStory = async () => {
-  let newLessonId;
+  let newLesson;
   isGeneratingLesson.value = true;
-  if (userId.value && getRuleNameFromSelectedId.value)
-    newLessonId = await generateAIPoweredStoryWithParameters(
+  console.log('LA', userId.value, moduleToTrain.value)
+  if (userId.value && moduleToTrain.value.name) {
+    console.log('ICI', userId.value, moduleToTrain.value.name)
+    newLesson = await generateAIPoweredStoryWithParameters(
       userId.value,
-      moduleToTrainId.value,
-      getRuleNameFromSelectedId.value,
+      moduleToTrain.value.id,
+      moduleToTrain.value.name,
       wordList.value.slice(0, 10),
       expressionList.value.slice(0, 3),
-      "beginner",
+      getDifficultyNameSafe(moduleToTrain.value.level),
       10,
     );
-  router.push(`/learning/lessons/${newLessonId}`);
+    console.log('newLesson', newLesson)
+    const promptForImageGeneration = newLesson.promptForImageGeneration;
+    console.log('promptForImageGeneration', promptForImageGeneration)
+    generateImageWithPrompt(promptForImageGeneration, newLesson.id);
+  }
+
+
+  router.push(`/learning/lessons/${String(newLesson.id)}`);
   isGeneratingLesson.value = false;
 };
 </script>
@@ -263,20 +282,21 @@ const handleGenerateStory = async () => {
                   <p class="text-gray-500 text-sm font-light">Choose the module you want to improve</p>
                 </div>
               </div>
-              
               <select
-                v-model="moduleToTrainId"
-                class="w-full max-w-lg bg-gradient-to-r from-slate-50 to-blue-50 border-2 border-blue-200/60 rounded-2xl px-6 py-5 text-gray-900 font-light text-lg focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 shadow-md"
+                v-model="selectedModuleId"
+                class="module-selector w-full max-w-lg bg-gradient-to-r from-slate-50 to-blue-50 border-2 border-blue-200/60 rounded-2xl px-6 py-5 text-gray-900 font-light text-lg focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 shadow-md"
               >
                 <optgroup
                   v-for="(options, difficulty) in groupedModuleOptions"
                   :key="difficulty"
                   :label="difficulty"
+                  :class="{ 'beginner-group': difficulty === 'Beginner' }"
                 >
                   <option
                     v-for="option in options"
                     :key="option.value"
                     :value="option.value"
+                    :class="{ 'beginner-option': difficulty === 'Beginner' }"
                   >
                     {{ option.label }}
                   </option>
@@ -435,7 +455,7 @@ const handleGenerateStory = async () => {
                 </p>
                 
                 <select
-                  v-model="moduleToTrainId"
+                  v-model="selectedModuleId"
                   class="select select-primary w-full max-w-md bg-white/90 backdrop-blur-sm border-primary/30 focus:border-primary shadow-sm"
                 >
                   <option
@@ -590,3 +610,38 @@ const handleGenerateStory = async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Custom styling for beginner options in the module selector */
+.module-selector optgroup[label="Beginner"] {
+  color: #16a34a; /* Success green color */
+  font-weight: 600;
+  background-color: #f0fdf4; /* Light green background */
+}
+
+.module-selector .beginner-option {
+  background-color: #dcfce7 !important; /* Light success green background */
+  color: #15803d !important; /* Success green text */
+  font-weight: 500;
+}
+
+.module-selector .beginner-option:hover {
+  background-color: #bbf7d0 !important; /* Slightly darker green on hover */
+  color: #14532d !important; /* Darker green text on hover */
+}
+
+.module-selector .beginner-option:selected {
+  background-color: #16a34a !important; /* Success green when selected */
+  color: white !important;
+}
+
+/* Style the optgroup label for Beginner */
+.module-selector optgroup.beginner-group {
+  background-color: #f0fdf4; /* Light green background */
+  color: #16a34a; /* Success green text */
+  font-weight: 700;
+  font-size: 0.95em;
+  padding: 8px 4px;
+  border-bottom: 1px solid #dcfce7;
+}
+</style>

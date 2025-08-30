@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { EyeIcon, TrashIcon, DocumentIcon } from "@heroicons/vue/24/outline";
 
-import { getGrammarRuleInitialLetters } from "~/utils/learning/grammar";
+import { DIFFICULTY_LEVELS, getDifficultyNameSafe } from "~/utils/learning/grammar";
 definePageMeta({
   layout: "authenticated",
 });
@@ -136,7 +136,7 @@ const handleCancel = () => {
                   <th
                     class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                   >
-                    Lesson name {{ currentPage }}
+                    Lesson name
                   </th>
                   <th
                     class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
@@ -155,9 +155,9 @@ const handleCancel = () => {
                   <td class="px-4 py-3">
                     <div class="flex items-center justify-center">
                       <span
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700 shadow-sm"
+                        class="text-sm font-semibold text-indigo-700 tracking-wide"
                       >
-                        {{ lesson.id }}
+                        #{{ lesson.id }}
                       </span>
                     </div>
                   </td>
@@ -166,51 +166,22 @@ const handleCancel = () => {
                       class="flex items-center gap-3 hover:cursor-pointer"
                       @click="router.push(`/learning/lessons/${lesson.id}`)"
                     >
-                      <div class="avatar">
-                        <div class="avatar avatar-placeholder">
-                          <div
-                            class="text-neutral-content w-10 h-10 rounded-xl bg-primary font-semibold"
-                          >
-                            <span class="text-xl">{{
-                              getGrammarRuleInitialLetters(lesson.title)
-                            }}</span>
-                          </div>
-                        </div>
-                      </div>
                       <div class="hover:cursor-pointer">
-                        <div class="font-bold">
+                        <div class="text-md font-serif tracking-tight font-light text-slate-800 tracking-wide">
                           {{ lesson.title }}
                         </div>
-                        <div class="text-sm opacity-50">
+                        <div class="text-sm font-light text-slate-600 italic">
                           {{ lesson.title_en }}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <div>
                       <div class="flex items-center hover:cursor-pointe">
-                        <div class="font-bold mr-2">
-                          {{ lesson.turkish_grammar_rules.rule_name }}
-                        </div>
-                        <div class="ml-2 text-sm opacity-50">
-                          {{
-                            lesson.turkish_grammar_rules.rule_name_translation
-                          }}
-                        </div>
+                        <LayoutKeyElementRule class="mr-2" :title="lesson.turkish_grammar_rules.rule_name_translation" :level="getDifficultyNameSafe(lesson.turkish_grammar_rules.difficulty_class)" size="xs"/>
+                        <LayoutKeyElementQuiz score="80" size="xs"/>
                       </div>
-                      <div class="mt-2 flex flex-wrap gap-y-2">
-                        {{ word }}
-                        <div
-                          v-for="(word, index) in lesson.turkish_lesson_words"
-                          :key="index"
-                          class="badge cursor-pointer badge-soft badge-neutral mr-2"
-                        >
-                          {{ word.turkish_words.text }}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
+                    </td>
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                       <button

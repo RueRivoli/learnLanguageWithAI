@@ -4,29 +4,30 @@ import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/solid";
 import {
   lessonMapping,
-  lessonFirstTab,
-  lessonSecondTab,
-} from "~/utils/learning/lesson.ts";
+} from "~/utils/learning/lesson";
+import { parseRuleData, type GrammarRule } from "~/types/grammar-rule";
+import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 definePageMeta({
   layout: "authenticated",
 });
 
 const route = useRoute();
-const lessonId = route.params.id;
+const lessonId = String(route.params.id);
 const isLoading = ref<boolean>(true);
 const lesson = ref<Lesson | null>(null);
 const showEnglishTranslations = ref(false);
-const activeLessonTab = ref(1);
-const activeSentenceTranslation = ref(null);
-const showExpressionTranslations = ref(false);
-const activeWordTranslation = ref(null);
-const activeExpressionTranslation = ref(null);
+const activeSentenceTranslation = ref<number | null>(null);
+const activeWordTranslation = ref<number | null>(null);
+const activeExpressionTranslation = ref<number | null>(null);
+const grammarRule = ref<GrammarRule | null>(null);
+const grammarRuleLoading = ref<boolean>(false);
+const isStoryShown = ref(true);
 
-const toggleWordTranslation = (index) => {
+const toggleWordTranslation = (index: number) => {
   activeWordTranslation.value = activeWordTranslation.value === index ? null : index;
 };
 
-const toggleExpressionTranslation = (index) => {
+const toggleExpressionTranslation = (index: number) => {
   activeExpressionTranslation.value = activeExpressionTranslation.value === index ? null : index;
 };
 
@@ -35,35 +36,56 @@ const startQuiz = () => {
   navigateTo(`/learning/quizzes/${lessonId}`);
 };
 
-const toggleSentenceTranslation = (index) => {
+const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
 };
 
+
+
+const getGrammarRule = async () => {
+  console.log("ID", lesson.value?.grammarRuleId);
+  if (!lesson.value?.grammarRuleId) return;
+  
+  try {
+    grammarRuleLoading.value = true;
+    const { data, error } = await useFetch(`/api/grammar/${lesson.value.grammarRuleId}`);
+    if (error.value) throw error;
+    if (data.value) {
+      grammarRule.value = parseRuleData(data.value as any);
+    }
+  } catch (error) {
+    console.log("Error fetching grammar rule:", error);
+  } finally {
+    grammarRuleLoading.value = false;
+  }
+};
+
+
 const getLesson = async () => {
   try {
-    const { data, error } = await useFetch(`/api/lessons/${lessonId}`);
+    const { data, error } = await useFetch(`/api/lessons/${lessonId}`)
     if (error.value) throw error;
-    else if (data) {
+    else if (data.value) {
+      const rawData = data.value as any;
       lesson.value = Object.fromEntries(
         Object.entries(lessonMapping).map(([sourceKey, targetKey]) => [
           targetKey,
-          data.value[sourceKey],
+          rawData[sourceKey],
         ]),
-      );
-      // see lesson.ts for individual assignation
-      console.log('data', data.value)
-      lesson.value.grammarRuleName = data.value.turkish_grammar_rules.rule_name;
+      ) as Lesson;
+      lesson.value.grammarRuleName = rawData.turkish_grammar_rules.rule_name;
       lesson.value.grammarRuleNameEn =
-        data.value.turkish_grammar_rules.rule_name_translation;
-      lesson.value.grammarRuleIntro = data.value.turkish_grammar_rules.intro;
+        rawData.turkish_grammar_rules.rule_name_translation;
+      lesson.value.grammarRuleIntro = rawData.turkish_grammar_rules.intro;
       lesson.value.grammarRuleDescription =
-        data.value.turkish_grammar_rules.description;
+        rawData.turkish_grammar_rules.description;
       lesson.value.grammarRuleExtendedDescription =
-        data.value.turkish_grammar_rules.extended_description;
-      lesson.value.introduction = data.value.introduction;
-      lesson.value.conclusion = data.value.conclusion;
-      lesson.value.newWords = data.value.turkish_lesson_words
-        .map((w) => w.turkish_words)
+        rawData.turkish_grammar_rules.extended_description;
+      lesson.value.introduction = rawData.introduction;
+      lesson.value.grammarRuleId = rawData.grammar_rule_id;
+      lesson.value.imgUrl = rawData.img_url;
+      lesson.value.newWords = rawData.turkish_lesson_words
+        .map((w: any) => w.turkish_words)
         .map(
           ({
             text,
@@ -72,7 +94,7 @@ const getLesson = async () => {
             word_sentence_translation,
             word_sentence_2,
             word_sentence_2_translation,
-          }) => ({
+          }: any) => ({
             text,
             textEn: translation,
             sentence: word_sentence,
@@ -81,8 +103,8 @@ const getLesson = async () => {
             sentence2En: word_sentence_2_translation,
           }),
         );
-      lesson.value.newExpressions = data.value.turkish_lesson_expressions
-        .map((w) => w.turkish_expressions)
+      lesson.value.newExpressions = rawData.turkish_lesson_expressions
+        .map((w: any) => w.turkish_expressions)
         .map(
           ({
             text,
@@ -91,7 +113,7 @@ const getLesson = async () => {
             expression_sentence_translation,
             expression_sentence_2,
             expression_sentence_2_translation,
-          }) => ({
+          }: any) => ({
             text,
             textEn: translation,
             sentence: expression_sentence,
@@ -101,7 +123,8 @@ const getLesson = async () => {
           }),
         );
       isLoading.value = false;
-      console.log("lesson", lesson.value);
+      // Fetch grammar rule after lesson is loaded
+      await getGrammarRule();
     }
   } catch (error) {
     console.log("error", error);
@@ -114,28 +137,28 @@ const sentences = computed(() => {
   if (!lesson.value) return [];
   let i = 0;
   const phrases = [];
-  while (lesson.value[`sentence${i + 1}`]) {
+  while ((lesson.value as any)[`sentence${i + 1}`]) {
     phrases.push({
-      original: lesson.value[`sentence${i + 1}`],
-      translation: lesson.value[`sentence${i + 1}En`],
+      original: (lesson.value as any)[`sentence${i + 1}`],
+      translation: (lesson.value as any)[`sentence${i + 1}En`],
     });
     i = i + 1;
   }
   return phrases;
 });
 
-const handleLessonDeletion = (id: number, title: string) => {
-  lessonNameToDelete.value = { id, title };
-};
+const imageUrl = computed(() => {
+  return lesson.value?.imgUrl || '../../../public/toucan.png';
+});
 
 const sanitizedIntroTemplate = computed(() =>
-  DOMPurify.sanitize(lesson.value.grammarRuleIntro || ""),
+  DOMPurify.sanitize(lesson.value?.grammarRuleIntro || grammarRule.value?.intro || ""),
 );
 const sanitizedDescriptionTemplate = computed(() =>
-  DOMPurify.sanitize(lesson.value.grammarRuleDescription || ""),
+  DOMPurify.sanitize(lesson.value?.grammarRuleDescription || grammarRule.value?.description || ""),
 );
 const sanitizedExtendedDescriptionTemplate = computed(() =>
-  DOMPurify.sanitize(lesson.value.grammarRuleExtendedDescription || ""),
+  DOMPurify.sanitize(lesson.value?.grammarRuleExtendedDescription || grammarRule.value?.extendedDescription || ""),
 );
 </script>
 
@@ -231,33 +254,85 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <div class="flex gap-8 items-center">
               <!-- Left Side - Image -->
               <div id="picture" class="flex-shrink-0 w-96">
-                <div class="relative group">
-                  <div class="absolute -inset-4 bg-gradient-to-r from-blue-200/40 to-indigo-200/40 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div class="relative">
+                  <div class="absolute -inset-4 bg-gradient-to-r from-blue-200/40 to-indigo-200/40 rounded-3xl blur-xl"></div>
                   <img 
-                    src="../../../public/toucan.png" 
-                    alt="Toucan illustration" 
-                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm transition-all duration-500 group-hover:scale-105"
+                    :src="imageUrl" 
+                    alt="Lesson illustration" 
+                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm"
                   />
                 </div>
               </div>
               
               <!-- Right Side - Introduction -->
               <div id="intro" class="flex-1">
-                <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-white/70">
-                  <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Introduction</h3>
-                  <p class="text-lg text-slate-600 leading-relaxed font-light tracking-wide">
-                    {{ lesson?.introduction }}
-                  </p>
+                <div class="relative p-6 overflow-hidden">
+                  <!-- Decorative background elements -->
+                  <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/30 to-indigo-100/20 rounded-full blur-2xl -translate-y-16 translate-x-16"></div>
+                  <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/25 to-pink-100/15 rounded-full blur-xl translate-y-12 -translate-x-12"></div>
+                  
+                  <!-- Content -->
+                  <div class="relative z-10">
+                    <!-- Enhanced heading -->
+                    <div class="flex items-center gap-3 mb-6">
+                      <div class="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
+                      <h3 class="text-2xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 bg-clip-text text-transparent tracking-tight">
+                        Introduction
+                      </h3>
+                    </div>
+                    
+                    <!-- Beautiful typography for the introduction text -->
+                    <div class="prose prose-lg max-w-none">
+                      <p class="text-xl leading-loose text-slate-700 font-light tracking-wide mb-0">
+                        {{ lesson?.introduction }}
+                      </p>
+                    </div>
+                    
+                    <!-- Decorative bottom accent -->
+                    <div class="mt-6 flex justify-center">
+                      <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent rounded-full opacity-60"></div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
-            
+            <div class="mt-5 italic">
+              When you're done with the lesson, don't forget <span class="text-primary font-semibold">
+                
+                <button
+                    class="btn btn-sm btn-error mx-2 btn-outline"
+                    @click="handleGenerateQuiz"
+                  >
+                    <span>to fill out the quiz</span>
+                  </button>
+                
+                </span> to update your scores
+            </div>
             <!-- Story Section (Full Width Below) -->
             <div id="story" class="w-full">
-              <div id="story_content" class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-white/70">
-                <!-- Header with Global Toggle -->
+              <div id="story_content" class="p-3">
+                <!-- Header with Rule Button and Global Toggle -->
                 <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50">
-                  <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
+                  <div class="flex items-center gap-4">
+                    <button 
+                      @click="isStoryShown = true"
+                    >
+                      <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
+                    </button>
+                   
+                    <!-- <button 
+                      class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2"
+                      @click="isStoryShown = false"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      Key Rule : {{ lesson.grammarRuleNameEn }}
+                    </button> -->
+
+                    <LayoutKeyElementRule :title="lesson?.grammarRuleNameEn"  size="sm" :level="getDifficultyNameSafe(lesson?.turkish_grammar_rules?.difficulty_class)" @click="isStoryShown = false"/>
+                  </div>
                   <label class="flex items-center gap-3 cursor-pointer group">
                     <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
                       Show All Translations
@@ -268,15 +343,56 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       class="toggle toggle-primary toggle-sm"
                     />
                   </label>
-                </div>
-                
-                <!-- Individual Sentences -->
-                <div :class="showEnglishTranslations ? 'space-y-4' : 'space-y-1'">
+                                  </div>
+                  
+                  <!-- Grammar Rule Content Section -->
+                  <div v-if="grammarRule && !isStoryShown" class="mb-6">
+                    <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-2xl p-6 border border-blue-200/30 shadow-sm">
+                      <!-- Grammar Rule Header -->
+                      <div class="flex items-center gap-4 mb-4 pb-3 border-b border-blue-200/40">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md">
+                          <span class="text-lg">{{ grammarRule.symbol || grammarRule.ruleName?.charAt(0) }}</span>
+                        </div>
+                        <div>
+                          <h4 class="text-lg font-semibold text-slate-800">{{ grammarRule.ruleNameTranslation }}</h4>
+                          <p class="text-sm text-slate-600">{{ grammarRule.ruleName }}</p>
+                        </div>
+                      </div>
+                      
+                      <!-- Grammar Rule Content -->
+                      <div class="space-y-4 text-slate-700">
+                        <div v-if="sanitizedIntroTemplate" class="prose prose-sm max-w-none prose-slate" v-html="sanitizedIntroTemplate" />
+                        <div v-if="sanitizedDescriptionTemplate" class="prose prose-sm max-w-none prose-slate" v-html="sanitizedDescriptionTemplate" />
+                        <div v-if="sanitizedExtendedDescriptionTemplate" class="prose prose-sm max-w-none prose-slate" v-html="sanitizedExtendedDescriptionTemplate" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Loading state for grammar rule -->
+                  <div v-else-if="grammarRuleLoading && !isStoryShown" class="mb-6">
+                    <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-2xl p-6 border border-blue-200/30 shadow-sm animate-pulse">
+                      <div class="flex items-center gap-4 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-gray-200"></div>
+                        <div class="flex-1">
+                          <div class="h-5 bg-gray-200 rounded w-1/3 mb-2"></div>
+                          <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+                        </div>
+                      </div>
+                      <div class="space-y-3">
+                        <div class="h-4 bg-gray-200 rounded w-full"></div>
+                        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                        <div class="h-4 bg-gray-200 rounded w-4/5"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Individual Sentences -->
+                <div v-else :class="showEnglishTranslations ? 'space-y-4' : 'space-y-1'">
                   <!-- Compact spacing when translations are off, normal spacing when on -->
                   <div
                     v-for="(sentence, index) in sentences"
                     :key="index"
-                    class="group relative border border-transparent hover:border-blue-200/50 rounded-xl p-3 transition-all duration-300"
+                    class="group relative border border-transparent hover:border-blue-200/50 rounded-xl p-1 transition-all duration-300"
                   >
                     <!-- Original Sentence -->
                     <p 
@@ -294,7 +410,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <!-- Translation (shows on click or global toggle) -->
                     <div
                       v-if="showEnglishTranslations || activeSentenceTranslation === index"
-                      class="mt-3 p-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-slate-200/60 animate-fade-in"
+                      class="mt-1 p-2 bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-slate-200/60 animate-fade-in"
                     >
                       <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 mt-1">
@@ -315,10 +431,10 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <!-- Key Words and Expressions Section -->
             <div class="space-y-2">
                             <!-- Key Words Section -->
-              <div class="p-5 bg-white/70 backdrop-blur-md rounded-3xl border border-white/60 shadow-lg">
+              <div class="p-5 bg-white/70 backdrop-blur-md  border border-primary/20 rounded-2xl shadow-lg">
                 <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Key Words</h3>
                 
-                <div class="grid grid-cols-1 gap-3">
+                <div class="grid grid-cols-2 gap-3">
                   <div
                     v-for="(word, index) in lesson?.newWords || []"
                     :key="index"
@@ -362,9 +478,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </div>
                         <div
                           v-if="word.sentenceEn"
-                          class="text-sm text-slate-600 italic pl-3"
+                          class="text-sm text-slate-600 pl-3"
                         >
-                          {{ word.sentenceEn }}
+                        <span class="font-medium text-slate-800">Translation:</span> <span class="italic">{{ word.sentenceEn }}</span>
                         </div>
                       </div>
                     </div>
@@ -373,7 +489,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               </div>
               
               <!-- Key Expressions Section -->
-              <div class="p-5 bg-white/70 backdrop-blur-md rounded-3xl border border-white/60 shadow-lg">
+              <div class="p-5 bg-white/70 backdrop-blur-md shadow-lg border border-purple-300/30 rounded-2xl shadow-lg">
                 <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Key Expressions</h3>
                 
                 <div class="grid grid-cols-1 gap-3">
@@ -384,7 +500,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   >
                     <!-- Enhanced Expression Card -->
                     <div 
-                      class="bg-gradient-to-r from-primary/15 to-primary/25 border border-primary/20 rounded-2xl p-4 cursor-pointer transition-all duration-300"
+                      class="bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/20 border border-purple-300/30 rounded-2xl p-4 cursor-pointer transition-all duration-300"
                       @click="toggleExpressionTranslation(index)"
                     >
                       <div class="flex items-center justify-between">
@@ -393,8 +509,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                             {{ expression.text }}
                           </span>
                           <span class="text-sm text-slate-600 font-light italic">
-                            {{ expression.textEn || expression.translation || expression.definition || 'Translation not available' }}
+                            {{ expression.textEn || 'Translation not available' }}
                           </span>
+                          
                         </div>
                         <svg 
                           class="w-4 h-4 text-slate-500 transition-all duration-300"
@@ -422,7 +539,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                           v-if="expression.sentenceEn"
                           class="text-sm text-slate-600 italic pl-3"
                         >
-                          {{ expression.sentenceEn }}
+                        <span class="font-medium text-slate-800">Translation:</span> <span class="italic">{{ expression.sentenceEn }}</span>
                         </div>
                       </div>
                     </div>
@@ -430,155 +547,21 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 </div>
               </div>
             </div>
-            
-            <!-- Conclusion Section -->
-            <div id="conclusion" class="bg-gradient-to-r from-slate-50/50 to-blue-50/30 rounded-3xl p-8 border border-slate-200/50">
-              <div class="max-w-4xl mx-auto">
-                <!-- Conclusion Header -->
-                <div class="text-center mb-6">
-                  <h2 class="text-2xl font-light text-slate-800 mb-3 font-serif">Lesson Summary</h2>
-                  <div class="w-20 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto rounded-full"></div>
-                </div>
-                
-                <!-- Content and Button Layout -->
-                <div class="flex flex-col lg:flex-row items-center gap-8">
-                  <!-- Conclusion Text -->
-                  <div class="flex-1">
-                    <p class="text-lg text-slate-700 leading-loose font-light tracking-wide text-left">
-                      {{ lesson?.conclusion }}
-                    </p>
-                  </div>
-                  
-                  <!-- Quiz Button -->
-                  <div class="flex-shrink-0">
-                    <button
-                class="btn btn-primary btn-lg px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <PlayIcon class="h-6 w-6 mr-2" />
-                Finish the lesson and test your level
-              </button>
-                  </div>
-                </div>
+              <div class="pt-4 border-t border-gray-100">
+                  <button
+                    class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                    :disabled="isLoading"
+                    @click="handleGenerateQuiz"
+                  >
+                    <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                    <PlayIcon v-else class="w-5 h-5" />
+                    <span>Grow Your Score With this Quiz</span>
+                  </button>
               </div>
-            </div>
           </div>
-          <!-- <div v-else class="p-8 min-h-screen flex flex-col">
-            <div class="shrink-0 mb-8">
-              <div class="mb-6">
-                <LayoutBreadcrumbs
-                  first-section="Lessons"
-                  :second-section="`Lesson #${lesson?.id}`"
-                />
-              </div>
-
-          
-              <div class="text-center mb-8">
-                <div
-                  class="bg-primary opacity-80 rounded-xl p-6 border border-gray-200"
-                >
-                  <h1
-                    class="text-3xl font-bold text-gray-900 mb-3 leading-tight"
-                  >
-                    {{ lesson?.title }}
-                  </h1>
-                  <h2 class="text-xl text-white font-medium italic">
-                    {{ lesson?.titleEn }}
-                  </h2>
-                </div>
-              </div>
-              <div class="flex items-center justify-between p-4">
-                <div class="flex-1">
-                  <LayoutTabs
-                    :first-tab="lessonFirstTab"
-                    :second-tab="lessonSecondTab"
-                    @tab-active-changed="
-                      (activeTab) => (activeLessonTab = activeTab)
-                    "
-                  />
-                </div>
-
-                <div class="flex items-center gap-3">
-                  <label class="flex items-center gap-3 cursor-pointer group">
-                    <span
-                      class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors"
-                    >
-                      Show Translations
-                    </span>
-                    <input
-                      v-model="showEnglishTranslations"
-                      type="checkbox"
-                      class="toggle toggle-primary toggle-sm"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div v-if="activeLessonTab === 1" class="grow">
-              <div class="bg-white rounded-xl p-8">
-                <div class="space-y-3">
-                  <div
-                    v-for="(sentence, index) in sentences"
-                    :key="index"
-                    class="group hover:bg-gray-50/50 rounded-lg p-3 transition-all duration-200"
-                  >
-                    <p
-                      class="text-lg font-semibold text-gray-900 mb-1 leading-relaxed"
-                    >
-                      {{ sentence.original }}
-                    </p>
-                    <p
-                      v-if="showEnglishTranslations"
-                      class="text-base text-gray-700 font-medium leading-relaxed border-l-4 border-primary/30 pl-4 bg-gray-50/50 rounded-r-lg py-1"
-                    >
-                      {{ sentence.translation }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div v-else class="grow">
-              <div class="bg-white p-8">
-                <div
-                  class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-strong:font-semibold"
-                >
-                  <div class="mb-6" v-html="sanitizedIntroTemplate" />
-                  <div class="mb-6" v-html="sanitizedDescriptionTemplate" />
-                  <div v-html="sanitizedExtendedDescriptionTemplate" />
-                </div>
-              </div>
-            </div>
-            <div class="mt-8 text-center">
-              <button
-                class="btn btn-primary btn-lg px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <PlayIcon class="h-6 w-6 mr-2" />
-                Finish the lesson and test your level
-              </button>
-            </div>
-          </div> -->
         </div>
       </div>
 
-      <!-- <div class="col-span-1">
-        <div class="space-y-6">
-          <div class="bg-white rounded-xl shadow-sm">
-            <LearningNewItems
-              :loading="isLoading"
-              title="New Words"
-              :items="lesson?.newWords"
-            />
-          </div>
-
-          <div class="bg-white rounded-xl shadow-sm">
-            <LearningNewItems
-              :loading="isLoading"
-              title="New Expressions"
-              :items="lesson?.newExpressions"
-            />
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>

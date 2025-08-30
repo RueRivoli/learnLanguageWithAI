@@ -9,26 +9,58 @@ export const grammarLevelTabs = {
   thirdTab : { title: 'Advanced', icon: 'rocket', activeBgColorClass: 'bg-error/80', activeTxtColorClass: 'text-white'}
 }
 
-const enum RuleDifficulty {
-  "BEGINNER" = 1,
-  "INTERMEDIATE" = 2,
-  "ADVANCED" = 3,
-  "EXPERT" = 4,
+// Mapping des niveaux de difficulté
+export const DIFFICULTY_LEVELS = {
+  1: "beginner",
+  2: "intermediate", 
+  3: "advanced",
+  4: "expert"
+} as const
+
+// Mapping inverse pour obtenir l'ID depuis le nom
+export const DIFFICULTY_IDS = {
+  "BEGINNER": 1,
+  "INTERMEDIATE": 2,
+  "ADVANCED": 3,
+  "EXPERT": 4
+} as const
+
+// Types dérivés
+export type DifficultyLevel = typeof DIFFICULTY_LEVELS[keyof typeof DIFFICULTY_LEVELS]
+export type DifficultyId = typeof DIFFICULTY_IDS[keyof typeof DIFFICULTY_IDS]
+
+// Enum pour une meilleure compatibilité avec le code existant
+export enum RuleDifficulty {
+  BEGINNER = 1,
+  INTERMEDIATE = 2,
+  ADVANCED = 3,
+  EXPERT = 4
+}
+
+// Fonctions utilitaires pour les mappings
+export function getDifficultyName(id: number): DifficultyLevel | null {
+  return DIFFICULTY_LEVELS[id as keyof typeof DIFFICULTY_LEVELS] || null
+}
+
+export function getDifficultyNameSafe(id: number): DifficultyLevel {
+  return DIFFICULTY_LEVELS[id as keyof typeof DIFFICULTY_LEVELS] || "beginner"
+}
+
+export function getDifficultyId(name: string): DifficultyId | null {
+  return DIFFICULTY_IDS[name as keyof typeof DIFFICULTY_IDS] || null
+}
+
+export function isDifficultyId(id: number): id is DifficultyId {
+  return id in DIFFICULTY_LEVELS
+}
+
+export function isDifficultyLevel(name: string): name is DifficultyLevel {
+  return name in DIFFICULTY_IDS
 }
 
 export function getLevelText(level: RuleDifficulty): string {
-  switch (level) {
-    case RuleDifficulty.BEGINNER:
-      return "beginner";
-    case RuleDifficulty.INTERMEDIATE:
-      return "intermediate";
-    case RuleDifficulty.ADVANCED:
-      return "advanced";
-    case RuleDifficulty.EXPERT:
-      return "expert";
-    default:
-      return "beginner";
-  }
+  const difficultyName = getDifficultyName(level)
+  return difficultyName ? difficultyName.toLowerCase() : "beginner"
 }
 
 export function getLevelLabel(level: RuleDifficulty): VNode {

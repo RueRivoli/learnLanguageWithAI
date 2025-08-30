@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
         title,
         title_en,
         turkish_grammar_rules (
+          difficulty_class,
           rule_name,
           rule_name_translation,
           intro,
