@@ -8,6 +8,7 @@ import type {
 } from "~/types/quiz.ts";
 import type { Word, WordContent } from "~/types/word";
 import { parseQuizQuestion } from "~/utils/learning/quiz";
+
 definePageMeta({
   layout: "authenticated",
 });
@@ -22,8 +23,8 @@ const quiz = ref<any>(null);
 const formGrammarQuiz = ref<FormQuizState>({});
 const wordsForQuiz = ref<WordContent[]>([]);
 const expressionsForQuiz = ref<ExpressionContent[]>([]);
-
-
+const currentQuestionIndex = ref<number>(0);
+const selectedAnswer = ref<string | null>(null);
 
 const { data: lessonVocabulary } = await useFetch(`/api/lessons/${lessonId}/vocabulary`, {
   method: 'GET'
@@ -31,9 +32,8 @@ const { data: lessonVocabulary } = await useFetch(`/api/lessons/${lessonId}/voca
 
 console.log("lessonVocabulary", lessonVocabulary);
 
-
 const initializeFormQuiz = (questions: QuizFormattedQuestion[]): void => {
-    formGrammarQuiz.value = questions.reduce(
+  formGrammarQuiz.value = questions.reduce(
     (
       acc: FormQuizState,
       currentValue: QuizFormattedQuestion,
@@ -56,7 +56,7 @@ const getVocabularyFromLesson = async () => {
   const { data } = await useFetch(
     `/api/lessons/${lessonId}/vocabulary`,
   );
-    console.log("getVocabularyFromLesson", data.value);
+  console.log("getVocabularyFromLesson", data.value);
   if (data.value) {
     wordsForQuiz.value = (data.value.turkish_lesson_words || []).map((word) => word.turkish_words);
     expressionsForQuiz.value = (data.value.turkish_lesson_expressions || []).map((expression) => expression.turkish_expressions);
@@ -65,7 +65,6 @@ const getVocabularyFromLesson = async () => {
   console.log("expressionsForQuiz", expressionsForQuiz.value);
   isLoadingFetchingLessonVocabulary.value = false;
 };
-
 
 const getQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
@@ -82,9 +81,65 @@ const getQuizData = async () => {
   isLoading.value = false;
 };
 
+const currentQuestion = computed(() => {
+  return quiz.value?.[currentQuestionIndex.value] || null;
+});
+
+const totalQuestions = computed(() => {
+  return quiz.value?.length || 0;
+});
+
+const goToNextQuestion = () => {
+  if (selectedAnswer.value) {
+    // Store the answer
+    if (formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
+      formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = selectedAnswer.value;
+    }
+    
+    if (currentQuestionIndex.value < totalQuestions.value - 1) {
+      currentQuestionIndex.value++;
+      selectedAnswer.value = null;
+    } else {
+      // Quiz finished - handle completion
+      console.log("Quiz completed!", formGrammarQuiz.value);
+    }
+  }
+};
+
+const selectAnswer = (option: string) => {
+  selectedAnswer.value = option;
+};
+
+// Mock progress data inspired by calendar design
+const grammarProgress = ref([
+  { completed: true, current: false },
+  { completed: true, current: false },
+  { completed: false, current: true },
+  { completed: false, current: false },
+  { completed: false, current: false },
+]);
+
+const vocabularyProgress = ref([
+  { completed: true, current: false },
+  { completed: true, current: false },
+  { completed: true, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+  { completed: true, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+  { completed: true, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+  { completed: false, current: false },
+]);
 
 await getQuizData();
 await getVocabularyFromLesson();
+
 // Page title
 useHead({
   title: `Quiz ${quizId} - Lesson ${lessonId}`,
@@ -92,17 +147,443 @@ useHead({
 </script>
 
 <template>
-  <div class="quiz-lesson">
-    <div class="quiz-lesson-content">
-      <div class="quiz-lesson-content-header">
-        <h1 class="quiz-lesson-content-header-title">Quiz Lesson</h1>
+  <div class="quiz-container">
+    <!-- Main Quiz Section -->
+    <div class="quiz-main">
+      <div class="quiz-header">
+        <div class="quiz-progress-indicator">
+          <span class="quiz-counter">{{ currentQuestionIndex + 1 }}</span>
+          <span class="quiz-total">/ {{ totalQuestions }}</span>
+        </div>
+      </div>
+
+      <div v-if="currentQuestion && !isLoading" class="quiz-content">
+        <!-- Question -->
+        <div class="question-section">
+          <h2 class="question-text">{{ currentQuestion.question }}</h2>
+        </div>
+
+        <!-- Answer Options -->
+        <div class="options-section">
+          <div class="options-grid">
+            <button
+              v-for="(option, index) in currentQuestion.options"
+              :key="index"
+              @click="selectAnswer(option)"
+              :class="[
+                'option-button',
+                selectedAnswer === option ? 'selected' : ''
+              ]"
+            >
+              <span class="option-letter">{{ String.fromCharCode(65 + index) }}</span>
+              <span class="option-text">{{ option }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Next Button -->
+        <div class="next-section">
+          <button
+            @click="goToNextQuestion"
+            :disabled="!selectedAnswer"
+            :class="[
+              'next-button',
+              !selectedAnswer ? 'disabled' : ''
+            ]"
+          >
+            <span v-if="currentQuestionIndex < totalQuestions - 1">Next Question</span>
+            <span v-else>Finish Quiz</span>
+            <svg class="next-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div v-else-if="isLoading" class="loading-section">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading quiz...</p>
+      </div>
+    </div>
+
+    <!-- Progress Sidebar - Calendar Style -->
+    <div class="progress-sidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">Progress</h3>
+      </div>
+
+      <div class="progress-section">
+        <h4 class="progress-title">Grammar</h4>
+        <div class="progress-grid grammar-grid">
+          <div
+            v-for="(item, index) in grammarProgress"
+            :key="index"
+            :class="[
+              'progress-square',
+              item.completed ? 'completed' : '',
+              item.current ? 'current' : ''
+            ]"
+          >
+            {{ index + 1 }}
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <h4 class="progress-title">Vocabulary</h4>
+        <div class="progress-grid vocabulary-grid">
+          <div
+            v-for="(item, index) in vocabularyProgress"
+            :key="index"
+            :class="[
+              'progress-square',
+              item.completed ? 'completed' : '',
+              item.current ? 'current' : ''
+            ]"
+          >
+            {{ index + 1 }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Add any specific styles for the quiz page here */
+/* Container */
+.quiz-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main Quiz Section */
+.quiz-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quiz-header {
+  width: 100%;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.quiz-progress-indicator {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.quiz-counter {
+  font-weight: 700;
+  color: #4f46e5;
+  font-size: 1.4rem;
+}
+
+.quiz-total {
+  font-weight: 500;
+}
+
+.quiz-content {
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Question Section */
+.question-section {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.question-text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.4;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+/* Options Section */
+.options-section {
+  margin-bottom: 3rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.option-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  width: 100%;
+  min-height: 120px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.option-button:hover {
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.option-button.selected {
+  border-color: #4f46e5;
+  background: #4f46e5;
+  color: white;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.option-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.option-button.selected .option-letter {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.option-text {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Next Button */
+.next-section {
+  text-align: center;
+}
+
+.next-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.875rem 2rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.next-button:hover:not(.disabled) {
+  background: #4338ca;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.next-button.disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.next-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+/* Loading Section */
+.loading-section {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.loading-text {
+  color: #6b7280;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Progress Sidebar - Calendar Inspired */
+.progress-sidebar {
+  width: 320px;
+  background: white;
+  border-left: 1px solid #e5e7eb;
+  padding: 2rem;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.progress-section {
+  margin-bottom: 2.5rem;
+}
+
+.progress-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.025em;
+}
+
+/* Progress Grid - Calendar Style */
+.progress-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.grammar-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.vocabulary-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.progress-square {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f9fafb;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+.progress-square:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-square.completed {
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+.progress-square.current {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .quiz-container {
+    flex-direction: column;
+  }
+  
+  .progress-sidebar {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+    order: 2;
+  }
+  
+  .quiz-main {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .quiz-main {
+    padding: 1rem;
+  }
+  
+  .question-text {
+    font-size: 1.5rem;
+  }
+  
+  .options-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 400px;
+  }
+  
+  .option-button {
+    padding: 1rem;
+    min-height: 100px;
+  }
+  
+  .option-text {
+    font-size: 0.9rem;
+  }
+  
+  .progress-sidebar {
+    padding: 1rem;
+  }
+  
+  .progress-square {
+    width: 40px;
+    height: 40px;
+    font-size: 0.75rem;
+  }
+}
 </style>
 
 
