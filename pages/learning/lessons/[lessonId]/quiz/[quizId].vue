@@ -13,6 +13,9 @@ definePageMeta({
   layout: "authenticated",
 });
 
+const TOTAL_VOCABULARY_QUESTIONS = 15;
+const TOTAL_GRAMMAR_QUESTIONS = 5;
+
 const route = useRoute();
 const lessonId = String(route.params.lessonId);
 const quizId = String(route.params.quizId);
@@ -58,13 +61,37 @@ const getVocabularyFromLesson = async () => {
   );
   console.log("getVocabularyFromLesson", data.value);
   if (data.value) {
-    wordsForQuiz.value = (data.value.turkish_lesson_words || []).map((word) => word.turkish_words);
-    expressionsForQuiz.value = (data.value.turkish_lesson_expressions || []).map((expression) => expression.turkish_expressions);
+    wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word) => word.turkish_words));
+    expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression) => expression.turkish_expressions));
   }
   console.log("wordsForQuiz", wordsForQuiz.value);
   console.log("expressionsForQuiz", expressionsForQuiz.value);
   isLoadingFetchingLessonVocabulary.value = false;
 };
+
+const getAdditionnalWordsForQuiz = async () => {
+  const { data } = await $fetch(`/api/words/levels/random/?limit=2`, {
+    method: "GET",
+  });
+  if (data) {
+    wordsForQuiz.value.push(...(data.map((word) => word.turkish_words)));
+    console.log("wordsQuiz", data);
+  }
+  console.log("wordsForQuiz", wordsForQuiz.value);
+  isLoading.value = false;
+};
+
+
+const getAdditionnalExpressionsForQuiz = async () => {
+  const { data } = await $fetch(`/api/expressions/levels/random/?limit=2`, {
+    method: "GET",
+  });
+  if (data) {
+    expressionsForQuiz.value.push(...(data.map((expression) => expression.turkish_expressions)));
+    isLoading.value = false;
+    console.log("expressionsForQuiz 2", expressionsForQuiz.value);
+   }
+}
 
 const getQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
@@ -123,7 +150,7 @@ const isGrammarQuiz = computed(() => {
 
 const isVocabularyQuiz = computed(() => {
   // For now, assume vocabulary quiz if not grammar
-  // This can be enhanced based on your actual data structure
+  // This can be enhanced based on my actual data structure
   return !isGrammarQuiz.value;
 });
 
@@ -152,12 +179,11 @@ const grammarProgress = computed(() => {
 
 const vocabularyProgress = computed(() => {
   const progress = [];
-  const totalVocabQuestions = 15; // Display 15 squares for vocabulary
   
-  for (let i = 0; i < totalVocabQuestions; i++) {
+  for (let i = 0; i < TOTAL_VOCABULARY_QUESTIONS; i++) {
     if (isVocabularyQuiz.value) {
       // Show progress only if this is a vocabulary quiz
-      const questionsPerSquare = Math.max(1, Math.floor(totalQuestions.value / totalVocabQuestions));
+      const questionsPerSquare = Math.max(1, Math.floor(totalQuestions.value / TOTAL_VOCABULARY_QUESTIONS));
       const questionIndex = i * questionsPerSquare;
       progress.push({
         completed: questionIndex < currentQuestionIndex.value,
@@ -177,11 +203,13 @@ const vocabularyProgress = computed(() => {
 
 await getQuizData();
 await getVocabularyFromLesson();
-
+await getAdditionnalWordsForQuiz();
+await getAdditionnalExpressionsForQuiz();
 // Page title
 useHead({
   title: `Quiz ${quizId} - Lesson ${lessonId}`,
 });
+
 </script>
 
 <template>
