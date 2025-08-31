@@ -192,7 +192,7 @@ const handleCancel = () => {
                         <EyeIcon class="h-5 w-5" />
                       </button>
                       <button
-                        class="w-8 h-8 btn btn-soft btn-circle btn-error rounded-lg cursor-pointer group"
+                        class="w-8 h-8 btn btn-soft btn-circle btn-error rounded-lg hover:text-white cursor-pointer group"
                         title="Delete lesson"
                         @click="handleLessonToDelete(lesson.id, lesson.title)"
                       >

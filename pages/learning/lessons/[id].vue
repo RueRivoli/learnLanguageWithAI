@@ -84,6 +84,7 @@ const getLesson = async () => {
         rawData.turkish_grammar_rules.extended_description;
       lesson.value.introduction = rawData.introduction;
       lesson.value.grammarRuleId = rawData.grammar_rule_id;
+      lesson.value.level = rawData.turkish_grammar_rules.difficulty_class;
       lesson.value.imgUrl = rawData.img_url;
       lesson.value.quizId = rawData.quiz_id;
       lesson.value.newWords = rawData.turkish_lesson_words
@@ -337,8 +338,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       </svg>
                       Key Rule : {{ lesson.grammarRuleNameEn }}
                     </button> -->
-
-                    <LayoutKeyElementRule :title="lesson?.grammarRuleNameEn"  size="sm" :level="getDifficultyNameSafe(lesson?.turkish_grammar_rules?.difficulty_class)" @click="isStoryShown = false"/>
+                    <LayoutKeyElementRule :title="lesson?.grammarRuleNameEn" :level="getDifficultyNameSafe(lesson?.level)" size="sm"  @click="isStoryShown = false"/>
                   </div>
                   <label class="flex items-center gap-3 cursor-pointer group">
                     <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
