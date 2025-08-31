@@ -7,6 +7,7 @@ import {
 } from "~/utils/learning/lesson";
 import { parseRuleData, type GrammarRule } from "~/types/grammar-rule";
 import { getDifficultyNameSafe } from "~/utils/learning/grammar";
+import { handleGenerationQuiz } from "~/utils/learning/quiz";
 definePageMeta({
   layout: "authenticated",
 });
@@ -84,6 +85,7 @@ const getLesson = async () => {
       lesson.value.introduction = rawData.introduction;
       lesson.value.grammarRuleId = rawData.grammar_rule_id;
       lesson.value.imgUrl = rawData.img_url;
+      lesson.value.quizId = rawData.quiz_id;
       lesson.value.newWords = rawData.turkish_lesson_words
         .map((w: any) => w.turkish_words)
         .map(
@@ -132,6 +134,11 @@ const getLesson = async () => {
 };
 
 getLesson();
+
+const handleGenerateQuiz = () => {
+  if (!lesson.value?.grammarRuleId) return;
+  handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
+};
 
 const sentences = computed(() => {
   if (!lesson.value) return [];
@@ -548,7 +555,11 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               </div>
             </div>
               <div class="pt-4 border-t border-gray-100">
+                <div v-if="lesson?.quizId">
+                  Your score: 100%
+                </div>
                   <button
+                    v-else
                     class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
                     :disabled="isLoading"
                     @click="handleGenerateQuiz"

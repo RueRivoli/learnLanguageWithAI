@@ -42,16 +42,6 @@ const getlastQuizzes = async () => {
 await getGrammarRule();
 await getlastQuizzes();
 
-const handleGenerateQuiz = async () => {
-  const { data, error } = await $fetch(`/api/quizzes/${grammarRuleId}`, {
-    method: "PUT",
-  });
-  if (error) throw error;
-  else if (data) {
-    router.push(`/learning/quizzes/${data}`);
-  }
-};
-
 const sanitizedIntroTemplate = computed(() =>
   DOMPurify.sanitize(grammarRule.value.intro || ""),
 );

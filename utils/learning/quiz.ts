@@ -33,3 +33,26 @@ export const parseQuizQuestion = (question: QuizFetchedQuestion): QuizFormattedQ
     option4: question.turkish_grammar_quizzes.option_4 ?? null,
   };
 };
+
+
+export const handleGenerationQuiz = async (ruleId: number, redirectionPath: string) => {
+  try {
+    // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
+    const response = await $fetch(`/api/quizzes/${ruleId}`, {
+      method: "PUT",
+    });
+    console.log("has generated a quizz with the id: ", response);
+    // response is the id of the new generated quiz
+    if (response) {
+      // router.push(`/learning/quizzes/${response}`);
+      await navigateTo({
+        path: `${redirectionPath}/${response.quizId}`,
+      });
+    }
+  } catch (err) {
+    console.error(
+      "An error occured while generating a new quiz, please try again.",
+      err,
+    );
+  }
+};

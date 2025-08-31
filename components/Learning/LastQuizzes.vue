@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PlayIcon, TrophyIcon, ClockIcon } from "@heroicons/vue/24/outline";
 import { formatDate } from "~/utils/date/date";
+import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import { useRouter } from "vue-router";
 import type { GrammarRule } from "~/types/grammar-rule";
 import { getColorStyleClass } from "~/utils/learning/grammar";
@@ -21,29 +22,36 @@ const props = withDefaults(
 );
 
 const handleGenerateQuiz = async () => {
-  try {
-    isLoading.value = true;
-    // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
-    const response = await $fetch(`/api/quizzes/${props.rule?.id}`, {
-      method: "PUT",
-    });
-    console.log("has generated a quizz with the id: ", response);
-    // response is the id of the new generated quiz
-    if (response) {
-      // router.push(`/learning/quizzes/${response}`);
-      await navigateTo({
-        path: `/learning/quizzes/${response.quizId}`,
-      });
-    }
-    isLoading.value = false;
-  } catch (err) {
-    console.error(
-      "An error occured while generating a new quiz, please try again.",
-      err,
-    );
-    isLoading.value = false;
-  }
-};
+  if (!props.rule?.id) return;
+  isLoading.value = true;
+  await handleGenerationQuiz(props.rule?.id, "/learning/quizzes");
+  isLoading.value = false;
+}
+
+// const handleGenerateQuiz = async () => {
+//   try {
+//     isLoading.value = true;
+//     // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
+//     const response = await $fetch(`/api/quizzes/${props.rule?.id}`, {
+//       method: "PUT",
+//     });
+//     console.log("has generated a quizz with the id: ", response);
+//     // response is the id of the new generated quiz
+//     if (response) {
+//       // router.push(`/learning/quizzes/${response}`);
+//       await navigateTo({
+//         path: `/learning/quizzes/${response.quizId}`,
+//       });
+//     }
+//     isLoading.value = false;
+//   } catch (err) {
+//     console.error(
+//       "An error occured while generating a new quiz, please try again.",
+//       err,
+//     );
+//     isLoading.value = false;
+//   }
+// };
 
 const getScoreColor = (score: number) => {
   if (score >= 90) return 'bg-emerald-100 text-emerald-700 border-emerald-200';

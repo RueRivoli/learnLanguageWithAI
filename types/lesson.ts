@@ -4,6 +4,7 @@ export type Lesson = {
     titleEn: string;
     introduction?: string;
     imgUrl?: string;
+    quizId?: number;
     grammarRuleId?: number;
     newWords: Array<{text: string, textEn: string, sentence: string, sentenceEn: string, sentence2: string, sentence2En: string}>
     newExpressions: Array<{text: string, textEn: string, sentence: string, sentenceEn: string, sentence2: string, sentence2En: string}>

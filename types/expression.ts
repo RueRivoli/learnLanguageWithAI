@@ -1,6 +1,12 @@
 import type { Database } from "~/supabase/types";
 type ExpressionRowFetched = Database['public']['Tables']['turkish_expressions']['Row'];
 
+
+export type ExpressionContent = {
+  text: ExpressionRowFetched['text'];
+  textEn: ExpressionRowFetched['translation'];
+};
+
 export type Expression = {
   id: ExpressionRowFetched['id'];
   text: ExpressionRowFetched['text'];
