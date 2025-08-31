@@ -77,12 +77,17 @@ const getQuizData = async () => {
     quiz.value = data.value;
     initializeFormQuiz(data.value);
   }
+  console.log("quiz", quiz.value);
   console.log("formGrammarQuiz", formGrammarQuiz.value);
   isLoading.value = false;
 };
 
 const currentQuestion = computed(() => {
   return quiz.value?.[currentQuestionIndex.value] || null;
+});
+
+const currentQuestionOptions = computed(() => {
+  return [quiz.value?.[currentQuestionIndex.value].option1, quiz.value?.[currentQuestionIndex.value].option2, quiz.value?.[currentQuestionIndex.value].option3, quiz.value?.[currentQuestionIndex.value].option4];
 });
 
 const totalQuestions = computed(() => {
@@ -110,32 +115,65 @@ const selectAnswer = (option: string) => {
   selectedAnswer.value = option;
 };
 
-// Mock progress data inspired by calendar design
-const grammarProgress = ref([
-  { completed: true, current: false },
-  { completed: true, current: false },
-  { completed: false, current: true },
-  { completed: false, current: false },
-  { completed: false, current: false },
-]);
+// Determine quiz type based on quiz data structure
+const isGrammarQuiz = computed(() => {
+  // If quiz has grammar rule data, it's a grammar quiz
+  return quiz.value?.[0]?.grammarRuleId != null;
+});
 
-const vocabularyProgress = ref([
-  { completed: true, current: false },
-  { completed: true, current: false },
-  { completed: true, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-  { completed: true, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-  { completed: true, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-  { completed: false, current: false },
-]);
+const isVocabularyQuiz = computed(() => {
+  // For now, assume vocabulary quiz if not grammar
+  // This can be enhanced based on your actual data structure
+  return !isGrammarQuiz.value;
+});
+
+// Dynamic progress tracking for separate quiz types
+const grammarProgress = computed(() => {
+  const progress = [];
+  const totalGrammarQuestions = 5; // Display 5 squares for grammar
+  
+  for (let i = 0; i < totalGrammarQuestions; i++) {
+    if (isGrammarQuiz.value) {
+      // Show progress only if this is a grammar quiz
+      progress.push({
+        completed: i < currentQuestionIndex.value,
+        current: i === currentQuestionIndex.value,
+      });
+    } else {
+      // If this is vocabulary quiz, grammar section remains untouched (all gray)
+      progress.push({
+        completed: false,
+        current: false,
+      });
+    }
+  }
+  return progress;
+});
+
+const vocabularyProgress = computed(() => {
+  const progress = [];
+  const totalVocabQuestions = 15; // Display 15 squares for vocabulary
+  
+  for (let i = 0; i < totalVocabQuestions; i++) {
+    if (isVocabularyQuiz.value) {
+      // Show progress only if this is a vocabulary quiz
+      const questionsPerSquare = Math.max(1, Math.floor(totalQuestions.value / totalVocabQuestions));
+      const questionIndex = i * questionsPerSquare;
+      progress.push({
+        completed: questionIndex < currentQuestionIndex.value,
+        current: questionIndex === currentQuestionIndex.value || 
+                 (i === Math.floor(currentQuestionIndex.value / questionsPerSquare) && questionIndex <= currentQuestionIndex.value),
+      });
+    } else {
+      // If this is grammar quiz, vocabulary section remains untouched (all gray)
+      progress.push({
+        completed: false,
+        current: false,
+      });
+    }
+  }
+  return progress;
+});
 
 await getQuizData();
 await getVocabularyFromLesson();
@@ -163,11 +201,11 @@ useHead({
           <h2 class="question-text">{{ currentQuestion.question }}</h2>
         </div>
 
-        <!-- Answer Options -->
+        <!-- Answer Options -->{{ currentQuestion.options }}
         <div class="options-section">
           <div class="options-grid">
             <button
-              v-for="(option, index) in currentQuestion.options"
+              v-for="(option, index) in currentQuestionOptions"
               :key="index"
               @click="selectAnswer(option)"
               :class="[
@@ -328,18 +366,18 @@ useHead({
 
 .option-button {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 1.5rem 1rem;
+  justify-content: flex-start;
+  padding: 1.25rem 1.5rem;
   background: white;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  text-align: center;
+  text-align: left;
   width: 100%;
-  min-height: 120px;
+  min-height: 100px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -367,7 +405,7 @@ useHead({
   justify-content: center;
   font-weight: 600;
   font-size: 0.875rem;
-  margin-bottom: 0.75rem;
+  margin-right: 1rem;
   flex-shrink: 0;
 }
 
@@ -380,7 +418,8 @@ useHead({
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.4;
-  text-align: center;
+  text-align: left;
+  flex: 1;
 }
 
 /* Next Button */
@@ -513,23 +552,21 @@ useHead({
   border: 1px solid #e5e7eb;
 }
 
-.progress-square:hover {
-  transform: scale(1.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+
 
 .progress-square.completed {
-  background: #4f46e5;
+  background: #10b981;
   color: white;
-  border-color: #4f46e5;
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+  border-color: #10b981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .progress-square.current {
-  background: #eff6ff;
-  color: #2563eb;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+  transform: scale(1.05);
 }
 
 /* Responsive Design */
@@ -566,8 +603,8 @@ useHead({
   }
   
   .option-button {
-    padding: 1rem;
-    min-height: 100px;
+    padding: 1rem 1.25rem;
+    min-height: 90px;
   }
   
   .option-text {
