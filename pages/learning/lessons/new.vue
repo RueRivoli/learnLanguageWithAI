@@ -3,6 +3,7 @@ import { PencilSquareIcon } from "@heroicons/vue/24/solid";
 import {
   BookOpenIcon,
   LanguageIcon,
+  PlayIcon,
   SparklesIcon,
   ViewfinderCircleIcon,
 } from "@heroicons/vue/24/outline";
@@ -385,15 +386,22 @@ const handleGenerateStory = async () => {
             <!-- Generate Button Section -->
             <div class="text-center pt-8">
               <button
+              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              @click="handleGenerateStory"
+            >
+              <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+              <PlayIcon v-else class="w-5 h-5" />
+              <span>Generate My Personalized Lesson</span>
+            </button>
+<!-- 
+              <button
                 class="group relative px-16 py-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-xl font-light rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 :class="{ 'opacity-50 cursor-not-allowed': !userId }"
                 @click="handleGenerateStory"
               >
-                <!-- Button Background Effects -->
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-600/20 rounded-2xl"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-2xl"></div>
                 
-                <!-- Button Content -->
                 <div class="relative z-10 flex items-center justify-center">
                   <span
                     v-if="isGeneratingLesson"
@@ -402,7 +410,7 @@ const handleGenerateStory = async () => {
                   <SparklesIcon class="h-6 w-6 mr-4 group-hover:rotate-6 transition-transform duration-300" />
                   <span>Generate My Personalized Lesson</span>
                 </div>
-              </button>
+              </button> -->
               
               <!-- <p class="text-gray-500 text-sm mt-6 font-light">
                 AI will create a story adapted to your level and selections

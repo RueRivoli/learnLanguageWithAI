@@ -6,15 +6,23 @@ const userScoreStore = useUserScoreStore();
 
 // Grid navigation state
 const currentBatch = ref(0);
-const totalWords = ref(2847); // Example total
 const wordsPerBatch = 500;
+
+// Get total words from store
+const totalWords = computed(() => userScoreStore.$state.totalWords || 0);
 
 // Calculate total batches
 const totalBatches = computed(() => Math.ceil(totalWords.value / wordsPerBatch));
 
+// Calculate how many squares to show in current batch
+const currentBatchSize = computed(() => {
+  const remainingWords = totalWords.value - (currentBatch.value * wordsPerBatch);
+  return Math.min(wordsPerBatch, remainingWords);
+});
+
 // Generate grid data for current batch
 const gridData = computed(() => {
-  return Array.from({ length: wordsPerBatch }, (_, i) => {
+  return Array.from({ length: currentBatchSize.value }, (_, i) => {
     const wordIndex = currentBatch.value * wordsPerBatch + i + 1;
     return {
       id: wordIndex,
@@ -44,15 +52,23 @@ const canGoForward = computed(() => currentBatch.value < totalBatches.value - 1)
 
 // Expression grid navigation state
 const currentExpressionBatch = ref(0);
-const totalExpressions = ref(1250); // Example total
 const expressionsPerBatch = 400;
+
+// Get total expressions from store
+const totalExpressions = computed(() => userScoreStore.$state.totalExpressions || 0);
 
 // Calculate total expression batches
 const totalExpressionBatches = computed(() => Math.ceil(totalExpressions.value / expressionsPerBatch));
 
+// Calculate how many squares to show in current expression batch
+const currentExpressionBatchSize = computed(() => {
+  const remainingExpressions = totalExpressions.value - (currentExpressionBatch.value * expressionsPerBatch);
+  return Math.min(expressionsPerBatch, remainingExpressions);
+});
+
 // Generate expression grid data for current batch
 const expressionGridData = computed(() => {
-  return Array.from({ length: expressionsPerBatch }, (_, i) => {
+  return Array.from({ length: currentExpressionBatchSize.value }, (_, i) => {
     const expressionIndex = currentExpressionBatch.value * expressionsPerBatch + i + 1;
     return {
       id: expressionIndex,
