@@ -3,6 +3,7 @@ type ExpressionRowFetched = Database['public']['Tables']['turkish_expressions'][
 
 
 export type ExpressionContent = {
+  id: ExpressionRowFetched['id'];
   text: ExpressionRowFetched['text'];
   textEn: ExpressionRowFetched['translation'];
 };

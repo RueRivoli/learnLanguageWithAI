@@ -151,7 +151,7 @@ export default defineEventHandler(async (event) => {
       body: {
         model: 'gpt-4o',
         messages: [
-          { role: 'system', content: 'You are a native experimented turkish teacher. Create a clear, captivating andhelpful story to learn Turkish' },
+          { role: 'system', content: 'You are a native experimented turkish teacher. Create a clear, captivating and helpful story to learn Turkish' },
           { role: 'user', content: body.message }
         ],
         response_format: lessonFormat,

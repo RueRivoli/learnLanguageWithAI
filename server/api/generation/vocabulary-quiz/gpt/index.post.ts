@@ -1,0 +1,54 @@
+import { defineEventHandler, readBody } from "h3";
+import { createClient } from "@supabase/supabase-js";
+import { quizFormat } from "../../formats/vocabulary";
+import { systemPromptVocabularyQuiz } from "../../prompts";
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SERVICE_SUPABASE_KEY,
+);
+
+const parseModelResponse = (text: string, ruleId: number) => {
+  const newLesson = JSON.parse(text)
+  return { user_id: "502a892f-8e9c-4a73-8635-b932f595d68a", grammar_rule_id: ruleId, ...newLesson }
+}
+
+
+
+
+export default defineEventHandler(async (event) => {
+  try {
+    const body = await readBody(event);
+    if (!body.message) {
+      throw new Error('Missing prompt for vocabulary quiz')
+    }
+    const result = await $fetch(process.env.OPENAI_API_URL, {
+      method: 'POST',
+      headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+      },
+      body: {
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemPromptVocabularyQuiz },
+          { role: 'user', content: body.message }
+        ],
+        response_format: quizFormat,
+        temperature: 0.7,
+        max_tokens: 1000
+      }
+    })
+    console.log('result', result, result.choices[0].message.content)
+    if (result && result.choices[0].message.content) {
+        console.log('vocabulary quiz', result.choices[0].message.content)
+        return result.choices[0].message.content
+      }
+    } catch (error) {
+      console.error('Error API OpenAI:', error)
+      return {
+        success: false,
+        error: error?.message ?? 'Unknown error'
+    }
+  }
+});

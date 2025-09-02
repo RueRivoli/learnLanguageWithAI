@@ -5,7 +5,7 @@ const getPromptForImageGeneration = (prompt: string) => {
   return imagePrompt
 }
 const generateStory = async (userId: string, ruleId: number, prompt: string, wordIds: number[], expressionIds: number[]) => {
-  const { data } = await useFetch("/api/gpt/generate", {
+  const { data } = await useFetch("/api/generation/story/gpt", {
     method: 'POST',
     body: { userId: userId, message: prompt, ruleId, wordIds, expressionIds}
    })

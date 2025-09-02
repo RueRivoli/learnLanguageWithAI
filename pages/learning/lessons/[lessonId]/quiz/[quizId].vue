@@ -1,22 +1,57 @@
 <script setup lang="ts">
 import type { ExpressionContent } from "~/types/expression";
-import type { Lesson } from "~/types/lesson.ts";
 import type {
   FormQuizState,
   QuizFetchedQuestion,
   QuizFormattedQuestion,
 } from "~/types/quiz.ts";
 import type { Word, WordContent } from "~/types/word";
+import type { QuizQuestion } from "~/utils/learning/lesson-quiz";
 import { parseQuizQuestion } from "~/utils/learning/quiz";
+import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
 
 definePageMeta({
-  layout: "authenticated",
+  layout: "quiz",
 });
+const vowelChangeMap = {
+    // Front vowels (e, i, ö, ü)
+    'e': ['i', 'ö', 'ü', 'a'],
+    'i': ['e', 'ü', 'ö', 'ı'], 
+    'ö': ['ü', 'e', 'i', 'o'],
+    'ü': ['ö', 'i', 'e', 'u'],
+    // Back vowels (a, ı, o, u)
+    'a': ['ı', 'o', 'u', 'e'],
+    'ı': ['a', 'o', 'u', 'i'],
+    'o': ['u', 'a', 'ı', 'e'],
+    'u': ['o', 'a', 'ı', 'e']
+};
+const consonantChangeMap = {
+    'b': ['p', 'v', 'f'],
+    'c': ['ç', 's', 'ş'],
+    'd': ['t', 'v', 'b'],
+    'ğ': ['k', 'h', 'g'],
+    'h': ['g', 'ğ', 'k'],
+    'k': ['c', 'q', 'ş'],
+    'p': ['ç', 's', 'r'],
+    't': ['ç', 's', 'd'],
+    'v': ['p', 'b', 'ş'],
+    'f': ['v', 's', 'c'],
+    's': ['ç', 'c', 'ş'],
+    'ş': ['ç', 's', 'c'],
+    'z': ['ç', 's', 'ş'],
+    'ç': ['c', 's', 'ş'],
+    'x': ['y', 's', 'ş'],
+    'q': ['l', 's', 'k'],
+    'w': ['ç', 's', 'ş'],
+    'y': ['ç', 's', 'ş'],
+    'r': ['ç', 's', 'ş'],
+    'l': ['p', 'v', 's'],
+    'm': ['n', 'b', 'v'],
+    'n': ['m', 't', 'd'],
+    'j': ['g', 's', 't'],
+};
 
-const TOTAL_VOCABULARY_QUESTIONS = 15;
-const TOTAL_GRAMMAR_QUESTIONS = 5;  
-const TOTAL_WORDS_QUESTIONS = 12;
-const TOTAL_EXPRESSIONS_QUESTIONS = 4;
+const TOTAL_GRAMMAR_QUESTIONS = 5;
 
 const route = useRoute();
 const lessonId = String(route.params.lessonId);
@@ -24,24 +59,63 @@ const quizId = String(route.params.quizId);
 
 const isLoading = ref<boolean>(true);
 const isLoadingFetchingLessonVocabulary = ref<boolean>(true);
-const grammarQuiz = ref<any>(null);
+const grammarQuiz = ref<QuizQuestion[] | null>(null);
 const formGrammarQuiz = ref<FormQuizState>({});
 const wordsForQuiz = ref<WordContent[]>([]);
 const expressionsForQuiz = ref<ExpressionContent[]>([]);
+const wordsQuiz = ref<QuizQuestion[] | null>(null);
+const formWordsQuiz = ref<FormQuizState>({});
+const expressionsQuiz = ref<QuizQuestion[] | null>(null);
+const formExpressionsQuiz = ref<FormQuizState>({});
+
+
 const currentQuestionIndex = ref<number>(0);
 const selectedAnswer = ref<string | null>(null);
 
-const { data: lessonVocabulary } = await useFetch(`/api/lessons/${lessonId}/vocabulary`, {
-  method: 'GET'
-}).catch(() => ({ data: null }));
 
-console.log("lessonVocabulary", lessonVocabulary);
-
-const initializeFormQuiz = (questions: QuizFormattedQuestion[]): void => {
+const initializeGrammarFormQuiz = (questions: QuizFormattedQuestion[]): void => {
   formGrammarQuiz.value = questions.reduce(
     (
       acc: FormQuizState,
       currentValue: QuizFormattedQuestion,
+      index: number,
+    ) => {
+      acc[index + 1] = {
+        questionId: currentValue.id,
+        selectedOption: null,
+        correctAnswer: currentValue.correctAnswer,
+      };
+      return acc;
+    },
+    {},
+  );
+};
+
+const initializeWordsFormQuiz = (questions: QuizQuestion[]): void => {
+
+  formWordsQuiz.value = questions.reduce(
+    (
+      acc: FormQuizState,
+      currentValue: QuizQuestion,
+      index: number,
+    ) => {
+      acc[index + 1] = {
+        questionId: currentValue.id,
+        selectedOption: null,
+        correctAnswer: currentValue.correctAnswer,
+      };
+      return acc;
+    },
+    {},
+  );
+};
+
+const initializeExpressionsFormQuiz = (questions: QuizQuestion[]): void => {
+
+  formExpressionsQuiz.value = questions.reduce(
+    (
+      acc: FormQuizState,
+      currentValue: QuizQuestion,
       index: number,
     ) => {
       acc[index + 1] = {
@@ -61,13 +135,10 @@ const getVocabularyFromLesson = async () => {
   const { data } = await useFetch(
     `/api/lessons/${lessonId}/vocabulary`,
   );
-  console.log("getVocabularyFromLesson", data.value);
   if (data.value) {
     wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => word.turkish_words));
     expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => expression.turkish_expressions));
   }
-  console.log("wordsForQuiz", wordsForQuiz.value);
-  console.log("expressionsForQuiz", expressionsForQuiz.value);
   isLoadingFetchingLessonVocabulary.value = false;
 };
 
@@ -77,9 +148,7 @@ const getAdditionnalWordsForQuiz = async () => {
   });
   if (data) {
     wordsForQuiz.value.push(...(data.map((word: any) => word.turkish_words)));
-    console.log("wordsQuiz", data);
   }
-  console.log("wordsForQuiz", wordsForQuiz.value);
   isLoading.value = false;
 };
 
@@ -91,11 +160,11 @@ const getAdditionnalExpressionsForQuiz = async () => {
   if (data && (data as any).data) {
     expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => expression.turkish_expressions)));
     isLoading.value = false;
-    console.log("expressionsForQuiz 2", expressionsForQuiz.value);
+    console.log("expressionsForQuiz", expressionsForQuiz.value);
    }
 }
 
-const getQuizData = async () => {
+const getGrammarQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
       return quizQuestions.map((question) => parseQuizQuestion(question));
@@ -104,27 +173,115 @@ const getQuizData = async () => {
   console.log("questions", data.value);
   if (data.value) {
     grammarQuiz.value = data.value;
-    initializeFormQuiz(data.value);
+    initializeGrammarFormQuiz(data.value);
   }
   console.log("grammarQuiz", grammarQuiz.value);
   console.log("formGrammarQuiz", formGrammarQuiz.value);
   isLoading.value = false;
 };
 
+
+const getGeneratedVocabularyQuiz = async () => {
+  const data  = await $fetch(`/api/generation/vocabulary-quiz/gpt/`, 
+    {
+      method: "POST",
+      body: {
+        message: promptGeneratedVocabularyQuiz(wordsForQuiz.value, expressionsForQuiz.value)
+      }
+    }
+  );
+  console.log("data", data);
+  if (data) {
+    console.log("generatedVocabularyQuiz", data);
+    
+    // Parse the JSON string into an objectn    
+    const parsedData = JSON.parse(data);
+    console.log("parsedData", parsedData);
+    const wordsArray = [];
+    if (parsedData.words) {
+      for (let i = 1; i <= 20; i++) {
+        const questionKey = `question${i}`;
+        if (parsedData.words[questionKey]) {
+          wordsArray.push({
+            id: i, // Generate ID based on question number
+            type: 1, 
+            question: parsedData.words[questionKey].question,
+            translation: parsedData.words[questionKey].translation,
+            correctAnswer: parsedData.words[questionKey].correctAnswer,
+            option1: parsedData.words[questionKey].option1,
+            option2: parsedData.words[questionKey].option2,
+            option3: parsedData.words[questionKey].option3,
+            option4: parsedData.words[questionKey].option4
+          });
+        }
+      }
+    }
+    console.log("wordsArray", wordsArray);
+    wordsQuiz.value = wordsArray;
+    console.log("wordsQuiz", wordsQuiz.value);
+    initializeWordsFormQuiz(wordsQuiz.value);
+    console.log("formWordsQuiz", formWordsQuiz.value);
+    
+    // Parse the expressions object into an array
+    const expressionsArray = [];
+    if (parsedData.expressions) {
+      for (let i = 1; i <= 5; i++) {
+        const questionKey = `question${i}`;
+        if (parsedData.expressions[questionKey]) {
+          expressionsArray.push({
+            id: i,
+            type: 1,
+            question: parsedData.expressions[questionKey].question,
+            translation: parsedData.expressions[questionKey].translation,
+            correctAnswer: parsedData.expressions[questionKey].correctAnswer,
+            option1: parsedData.expressions[questionKey].option1,
+            option2: parsedData.expressions[questionKey].option2,
+            option3: parsedData.expressions[questionKey].option3,
+            option4: parsedData.expressions[questionKey].option4
+          });
+        }
+      }
+    }
+    expressionsQuiz.value = expressionsArray;
+    initializeExpressionsFormQuiz(expressionsQuiz.value);
+    console.log("expressionsQuiz", expressionsQuiz.value);
+    console.log("formExpressionsQuiz", formExpressionsQuiz.value);
+  }
+};
+
 const currentQuestion = computed(() => {
+  // Determine which section we're in based on current question index  
+  const grammarLength = grammarQuiz.value?.length || 0;
+  const wordsLength = wordsForQuiz.value?.length || 0;
+  if (currentQuestionIndex.value < grammarLength) {
+     // Grammar sectionn    
   return grammarQuiz.value?.[currentQuestionIndex.value] || null;
+} else if (currentQuestionIndex.value < grammarLength + wordsLength) {
+    // Words section
+    const wordIndex = currentQuestionIndex.value - grammarLength;
+    return wordsQuiz.value?.[wordIndex] || null;
+  } else {
+    // Expressions section
+    const expressionIndex = currentQuestionIndex.value - grammarLength - wordsLength;
+    return expressionsQuiz.value?.[expressionIndex] || null;
+  }
 });
 
 const currentQuestionOptions = computed(() => {
-  return [grammarQuiz.value?.[currentQuestionIndex.value].option1, grammarQuiz.value?.[currentQuestionIndex.value].option2, grammarQuiz.value?.[currentQuestionIndex.value].option3, grammarQuiz.value?.[currentQuestionIndex.value].option4];
+  const question = currentQuestion.value;
+  if (!question) return [];
+  return [question.option1, question.option2, question.option3, question.option4];
 });
 
 const totalQuestions = computed(() => {
-  return grammarQuiz.value?.length || 0;
+  return (grammarQuiz.value?.length || 0) + 
+         (wordsForQuiz.value?.length || 0) + 
+         (expressionsForQuiz.value?.length || 0);
 });
 
 // Determine current section and progress
 const currentSection = computed(() => {
+  console.log('currentSection: isGrammar, isVocabulary', isGrammarQuiz.value, isWordsQuiz.value, isExpressionsQuiz.value);
   if (isGrammarQuiz.value) {
     return {
       name: 'Grammar',
@@ -135,17 +292,18 @@ const currentSection = computed(() => {
     // For vocabulary quizzes, determine if we're in words or expressions
     const wordsCount = wordsForQuiz.value.length;
     const expressionsCount = expressionsForQuiz.value.length;
+    const grammarCount = grammarQuiz.value?.length || 0;
     
-    if (currentQuestionIndex.value < wordsCount) {
+    if (currentQuestionIndex.value < (grammarQuiz.value?.length || 0) + wordsCount) {
       return {
         name: 'Words',
-        current: currentQuestionIndex.value + 1,
+        current: currentQuestionIndex.value - grammarCount + 1,
         total: wordsCount
       };
     } else {
       return {
         name: 'Expressions',
-        current: currentQuestionIndex.value - wordsCount + 1,
+        current: currentQuestionIndex.value - wordsCount - grammarCount + 1,
         total: expressionsCount
       };
     }
@@ -159,23 +317,16 @@ const isLastQuestion = computed(() => {
   return currentQuestionIndex.value >= totalQuestions.value - 1;
 });
 
-// Determine if we're at the end of grammar section (for vocabulary quizzes)
-const isEndOfGrammarSection = computed(() => {
-  if (isGrammarQuiz.value) {
-    return currentQuestionIndex.value >= TOTAL_GRAMMAR_QUESTIONS - 1;
-  }
-  return false;
-});
 
 const goToNextQuestion = () => {
   if (selectedAnswer.value) {
-    // Store the answer
+    // Store the answer in the correct form based on current sectionn    
+    const optionIndex = currentQuestionOptions.value.findIndex(option => option === selectedAnswer.value);
+    const selectedOptionNumber = optionIndex + 1;
+
     if (formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
-      // Convert option string to option number (1-4 based on current options)
-      const optionIndex = currentQuestionOptions.value.findIndex(option => option === selectedAnswer.value);
-      formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = optionIndex + 1;
+      formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = selectedOptionNumber;
     }
-    
     if (currentQuestionIndex.value < totalQuestions.value - 1) {
       currentQuestionIndex.value++;
       selectedAnswer.value = null;
@@ -192,14 +343,20 @@ const selectAnswer = (option: string) => {
 
 // Determine quiz type based on quiz data structure
 const isGrammarQuiz = computed(() => {
-  // If quiz has grammar rule data, it's a grammar quiz
-  return grammarQuiz.value?.[0]?.grammarRuleId != null;
+  return currentQuestionIndex.value < (grammarQuiz.value?.length || 0);
+});
+
+const isWordsQuiz = computed(() => {
+  return currentQuestionIndex.value >= (grammarQuiz.value?.length || 0) && currentQuestionIndex.value < (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0);
+});
+const isExpressionsQuiz = computed(() => {
+  return currentQuestionIndex.value >= (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) && currentQuestionIndex.value < (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) + (expressionsForQuiz.value?.length || 0);
 });
 
 const isVocabularyQuiz = computed(() => {
   // For now, assume vocabulary quiz if not grammar
   // This can be enhanced based on my actual data structure
-  return !isGrammarQuiz.value;
+  return isWordsQuiz.value || isExpressionsQuiz.value;
 });
 
 // Dynamic progress tracking for separate quiz types
@@ -208,19 +365,10 @@ const grammarProgress = computed(() => {
   const totalGrammarQuestions = 5; // Display 5 squares for grammar
   
   for (let i = 0; i < totalGrammarQuestions; i++) {
-    if (isGrammarQuiz.value) {
-      // Show progress only if this is a grammar quiz
       progress.push({
         completed: i < currentQuestionIndex.value,
         current: i === currentQuestionIndex.value,
       });
-    } else {
-      // If this is vocabulary quiz, grammar section remains untouched (all gray)
-      progress.push({
-        completed: false,
-        current: false,
-      });
-    }
   }
   return progress;
 });
@@ -230,13 +378,9 @@ const wordsProgress = computed(() => {
   
   for (let i = 0; i < wordsForQuiz.value.length; i++) {
     if (isVocabularyQuiz.value) {
-      // Show progress only if this is a vocabulary quiz
-      const questionsPerSquare = Math.max(1, Math.floor(totalQuestions.value / TOTAL_VOCABULARY_QUESTIONS));
-      const questionIndex = i * questionsPerSquare;
       progress.push({
-        completed: questionIndex < currentQuestionIndex.value,
-        current: questionIndex === currentQuestionIndex.value || 
-                 (i === Math.floor(currentQuestionIndex.value / questionsPerSquare) && questionIndex <= currentQuestionIndex.value),
+        completed: i + (grammarQuiz.value?.length || 0) < currentQuestionIndex.value,
+        current: i + (grammarQuiz.value?.length || 0) === currentQuestionIndex.value, 
       });
     } else {
       // If this is grammar quiz, words section remains untouched (all gray)
@@ -253,18 +397,13 @@ const expressionsProgress = computed(() => {
   const progress = [];
   
   for (let i = 0; i < expressionsForQuiz.value.length; i++) {
-    if (isVocabularyQuiz.value) {
-      // Show progress only if this is a vocabulary quiz
-      // Expressions come after words in the quiz sequence
-      const questionsPerSquare = Math.max(1, Math.floor(totalQuestions.value / TOTAL_VOCABULARY_QUESTIONS));
-      const questionIndex = (TOTAL_WORDS_QUESTIONS + i) * questionsPerSquare;
+    if (isExpressionsQuiz.value) {
       progress.push({
-        completed: questionIndex < currentQuestionIndex.value,
-        current: questionIndex === currentQuestionIndex.value || 
-                 (i === Math.floor((currentQuestionIndex.value - TOTAL_WORDS_QUESTIONS) / questionsPerSquare) && questionIndex <= currentQuestionIndex.value),
+        completed: i + (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) < currentQuestionIndex.value,
+        current: i + (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) === currentQuestionIndex.value, 
       });
     } else {
-      // If this is grammar quiz, expressions section remains untouched (all gray)
+      // If this is grammar quiz or word quiz, expressions section remains untouched (all gray)
       progress.push({
         completed: false,
         current: false,
@@ -274,10 +413,12 @@ const expressionsProgress = computed(() => {
   return progress;
 });
 
-await getQuizData();
+await getGrammarQuizData();
 await getVocabularyFromLesson();
 await getAdditionnalWordsForQuiz();
 await getAdditionnalExpressionsForQuiz();
+await getGeneratedVocabularyQuiz();
+
 // Page title
 useHead({
   title: `Quiz ${quizId} - Lesson ${lessonId}`,
@@ -296,14 +437,13 @@ useHead({
           <span class="quiz-total">/ {{ currentSection.total }}</span>
         </div>
       </div>
-
       <div v-if="currentQuestion && !isLoading" class="quiz-content">
         <!-- Question -->
         <div class="question-section">
           <h2 class="question-text">{{ currentQuestion.question }}</h2>
         </div>
 
-        <!-- Answer Options -->{{ currentQuestion.options }}
+        <!-- Answer Options -->
         <div class="options-section">
           <div class="options-grid">
             <button
