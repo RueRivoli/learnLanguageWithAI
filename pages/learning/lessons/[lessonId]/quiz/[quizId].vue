@@ -9,6 +9,8 @@ import type { Word, WordContent } from "~/types/word";
 import type { QuizQuestion } from "~/utils/learning/lesson-quiz";
 import { parseQuizQuestion } from "~/utils/learning/quiz";
 import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
+import { LayoutKeyElementRule } from "#components";
+import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 
 definePageMeta({
   layout: "quiz",
@@ -67,7 +69,7 @@ const wordsQuiz = ref<QuizQuestion[] | null>(null);
 const formWordsQuiz = ref<FormQuizState>({});
 const expressionsQuiz = ref<QuizQuestion[] | null>(null);
 const formExpressionsQuiz = ref<FormQuizState>({});
-
+const grammarRuleMetaData = ref<{level: 'beginner' | 'intermediate' | 'advanced' | 'expert', name: string} | null>(null);
 
 const currentQuestionIndex = ref<number>(0);
 const selectedAnswer = ref<string | null>(null);
@@ -136,6 +138,10 @@ const getVocabularyFromLesson = async () => {
     `/api/lessons/${lessonId}/vocabulary`,
   );
   if (data.value) {
+    grammarRuleMetaData.value = {
+      level: DIFFICULTY_LEVELS[data.value.turkish_grammar_rules.difficulty_class],
+      name: data.value.turkish_grammar_rules.rule_name_translation,
+    }
     wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => word.turkish_words));
     expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => expression.turkish_expressions));
   }
@@ -417,7 +423,7 @@ await getGrammarQuizData();
 await getVocabularyFromLesson();
 await getAdditionnalWordsForQuiz();
 await getAdditionnalExpressionsForQuiz();
-await getGeneratedVocabularyQuiz();
+// await getGeneratedVocabularyQuiz();
 
 // Page title
 useHead({
@@ -494,7 +500,11 @@ useHead({
       </div>
 
       <div class="progress-section">
-        <h4 class="progress-title">Grammar</h4>
+        <div class="flex items-center justify-between">
+          <h4 class="progress-title">Grammar</h4>
+          <LayoutKeyElementRule class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
+        </div>
+    
         <div class="progress-grid grammar-grid">
           <div
             v-for="(item, index) in grammarProgress"
