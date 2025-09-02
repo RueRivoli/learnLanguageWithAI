@@ -380,6 +380,43 @@ const goToQuestion = (questionIndex: number) => {
   }
 };
 
+// Navigation function for review mode
+const goToNextQuestionInReview = () => {
+  if (isQuizCompleted.value && currentQuestionIndex.value < totalQuestions.value - 1) {
+    currentQuestionIndex.value++;
+    
+    // Set the selected answer to show which option the user chose
+    const userAnswer = getUserAnswer(currentQuestionIndex.value);
+    if (userAnswer !== null) {
+      const question = currentQuestion.value;
+      if (question) {
+        const options = [question.option1, question.option2, question.option3, question.option4];
+        selectedAnswer.value = options[userAnswer - 1] || null;
+      }
+    } else {
+      selectedAnswer.value = null;
+    }
+  }
+};
+
+const goToPreviousQuestionInReview = () => {
+  if (isQuizCompleted.value && currentQuestionIndex.value > 0) {
+    currentQuestionIndex.value--;
+    
+    // Set the selected answer to show which option the user chose
+    const userAnswer = getUserAnswer(currentQuestionIndex.value);
+    if (userAnswer !== null) {
+      const question = currentQuestion.value;
+      if (question) {
+        const options = [question.option1, question.option2, question.option3, question.option4];
+        selectedAnswer.value = options[userAnswer - 1] || null;
+      }
+    } else {
+      selectedAnswer.value = null;
+    }
+  }
+};
+
 // Calculate scores for each section
 const grammarScore = computed(() => {
   if (!grammarQuiz.value || !formGrammarQuiz.value) return 0;
@@ -603,14 +640,6 @@ useHead({
     <!-- Main Quiz Section -->
     <div class="quiz-main">
       <div class="quiz-header">
-        <div class="quiz-progress-indicator">
-          <span class="quiz-section-name">{{ currentSection.name }}</span>
-          <span class="quiz-counter">{{ currentSection.current }}</span>
-          <span class="quiz-total">/ {{ currentSection.total }}</span>
-        </div>
-      </div>
-      <div v-if="currentQuestion && !isLoading" class="quiz-content">
-        <!-- Back to lessons button -->
         <div v-if="isQuizCompleted" class="back-button-container">
           <button @click="$router.push(`/learning/lessons/${lessonId}`)" class="back-button">
             <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -619,6 +648,15 @@ useHead({
             Go back to lessons
           </button>
         </div>
+        <div class="quiz-progress-indicator">
+          <span class="quiz-section-name">{{ currentSection.name }}</span>
+          <span class="quiz-counter">{{ currentSection.current }}</span>
+          <span class="quiz-total">/ {{ currentSection.total }}</span>
+        </div>
+      </div>
+      <div v-if="currentQuestion && !isLoading" class="quiz-content">
+        <!-- Back to lessons button -->
+
         
         <!-- Question -->
         <div class="question-section">
@@ -646,19 +684,37 @@ useHead({
           </div>
         </div>
 
-        <!-- Next Button -->
-        <div class="next-section">
+        <!-- Navigation Buttons -->
+        <div class="navigation-section">
+          <!-- Previous Button (only in review mode) -->
           <button
-            @click="goToNextQuestion"
-            :disabled="!selectedAnswer && !isQuizCompleted"
+            v-if="isQuizCompleted"
+            @click="goToPreviousQuestionInReview()"
+            :disabled="currentQuestionIndex <= 0"
             :class="[
-              'next-button',
-              !selectedAnswer && !isQuizCompleted ? 'disabled' : ''
+              'nav-button prev-button',
+              currentQuestionIndex <= 0 ? 'disabled' : ''
             ]"
           >
-            <span v-if="isLastQuestion">Finish Quiz</span>
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Previous</span>
+          </button>
+
+          <!-- Next Button -->
+          <button
+            @click="isQuizCompleted ? goToNextQuestionInReview() : goToNextQuestion()"
+            :disabled="!isQuizCompleted && !selectedAnswer"
+            :class="[
+              'nav-button next-button',
+              !isQuizCompleted && !selectedAnswer ? 'disabled' : ''
+            ]"
+          >
+            <span v-if="!isQuizCompleted && isLastQuestion">Finish Quiz</span>
+            <span v-else-if="isQuizCompleted && currentQuestionIndex >= totalQuestions - 1">Last Question</span>
             <span v-else>Next Question</span>
-            <svg class="next-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -983,12 +1039,15 @@ useHead({
   flex: 1;
 }
 
-/* Next Button */
-.next-section {
-  text-align: center;
+/* Navigation Buttons */
+.navigation-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
-.next-button {
+.nav-button {
   display: inline-flex;
   align-items: center;
   padding: 0.875rem 2rem;
@@ -1003,22 +1062,39 @@ useHead({
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
-.next-button:hover:not(.disabled) {
+.nav-button:hover:not(.disabled) {
   background: #4338ca;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
 }
 
-.next-button.disabled {
+.nav-button.disabled {
   background: #9ca3af;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-.next-icon {
+.prev-button {
+  background: #6b7280;
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+.prev-button:hover:not(.disabled) {
+  background: #4b5563;
+  box-shadow: 0 6px 16px rgba(107, 114, 128, 0.4);
+}
+
+.nav-icon {
   width: 1.25rem;
   height: 1.25rem;
+}
+
+.next-button .nav-icon {
   margin-left: 0.5rem;
+}
+
+.prev-button .nav-icon {
+  margin-right: 0.5rem;
 }
 
 /* Loading Section */
