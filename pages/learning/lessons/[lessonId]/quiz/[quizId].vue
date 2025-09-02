@@ -74,6 +74,8 @@ const grammarRuleMetaData = ref<{level: 'beginner' | 'intermediate' | 'advanced'
 
 const currentQuestionIndex = ref<number>(0);
 const selectedAnswer = ref<string | null>(null);
+const isQuizCompleted = ref<boolean>(false);
+const viewingCompletedQuestion = ref<boolean>(false);
 
 
 const initializeGrammarFormQuiz = (questions: QuizFormattedQuestion[]): void => {
@@ -330,25 +332,160 @@ const isLastQuestion = computed(() => {
 
 const goToNextQuestion = () => {
   if (selectedAnswer.value) {
-    // Store the answer in the correct form based on current sectionn    
+    // Store the answer in the correct form based on current section
     const optionIndex = currentQuestionOptions.value.findIndex(option => option === selectedAnswer.value);
     const selectedOptionNumber = optionIndex + 1;
 
-    if (formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
+    // Store answer in the appropriate form based on current section
+    if (isGrammarQuiz.value && formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
       formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = selectedOptionNumber;
+    } else if (isWordsQuiz.value && formWordsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) + 1]) {
+      formWordsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) + 1].selectedOption = selectedOptionNumber;
+    } else if (isExpressionsQuiz.value && formExpressionsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) - (wordsForQuiz.value?.length || 0) + 1]) {
+      formExpressionsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) - (wordsForQuiz.value?.length || 0) + 1].selectedOption = selectedOptionNumber;
     }
+
     if (currentQuestionIndex.value < totalQuestions.value - 1) {
       currentQuestionIndex.value++;
       selectedAnswer.value = null;
     } else {
       // Quiz finished - handle completion
-      console.log("Quiz completed!", formGrammarQuiz.value);
+      isQuizCompleted.value = true;
+      console.log("Quiz completed!", { formGrammarQuiz: formGrammarQuiz.value, formWordsQuiz: formWordsQuiz.value, formExpressionsQuiz: formExpressionsQuiz.value });
     }
   }
 };
 
 const selectAnswer = (option: string) => {
   selectedAnswer.value = option;
+};
+
+// Navigation function to go to specific question
+const goToQuestion = (questionIndex: number) => {
+  if (isQuizCompleted.value) {
+    currentQuestionIndex.value = questionIndex;
+    viewingCompletedQuestion.value = true;
+    
+    // Set the selected answer to show which option the user chose
+    const userAnswer = getUserAnswer(questionIndex);
+    if (userAnswer !== null) {
+      const question = currentQuestion.value;
+      if (question) {
+        const options = [question.option1, question.option2, question.option3, question.option4];
+        selectedAnswer.value = options[userAnswer - 1] || null;
+      }
+    } else {
+      selectedAnswer.value = null;
+    }
+  }
+};
+
+// Calculate scores for each section
+const grammarScore = computed(() => {
+  if (!grammarQuiz.value || !formGrammarQuiz.value) return 0;
+  let correct = 0;
+  let total = 0;
+  
+  Object.values(formGrammarQuiz.value).forEach((answer, index) => {
+    if (answer.selectedOption !== null) {
+      total++;
+      if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+        correct++;
+      }
+    }
+  });
+  
+  return total > 0 ? Math.round((correct / total) * 100) : 0;
+});
+
+const wordsScore = computed(() => {
+  if (!wordsQuiz.value || !formWordsQuiz.value) return 0;
+  let correct = 0;
+  let total = 0;
+  
+  Object.values(formWordsQuiz.value).forEach((answer) => {
+    if (answer.selectedOption !== null) {
+      total++;
+      if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+        correct++;
+      }
+    }
+  });
+  
+  return total > 0 ? Math.round((correct / total) * 100) : 0;
+});
+
+const expressionsScore = computed(() => {
+  if (!expressionsQuiz.value || !formExpressionsQuiz.value) return 0;
+  let correct = 0;
+  let total = 0;
+  
+  Object.values(formExpressionsQuiz.value).forEach((answer) => {
+    if (answer.selectedOption !== null) {
+      total++;
+      if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+        correct++;
+      }
+    }
+  });
+  
+  return total > 0 ? Math.round((correct / total) * 100) : 0;
+});
+
+const globalScore = computed(() => {
+  const grammarTotal = Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null).length;
+  const wordsTotal = Object.values(formWordsQuiz.value).filter(a => a.selectedOption !== null).length;
+  const expressionsTotal = Object.values(formExpressionsQuiz.value).filter(a => a.selectedOption !== null).length;
+  
+  const totalQuestions = grammarTotal + wordsTotal + expressionsTotal;
+  if (totalQuestions === 0) return 0;
+  
+  const totalCorrect = 
+    Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null && Number(a.selectedOption) === Number(a.correctAnswer)).length +
+    Object.values(formWordsQuiz.value).filter(a => a.selectedOption !== null && Number(a.selectedOption) === Number(a.correctAnswer)).length +
+    Object.values(formExpressionsQuiz.value).filter(a => a.selectedOption !== null && Number(a.selectedOption) === Number(a.correctAnswer)).length;
+  
+  return Math.round((totalCorrect / totalQuestions) * 100);
+});
+
+// Check if a specific question was answered correctly
+const isQuestionCorrect = (questionIndex: number) => {
+  const grammarLength = grammarQuiz.value?.length || 0;
+  const wordsLength = wordsForQuiz.value?.length || 0;
+  
+  if (questionIndex < grammarLength) {
+    const formIndex = questionIndex + 1;
+    const answer = formGrammarQuiz.value[formIndex];
+    return answer && answer.selectedOption !== null && Number(answer.selectedOption) === Number(answer.correctAnswer);
+  } else if (questionIndex < grammarLength + wordsLength) {
+    const formIndex = questionIndex - grammarLength + 1;
+    const answer = formWordsQuiz.value[formIndex];
+    return answer && answer.selectedOption !== null && Number(answer.selectedOption) === Number(answer.correctAnswer);
+  } else {
+    const formIndex = questionIndex - grammarLength - wordsLength + 1;
+    const answer = formExpressionsQuiz.value[formIndex];
+    return answer && answer.selectedOption !== null && Number(answer.selectedOption) === Number(answer.correctAnswer);
+  }
+};
+
+// Get user's selected answer for a question
+const getUserAnswer = (questionIndex: number) => {
+  const grammarLength = grammarQuiz.value?.length || 0;
+  const wordsLength = wordsForQuiz.value?.length || 0;
+  
+  if (questionIndex < grammarLength) {
+    const formIndex = questionIndex + 1;
+    const answer = formGrammarQuiz.value[formIndex];
+    return answer?.selectedOption || null;
+  } else if (questionIndex < grammarLength + wordsLength) {
+    const formIndex = questionIndex - grammarLength + 1;
+    const answer = formWordsQuiz.value[formIndex];
+    return answer?.selectedOption || null;
+  } else {
+    const formIndex = questionIndex - grammarLength - wordsLength + 1;
+    const answer = formExpressionsQuiz.value[formIndex];
+    return answer?.selectedOption || null;
+  }
 };
 
 // Determine quiz type based on quiz data structure
@@ -375,9 +512,12 @@ const grammarProgress = computed(() => {
   const totalGrammarQuestions = 5; // Display 5 squares for grammar
   
   for (let i = 0; i < totalGrammarQuestions; i++) {
+      const hasAnswer = formGrammarQuiz.value[i + 1] && formGrammarQuiz.value[i + 1].selectedOption !== null;
       progress.push({
         completed: i < currentQuestionIndex.value,
-        current: i === currentQuestionIndex.value,
+        current: !isQuizCompleted.value && i === currentQuestionIndex.value,
+        correct: isQuizCompleted.value && hasAnswer ? isQuestionCorrect(i) : null,
+        questionIndex: i
       });
   }
   return progress;
@@ -387,16 +527,22 @@ const wordsProgress = computed(() => {
   const progress = [];
   
   for (let i = 0; i < wordsForQuiz.value.length; i++) {
+    const questionIndex = i + (grammarQuiz.value?.length || 0);
     if (isVocabularyQuiz.value) {
+      const hasAnswer = formWordsQuiz.value[i + 1] && formWordsQuiz.value[i + 1].selectedOption !== null;
       progress.push({
-        completed: i + (grammarQuiz.value?.length || 0) < currentQuestionIndex.value,
-        current: i + (grammarQuiz.value?.length || 0) === currentQuestionIndex.value, 
+        completed: questionIndex < currentQuestionIndex.value,
+        current: !isQuizCompleted.value && questionIndex === currentQuestionIndex.value,
+        correct: isQuizCompleted.value && hasAnswer ? isQuestionCorrect(questionIndex) : null,
+        questionIndex: questionIndex
       });
     } else {
       // If this is grammar quiz, words section remains untouched (all gray)
       progress.push({
         completed: false,
         current: false,
+        correct: null,
+        questionIndex: questionIndex
       });
     }
   }
@@ -407,16 +553,22 @@ const expressionsProgress = computed(() => {
   const progress = [];
   
   for (let i = 0; i < expressionsForQuiz.value.length; i++) {
+    const questionIndex = i + (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0);
     if (isExpressionsQuiz.value) {
+      const hasAnswer = formExpressionsQuiz.value[i + 1] && formExpressionsQuiz.value[i + 1].selectedOption !== null;
       progress.push({
-        completed: i + (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) < currentQuestionIndex.value,
-        current: i + (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) === currentQuestionIndex.value, 
+        completed: questionIndex < currentQuestionIndex.value,
+        current: !isQuizCompleted.value && questionIndex === currentQuestionIndex.value,
+        correct: isQuizCompleted.value && hasAnswer ? isQuestionCorrect(questionIndex) : null,
+        questionIndex: questionIndex
       });
     } else {
       // If this is grammar quiz or word quiz, expressions section remains untouched (all gray)
       progress.push({
         completed: false,
         current: false,
+        correct: null,
+        questionIndex: questionIndex
       });
     }
   }
@@ -448,6 +600,16 @@ useHead({
         </div>
       </div>
       <div v-if="currentQuestion && !isLoading" class="quiz-content">
+        <!-- Back to lessons button -->
+        <div v-if="isQuizCompleted" class="back-button-container">
+          <button @click="$router.push(`/learning/lessons/${lessonId}`)" class="back-button">
+            <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Go back to lessons
+          </button>
+        </div>
+        
         <!-- Question -->
         <div class="question-section">
           <h2 class="question-text">{{ currentQuestion.question }}</h2>
@@ -459,10 +621,13 @@ useHead({
             <button
               v-for="(option, index) in currentQuestionOptions"
               :key="index"
-              @click="selectAnswer(option)"
+              @click="!isQuizCompleted ? selectAnswer(option) : null"
               :class="[
                 'option-button',
-                selectedAnswer === option ? 'selected' : ''
+                selectedAnswer === option ? 'selected' : '',
+                isQuizCompleted ? 'completed-quiz' : '',
+                isQuizCompleted && index + 1 === Number(currentQuestion.correctAnswer) ? 'correct-answer' : '',
+                isQuizCompleted && index + 1 === getUserAnswer(currentQuestionIndex) && index + 1 !== Number(currentQuestion.correctAnswer) ? 'incorrect-answer' : ''
               ]"
             >
               <span class="option-letter">{{ String.fromCharCode(65 + index) }}</span>
@@ -508,15 +673,25 @@ useHead({
           <h4 class="progress-title">Grammar</h4>
           <LayoutKeyElementRule class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
         </div>
+        
+        <!-- Grammar Score -->
+        <div v-if="isQuizCompleted" class="score-display">
+          <span class="score-label">Score:</span>
+          <span class="score-value">{{ grammarScore }}%</span>
+        </div>
     
         <div class="progress-grid grammar-grid">
           <div
             v-for="(item, index) in grammarProgress"
             :key="index"
+            @click="isQuizCompleted ? goToQuestion(item.questionIndex) : null"
             :class="[
               'progress-square',
               item.completed ? 'completed' : '',
-              item.current ? 'current' : ''
+              item.current ? 'current' : '',
+              isQuizCompleted && item.correct === true ? 'correct' : '',
+              isQuizCompleted && item.correct === false ? 'incorrect' : '',
+              isQuizCompleted ? 'clickable' : ''
             ]"
           >
             {{ index + 1 }}
@@ -529,15 +704,26 @@ useHead({
         
         <!-- Words Subsection -->
         <div class="progress-subsection">
-          <h5 class="progress-subtitle">Words</h5>
+          <div class="flex items-center justify-between">
+            <h5 class="progress-subtitle">Words</h5>
+            <!-- Words Score -->
+            <div v-if="isQuizCompleted" class="score-display small">
+              <span class="score-label">Score:</span>
+              <span class="score-value">{{ wordsScore }}%</span>
+            </div>
+          </div>
           <div class="progress-grid words-grid">
             <div
               v-for="(item, index) in wordsProgress"
               :key="index"
+              @click="isQuizCompleted ? goToQuestion(item.questionIndex) : null"
               :class="[
                 'progress-square',
                 item.completed ? 'completed' : '',
-                item.current ? 'current' : ''
+                item.current ? 'current' : '',
+                isQuizCompleted && item.correct === true ? 'correct' : '',
+                isQuizCompleted && item.correct === false ? 'incorrect' : '',
+                isQuizCompleted ? 'clickable' : ''
               ]"
             >
               {{ index + 1 }}
@@ -547,20 +733,39 @@ useHead({
 
         <!-- Expressions Subsection -->
         <div class="progress-subsection">
-          <h5 class="progress-subtitle">Expressions</h5>
+          <div class="flex items-center justify-between">
+            <h5 class="progress-subtitle">Expressions</h5>
+            <!-- Expressions Score -->
+            <div v-if="isQuizCompleted" class="score-display small">
+              <span class="score-label">Score:</span>
+              <span class="score-value">{{ expressionsScore }}%</span>
+            </div>
+          </div>
           <div class="progress-grid expressions-grid">
             <div
               v-for="(item, index) in expressionsProgress"
               :key="index"
+              @click="isQuizCompleted ? goToQuestion(item.questionIndex) : null"
               :class="[
                 'progress-square',
                 item.completed ? 'completed' : '',
-                item.current ? 'current' : ''
+                item.current ? 'current' : '',
+                isQuizCompleted && item.correct === true ? 'correct' : '',
+                isQuizCompleted && item.correct === false ? 'incorrect' : '',
+                isQuizCompleted ? 'clickable' : ''
               ]"
             >
               {{ index + 1 }}
             </div>
           </div>
+        </div>
+      </div>
+      
+      <!-- Global Score -->
+      <div v-if="isQuizCompleted" class="global-score-section">
+        <div class="global-score-card">
+          <h4 class="global-score-title">Overall Score</h4>
+          <div class="global-score-value">{{ globalScore }}%</div>
         </div>
       </div>
     </div>
@@ -592,6 +797,37 @@ useHead({
   width: 100%;
   margin-bottom: 2rem;
   text-align: center;
+  position: relative;
+}
+
+.back-button-container {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.back-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
 }
 
 .quiz-progress-indicator {
@@ -699,6 +935,32 @@ useHead({
 }
 
 .option-button.selected .option-letter {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.option-button.completed-quiz {
+  cursor: default;
+}
+
+.option-button.correct-answer {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.option-button.correct-answer .option-letter {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.option-button.incorrect-answer {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+.option-button.incorrect-answer .option-letter {
   background: rgba(255, 255, 255, 0.2);
   color: white;
 }
@@ -859,7 +1121,7 @@ useHead({
 
 
 
-.progress-square.completed {
+.progress-square.completed:not(.correct):not(.incorrect) {
   background: #10b981;
   color: white;
   border-color: #10b981;
@@ -872,6 +1134,97 @@ useHead({
   border-color: #4f46e5;
   box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
   transform: scale(1.05);
+}
+
+.progress-square.correct {
+  background: #10b981 !important;
+  color: white !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+.progress-square.incorrect {
+  background: #ef4444 !important;
+  color: white !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3) !important;
+}
+
+.progress-square.clickable {
+  cursor: pointer;
+}
+
+.progress-square.clickable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Score Display Styles */
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.score-display.small {
+  font-size: 0.875rem;
+  padding: 0.375rem 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.score-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.score-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.score-display.small .score-label {
+  font-size: 0.75rem;
+}
+
+.score-display.small .score-value {
+  font-size: 0.875rem;
+}
+
+/* Global Score Styles */
+.global-score-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.global-score-card {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.global-score-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  opacity: 0.9;
+}
+
+.global-score-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design */
