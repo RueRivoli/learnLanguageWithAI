@@ -961,28 +961,67 @@ useHead({
   align-items: center;
   justify-content: flex-start;
   padding: 1.25rem 1.5rem;
-  background: white;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
   width: 100%;
   min-height: 100px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.option-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .option-button:hover {
   border-color: #d1d5db;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.option-button:hover::before {
+  opacity: 1;
 }
 
 .option-button.selected {
   border-color: #4f46e5;
-  background: #4f46e5;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  box-shadow: 
+    0 10px 25px -3px rgba(79, 70, 229, 0.4),
+    0 4px 6px -2px rgba(79, 70, 229, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.option-button.selected::before {
+  opacity: 1;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
 }
 
 .option-letter {
@@ -1010,9 +1049,20 @@ useHead({
 }
 
 .option-button.correct-answer {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
   border-color: #10b981;
   color: white;
+  box-shadow: 
+    0 10px 25px -3px rgba(16, 185, 129, 0.4),
+    0 4px 6px -2px rgba(16, 185, 129, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.option-button.correct-answer::before {
+  opacity: 1;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
 }
 
 .option-button.correct-answer .option-letter {
@@ -1021,9 +1071,20 @@ useHead({
 }
 
 .option-button.incorrect-answer {
-  background: #ef4444;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
   border-color: #ef4444;
   color: white;
+  box-shadow: 
+    0 10px 25px -3px rgba(239, 68, 68, 0.4),
+    0 4px 6px -2px rgba(239, 68, 68, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.option-button.incorrect-answer::before {
+  opacity: 1;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
 }
 
 .option-button.incorrect-answer .option-letter {
@@ -1199,41 +1260,97 @@ useHead({
   font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: #f9fafb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
   color: #6b7280;
   border: 1px solid #e5e7eb;
+  box-shadow: 
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-square::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 
 
 .progress-square.completed:not(.correct):not(.incorrect) {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
   color: white;
   border-color: #10b981;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  box-shadow: 
+    0 4px 8px -2px rgba(16, 185, 129, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.progress-square.completed:not(.correct):not(.incorrect)::before {
+  opacity: 1;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
 }
 
 .progress-square.current {
-  background: #4f46e5;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
   color: white;
   border-color: #4f46e5;
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+  box-shadow: 
+    0 6px 12px -2px rgba(79, 70, 229, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: scale(1.05);
 }
 
+.progress-square.current::before {
+  opacity: 1;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
 .progress-square.correct {
-  background: #10b981 !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%) !important;
   color: white !important;
   border-color: #10b981 !important;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 
+    0 4px 8px -2px rgba(16, 185, 129, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.progress-square.correct::before {
+  opacity: 1 !important;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%) !important;
 }
 
 .progress-square.incorrect {
-  background: #ef4444 !important;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%) !important;
   color: white !important;
   border-color: #ef4444 !important;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3) !important;
+  box-shadow: 
+    0 4px 8px -2px rgba(239, 68, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.progress-square.incorrect::before {
+  opacity: 1 !important;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%) !important;
 }
 
 .progress-square.clickable {
@@ -1242,7 +1359,13 @@ useHead({
 
 .progress-square.clickable:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 
+    0 6px 16px -4px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.progress-square.clickable:hover::before {
+  opacity: 1;
 }
 
 /* Score Display Styles */
@@ -1291,12 +1414,31 @@ useHead({
 }
 
 .global-score-card {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
   color: white;
   padding: 1.5rem;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  box-shadow: 
+    0 10px 25px -3px rgba(79, 70, 229, 0.4),
+    0 4px 6px -2px rgba(79, 70, 229, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.global-score-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  pointer-events: none;
 }
 
 .global-score-title {
@@ -1304,6 +1446,8 @@ useHead({
   font-weight: 600;
   margin: 0 0 0.5rem 0;
   opacity: 0.9;
+  position: relative;
+  z-index: 1;
 }
 
 .global-score-value {
@@ -1311,6 +1455,8 @@ useHead({
   font-weight: 800;
   margin: 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
 /* Responsive Design */
