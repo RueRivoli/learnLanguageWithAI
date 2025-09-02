@@ -514,7 +514,7 @@ const grammarProgress = computed(() => {
   for (let i = 0; i < totalGrammarQuestions; i++) {
       const hasAnswer = formGrammarQuiz.value[i + 1] && formGrammarQuiz.value[i + 1].selectedOption !== null;
       progress.push({
-        completed: i < currentQuestionIndex.value,
+        completed: !isQuizCompleted.value && i < currentQuestionIndex.value,
         current: !isQuizCompleted.value && i === currentQuestionIndex.value,
         correct: isQuizCompleted.value && hasAnswer ? isQuestionCorrect(i) : null,
         questionIndex: i
@@ -531,9 +531,14 @@ const wordsProgress = computed(() => {
     if (isVocabularyQuiz.value) {
       const hasAnswer = formWordsQuiz.value[i + 1] && formWordsQuiz.value[i + 1].selectedOption !== null;
       progress.push({
-        completed: questionIndex < currentQuestionIndex.value,
+        completed: !isQuizCompleted.value && questionIndex < currentQuestionIndex.value,
         current: !isQuizCompleted.value && questionIndex === currentQuestionIndex.value,
         correct: isQuizCompleted.value && hasAnswer ? isQuestionCorrect(questionIndex) : null,
+        questionIndex: questionIndex
+      });
+    } else if (isQuizCompleted) {
+      progress.push({
+        correct: isQuestionCorrect(questionIndex),
         questionIndex: questionIndex
       });
     } else {
@@ -557,9 +562,14 @@ const expressionsProgress = computed(() => {
     if (isExpressionsQuiz.value) {
       const hasAnswer = formExpressionsQuiz.value[i + 1] && formExpressionsQuiz.value[i + 1].selectedOption !== null;
       progress.push({
-        completed: questionIndex < currentQuestionIndex.value,
+        completed: !isQuizCompleted.value && questionIndex < currentQuestionIndex.value,
         current: !isQuizCompleted.value && questionIndex === currentQuestionIndex.value,
         correct: isQuizCompleted.value && hasAnswer ? isQuestionCorrect(questionIndex) : null,
+        questionIndex: questionIndex
+      });
+    } else if (isQuizCompleted) {
+      progress.push({
+        correct: isQuestionCorrect(questionIndex),
         questionIndex: questionIndex
       });
     } else {
@@ -640,10 +650,10 @@ useHead({
         <div class="next-section">
           <button
             @click="goToNextQuestion"
-            :disabled="!selectedAnswer"
+            :disabled="!selectedAnswer && !isQuizCompleted"
             :class="[
               'next-button',
-              !selectedAnswer ? 'disabled' : ''
+              !selectedAnswer && !isQuizCompleted ? 'disabled' : ''
             ]"
           >
             <span v-if="isLastQuestion">Finish Quiz</span>
