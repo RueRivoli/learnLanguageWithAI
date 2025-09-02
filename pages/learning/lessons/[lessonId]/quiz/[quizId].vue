@@ -11,6 +11,7 @@ import { parseQuizQuestion } from "~/utils/learning/quiz";
 import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
 import { LayoutKeyElementRule } from "#components";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
+import { mockData } from "../../mockData";
 
 definePageMeta({
   layout: "quiz",
@@ -188,20 +189,23 @@ const getGrammarQuizData = async () => {
 
 
 const getGeneratedVocabularyQuiz = async () => {
-  const data  = await $fetch(`/api/generation/vocabulary-quiz/gpt/`, 
-    {
-      method: "POST",
-      body: {
-        message: promptGeneratedVocabularyQuiz(wordsForQuiz.value, expressionsForQuiz.value)
-      }
-    }
-  );
+  // const data  = await $fetch(`/api/generation/vocabulary-quiz/gpt/`, 
+  //   {
+  //     method: "POST",
+  //     body: {
+  //       message: promptGeneratedVocabularyQuiz(wordsForQuiz.value, expressionsForQuiz.value)
+  //     }
+  //   }
+  // );
+  const data = mockData;
+  
   console.log("data", data);
   if (data) {
     console.log("generatedVocabularyQuiz", data);
     
     // Parse the JSON string into an objectn    
-    const parsedData = JSON.parse(data);
+    // const parsedData = JSON.parse(data);
+    const parsedData = mockData;
     console.log("parsedData", parsedData);
     const wordsArray = [];
     if (parsedData.words) {
@@ -423,7 +427,7 @@ await getGrammarQuizData();
 await getVocabularyFromLesson();
 await getAdditionnalWordsForQuiz();
 await getAdditionnalExpressionsForQuiz();
-// await getGeneratedVocabularyQuiz();
+await getGeneratedVocabularyQuiz();
 
 // Page title
 useHead({
