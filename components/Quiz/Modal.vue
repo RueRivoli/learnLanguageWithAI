@@ -269,13 +269,22 @@ const grammarColors = computed(() => {
                           :stroke-dashoffset="251 - (251 * props.detailedResults.words.percentage / 100)"
                         />
                       </svg>
-                      <div class="progress-ring-text">{{ props.detailedResults.words.correct }}/{{ props.detailedResults.words.total }}</div>
-
+                      <!-- <div class="progress-ring-text">{{ props.detailedResults.words.correct }}/{{ props.detailedResults.words.total }}</div> -->
+                      <div class="progress-ring-text">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900">
+                            {{ props.detailedResults.words.correct }}
+                        </span>
+                        <span class="text-base text-gray-500"
+                            >/ {{ props.detailedResults.words.total }}</span
+                        >
+                        </div>
+                    </div>
                     </div>
                   </div>
                 <div class="chart-details">
                   <div class="chart-stat">
-                    <div class="stat-label">Validated:</div> <span v-if="props.detailedResults.words.validatedList.length > 0" class="stat-value words-gradient">+{{ props.detailedResults.words.validatedList.length }}</span>
+                    <div class="stat-label">Validated:</div> <span v-if="props.detailedResults.words.validatedList.length > 0" class="stat-value words-gradient">+{{ props.detailedResults.words.validatedList.length.toString() }}</span>
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="word in props.detailedResults.words.validatedList" :key="word">
@@ -284,7 +293,7 @@ const grammarColors = computed(() => {
                   </div>
 
                   <div class="chart-stat">
-                    <div class="stat-label">Invalidated:</div><span v-if="props.detailedResults.words.invalidatedList.length > 0" class="stat-value words-gradient">{{ props.detailedResults.words.invalidatedList.length ?? 0 }}</span>
+                    <div class="stat-label">Invalidated:</div><span v-if="props.detailedResults.words.invalidatedList.length > 0" class="stat-value words-gradient">{{ props.detailedResults.words.invalidatedList.length.toString()}}</span>
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="word in props.detailedResults.words.invalidatedList" :key="word">
@@ -344,7 +353,17 @@ const grammarColors = computed(() => {
                           :stroke-dashoffset="251 - (251 * props.detailedResults.expressions.percentage / 100)"
                         />
                       </svg>
-                      <div class="progress-ring-text">{{ props.detailedResults.expressions.correct }}/{{ props.detailedResults.expressions.total }}</div>
+                      <!-- <div class="progress-ring-text">{{ props.detailedResults.expressions.correct }}/{{ props.detailedResults.expressions.total }}</div> -->
+                    </div>
+                    <div class="progress-ring-text">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900">
+                            {{ props.detailedResults.expressions.correct }}
+                        </span>
+                        <span class="text-base text-gray-500"
+                            >/ {{ props.detailedResults.expressions.total }}</span
+                        >
+                        </div>
                     </div>
                   </div>
                 <div class="chart-details">
@@ -1412,7 +1431,7 @@ const grammarColors = computed(() => {
 }
 
 .stat-value.words-gradient {
-  background: #3b82f6;
+  color: #3b82f6;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1426,7 +1445,7 @@ const grammarColors = computed(() => {
 }
 
 .chart-percentage.words-gradient {
-  background: #3b82f6;
+  color: #3b82f6;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1441,12 +1460,9 @@ const grammarColors = computed(() => {
 
 /* Word boxes styling */
 .chart-details .stat-value {
-  background: #3b82f6;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: #3b82f6;
+  font-size: 0.975rem;
+  font-weight: 700;
   border: none;
   -webkit-background-clip: unset;
   -webkit-text-fill-color: unset;

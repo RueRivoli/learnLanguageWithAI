@@ -1510,7 +1510,7 @@ useHead({
 .score-label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #64748b;
+  color: var(color-neutral);
 }
 
 .score-value {

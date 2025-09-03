@@ -20,27 +20,72 @@ const currentBatchSize = computed(() => {
   return Math.min(wordsPerBatch, remainingWords);
 });
 
+// Store for actual words data
+const wordsData = ref<Array<{id: number, text: string, translation: string, isMastered: boolean}>>([]);
+const isLoadingWords = ref(false);
+
+// Fetch words for current batch
+const fetchWordsForBatch = async () => {
+  if (isLoadingWords.value) return;
+  
+  isLoadingWords.value = true;
+  try {
+    const page = Math.floor((currentBatch.value * wordsPerBatch) / 16) + 1;
+    const { data } = await $fetch(`/api/words?page=${page}&size=16`, {
+      query: { is_learned: 'false' }
+    });
+    
+    if (data) {
+      // Map the fetched words to our grid format
+      const startIndex = currentBatch.value * wordsPerBatch;
+      const endIndex = Math.min(startIndex + wordsPerBatch, totalWords.value);
+      
+      wordsData.value = Array.from({ length: currentBatchSize.value }, (_, i) => {
+        const wordIndex = startIndex + i + 1;
+        const wordData = data[i] || null;
+        
+        return {
+          id: wordIndex,
+          text: wordData?.text || `Word ${wordIndex}`,
+          translation: wordData?.translation || '',
+          isMastered: wordIndex % 3 === 0 || wordIndex % 7 === 0 // ~33% mastered
+        };
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching words:', error);
+    // Fallback to original behavior
+    wordsData.value = Array.from({ length: currentBatchSize.value }, (_, i) => {
+      const wordIndex = currentBatch.value * wordsPerBatch + i + 1;
+      return {
+        id: wordIndex,
+        text: `Word ${wordIndex}`,
+        translation: '',
+        isMastered: wordIndex % 3 === 0 || wordIndex % 7 === 0
+      };
+    });
+  } finally {
+    isLoadingWords.value = false;
+  }
+};
+
 // Generate grid data for current batch
 const gridData = computed(() => {
-  return Array.from({ length: currentBatchSize.value }, (_, i) => {
-    const wordIndex = currentBatch.value * wordsPerBatch + i + 1;
-    return {
-      id: wordIndex,
-      isMastered: wordIndex % 3 === 0 || wordIndex % 7 === 0 // ~33% mastered
-    };
-  });
+  return wordsData.value;
 });
 
 // Navigation functions
 const goToPreviousBatch = () => {
   if (currentBatch.value > 0) {
     currentBatch.value--;
+    fetchWordsForBatch();
   }
 };
 
 const goToNextBatch = () => {
   if (currentBatch.value < totalBatches.value - 1) {
     currentBatch.value++;
+    fetchWordsForBatch();
   }
 };
 
@@ -66,27 +111,71 @@ const currentExpressionBatchSize = computed(() => {
   return Math.min(expressionsPerBatch, remainingExpressions);
 });
 
+// Store for actual expressions data
+const expressionsData = ref<Array<{id: number, text: string, translation: string, isMastered: boolean}>>([]);
+const isLoadingExpressions = ref(false);
+
+// Fetch expressions for current batch
+const fetchExpressionsForBatch = async () => {
+  if (isLoadingExpressions.value) return;
+  
+  isLoadingExpressions.value = true;
+  try {
+    const page = Math.floor((currentExpressionBatch.value * expressionsPerBatch) / 10) + 1;
+    const { data } = await $fetch(`/api/expressions?page=${page}&size=10`, {
+      query: { is_learned: 'false' }
+    });
+    
+    if (data) {
+      // Map the fetched expressions to our grid format
+      const startIndex = currentExpressionBatch.value * expressionsPerBatch;
+      
+      expressionsData.value = Array.from({ length: currentExpressionBatchSize.value }, (_, i) => {
+        const expressionIndex = startIndex + i + 1;
+        const expressionData = data[i] || null;
+        
+        return {
+          id: expressionIndex,
+          text: expressionData?.text || `Expression ${expressionIndex}`,
+          translation: expressionData?.translation || '',
+          isMastered: expressionIndex % 4 === 0 || expressionIndex % 9 === 0 // ~25% mastered
+        };
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching expressions:', error);
+    // Fallback to original behavior
+    expressionsData.value = Array.from({ length: currentExpressionBatchSize.value }, (_, i) => {
+      const expressionIndex = currentExpressionBatch.value * expressionsPerBatch + i + 1;
+      return {
+        id: expressionIndex,
+        text: `Expression ${expressionIndex}`,
+        translation: '',
+        isMastered: expressionIndex % 4 === 0 || expressionIndex % 9 === 0
+      };
+    });
+  } finally {
+    isLoadingExpressions.value = false;
+  }
+};
+
 // Generate expression grid data for current batch
 const expressionGridData = computed(() => {
-  return Array.from({ length: currentExpressionBatchSize.value }, (_, i) => {
-    const expressionIndex = currentExpressionBatch.value * expressionsPerBatch + i + 1;
-    return {
-      id: expressionIndex,
-      isMastered: expressionIndex % 4 === 0 || expressionIndex % 9 === 0 // ~25% mastered
-    };
-  });
+  return expressionsData.value;
 });
 
 // Expression navigation functions
 const goToPreviousExpressionBatch = () => {
   if (currentExpressionBatch.value > 0) {
     currentExpressionBatch.value--;
+    fetchExpressionsForBatch();
   }
 };
 
 const goToNextExpressionBatch = () => {
   if (currentExpressionBatch.value < totalExpressionBatches.value - 1) {
     currentExpressionBatch.value++;
+    fetchExpressionsForBatch();
   }
 };
 
@@ -117,6 +206,30 @@ const optionChartExpressions = computed(() => {
     userScoreStore.totalExpressionsInK,
   );
 });
+
+// Watch for batch changes and fetch words
+watch(currentBatch, () => {
+  fetchWordsForBatch();
+}, { immediate: true });
+
+// Watch for total words changes to fetch initial data
+watch(totalWords, () => {
+  if (totalWords.value > 0) {
+    fetchWordsForBatch();
+  }
+}, { immediate: true });
+
+// Watch for expression batch changes and fetch expressions
+watch(currentExpressionBatch, () => {
+  fetchExpressionsForBatch();
+}, { immediate: true });
+
+// Watch for total expressions changes to fetch initial data
+watch(totalExpressions, () => {
+  if (totalExpressions.value > 0) {
+    fetchExpressionsForBatch();
+  }
+}, { immediate: true });
 </script>
 
 <template>
@@ -175,7 +288,7 @@ const optionChartExpressions = computed(() => {
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform"
             :class="item.isMastered ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-200 hover:bg-gray-300'"
-            :title="`Word ${item.id}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
+            :title="`${item.text}${item.translation ? ' - ' + item.translation : ''}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
           ></div>
         </div>
       </div>
@@ -247,7 +360,7 @@ const optionChartExpressions = computed(() => {
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform"
             :class="item.isMastered ? 'bg-purple-500 hover:bg-purple-600' : 'bg-gray-200 hover:bg-gray-300'"
-            :title="`Expression ${item.id}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
+            :title="`${item.text}${item.translation ? ' - ' + item.translation : ''}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
           ></div>
         </div>
       </div>
