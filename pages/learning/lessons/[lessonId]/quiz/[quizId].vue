@@ -12,7 +12,6 @@ import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
 import { LayoutKeyElementRule } from "#components";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import { mockData } from "../../mockData";
-import { ArrowLeftIcon, BookOpenIcon, EyeIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 
 definePageMeta({
   layout: "quiz",
@@ -912,14 +911,6 @@ useHead({
               {{ index + 1 }}
             </div>
           </div>
-        </div>
-      </div>
-      
-      <!-- Global Score -->
-      <div v-if="isQuizCompleted" class="global-score-section">
-        <div class="global-score-card">
-          <h4 class="global-score-title">Overall Score</h4>
-          <div class="global-score-value">{{ globalScore }}%</div>
         </div>
       </div>
     </div>

@@ -167,7 +167,7 @@ const handleCancel = () => {
                       @click="router.push(`/learning/lessons/${lesson.id}`)"
                     >
                       <div class="hover:cursor-pointer">
-                        <div class="text-md font-serif tracking-tight font-light text-slate-800 tracking-wide">
+                        <div class="text-md font-serif tracking-tight font-semibold text-slate-800 tracking-wide">
                           {{ lesson.title }}
                         </div>
                         <div class="text-sm font-light text-slate-600 italic">

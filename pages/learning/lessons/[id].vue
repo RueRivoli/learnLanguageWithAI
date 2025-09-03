@@ -307,7 +307,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               When you're done with the lesson, don't forget <span class="text-primary font-semibold">
                 
                 <button
-                    class="btn btn-sm btn-error mx-2 btn-outline"
+                    class="btn btn-sm btn-error mx-2 btn-outline hover:text-white"
                     @click="handleGenerateQuiz"
                   >
                     <span>to fill out the quiz</span>

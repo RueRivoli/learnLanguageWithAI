@@ -329,14 +329,14 @@ const emit = defineEmits(["close"]);
           <div class="modal-actions">
             <button 
               class="px-4 py-2 text-white text-sm font-medium rounded-lg cursor-pointer shadow-sm flex items-center gap-2 bg-gradient-to-r from-gray-500 to-slate-600"
-              @click="$router.push(`/learning/lessons/`)"
+              @click="$router.push(`/learning/stories/`)"
         >
             <ArrowLeftIcon class="h-5 w-5" />
             <span>Back To Lessons</span>
           </button>
             <button
               class="bg-primary hover:bg-primary/90 text-white cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
-              @click="$router.push(`/learning/lessons`)" 
+              @click="emit('close')" 
             >
               <EyeIcon class="h-5 w-5" />
               <span>See Your Mistakes</span>
