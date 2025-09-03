@@ -32,10 +32,6 @@ const toggleExpressionTranslation = (index: number) => {
   activeExpressionTranslation.value = activeExpressionTranslation.value === index ? null : index;
 };
 
-const startQuiz = () => {
-  // Navigate to quiz for this lesson
-  navigateTo(`/learning/quizzes/${lessonId}`);
-};
 
 const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
@@ -137,8 +133,10 @@ const getLesson = async () => {
 getLesson();
 
 const handleGenerateQuiz = () => {
+  isLoading.value = true;
   if (!lesson.value?.grammarRuleId) return;
   handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
+  isLoading.value = false;
 };
 
 const sentences = computed(() => {

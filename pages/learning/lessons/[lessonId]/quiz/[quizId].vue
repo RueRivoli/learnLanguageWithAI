@@ -12,47 +12,11 @@ import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
 import { LayoutKeyElementRule } from "#components";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import { mockData } from "../../mockData";
+import { ArrowLeftIcon, BookOpenIcon, EyeIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 
 definePageMeta({
   layout: "quiz",
 });
-const vowelChangeMap = {
-    // Front vowels (e, i, ö, ü)
-    'e': ['i', 'ö', 'ü', 'a'],
-    'i': ['e', 'ü', 'ö', 'ı'], 
-    'ö': ['ü', 'e', 'i', 'o'],
-    'ü': ['ö', 'i', 'e', 'u'],
-    // Back vowels (a, ı, o, u)
-    'a': ['ı', 'o', 'u', 'e'],
-    'ı': ['a', 'o', 'u', 'i'],
-    'o': ['u', 'a', 'ı', 'e'],
-    'u': ['o', 'a', 'ı', 'e']
-};
-const consonantChangeMap = {
-    'b': ['p', 'v', 'f'],
-    'c': ['ç', 's', 'ş'],
-    'd': ['t', 'v', 'b'],
-    'ğ': ['k', 'h', 'g'],
-    'h': ['g', 'ğ', 'k'],
-    'k': ['c', 'q', 'ş'],
-    'p': ['ç', 's', 'r'],
-    't': ['ç', 's', 'd'],
-    'v': ['p', 'b', 'ş'],
-    'f': ['v', 's', 'c'],
-    's': ['ç', 'c', 'ş'],
-    'ş': ['ç', 's', 'c'],
-    'z': ['ç', 's', 'ş'],
-    'ç': ['c', 's', 'ş'],
-    'x': ['y', 's', 'ş'],
-    'q': ['l', 's', 'k'],
-    'w': ['ç', 's', 'ş'],
-    'y': ['ç', 's', 'ş'],
-    'r': ['ç', 's', 'ş'],
-    'l': ['p', 'v', 's'],
-    'm': ['n', 'b', 'v'],
-    'n': ['m', 't', 'd'],
-    'j': ['g', 's', 't'],
-};
 
 const TOTAL_GRAMMAR_QUESTIONS = 5;
 
@@ -352,6 +316,10 @@ const goToNextQuestion = () => {
       // Quiz finished - handle completion
       isQuizCompleted.value = true;
       console.log("Quiz completed!", { formGrammarQuiz: formGrammarQuiz.value, formWordsQuiz: formWordsQuiz.value, formExpressionsQuiz: formExpressionsQuiz.value });
+      // Open results modal after a short delay
+      setTimeout(() => {
+        openResultsModal();
+      }, 500);
     }
   }
 };
@@ -542,6 +510,126 @@ const isVocabularyQuiz = computed(() => {
   // This can be enhanced based on my actual data structure
   return isWordsQuiz.value || isExpressionsQuiz.value;
 });
+
+// Summary data for completed quiz
+const validatedWords = computed(() => {
+  if (!wordsQuiz.value || !formWordsQuiz.value) return { correct: 0, total: 0 };
+  let correct = 0;
+  let total = 0;
+  
+  Object.values(formWordsQuiz.value).forEach((answer) => {
+    if (answer.selectedOption !== null) {
+      total++;
+      if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+        correct++;
+      }
+    }
+  });
+  
+  return { correct, total };
+});
+
+const validatedExpressions = computed(() => {
+  if (!expressionsQuiz.value || !formExpressionsQuiz.value) return { correct: 0, total: 0 };
+  let correct = 0;
+  let total = 0;
+  
+  Object.values(formExpressionsQuiz.value).forEach((answer) => {
+    if (answer.selectedOption !== null) {
+      total++;
+      if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+        correct++;
+      }
+    }
+  });
+  
+  return { correct, total };
+});
+
+// Results modal state
+const showResultsModal = ref(false);
+
+const openResultsModal = () => {
+  showResultsModal.value = true;
+};
+
+const closeResultsModal = () => {
+  showResultsModal.value = false;
+};
+
+// Enhanced data for modal
+const detailedResults = computed(() => {
+  const grammarCorrect = Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null && Number(a.selectedOption) === Number(a.correctAnswer)).length;
+  const grammarTotal = Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null).length;
+  
+  const wordsCorrect = validatedWords.value.correct;
+  const wordsTotal = validatedWords.value.total;
+  const wordsIncorrect = wordsTotal - wordsCorrect;
+  
+  const expressionsCorrect = validatedExpressions.value.correct;
+  const expressionsTotal = validatedExpressions.value.total;
+  const expressionsIncorrect = expressionsTotal - expressionsCorrect;
+  
+  // Get actual words that were validated/invalidated
+  const validatedWordsList = [];
+  const invalidatedWordsList = [];
+  if (wordsQuiz.value && formWordsQuiz.value) {
+    Object.values(formWordsQuiz.value).forEach((answer, index) => {
+      if (answer.selectedOption !== null && wordsQuiz.value[index]) {
+        const question = wordsQuiz.value[index];
+        const correctAnswer = question[`option${answer.correctAnswer}`];
+        const userAnswer = question[`option${answer.selectedOption}`];
+        
+        if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+          validatedWordsList.push(correctAnswer);
+        } else {
+          invalidatedWordsList.push(correctAnswer);
+        }
+      }
+    });
+  }
+  
+  // Get actual expressions that were validated/invalidated
+  const validatedExpressionsList = [];
+  const invalidatedExpressionsList = [];
+  if (expressionsQuiz.value && formExpressionsQuiz.value) {
+    Object.values(formExpressionsQuiz.value).forEach((answer, index) => {
+      if (answer.selectedOption !== null && expressionsQuiz.value[index]) {
+        const question = expressionsQuiz.value[index];
+        const correctAnswer = question[`option${answer.correctAnswer}`];
+        const userAnswer = question[`option${answer.selectedOption}`];
+        
+        if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+          validatedExpressionsList.push(correctAnswer);
+        } else {
+          invalidatedExpressionsList.push(correctAnswer);
+        }
+      }
+    });
+  }
+  
+  return {
+    grammar: { correct: grammarCorrect, total: grammarTotal, percentage: grammarTotal > 0 ? Math.round((grammarCorrect / grammarTotal) * 100) : 0 },
+    words: { 
+      correct: wordsCorrect, 
+      total: wordsTotal, 
+      incorrect: wordsIncorrect, 
+      percentage: wordsTotal > 0 ? Math.round((wordsCorrect / wordsTotal) * 100) : 0,
+      validatedList: validatedWordsList,
+      invalidatedList: invalidatedWordsList
+    },
+    expressions: { 
+      correct: expressionsCorrect, 
+      total: expressionsTotal, 
+      incorrect: expressionsIncorrect, 
+      percentage: expressionsTotal > 0 ? Math.round((expressionsCorrect / expressionsTotal) * 100) : 0,
+      validatedList: validatedExpressionsList,
+      invalidatedList: invalidatedExpressionsList
+    },
+    overall: { percentage: globalScore.value }
+  };
+});
+
 
 // Dynamic progress tracking for separate quiz types
 const grammarProgress = computed(() => {
@@ -835,6 +923,12 @@ useHead({
         </div>
       </div>
     </div>
+
+    <!-- Results Modal -->
+     <div v-if="showResultsModal" class="modal-overlay">
+      <QuizModal  :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" @close="closeResultsModal" />
+     </div>
+  
   </div>
 </template>
 
@@ -1459,6 +1553,519 @@ useHead({
   z-index: 1;
 }
 
+/* Results Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-container {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  max-width: 900px;
+  width: 90%;
+  max-height: 95vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem 1rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.modal-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.modal-title-section {
+  position: relative;
+  z-index: 1;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-subtitle {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 500;
+}
+
+.modal-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+.close-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #ef4444;
+}
+
+.modal-content {
+  padding: 1.5rem 2rem;
+}
+
+/* Overall Score Section */
+.overall-score-section {
+  margin-bottom: 2rem;
+}
+
+.overall-score-card {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 40px -12px rgba(79, 70, 229, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.overall-score-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.score-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.score-percentage {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.score-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-align: center;
+}
+
+.score-details {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.score-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.75rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.score-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Charts Section */
+.charts-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 2rem 0;
+  text-align: center;
+  letter-spacing: -0.025em;
+}
+
+/* Grammar Chart - Full Width */
+.grammar-chart-container {
+  margin-bottom: 1.5rem;
+}
+
+.grammar-full-width {
+  width: 100%;
+}
+
+.grammar-chart-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.grammar-chart-content .chart-visual {
+  flex-shrink: 0;
+}
+
+.grammar-chart-content .chart-details {
+  flex: 1;
+}
+
+/* Vocabulary Charts - Side by Side */
+.vocabulary-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.chart-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 
+    0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.chart-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+.chart-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #6b7280;
+}
+
+.chart-percentage {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4f46e5;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chart-visual {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle-bg {
+  fill: none;
+  stroke: #e5e7eb;
+  stroke-width: 8;
+}
+
+.progress-ring-circle {
+  fill: none;
+  stroke: #4f46e5;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.progress-ring-circle.words {
+  stroke: url(#wordsGradient);
+}
+
+.progress-ring-circle.expressions {
+  stroke: url(#expressionsGradient);
+}
+
+.progress-ring-text {
+  position: absolute;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #374151;
+  text-align: center;
+}
+
+.chart-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.chart-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.stat-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.stat-value.level {
+  text-transform: capitalize;
+  color: #7c3aed;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-value.incorrect {
+  color: #ef4444;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-value.words-gradient {
+  background: #3b82f6;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-value.expressions-gradient {
+  background: linear-gradient(to bottom right, #8b5cf6, #ec4899, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chart-percentage.words-gradient {
+  background: #3b82f6;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chart-percentage.expressions-gradient {
+  background: linear-gradient(to bottom right, #8b5cf6, #ec4899, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Word boxes styling */
+.chart-details .stat-value {
+  background: #3b82f6;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 1.5rem;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+
+
+.action-button.primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 
+    0 10px 25px -3px rgba(79, 70, 229, 0.4),
+    0 4px 6px -2px rgba(79, 70, 229, 0.1);
+}
+
+
+
+.action-button.secondary {
+  background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+  color: white;
+  box-shadow: 
+    0 10px 25px -3px rgba(107, 114, 128, 0.4),
+    0 4px 6px -2px rgba(107, 114, 128, 0.1);
+}
+
+
+
+.action-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .quiz-container {
@@ -1509,6 +2116,69 @@ useHead({
     width: 40px;
     height: 40px;
     font-size: 0.75rem;
+  }
+  
+  /* Modal responsive */
+  .modal-container {
+    width: 95%;
+    max-height: 98vh;
+  }
+  
+  .modal-header {
+    padding: 1rem 1.5rem 0.75rem 1.5rem;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+  }
+  
+  .modal-content {
+    padding: 1rem 1.5rem;
+  }
+  
+  .overall-score-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .score-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .score-percentage {
+    font-size: 1.75rem;
+  }
+  
+  .score-title {
+    font-size: 1.5rem;
+  }
+  
+  .vocabulary-charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .grammar-chart-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .chart-card {
+    padding: 1rem;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .action-button {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style>
