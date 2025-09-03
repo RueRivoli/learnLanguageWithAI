@@ -159,7 +159,7 @@ const getScoreColor = (score: number) => {
               :disabled="isLoading"
               @click="handleGenerateQuiz"
             >
-              <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+              <span v-if="isLoading" class="animate-spin cursor-pointer rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
               <PlayIcon v-else class="w-5 h-5" />
               <span>Start New Quiz</span>
             </button>

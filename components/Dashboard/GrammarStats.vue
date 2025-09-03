@@ -146,9 +146,9 @@ const averageScore = computed(() => {
 </script>
 
 <template>
-  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-    <div class="mb-6">
-      <div class="flex items-center justify-between mb-4">
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+    <div class="mb-3">
+      <div class="flex items-center justify-between mb-2">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="relative">
@@ -181,7 +181,7 @@ const averageScore = computed(() => {
     </div>
 
     <!-- Chart and Legend Container -->
-    <div class="flex gap-6">
+    <div class="flex gap-4">
       <!-- Chart Section -->
       <div class="flex-1">
         <div class="relative">
@@ -194,9 +194,9 @@ const averageScore = computed(() => {
       </div>
 
       <!-- Legend Section -->
-      <div class="w-80 bg-gray-50 rounded-lg p-4 border border-gray-200">
-        <div class="mb-4">
-          <h4 class="text-sm font-semibold text-gray-900 mb-2">
+      <div class="w-80 bg-gray-50 rounded-lg p-3 border border-gray-200">
+        <div class="mb-3">
+          <h4 class="text-sm font-semibold text-gray-900 mb-1">
             {{ levelTitle }} Modules
           </h4>
           <p class="text-xs text-gray-600">
@@ -204,11 +204,11 @@ const averageScore = computed(() => {
           </p>
         </div>
 
-        <div class="space-y-3 max-h-80 overflow-y-auto">
+        <div class="space-y-2 max-h-80 overflow-y-auto">
           <div
             v-for="(name, index) in currentNames"
             :key="index"
-            class="flex items-center gap-3 p-2 rounded-md hover:bg-white transition-colors duration-200"
+            class="flex items-center gap-3 p-1.5 rounded-md hover:bg-white transition-colors duration-200"
           >
             <!-- Number Badge -->
             <div
@@ -242,7 +242,7 @@ const averageScore = computed(() => {
         </div>
 
         <!-- Legend Footer -->
-        <div class="mt-4 pt-3 border-t border-gray-200">
+        <div class="mt-3 pt-2 border-t border-gray-200">
           <div class="flex items-center justify-between text-xs text-gray-600">
             <span>Total Rules: {{ currentNames.length }}</span>
             <span>Avg Score: {{ averageScore }}%</span>

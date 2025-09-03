@@ -132,10 +132,10 @@ const getLesson = async () => {
 
 getLesson();
 
-const handleGenerateQuiz = () => {
+const handleGenerateQuiz = async () => {
   isLoading.value = true;
   if (!lesson.value?.grammarRuleId) return;
-  handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
+  await handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
   isLoading.value = false;
 };
 
@@ -310,7 +310,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     class="btn btn-sm btn-error mx-2 btn-outline hover:text-white"
                     @click="handleGenerateQuiz"
                   >
-                    <span>to fill out the quiz</span>
+                  <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                  <span >to fill out the quiz</span>
                   </button>
                 
                 </span> to update your scores

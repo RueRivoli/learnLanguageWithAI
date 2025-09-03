@@ -709,6 +709,42 @@ const expressionsProgress = computed(() => {
   return progress;
 });
 
+// Get grammar rule level for color matching
+const grammarRuleLevel = computed(() => {
+  return grammarRuleMetaData.value?.level || 'beginner';
+});
+
+// Get grammar colors based on rule level (matching KeyElementRule)
+const grammarColors = computed(() => {
+  switch (grammarRuleLevel.value) {
+    case 'beginner':
+      return {
+        gradient: 'from-emerald-500 to-teal-600',
+        stroke: '#10b981', // emerald-500
+        text: '#10b981'
+      };
+    case 'intermediate':
+      return {
+        gradient: 'from-amber-500 to-orange-600', 
+        stroke: '#f59e0b', // amber-500
+        text: '#f59e0b'
+      };
+    case 'advanced':
+      return {
+        gradient: 'from-pink-500 to-rose-600',
+        stroke: '#ec4899', // pink-500
+        text: '#ec4899'
+      };
+    case 'expert':
+    default:
+      return {
+        gradient: 'from-blue-600 to-indigo-700',
+        stroke: '#2563eb', // blue-600
+        text: '#2563eb'
+      };
+  }
+});
+
 await getGrammarQuizData();
 await getVocabularyFromLesson();
 await getAdditionnalWordsForQuiz();
@@ -1891,6 +1927,10 @@ useHead({
   transition: stroke-dashoffset 1s ease-in-out;
 }
 
+.progress-ring-circle.grammar {
+  stroke: url(#grammarGradient);
+}
+
 .progress-ring-circle.words {
   stroke: url(#wordsGradient);
 }
@@ -1973,6 +2013,12 @@ useHead({
 
 .chart-percentage.expressions-gradient {
   background: linear-gradient(to bottom right, #8b5cf6, #ec4899, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chart-percentage.grammar-gradient {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

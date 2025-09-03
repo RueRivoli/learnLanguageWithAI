@@ -85,6 +85,38 @@ const congratulationsMessage = computed(() => {
 });
 
 const emit = defineEmits(["close"]);
+
+// Get grammar rule level for color matching
+const grammarRuleLevel = computed(() => {
+  return props.grammarRuleMetaData?.level || 'beginner';
+});
+
+// Get grammar colors based on rule level (matching KeyElementRule)
+const grammarColors = computed(() => {
+  switch (grammarRuleLevel.value) {
+    case 'beginner':
+      return {
+        stroke: '#10b981', // emerald-500
+        text: '#10b981'
+      };
+    case 'intermediate':
+      return {
+        stroke: '#f59e0b', // amber-500
+        text: '#f59e0b'
+      };
+    case 'advanced':
+      return {
+        stroke: '#ec4899', // pink-500
+        text: '#ec4899'
+      };
+    case 'expert':
+    default:
+      return {
+        stroke: '#2563eb', // blue-600
+        text: '#2563eb'
+      };
+  }
+});
 </script>
 
 
@@ -147,7 +179,7 @@ const emit = defineEmits(["close"]);
         </div>
 
                   </div>
-                  <div class="chart-percentage">{{ props.detailedResults.grammar.percentage }}%</div>
+                  <div class="chart-percentage" :style="{ color: grammarColors.text }">{{ props.detailedResults.grammar.percentage }}%</div>
                 </div>
                 <div class="grammar-chart-content">
                   <div class="chart-visual">
@@ -161,10 +193,21 @@ const emit = defineEmits(["close"]);
                           r="40" 
                           :stroke-dasharray="251"
                           :stroke-dashoffset="251 - (251 * props.detailedResults.grammar.percentage / 100)"
+                          :stroke="grammarColors.stroke"
                         />
                       </svg>
-                      <div class="progress-ring-text">{{ props.detailedResults.grammar.correct }}/{{ props.detailedResults.grammar.total }}</div>
+                      <!-- <div class="progress-ring-text">{{ props.detailedResults.grammar.correct }}/{{ props.detailedResults.grammar.total }}</div> -->
+                      <div class="progress-ring-text">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900">
+                            {{ props.detailedResults.grammar.correct }}
+                        </span>
+                        <span class="text-base text-gray-500"
+                            >/ {{ props.detailedResults.grammar.total }}</span
+                        >
+                        </div>
                     </div>
+                </div>
                   </div>
                   <div class="chart-details">
                     <div class="chart-stat">
@@ -227,6 +270,7 @@ const emit = defineEmits(["close"]);
                         />
                       </svg>
                       <div class="progress-ring-text">{{ props.detailedResults.words.correct }}/{{ props.detailedResults.words.total }}</div>
+
                     </div>
                   </div>
                 <div class="chart-details">

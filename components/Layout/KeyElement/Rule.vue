@@ -19,47 +19,31 @@ const emit = defineEmits(["click"]);
 const backgroundClasses = computed(() => {
   switch (props.level) {
     case 'beginner':
-      return 'bg-[#e6f2f0]'; // Soft mint/aqua color
+      return 'bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md shadow-emerald-100'; // Refined mint/teal gradient
     case 'intermediate':
-      return 'bg-[#f0e6d6]'; // Warmer, more pronounced beige color
+      return 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-md shadow-amber-100'; // Refined amber/orange gradient
     case 'advanced':
-      return 'bg-[#f4e6f2]'; // Soft pink/mauve color
+      return 'bg-gradient-to-br from-pink-500 to-rose-600 shadow-md shadow-pink-100'; // Refined pink/rose gradient
     case 'expert':
     default:
-      return 'bg-gradient-to-r from-blue-500 to-indigo-600';
+      return 'bg-gradient-to-br from-blue-600 to-indigo-700 shadow-md shadow-blue-100';
   }
 });
 
 // Dynamic text color based on level
 const textClasses = computed(() => {
-  switch (props.level) {
-    case 'beginner':
-    case 'intermediate':
-    case 'advanced':
-      return 'text-gray-700'; // Darker text for better contrast on light background
-    default:
-      return 'text-white';
-  }
+  return 'text-white font-semibold'; // White text for all levels
 });
 </script>
 
 <template>
     <button 
-        :class="['px-4 py-2 text-sm font-medium rounded-lg shadow-sm flex items-center gap-2 relative overflow-hidden', backgroundClasses, textClasses]"
+        :class="['px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 relative overflow-hidden', backgroundClasses, textClasses]"
         @click="emit('click')"
     >
-        <!-- Grid overlay for beginner, intermediate, and advanced levels -->
+        <!-- Subtle texture overlay for all levels -->
         <div 
-            v-if="props.level === 'beginner'" 
-            class="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:4px_4px]"
-        ></div>
-        <div 
-            v-if="props.level === 'intermediate'" 
-            class="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:4px_4px]"
-        ></div>
-        <div 
-            v-if="props.level === 'advanced'" 
-            class="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:4px_4px]"
+            class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"
         ></div>
         
         <svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
