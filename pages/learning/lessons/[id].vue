@@ -311,7 +311,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     @click="handleGenerateQuiz"
                   >
                   <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
-                  <span >to fill out the quiz</span>
+                  <span>to fill out the quiz</span>
                   </button>
                 
                 </span> to update your scores
