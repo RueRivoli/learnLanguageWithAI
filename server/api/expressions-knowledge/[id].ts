@@ -8,7 +8,6 @@ const supabase = createClient(
 
 export default defineEventHandler(async (event) => {
     const expressionId = getRouterParam(event, "id");
-    const body = await readBody(event);
     const { error } = await supabase
       .from("turkish_expressions_knowledge")
       .delete().eq('expression_id', expressionId)

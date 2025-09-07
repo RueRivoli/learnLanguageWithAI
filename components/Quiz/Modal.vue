@@ -140,7 +140,7 @@ const grammarClass = computed(() => {
         <!-- Modal Header -->
         <div class="modal-header">
           <div class="modal-title-section">
-            <h2 class="modal-title">Quiz Results</h2>
+            <h2 class="modal-title">Quiz Results: {{ greetingMessage }}</h2>
           </div>
           <button @click="emit('close')" class="modal-close-button">
             <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,12 +154,11 @@ const grammarClass = computed(() => {
           <!-- Overall Score Section -->
           <div class="overall-score-section">
             <div class="overall-score-card">
-              <div class="score-circle">
+              <div>
                 <div class="score-percentage">{{ props.detailedResults.overall.percentage }}%</div>
                 <div class="score-label">Overall Score</div>
               </div>
               <div class="score-details">
-                <h3 class="score-title">{{ greetingMessage }}</h3>
                 <p class="score-description">{{ congratulationsMessage }}</p>
               </div>
             </div>
@@ -169,7 +168,7 @@ const grammarClass = computed(() => {
           <div class="charts-section">
             <!-- Grammar Chart - Full Width -->
             <div class="grammar-chart-container">
-              <div class="chart-card grammar-full-width">
+              <div class="chart-card grammar-full-width" :class="grammarClass">
                 <div class="chart-header">
                   <div class="chart-title">
                     <div class="flex items-center">
@@ -260,7 +259,7 @@ const grammarClass = computed(() => {
             <!-- Words and Expressions Charts - Side by Side -->
             <div class="vocabulary-charts-grid">
               <!-- Words Chart -->
-              <div class="chart-card">
+              <div class="chart-card words-chart-bg">
                 <div class="chart-header">
                   <div class="chart-title">
                     <div class="flex items-center justify-between">
@@ -343,14 +342,14 @@ const grammarClass = computed(() => {
                     <div class="chart-stat">
                     <div class="stat-label mb-1">Note:</div>
                   </div>
-                  <div class="stat-description">The quiz may include a few words already known. This is to verify that you truly master them.</div>
+                  <div class="text-xs text-gray-600">*The quiz may include a few words already known because repetition is the way to memorize</div>
                 </div>
 
                 </div>
               </div>
 
               <!-- Expressions Chart -->
-              <div class="chart-card">
+              <div class="chart-card expressions-chart-bg">
                 <div class="chart-header">
                   <div class="chart-title">
                     <div class="flex items-center justify-between">
@@ -426,10 +425,16 @@ const grammarClass = computed(() => {
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="expression in props.detailedResults.expressions.invalidatedList" :key="expression">
-                     <LayoutKeyElementExpression :text="expression" />
+                        <LayoutKeyElementExpression :text="expression" />
                     </div>
                   </div>
-                    </div>
+                </div>
+                <div>
+                    <div class="chart-stat">
+                    <div class="stat-label mb-1">Note:</div>
+                  </div>
+                  <div class="text-xs text-gray-600">*The quiz may include a few expressions already known because repetition is the way to memorize</div>
+                </div>
 
                 </div>
               </div>
@@ -439,18 +444,18 @@ const grammarClass = computed(() => {
           <!-- Action Buttons -->
           <div class="modal-actions">
             <button 
-              class="px-4 py-2 text-white text-sm font-medium rounded-lg cursor-pointer shadow-sm flex items-center gap-2 bg-gradient-to-r from-gray-500 to-slate-600"
+              class="btn-ghost px-4 py-2 text-sm font-medium cursor-pointer flex items-center gap-2"
               @click="$router.push(`/learning/stories/`)"
-        >
-            <ArrowLeftIcon class="h-5 w-5" />
-            <span>Back To Lessons</span>
+            >
+                <ArrowLeftIcon class="h-5 w-5" />
+                <span>Back To Lessons</span>
           </button>
             <button
-              class="bg-primary hover:bg-primary/90 text-white cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
-              @click="emit('close')" 
+              class="bg-primary hover:bg-primary/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              @click="emit('close')"
             >
               <EyeIcon class="h-5 w-5" />
-              <span>See Your Mistakes</span>
+              <span>See Answers</span>
             </button>
           </div>
         </div>
@@ -554,7 +559,7 @@ const grammarClass = computed(() => {
 }
 
 .overall-score-card {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  background: #4f46e5;
   border-radius: 20px;
   padding: 1.5rem;
   display: flex;
@@ -693,6 +698,37 @@ const grammarClass = computed(() => {
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
+}
+
+/* Chart Background Colors */
+.grammar-achievement__beginner {
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  border: 1px solid #dcfce7;
+}
+
+.grammar-achievement__intermediate {
+  background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+  border: 1px solid #fed7aa;
+}
+
+.grammar-achievement__advanced {
+  background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
+  border: 1px solid #fce7f3;
+}
+
+.grammar-achievement__expert {
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+  border: 1px solid #dbeafe;
+}
+
+.words-chart-bg {
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+  border: 1px solid #dbeafe;
+}
+
+.expressions-chart-bg {
+  background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
+  border: 1px solid #fce7f3;
 }
 
 .chart-header {

@@ -94,7 +94,7 @@ const totalExpressionsInK = computed(() => {
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+            <div class="w-1.5 h-1.5 bg-blue-500 rounded-full" />
             <span class="text-lg font-medium text-gray-700"
               >{{ totalWordsMasteredInPercentage }}%</span
             >
@@ -165,7 +165,7 @@ const totalExpressionsInK = computed(() => {
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+            <div class="w-1.5 h-1.5 bg-purple-500 rounded-full" />
             <span class="text-lg font-medium text-gray-700"
               >{{ totalExpressionsMasteredInPercentage }}%</span
             >

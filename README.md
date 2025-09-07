@@ -1,14 +1,10 @@
-![logo2](https://github.com/user-attachments/assets/b271581d-9f33-4e44-91cf-71618e287ea3)
-
-
-
 ## 🚀 Overview
 
 **LinguaLAB** is a fast and intelligent language learning web app built with **Nuxt 3** and powered by **AI**.  
 It dynamically generates lessons (or short stories) with:
 
-- 🧠 The **top 8K words** you don’t know yet
-- 🧩 A specific **grammar rule** you need to master
+- the **top 8K words** you don’t know yet
+- a specific **grammar rule** you need to master
 
 Each lesson ends with a quiz to evaluate your progress. Based on your answers, your personal knowledge base is updated.
 
@@ -16,9 +12,9 @@ Each lesson ends with a quiz to evaluate your progress. Based on your answers, y
 
 A personal dashboard monitors your proficiency in:
 
-- ✅ The **8,000 most common words** in the language
-- ✅ The **1,000 most useful expressions**
-- ✅ Your **grammar mastery** across different rules
+- the **8,000 most common words** in the language
+- the **1,000 most useful expressions**
+- your **grammar mastery** across different rules
 
 ## 📊 What Needs to Be Done
 
