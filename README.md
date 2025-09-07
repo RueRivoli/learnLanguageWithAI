@@ -16,7 +16,7 @@ A personal dashboard monitors your proficiency in:
 - the **1,000 most useful expressions**
 - your **grammar mastery** across different rules
 
-# 📊 What Needs to Be Done
+# What Needs to Be Done
 
 ## Finish MVP
 
@@ -47,7 +47,7 @@ A personal dashboard monitors your proficiency in:
 - 🎨 [TailwindCSS](https://tailwindcss.com/)
 - 🌸 [DaisyUI](https://daisyui.com/)
 - ⚡ [Nuxt 3](https://nuxt.com/)
-- 🧑‍💻 Typescript (https://www.typescriptlang.org/)
+- 🧑‍💻 [Typescript] (https://www.typescriptlang.org/)
 - 🗃️ [Supabase](https://supabase.com/)
 
 ---
