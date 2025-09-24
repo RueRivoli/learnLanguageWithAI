@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import DOMPurify from "dompurify";
+<<<<<<< Updated upstream
 import type { GrammarRule } from "~/types/grammar-rule";
 import { parseRuleData } from "~/utils/learning/grammar";
+=======
+import NumbersDirections from "~/components/Rules/NumbersDirectionsTemplate.vue";
+import { parseRuleData, type GrammarRule } from "~/types/grammar-rule";
+
+const router = useRouter();
+>>>>>>> Stashed changes
 
 definePageMeta({
   layout: "authenticated",
