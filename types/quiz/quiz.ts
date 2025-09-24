@@ -28,19 +28,23 @@ export type QuizFetchedQuestion = {
   }
 }
 
-export interface QuizFormattedQuestion {
-  id: QuizSeries['id'],
-  type: GrammarQuizModel['question_type'],
-  difficulty: GrammarQuizModel['difficulty_status'],
-  grammarRuleId: GrammarQuizModel['grammar_rule_id'],
-  translation: GrammarQuizModel['translation'],
-  correctAnswer: GrammarQuizModel['correct_answer'],
-  question: GrammarQuizModel['text'], 
-  option1: GrammarQuizModel['option_1'], 
-  option2: GrammarQuizModel['option_2'], 
-  option3: GrammarQuizModel['option_3'], 
-  option4: GrammarQuizModel['option_4'], 
+type GrammarQuizQuestionModel = Database['public']['Tables']['turkish_grammar_quizzes']['Row']
+
+// Quiz GrammarQuestion Model for a Lesson
+export type GrammarQuizQuestion = {
+    id: GrammarQuizQuestionModel['id'],
+    type: GrammarQuizQuestionModel['question_type'],
+    difficulty: GrammarQuizQuestionModel['difficulty_status'],
+    ruleId: GrammarQuizQuestionModel['grammar_rule_id'],
+    question: GrammarQuizQuestionModel['text'],
+    correctAnswer: GrammarQuizQuestionModel['correct_answer'],
+    option1: GrammarQuizQuestionModel['option_1'],
+    option2: GrammarQuizQuestionModel['option_2'],
+    option3: GrammarQuizQuestionModel['option_3'],
+    option4: GrammarQuizQuestionModel['option_4'],
+    note: GrammarQuizQuestionModel['note']
 }
+
 
 export interface FormQuizItem {
   selectedOption: number | null;

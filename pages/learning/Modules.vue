@@ -13,7 +13,7 @@ import {
   getGrammarRuleStyleClass,
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
-import { parseRules } from "~/types/grammar-rule.ts";
+import { parseRules } from "~/utils/learning/grammar";
 
 definePageMeta({
   layout: "authenticated",

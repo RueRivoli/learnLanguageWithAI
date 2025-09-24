@@ -1,17 +1,5 @@
-import type { WordContent } from "~/types/word";
-
-
-export type QuizVocabularyQuestion = {
-    id: number,
-    type: number,
-    question: string,
-    translation: string,
-    correctAnswer: string,
-    option1: string,
-    option2: string,
-    option3: string,
-    option4: string
-}
+import type { WordContent } from "~/types/vocabulary.ts/word";
+import type { GrammarQuizQuestion } from "~/types/quiz/quiz.ts";
 
 const vowelChangeMap = {
     // Front vowels (e, i, ö, ü)
@@ -144,8 +132,8 @@ const createPersonalPronounTypeQuestion = (personalPronounList: Array<WordConten
 const createSubsidiaryVerbTypeQuestion = (subsidiaryVerbList: Array<WordContent>, word: WordContent) : any => {
 
 }
-export const createWordListQuiz = (wordList: Array<WordContent>) : Array<QuizQuestion> => {
-    const quizQuestions: Array<QuizQuestion> = [];
+export const createWordListQuiz = (wordList: Array<WordContent>) : Array<GrammarQuizQuestion> => {
+    const quizQuestions: Array<GrammarQuizQuestion> = [];
     let questionIndex = 1;
     for (const word of wordList) {
         let newQuestion

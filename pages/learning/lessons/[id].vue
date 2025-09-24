@@ -5,7 +5,8 @@ import { PlayIcon } from "@heroicons/vue/24/solid";
 import {
   lessonMapping,
 } from "~/utils/learning/lesson";
-import { parseRuleData, type GrammarRule } from "~/types/grammar-rule";
+import { parseRuleData} from "~/utils/learning/grammar";
+import type { GrammarRule } from "~/types/grammar-rule";
 import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 definePageMeta({
@@ -23,6 +24,7 @@ const activeExpressionTranslation = ref<number | null>(null);
 const grammarRule = ref<GrammarRule | null>(null);
 const grammarRuleLoading = ref<boolean>(false);
 const isStoryShown = ref(true);
+const relatedQuiz = ref<any>(null);
 
 const toggleWordTranslation = (index: number) => {
   activeWordTranslation.value = activeWordTranslation.value === index ? null : index;
@@ -32,17 +34,12 @@ const toggleExpressionTranslation = (index: number) => {
   activeExpressionTranslation.value = activeExpressionTranslation.value === index ? null : index;
 };
 
-
 const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
 };
 
-
-
 const getGrammarRule = async () => {
-  console.log("ID", lesson.value?.grammarRuleId);
   if (!lesson.value?.grammarRuleId) return;
-  
   try {
     grammarRuleLoading.value = true;
     const { data, error } = await useFetch(`/api/grammar/${lesson.value.grammarRuleId}`);
@@ -83,6 +80,9 @@ const getLesson = async () => {
       lesson.value.level = rawData.turkish_grammar_rules.difficulty_class;
       lesson.value.imgUrl = rawData.img_url;
       lesson.value.quizId = rawData.quiz_id;
+      if (rawData.turkish_quizzes_result) {
+        relatedQuiz.value = { score: rawData.turkish_quizzes_result.score_global, createdAt: rawData.turkish_quizzes_result.created_at, id: rawData.turkish_quizzes_result.id };
+      }
       lesson.value.newWords = rawData.turkish_lesson_words
         .map((w: any) => w.turkish_words)
         .map(
@@ -558,7 +558,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             </div>
               <div class="pt-4 border-t border-gray-100">
                 <div v-if="lesson?.quizId">
-                  Your score: 100%
+                  <QuizResult :quiz="relatedQuiz"/>
                 </div>
                   <button
                     v-else

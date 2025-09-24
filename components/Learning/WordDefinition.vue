@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Word } from "~/types/word.ts";
+import type { Word } from "~/types/vocabulary.ts/word";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 
 import { ChevronDownIcon } from "@heroicons/vue/24/solid";

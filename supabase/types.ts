@@ -7,30 +7,10 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          operationName?: string
-          query?: string
-          variables?: Json
-          extensions?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
@@ -45,6 +25,7 @@ export type Database = {
           language_learned: string | null
           last_name: string | null
           pseudo: string | null
+          second_language_learned: string | null
           subscribed: boolean | null
         }
         Insert: {
@@ -57,6 +38,7 @@ export type Database = {
           language_learned?: string | null
           last_name?: string | null
           pseudo?: string | null
+          second_language_learned?: string | null
           subscribed?: boolean | null
         }
         Update: {
@@ -69,6 +51,7 @@ export type Database = {
           language_learned?: string | null
           last_name?: string | null
           pseudo?: string | null
+          second_language_learned?: string | null
           subscribed?: boolean | null
         }
         Relationships: []
@@ -76,36 +59,45 @@ export type Database = {
       turkish_expressions: {
         Row: {
           created_at: string
+          explanation: string | null
           expression_sentence: string | null
           expression_sentence_2: string | null
           expression_sentence_2_translation: string | null
           expression_sentence_translation: string | null
           family: string | null
           id: number
+          litteral_translation: string | null
           text: string | null
           translation: string | null
+          usage: string | null
         }
         Insert: {
           created_at?: string
+          explanation?: string | null
           expression_sentence?: string | null
           expression_sentence_2?: string | null
           expression_sentence_2_translation?: string | null
           expression_sentence_translation?: string | null
           family?: string | null
           id?: number
+          litteral_translation?: string | null
           text?: string | null
           translation?: string | null
+          usage?: string | null
         }
         Update: {
           created_at?: string
+          explanation?: string | null
           expression_sentence?: string | null
           expression_sentence_2?: string | null
           expression_sentence_2_translation?: string | null
           expression_sentence_translation?: string | null
           family?: string | null
           id?: number
+          litteral_translation?: string | null
           text?: string | null
           translation?: string | null
+          usage?: string | null
         }
         Relationships: []
       }
@@ -138,7 +130,7 @@ export type Database = {
           {
             foreignKeyName: "turkish_expressions_knowledge_expression_id_fkey"
             columns: ["expression_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "turkish_expressions"
             referencedColumns: ["id"]
           },
@@ -158,13 +150,13 @@ export type Database = {
           difficulty_status: number | null
           grammar_rule_id: number | null
           id: number
+          note: string | null
           option_1: string | null
           option_2: string | null
           option_3: string | null
           option_4: string | null
           question_type: number | null
           text: string | null
-          translation: string | null
         }
         Insert: {
           correct_answer?: string | null
@@ -172,13 +164,13 @@ export type Database = {
           difficulty_status?: number | null
           grammar_rule_id?: number | null
           id?: number
+          note?: string | null
           option_1?: string | null
           option_2?: string | null
           option_3?: string | null
           option_4?: string | null
           question_type?: number | null
           text?: string | null
-          translation?: string | null
         }
         Update: {
           correct_answer?: string | null
@@ -186,13 +178,13 @@ export type Database = {
           difficulty_status?: number | null
           grammar_rule_id?: number | null
           id?: number
+          note?: string | null
           option_1?: string | null
           option_2?: string | null
           option_3?: string | null
           option_4?: string | null
           question_type?: number | null
           text?: string | null
-          translation?: string | null
         }
         Relationships: [
           {
@@ -206,39 +198,51 @@ export type Database = {
       }
       turkish_grammar_rules: {
         Row: {
+          bookmarked: boolean | null
+          checkedBy: string | null
           created_at: string
           description: string | null
           difficulty_class: number | null
           extended_description: string | null
+          filledWithAI: boolean | null
           highlights: string | null
           id: number
           intro: string | null
+          position: number | null
           rule_name: string | null
           rule_name_translation: string | null
           symbol: string | null
           type: string | null
         }
         Insert: {
+          bookmarked?: boolean | null
+          checkedBy?: string | null
           created_at?: string
           description?: string | null
           difficulty_class?: number | null
           extended_description?: string | null
+          filledWithAI?: boolean | null
           highlights?: string | null
           id?: number
           intro?: string | null
+          position?: number | null
           rule_name?: string | null
           rule_name_translation?: string | null
           symbol?: string | null
           type?: string | null
         }
         Update: {
+          bookmarked?: boolean | null
+          checkedBy?: string | null
           created_at?: string
           description?: string | null
           difficulty_class?: number | null
           extended_description?: string | null
+          filledWithAI?: boolean | null
           highlights?: string | null
           id?: number
           intro?: string | null
+          position?: number | null
           rule_name?: string | null
           rule_name_translation?: string | null
           symbol?: string | null
@@ -352,9 +356,13 @@ export type Database = {
       }
       turkish_lessons: {
         Row: {
+          conclusion: string | null
           created_at: string
           grammar_rule_id: number | null
           id: number
+          img_url: string | null
+          introduction: string | null
+          promptForImageGeneration: string | null
           quiz_id: number | null
           sentence_1: string | null
           sentence_1_en: string | null
@@ -401,9 +409,13 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          conclusion?: string | null
           created_at?: string
           grammar_rule_id?: number | null
           id?: number
+          img_url?: string | null
+          introduction?: string | null
+          promptForImageGeneration?: string | null
           quiz_id?: number | null
           sentence_1?: string | null
           sentence_1_en?: string | null
@@ -450,9 +462,13 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          conclusion?: string | null
           created_at?: string
           grammar_rule_id?: number | null
           id?: number
+          img_url?: string | null
+          introduction?: string | null
+          promptForImageGeneration?: string | null
           quiz_id?: number | null
           sentence_1?: string | null
           sentence_1_en?: string | null
@@ -509,7 +525,7 @@ export type Database = {
           {
             foreignKeyName: "turkish_lessons_quiz_id_fkey"
             columns: ["quiz_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "turkish_quizzes_result"
             referencedColumns: ["id"]
           },
@@ -519,22 +535,33 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          rule_id: number | null
           score_global: number | null
           user_id: string | null
         }
         Insert: {
           created_at?: string
           id?: number
+          rule_id?: number | null
           score_global?: number | null
           user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: number
+          rule_id?: number | null
           score_global?: number | null
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "turkish_quizzes_result_rule_id_fkey"
+            columns: ["rule_id"]
+            isOneToOne: false
+            referencedRelation: "turkish_grammar_rules"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       turkish_quizzes_series: {
         Row: {
@@ -606,15 +633,7 @@ export type Database = {
           words_learned_count?: number | null
           words_mastered_count?: number | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "turkish_vocabulary_scores_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       turkish_words: {
         Row: {
@@ -622,11 +641,17 @@ export type Database = {
           frecuency_class: number | null
           id: number
           role: string | null
+          role_2: string | null
+          role_3: string | null
           text: string | null
           translation: string | null
+          translation_2: string | null
+          translation_3: string | null
           word_sentence: string | null
           word_sentence_2: string | null
           word_sentence_2_translation: string | null
+          word_sentence_3: string | null
+          word_sentence_3_translation: string | null
           word_sentence_translation: string | null
         }
         Insert: {
@@ -634,11 +659,17 @@ export type Database = {
           frecuency_class?: number | null
           id?: number
           role?: string | null
+          role_2?: string | null
+          role_3?: string | null
           text?: string | null
           translation?: string | null
+          translation_2?: string | null
+          translation_3?: string | null
           word_sentence?: string | null
           word_sentence_2?: string | null
           word_sentence_2_translation?: string | null
+          word_sentence_3?: string | null
+          word_sentence_3_translation?: string | null
           word_sentence_translation?: string | null
         }
         Update: {
@@ -646,11 +677,17 @@ export type Database = {
           frecuency_class?: number | null
           id?: number
           role?: string | null
+          role_2?: string | null
+          role_3?: string | null
           text?: string | null
           translation?: string | null
+          translation_2?: string | null
+          translation_3?: string | null
           word_sentence?: string | null
           word_sentence_2?: string | null
           word_sentence_2_translation?: string | null
+          word_sentence_3?: string | null
+          word_sentence_3_translation?: string | null
           word_sentence_translation?: string | null
         }
         Relationships: []
@@ -659,7 +696,7 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          user_id: string | null
+          user_id: string
           word_id: number | null
           word_learned: boolean | null
           word_mastered: boolean | null
@@ -667,7 +704,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: number
-          user_id?: string | null
+          user_id?: string
           word_id?: number | null
           word_learned?: boolean | null
           word_mastered?: boolean | null
@@ -675,19 +712,12 @@ export type Database = {
         Update: {
           created_at?: string
           id?: number
-          user_id?: string | null
+          user_id?: string
           word_id?: number | null
           word_learned?: boolean | null
           word_mastered?: boolean | null
         }
         Relationships: [
-          {
-            foreignKeyName: "turkish_words_knowledge_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "turkish_words_knowledge_word_id_fkey"
             columns: ["word_id"]
@@ -713,21 +743,25 @@ export type Database = {
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -745,14 +779,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -768,14 +804,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -791,14 +829,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -806,22 +846,21 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },

@@ -2,6 +2,15 @@ import type { Database } from "~/supabase/types";
 
 export type GrammarRow = Database['public']['Tables']['turkish_grammar_rules']['Row']
 
+type GrammarRuleLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert'
+
+export type GrammarRuleMeta = { 
+  level: GrammarRuleLevel,
+  name: GrammarRow['rule_name'],
+  id: GrammarRow['id']
+}
+
+
 export type GrammarRule = {
   id: GrammarRow['id'];
   ruleName: GrammarRow['rule_name'];

@@ -1,13 +1,14 @@
 import type { VNode } from "vue";
 import { h } from "vue";
 import type { GrammarRule } from "~/types/grammar-rule.ts";
-
+import type { Database } from "~/supabase/types";
 
 export const grammarLevelTabs = {
   firstTab : { title: 'Beginner', icon: 'academic', activeBgColorClass: 'bg-success/80', activeTxtColorClass: 'text-white'},
   secondTab : { title: 'Intermediate', icon: 'trophy', activeBgColorClass: 'bg-warning/80', activeTxtColorClass: 'text-white'},
   thirdTab : { title: 'Advanced', icon: 'rocket', activeBgColorClass: 'bg-error/80', activeTxtColorClass: 'text-white'}
 }
+
 
 // Mapping des niveaux de difficulté
 export const DIFFICULTY_LEVELS = {
@@ -181,3 +182,38 @@ export function getPercentageStyleClass(progress: number): string {
     return "text-neutral";
   }
 }
+
+export const parseRules = (modules: Array<Database['public']['Tables']['turkish_grammar_rules']['Row'] & { 'turkish_grammar_scores': Array<{score: number}>}>): Array<GrammarRule & {score: Array<{score: number}>}> => {
+  return modules.map((module) => (
+    {
+      id: module.id,
+      ruleName: module.rule_name,
+      ruleNameTranslation: module.rule_name_translation,
+      difficultyClass: module.difficulty_class,
+      intro: module.intro,
+      description: module.description,
+      highlights: module.highlights,
+      extendedDescription: module.extended_description,
+      symbol: module.symbol,
+      score: module.turkish_grammar_scores,
+      type: module.type,
+      bookmarked: module.bookmarked,
+    }))
+}
+
+export const parseRuleData = (data: Database['public']['Tables']['turkish_grammar_rules']['Row']): GrammarRule  => {
+  return {
+    id: data.id,
+    ruleName: data.rule_name,
+    ruleNameTranslation: data.rule_name_translation,
+    difficultyClass: data.difficulty_class,
+    symbol: data.symbol,
+    bookmarked: data.bookmarked,
+    description: data.description,
+    highlights: data.highlights,
+    type: data.type,
+    extendedDescription: data.extended_description,
+    intro: data.intro,
+    // score
+  };
+};

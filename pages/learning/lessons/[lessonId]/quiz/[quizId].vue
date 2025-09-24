@@ -1,102 +1,55 @@
 <script setup lang="ts">
-import type { ExpressionContent } from "~/types/expression";
+import type { ExpressionContent } from "~/types/vocabulary.ts/expression";
 import type {
   FormQuizState,
   QuizFetchedQuestion,
-  QuizFormattedQuestion,
-} from "~/types/quiz.ts";
-import type { Word, WordContent } from "~/types/word";
-import type { QuizQuestion } from "~/utils/learning/lesson-quiz";
-import { parseQuizQuestion } from "~/utils/learning/quiz";
+  GrammarQuizQuestion,
+} from "~/types/quiz/quiz";
+import type { Word, WordContent } from "~/types/vocabulary.ts/word";
+import { initializeFormQuiz, parseGrammarQuizQuestion } from "~/utils/learning/quiz";
 import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
 import { LayoutKeyElementRule } from "#components";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
+import type { GrammarRuleMeta } from "~/types/grammar-rule";
 import { mockData } from "../../mockData";
+import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
 
 definePageMeta({
   layout: "quiz",
 });
 
-
 const TOTAL_GRAMMAR_QUESTIONS = 5;
-
 const route = useRoute();
 const lessonId = String(route.params.lessonId);
 const quizId = String(route.params.quizId);
 
 const isLoading = ref<boolean>(true);
 const isLoadingFetchingLessonVocabulary = ref<boolean>(true);
-const grammarQuiz = ref<QuizQuestion[] | null>(null);
+
+// List of questions for grammar, words, expressions quizzes
+const grammarQuizQuestions = ref<GrammarQuizQuestion[] | null>(null);
+const wordsQuizQuestions = ref<VocabularyQuizQuestion[] | null>(null);
+const expressionsQuizQuestions = ref<VocabularyQuizQuestion[] | null>(null);
+
+// Maps memorizing quizzes values for grammar, words, expressions
 const formGrammarQuiz = ref<FormQuizState>({});
+const formWordsQuiz = ref<FormQuizState>({});
+const formExpressionsQuiz = ref<FormQuizState>({});
+
+// List of words and expressions to be used when generating vocabulary quizzes
 const wordsForQuiz = ref<WordContent[]>([]);
 const expressionsForQuiz = ref<ExpressionContent[]>([]);
-const wordsQuiz = ref<QuizQuestion[] | null>(null);
-const formWordsQuiz = ref<FormQuizState>({});
-const expressionsQuiz = ref<QuizQuestion[] | null>(null);
-const formExpressionsQuiz = ref<FormQuizState>({});
-const grammarRuleMetaData = ref<{level: 'beginner' | 'intermediate' | 'advanced' | 'expert', name: string, id: number} | null>(null);
+
+
+// Information data about the targeted grammar rule to display in the quiz
+const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
+
 
 const currentQuestionIndex = ref<number>(0);
 const selectedAnswer = ref<string | null>(null);
 const isQuizCompleted = ref<boolean>(false);
 const viewingCompletedQuestion = ref<boolean>(false);
 
-
-
-const initializeGrammarFormQuiz = (questions: QuizFormattedQuestion[]): void => {
-  formGrammarQuiz.value = questions.reduce(
-    (
-      acc: FormQuizState,
-      currentValue: QuizFormattedQuestion,
-      index: number,
-    ) => {
-      acc[index + 1] = {
-        questionId: currentValue.id,
-        selectedOption: null,
-        correctAnswer: currentValue.correctAnswer,
-      };
-      return acc;
-    },
-    {},
-  );
-};
-
-const initializeWordsFormQuiz = (questions: QuizQuestion[]): void => {
-  formWordsQuiz.value = questions.reduce(
-    (
-      acc: FormQuizState,
-      currentValue: QuizQuestion,
-      index: number,
-    ) => {
-      acc[index + 1] = {
-        questionId: currentValue.id,
-        selectedOption: null,
-        correctAnswer: currentValue.correctAnswer,
-      };
-      return acc;
-    },
-    {},
-  );
-};
-
-const initializeExpressionsFormQuiz = (questions: QuizQuestion[]): void => {
-
-  formExpressionsQuiz.value = questions.reduce(
-    (
-      acc: FormQuizState,
-      currentValue: QuizQuestion,
-      index: number,
-    ) => {
-      acc[index + 1] = {
-        questionId: currentValue.id,
-        selectedOption: null,
-        correctAnswer: currentValue.correctAnswer,
-      };
-      return acc;
-    },
-    {},
-  );
-};
 
 // Fetch lesson data
 const getVocabularyFromLesson = async () => {
@@ -141,16 +94,13 @@ const getAdditionnalExpressionsForQuiz = async () => {
 const getGrammarQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
-      return quizQuestions.map((question) => parseQuizQuestion(question));
+      return quizQuestions.map((question) => parseGrammarQuizQuestion(question));
     },
   });
-  console.log("questions", data.value);
   if (data.value) {
-    grammarQuiz.value = data.value;
-    initializeGrammarFormQuiz(data.value);
+    grammarQuizQuestions.value = data.value;
+    initializeFormQuiz(formGrammarQuiz, data.value);
   }
-  console.log("grammarQuiz", grammarQuiz.value);
-  console.log("formGrammarQuiz", formGrammarQuiz.value);
   isLoading.value = false;
 };
 
@@ -166,15 +116,13 @@ const getGeneratedVocabularyQuiz = async () => {
   // );
   const data = mockData;
   
-  console.log("data", data);
   if (data) {
-    console.log("generatedVocabularyQuiz", data);
     
     // Parse the JSON string into an objectn    
     // const parsedData = JSON.parse(data);
     const parsedData = mockData;
     console.log("parsedData", parsedData);
-    const wordsArray = [];
+    const wordsArray : GrammarQuizQuestion[] = [];
     if (parsedData.words) {
       for (let i = 1; i <= 20; i++) {
         const questionKey = `question${i}`;
@@ -193,10 +141,8 @@ const getGeneratedVocabularyQuiz = async () => {
         }
       }
     }
-    console.log("wordsArray", wordsArray);
-    wordsQuiz.value = wordsArray;
-    console.log("wordsQuiz", wordsQuiz.value);
-    initializeWordsFormQuiz(wordsQuiz.value);
+    wordsQuizQuestions.value = wordsArray;
+    if (wordsQuizQuestions.value) initializeFormQuiz(formWordsQuiz, wordsQuizQuestions.value);
     console.log("formWordsQuiz", formWordsQuiz.value);
     
     // Parse the expressions object into an array
@@ -219,28 +165,28 @@ const getGeneratedVocabularyQuiz = async () => {
         }
       }
     }
-    expressionsQuiz.value = expressionsArray;
-    initializeExpressionsFormQuiz(expressionsQuiz.value);
-    console.log("expressionsQuiz", expressionsQuiz.value);
+    expressionsQuizQuestions.value = expressionsArray;
+    if (expressionsQuizQuestions.value) initializeFormQuiz(formExpressionsQuiz, expressionsQuizQuestions.value);
+    console.log("expressionsQuizQuestions", expressionsQuizQuestions.value);
     console.log("formExpressionsQuiz", formExpressionsQuiz.value);
   }
 };
 
 const currentQuestion = computed(() => {
   // Determine which section we're in based on current question index  
-  const grammarLength = grammarQuiz.value?.length || 0;
+  const grammarLength = grammarQuizQuestions.value?.length || 0;
   const wordsLength = wordsForQuiz.value?.length || 0;
   if (currentQuestionIndex.value < grammarLength) {
      // Grammar sectionn    
-  return grammarQuiz.value?.[currentQuestionIndex.value] || null;
+  return grammarQuizQuestions.value?.[currentQuestionIndex.value] || null;
 } else if (currentQuestionIndex.value < grammarLength + wordsLength) {
     // Words section
     const wordIndex = currentQuestionIndex.value - grammarLength;
-    return wordsQuiz.value?.[wordIndex] || null;
+    return wordsQuizQuestions.value?.[wordIndex] || null;
   } else {
     // Expressions section
     const expressionIndex = currentQuestionIndex.value - grammarLength - wordsLength;
-    return expressionsQuiz.value?.[expressionIndex] || null;
+    return expressionsQuizQuestions.value?.[expressionIndex] || null;
   }
 });
 
@@ -251,7 +197,7 @@ const currentQuestionOptions = computed(() => {
 });
 
 const totalQuestions = computed(() => {
-  return (grammarQuiz.value?.length || 0) + 
+  return (grammarQuizQuestions.value?.length || 0) + 
          (wordsForQuiz.value?.length || 0) + 
          (expressionsForQuiz.value?.length || 0);
 });
@@ -269,9 +215,9 @@ const currentSection = computed(() => {
     // For vocabulary quizzes, determine if we're in words or expressions
     const wordsCount = wordsForQuiz.value.length;
     const expressionsCount = expressionsForQuiz.value.length;
-    const grammarCount = grammarQuiz.value?.length || 0;
+    const grammarCount = grammarQuizQuestions.value?.length || 0;
     
-    if (currentQuestionIndex.value < (grammarQuiz.value?.length || 0) + wordsCount) {
+    if (currentQuestionIndex.value < (grammarQuizQuestions.value?.length || 0) + wordsCount) {
       return {
         name: 'Words',
         current: currentQuestionIndex.value - grammarCount + 1,
@@ -322,10 +268,10 @@ const goToNextQuestion = () => {
     // Store answer in the appropriate form based on current section
     if (isGrammarQuiz.value && formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
       formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = selectedOptionNumber;
-    } else if (isWordsQuiz.value && formWordsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) + 1]) {
-      formWordsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) + 1].selectedOption = selectedOptionNumber;
-    } else if (isExpressionsQuiz.value && formExpressionsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) - (wordsForQuiz.value?.length || 0) + 1]) {
-      formExpressionsQuiz.value[currentQuestionIndex.value - (grammarQuiz.value?.length || 0) - (wordsForQuiz.value?.length || 0) + 1].selectedOption = selectedOptionNumber;
+    } else if (isWordsQuiz.value && formWordsQuiz.value[currentQuestionIndex.value - (grammarQuizQuestions.value?.length || 0) + 1]) {
+      formWordsQuiz.value[currentQuestionIndex.value - (grammarQuizQuestions.value?.length || 0) + 1].selectedOption = selectedOptionNumber;
+    } else if (isExpressionsQuiz.value && formExpressionsQuiz.value[currentQuestionIndex.value - (grammarQuizQuestions.value?.length || 0) - (wordsForQuiz.value?.length || 0) + 1]) {
+      formExpressionsQuiz.value[currentQuestionIndex.value - (grammarQuizQuestions.value?.length || 0) - (wordsForQuiz.value?.length || 0) + 1].selectedOption = selectedOptionNumber;
     }
 
     if (currentQuestionIndex.value < totalQuestions.value - 1) {
@@ -407,7 +353,7 @@ const goToPreviousQuestionInReview = () => {
 
 // Calculate scores for each section
 const grammarScore = computed(() => {
-  if (!grammarQuiz.value || !formGrammarQuiz.value) return 0;
+  if (!grammarQuizQuestions.value || !formGrammarQuiz.value) return 0;
   let correct = 0;
   let total = 0;
   
@@ -424,7 +370,7 @@ const grammarScore = computed(() => {
 });
 
 const wordsScore = computed(() => {
-  if (!wordsQuiz.value || !formWordsQuiz.value) return 0;
+  if (!wordsQuizQuestions.value || !formWordsQuiz.value) return 0;
   let correct = 0;
   let total = 0;
   
@@ -441,7 +387,7 @@ const wordsScore = computed(() => {
 });
 
 const expressionsScore = computed(() => {
-  if (!expressionsQuiz.value || !formExpressionsQuiz.value) return 0;
+  if (!expressionsQuizQuestions.value || !formExpressionsQuiz.value) return 0;
   let correct = 0;
   let total = 0;
   
@@ -475,7 +421,7 @@ const globalScore = computed(() => {
 
 // Check if a specific question was answered correctly
 const isQuestionCorrect = (questionIndex: number) => {
-  const grammarLength = grammarQuiz.value?.length || 0;
+  const grammarLength = grammarQuizQuestions.value?.length || 0;
   const wordsLength = wordsForQuiz.value?.length || 0;
   
   if (questionIndex < grammarLength) {
@@ -495,7 +441,7 @@ const isQuestionCorrect = (questionIndex: number) => {
 
 // Get user's selected answer for a question
 const getUserAnswer = (questionIndex: number) => {
-  const grammarLength = grammarQuiz.value?.length || 0;
+  const grammarLength = grammarQuizQuestions.value?.length || 0;
   const wordsLength = wordsForQuiz.value?.length || 0;
   
   if (questionIndex < grammarLength) {
@@ -515,14 +461,14 @@ const getUserAnswer = (questionIndex: number) => {
 
 // Determine quiz type based on quiz data structure
 const isGrammarQuiz = computed(() => {
-  return currentQuestionIndex.value < (grammarQuiz.value?.length || 0);
+  return currentQuestionIndex.value < (grammarQuizQuestions.value?.length || 0);
 });
 
 const isWordsQuiz = computed(() => {
-  return currentQuestionIndex.value >= (grammarQuiz.value?.length || 0) && currentQuestionIndex.value < (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0);
+  return currentQuestionIndex.value >= (grammarQuizQuestions.value?.length || 0) && currentQuestionIndex.value < (grammarQuizQuestions.value?.length || 0) + (wordsForQuiz.value?.length || 0);
 });
 const isExpressionsQuiz = computed(() => {
-  return currentQuestionIndex.value >= (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) && currentQuestionIndex.value < (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0) + (expressionsForQuiz.value?.length || 0);
+  return currentQuestionIndex.value >= (grammarQuizQuestions.value?.length || 0) + (wordsForQuiz.value?.length || 0) && currentQuestionIndex.value < (grammarQuizQuestions.value?.length || 0) + (wordsForQuiz.value?.length || 0) + (expressionsForQuiz.value?.length || 0);
 });
 
 const isVocabularyQuiz = computed(() => {
@@ -533,7 +479,7 @@ const isVocabularyQuiz = computed(() => {
 
 // Summary data for completed quiz
 const validatedWords = computed(() => {
-  if (!wordsQuiz.value || !formWordsQuiz.value) return { correct: 0, total: 0 };
+  if (!wordsQuizQuestions.value || !formWordsQuiz.value) return { correct: 0, total: 0 };
   let correct = 0;
   let total = 0;
   
@@ -550,7 +496,7 @@ const validatedWords = computed(() => {
 });
 
 const validatedExpressions = computed(() => {
-  if (!expressionsQuiz.value || !formExpressionsQuiz.value) return { correct: 0, total: 0 };
+  if (!expressionsQuizQuestions.value || !formExpressionsQuiz.value) return { correct: 0, total: 0 };
   let correct = 0;
   let total = 0;
   
@@ -593,10 +539,10 @@ const detailedResults = computed(() => {
   // Get actual words that were validated/invalidated
   const validatedWordsList = [];
   const invalidatedWordsList = [];
-  if (wordsQuiz.value && formWordsQuiz.value) {
+  if (wordsQuizQuestions.value && formWordsQuiz.value) {
     Object.values(formWordsQuiz.value).forEach((answer, index) => {
-      if (answer.selectedOption !== null && wordsQuiz.value[index]) {
-        const question = wordsQuiz.value[index];
+      if (answer.selectedOption !== null && wordsQuizQuestions.value[index]) {
+        const question = wordsQuizQuestions.value[index];
         const correctAnswer = question[`option${answer.correctAnswer}`];
         const userAnswer = question[`option${answer.selectedOption}`];
         
@@ -612,10 +558,10 @@ const detailedResults = computed(() => {
   // Get actual expressions that were validated/invalidated
   const validatedExpressionsList = [];
   const invalidatedExpressionsList = [];
-  if (expressionsQuiz.value && formExpressionsQuiz.value) {
+  if (expressionsQuizQuestions.value && formExpressionsQuiz.value) {
     Object.values(formExpressionsQuiz.value).forEach((answer, index) => {
-      if (answer.selectedOption !== null && expressionsQuiz.value[index]) {
-        const question = expressionsQuiz.value[index];
+      if (answer.selectedOption !== null && expressionsQuizQuestions.value[index]) {
+        const question = expressionsQuizQuestions.value[index];
         const correctAnswer = question[`option${answer.correctAnswer}`];
         const userAnswer = question[`option${answer.selectedOption}`];
         
@@ -672,7 +618,7 @@ const wordsProgress = computed(() => {
   const progress = [];
   
   for (let i = 0; i < wordsForQuiz.value.length; i++) {
-    const questionIndex = i + (grammarQuiz.value?.length || 0);
+    const questionIndex = i + (grammarQuizQuestions.value?.length || 0);
     if (isVocabularyQuiz.value) {
       const hasAnswer = formWordsQuiz.value[i + 1] && formWordsQuiz.value[i + 1].selectedOption !== null;
       progress.push({
@@ -703,7 +649,7 @@ const expressionsProgress = computed(() => {
   const progress = [];
   
   for (let i = 0; i < expressionsForQuiz.value.length; i++) {
-    const questionIndex = i + (grammarQuiz.value?.length || 0) + (wordsForQuiz.value?.length || 0);
+    const questionIndex = i + (grammarQuizQuestions.value?.length || 0) + (wordsForQuiz.value?.length || 0);
     if (isExpressionsQuiz.value) {
       const hasAnswer = formExpressionsQuiz.value[i + 1] && formExpressionsQuiz.value[i + 1].selectedOption !== null;
       progress.push({
@@ -730,49 +676,12 @@ const expressionsProgress = computed(() => {
   return progress;
 });
 
-// Get grammar rule level for color matching
-const grammarRuleLevel = computed(() => {
-  return grammarRuleMetaData.value?.level || 'beginner';
-});
-
-// Get grammar colors based on rule level (matching KeyElementRule)
-const grammarColors = computed(() => {
-  switch (grammarRuleLevel.value) {
-    case 'beginner':
-      return {
-        gradient: 'from-emerald-500 to-teal-600',
-        stroke: '#10b981', // emerald-500
-        text: '#10b981'
-      };
-    case 'intermediate':
-      return {
-        gradient: 'from-amber-500 to-orange-600', 
-        stroke: '#f59e0b', // amber-500
-        text: '#f59e0b'
-      };
-    case 'advanced':
-      return {
-        gradient: 'from-pink-500 to-rose-600',
-        stroke: '#ec4899', // pink-500
-        text: '#ec4899'
-      };
-    case 'expert':
-    default:
-      return {
-        gradient: 'from-blue-600 to-indigo-700',
-        stroke: '#2563eb', // blue-600
-        text: '#2563eb'
-      };
-  }
-});
 
 await getGrammarQuizData();
 await getVocabularyFromLesson();
 await getAdditionnalWordsForQuiz();
 await getAdditionnalExpressionsForQuiz();
 await getGeneratedVocabularyQuiz();
-
-
 
 </script>
 

@@ -1,22 +1,13 @@
-import type { QuizFetchedQuestion, QuizFormattedQuestion } from "~/types/quiz.ts";
+import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quiz/quiz";
+import type { GrammarQuizQuestion } from "./lesson-quiz";
 
-type QuizQuestion = {
-  type: string | null;
-  difficulty: number | null;
-  grammarRuleId: number | null;
-  correctAnswer: string | null;
-  question: string | null;
-  option1: string | null;
-  option2: string | null;
-  option3: string | null;
-  option4: string | null;
-}
 
-export const parseQuestions = (data: any): QuizQuestion => {
+export const parseQuestions = (data: any): GrammarQuizQuestion => {
   return {
+    id: data.id,
     type: data.turkish_grammar_quizzes.question_type ?? null,
     difficulty: data.turkish_grammar_quizzes.difficulty_class ?? null,
-    grammarRuleId: data.turkish_grammar_quizzes.grammar_rule_id ?? null,
+    ruleId: data.turkish_grammar_quizzes.grammar_rule_id ?? null,
     correctAnswer: data.turkish_grammar_quizzes.correct_answer ?? null,
     question: data.turkish_grammar_quizzes.text ?? null,
     option1: data.turkish_grammar_quizzes.option_1 ?? null,
@@ -27,7 +18,7 @@ export const parseQuestions = (data: any): QuizQuestion => {
 };
 
 
-export const parseQuizQuestion = (question: QuizFetchedQuestion): QuizFormattedQuestion => {
+export const parseGrammarQuizQuestion = (question: QuizFetchedQuestion): GrammarQuizQuestion => {
   return {
     id: question.id,
     type: question.turkish_grammar_quizzes.question_type ?? null,
@@ -76,3 +67,23 @@ export const handleGenerationQuiz = async (lessonId: string, ruleId: number, red
     );
   }
 };
+
+
+export const initializeFormQuiz = (quiz: Ref<FormQuizState>, questions: GrammarQuizQuestion[] | GrammarQuizQuestion[]): void => {
+  quiz.value = questions.reduce(
+    (
+      acc: FormQuizState,
+      currentValue: GrammarQuizQuestion | GrammarQuizQuestion,
+      index: number,
+    ) => {
+      acc[index + 1] = {
+        questionId: currentValue.id,
+        selectedOption: null,
+        correctAnswer: currentValue.correctAnswer,
+      };
+      return acc;
+    },
+    {},
+  );
+}
+

@@ -50,6 +50,11 @@ export default defineNuxtConfig({
       exclude: [],
       saveRedirectToCookie: false,
     },
+    // Génération automatique des types
+    typegen: {
+      enabled: true,
+      outputPath: 'supabase/types.ts'
+    }
   },
   stripe: {
     // Server

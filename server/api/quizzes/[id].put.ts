@@ -8,6 +8,7 @@ const supabase = createClient(
 );
 
 export default defineEventHandler(async (event) => {
+  console.log('quizzes/[id].put.ts ==> start')
   try {
     const ruleId = getRouterParam(event, "id");
     console.log('ruleId', ruleId)
@@ -62,7 +63,6 @@ export default defineEventHandler(async (event) => {
       .upsert({
         score_global: 0,
         rule_id: ruleId,
-        lesson_id: lessonId,
         user_id: userId,
       })
       .select("id")

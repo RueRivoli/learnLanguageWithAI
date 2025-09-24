@@ -59,12 +59,8 @@ export default defineEventHandler(async (event) => {
     //       console.error(`Error updating question ${questionId}:`, error);
     //     }
     //   });
-    console.log('mettre à jour score du quiz ',)
-    console.log('pour l\'utilisateur: ', user.id)
-    console.log('avec ce score: ', score)
-    console.log('avec cet id de quiz: ', quizId)
     const grammarRuleScore = await getAverageScore(score, user.id, ruleId)
-    console.log('xxxxxx grammarRuleScore xxxxxxxxx', grammarRuleScore)
+
     const updateQuizResult = async () => {
         const { error: errorFromQuizzedResult } = await supabase.from("turkish_quizzes_result").update({ score_global: score }).eq("id", quizId).eq("user_id", user.id)
       

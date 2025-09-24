@@ -8,9 +8,9 @@ import {
 import type {
   FormQuizState,
   QuizFetchedQuestion,
-  QuizFormattedQuestion,
-} from "~/types/quiz.ts";
-import { parseQuizQuestion } from "~/utils/learning/quiz";
+  GrammarQuizQuestion,
+} from "~/types/quiz/quiz";
+import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
 
 definePageMeta({
   layout: "authenticated",
@@ -18,7 +18,7 @@ definePageMeta({
 
 const route = useRoute();
 const isLoading = ref<boolean>(true);
-const quiz = ref<QuizFormattedQuestion[]>([]);
+const quiz = ref<GrammarQuizQuestion[]>([]);
 const formQuiz = ref<FormQuizState>({});
 
 const { lessonId, quizId } = route.params; // strings
@@ -42,11 +42,11 @@ const calculateScoreTotal = () => {
   }, 0);
 };
 
-const initializeFormQuiz = (questions: QuizFormattedQuestion[]): void => {
+const initializeFormQuiz = (questions: GrammarQuizQuestion[]): void => {
   formQuiz.value = questions.reduce(
     (
       acc: FormQuizState,
-      currentValue: QuizFormattedQuestion,
+      currentValue: GrammarQuizQuestion,
       index: number,
     ) => {
       acc[index + 1] = {
@@ -63,7 +63,7 @@ const initializeFormQuiz = (questions: QuizFormattedQuestion[]): void => {
 const getQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
-      return quizQuestions.map((question) => parseQuizQuestion(question));
+      return quizQuestions.map((question) => parseGrammarQuizQuestion(question));
     },
   });
   console.log("questions", data.value);
