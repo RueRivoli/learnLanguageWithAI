@@ -2,7 +2,6 @@
 import DOMPurify from "dompurify";
 import type { GrammarRule } from "~/types/grammar-rule";
 import { parseRuleData } from "~/utils/learning/grammar";
-const router = useRouter();
 
 definePageMeta({
   layout: "authenticated",
