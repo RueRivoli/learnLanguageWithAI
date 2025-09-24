@@ -1,4 +1,4 @@
-import { defineEventHandler } from "h3";
+import { defineEventHandler, readBody, getHeader } from "h3";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -6,9 +6,9 @@ const supabase = createClient(
   process.env.SERVICE_SUPABASE_KEY,
 );
 
-const parseModelResponse = (text: string, ruleId: number) => {
+const parseModelResponse = (text: string, ruleId: number, userId: string) => {
   const newLesson = JSON.parse(text)
-  return { user_id: "502a892f-8e9c-4a73-8635-b932f595d68a", grammar_rule_id: ruleId, ...newLesson }
+  return { user_id: userId, grammar_rule_id: ruleId, ...newLesson }
 }
 
 const lessonFormat = { "type": "json_schema", "json_schema": {
@@ -125,9 +125,9 @@ const linkExpressionsToLesson = async (expressionIds: number[], lessonId: number
   }
 }
 
-const saveNewLesson = async (content: string, ruleId: number) => {
+const saveNewLesson = async (content: string, ruleId: number, userId: string) => {
   console.log('saveNewLesson', content, ruleId)
-  const newLessonRow = parseModelResponse(content, ruleId)
+  const newLessonRow = parseModelResponse(content, ruleId, userId)
       // Save new lesson
       const { data: newLesson, error: errorLessons } = await supabase
       .from("turkish_lessons")
@@ -142,13 +142,34 @@ export default defineEventHandler(async (event) => {
     if (!body.message) {
       throw new Error('Missing prompt')
     }
-    const result = await $fetch(process.env.OPENAI_API_URL, {
+    // Resolve current user from Authorization header
+    const authHeader = getHeader(event, 'authorization')
+    if (!authHeader) {
+      throw new Error('Authorization header required')
+    }
+    const supabaseAuth = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_ANON_KEY,
+      {
+        global: {
+          headers: {
+            Authorization: authHeader
+          }
+        }
+      }
+    )
+    const { data: { user }, error: userError } = await supabaseAuth.auth.getUser()
+    if (userError) throw userError
+    if (!user?.id) {
+      throw new Error('Unable to resolve authenticated user')
+    }
+    const result = await fetch(process.env.OPENAI_API_URL as string, {
       method: 'POST',
       headers: {
           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
       },
-      body: {
+      body: JSON.stringify({
         model: 'gpt-4o',
         messages: [
           { role: 'system', content: 'You are a native experimented turkish teacher. Create a clear, captivating and helpful story to learn Turkish' },
@@ -157,12 +178,13 @@ export default defineEventHandler(async (event) => {
         response_format: lessonFormat,
         temperature: 0.7,
         max_tokens: 1000
-      }
+      })
     })
-    console.log('result', result, result.choices[0].message.content)
-    if (result && result.choices[0].message.content) {
+    const json = await result.json()
+    console.log('result', json, json.choices?.[0]?.message?.content)
+    if (json && json.choices?.[0]?.message?.content) {
       console.log('test')
-      const lesson = await saveNewLesson(result.choices[0].message.content, body.ruleId)
+      const lesson = await saveNewLesson(json.choices[0].message.content, body.ruleId, user.id)
       console.log('lesson', lesson)
       if (lesson) {
         linkWordsToLesson(body.wordIds, lesson[0].id)

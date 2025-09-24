@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckIcon, ClockIcon } from "@heroicons/vue/24/solid";
+import { ClockIcon } from "@heroicons/vue/24/solid";
 import {
   QuestionMarkCircleIcon,
   ArrowRightIcon,
@@ -17,10 +17,11 @@ definePageMeta({
 });
 
 const route = useRoute();
-const quizId = route.params.id;
 const isLoading = ref<boolean>(true);
 const quiz = ref<QuizFormattedQuestion[]>([]);
 const formQuiz = ref<FormQuizState>({});
+
+const { lessonId, quizId } = route.params; // strings
 
 const isQuizComplete = computed(() => {
   let complete = true;

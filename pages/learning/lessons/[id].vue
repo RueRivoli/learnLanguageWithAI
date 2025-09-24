@@ -135,7 +135,7 @@ getLesson();
 const handleGenerateQuiz = async () => {
   isLoading.value = true;
   if (!lesson.value?.grammarRuleId) return;
-  await handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
+  await handleGenerationQuiz(lessonId, lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
   isLoading.value = false;
 };
 
@@ -303,7 +303,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 </div>
               </div>
             </div>
-            <div class="mt-5 italic">
+            <div class="mt-5 italic" v-if="!lesson?.quizId">
               When you're done with the lesson, don't forget <span class="text-primary font-semibold">
                 
                 <button
@@ -315,6 +315,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   </button>
                 
                 </span> to update your scores
+            </div>
+            <div class="mt-5 italic" v-else>
+              Quiz is already filled out
             </div>
             <!-- Story Section (Full Width Below) -->
             <div id="story" class="w-full">

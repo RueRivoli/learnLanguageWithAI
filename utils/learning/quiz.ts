@@ -1,7 +1,16 @@
-import type { QuizFetchedQuestion, QuizFormattedQuestion, QuizQuestion, QuizQuestion } from "~/types/quiz.ts";
-import type { Database } from "~/supabase/types";
+import type { QuizFetchedQuestion, QuizFormattedQuestion } from "~/types/quiz.ts";
 
-
+type QuizQuestion = {
+  type: string | null;
+  difficulty: number | null;
+  grammarRuleId: number | null;
+  correctAnswer: string | null;
+  question: string | null;
+  option1: string | null;
+  option2: string | null;
+  option3: string | null;
+  option4: string | null;
+}
 
 export const parseQuestions = (data: any): QuizQuestion => {
   return {
@@ -35,20 +44,31 @@ export const parseQuizQuestion = (question: QuizFetchedQuestion): QuizFormattedQ
 };
 
 
-export const handleGenerationQuiz = async (ruleId: number, redirectionPath: string) => {
+export const handleGenerationQuiz = async (lessonId: string, ruleId: number, redirectionPath: string) => {
   try {
+    // Attach Authorization header from Supabase session for secure server-side auth
+    const { data: { session } } = await useSupabaseClient().auth.getSession()
+    const headers: Record<string, string> = {}
+    if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
     // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
-    const response = await $fetch(`/api/quizzes/${ruleId}`, {
+    const response = await $fetch<{ quizId: number }>(`/api/quizzes/${ruleId}`, {
       method: "PUT",
+      headers,
+      body: {
+        lessonId: lessonId,
+      },
     });
-    console.log("has generated a quizz with the id: ", response);
+    console.log("has generated a quiz with the quizId: ", response.quizId);
     // response is the id of the new generated quiz
-    if (response) {
-      // router.push(`/learning/quizzes/${response}`);
-      await navigateTo({
-        path: `${redirectionPath}/${response.quizId}`,
-      });
-    }
+    await $fetch(`/api/lessons/${lessonId}`, {
+      method: "PUT", 
+      body: {
+        quizId: response.quizId,
+      },
+    });
+    await navigateTo({
+      path: `${redirectionPath}/${response.quizId}`,
+    });
   } catch (err) {
     console.error(
       "An error occured while generating a new quiz, please try again.",

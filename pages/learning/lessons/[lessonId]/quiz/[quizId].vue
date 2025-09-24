@@ -17,6 +17,7 @@ definePageMeta({
   layout: "quiz",
 });
 
+
 const TOTAL_GRAMMAR_QUESTIONS = 5;
 
 const route = useRoute();
@@ -33,12 +34,13 @@ const wordsQuiz = ref<QuizQuestion[] | null>(null);
 const formWordsQuiz = ref<FormQuizState>({});
 const expressionsQuiz = ref<QuizQuestion[] | null>(null);
 const formExpressionsQuiz = ref<FormQuizState>({});
-const grammarRuleMetaData = ref<{level: 'beginner' | 'intermediate' | 'advanced' | 'expert', name: string} | null>(null);
+const grammarRuleMetaData = ref<{level: 'beginner' | 'intermediate' | 'advanced' | 'expert', name: string, id: number} | null>(null);
 
 const currentQuestionIndex = ref<number>(0);
 const selectedAnswer = ref<string | null>(null);
 const isQuizCompleted = ref<boolean>(false);
 const viewingCompletedQuestion = ref<boolean>(false);
+
 
 
 const initializeGrammarFormQuiz = (questions: QuizFormattedQuestion[]): void => {
@@ -60,7 +62,6 @@ const initializeGrammarFormQuiz = (questions: QuizFormattedQuestion[]): void => 
 };
 
 const initializeWordsFormQuiz = (questions: QuizQuestion[]): void => {
-
   formWordsQuiz.value = questions.reduce(
     (
       acc: FormQuizState,
@@ -107,6 +108,7 @@ const getVocabularyFromLesson = async () => {
     grammarRuleMetaData.value = {
       level: DIFFICULTY_LEVELS[data.value.turkish_grammar_rules.difficulty_class],
       name: data.value.turkish_grammar_rules.rule_name_translation,
+      id: data.value.turkish_grammar_rules.id,
     }
     wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => word.turkish_words));
     expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => expression.turkish_expressions));
@@ -293,6 +295,24 @@ const isLastQuestion = computed(() => {
 });
 
 
+const handleQuizResults = async() => {
+  console.log("handleQuizResults");
+  //console.log("score", score, quiz.value, quiz.value[0].grammarRuleId);
+  // Add your submission logic here
+  const { data: { session } } = await useSupabaseClient().auth.getSession()
+  const headers: Record<string, string> = {}
+  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+  await $fetch(`/api/quizzes/result/${quizId}`, {
+    method: "PUT",
+    headers,
+    body: {
+      ruleId: grammarRuleMetaData.value?.id,
+      score: grammarScore.value,
+      // value: formQuiz.value,
+    },
+  });
+}
+
 const goToNextQuestion = () => {
   if (selectedAnswer.value) {
     // Store the answer in the correct form based on current section
@@ -316,6 +336,7 @@ const goToNextQuestion = () => {
       isQuizCompleted.value = true;
       console.log("Quiz completed!", { formGrammarQuiz: formGrammarQuiz.value, formWordsQuiz: formWordsQuiz.value, formExpressionsQuiz: formExpressionsQuiz.value });
       // Open results modal after a short delay
+      handleQuizResults()
       setTimeout(() => {
         openResultsModal();
       }, 500);
@@ -751,10 +772,7 @@ await getAdditionnalWordsForQuiz();
 await getAdditionnalExpressionsForQuiz();
 await getGeneratedVocabularyQuiz();
 
-// Page title
-useHead({
-  title: `Quiz ${quizId} - Lesson ${lessonId}`,
-});
+
 
 </script>
 

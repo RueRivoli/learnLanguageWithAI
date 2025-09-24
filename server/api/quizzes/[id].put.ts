@@ -1,4 +1,4 @@
-import { defineEventHandler, getRouterParam } from "h3";
+import { defineEventHandler, getRouterParam, readBody, getHeader } from "h3";
 import { getRandomQuizzes } from "../quiz-models/[id].get";
 import { createClient } from "@supabase/supabase-js";
 
@@ -11,6 +11,29 @@ export default defineEventHandler(async (event) => {
   try {
     const ruleId = getRouterParam(event, "id");
     console.log('ruleId', ruleId)
+    const { lessonId } = await readBody(event);
+    // Resolve current user from Authorization header
+    const authHeader = getHeader(event, 'authorization')
+    if (!authHeader) {
+      throw new Error('Authorization header required')
+    }
+    const supabaseAuth = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_ANON_KEY,
+      {
+        global: {
+          headers: {
+            Authorization: authHeader
+          }
+        }
+      }
+    )
+    const { data: { user }, error: userError } = await supabaseAuth.auth.getUser()
+    if (userError) throw userError
+    if (!user?.id) {
+      throw new Error('Unable to resolve authenticated user')
+    }
+    const userId = user.id
     // 1 = easy; 2 = intermediate; 3 = difficult
     const difficultyLevels = [
       { category: 1, quantity: 2 },
@@ -39,6 +62,8 @@ export default defineEventHandler(async (event) => {
       .upsert({
         score_global: 0,
         rule_id: ruleId,
+        lesson_id: lessonId,
+        user_id: userId,
       })
       .select("id")
       .single();
@@ -57,7 +82,7 @@ export default defineEventHandler(async (event) => {
       question_id: id,
     }));
 
-    const { errorUpsert } = await supabase
+    const { error: errorUpsert } = await supabase
       .from("turkish_quizzes_series")
       .upsert(rowsToUpsert);
     if (errorUpsert) throw errorUpsert;
