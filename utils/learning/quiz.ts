@@ -1,5 +1,6 @@
 import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quiz/quiz";
 import type { GrammarQuizQuestion } from "./lesson-quiz";
+import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
 
 
 export const parseQuestions = (data: any): GrammarQuizQuestion => {
@@ -69,11 +70,11 @@ export const handleGenerationQuiz = async (lessonId: string, ruleId: number, red
 };
 
 
-export const initializeFormQuiz = (quiz: Ref<FormQuizState>, questions: GrammarQuizQuestion[] | GrammarQuizQuestion[]): void => {
+export const initializeFormQuiz = (quiz: Ref<FormQuizState>, questions: GrammarQuizQuestion[] | VocabularyQuizQuestion[]): void => {
   quiz.value = questions.reduce(
     (
       acc: FormQuizState,
-      currentValue: GrammarQuizQuestion | GrammarQuizQuestion,
+      currentValue: GrammarQuizQuestion | VocabularyQuizQuestion,
       index: number,
     ) => {
       acc[index + 1] = {

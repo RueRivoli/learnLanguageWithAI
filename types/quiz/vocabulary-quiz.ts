@@ -7,7 +7,7 @@ export type VocabularyQuizQuestion = {
     question: string,
     difficulty: number | null,
     translation: string,
-    correctAnswer: string,
+    correctAnswer: number,
     option1: string,
     option2: string,
     option3: string,

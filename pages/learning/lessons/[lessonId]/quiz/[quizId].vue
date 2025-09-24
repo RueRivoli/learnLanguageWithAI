@@ -7,12 +7,14 @@ import type {
 } from "~/types/quiz/quiz";
 import type { Word, WordContent } from "~/types/vocabulary.ts/word";
 import { initializeFormQuiz, parseGrammarQuizQuestion } from "~/utils/learning/quiz";
-import { promptGeneratedVocabularyQuiz } from "../../prompts/vocabulary-quiz";
+import { promptGeneratedVocabularyQuiz, promptGeneratedWordQuiz, promptGeneratedExpressionQuiz } from "../../prompts/vocabulary-quiz";
 import { LayoutKeyElementRule } from "#components";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import type { GrammarRuleMeta } from "~/types/grammar-rule";
-import { mockData } from "../../mockData";
+import { mockExpressionQuizQuestions, mockWordQuizQuestions } from "~/mockData/lessons/quiz/index";
 import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
+import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/generatedQuiz";
+import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
 
 definePageMeta({
   layout: "quiz",
@@ -106,70 +108,38 @@ const getGrammarQuizData = async () => {
 
 
 const getGeneratedVocabularyQuiz = async () => {
-  // const data  = await $fetch(`/api/generation/vocabulary-quiz/gpt/`, 
+  //   const generatedWordsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/words`, 
   //   {
   //     method: "POST",
   //     body: {
-  //       message: promptGeneratedVocabularyQuiz(wordsForQuiz.value, expressionsForQuiz.value)
+  //       message: promptGeneratedWordQuiz(wordsForQuiz.value)
   //     }
   //   }
   // );
-  const data = mockData;
-  
-  if (data) {
-    
-    // Parse the JSON string into an objectn    
-    // const parsedData = JSON.parse(data);
-    const parsedData = mockData;
-    console.log("parsedData", parsedData);
-    const wordsArray : GrammarQuizQuestion[] = [];
-    if (parsedData.words) {
-      for (let i = 1; i <= 20; i++) {
-        const questionKey = `question${i}`;
-        if (parsedData.words[questionKey]) {
-          wordsArray.push({
-            id: i, // Generate ID based on question number
-            type: 1, 
-            question: parsedData.words[questionKey].question,
-            translation: parsedData.words[questionKey].translation,
-            correctAnswer: parsedData.words[questionKey].correctAnswer,
-            option1: parsedData.words[questionKey].option1,
-            option2: parsedData.words[questionKey].option2,
-            option3: parsedData.words[questionKey].option3,
-            option4: parsedData.words[questionKey].option4
-          });
-        }
-      }
-    }
-    wordsQuizQuestions.value = wordsArray;
+  const generatedWordsQuiz = mockNotParsedWordQuizQuestions
+
+  // const generatedExpressionsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, 
+  //   {
+  //     method: "POST",
+  //     body: {
+  //       message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
+  //     }
+  //   }
+  // );
+  const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
+  if (generatedWordsQuiz) {
+    wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(generatedWordsQuiz);
+    // wordsQuizQuestions.value = mockWordQuizQuestions;
     if (wordsQuizQuestions.value) initializeFormQuiz(formWordsQuiz, wordsQuizQuestions.value);
     console.log("formWordsQuiz", formWordsQuiz.value);
-    
-    // Parse the expressions object into an array
-    const expressionsArray = [];
-    if (parsedData.expressions) {
-      for (let i = 1; i <= 5; i++) {
-        const questionKey = `question${i}`;
-        if (parsedData.expressions[questionKey]) {
-          expressionsArray.push({
-            id: i,
-            type: 1,
-            question: parsedData.expressions[questionKey].question,
-            translation: parsedData.expressions[questionKey].translation,
-            correctAnswer: parsedData.expressions[questionKey].correctAnswer,
-            option1: parsedData.expressions[questionKey].option1,
-            option2: parsedData.expressions[questionKey].option2,
-            option3: parsedData.expressions[questionKey].option3,
-            option4: parsedData.expressions[questionKey].option4
-          });
-        }
-      }
-    }
-    expressionsQuizQuestions.value = expressionsArray;
-    if (expressionsQuizQuestions.value) initializeFormQuiz(formExpressionsQuiz, expressionsQuizQuestions.value);
-    console.log("expressionsQuizQuestions", expressionsQuizQuestions.value);
-    console.log("formExpressionsQuiz", formExpressionsQuiz.value);
   }
+  if (generatedExpressionsQuiz) {
+      expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(generatedExpressionsQuiz);
+      // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
+      if (expressionsQuizQuestions.value) initializeFormQuiz(formExpressionsQuiz, expressionsQuizQuestions.value);
+      console.log("expressionsQuizQuestions", expressionsQuizQuestions.value);
+      console.log("formExpressionsQuiz", formExpressionsQuiz.value);
+    }
 };
 
 const currentQuestion = computed(() => {
