@@ -38,11 +38,11 @@ const totalExpressionsInK = computed(() => {
 <template>
   <!-- Total Words Mastered - Professional Design -->
   <div
-    class="group relative bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/60 rounded-xl shadow-sm border border-blue-200/60 p-4 hover:shadow-lg overflow-hidden"
+    class="group relative bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-xl shadow-md border border-blue-300/70 p-4 hover:shadow-xl hover:border-blue-400/80 overflow-hidden transition-all duration-300"
   >
     <!-- Professional background pattern -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-white to-indigo-50/30 opacity-80"
+      class="absolute inset-0 bg-gradient-to-br from-blue-100/60 via-blue-50/80 to-indigo-100/50 opacity-90"
     />
 
     <!-- Success celebration overlay -->
@@ -90,7 +90,7 @@ const totalExpressionsInK = computed(() => {
 
       <!-- Progress details -->
       <div
-        class="bg-gradient-to-r from-blue-50/80 to-indigo-50/60 rounded-lg p-3 border border-blue-100/60"
+        class="bg-gradient-to-r from-blue-100/90 to-indigo-100/80 rounded-lg p-3 border border-blue-200/80 shadow-sm"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -109,11 +109,11 @@ const totalExpressionsInK = computed(() => {
 
   <!-- Total Expressions Mastered - Professional Design -->
   <div
-    class="group relative bg-gradient-to-br from-purple-50/80 via-white to-pink-50/60 rounded-xl shadow-sm border border-purple-200/60 p-4 hover:shadow-lg overflow-hidden"
+    class="group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-xl shadow-md border border-purple-300/70 p-4 hover:shadow-xl hover:border-purple-400/80 overflow-hidden transition-all duration-300"
   >
     <!-- Professional background pattern -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-purple-50/40 via-white to-pink-50/30 opacity-80"
+      class="absolute inset-0 bg-gradient-to-br from-purple-100/60 via-purple-50/80 to-pink-100/50 opacity-90"
     />
 
     <!-- Success celebration overlay -->
@@ -161,7 +161,7 @@ const totalExpressionsInK = computed(() => {
 
       <!-- Progress details -->
       <div
-        class="bg-gradient-to-r from-purple-50/80 to-pink-50/60 rounded-lg p-3 border border-purple-100/60"
+        class="bg-gradient-to-r from-purple-100/90 to-pink-100/80 rounded-lg p-3 border border-purple-200/80 shadow-sm"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">

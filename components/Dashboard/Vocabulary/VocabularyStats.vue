@@ -261,7 +261,17 @@ watch(totalExpressions, () => {
       
       <!-- Grid container -->
       <div class="bg-gray-50 rounded-xl">
-        <div class="grid gap-0.5" style="grid-template-columns: repeat(50, minmax(0, 1fr));">
+        <!-- Loading skeleton -->
+        <div v-if="isLoadingWords" class="grid gap-0.5" style="grid-template-columns: repeat(50, minmax(0, 1fr));">
+          <div 
+            v-for="i in currentBatchSize" 
+            :key="`skeleton-${i}`"
+            class="aspect-square rounded-sm bg-gray-200 animate-pulse"
+          ></div>
+        </div>
+        
+        <!-- Actual grid data -->
+        <div v-else class="grid gap-0.5" style="grid-template-columns: repeat(50, minmax(0, 1fr));">
           <div 
             v-for="item in gridData" 
             :key="item.id"
@@ -333,7 +343,17 @@ watch(totalExpressions, () => {
       
       <!-- Grid container -->
       <div class="bg-gray-50 rounded-xl">
-        <div class="grid gap-0.5" style="grid-template-columns: repeat(40, minmax(0, 1fr));">
+        <!-- Loading skeleton -->
+        <div v-if="isLoadingExpressions" class="grid gap-0.5" style="grid-template-columns: repeat(40, minmax(0, 1fr));">
+          <div 
+            v-for="i in currentExpressionBatchSize" 
+            :key="`expression-skeleton-${i}`"
+            class="aspect-square rounded-sm bg-gray-200 animate-pulse"
+          ></div>
+        </div>
+        
+        <!-- Actual grid data -->
+        <div v-else class="grid gap-0.5" style="grid-template-columns: repeat(40, minmax(0, 1fr));">
           <div 
             v-for="item in expressionGridData" 
             :key="item.id"
