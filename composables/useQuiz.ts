@@ -1,7 +1,7 @@
-import type { FormQuizState, GrammarQuizQuestion, QuizProgress } from "~/types/quiz/quiz";
-import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
-import type { ExpressionContent } from "~/types/vocabulary.ts/expression";
-import type { WordContent } from "~/types/vocabulary.ts/word";
+import type { FormQuizState, GrammarQuizQuestion, QuizProgress } from "~/types/quizzes/quiz";
+import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
+import type { ExpressionContent } from "~/types/vocabulary/expression";
+import type { WordContent } from "~/types/vocabulary/word";
 import { initializeFormQuiz } from "~/utils/learning/quiz";
 
 const TOTAL_GRAMMAR_QUESTIONS_FULL_QUIZ = 5;
@@ -53,7 +53,7 @@ export const useQuiz = (grammarQuizQuestions: Ref<GrammarQuizQuestion[] | null>,
     return isWordsQuiz.value || isExpressionsQuiz.value;
   });
 
-  const currentQuestion = computed(() => {
+  const currentQuestion = computed(() : GrammarQuizQuestion | VocabularyQuizQuestion | null => {
     // Determine which section we're in based on current question index  
     const grammarLength = grammarQuizQuestions.value?.length || 0;
     const wordsLength = wordsForQuiz.value?.length || 0;
@@ -104,7 +104,7 @@ const currentSection = computed(() => {
   });
 
 
-const currentQuestionOptions = computed(() => {
+const currentQuestionOptions = computed((): Array<GrammarQuizQuestion['option1'] | VocabularyQuizQuestion['option1']> => {
     const question = currentQuestion.value;
     if (!question) return [];
     return [question.option1, question.option2, question.option3, question.option4];
@@ -365,8 +365,6 @@ const currentQuestionOptions = computed(() => {
         }
       }
     });
-    console.log("validatedWords", { correct, total });
-    console.log("wordsQuizQuestions", wordsQuizQuestions.value, formWordsQuiz.value);
     return { correct, total };
   });
   
@@ -388,8 +386,6 @@ const currentQuestionOptions = computed(() => {
   });
   
   const handleQuizResults = async() => {
-    console.log("handleQuizResults");
-    console.log("detailedResults", detailedResults.value);
     emit('submitQuiz', {  
       score: grammarScore.value,
       formGrammarQuiz: formGrammarQuiz.value,
@@ -418,7 +414,6 @@ const goToNextQuestion = () => {
     } else {
       // Quiz finished - handle completion
       isQuizCompleted.value = true;
-      console.log("Quiz completed!", { formGrammarQuiz: formGrammarQuiz.value, formWordsQuiz: formWordsQuiz.value, formExpressionsQuiz: formExpressionsQuiz.value });
       // Open results modal after a short delay
       handleQuizResults()
     }
@@ -527,7 +522,6 @@ const isLastQuestion = computed(() => {
     currentQuestionIndex,
     currentQuestionOptions,
     currentSection,
-    detailedResults,
     expressionsProgress,
     expressionsScore,
     getUserAnswer,

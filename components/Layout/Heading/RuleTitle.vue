@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GrammarRow, GrammarRule } from "~/types/grammar-rule";
+import type { GrammarRow, GrammarRule } from "~/types/modules/grammar-rule";
 import { getGrammarRuleStyleClass } from "~/utils/learning/grammar";
 const props = withDefaults(
   defineProps<{

@@ -1,6 +1,6 @@
 import type { Database } from "~/supabase/types";
-import type { WordContent } from "~/types/vocabulary.ts/word";
-import type { GrammarQuizQuestion } from "~/types/quiz/quiz.ts";
+import type { WordContent } from "~/types/vocabulary/word";
+import type { GrammarQuizQuestion } from "~/types/quizzes/quiz";
 
 
 const createNounTypeQuestion = (wordList: Array<WordContent>, word: WordContent) : any => {

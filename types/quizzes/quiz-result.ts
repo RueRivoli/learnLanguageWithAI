@@ -1,4 +1,4 @@
-import type { QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quiz/quiz";
+import type { QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quizzes/quiz";
 import type { Database } from "~/supabase/types";
 
 type Result = Database['public']['Tables']['turkish_quizzes_result']['Row']

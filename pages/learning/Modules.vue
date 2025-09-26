@@ -12,7 +12,7 @@ import {
   grammarLevelTabs,
   getGrammarRuleStyleClass,
 } from "~/utils/learning/grammar";
-import type { GrammarRule } from "~/types/grammar-rule.ts";
+import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { parseRules } from "~/utils/learning/grammar";
 
 definePageMeta({

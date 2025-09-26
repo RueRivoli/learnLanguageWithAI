@@ -1,6 +1,3 @@
-import type { Database } from "~/supabase/types";
-
-
 export interface UserScore {
     isLoaded: boolean,
     totalWords: number | null,

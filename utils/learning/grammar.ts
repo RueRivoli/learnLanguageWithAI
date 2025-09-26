@@ -1,6 +1,6 @@
 import type { VNode } from "vue";
 import { h } from "vue";
-import type { GrammarRule } from "~/types/grammar-rule.ts";
+import type { GrammarRule } from "~/types/modules/grammar-rule";
 import type { Database } from "~/supabase/types";
 
 export const grammarLevelTabs = {

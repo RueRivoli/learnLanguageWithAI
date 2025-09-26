@@ -1,5 +1,5 @@
-import type { WordContent } from "~/types/vocabulary.ts/word";
-import type { GrammarQuizQuestion } from "~/types/quiz/quiz.ts";
+import type { WordContent } from "~/types/vocabulary/word";
+import type { GrammarQuizQuestion } from "~/types/quizzes/quiz";
 
 const vowelChangeMap = {
     // Front vowels (e, i, ö, ü)

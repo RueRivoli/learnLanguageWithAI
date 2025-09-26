@@ -9,7 +9,7 @@ import type {
   FormQuizState,
   QuizFetchedQuestion,
   GrammarQuizQuestion,
-} from "~/types/quiz/quiz";
+} from "~/types/quizzes/quiz";
 import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
 
 definePageMeta({

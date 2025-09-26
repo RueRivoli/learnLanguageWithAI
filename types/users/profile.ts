@@ -1,5 +1,4 @@
 import type { Database } from "~/supabase/types";
-
 export type DatabaseUserProfile = Database["public"]["Tables"]["profiles"]["Row"]
 
 export interface User {

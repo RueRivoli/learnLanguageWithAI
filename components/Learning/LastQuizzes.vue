@@ -3,7 +3,7 @@ import { PlayIcon, TrophyIcon, ClockIcon } from "@heroicons/vue/24/outline";
 import { formatDate } from "~/utils/date/date";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import { useRouter } from "vue-router";
-import type { GrammarRule } from "~/types/grammar-rule";
+import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { getColorStyleClass } from "~/utils/learning/grammar";
 import QuizResult from "~/components/Quiz/Result.vue";
 

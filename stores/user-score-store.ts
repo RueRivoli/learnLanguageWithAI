@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import type {VocabularyScore} from "~/stores/user-score";
+import type { UserScore, VocabularyScore, GrammarScores } from "~/types/users/score";
+
 export const useUserScoreStore = defineStore("user-score", {
   state: (): UserScore => {
     return {
@@ -15,7 +16,6 @@ export const useUserScoreStore = defineStore("user-score", {
   },
   actions: {
     async setCount () {
-      console.log("setCount")
       const { count: totalWords }= await $fetch('/api/words/count/', {
         method: "GET",
       });
@@ -24,7 +24,6 @@ export const useUserScoreStore = defineStore("user-score", {
       });
       this.totalWords = totalWords
       this.totalExpressions = totalExpressions
-      console.log('score', totalWords, totalExpressions)
     },
     setScores(grammarScores: GrammarScores, vocabScores: VocabularyScore) {
       this.isLoaded = true;
@@ -35,7 +34,6 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setAllScores(userId: string) {
-      console.log("setAllScores")
       
       // Récupérer le token d'authentification
       const { data: { session } } = await useSupabaseClient().auth.getSession()
@@ -51,7 +49,6 @@ export const useUserScoreStore = defineStore("user-score", {
           'Authorization': `Bearer ${session.access_token}`
         }
       });
-      console.log('scores', scores)
       const grammarScores = scores.grammarScores.data.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({
           ruleId: rule_id,
@@ -61,8 +58,7 @@ export const useUserScoreStore = defineStore("user-score", {
           symbol: turkish_grammar_rules.symbol,
           difficultyClass: turkish_grammar_rules.difficulty_class,
         }),
-      );
-      console.log('grammarScores', grammarScores)
+      )
       const vocabScores = scores.vocabScores.data.map(
         ({
           expressions_learned_count,
@@ -76,7 +72,6 @@ export const useUserScoreStore = defineStore("user-score", {
           totalExpressionsLearned: expressions_learned_count,
         }),
       );
-      console.log('vocabScores', vocabScores)
       const score = vocabScores[0] || {};
       this.isLoaded = true;
       this.totalWordsMastered = score.totalWordsMastered;
@@ -113,7 +108,6 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setVocabularyScores(userId: string) {
-      console.log("setVocabularyScores")
       
       // Récupérer le token d'authentification
       const { data: { session } } = await useSupabaseClient().auth.getSession()
@@ -142,7 +136,6 @@ export const useUserScoreStore = defineStore("user-score", {
           totalExpressionsLearned: expressions_learned_count,
         }))
       const score = vocabScores[0] || {};
-      console.log('WM', vocabScores, score)
       this.isLoaded = true;
       this.totalWordsMastered = score.totalWordsMastered;
       this.totalWordsLearned = score.totalWordsLearned;
@@ -199,7 +192,6 @@ export const useUserScoreStore = defineStore("user-score", {
     },
     totalExpressionsInK(state: UserScore): string {
       if (state.totalExpressions && state.totalExpressions > 999) {
-        console.log('expes > 999')
         const nbK = Math.floor((state.totalExpressions ?? 0) / 1000);
         const nbKCent = Math.floor(
           ((state.totalExpressions ?? 0) - nbK * 1000) / 100,

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import type { ExpressionContent } from "~/types/vocabulary.ts/expression";
+import type { ExpressionContent } from "~/types/vocabulary/expression";
 import type {
   QuizFetchedQuestion,
   GrammarQuizQuestion,
-} from "~/types/quiz/quiz";
-import type { WordContent } from "~/types/vocabulary.ts/word";
+} from "~/types/quizzes/quiz";
+import type { WordContent } from "~/types/vocabulary/word";
 import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
 import { promptGeneratedVocabularyQuiz, promptGeneratedWordQuiz, promptGeneratedExpressionQuiz } from "../../prompts/vocabulary-quiz";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
-import type { GrammarRuleMeta } from "~/types/grammar-rule";
+import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
 import { mockExpressionQuizQuestions, mockWordQuizQuestions } from "~/mockData/lessons/quiz/index";
-import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
+import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/generatedQuiz";
 import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
 
@@ -23,8 +23,7 @@ const route = useRoute();
 const lessonId = String(route.params.lessonId);
 const quizId = String(route.params.quizId);
 
-const isLoading = ref<boolean>(true);
-const isLoadingFetchingLessonVocabulary = ref<boolean>(true);
+const isLoadingQuiz = ref<boolean>(true);
 
 // List of questions for grammar, words, expressions quizzes
 const grammarQuizQuestions = ref<GrammarQuizQuestion[] | null>(null);
@@ -53,7 +52,6 @@ const closeResultsModal = () => {
 
 // Fetch lesson data
 const getVocabularyFromLesson = async () => {
-  isLoadingFetchingLessonVocabulary.value = true;
   const { data } = await useFetch(
     `/api/lessons/${lessonId}/vocabulary`,
   );
@@ -66,7 +64,6 @@ const getVocabularyFromLesson = async () => {
     wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => word.turkish_words));
     expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => expression.turkish_expressions));
   }
-  isLoadingFetchingLessonVocabulary.value = false;
 };
 
 const getAdditionnalWordsForQuiz = async () => {
@@ -76,7 +73,6 @@ const getAdditionnalWordsForQuiz = async () => {
   if (data) {
     wordsForQuiz.value.push(...(data.map((word: any) => word.turkish_words)));
   }
-  isLoading.value = false;
 };
 
 
@@ -86,7 +82,6 @@ const getAdditionnalExpressionsForQuiz = async () => {
   });
   if (data && (data as any).data) {
     expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => expression.turkish_expressions)));
-    isLoading.value = false;
     console.log("expressionsForQuiz", expressionsForQuiz.value);
    }
 }
@@ -101,7 +96,6 @@ const getGrammarQuizData = async () => {
   if (data.value) {
     grammarQuizQuestions.value = data.value;
   }
-  isLoading.value = false;
 };
 
 
@@ -164,6 +158,7 @@ await Promise.all([
   getAdditionnalExpressionsForQuiz(),
 ]);
 await getGeneratedVocabularyQuiz();
+isLoadingQuiz.value = false;
 </script>
 
 <template>
@@ -177,6 +172,7 @@ await getGeneratedVocabularyQuiz();
       :wordsQuizQuestions="wordsQuizQuestions"
       :expressionsQuizQuestions="expressionsQuizQuestions"
       :subjetId="lessonId"
+      :isLoading="isLoadingQuiz"
       @submitQuiz="(results) => handleSubmitQuiz(results)"
     />
     <!-- Results Modal -->

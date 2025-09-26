@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Word } from "~/types/vocabulary.ts/word";
-import type { Expression } from "~/types/vocabulary.ts/expression";
+import type { Word } from "~/types/vocabulary/word";
+import type { Expression } from "~/types/vocabulary/expression";
 import {
   getClassWordRole,
 } from "~/utils/learning/vocabulary";

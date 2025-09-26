@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DOMPurify from "dompurify";
-import type { GrammarRule } from "~/types/grammar-rule";
+import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { parseRuleData } from "~/utils/learning/grammar";
 
 definePageMeta({

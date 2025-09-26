@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Word } from "~/types/vocabulary.ts/word";
+import type { Word } from "~/types/vocabulary/word";
 import { BookOpenIcon, LanguageIcon  } from "@heroicons/vue/24/outline";
 const props = withDefaults(
   defineProps<{

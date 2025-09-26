@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { GrammarRuleMeta } from '~/types/grammar-rule';
-import type { GrammarQuizQuestion } from '~/types/quiz/quiz';
-import type { VocabularyQuizQuestion } from '~/types/quiz/vocabulary-quiz';
-import type { ExpressionContent } from '~/types/vocabulary.ts/expression';
-import type { WordContent } from '~/types/vocabulary.ts/word';
-import { useQuiz } from '~/hooks/use-quiz';
+import type { GrammarRuleMeta } from '~/types/modules/grammar-rule';
+import type { GrammarQuizQuestion } from '~/types/quizzes/quiz';
+import type { VocabularyQuizQuestion } from '~/types/quizzes/vocabulary-quiz';
+import type { ExpressionContent } from '~/types/vocabulary/expression';
+import type { WordContent } from '~/types/vocabulary/word';
+import { useQuiz } from '~/composables/useQuiz';
 
 definePageMeta({
   layout: "quiz",
 });
+
 const emit = defineEmits(["submitQuiz"]);
 
 const router = useRouter();
@@ -25,6 +26,7 @@ const props = withDefaults(
     wordsQuizQuestions: VocabularyQuizQuestion[] | null;
     expressionsQuizQuestions: VocabularyQuizQuestion[] | null;
     grammarRuleMetaData: GrammarRuleMeta | null;
+    isLoading: boolean;
   }>(),
   {
     type: 'full',
@@ -34,6 +36,7 @@ const props = withDefaults(
     grammarRuleMetaData: null,
     wordsQuizQuestions: null,
     expressionsQuizQuestions: null,
+    isLoading: false,
   },
 );
 
@@ -43,7 +46,6 @@ const {
     currentQuestionIndex,
     currentQuestionOptions,
     currentSection,
-    detailedResults,
     expressionsProgress,
     expressionsScore,
     getUserAnswer,
@@ -95,7 +97,7 @@ const handleReturnToSubject = () => {
           <span class="quiz-total">/ {{ currentSection.total }}</span>
         </div>
       </div>
-      <div v-if="currentQuestion && !isLoading" class="quiz-content">
+      <div v-if="currentQuestion && !props.isLoading" class="quiz-content">
         <!-- Back to lessons button -->
 
         
@@ -163,7 +165,7 @@ const handleReturnToSubject = () => {
       </div>
 
       <!-- Loading State -->
-      <div v-else-if="isLoading" class="loading-section">
+      <div v-else-if="props.isLoading" class="loading-section">
         <div class="loading-spinner"></div>
         <p class="loading-text">Loading quiz...</p>
       </div>

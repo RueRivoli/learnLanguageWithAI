@@ -1,5 +1,5 @@
-import type { Expression } from "~/types/vocabulary.ts/expression";
-import type { Word } from "~/types/vocabulary.ts/word";
+import type { Expression } from "~/types/vocabulary/expression";
+import type { Word } from "~/types/vocabulary/word";
 import type { Database } from "~/supabase/types";
 
 export const vocabularyFirstTab = { 

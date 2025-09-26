@@ -1,6 +1,6 @@
-import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quiz/quiz";
+import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quizzes/quiz";
 import type { GrammarQuizQuestion } from "./lesson-quiz";
-import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
+import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 
 
 export const parseQuestions = (data: any): GrammarQuizQuestion => {

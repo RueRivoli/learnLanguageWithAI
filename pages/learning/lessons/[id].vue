@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { Lesson } from "~/types/lesson.ts";
+import type { Lesson } from "~/types/lessons/lesson";
 import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/solid";
 import {
   lessonMapping,
 } from "~/utils/learning/lesson";
 import { parseRuleData} from "~/utils/learning/grammar";
-import type { GrammarRule } from "~/types/grammar-rule";
+import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 definePageMeta({

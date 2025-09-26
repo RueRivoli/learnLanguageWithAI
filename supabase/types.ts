@@ -151,10 +151,10 @@ export type Database = {
           grammar_rule_id: number | null
           id: number
           note: string | null
-          option_1: string | null
-          option_2: string | null
-          option_3: string | null
-          option_4: string | null
+          option_1: string
+          option_2: string
+          option_3: string
+          option_4: string
           question_type: number | null
           text: string | null
         }
@@ -165,10 +165,10 @@ export type Database = {
           grammar_rule_id?: number | null
           id?: number
           note?: string | null
-          option_1?: string | null
-          option_2?: string | null
-          option_3?: string | null
-          option_4?: string | null
+          option_1: string
+          option_2: string
+          option_3: string
+          option_4: string
           question_type?: number | null
           text?: string | null
         }
@@ -179,10 +179,10 @@ export type Database = {
           grammar_rule_id?: number | null
           id?: number
           note?: string | null
-          option_1?: string | null
-          option_2?: string | null
-          option_3?: string | null
-          option_4?: string | null
+          option_1?: string
+          option_2?: string
+          option_3?: string
+          option_4?: string
           question_type?: number | null
           text?: string | null
         }
@@ -209,7 +209,7 @@ export type Database = {
           id: number
           intro: string | null
           position: number | null
-          rule_name: string | null
+          rule_name: string
           rule_name_translation: string | null
           symbol: string | null
           type: string | null
@@ -226,7 +226,7 @@ export type Database = {
           id?: number
           intro?: string | null
           position?: number | null
-          rule_name?: string | null
+          rule_name: string
           rule_name_translation?: string | null
           symbol?: string | null
           type?: string | null
@@ -243,7 +243,7 @@ export type Database = {
           id?: number
           intro?: string | null
           position?: number | null
-          rule_name?: string | null
+          rule_name?: string
           rule_name_translation?: string | null
           symbol?: string | null
           type?: string | null

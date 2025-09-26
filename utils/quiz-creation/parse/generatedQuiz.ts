@@ -1,4 +1,4 @@
-import type { VocabularyQuizQuestion } from "~/types/quiz/vocabulary-quiz";
+import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 
 export const parseVocabularyGeneratedQuiz = (data: any) : VocabularyQuizQuestion[] => {
    //const parsedData = JSON.parse(data);
