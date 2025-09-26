@@ -5,6 +5,7 @@ export type ExpressionContent = {
   id: ExpressionRowFetched['id'];
   text: ExpressionRowFetched['text'];
   textEn: ExpressionRowFetched['translation'];
+  isMastered: boolean;
 };
 
 export type Expression = {

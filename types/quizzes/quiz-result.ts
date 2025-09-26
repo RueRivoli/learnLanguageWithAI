@@ -9,3 +9,25 @@ export type QuizResult = {
   scoreGlobal: Result['score_global']
   userId: Result['user_id']
 }
+
+
+export type DetailedResults = {
+  grammar: { correct: number, total: number},
+      words: { 
+        correct: number, 
+        total: number, 
+        incorrect: number, 
+        percentage: number,
+        validatedList: Array<{text: string, isMastered: boolean, id: number}>,
+        invalidatedList: Array<{text: string, isMastered: boolean, id: number}>,
+      },
+      expressions: { 
+        correct: number, 
+        total: number, 
+        incorrect: number, 
+        percentage: number,
+        validatedList: Array<{text: string, isMastered: boolean, id: number}>,
+        invalidatedList: Array<{text: string, isMastered: boolean, id: number}>,
+      },
+      overall: { percentage: number }
+}

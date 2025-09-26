@@ -324,7 +324,7 @@ const grammarClass = computed(() => {
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <div v-for="word in props.detailedResults.words.validatedList" :key="word">
-                                <LayoutKeyElementWord :text="word" />
+                                <LayoutKeyElementWord :text="word.text" :isMastered="word.isMastered" />
                             </div>
                         </div>
                     </div>
@@ -334,7 +334,7 @@ const grammarClass = computed(() => {
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <div v-for="word in props.detailedResults.words.invalidatedList" :key="word">
-                        <LayoutKeyElementWord :text="word" />
+                        <LayoutKeyElementWord :text="word.text" :isMastered="word.isMastered"/>
                     </div>
                 </div>
                     </div>
@@ -414,7 +414,7 @@ const grammarClass = computed(() => {
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="expression in props.detailedResults.expressions.validatedList" :key="expression">
-                     <LayoutKeyElementExpression :text="expression" />
+                     <LayoutKeyElementExpression :text="expression.text" :isMastered="expression.isMastered"/>
                     </div>
                   </div>
                     </div>
@@ -425,7 +425,7 @@ const grammarClass = computed(() => {
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="expression in props.detailedResults.expressions.invalidatedList" :key="expression">
-                        <LayoutKeyElementExpression :text="expression" />
+                        <LayoutKeyElementExpression :text="expression.text" :isMastered="expression.isMastered"/>
                     </div>
                   </div>
                 </div>
@@ -466,7 +466,7 @@ const grammarClass = computed(() => {
 
 .modal-container {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -518,14 +518,10 @@ const grammarClass = computed(() => {
 
 .modal-title {
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 600;
   color: #1f2937;
   margin: 0 0 0.5rem 0;
   letter-spacing: -0.025em;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .modal-close-button {
@@ -560,7 +556,7 @@ const grammarClass = computed(() => {
 
 .overall-score-card {
   background: #4f46e5;
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   align-items: center;

@@ -3,6 +3,7 @@ import type { ExpressionContent } from "~/types/vocabulary/expression";
 import type {
   QuizFetchedQuestion,
   GrammarQuizQuestion,
+  FormQuizState,
 } from "~/types/quizzes/quiz";
 import type { WordContent } from "~/types/vocabulary/word";
 import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
@@ -13,6 +14,7 @@ import { mockExpressionQuizQuestions, mockWordQuizQuestions } from "~/mockData/l
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/generatedQuiz";
 import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
+import type { DetailedResults } from "~/types/quizzes/quiz-result";
 
 definePageMeta({
   layout: "quiz",
@@ -20,8 +22,8 @@ definePageMeta({
 
 
 const route = useRoute();
-const lessonId = String(route.params.lessonId);
-const quizId = String(route.params.quizId);
+const lessonId = Number(route.params.lessonId);
+const quizId = Number(route.params.quizId);
 
 const isLoadingQuiz = ref<boolean>(true);
 
@@ -41,7 +43,7 @@ const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
 // Results modal state
 const showResultsModal = ref(false);
 
-const detailedResults = ref<any>(null);
+const detailedResults = ref<DetailedResults | null>(null);
 const globalScore = ref<number>(0);
 const openResultsModal = () => {
   showResultsModal.value = true;
@@ -61,8 +63,8 @@ const getVocabularyFromLesson = async () => {
       name: data.value.turkish_grammar_rules.rule_name_translation,
       id: data.value.turkish_grammar_rules.id,
     }
-    wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => word.turkish_words));
-    expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => expression.turkish_expressions));
+    wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => {return { ...word.turkish_words, isMastered: false }}));
+    expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => {return { ...expression.turkish_expressions, isMastered: false }}));
   }
 };
 
@@ -71,7 +73,7 @@ const getAdditionnalWordsForQuiz = async () => {
     method: "GET",
   });
   if (data) {
-    wordsForQuiz.value.push(...(data.map((word: any) => word.turkish_words)));
+    wordsForQuiz.value.push(...(data.map((word: any) => {return { ...word.turkish_words, isMastered: true }})));
   }
 };
 
@@ -81,7 +83,7 @@ const getAdditionnalExpressionsForQuiz = async () => {
     method: "GET",
   });
   if (data && (data as any).data) {
-    expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => expression.turkish_expressions)));
+    expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => {return { ...expression.turkish_expressions, isMastered: true }})));
     console.log("expressionsForQuiz", expressionsForQuiz.value);
    }
 }
@@ -100,37 +102,38 @@ const getGrammarQuizData = async () => {
 
 
 const getGeneratedVocabularyQuiz = async () => {
-  //   const generatedWordsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/words`, 
-  //   {
-  //     method: "POST",
-  //     body: {
-  //       message: promptGeneratedWordQuiz(wordsForQuiz.value)
-  //     }
-  //   }
-  // );
-  const generatedWordsQuiz = mockNotParsedWordQuizQuestions
+    const generatedWordsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/words`, 
+    {
+      method: "POST",
+      body: {
+        message: promptGeneratedWordQuiz(wordsForQuiz.value)
+      }
+    }
+  );
+  // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
 
-  // const generatedExpressionsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, 
-  //   {
-  //     method: "POST",
-  //     body: {
-  //       message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
-  //     }
-  //   }
-  // );
-  const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
+  const generatedExpressionsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, 
+    {
+      method: "POST",
+      body: {
+        message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
+      }
+    }
+  );
+  // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
   if (generatedWordsQuiz) {
+    // change generatedQuiz if using mock data
     wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(generatedWordsQuiz);
     // wordsQuizQuestions.value = mockWordQuizQuestions;
   }
   if (generatedExpressionsQuiz) {
+    // change generatedQuiz if using mock data
       expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(generatedExpressionsQuiz);
       // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
     }
 };
 
-const handleSubmitQuiz = async(results: any) => {
-  console.log("handleQuizResults", results);
+const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
   detailedResults.value = results.detailedResults;
   const { data: { session } } = await useSupabaseClient().auth.getSession()
   const headers: Record<string, string> = {}
@@ -141,6 +144,7 @@ const handleSubmitQuiz = async(results: any) => {
     body: {
       ruleId: grammarRuleMetaData.value?.id,
       score: results.score,
+      detailedResults: results.detailedResults,
       // value: formQuiz.value,
     },
   });
@@ -148,8 +152,6 @@ const handleSubmitQuiz = async(results: any) => {
     openResultsModal();
   }, 200);
 }
-
-
 
 await Promise.all([
   getGrammarQuizData(),
@@ -177,7 +179,7 @@ isLoadingQuiz.value = false;
     />
     <!-- Results Modal -->
      <div v-if="showResultsModal" class="modal-overlay">
-      <QuizModal  :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" @close="closeResultsModal" />
+      <QuizModal :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" @close="closeResultsModal" />
      </div>
   </div>
 </template>

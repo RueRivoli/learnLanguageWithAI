@@ -1,4 +1,5 @@
 import type { FormQuizState, GrammarQuizQuestion, QuizProgress } from "~/types/quizzes/quiz";
+import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import type { ExpressionContent } from "~/types/vocabulary/expression";
 import type { WordContent } from "~/types/vocabulary/word";
@@ -445,7 +446,10 @@ const isLastQuestion = computed(() => {
   return currentQuestionIndex.value >= totalQuestions.value - 1;
 });
 
-  const detailedResults = computed(() => {
+
+
+
+  const detailedResults = computed((): DetailedResults => {
     const grammarCorrect = Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null && Number(a.selectedOption) === Number(a.correctAnswer)).length;
     const grammarTotal = Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null).length;
     
@@ -458,38 +462,38 @@ const isLastQuestion = computed(() => {
     const expressionsIncorrect = expressionsTotal - expressionsCorrect;
     
     // Get actual words that were validated/invalidated
-    const validatedWordsList: string[] = [];
-    const invalidatedWordsList: string[] = [];
+    const validatedWordsList: Array<{text: string, isMastered: boolean, id: number}> = [];
+    const invalidatedWordsList: Array<{text: string, isMastered: boolean, id: number}> = [];
     if (wordsQuizQuestions.value && formWordsQuiz.value) {
       Object.values(formWordsQuiz.value).forEach((answer, index) => {
         if (answer.selectedOption !== null && wordsQuizQuestions.value?.[index]) {
           const question = wordsQuizQuestions.value?.[index];
           const correctAnswer: VocabularyQuizQuestion['option1'] = question[`option${answer.correctAnswer}`];
           const userAnswer = question[`option${answer.selectedOption}`];
-          
+          const wordContext = wordsForQuiz.value?.find(word => word.text === correctAnswer);
           if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
-            validatedWordsList.push(correctAnswer);
+            validatedWordsList.push({text: correctAnswer, isMastered: wordContext?.isMastered ?? false, id: wordContext?.id ?? 0});
           } else {
-            invalidatedWordsList.push(correctAnswer);
+            invalidatedWordsList.push({text: correctAnswer, isMastered: wordContext?.isMastered ?? false, id: wordContext?.id ?? 0});
           }
         }
       });
     }
     
     // Get actual expressions that were validated/invalidated
-    const validatedExpressionsList: string[] = [];
-    const invalidatedExpressionsList: string[] = [];
+    const validatedExpressionsList: Array<{text: string, isMastered: boolean, id: number}> = [];
+    const invalidatedExpressionsList: Array<{text: string, isMastered: boolean, id: number}> = [];
     if (expressionsQuizQuestions.value && formExpressionsQuiz.value) {
       Object.values(formExpressionsQuiz.value).forEach((answer, index) => {
         if (answer.selectedOption !== null && expressionsQuizQuestions.value?.[index]) {
           const question = expressionsQuizQuestions.value?.[index];
           const correctAnswer = question[`option${answer.correctAnswer}`];
           const userAnswer = question[`option${answer.selectedOption}`];
-          
+          const expressionContext = expressionsForQuiz.value?.find(expr => expr.text === correctAnswer);
           if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
-            validatedExpressionsList.push(correctAnswer);
+            validatedExpressionsList.push({text: correctAnswer, isMastered: expressionContext?.isMastered ?? false, id: expressionContext?.id ?? 0});
           } else {
-            invalidatedExpressionsList.push(correctAnswer);
+            invalidatedExpressionsList.push({text: correctAnswer, isMastered: expressionContext?.isMastered ?? false, id: expressionContext?.id ?? 0});
           }
         }
       });
