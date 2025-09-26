@@ -102,35 +102,44 @@ const getGrammarQuizData = async () => {
 
 
 const getGeneratedVocabularyQuiz = async () => {
-    const generatedWordsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/words`, 
-    {
+  try {
+    const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/words`, {
       method: "POST",
       body: {
         message: promptGeneratedWordQuiz(wordsForQuiz.value)
       }
-    }
-  );
-  // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
-
-  const generatedExpressionsQuiz = await $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, 
-    {
+    });
+    
+    const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, {
       method: "POST",
       body: {
         message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
       }
+    });
+    
+    // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
+    // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
+
+    const [wordsQuizResult, expressionsQuizResult] = await Promise.all([
+      generatedWordsQuiz, 
+      generatedExpressionsQuiz
+    ]);
+    
+    if (wordsQuizResult) {
+      // change generatedQuiz if using mock data
+      wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(wordsQuizResult);
+      // wordsQuizQuestions.value = mockWordQuizQuestions;
     }
-  );
-  // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
-  if (generatedWordsQuiz) {
-    // change generatedQuiz if using mock data
-    wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(generatedWordsQuiz);
-    // wordsQuizQuestions.value = mockWordQuizQuestions;
-  }
-  if (generatedExpressionsQuiz) {
-    // change generatedQuiz if using mock data
-      expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(generatedExpressionsQuiz);
+    
+    if (expressionsQuizResult) {
+      // change generatedQuiz if using mock data
+      expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(expressionsQuizResult);
       // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
     }
+  } catch (error) {
+    console.error('Error generating vocabulary quiz:', error);
+    // Handle error appropriately - maybe set some default values or show error message
+  }
 };
 
 const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
