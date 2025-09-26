@@ -9,7 +9,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -21,7 +21,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -33,7 +33,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -45,7 +45,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -57,7 +57,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -69,7 +69,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -81,7 +81,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -93,7 +93,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -105,7 +105,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -117,7 +117,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -129,7 +129,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -141,7 +141,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -153,7 +153,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -165,7 +165,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -177,7 +177,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -189,7 +189,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -201,7 +201,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -213,7 +213,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -225,7 +225,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }
@@ -237,7 +237,7 @@ export const quizFormat = { "type": "json_schema", "json_schema": {"name": "quiz
             "option2": { "type": "string" },
             "option3": { "type": "string" },
             "option4": { "type": "string" },
-            "correctAnswer": { "type": "string" },
+            "correctAnswer": { "type": "number" },
             "question": { "type": "string" },
             "translation": { "type": "string" }
           }

@@ -25,37 +25,3 @@ export type GrammarRule = {
   type: GrammarRow['type'];
 };
 
-export const parseRules = (modules: Array<Database['public']['Tables']['turkish_grammar_rules']['Row'] & { 'turkish_grammar_scores': Array<{score: number}>}>): Array<GrammarRule & {score: Array<{score: number}>}> => {
-  return modules.map((module) => (
-    {
-      id: module.id,
-      ruleName: module.rule_name,
-      ruleNameTranslation: module.rule_name_translation,
-      difficultyClass: module.difficulty_class,
-      intro: module.intro,
-      description: module.description,
-      highlights: module.highlights,
-      extendedDescription: module.extended_description,
-      symbol: module.symbol,
-      score: module.turkish_grammar_scores,
-      type: module.type,
-      bookmarked: module.bookmarked,
-    }))
-}
-
-export const parseRuleData = (data: Database['public']['Tables']['turkish_grammar_rules']['Row']): GrammarRule  => {
-  return {
-    id: data.id,
-    ruleName: data.rule_name,
-    ruleNameTranslation: data.rule_name_translation,
-    difficultyClass: data.difficulty_class,
-    symbol: data.symbol,
-    bookmarked: data.bookmarked,
-    description: data.description,
-    highlights: data.highlights,
-    type: data.type,
-    extendedDescription: data.extended_description,
-    intro: data.intro,
-    // score
-  };
-};

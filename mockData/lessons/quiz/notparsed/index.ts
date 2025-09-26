@@ -5,7 +5,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "etmek",
       "option3": "olmak",
       "option4": "yapmak",
-      "correctAnswer": "olmak",
+      "correctAnswer": "3",
       "translation": "to be"
     },
     "question2": {
@@ -14,7 +14,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "etmek",
       "option3": "olmak",
       "option4": "almak",
-      "correctAnswer": "etmek",
+      "correctAnswer": "2",
       "translation": "to do"
     },
     "question3": {
@@ -23,7 +23,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "yapmak",
       "option3": "gelmek",
       "option4": "demek",
-      "correctAnswer": "yapmak",
+      "correctAnswer": "2",
       "translation": "to make"
     },
     "question4": {
@@ -32,7 +32,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "almak",
       "option3": "olmak",
       "option4": "vermek",
-      "correctAnswer": "almak",
+      "correctAnswer": "2",
       "translation": "to take"
     },
     "question5": {
@@ -41,7 +41,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "demek",
       "option3": "almak",
       "option4": "vermek",
-      "correctAnswer": "demek",
+      "correctAnswer": "2",
       "translation": "to say"
     },
     "question6": {
@@ -50,7 +50,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "bir",
       "option3": "o",
       "option4": "sen",
-      "correctAnswer": "ben",
+      "correctAnswer": "1",
       "translation": "I"
     },
     "question7": {
@@ -59,7 +59,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "demek",
       "option3": "etmek",
       "option4": "vermek",
-      "correctAnswer": "gelmek",
+      "correctAnswer": "1",
       "translation": "to come"
     },
     "question8": {
@@ -68,7 +68,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "gelin",
       "option3": "ben",
       "option4": "benim",
-      "correctAnswer": "için",
+      "correctAnswer": "1",
       "translation": "for"
     },
     "question9": {
@@ -77,7 +77,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "çık",
       "option3": "çek",
       "option4": "çak",
-      "correctAnswer": "çok",
+      "correctAnswer": "1",
       "translation": "very"
     },
     "question10": {
@@ -86,7 +86,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "gelmek",
       "option3": "etmek",
       "option4": "almak",
-      "correctAnswer": "vermek",
+      "correctAnswer": "1",
       "translation": "to give"
     },
     "question11": {
@@ -95,7 +95,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "ben",
       "option3": "biz",
       "option4": "benim",
-      "correctAnswer": "bir",
+      "correctAnswer": "1",
       "translation": "one"
     },
     "question12": {
@@ -104,7 +104,7 @@ export const mockNotParsedWordQuizQuestions = {
       "option2": "on",
       "option3": "ben",
       "option4": "bir",
-      "correctAnswer": "o",
+      "correctAnswer": "1",
       "translation": "he/she/it"
     }
   }
@@ -116,7 +116,7 @@ export const mockNotParsedExpressionQuizQuestions = {
       "option2": "naz olmak",
       "option3": "naz etmek",
       "option4": "naz vermek",
-      "correctAnswer": "naz yapmak",
+      "correctAnswer": "1",
       "translation": "naz yapmak"
     },
     "question2": {
@@ -125,7 +125,7 @@ export const mockNotParsedExpressionQuizQuestions = {
       "option2": "saygı etmek",
       "option3": "saygı duymak",
       "option4": "saygı vermek",
-      "correctAnswer": "saygı göstermek",
+      "correctAnswer": "1",
       "translation": "saygı göstermek / duymak"
     },
     "question3": {
@@ -134,7 +134,7 @@ export const mockNotParsedExpressionQuizQuestions = {
       "option2": "nefre etmek",
       "option3": "nefrat etmek",
       "option4": "nefer etmek",
-      "correctAnswer": "nefret etmek",
+      "correctAnswer": "1",
       "translation": "nefret etmek"
     },
     "question4": {
@@ -143,7 +143,7 @@ export const mockNotParsedExpressionQuizQuestions = {
       "option2": "rağbet görmek",
       "option3": "rağbet duymak",
       "option4": "rağbet almak",
-      "correctAnswer": "rağbet görmek",
+      "correctAnswer": "2",
       "translation": "rağbet görmek"
     },
     "question5": null

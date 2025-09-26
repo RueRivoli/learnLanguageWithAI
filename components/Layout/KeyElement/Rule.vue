@@ -19,10 +19,13 @@ const emit = defineEmits(["click"]);
 const backgroundClasses = computed(() => {
   switch (props.level) {
     case 'beginner':
-      return 'bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md shadow-emerald-100'; // Refined mint/teal gradient
+    return 'btn-success';
+    return 'bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md shadow-emerald-100'; // Refined mint/teal gradient
     case 'intermediate':
+    return 'btn-warning';
       return 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-md shadow-amber-100'; // Refined amber/orange gradient
     case 'advanced':
+      return 'btn-error';
       return 'bg-gradient-to-br from-pink-500 to-rose-600 shadow-md shadow-pink-100'; // Refined pink/rose gradient
     case 'expert':
     default:
@@ -34,11 +37,12 @@ const backgroundClasses = computed(() => {
 const textClasses = computed(() => {
   return 'text-white font-semibold'; // White text for all levels
 });
+//        :class="['px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 relative overflow-hidden btn btn-soft btn-secondary', backgroundClasses, textClasses]"
 </script>
 
 <template>
     <button 
-        :class="['px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 relative overflow-hidden', backgroundClasses, textClasses]"
+  :class="['text-sm font-medium rounded-lg flex items-center gap-2 relative overflow-hidden btn btn-outline btn-sm', backgroundClasses]"
         @click="emit('click')"
     >
         <!-- Subtle texture overlay for all levels -->

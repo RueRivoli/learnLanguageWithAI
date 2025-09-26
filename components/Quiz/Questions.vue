@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { GrammarRuleMeta } from '~/types/grammar-rule';
-import type { FormQuizState, GrammarQuizQuestion } from '~/types/quiz/quiz';
+import type { FormQuizState, GrammarQuizQuestion, QuizProgress } from '~/types/quiz/quiz';
 import type { VocabularyQuizQuestion } from '~/types/quiz/vocabulary-quiz';
 import type { ExpressionContent } from '~/types/vocabulary.ts/expression';
 import type { WordContent } from '~/types/vocabulary.ts/word';
@@ -10,25 +10,31 @@ import { initializeFormQuiz } from '~/utils/learning/quiz';
 definePageMeta({
   layout: "quiz",
 });
+const emit = defineEmits(["submitQuiz"]);
 
 const TOTAL_GRAMMAR_QUESTIONS_FULL_QUIZ = 5;
 const TOTAL_GRAMMAR_QUESTIONS_GRAMMAR_QUIZ = 10;
+const router = useRouter();
 
 const props = withDefaults(
   defineProps<{
     type: 'full' | 'vocabulary' | 'grammar';
+    // Lesson Id or Module Id
+    subjetId: number | null;
     wordsForQuiz: WordContent[] | null;
     expressionsForQuiz: ExpressionContent[] | null;
+    // List of questions for grammar, words, expressions quizzes
     grammarQuizQuestions: GrammarQuizQuestion[] | null;
-    grammarRuleMetaData: GrammarRuleMeta | null;
     wordsQuizQuestions: VocabularyQuizQuestion[] | null;
     expressionsQuizQuestions: VocabularyQuizQuestion[] | null;
+    grammarRuleMetaData: GrammarRuleMeta | null;
   }>(),
   {
     type: 'full',
     wordsForQuiz: null,
     expressionsForQuiz: null,
     grammarQuizQuestions: null,
+    grammarRuleMetaData: null,
     wordsQuizQuestions: null,
     expressionsQuizQuestions: null,
   },
@@ -43,23 +49,25 @@ const currentQuestionIndex = ref<number>(0);
 const selectedAnswer = ref<string | null>(null);
 const isQuizCompleted = ref<boolean>(false);
 const viewingCompletedQuestion = ref<boolean>(false);
-const emit = defineEmits(["submitQuiz"]);
+
 const grammarSectionQuizLength = computed(() => {
   return props.type === 'grammar' ? TOTAL_GRAMMAR_QUESTIONS_GRAMMAR_QUIZ : TOTAL_GRAMMAR_QUESTIONS_FULL_QUIZ
 });
 
 
-watch(props.grammarQuizQuestions, (newGrammarQuizQuestions: GrammarQuizQuestion[] | null) => {
+watch(() => props.grammarQuizQuestions, (newGrammarQuizQuestions: GrammarQuizQuestion[] | null) => {
   if (newGrammarQuizQuestions) initializeFormQuiz(formGrammarQuiz, newGrammarQuizQuestions);
-});
+}, { immediate: true });
 
-watch(props.wordsQuizQuestions, (newWordsForQuizQuestions: VocabularyQuizQuestion[] | null) => {
+watch(() => props.wordsQuizQuestions, (newWordsForQuizQuestions: VocabularyQuizQuestion[] | null) => {
+    console.log("newWordsForQuizQuestions", newWordsForQuizQuestions);
     if (newWordsForQuizQuestions) initializeFormQuiz(formWordsQuiz, newWordsForQuizQuestions);
-});
+    console.log("formWordsQuiz", formWordsQuiz.value);
+}, { immediate: true });
 
-watch(props.expressionsForQuiz, (newExpressionsForQuizQuestions: VocabularyQuizQuestion[] | null) => {
+watch(() => props.expressionsQuizQuestions, (newExpressionsForQuizQuestions: VocabularyQuizQuestion[] | null) => {
     if (newExpressionsForQuizQuestions) initializeFormQuiz(formExpressionsQuiz, newExpressionsForQuizQuestions);
-});
+}, { immediate: true });
 
 
 // Determine quiz type based on quiz data structure
@@ -211,7 +219,7 @@ const wordsScore = computed(() => {
   Object.values(formWordsQuiz.value).forEach((answer) => {
     if (answer.selectedOption !== null) {
       total++;
-      if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
+      if (String(answer.selectedOption) === String(answer.correctAnswer)) {
         correct++;
       }
     }
@@ -253,8 +261,8 @@ const globalScore = computed(() => {
   return Math.round((totalCorrect / totalQuestions) * 100);
 });
 
-const grammarProgress = computed(() => {
-  const progress = [];
+const grammarProgress = computed((): QuizProgress[] => {
+  const progress: QuizProgress[] = [];
   const totalGrammarQuestions = 5; // Display 5 squares for grammar
   
   for (let i = 0; i < totalGrammarQuestions; i++) {
@@ -270,9 +278,9 @@ const grammarProgress = computed(() => {
 });
 
 
-const wordsProgress = computed(() => {
-  const progress = [];
-  
+const wordsProgress = computed(() : QuizProgress[]=> {
+    const progress: QuizProgress[] = [];
+  if (!props.wordsForQuiz?.length) return progress;
   for (let i = 0; i < props.wordsForQuiz?.length; i++) {
     const questionIndex = i + (props.grammarQuizQuestions?.length || 0);
     if (isVocabularyQuiz.value) {
@@ -285,6 +293,8 @@ const wordsProgress = computed(() => {
       });
     } else if (isQuizCompleted) {
       progress.push({
+        completed: null,
+        current: null,
         correct: isQuestionCorrect(questionIndex),
         questionIndex: questionIndex
       });
@@ -301,10 +311,10 @@ const wordsProgress = computed(() => {
   return progress;
 });
 
-const expressionsProgress = computed(() => {
-  const progress = [];
-  
-  for (let i = 0; i < props.expressionsForQuiz.length; i++) {
+const expressionsProgress = computed((): QuizProgress[] => {
+  const progress: QuizProgress[] = [];
+  if (!props.expressionsForQuiz?.length) return progress;
+  for (let i = 0; i < props.expressionsForQuiz?.length; i++) {
     const questionIndex = i + (props.grammarQuizQuestions?.length || 0) + (props.wordsForQuiz?.length || 0);
     if (isExpressionsQuiz.value) {
       const hasAnswer = formExpressionsQuiz.value[i + 1] && formExpressionsQuiz.value[i + 1].selectedOption !== null;
@@ -316,6 +326,8 @@ const expressionsProgress = computed(() => {
       });
     } else if (isQuizCompleted) {
       progress.push({
+        completed: null,
+        current: null,
         correct: isQuestionCorrect(questionIndex),
         questionIndex: questionIndex
       });
@@ -371,62 +383,9 @@ const goToNextQuestionInReview = () => {
   }
 };
 
-const handleQuizResults = async() => {
-  console.log("handleQuizResults");
-  emit('submitQuiz', {  
-    score: props.grammarScore.value
-    formGrammarQuiz: formGrammarQuiz.value,
-  });
-  //console.log("score", score, quiz.value, quiz.value[0].grammarRuleId);
-//   const { data: { session } } = await useSupabaseClient().auth.getSession()
-//   const headers: Record<string, string> = {}
-//   if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
-//   await $fetch(`/api/quizzes/result/${quizId}`, {
-//     method: "PUT",
-//     headers,
-//     body: {
-//       ruleId: props.grammarRuleMetaData?.id,
-//       score: grammarScore.value,
-//       // value: formQuiz.value,
-//     },
-//   });
-// setTimeout(() => {
-//         openResultsModal();
-//       }, 500);
-}
-
-
-const goToNextQuestion = () => {
-  if (selectedAnswer.value) {
-    // Store the answer in the correct form based on current section
-    const optionIndex = currentQuestionOptions.value.findIndex(option => option === selectedAnswer.value);
-    const selectedOptionNumber = optionIndex + 1;
-
-    // Store answer in the appropriate form based on current section
-    if (isGrammarQuiz.value && formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
-      formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = selectedOptionNumber;
-    } else if (isWordsQuiz.value && formWordsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) + 1]) {
-      formWordsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) + 1].selectedOption = selectedOptionNumber;
-    } else if (isExpressionsQuiz.value && formExpressionsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) - (props.wordsForQuiz?.length || 0) + 1]) {
-      formExpressionsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) - (props.wordsForQuiz?.length || 0) + 1].selectedOption = selectedOptionNumber;
-    }
-
-    if (currentQuestionIndex.value < totalQuestions.value - 1) {
-      currentQuestionIndex.value++;
-      selectedAnswer.value = null;
-    } else {
-      // Quiz finished - handle completion
-      isQuizCompleted.value = true;
-      console.log("Quiz completed!", { formGrammarQuiz: formGrammarQuiz.value, formWordsQuiz: formWordsQuiz.value, formExpressionsQuiz: formExpressionsQuiz.value });
-      // Open results modal after a short delay
-      handleQuizResults()
-    }
-  }
-};
-
 // Summary data for completed quiz
 const validatedWords = computed(() => {
-  if (!wordsQuizQuestions.value || !formWordsQuiz.value) return { correct: 0, total: 0 };
+  if (!props.wordsQuizQuestions || !formWordsQuiz.value) return { correct: 0, total: 0 };
   let correct = 0;
   let total = 0;
   
@@ -438,12 +397,13 @@ const validatedWords = computed(() => {
       }
     }
   });
-  
+  console.log("validatedWords", { correct, total });
+  console.log("props.wordsQuizQuestions", props.wordsQuizQuestions, formWordsQuiz.value);
   return { correct, total };
 });
 
 const validatedExpressions = computed(() => {
-  if (!expressionsQuizQuestions.value || !formExpressionsQuiz.value) return { correct: 0, total: 0 };
+  if (!props.expressionsQuizQuestions || !formExpressionsQuiz.value) return { correct: 0, total: 0 };
   let correct = 0;
   let total = 0;
   
@@ -459,6 +419,8 @@ const validatedExpressions = computed(() => {
   return { correct, total };
 });
 
+
+
 // Enhanced data for modal
 const detailedResults = computed(() => {
   const grammarCorrect = Object.values(formGrammarQuiz.value).filter(a => a.selectedOption !== null && Number(a.selectedOption) === Number(a.correctAnswer)).length;
@@ -473,13 +435,13 @@ const detailedResults = computed(() => {
   const expressionsIncorrect = expressionsTotal - expressionsCorrect;
   
   // Get actual words that were validated/invalidated
-  const validatedWordsList = [];
-  const invalidatedWordsList = [];
-  if (wordsQuizQuestions.value && formWordsQuiz.value) {
+  const validatedWordsList: string[] = [];
+  const invalidatedWordsList: string[] = [];
+  if (props.wordsQuizQuestions && formWordsQuiz.value) {
     Object.values(formWordsQuiz.value).forEach((answer, index) => {
-      if (answer.selectedOption !== null && wordsQuizQuestions.value[index]) {
-        const question = wordsQuizQuestions.value[index];
-        const correctAnswer = question[`option${answer.correctAnswer}`];
+      if (answer.selectedOption !== null && props.wordsQuizQuestions?.[index]) {
+        const question = props.wordsQuizQuestions[index];
+        const correctAnswer: VocabularyQuizQuestion['option1'] = question[`option${answer.correctAnswer}`];
         const userAnswer = question[`option${answer.selectedOption}`];
         
         if (Number(answer.selectedOption) === Number(answer.correctAnswer)) {
@@ -492,12 +454,12 @@ const detailedResults = computed(() => {
   }
   
   // Get actual expressions that were validated/invalidated
-  const validatedExpressionsList = [];
-  const invalidatedExpressionsList = [];
-  if (expressionsQuizQuestions.value && formExpressionsQuiz.value) {
+  const validatedExpressionsList: string[] = [];
+  const invalidatedExpressionsList: string[] = [];
+  if (props.expressionsQuizQuestions && formExpressionsQuiz.value) {
     Object.values(formExpressionsQuiz.value).forEach((answer, index) => {
-      if (answer.selectedOption !== null && expressionsQuizQuestions.value[index]) {
-        const question = expressionsQuizQuestions.value[index];
+      if (answer.selectedOption !== null && props.expressionsQuizQuestions?.[index]) {
+        const question = props.expressionsQuizQuestions?.[index];
         const correctAnswer = question[`option${answer.correctAnswer}`];
         const userAnswer = question[`option${answer.selectedOption}`];
         
@@ -532,6 +494,79 @@ const detailedResults = computed(() => {
   };
 });
 
+const handleReturnToSubject = () => {
+  if (props.type === 'full') {
+    router.push(`/learning/lessons/${props.subjetId}`);
+  } else {
+    router.push(`/learning/modules/${props.subjetId}`);
+  }
+}
+const handleQuizResults = async() => {
+  console.log("handleQuizResults");
+  console.log("detailedResults", detailedResults.value);
+  emit('submitQuiz', {  
+    score: grammarScore.value,
+    formGrammarQuiz: formGrammarQuiz.value,
+    detailedResults: detailedResults.value,
+  });
+}
+
+
+const goToNextQuestion = () => {
+  if (selectedAnswer.value) {
+    // Store the answer in the correct form based on current section
+    const optionIndex = currentQuestionOptions.value.findIndex(option => option === selectedAnswer.value);
+    const selectedOptionNumber = optionIndex + 1;
+
+    // Store answer in the appropriate form based on current section
+    if (isGrammarQuiz.value && formGrammarQuiz.value[currentQuestionIndex.value + 1]) {
+      formGrammarQuiz.value[currentQuestionIndex.value + 1].selectedOption = selectedOptionNumber;
+    } else if (isWordsQuiz.value && formWordsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) + 1]) {
+      formWordsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) + 1].selectedOption = selectedOptionNumber;
+    } else if (isExpressionsQuiz.value && formExpressionsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) - (props.wordsForQuiz?.length || 0) + 1]) {
+      formExpressionsQuiz.value[currentQuestionIndex.value - (props.grammarQuizQuestions?.length || 0) - (props.wordsForQuiz?.length || 0) + 1].selectedOption = selectedOptionNumber;
+    }
+
+    if (currentQuestionIndex.value < totalQuestions.value - 1) {
+      currentQuestionIndex.value++;
+      selectedAnswer.value = null;
+    } else {
+      // Quiz finished - handle completion
+      isQuizCompleted.value = true;
+      console.log("Quiz completed!", { formGrammarQuiz: formGrammarQuiz.value, formWordsQuiz: formWordsQuiz.value, formExpressionsQuiz: formExpressionsQuiz.value });
+      // Open results modal after a short delay
+      handleQuizResults()
+    }
+  }
+};
+
+
+
+// Navigation function to go to specific question
+const goToQuestion = (questionIndex: number) => {
+  if (isQuizCompleted.value) {
+    currentQuestionIndex.value = questionIndex;
+    viewingCompletedQuestion.value = true;
+    
+    // Set the selected answer to show which option the user chose
+    const userAnswer = getUserAnswer(questionIndex);
+    if (userAnswer !== null) {
+      const question = currentQuestion.value;
+      if (question) {
+        const options = [question.option1, question.option2, question.option3, question.option4];
+        selectedAnswer.value = options[userAnswer - 1] || null;
+      }
+    } else {
+      selectedAnswer.value = null;
+    }
+  }
+};
+// Determine if we're at the last question of the entire quiz
+const isLastQuestion = computed(() => {
+  return currentQuestionIndex.value >= totalQuestions.value - 1;
+});
+
+
 </script>
 
 <template>
@@ -540,11 +575,12 @@ const detailedResults = computed(() => {
     <div class="quiz-main">
       <div class="quiz-header">
         <div v-if="isQuizCompleted" class="back-button-container">
-          <button @click="$router.push(`/learning/lessons/${lessonId}`)" class="back-button">
+          <button @click="handleReturnToSubject" class="back-button">
             <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
-            Go back to lessons
+            <span v-if="props.type === 'full'">Back to the Lesson</span>
+            <span v-else>Back to the Module</span>
           </button>
         </div>
         <div class="quiz-progress-indicator">
@@ -725,13 +761,7 @@ const detailedResults = computed(() => {
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Results Modal -->
-     <div v-if="showResultsModal" class="modal-overlay">
-      <QuizModal  :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" @close="closeResultsModal" />
-     </div>
-  
+    </div>  
   </div>
 </template>
 
@@ -1301,31 +1331,6 @@ const detailedResults = computed(() => {
 
 .score-display.small .score-value {
   font-size: 0.875rem;
-}
-
-/* Results Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: modalFadeIn 0.3s ease-out;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 /* Responsive Design */

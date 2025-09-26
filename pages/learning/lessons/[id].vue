@@ -23,7 +23,7 @@ const activeWordTranslation = ref<number | null>(null);
 const activeExpressionTranslation = ref<number | null>(null);
 const grammarRule = ref<GrammarRule | null>(null);
 const grammarRuleLoading = ref<boolean>(false);
-const isStoryShown = ref(true);
+const isStoryShown = ref<boolean>(true);
 const relatedQuiz = ref<any>(null);
 
 const toggleWordTranslation = (index: number) => {
@@ -136,7 +136,6 @@ const handleGenerateQuiz = async () => {
   isLoading.value = true;
   if (!lesson.value?.grammarRuleId) return;
   await handleGenerationQuiz(lessonId, lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
-  isLoading.value = false;
 };
 
 const sentences = computed(() => {

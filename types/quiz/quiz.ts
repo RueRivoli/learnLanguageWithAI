@@ -45,6 +45,12 @@ export type GrammarQuizQuestion = {
     note: GrammarQuizQuestionModel['note']
 }
 
+export type QuizProgress = {
+  completed: boolean | null;
+  current: boolean | null;
+  correct: boolean | null;
+  questionIndex: number;
+}
 
 export interface FormQuizItem {
   selectedOption: number | null;
