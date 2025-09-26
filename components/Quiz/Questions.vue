@@ -11,8 +11,6 @@ definePageMeta({
 });
 const emit = defineEmits(["submitQuiz"]);
 
-const TOTAL_GRAMMAR_QUESTIONS_FULL_QUIZ = 5;
-const TOTAL_GRAMMAR_QUESTIONS_GRAMMAR_QUIZ = 10;
 const router = useRouter();
 
 const props = withDefaults(
