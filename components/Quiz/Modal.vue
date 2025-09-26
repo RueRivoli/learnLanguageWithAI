@@ -703,22 +703,18 @@ const grammarClass = computed(() => {
 /* Chart Background Colors */
 .grammar-achievement__beginner {
   background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-  border: 1px solid #dcfce7;
 }
 
 .grammar-achievement__intermediate {
   background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
-  border: 1px solid #fed7aa;
 }
 
 .grammar-achievement__advanced {
   background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
-  border: 1px solid #fce7f3;
 }
 
 .grammar-achievement__expert {
   background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
-  border: 1px solid #dbeafe;
 }
 
 .words-chart-bg {
