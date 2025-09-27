@@ -70,7 +70,7 @@ const getScoreColor = (score: number) => {
 
 <template>
   <div class="w-full">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div class="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 rounded-xl shadow-lg border border-gray-300 p-6">
       <!-- Loading State -->
       <div v-if="loading" class="w-full h-32 flex justify-center items-center">
         <div class="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent" />

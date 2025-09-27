@@ -42,35 +42,19 @@ const props = withDefaults(
       <div class="flex items-center">
         <div class="relative">
           <!-- Main score container with glass morphism effect -->
-          <div class="relative bg-white/80 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/20 shadow-lg group-hover:shadow-xl group-hover:shadow-primary/10 transition-all duration-300 overflow-hidden">
+          <div class="relative bg-white/80 backdrop-blur-sm rounded-xl px-2 py-1 border border-gray-300 shadow-lg group-hover:shadow-xl group-hover:shadow-primary/10 transition-all duration-300 overflow-hidden">
             <!-- Animated background gradient -->
             <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
             <!-- Score content -->
             <div class="relative flex flex-col items-center">
               <!-- Score number with premium typography -->
-              <div class="flex items-baseline gap-1 mb-1">
-                <span class="text-4xl font-black bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent group-hover:from-primary group-hover:via-primary group-hover:to-emerald-600 transition-all duration-500 tracking-tight">
+              <div class="flex items-baseline gap-1">
+                <span class="text-2xl font-black bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent group-hover:from-primary group-hover:via-primary group-hover:to-emerald-600 transition-all duration-500 tracking-tight">
                   {{ props.quiz.score }}
                 </span>
                 <span class="text-lg font-semibold text-gray-400 group-hover:text-gray-500 transition-colors duration-300">
                   /100
-                </span>
-              </div>
-              
-              <!-- Performance indicator -->
-              <div class="flex items-center gap-2">
-                <!-- Performance bar -->
-                <div class="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                  <div 
-                    class="h-full bg-gradient-to-r from-primary to-emerald-500 rounded-full transition-all duration-500 group-hover:from-primary group-hover:to-emerald-400"
-                    :style="{ width: `${props.quiz.score}%` }"
-                  ></div>
-                </div>
-                
-                <!-- Performance label -->
-                <span class="text-xs font-medium text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
-                  {{ props.quiz.score >= 90 ? 'Excellent' : props.quiz.score >= 80 ? 'Very Good' : props.quiz.score >= 70 ? 'Good' : props.quiz.score >= 60 ? 'Promising' : props.quiz.score >= 40 ?  'Not Bad' : props.quiz.score >= 20 ? 'Can Do Better': 'Needs Work' }}
                 </span>
               </div>
             </div>

@@ -151,7 +151,7 @@ const handleCancel = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="lesson in lessons">
+                <tr v-for="(lesson, index) in lessons" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'">
                   <td class="px-4 py-3">
                     <div class="flex items-center justify-center">
                       <span

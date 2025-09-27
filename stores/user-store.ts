@@ -9,7 +9,7 @@ export const useUserStore = defineStore("user", {
       fullName: null,
       hasFilledInitialForm: false,
       id: null,
-      // initials: null,
+      initials: null,
       isSubscribed: false,
       languageLearned: null,
       pseudo: null,
@@ -33,7 +33,7 @@ export const useUserStore = defineStore("user", {
       this.isSubscribed = profile.subscribed;
       this.languageLearned = profile.language_learned;
       this.pseudo = profile.pseudo;
-      // this.initials = profile.initials;
+      this.initials = profile.initials;
       this.email = profile.email;
       this.isSubscribed = profile.subscribed;
       this.hasFilledInitialForm = profile.has_filled_initial_form;
