@@ -26,7 +26,7 @@ const handleGenerateQuiz = async () => {
   if (!props.rule?.id) return;
   isLoading.value = true;
   try {
-    await handleGenerationQuiz("", props.rule?.id, "/learning/quizzes");
+    await handleGenerationQuiz(props.rule?.id, `/learning/modules/${props.rule.id}/quizzes`, null, 10);
   } catch (error) {
     console.error("Error generating quiz:", error);
   } finally {
@@ -122,7 +122,7 @@ const getScoreColor = (score: number) => {
           <!-- Action Button -->
           <div class="pt-4 border-t border-gray-100">
             <button
-              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
               :disabled="isLoading"
               @click="handleGenerateQuiz"
             >

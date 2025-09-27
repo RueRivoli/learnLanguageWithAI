@@ -1,0 +1,8 @@
+id;grammar_rule_id;question_type;questions;difficulty_status;option_1;option_2;option_3;option_4;correct_answer;note
+234;1;1; Which of the following vowels is a back vowel in Turkish?;1;e;i;ö;a;4;
+235;1;1;Which option shows the correct dative form (to...) of the word 'köy' (village) following vowel harmony?;3;köyü;köya;köyö;köye;4;
+236;1;1;In Turkish vowel harmony, which feature determines whether a suffix uses a front or back vowel?;1;The first consonant in the word;The last vowel in the word;The number of syllables;The stress pattern of the word;2;
+237;1;1;Which of the following words correctly applies the plural suffix according to Turkish vowel harmony?;1;kalemlar;kitapler;okullar;çocukler;3;
+238;1;1;The possessive suffix '-im/-ım/-üm/-um' follows four-way vowel harmony. Which is the correct form for 'göz' (eye)?;2;gözim;gözüm;gözam;gözom;2;
+239;1;1;Which of the following dative forms (to...) is correct according to vowel harmony?;2;okule (to school);kitaba (to the book);şehirö (to the city);arabaye (to the car);2;
+240;1;1;Some suffixes in Turkish obey **two-way vowel harmony**, while others obey **four-way vowel harmony**. Which suffix below follows **two-way vowel harmony**?;3;Plural suffix (-ler / -lar);First person possessive (-im / -ım / -üm / -um);Past tense (-di / -dı / -dü / -du);Aorist tense (-ir / -ır / -ür / -ur);1;

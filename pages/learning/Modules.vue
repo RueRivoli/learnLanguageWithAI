@@ -176,8 +176,8 @@ watchEffect(async () => {
               v-for="(rule, n) in grammarRules"
               v-else
               :key="n"
-              class="flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200"
-              @click="router.push(`/learning/grammar/${rule.id}`)"
+              class="flex flex-col justify-between cursor-pointer bg-white rounded-lg border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200"
+              @click="router.push(`/learning/modules/${rule.id}`)"
             >
               <div class="flex items-start justify-between">
                 <LayoutHeadingRuleTitle :rule="rule" />
@@ -246,7 +246,7 @@ watchEffect(async () => {
 
                   <button
                     class="btn btn-sm btn-error btn-link rounded-lg cursor-pointer group mr-2"
-                    @click="router.push(`/learning/grammar/${rule.id}`)"
+                    @click="router.push(`/learning/modules/${rule.id}`)"
                   >
                     <ArrowTrendingUpIcon class="h-4 w-4" />
                     <span>Practice</span>
@@ -279,7 +279,7 @@ watchEffect(async () => {
                 <td>
                   <div
                     class="flex group items-center gap-3 hover:cursor-pointer"
-                    @click="router.push(`/learning/grammar/${rule.id}`)"
+                    @click="router.push(`/learning/modules/${rule.id}`)"
                   >
                     <div
                       class="avatar group-hover:opacity-70 transition-opacity duration-300"
@@ -332,7 +332,7 @@ watchEffect(async () => {
                   </button>
                   <button
                     class="btn btn-ghost"
-                    @click="router.push(`/learning/grammar/${rule.id}`)"
+                    @click="router.push(`/learning/modules/${rule.id}`)"
                   >
                     <EyeIcon
                       class="h-5 w-5 font-bold text-black dark:text-white group-hover:text-white"

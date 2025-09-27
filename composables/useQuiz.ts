@@ -232,7 +232,7 @@ const currentQuestionOptions = computed((): Array<GrammarQuizQuestion['option1']
   
   const grammarProgress = computed((): QuizProgress[] => {
     const progress: QuizProgress[] = [];
-    const totalGrammarQuestions = 5; // Display 5 squares for grammar
+    const totalGrammarQuestions = grammarQuizQuestions.value?.length || 0; // Display 5 squares for grammar
     
     for (let i = 0; i < totalGrammarQuestions; i++) {
         const hasAnswer = formGrammarQuiz.value[i + 1] && formGrammarQuiz.value[i + 1].selectedOption !== null;
@@ -464,7 +464,7 @@ const isLastQuestion = computed(() => {
     // Get actual words that were validated/invalidated
     const validatedWordsList: Array<{text: string, isMastered: boolean, id: number}> = [];
     const invalidatedWordsList: Array<{text: string, isMastered: boolean, id: number}> = [];
-    if (wordsQuizQuestions.value && formWordsQuiz.value) {
+    if (type !== 'grammar' && wordsQuizQuestions.value && formWordsQuiz.value) {
       Object.values(formWordsQuiz.value).forEach((answer, index) => {
         if (answer.selectedOption !== null && wordsQuizQuestions.value?.[index]) {
           const question = wordsQuizQuestions.value?.[index];
@@ -483,7 +483,7 @@ const isLastQuestion = computed(() => {
     // Get actual expressions that were validated/invalidated
     const validatedExpressionsList: Array<{text: string, isMastered: boolean, id: number}> = [];
     const invalidatedExpressionsList: Array<{text: string, isMastered: boolean, id: number}> = [];
-    if (expressionsQuizQuestions.value && formExpressionsQuiz.value) {
+    if (type !== 'grammar' && expressionsQuizQuestions.value && formExpressionsQuiz.value) {
       Object.values(formExpressionsQuiz.value).forEach((answer, index) => {
         if (answer.selectedOption !== null && expressionsQuizQuestions.value?.[index]) {
           const question = expressionsQuizQuestions.value?.[index];
@@ -499,7 +499,7 @@ const isLastQuestion = computed(() => {
       });
     }
     
-    return {
+    return type !== 'grammar' ? {
       grammar: { correct: grammarCorrect, total: grammarTotal, percentage: grammarTotal > 0 ? Math.round((grammarCorrect / grammarTotal) * 100) : 0 },
       words: { 
         correct: wordsCorrect, 
@@ -517,6 +517,9 @@ const isLastQuestion = computed(() => {
         validatedList: validatedExpressionsList,
         invalidatedList: invalidatedExpressionsList
       },
+      overall: { percentage: globalScore.value }
+    } : {
+      grammar: { correct: grammarCorrect, total: grammarTotal, percentage: grammarTotal > 0 ? Math.round((grammarCorrect / grammarTotal) * 100) : 0 },
       overall: { percentage: globalScore.value }
     };
   });

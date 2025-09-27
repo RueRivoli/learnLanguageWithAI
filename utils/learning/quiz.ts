@@ -1,5 +1,4 @@
 import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quizzes/quiz";
-import type { GrammarQuizQuestion } from "./lesson-quiz";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 
 
@@ -24,19 +23,21 @@ export const parseGrammarQuizQuestion = (question: QuizFetchedQuestion): Grammar
     id: question.id,
     type: question.turkish_grammar_quizzes.question_type ?? null,
     difficulty: question.turkish_grammar_quizzes.difficulty_status ?? null,
-    grammarRuleId: question.turkish_grammar_quizzes.grammar_rule_id ?? null,
+    ruleId: question.turkish_grammar_quizzes.grammar_rule_id ?? null,
     correctAnswer: question.turkish_grammar_quizzes.correct_answer ?? null,
     question: question.turkish_grammar_quizzes.text ?? null,
-    translation: question.turkish_grammar_quizzes.translation ?? null,
+    // translation: question.turkish_grammar_quizzes.translation ?? null,
     option1: question.turkish_grammar_quizzes.option_1 ?? null,
     option2: question.turkish_grammar_quizzes.option_2 ?? null,
     option3: question.turkish_grammar_quizzes.option_3 ?? null,
     option4: question.turkish_grammar_quizzes.option_4 ?? null,
+    note: null,
+    // note: question.turkish_grammar_quizzes.note ?? null,
   };
 };
 
 
-export const handleGenerationQuiz = async (lessonId: string, ruleId: number, redirectionPath: string) => {
+export const handleGenerationQuiz = async (ruleId: number, redirectionPath: string, lessonId?: string | null, length = 5) => {
   try {
     // Attach Authorization header from Supabase session for secure server-side auth
     const { data: { session } } = await useSupabaseClient().auth.getSession()
@@ -47,12 +48,12 @@ export const handleGenerationQuiz = async (lessonId: string, ruleId: number, red
       method: "PUT",
       headers,
       body: {
-        lessonId: lessonId,
+        numberOfQuestions: length,
       },
     });
     console.log("has generated a quiz with the quizId: ", response.quizId);
     // response is the id of the new generated quiz
-    await $fetch(`/api/lessons/${lessonId}`, {
+    if (lessonId) await $fetch(`/api/lessons/${lessonId}`, {
       method: "PUT", 
       body: {
         quizId: response.quizId,

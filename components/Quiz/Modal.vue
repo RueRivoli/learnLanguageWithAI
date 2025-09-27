@@ -11,8 +11,10 @@ const props = withDefaults(
     loading?: boolean;
     detailedResults?: any;
     globalScore?: number | null;
+    type: 'grammar' | 'vocabulary' | 'full',
   }>(),
   {
+    type: 'full',
     grammarRuleMetaData: null,
     loading: false,
     rule: null,
@@ -54,6 +56,9 @@ const greetingMessage = computed(() => {
 
 
 const congratulationsMessage = computed(() => {
+  if (props.type === 'grammar') {
+    return `Well done ! You've accomplished ${props.detailedResults.grammar.percentage}% of success for the ${props.grammarRuleMetaData?.name}`;
+  }
   const scores = [
     { type: 'words', percentage: props.detailedResults.words.percentage, label: 'word list' },
     { type: 'expressions', percentage: props.detailedResults.expressions.percentage, label: 'expression list' },
@@ -257,7 +262,7 @@ const grammarClass = computed(() => {
             </div>
 
             <!-- Words and Expressions Charts - Side by Side -->
-            <div class="vocabulary-charts-grid">
+            <div v-if="props.type !== 'grammar'" class="vocabulary-charts-grid">
               <!-- Words Chart -->
               <div class="chart-card words-chart-bg">
                 <div class="chart-header">

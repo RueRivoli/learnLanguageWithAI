@@ -8,6 +8,7 @@ export type WordContent = {
   translation: WordRowFetched['translation'];
   isMastered: boolean;
 }
+
 export type Word = {
   id: WordRowFetched['id'];
   text: WordRowFetched['text'];

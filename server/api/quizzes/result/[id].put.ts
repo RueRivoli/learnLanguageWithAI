@@ -70,15 +70,10 @@ export default defineEventHandler(async (event) => {
     const score = body.score
     const ruleId = body.ruleId
     const detailedResults = body.detailedResults
+    const type = body.type
     // const questionValues = body.value
-
-    // Vocabulary mastering data
-    const newMasteredWordsIds = detailedResults.words.validatedList.filter(word => !word.isMastered).map(word => word.id)
-    const newForgottenWordIds = detailedResults.words.invalidatedList.filter(word => word.isMastered).map(word => word.id)
-    const newMasteredExpressionsIds = detailedResults.expressions.validatedList.filter(expr => !expr.isMastered).map(expr => expr.id)
-    const newForgottenExpressionsIds = detailedResults.expressions.invalidatedList.filter(expr => expr.isMastered).map(expr => expr.id)
-
-    // Resolve current user from Authorization header for RLS-safe operations
+    console.log('xxxxxx body xxxxxxxxx', body)
+        // Resolve current user from Authorization header for RLS-safe operations
     const authHeader = getHeader(event, 'authorization')
     if (!authHeader) {
       throw new Error('Authorization header required')
@@ -100,24 +95,35 @@ export default defineEventHandler(async (event) => {
       throw new Error('Unable to resolve authenticated user')
     }
 
+     // Grammar mastering data
     const grammarRuleScore = await getAverageScore(score, user.id, ruleId)
 
     const updateQuizResult = async () => {
-        const { error: errorFromQuizzedResult } = await supabase.from("turkish_quizzes_result").update({ score_global: score }).eq("id", quizId).eq("user_id", user.id)
-      
-        if (errorFromQuizzedResult) {
-          throw new Error("An error occurred while updating the quiz result. Please try again.");
+      const { error: errorFromQuizzedResult } = await supabase.from("turkish_quizzes_result").update({ score_global: score }).eq("id", quizId).eq("user_id", user.id)
+          
+      if (errorFromQuizzedResult) {
+        throw new Error("An error occurred while updating the quiz result. Please try again.");
         }
       };
-
+    
       const updateUserGrammarScore = async () => {
-        const { error: errorFromGrammarScores } = await supabase
-        .from("turkish_grammar_scores")
-        .update({
-          score: grammarRuleScore,
-        }).eq('rule_id', ruleId).eq('user_id', user.id)
-        if (errorFromGrammarScores) throw ('An error occured while updating the quiz result, please try again')
-      }; 
+        const { error: errorFromGrammarScores } = await supabase.from("turkish_grammar_scores").update({
+              score: grammarRuleScore,
+            }).eq('rule_id', ruleId).eq('user_id', user.id)
+            if (errorFromGrammarScores) throw ('An error occured while updating the quiz result, please try again')
+          }; 
+
+      if (type === 'grammar') { 
+        await updateQuizResult()
+        await updateUserGrammarScore()
+        return
+      }
+
+    // Vocabulary mastering data
+    const newMasteredWordsIds = detailedResults.words.validatedList.filter(word => !word.isMastered).map(word => word.id)
+    const newForgottenWordIds = detailedResults.words.invalidatedList.filter(word => word.isMastered).map(word => word.id)
+    const newMasteredExpressionsIds = detailedResults.expressions.validatedList.filter(expr => !expr.isMastered).map(expr => expr.id)
+    const newForgottenExpressionsIds = detailedResults.expressions.invalidatedList.filter(expr => expr.isMastered).map(expr => expr.id)
 
       const updateVocabularyData = async () => {
         if (user?.id) updateVocabularyKnowledge(user.id, newMasteredWordsIds, newForgottenWordIds, newMasteredExpressionsIds, newForgottenExpressionsIds)

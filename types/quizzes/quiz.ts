@@ -24,7 +24,7 @@ export type QuizFetchedQuestion = {
     option_4: GrammarQuizModel['option_4'], 
     text: GrammarQuizModel['text'], 
     correct_answer: GrammarQuizModel['correct_answer'], 
-    translation: GrammarQuizModel['translation']
+    // translation: GrammarQuizModel['translation']
   }
 }
 

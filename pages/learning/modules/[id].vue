@@ -42,14 +42,14 @@ await getGrammarRule();
 await getlastQuizzes();
 
 const sanitizedIntroTemplate = computed(() =>
-  DOMPurify.sanitize(grammarRule.value.intro || ""),
+  DOMPurify.sanitize(grammarRule.value?.intro || ""),
 );
 
 const sanitizedDescriptionTemplate = computed(() =>
-  DOMPurify.sanitize(grammarRule.value.description || ""),
+  DOMPurify.sanitize(grammarRule.value?.description || ""),
 );
 const sanitizedExtendedDescriptionTemplate = computed(() =>
-  DOMPurify.sanitize(grammarRule.value.extendedDescription || ""),
+  DOMPurify.sanitize(grammarRule.value?.extendedDescription || ""),
 );
 </script>
 

@@ -12,7 +12,7 @@ export type QuizResult = {
 
 
 export type DetailedResults = {
-  grammar: { correct: number, total: number},
+  grammar: { correct: number, percentage: number, total: number},
       words: { 
         correct: number, 
         total: number, 
@@ -30,4 +30,7 @@ export type DetailedResults = {
         invalidatedList: Array<{text: string, isMastered: boolean, id: number}>,
       },
       overall: { percentage: number }
+} | {
+  grammar: { correct: number, percentage: number, total: number},
+  overall: { percentage: number }
 }

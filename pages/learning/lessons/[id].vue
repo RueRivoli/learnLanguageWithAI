@@ -135,7 +135,7 @@ getLesson();
 const handleGenerateQuiz = async () => {
   isLoading.value = true;
   if (!lesson.value?.grammarRuleId) return;
-  await handleGenerationQuiz(lessonId, lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`);
+  await handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`, lessonId);
 };
 
 const sentences = computed(() => {

@@ -1,8 +1,8 @@
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 
 export const parseVocabularyGeneratedQuiz = (data: any) : VocabularyQuizQuestion[] => {
-   const parsedData = JSON.parse(data);
-    // const parsedData = data;
+   // const parsedData = JSON.parse(data);
+    const parsedData = data;
    const finalQuiz: VocabularyQuizQuestion[] = [];
    let i = 1;
    console.log("parsedData", parsedData, parsedData[`question${i}`]);

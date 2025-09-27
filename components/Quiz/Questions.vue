@@ -57,7 +57,6 @@ const {
     grammarScore,
     isLastQuestion,
     isQuizCompleted,
-    isQuestionCorrect,
     selectAnswer,
     selectedAnswer,
     totalQuestions,
@@ -208,7 +207,7 @@ const handleReturnToSubject = () => {
         </div>
       </div>
 
-      <div class="progress-section">
+      <div class="progress-section" v-if="props.type === 'full' || props.type === 'vocabulary'">
         <h4 class="progress-title">Vocabulary</h4>
         
         <!-- Words Subsection -->

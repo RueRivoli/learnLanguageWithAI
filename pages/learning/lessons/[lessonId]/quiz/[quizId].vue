@@ -103,22 +103,22 @@ const getGrammarQuizData = async () => {
 
 const getGeneratedVocabularyQuiz = async () => {
   try {
-    const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/words`, {
-      method: "POST",
-      body: {
-        message: promptGeneratedWordQuiz(wordsForQuiz.value)
-      }
-    });
+    // const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/words`, {
+    //   method: "POST",
+    //   body: {
+    //     message: promptGeneratedWordQuiz(wordsForQuiz.value)
+    //   }
+    // });
     
-    const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, {
-      method: "POST",
-      body: {
-        message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
-      }
-    });
+    // const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, {
+    //   method: "POST",
+    //   body: {
+    //     message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
+    //   }
+    // });
     
-    // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
-    // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
+    const generatedWordsQuiz = mockNotParsedWordQuizQuestions
+    const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
 
     const [wordsQuizResult, expressionsQuizResult] = await Promise.all([
       generatedWordsQuiz, 
@@ -188,7 +188,7 @@ isLoadingQuiz.value = false;
     />
     <!-- Results Modal -->
      <div v-if="showResultsModal" class="modal-overlay">
-      <QuizModal :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" @close="closeResultsModal" />
+      <QuizModal :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" type="full" @close="closeResultsModal" />
      </div>
   </div>
 </template>

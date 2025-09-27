@@ -500,24 +500,12 @@ const handleExpressionLearningStatus = async (
                   </p>
                 </div>
 
-                <!-- Bottom section with ID and Learned button - no separator line -->
+                <!-- Bottom section with ID only -->
                 <div class="flex items-center justify-between mt-4">
                   <!-- Expression ID on the left -->
                   <span class="text-xs text-slate-500 font-medium">
                     #{{ expression.id }}
                   </span>
-                  
-                  <!-- Learned button on the right -->
-                  <button
-                    class="flex items-center gap-1 px-3 py-1 bg-green-100 hover:bg-green-200 text-green-700 hover:text-green-800 text-xs font-medium rounded-lg transition-all duration-200 hover:shadow-sm"
-                    @click.stop="handleExpressionLearningStatus(expression.id, showLearnedExpressions)"
-                  >
-                    <span v-if="showLearnedExpressions">Unlearn</span>
-                    <span v-else>Learned</span>
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </button>
                 </div>
               </div>
             </div>
