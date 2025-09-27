@@ -315,9 +315,6 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 
                 </span> to update your scores
             </div>
-            <div class="mt-5 italic" v-else>
-              Quiz is already filled out
-            </div>
             <!-- Story Section (Full Width Below) -->
             <div id="story" class="w-full">
               <div id="story_content" class="p-3">
@@ -340,6 +337,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       Key Rule : {{ lesson.grammarRuleNameEn }}
                     </button> -->
                     <LayoutKeyElementRule :title="lesson?.grammarRuleNameEn" :level="getDifficultyNameSafe(lesson?.level)" size="sm"  @click="isStoryShown = false"/>
+                    <LayoutKeyElementQuiz v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
                   <label class="flex items-center gap-3 cursor-pointer group">
                     <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">

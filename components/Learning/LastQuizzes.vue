@@ -112,11 +112,12 @@ const getScoreColor = (score: number) => {
           </div>
 
           <div v-else class="space-y-3">
-            <QuizResult
+            <!-- <QuizResult
               v-for="(quiz, index) in props.quizs"
               :key="index"
               :quiz="quiz"
-            />
+            /> -->
+            <LayoutKeyElementQuiz class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :score="quiz.score" size="xl"/>
           </div>
 
           <!-- Action Button -->
