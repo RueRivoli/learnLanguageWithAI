@@ -276,8 +276,8 @@ const handleGenerateStory = async () => {
                     class="btn btn-word btn-outline"
                     @click="handleModifyWordList"
                   >
-                    <PencilSquareIcon class="h-4 w-4 inline mr-2" />
-                    Edit
+                    <PencilSquareIcon class="h-4 w-4 inline" />
+                    <!-- Edit -->
                   </button>
                 </template>
               <template #content>
@@ -301,11 +301,11 @@ const handleGenerateStory = async () => {
               <LayoutKeyElementExpressionCard title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <button
-                    class="btn btn-expression btn-outline"
+                    class="btn btn-expression btn-soft"
                     @click="handleModifyExpressionList"
                   >
-                    <PencilSquareIcon class="h-4 w-4 inline mr-2" />
-                    Edit
+                    <PencilSquareIcon class="h-4 w-4 inline mr-1" />
+                    <span>Edit</span>
                   </button>
                 </template>
               <template #content>
@@ -337,7 +337,7 @@ const handleGenerateStory = async () => {
         <ModalSelection
           id="my_modal_to_change_word_list"
           :key="openingModalId"
-          title="Customize Word Selection"
+          title="Edit the Words List"
           :list="wordList"
           :limit="Number(10)"
           type="word"
@@ -347,9 +347,9 @@ const handleGenerateStory = async () => {
         <ModalSelection
           id="my_modal_to_change_expression_list"
           :key="openingModalId"
-          title="Customize Expression Selection"
+          title="Edit the Expressions List"
           :list="expressionList"
-          :limit="Number(4)"
+          :limit="Number(3)"
           type="expression"
           @apply-selection="(value) => handleExpressionSelectionChange(value)"
           @cancel="handleCancelModal"

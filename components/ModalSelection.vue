@@ -36,37 +36,32 @@ const handleDeleteSelectedItem = (text: string) => {
         <PencilSquareIcon
           class="h-5 w-5 mr-2 font-semibold group-hover:text-neutral"
         />
-        <h3 class="text-lg font-semibold">{{ props.title }}</h3>
+        <h3 class="text-xl text-gray-900">{{ props.title }}</h3>
       </div>
 
       <p class="pt-2 pb-4 italic">
-        <span v-if="props.type === 'word'"
-          >Remove words you know from the list.
-        </span>
-        <span v-else-if="props.type === 'expression'">
-          Remove expressions you know from the list.
-          <!-- </span>
-        TODO: master learning word when closed here -->
-          <!-- <span>The expressions you closed will be automatically stored as learned
-          expressions.</span> -->
-        </span>
+        <!-- Add description here -->
       </p>
 
-      <!-- <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-          ✕
-        </button>
-      </form> -->
       <div
-        v-for="(elt, n) in listItems.slice(0, props.limit)"
-        :key="n"
-        class="btn btn-sm btn-neutral mr-2 mb-2"
+        class="mr-2 mb-2 flex flex-wrap gap-2"
       >
-        {{ elt.text }}
-        <XMarkIcon
-          class="h-4 w-4 font-semibold group-hover:text-neutral"
-          @click="handleDeleteSelectedItem(elt.text)"
-        />
+      <LayoutKeyElementWordBadge v-if="props.type === 'word'" v-for="(elt, n) in listItems.slice(0, props.limit)" :key="n" :text="elt.text">
+          <template #action>
+            <XMarkIcon
+              class="h-4 w-4 text-white cursor-pointer font-semibold group-hover:text-neutral"
+              @click="handleDeleteSelectedItem(elt.text)"
+            />
+          </template>
+        </LayoutKeyElementWordBadge>
+      <LayoutKeyElementExpressionBadge v-else-if="props.type === 'expression'" v-for="(elt, index) in listItems.slice(0, props.limit)" :key="index" :text="elt.text">
+          <template #action>
+            <XMarkIcon
+              class="h-4 w-4 text-white cursor-pointer font-semibold group-hover:text-neutral"
+              @click="handleDeleteSelectedItem(elt.text)"
+            />
+          </template>
+        </LayoutKeyElementExpressionBadge>
       </div>
       <div class="modal-action">
         <form method="dialog">

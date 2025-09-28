@@ -111,6 +111,27 @@ const currentInfo = computed(() => {
             </div>
           </div>
         </div>
+        <div id="rules_overview" v-for="(rule, index) in currentInfo"  :key="index">
+          <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score">
+            <template #details>
+              <div class="rounded-lg p-2"
+          >
+            <div class="flex items-center">
+              <div class="flex items-center gap-2">
+                <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                <span class="text-md font-medium text-gray-700"
+                  >37.5%</span
+                >
+              </div>
+              <span class="text-xs text-gray-600 ml-2"
+                >of correct answers</span
+              >
+            </div>
+          </div>
+            </template>
+
+            </LayoutKeyElementRuleOverview>
+        </div>
         <div 
           id="rules_overview" 
           v-for="(rule, index) in currentInfo" 

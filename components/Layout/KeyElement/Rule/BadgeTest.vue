@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DocumentIcon, LanguageIcon } from '@heroicons/vue/24/outline';
+import { BookOpenIcon, LanguageIcon, ViewfinderCircleIcon } from '@heroicons/vue/24/outline';
 
 const props = withDefaults(
   defineProps<{
@@ -13,6 +13,7 @@ const props = withDefaults(
     symbol: null,
   },
 );
+
 
 </script>
 
@@ -51,13 +52,9 @@ const props = withDefaults(
               </div>
             </div>
         </div>
-        <!-- Main statistics -->
-        <slot name="content" />
-        <!-- Progress details -->
-        <slot name="details"></slot>
     </div> 
 </div>
 </template>
 
-<style>  
+<style>
 </style>

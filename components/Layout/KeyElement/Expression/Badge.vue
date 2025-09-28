@@ -31,7 +31,8 @@ const emit = defineEmits(["click"]);
 
     <span v-if="props.translation" class="text-sm text-slate-600 font-light italic">
         {{ props.translation }}
-    </span>                  
+    </span>
+    <slot name="action"></slot>               
 </div>
     </div>
 </div>

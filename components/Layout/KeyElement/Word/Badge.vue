@@ -29,14 +29,15 @@ class="rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 py-1 px-2 transi
     <div>
       <span class="text-base font-medium text-white font-serif">
       {{ props.text }}
-    </span>
-    <span class="text-base font-medium text-white font-serif" v-if="props.isMastered">*</span>
+      </span>
+      <span class="text-base font-medium text-white font-serif" v-if="props.isMastered">*</span>
     </div>
 
     <span v-if="props.translation" class="text-sm text-slate-600 font-light italic">
       {{ props.translation}}
     </span>
   </div>
+  <slot name="action"></slot>
     </div>
 </div>
 </template>

@@ -117,7 +117,7 @@ const getScoreColor = (score: number) => {
               :key="index"
               :quiz="quiz"
             /> -->
-            <LayoutKeyElementQuiz class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :score="quiz.score" size="xl"/>
+            <LayoutKeyElementQuizBadge class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :score="quiz.score" size="sm"/>
           </div>
 
           <!-- Action Button -->
