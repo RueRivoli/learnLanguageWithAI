@@ -30,8 +30,8 @@
   --color-accent-content: oklch(98% 0.003 247.858);
   --color-neutral: oklch(27% 0.041 260.031);
   --color-neutral-content: oklch(98% 0.003 247.858);
-  --color-info: oklch(68% 0.169 237.323);
-  --color-info-content: oklch(29% 0.066 243.157);
+  --color-info: oklch(60% 0.2 240);
+  --color-info-content: oklch(98% 0.002 247.839);
   --color-success: oklch(69% 0.17 162.48);
   --color-success-content: oklch(26% 0.051 172.552);
   --color-warning: oklch(75% 0.183 55.934);
@@ -40,6 +40,12 @@
   --color-error-content: oklch(27% 0.105 12.094);
   --color-middle-progress: oklch(0.9267 0.2166 114.35);
   --color-middle-progress-content: oklch(27% 0.105 12.094);
+  --color-expression: oklch(60% 0.2 300);
+  --color-expression-content: oklch(98% 0.002 247.839);
+  --color-word: oklch(60% 0.2 240);
+  --color-word-content: oklch(98% 0.002 247.839);
+  --color-rule: oklch(60% 0.2 160);
+  --color-rule-content: oklch(98% 0.002 247.839);
   --radius-selector: 1rem;
   --radius-field: 0.3rem;
   --radius-box: 0.2rem;
@@ -67,14 +73,20 @@
   --color-accent-content: oklch(38% 0.063 188.416);
   --color-neutral: oklch(98% 0.003 247.858);
   --color-neutral-content: oklch(12% 0.042 264.695);
-  --color-info: oklch(74% 0.16 232.661);
-  --color-info-content: oklch(29% 0.066 243.157);
+  --color-info: oklch(60% 0.2 240);
+  --color-info-content: oklch(98% 0.002 247.839);
   --color-success: oklch(76% 0.177 163.223);
   --color-success-content: oklch(37% 0.077 168.94);
   --color-warning: oklch(82% 0.189 84.429);
   --color-warning-content: oklch(41% 0.112 45.904);
   --color-error: oklch(71% 0.194 13.428);
   --color-error-content: oklch(27% 0.105 12.094);
+  --color-expression: oklch(60% 0.2 300);
+  --color-expression-content: oklch(98% 0.002 247.839);
+  --color-word: oklch(60% 0.2 240);
+  --color-word-content: oklch(98% 0.002 247.839);
+  --color-rule: oklch(60% 0.2 160);
+  --color-rule-content: oklch(98% 0.002 247.839);
   --radius-selector: 1rem;
   --radius-field: 0.3rem;
   --radius-box: 0.5rem;
@@ -237,4 +249,124 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Color Classes */
+.bg-expression {
+  background-color: var(--color-expression);
+  color: var(--color-expression-content);
+}
+
+.bg-word {
+  background-color: var(--color-word);
+  color: var(--color-word-content);
+}
+
+.bg-rule {
+  background-color: var(--color-rule);
+  color: var(--color-rule-content);
+}
+
+.text-expression {
+  color: var(--color-expression);
+}
+
+.text-word {
+  color: var(--color-word);
+}
+
+.text-rule {
+  color: var(--color-rule);
+}
+
+.border-expression {
+  border-color: var(--color-expression);
+}
+
+.border-word {
+  border-color: var(--color-word);
+}
+
+.border-rule {
+  border-color: var(--color-rule);
+}
+
+/* Gradient variations */
+.bg-gradient-expression {
+  background: linear-gradient(135deg, var(--color-expression), oklch(50% 0.25 300));
+}
+
+.bg-gradient-word {
+  background: linear-gradient(135deg, var(--color-word), oklch(50% 0.25 240));
+}
+
+.bg-gradient-rule {
+  background: linear-gradient(135deg, var(--color-rule), oklch(50% 0.25 160));
+}
+
+/* DaisyUI Button overrides with custom colors */
+.btn.btn-word {
+  background-color: var(--color-word) !important;
+  border-color: var(--color-word) !important;
+  color: var(--color-word-content) !important;
+}
+
+.btn.btn-word:hover {
+  background-color: oklch(50% 0.25 240) !important;
+  border-color: oklch(50% 0.25 240) !important;
+}
+
+.btn.btn-word.btn-outline {
+  background-color: transparent !important;
+  color: var(--color-word) !important;
+  border-color: var(--color-word) !important;
+}
+
+.btn.btn-word.btn-outline:hover {
+  background-color: var(--color-word) !important;
+  color: var(--color-word-content) !important;
+}
+
+.btn.btn-expression {
+  background-color: var(--color-expression) !important;
+  border-color: var(--color-expression) !important;
+  color: var(--color-expression-content) !important;
+}
+
+.btn.btn-expression:hover {
+  background-color: oklch(50% 0.25 300) !important;
+  border-color: oklch(50% 0.25 300) !important;
+}
+
+.btn.btn-expression.btn-outline {
+  background-color: transparent !important;
+  color: var(--color-expression) !important;
+  border-color: var(--color-expression) !important;
+}
+
+.btn.btn-expression.btn-outline:hover {
+  background-color: var(--color-expression) !important;
+  color: var(--color-expression-content) !important;
+}
+
+.btn.btn-rule {
+  background-color: var(--color-rule) !important;
+  border-color: var(--color-rule) !important;
+  color: var(--color-rule-content) !important;
+}
+
+.btn.btn-rule:hover {
+  background-color: oklch(50% 0.25 160) !important;
+  border-color: oklch(50% 0.25 160) !important;
+}
+
+.btn.btn-rule.btn-outline {
+  background-color: transparent !important;
+  color: var(--color-rule) !important;
+  border-color: var(--color-rule) !important;
+}
+
+.btn.btn-rule.btn-outline:hover {
+  background-color: var(--color-rule) !important;
+  color: var(--color-rule-content) !important;
 }

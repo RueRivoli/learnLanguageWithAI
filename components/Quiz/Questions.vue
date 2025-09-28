@@ -179,7 +179,7 @@ const handleReturnToSubject = () => {
       <div class="progress-section">
         <div class="flex items-center justify-between">
           <h4 class="progress-title">Grammar</h4>
-          <LayoutKeyElementRule class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
+          <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
         </div>
         
         <!-- Grammar Score -->

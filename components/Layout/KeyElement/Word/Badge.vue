@@ -21,7 +21,7 @@ const emit = defineEmits(["click"]);
 
 <template>
 <div 
-class="rounded-md blue-bg py-1 px-2 transition-all duration-300"
+class="rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 py-1 px-2 transition-all duration-300"
 @click="emit('click')"
 >
 <div class="flex items-center justify-between">
@@ -42,8 +42,5 @@ class="rounded-md blue-bg py-1 px-2 transition-all duration-300"
 </template>
 
 <style>
-
-.blue-bg{
-    background: #3b82f6;
-}  
+/* Styles are now handled by CSS variables in main.css */
 </style>

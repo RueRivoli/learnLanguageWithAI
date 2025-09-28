@@ -25,7 +25,8 @@ const grammarRule = ref<GrammarRule | null>(null);
 const grammarRuleLoading = ref<boolean>(false);
 const isStoryShown = ref<boolean>(true);
 const relatedQuiz = ref<any>(null);
-
+const areWordsExampleShown = ref<boolean>(false);
+const areExpressionsExampleShown = ref<boolean>(false);
 const toggleWordTranslation = (index: number) => {
   activeWordTranslation.value = activeWordTranslation.value === index ? null : index;
 };
@@ -336,8 +337,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       </svg>
                       Key Rule : {{ lesson.grammarRuleNameEn }}
                     </button> -->
-                    <LayoutKeyElementRule :title="lesson?.grammarRuleNameEn" :level="getDifficultyNameSafe(lesson?.level)" size="sm"  @click="isStoryShown = false"/>
-                    <LayoutKeyElementQuiz v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
+                    <LayoutKeyElementRuleBadge :title="lesson?.grammarRuleNameEn" :level="getDifficultyNameSafe(lesson?.level)" size="sm"  @click="isStoryShown = false"/>
+                    <LayoutKeyElementQuizBadge v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
                   <label class="flex items-center gap-3 cursor-pointer group">
                     <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
@@ -436,129 +437,63 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             
             <!-- Key Words and Expressions Section -->
             <div class="space-y-2">
-                            <!-- Key Words Section -->
-              <div class="p-5 bg-white/70 backdrop-blur-md  border border-primary/20 rounded-2xl shadow-lg">
-                <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Key Words</h3>
-                
+              <!-- Words Selection Section -->
+             <LayoutKeyElementWordCard title="Key Words">
+              <template #top-right-corner>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                    <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
+                      Show Examples
+                    </span>
+                    <input
+                      v-model="areWordsExampleShown"
+                      type="checkbox"
+                      class="toggle toggle-primary toggle-sm"
+                    />
+                  </label>
+              </template>
+              <template #content>
                 <div class="grid grid-cols-2 gap-3">
-                  <div
+                <div
                     v-for="(word, index) in lesson?.newWords || []"
                     :key="index"
                     class="group relative"
                   >
-                    <!-- Enhanced Word Card -->
-                    <div 
-                      class="bg-gradient-to-r from-primary/15 to-primary/25 border border-primary/20 rounded-2xl p-4 cursor-pointer transition-all duration-300"
-                      @click="toggleWordTranslation(index)"
-                    >
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                          <span class="text-base font-medium text-slate-800 font-serif">
-                            {{ word.text }}
-                          </span>
-                          <span class="text-sm text-slate-600 font-light italic">
-                            {{ word.textEn || 'Translation not available' }}
-                          </span>
-                        </div>
-                        <svg 
-                          class="w-4 h-4 text-slate-500 transition-all duration-300"
-                          :class="{ 'rotate-180': activeWordTranslation === index }"
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                      </div>
-                      
-                      <!-- Example Sentences (shows when clicked) -->
-                      <div
-                        v-if="activeWordTranslation === index && (word.sentence || word.sentenceEn)"
-                        class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
-                      >
-                        <div
-                          v-if="word.sentence"
-                          class="text-sm text-slate-700 bg-slate-50/50 p-3 rounded-lg"
-                        >
-                          <span class="font-medium text-slate-800">Example:</span> {{ word.sentence }}
-                        </div>
-                        <div
-                          v-if="word.sentenceEn"
-                          class="text-sm text-slate-600 pl-3"
-                        >
-                        <span class="font-medium text-slate-800">Translation:</span> <span class="italic">{{ word.sentenceEn }}</span>
-                        </div>
-                      </div>
-                    </div>
+                  <LayoutKeyElementWordDefinition :word="word" :isActive="areWordsExampleShown" @click="toggleWordTranslation(index)"/>
                   </div>
                 </div>
-              </div>
+                 </template>
+              </LayoutKeyElementWordCard>
               
-              <!-- Key Expressions Section -->
-              <div class="p-5 bg-white/70 backdrop-blur-md shadow-lg border border-purple-300/30 rounded-2xl shadow-lg">
-                <h3 class="text-lg font-medium text-slate-700 font-serif mb-4">Key Expressions</h3>
-                
-                <div class="grid grid-cols-1 gap-3">
-                  <div
-                    v-for="(expression, index) in lesson?.newExpressions || []"
-                    :key="index"
-                    class="group relative"
-                  >
-                    <!-- Enhanced Expression Card -->
-                    <div 
-                      class="bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/20 border border-purple-300/30 rounded-2xl p-4 cursor-pointer transition-all duration-300"
-                      @click="toggleExpressionTranslation(index)"
-                    >
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                          <span class="text-base font-medium text-slate-800 font-serif">
-                            {{ expression.text }}
-                          </span>
-                          <span class="text-sm text-slate-600 font-light italic">
-                            {{ expression.textEn || 'Translation not available' }}
-                          </span>
-                          
-                        </div>
-                        <svg 
-                          class="w-4 h-4 text-slate-500 transition-all duration-300"
-                          :class="{ 'rotate-180': activeExpressionTranslation === index }"
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                      </div>
-                      
-                      <!-- Example Sentences (shows when clicked) -->
+               <!-- Key Expressions Section -->
+              <LayoutKeyElementExpressionCard title="Key Expressions">
+                <template #top-right-corner>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                    <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
+                      Show Examples
+                    </span>
+                    <input
+                      v-model="areExpressionsExampleShown"
+                      type="checkbox"
+                      class="toggle toggle-primary toggle-sm"
+                    />
+                  </label>
+              </template>
+                <template #content>
+                    <div class="grid grid-cols-2 gap-3">
                       <div
-                        v-if="activeExpressionTranslation === index && (expression.sentence || expression.sentenceEn)"
-                        class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
+                        v-for="(expression, index) in lesson?.newExpressions || []"
+                        :key="index"
+                        class="group relative"
                       >
-                        <div
-                          v-if="expression.sentence"
-                          class="text-sm text-slate-700 bg-slate-50/50 p-3 rounded-lg"
-                        >
-                          <span class="font-medium text-slate-800">Example:</span> {{ expression.sentence }}
-                        </div>
-                        <div
-                          v-if="expression.sentenceEn"
-                          class="text-sm text-slate-600 italic pl-3"
-                        >
-                        <span class="font-medium text-slate-800">Translation:</span> <span class="italic">{{ expression.sentenceEn }}</span>
-                        </div>
+                      <LayoutKeyElementExpressionDefinition :expression="expression" :isActive="areExpressionsExampleShown" @click="toggleExpressionTranslation(index)"/>
                       </div>
-                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                  </template>
+            </LayoutKeyElementExpressionCard>
+
               <div class="pt-4 border-t border-gray-100">
-                <div v-if="lesson?.quizId">
-                  <QuizResult :quiz="relatedQuiz"/>
-                </div>
                   <button
-                    v-else
+                    v-if="!lesson?.quizId"
                     class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
                     :disabled="isLoading"
                     @click="handleGenerateQuiz"
@@ -571,7 +506,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           </div>
         </div>
       </div>
-
+    </div>
     </div>
   </div>
 </template>

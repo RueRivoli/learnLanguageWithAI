@@ -178,8 +178,8 @@ const handleCancel = () => {
                   </td>
                   <td>
                       <div class="flex items-center hover:cursor-pointe">
-                        <LayoutKeyElementRule class="mr-2" :title="lesson.turkish_grammar_rules.rule_name_translation" :level="getDifficultyNameSafe(lesson.turkish_grammar_rules.difficulty_class)" size="xs"/>
-                        <LayoutKeyElementQuiz score="80" size="xs"/>
+                        <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name_translation" :level="getDifficultyNameSafe(lesson.turkish_grammar_rules.difficulty_class)" size="xs"/>
+                        <LayoutKeyElementQuizBadge score="80" size="xs"/>
                       </div>
                     </td>
                   <td class="px-4 py-3">

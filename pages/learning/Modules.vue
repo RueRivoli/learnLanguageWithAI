@@ -172,32 +172,35 @@ watchEffect(async () => {
                 </div>
               </div>
             </template>
-            <div
-              v-for="(rule, n) in grammarRules"
-              v-else
-              :key="n"
-              class="flex flex-col justify-between cursor-pointer bg-white rounded-lg border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200"
-              @click="router.push(`/learning/modules/${rule.id}`)"
-            >
-              <div class="flex items-start justify-between">
-                <LayoutHeadingRuleTitle :rule="rule" />
-                <BookmarkSolidIcon v-if="rule.bookmarked" class="h-5 w-5" />
-                <BookmarkIcon v-else class="h-5 w-5" />
-              </div>
+            <div v-else v-for="(rule, n) in grammarRules" :key="n" @click="router.push(`/learning/modules/${rule.id}`)">
+              <LayoutKeyElementRuleOverview :title="rule.ruleName" :titleEn="rule.ruleNameTranslation">
+                <template #content>
+                   <div class="rounded-lg p-3 border border-green-200/80 shadow-sm">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <!-- <div class="w-1.5 h-1.5 bg-green-500 rounded-full" /> -->
+                      <span class="text-base text-sm text-gray-500"
+                      >{{ (rule as any).highlights }}</span
+                    >
+                  </div>
 
-              <!-- Highlights -->
-              <div v-if="(rule as any).highlights" class="mb-3">
+            </div>
+          </div>
+              <!-- <span class="text-xs text-gray-600"
+                >out of <strong>{{ totalWordsInK }}</strong> total words</span
+              > -->
+
+                   <!-- Highlights -->
+              <!-- <div v-if="(rule as any).highlights" class="mb-3">
                 <div
                   class="rounded-xl p-3 shadow-sm relative overflow-hidden border border-slate-200/50"
                 >
-                  <!-- Light background with difficulty-based color tint -->
                   <div class="absolute inset-0 bg-white/90" />
                   <div
                     class="absolute inset-0 opacity-20"
                     :class="getGrammarRuleStyleClass(rule)"
                   />
 
-                  <!-- Professional texture overlay with low opacity -->
                   <div
                     class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"
                   />
@@ -229,36 +232,21 @@ watchEffect(async () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <!-- Actions -->
-              <div class="flex items-center justify-between">
-                <div>
-                  <!-- <button
-                        class="w-8 h-8 btn btn-soft btn-circle btn-primary rounded-lg cursor-pointer group"
-                        title="View lesson"
-                        @click="router.push(`/learning/lessons/${lesson.id}`)"
-                      >
-                        <EyeIcon
-                          class="h-5 w-5"
-                        />
-                      </button> -->
-
-
-                  <button
+              </div> -->
+            </template>
+            <template #details>
+              <button
                     class="btn btn-sm btn-error btn-link rounded-lg cursor-pointer group mr-2"
                     @click="router.push(`/learning/modules/${rule.id}`)"
                   >
                     <ArrowTrendingUpIcon class="h-4 w-4" />
                     <span>Practice</span>
-                  </button>
-                </div>
+              </button>
+            </template>
 
-                <LearningModuleScore
-                  v-if="rule.score[0]"
-                  :score="rule.score[0].score"
-                />
-              </div>
-            </div>
+            </LayoutKeyElementRuleOverview>
+          </div>
+
           </div>
           <!-- Table layout if necessary -->
           <!-- <table class="table table-pin-rows table-pin-cols">

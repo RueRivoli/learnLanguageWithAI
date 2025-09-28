@@ -218,7 +218,7 @@ const grammarClass = computed(() => {
                             <div class="stat-label mb-1">Rule:</div>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <LayoutKeyElementRule class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
+                            <LayoutKeyElementRuleBadgeBadge class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
                         </div>
                         </div>
  
@@ -329,7 +329,7 @@ const grammarClass = computed(() => {
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <div v-for="word in props.detailedResults.words.validatedList" :key="word">
-                                <LayoutKeyElementWord :text="word.text" :isMastered="word.isMastered" />
+                                <LayoutKeyElementWordBadge :text="word.text" :isMastered="word.isMastered" />
                             </div>
                         </div>
                     </div>
@@ -339,7 +339,7 @@ const grammarClass = computed(() => {
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <div v-for="word in props.detailedResults.words.invalidatedList" :key="word">
-                        <LayoutKeyElementWord :text="word.text" :isMastered="word.isMastered"/>
+                        <LayoutKeyElementWordBadge :text="word.text" :isMastered="word.isMastered"/>
                     </div>
                 </div>
                     </div>
@@ -419,7 +419,7 @@ const grammarClass = computed(() => {
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="expression in props.detailedResults.expressions.validatedList" :key="expression">
-                     <LayoutKeyElementExpression :text="expression.text" :isMastered="expression.isMastered"/>
+                     <LayoutKeyElementExpressionBadgeBadge :text="expression.text" :isMastered="expression.isMastered"/>
                     </div>
                   </div>
                     </div>
