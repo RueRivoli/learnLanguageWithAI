@@ -42,10 +42,10 @@ const totalExpressionsInK = computed(() => {
               <div class="mb-3">
                 <div class="flex items-baseline gap-2">
                   <span class="text-2xl font-bold text-gray-900">
-                    {{ totalExpressionsMastered.toLocaleString() }}
+                    {{ totalWordsMastered.toLocaleString() }}
                   </span>
                   <span class="text-base text-gray-500"
-                    >/ {{ totalExpressions.toLocaleString() }}</span
+                    >/ {{ totalWords.toLocaleString() }}</span
                   >
                 </div>
                 <p class="text-xs text-gray-600 mt-0.5">expressions mastered</p>

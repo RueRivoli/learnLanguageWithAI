@@ -6,6 +6,7 @@ import {
 import {
   BookmarkIcon,
   EyeIcon,
+  LightBulbIcon,
   Square2StackIcon,
 } from "@heroicons/vue/24/outline";
 import {
@@ -173,19 +174,31 @@ watchEffect(async () => {
               </div>
             </template>
             <div v-else v-for="(rule, n) in grammarRules" :key="n" @click="router.push(`/learning/modules/${rule.id}`)">
-              <LayoutKeyElementRuleOverview :title="rule.ruleName" :titleEn="rule.ruleNameTranslation">
+              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score">
                 <template #content>
-                   <div class="rounded-lg p-3 border border-green-200/80 shadow-sm">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                      <!-- <div class="w-1.5 h-1.5 bg-green-500 rounded-full" /> -->
-                      <span class="text-base text-sm text-gray-500"
-                      >{{ (rule as any).highlights }}</span
-                    >
+                  <!-- Professional description box -->
+                  <div v-if="(rule as any).highlights" class="mt-3 mb-4">
+                    <div class="relative rounded-xl p-4 bg-gradient-to-br from-emerald-50/80 via-green-50/70 to-teal-50/60 border border-emerald-200/50 shadow-sm overflow-hidden">
+                      <!-- Subtle texture overlay -->
+                      <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
+                      <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
+                      
+                      <!-- Content -->
+                      <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-2">
+                          <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
+                          <svg class="h-3 w-3 text-emerald-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                        </svg>
+                          <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">Key Point</span>
+                        </div>
+                        <p class="text-sm text-slate-700 font-medium leading-relaxed">
+                          {{ (rule as any).highlights }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-
-            </div>
-          </div>
               <!-- <span class="text-xs text-gray-600"
                 >out of <strong>{{ totalWordsInK }}</strong> total words</span
               > -->
@@ -235,13 +248,27 @@ watchEffect(async () => {
               </div> -->
             </template>
             <template #details>
-              <button
+              <!-- <button
                     class="btn btn-sm btn-error btn-link rounded-lg cursor-pointer group mr-2"
                     @click="router.push(`/learning/modules/${rule.id}`)"
                   >
                     <ArrowTrendingUpIcon class="h-4 w-4" />
                     <span>Practice</span>
-              </button>
+              </button> -->
+              <div class="rounded-lg p-2"
+          >
+            <div class="flex items-center">
+              <div class="flex items-center gap-2">
+                <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                <span class="text-md font-medium text-gray-700"
+                  >37.5%</span
+                >
+              </div>
+              <span class="text-xs text-gray-600 ml-2"
+                >of correct answers</span
+              >
+            </div>
+          </div>
             </template>
 
             </LayoutKeyElementRuleOverview>

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getQuery } from "h3";
+import { defineEventHandler, getHeader, getQuery } from "h3";
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SERVICE_SUPABASE_KEY,

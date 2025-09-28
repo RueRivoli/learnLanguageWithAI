@@ -5,10 +5,12 @@ const props = withDefaults(
   defineProps<{
     title: string | null;
     titleEn: string | null;
+    symbol: string | null;
   }>(),
   {
     title: null,
     titleEn: null,
+    symbol: null,
   },
 );
 
@@ -39,13 +41,12 @@ const props = withDefaults(
             <div class="flex-shrink-0 ml-3">
             <div class="relative">
                 <div
-                class="absolute inset-0 bg-gradient-to-br from-emerald-600/25 to-teal-600/25 rounded-lg blur-sm"
+                class="absolute inset-0 bg-gradient-to-br from-green-800/20 to-emerald-900/20 rounded-lg blur-sm"
                 />
                 <div
-                class="h-8 w-8 flex items-center relative p-2 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-lg shadow-lg flex items-center justify-center"
+                class="relative p-2 bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-600 shadow-lg shadow-emerald-200/50 hover:shadow-emerald-300/60 rounded-lg shadow-lg"
                 >
-                <!-- <span class="w-5 text-white leading-8">B1</span> -->
-                <DocumentIcon class="h-8 w-8  text-white" />
+                <span class="h-5 w-5 text-white font-semibold flex items-center justify-center">{{ props.symbol }}</span>
                 </div>
             </div>
             </div>
