@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PencilSquareIcon } from "@heroicons/vue/24/solid";
+import { PencilSquareIcon } from "@heroicons/vue/24/outline";
 import {
   BookOpenIcon,
   LanguageIcon,
@@ -233,10 +233,38 @@ const handleGenerateStory = async () => {
 
 
             <!-- Module Selection Section -->
-              <LayoutKeyElementRuleCard title="Module to Work On" description="Choose the Module to improve">
+              <LayoutKeyElementRuleCard title="Module to Work On" description="Select the Module you want to work on">
                 <template #top-right-corner>
                 </template>
               <template #content>
+
+
+                <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score">
+                <template #content>
+                  <!-- Professional description box -->
+                  <div v-if="(rule as any).highlights" class="mt-3 mb-4">
+                    <div class="relative rounded-xl p-4 bg-gradient-to-br from-emerald-50/80 via-green-50/70 to-teal-50/60 border border-emerald-200/50 shadow-sm overflow-hidden">
+                      <!-- Subtle texture overlay -->
+                      <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
+                      <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
+                      
+                      <!-- Content -->
+                      <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-2">
+                          <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
+                          <svg class="h-3 w-3 text-emerald-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                        </svg>
+                          <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">Key Point</span>
+                        </div>
+                        <p class="text-sm text-slate-700 font-medium leading-relaxed">
+                          {{ (rule as any).highlights }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
                 <select
                 v-model="selectedModuleId"
                 class="module-selector w-full max-w-lg bg-gradient-to-r from-slate-50 to-blue-50 border-2 border-blue-200/60 rounded-2xl px-6 py-5 text-gray-900 font-light text-lg focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50 shadow-md"
@@ -272,13 +300,7 @@ const handleGenerateStory = async () => {
             <!-- Words Selection Section -->
              <LayoutKeyElementWordCard title="Words to Learn" description="Select 10 words for your lesson">
                 <template #top-right-corner>
-                  <button
-                    class="btn btn-word btn-outline"
-                    @click="handleModifyWordList"
-                  >
-                    <PencilSquareIcon class="h-4 w-4 inline" />
-                    <!-- Edit -->
-                  </button>
+                    <PencilSquareIcon class="h-6 w-6 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
               <template #content>
                 <div class="flex flex-wrap gap-3">
@@ -300,13 +322,7 @@ const handleGenerateStory = async () => {
               <!-- Expressions Selection Section -->
               <LayoutKeyElementExpressionCard title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
-                  <button
-                    class="btn btn-expression btn-soft"
-                    @click="handleModifyExpressionList"
-                  >
-                    <PencilSquareIcon class="h-4 w-4 inline mr-1" />
-                    <span>Edit</span>
-                  </button>
+                  <PencilSquareIcon class="h-6 w-6 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>
               <template #content>
                   <div class="flex flex-wrap gap-3">

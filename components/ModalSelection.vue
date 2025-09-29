@@ -34,7 +34,7 @@ const handleDeleteSelectedItem = (text: string) => {
     <div class="modal-box">
       <div class="flex items-center">
         <PencilSquareIcon
-          class="h-5 w-5 mr-2 font-semibold group-hover:text-neutral"
+          class="h-5 w-5 mr-2 text-gray-900 group-hover:text-neutral"
         />
         <h3 class="text-xl text-gray-900">{{ props.title }}</h3>
       </div>
