@@ -245,7 +245,7 @@ const handleGenerateStory = async () => {
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>
                 <template #content>
-                  <div class="w-[70%] m-auto">
+                  <div class="w-[60%] m-auto">
                   <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="moduleToTrain.name" :titleEn="moduleToTrain.name" :symbol="moduleToTrain.symbol" :score="moduleToTrain.score" :darkerMode="true">
                     <template #content>
                       <!-- Professional description box -->
