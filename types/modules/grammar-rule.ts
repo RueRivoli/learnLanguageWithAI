@@ -4,10 +4,12 @@ export type GrammarRow = Database['public']['Tables']['turkish_grammar_rules']['
 
 type GrammarRuleLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert'
 
-export type GrammarRuleMeta = { 
+export type GrammarRuleMeta = {
+  highlights: GrammarRow['highlights'];
   level: GrammarRuleLevel,
   name: GrammarRow['rule_name'],
-  id: GrammarRow['id']
+  id: GrammarRow['id'],
+  symbol: GrammarRow['symbol']
 }
 
 

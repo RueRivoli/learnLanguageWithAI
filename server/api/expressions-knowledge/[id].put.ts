@@ -2,8 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getRouterParam } from "h3";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
+  process.env.SUPABASE_URL || 'https://your-project.supabase.co',
+  process.env.SUPABASE_KEY || 'your-anon-key',
 );
 
 export default defineEventHandler(async (event) => {

@@ -13,10 +13,7 @@ export default defineNuxtConfig({
   debug: true,
   devtools: { enabled: true },
   echarts: {
-    charts: ['BarChart', 'LineChart', 'PieChart'],
-    components: ['DatasetComponent', 'LegendComponent', 'GridComponent', 'TitleComponent', 'TooltipComponent'],
-    features: ['LabelLayout', 'UniversalTransition'],
-    renderer: ['svg', 'canvas'],
+    renderer: 'canvas',
   },
   modules: [
     "@nuxt/eslint",

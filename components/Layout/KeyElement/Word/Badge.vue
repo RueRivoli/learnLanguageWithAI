@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    isMastered: boolean;
+    isMastered?: boolean | undefined;
     text?: string | null;
     translation?: string | null;
     size?: 'sm' | 'xs';

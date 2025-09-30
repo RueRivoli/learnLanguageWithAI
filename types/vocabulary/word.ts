@@ -1,6 +1,11 @@
 import type { Database } from "~/supabase/types";
 type WordRowFetched = Database['public']['Tables']['turkish_words']['Row'];
 
+export type WordMetadata = {
+  id: WordRowFetched['id'];
+  text: WordRowFetched['text'];
+}
+
 export type WordContent = {
   id: WordRowFetched['id'];
   role: WordRowFetched['role'];

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOpenIcon, LanguageIcon, ViewfinderCircleIcon } from '@heroicons/vue/24/outline';
+import { DocumentIcon, ViewfinderCircleIcon } from '@heroicons/vue/24/outline';
 
 const props = withDefaults(
   defineProps<{
