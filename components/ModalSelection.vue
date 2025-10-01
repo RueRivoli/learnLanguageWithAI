@@ -64,12 +64,9 @@ const handleDeleteSelectedItem = (text: string) => {
         </LayoutKeyElementExpressionBadge>
       </div>
       <div class="modal-action">
-        <form method="dialog">
           <button class="btn btn-sm btn-secondary" @click="$emit('cancel')">
             Cancel
           </button>
-        </form>
-
         <button
           class="btn btn-sm btn-primary"
           @click="$emit('applySelection', listItems)"

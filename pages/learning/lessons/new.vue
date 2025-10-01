@@ -19,18 +19,27 @@ definePageMeta({
 });
 
 const userStore = useUserStore();
-const isFetchingData = ref<boolean>(false);
-const moduleOptions = ref<Array<{value: number, label: string}>>([]);
+const router = useRouter();
+const userId = computed(() => userStore.$state.id);
+
+
 // Store original modules data for grouping
-const originalModulesData = ref<any[]>([]);
+const originalModulesData = ref<Array<GrammarRuleMeta & {score: number}>>([]);
+
+// Options for modules, words and expressions
+const moduleOptions = ref<Array<{value: number, label: string}>>([]);
 const wordList = ref<WordMetadata[]>([]);
 const expressionList = ref<ExpressionMetadata[]>([]);
+
+const targetedModule = ref<GrammarRuleMeta & {score: number} | null>(null);
+const targetedModuleId = ref<number>(0);
+
+// Id of the opened modal
 const openingModalId = ref(0);
-const moduleToTrain = ref<GrammarRuleMeta & {score: number} | null>(null);
-const selectedModuleId = ref<number>(0);
-const router = useRouter();
+// Boolean for loading and fetching status
 const isGeneratingLesson = ref(false);
-const userId = computed(() => userStore.$state.id);
+const isFetchingData = ref<boolean>(false);
+
 
 
 // Group modules by rule level and order by score within each group
@@ -38,23 +47,21 @@ const groupedModuleOptions = computed(() => {
   if (!originalModulesData.value || originalModulesData.value.length === 0) return {};
   
   // Group by rule difficulty_class
-  const grouped: Record<string, Array<{value: number, label: string, score: number}>> = {
+  const grouped: Record<string, Array<GrammarRuleMeta & {score: number}>> = {
     'Beginner': [],
     'Intermediate': [],
     'Advanced': []
   };
   
   originalModulesData.value.forEach((module: any) => {
-    const difficultyClass = module?.turkish_grammar_rules?.difficulty_class;
-    const score = module?.score || 0;
-    const label = `${module?.turkish_grammar_rules?.rule_name_translation}  —   Score: ${score}%`;
-    
-    if (difficultyClass === 1) {
-      grouped['Beginner'].push({ value: module.rule_id, label, score });
-    } else if (difficultyClass === 2) {
-      grouped['Intermediate'].push({ value: module.rule_id, label, score });
-    } else if (difficultyClass === 3) {
-      grouped['Advanced'].push({ value: module.rule_id, label, score });
+    const {name, nameEn, symbol, level, score } = module;
+
+    if (level === 1) {
+      grouped['Beginner'].push({ name, nameEn, symbol, score });
+    } else if (level === 2) {
+      grouped['Intermediate'].push({ name, nameEn, symbol, score });
+    } else if (level === 3) {
+      grouped['Advanced'].push({ name, nameEn, symbol, score });
     }
   });
   
@@ -78,62 +85,63 @@ const getModulesWithLowScores = async () => {
       const modules = await $fetch(
         `/api/grammar-scores/${userId.value}?order_by=score`,
       );
-    if (modules) {
-      // Store original data for grouping
-      originalModulesData.value = modules;
-      
-      moduleOptions.value = modules.map(
-        ({ rule_id, score, turkish_grammar_rules }) => ({
-          value: rule_id,
-          label: `${turkish_grammar_rules.rule_name_translation}  —   Score: ${score}%`,
-        }),
-      );
-      moduleToTrain.value =  {
-        id: modules[0].rule_id,
-        highlights: modules[0].turkish_grammar_rules.highlights,
-        level: modules[0].turkish_grammar_rules.difficulty_class,
-        name: modules[0].turkish_grammar_rules.rule_name_translation,
-        symbol: modules[0].turkish_grammar_rules.symbol,
-        score: modules[0].score,
-      };
-      selectedModuleId.value = modules[0].rule_id;
+      if (modules) {
+        // Store original data for grouping
+        originalModulesData.value = modules.map(({rule_id, score, turkish_grammar_rules}) => ({
+          id: rule_id,
+          highlights: turkish_grammar_rules.highlights,
+          level: turkish_grammar_rules.difficulty_class,
+          name: turkish_grammar_rules.rule_name,
+          nameEn: turkish_grammar_rules.rule_name_translation,
+          symbol: turkish_grammar_rules.symbol,
+          score: score,
+        }));
+        
+        moduleOptions.value = modules.map(
+          ({ rule_id, score, turkish_grammar_rules }) => ({
+            value: rule_id,
+            label: `${turkish_grammar_rules.rule_name_translation}  —   Score: ${score}%`,
+          }),
+        );
+        targetedModule.value = originalModulesData.value?.find(module => module.id === modules[0].rule_id);
+        targetedModuleId.value = modules[0].rule_id;
+      }
+    } catch (error) {
+      console.log("Error fetching modules with low scores", error);
     }
-  } catch (error) {
-  console.log("Error fetching modules with low scores", error);
-} finally {
-  isFetchingData.value = false;
 }
-} 
 };
 
 const getWordsWithLowScores = async () => {
   if (userId.value) {
-    const words = await $fetch(`/api/words/levels/${userId.value}?limit=50`);
-    if (words.error) console.log("error", words.error);
-    else if (words) {
-      wordList.value = [...words];
-    }
+    try {
+      const words = await $fetch(`/api/words/levels/${userId.value}?limit=50`);
+    if (words) wordList.value = words;
+  } catch (error) {
+    console.log("Error fetching words with low scores", words.error);
+  }
   }
 };
 
 const getExpressionsWithLowScores = async () => {
   if (userId.value) {
+    try {
     const expressions = await $fetch(
       `/api/expressions/levels/${userId.value}?limit=50`,
     );
-    if (expressions.error) console.log("error", expressions.error);
-    else if (expressions) {
-      expressionList.value = [...expressions];
-    }
+    if (expressions) expressionList.value = expressions;
+  } catch (error) {
+    console.log("Error fetching expressions with low scores", expressions.error);
+  }
   }
 };
 
 // Watch for module selection changes
-watch(selectedModuleId, (newModuleId) => {
+watch(targetedModuleId, (newModuleId) => {
   if (newModuleId && originalModulesData.value) {
     const selectedModule = originalModulesData.value.find(module => module.rule_id === newModuleId);
     if (selectedModule) {
-      moduleToTrain.value = {
+      targetedModule.value = {
         id: selectedModule.rule_id,
         highlights: selectedModule.turkish_grammar_rules.highlights,
         level: selectedModule.turkish_grammar_rules.difficulty_class,
@@ -146,12 +154,14 @@ watch(selectedModuleId, (newModuleId) => {
 });
 
 watchEffect(async () => {
-  console.log("IN WATCH FETCHING");
+  console.log("fetching Data");
   if (userId.value) {
     isFetchingData.value = true;
-    await getModulesWithLowScores();
-    await getWordsWithLowScores();
-    await getExpressionsWithLowScores();
+    await Promise.all([
+      getModulesWithLowScores(),
+      getWordsWithLowScores(),
+      getExpressionsWithLowScores()
+  ]);
     isFetchingData.value = false;
   }
 });
@@ -162,6 +172,10 @@ const handleModifyWordList = () => {
 
 const handleModifyExpressionList = () => {
   my_modal_to_change_expression_list.showModal();
+};
+
+const handleModifyTargetedModule = () => {
+  my_modal_to_change_targeted_module.showModal();
 };
 
 const handleWordSelectionChange = (newSelection: any[]) => {
@@ -175,6 +189,11 @@ const handleExpressionSelectionChange = (newSelection: any[]) => {
   my_modal_to_change_expression_list.close();
 };
 
+const handleModuleSelectionChange = (newSelection: any[]) => {
+  targetedModule.value = newSelection;
+  my_modal_to_change_targeted_module.close();
+};
+
 const handleCancelModal = () => {
   openingModalId.value = openingModalId.value + 1;
 };
@@ -182,21 +201,17 @@ const handleCancelModal = () => {
 const handleGenerateStory = async () => {
   let newLesson;
   isGeneratingLesson.value = true;
-  console.log('LA', userId.value, moduleToTrain.value)
-  if (userId.value && moduleToTrain.value?.name) {
-    console.log('ICI', userId.value, moduleToTrain.value.name)
+  if (userId.value && targetedModule.value?.name) {
     newLesson = await generateAIPoweredStoryWithParameters(
       userId.value,
-      moduleToTrain.value.id,
-      moduleToTrain.value.name,
+      targetedModule.value.id,
+      targetedModule.value.name,
       wordList.value.slice(0, 10),
       expressionList.value.slice(0, 3),
-      getDifficultyNameSafe(moduleToTrain.value.level),
+      getDifficultyNameSafe(targetedModule.value.level),
       10,
     );
-    console.log('newLesson', newLesson)
     const promptForImageGeneration = newLesson.promptForImageGeneration;
-    console.log('promptForImageGeneration', promptForImageGeneration)
     generateImageWithPrompt(promptForImageGeneration, newLesson.id);
   }
   router.push(`/learning/lessons/${String(newLesson.id)}`);
@@ -240,16 +255,16 @@ const handleGenerateStory = async () => {
 
             <div class="grid grid-cols-2 gap-4">
                           <!-- Module Selection Section -->
-            <LayoutKeyElementRuleCard class="col-span-1" v-if="moduleToTrain" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
+            <LayoutKeyElementRuleCard class="col-span-1" v-if="targetedModule" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
                 <template #top-right-corner>
-                  <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
+                  <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>
                 <template #content>
                   <div class="w-[60%] m-auto">
-                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="moduleToTrain.name" :titleEn="moduleToTrain.name" :symbol="moduleToTrain.symbol" :score="moduleToTrain.score" :darkerMode="true">
+                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule.name" :titleEn="targetedModule.name" :symbol="targetedModule.symbol" :score="targetedModule.score" :darkerMode="true">
                     <template #content>
                       <!-- Professional description box -->
-                      <div v-if="moduleToTrain.highlights" class="mt-3 mb-4">
+                      <div v-if="targetedModule.highlights" class="mt-3 mb-4">
                         <div class="relative rounded-xl p-4 bg-gradient-to-br from-emerald-50/80 via-green-50/70 to-teal-50/60 border border-emerald-200/50 shadow-sm overflow-hidden">
                           <!-- Subtle texture overlay -->
                           <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
@@ -266,7 +281,7 @@ const handleGenerateStory = async () => {
                               <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">Key Point</span>
                             </div>
                             <p class="text-sm text-slate-700 font-medium leading-relaxed">
-                              {{ moduleToTrain.highlights }}
+                              {{ targetedModule.highlights }}
                             </p>
                           </div>
                         </div>
@@ -282,7 +297,7 @@ const handleGenerateStory = async () => {
                 >current score</span
               >
                 <span class="text-md font-medium text-gray-700"
-                  >{{ moduleToTrain.score }}%</span
+                  >{{ targetedModule.score }}%</span
                 >
               </div>
 
@@ -356,16 +371,24 @@ const handleGenerateStory = async () => {
           @apply-selection="(value) => handleWordSelectionChange(value)"
           @cancel="handleCancelModal"
         />
-        <ModalSelection
-          id="my_modal_to_change_expression_list"
-          :key="openingModalId"
-          title="Edit the Expressions List"
-          :list="expressionList"
-          :limit="Number(3)"
-          type="expression"
-          @apply-selection="(value) => handleExpressionSelectionChange(value)"
-          @cancel="handleCancelModal"
-        />
+          <ModalSelection
+            id="my_modal_to_change_expression_list"
+            :key="openingModalId"
+            title="Edit the Expressions List"
+            :list="expressionList"
+            :limit="Number(3)"
+            type="expression"
+            @apply-selection="(value) => handleExpressionSelectionChange(value)"
+            @cancel="handleCancelModal"
+          />
+          <LayoutKeyElementRuleModalSelection
+            id="my_modal_to_change_targeted_module"
+            :key="openingModalId"
+            title="Edit the Targeted Module"
+            :moduleOptions="groupedModuleOptions"
+            @apply-selection="(value) => handleModuleSelectionChange(value)"
+            @cancel="handleCancelModal"
+          />
   </div>
 </template>
 

@@ -16,6 +16,7 @@ const props = withDefaults(
   },
 );
 
+const test = ref(false);
 </script>
 
 <template>
@@ -39,12 +40,18 @@ const props = withDefaults(
     <!-- Content container -->
     <div class="h-full relative flex flex-col justify-between z-10">
         <div class="flex items-center justify-between mb-3">
-            <div class="flex-1">
-                <h3 :class="{'text-xl text-white mb-0.5': props.darkerMode, 'text-xl text-gray-900 mb-0.5': !props.darkerMode}">
-                    {{ props.title }}
-                </h3>
-                <p :class="{'text-xs text-gray-100 text-sm font-light': props.darkerMode, 'text-xs text-gray-500 text-sm font-light': !props.darkerMode}"> {{props.titleEn}}</p>
+            <div class="flex items-center gap-2">
+                <div>
+                <input type="checkbox" :checked="test" class="checkbox checkbox-sm" />
+                </div>
+                <div class="flex-1">
+                    <h3 :class="{'text-md text-white mb-0.5': props.darkerMode, 'text-md text-gray-900 mb-0.5': !props.darkerMode}">
+                        {{ props.title }}
+                    </h3>
+                    <p :class="{'text-xs text-gray-100 text-sm font-light': props.darkerMode, 'text-xs text-gray-500 text-sm font-light': !props.darkerMode}"> {{props.titleEn}}</p>
+                </div>
             </div>
+
 
             
             <!-- Icon with professional styling -->
@@ -56,7 +63,7 @@ const props = withDefaults(
                   <div
                   :class="{'relative p-2 bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600 shadow-md shadow-emerald-300/20 hover:shadow-emerald-300/35 rounded-lg border border-emerald-300/15': props.darkerMode, 'relative p-2 bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-600 shadow-lg shadow-emerald-200/50 hover:shadow-emerald-300/60 rounded-lg shadow-lg': !props.darkerMode}"
                   >
-                    <span class="h-5 w-5 text-white font-semibold flex items-center justify-center">{{ props.symbol }}</span>
+                    <span class="h-4 w-4 text-white font-semibold flex items-center justify-center">{{ props.symbol }}</span>
                   </div>
               </div>
             </div>

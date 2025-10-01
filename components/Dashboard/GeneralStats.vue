@@ -112,7 +112,7 @@ const currentInfo = computed(() => {
           </div>
         </div>
         <div id="rules_overview" v-for="(rule, index) in currentInfo"  :key="index">
-          <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score">
+          <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :darkerMode="true">
             <template #details>
               <div class="rounded-lg p-2"
           >

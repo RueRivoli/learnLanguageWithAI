@@ -8,6 +8,7 @@ export type GrammarRuleMeta = {
   highlights: GrammarRow['highlights'];
   level: GrammarRuleLevel,
   name: GrammarRow['rule_name'],
+  nameEn: GrammarRow['rule_name_translation'],
   id: GrammarRow['id'],
   symbol: GrammarRow['symbol']
 }
