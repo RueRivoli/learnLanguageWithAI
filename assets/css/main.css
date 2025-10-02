@@ -12,7 +12,7 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  prefersdark: false;
+  prefersdark: true;
   color-scheme: "light";
   --color-base-100: oklch(97.788% 0.004 56.375);
   --color-base-200: oklch(93.982% 0.007 61.449);
@@ -59,7 +59,7 @@
 @plugin "daisyui/theme" {
   name: "dark";
   default: false;
-  prefersdark: true;
+  prefersdark: false;
   color-scheme: "dark";
   --color-base-100: oklch(25.33% 0.016 252.42);
   --color-base-200: oklch(23.26% 0.014 253.1);

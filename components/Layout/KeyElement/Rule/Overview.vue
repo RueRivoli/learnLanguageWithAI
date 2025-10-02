@@ -41,9 +41,9 @@ const props = withDefaults(
         <div class="flex items-center justify-between mb-3">
             <div class="flex-1">
                 <h3 :class="{'text-xl text-white mb-0.5': props.darkerMode, 'text-xl text-gray-900 mb-0.5': !props.darkerMode}">
-                    {{ props.title }}
+                    {{ props.titleEn }}
                 </h3>
-                <p :class="{'text-xs text-gray-100 text-sm font-light': props.darkerMode, 'text-xs text-gray-500 text-sm font-light': !props.darkerMode}"> {{props.titleEn}}</p>
+                <p :class="{'text-xs text-gray-100 text-sm font-light': props.darkerMode, 'text-xs text-gray-500 text-sm font-light': !props.darkerMode}"> {{props.title}}</p>
             </div>
 
             

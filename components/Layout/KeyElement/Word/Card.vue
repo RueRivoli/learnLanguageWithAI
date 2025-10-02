@@ -3,10 +3,12 @@ import { BookOpenIcon } from '@heroicons/vue/24/outline';
 
 const props = withDefaults(
   defineProps<{
+    backgroundClasses: string | null;
     title: string | null;
     description: string | null;
   }>(),
   {
+    backgroundClasses: null,
     title: null,
     description: null,
   },
@@ -15,13 +17,13 @@ const props = withDefaults(
 </script>
 
 <template>
-   <div class="group relative bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-xl shadow-md border border-blue-300/70 p-4 hover:border-blue-400/80 overflow-hidden transition-all duration-300">
+     <div :class="[props.backgroundClasses ? `group relative overflow-hidden rounded-md shadow-md rounded-md border border-blue-300/70  p-4 ${props.backgroundClasses}` : 'group relative bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-md shadow-md border border-blue-300/70 p-4 hover:border-blue-400/80 overflow-hidden transition-all duration-300']">
         <div class="wrapper-header">
             <div class="wrapper-title">
                 <!-- <div class="w-12 h-12 blue-bg text-white rounded-xl flex items-center justify-center mr-5 shadow-lg">
                     <BookOpenIcon class="h-6 w-6" />
                 </div> -->
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl flex items-center justify-center mr-5 shadow-lg">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-md flex items-center justify-center mr-5 shadow-lg">
                     <BookOpenIcon class="h-6 w-6 text-white" />
                 </div>
                   <div>

@@ -40,7 +40,7 @@ const openingModalId = ref(0);
 const isGeneratingLesson = ref(false);
 const isFetchingData = ref<boolean>(false);
 
-
+const initialModuleSelectedId = ref<number | null>(null);
 
 // Group modules by rule level and order by score within each group
 const groupedModuleOptions = computed(() => {
@@ -54,14 +54,13 @@ const groupedModuleOptions = computed(() => {
   };
   
   originalModulesData.value.forEach((module: any) => {
-    const {name, nameEn, symbol, level, score } = module;
-
+    const {id, name, nameEn, symbol, level, score } = module;
     if (level === 1) {
-      grouped['Beginner'].push({ name, nameEn, symbol, score });
+      grouped['Beginner'].push({ id, name, nameEn, symbol, score });
     } else if (level === 2) {
-      grouped['Intermediate'].push({ name, nameEn, symbol, score });
+      grouped['Intermediate'].push({ id, name, nameEn, symbol, score });
     } else if (level === 3) {
-      grouped['Advanced'].push({ name, nameEn, symbol, score });
+      grouped['Advanced'].push({ id, name, nameEn, symbol, score });
     }
   });
   
@@ -95,16 +94,17 @@ const getModulesWithLowScores = async () => {
           nameEn: turkish_grammar_rules.rule_name_translation,
           symbol: turkish_grammar_rules.symbol,
           score: score,
-        }));
-        
+        })).sort((a, b) => a.level - b.level);
+        console.log("originalModulesData", originalModulesData.value);
         moduleOptions.value = modules.map(
           ({ rule_id, score, turkish_grammar_rules }) => ({
             value: rule_id,
             label: `${turkish_grammar_rules.rule_name_translation}  —   Score: ${score}%`,
           }),
         );
-        targetedModule.value = originalModulesData.value?.find(module => module.id === modules[0].rule_id);
-        targetedModuleId.value = modules[0].rule_id;
+        targetedModule.value = originalModulesData.value[0];
+        targetedModuleId.value = originalModulesData.value[0].id;
+        initialModuleSelectedId.value = targetedModuleId.value;
       }
     } catch (error) {
       console.log("Error fetching modules with low scores", error);
@@ -138,17 +138,20 @@ const getExpressionsWithLowScores = async () => {
 
 // Watch for module selection changes
 watch(targetedModuleId, (newModuleId) => {
+  console.log("watch: targetedModuleId", newModuleId);
   if (newModuleId && originalModulesData.value) {
-    const selectedModule = originalModulesData.value.find(module => module.rule_id === newModuleId);
+    const selectedModule = originalModulesData.value.find(module => module.id === Number(newModuleId));
     if (selectedModule) {
       targetedModule.value = {
-        id: selectedModule.rule_id,
-        highlights: selectedModule.turkish_grammar_rules.highlights,
-        level: selectedModule.turkish_grammar_rules.difficulty_class,
-        name: selectedModule.turkish_grammar_rules.rule_name_translation,
+        id: selectedModule.id,
+        highlights: selectedModule.highlights,
+        level: selectedModule.level,
+        name: selectedModule.name,
+        nameEn: selectedModule.nameEn,
         score: selectedModule.score,
-        symbol: selectedModule.turkish_grammar_rules.symbol
+        symbol: selectedModule.symbol
       };
+      console.log("targetedModule", targetedModule.value);
     }
   }
 });
@@ -189,8 +192,9 @@ const handleExpressionSelectionChange = (newSelection: any[]) => {
   my_modal_to_change_expression_list.close();
 };
 
-const handleModuleSelectionChange = (newSelection: any[]) => {
-  targetedModule.value = newSelection;
+const handleModuleSelectionChange = (newModuleId: number) => {
+  console.log("handleModuleSelectionChange", newModuleId);
+  targetedModuleId.value = newModuleId;
   my_modal_to_change_targeted_module.close();
 };
 
@@ -255,13 +259,13 @@ const handleGenerateStory = async () => {
 
             <div class="grid grid-cols-2 gap-4">
                           <!-- Module Selection Section -->
-            <LayoutKeyElementRuleCard class="col-span-1" v-if="targetedModule" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
+            <LayoutKeyElementRuleCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" class="col-span-1" v-if="targetedModule" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>
                 <template #content>
                   <div class="w-[60%] m-auto">
-                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule.name" :titleEn="targetedModule.name" :symbol="targetedModule.symbol" :score="targetedModule.score" :darkerMode="true">
+                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule.name" :titleEn="targetedModule.nameEn" :symbol="targetedModule.symbol" :score="targetedModule.score" :darkerMode="true">
                     <template #content>
                       <!-- Professional description box -->
                       <div v-if="targetedModule.highlights" class="mt-3 mb-4">
@@ -311,7 +315,7 @@ const handleGenerateStory = async () => {
 
             <div class="col-span-1 flex flex-col justify-between">                    
             <!-- Words Selection Section -->
-             <LayoutKeyElementWordCard title="Words to Learn" description="Select 10 words for your lesson">
+             <LayoutKeyElementWordCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Words to Learn" description="Select 10 words for your lesson">
                 <template #top-right-corner>
                     <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
@@ -326,7 +330,7 @@ const handleGenerateStory = async () => {
 
 
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>
@@ -341,13 +345,10 @@ const handleGenerateStory = async () => {
             </div>
             </div>
 
-
-
-
             <!-- Generate Button Section -->
             <div class="text-center pt-8">
               <button
-              class="w-full bg-primary hover:bg-primary/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              class="w-80 m-auto bg-warning hover:bg-warning/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
               @click="handleGenerateStory"
             >
               <span v-if="isGeneratingLesson" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
@@ -385,8 +386,10 @@ const handleGenerateStory = async () => {
             id="my_modal_to_change_targeted_module"
             :key="openingModalId"
             title="Edit the Targeted Module"
+            :listModules="originalModulesData.map((module) => module.id)"
             :moduleOptions="groupedModuleOptions"
-            @apply-selection="(value) => handleModuleSelectionChange(value)"
+            :initialModuleSelectedId="initialModuleSelectedId"
+            @apply-selection="(newModuleId: number) => handleModuleSelectionChange(newModuleId)"
             @cancel="handleCancelModal"
           />
   </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PencilSquareIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { CheckIcon, PencilSquareIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 const props = withDefaults(
   defineProps<{
     list: any[];
@@ -64,15 +64,18 @@ const handleDeleteSelectedItem = (text: string) => {
         </LayoutKeyElementExpressionBadge>
       </div>
       <div class="modal-action">
-          <button class="btn btn-sm btn-secondary" @click="$emit('cancel')">
-            Cancel
-          </button>
-        <button
-          class="btn btn-sm btn-primary"
-          @click="$emit('applySelection', listItems)"
-        >
-          Apply
-        </button>
+        <button class="btn btn-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50" @click="$emit('cancel')">
+              Cancel
+            </button>
+            <button
+              class="btn btn-primary text-white cursor-pointer hover:bg-primary/90 font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50"
+              @click="$emit('applySelection', listItems)"
+            >
+            <CheckIcon
+              class="h-5 w-5 mr-2 text-white group-hover:text-neutral"
+            />
+              <span>Apply</span>
+            </button>
       </div>
     </div>
   </dialog>

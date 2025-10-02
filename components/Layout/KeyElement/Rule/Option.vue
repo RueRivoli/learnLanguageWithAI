@@ -7,16 +7,19 @@ const props = withDefaults(
     title: string | null;
     titleEn: string | null;
     symbol: string | null;
+    selected: boolean | null;
   }>(),
   {
-    darkerMode:false,
+    darkerMode: false,
     title: null,
     titleEn: null,
     symbol: null,
+    selected: null,
   },
 );
 
-const test = ref(false);
+const emit = defineEmits(["click"]);
+
 </script>
 
 <template>
@@ -41,8 +44,8 @@ const test = ref(false);
     <div class="h-full relative flex flex-col justify-between z-10">
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
-                <div>
-                <input type="checkbox" :checked="test" class="checkbox checkbox-sm" />
+                <div v-if="props.selected !== null">
+                  <input type="checkbox" :checked="props.selected" class="checkbox checkbox-sm" @click="emit('click')"/>
                 </div>
                 <div class="flex-1">
                     <h3 :class="{'text-md text-white mb-0.5': props.darkerMode, 'text-md text-gray-900 mb-0.5': !props.darkerMode}">

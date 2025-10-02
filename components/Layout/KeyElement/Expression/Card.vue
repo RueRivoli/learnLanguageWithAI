@@ -5,22 +5,26 @@ const props = withDefaults(
   defineProps<{
     title: string | null;
     description: string | null;
+    backgroundClasses: string | null;
   }>(),
   {
     title: null,
     description: null,
+    backgroundClasses: null,
   },
 );
 
+// black stunning color
+// <div class="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700 text-white rounded-lg flex items-center justify-center mr-5 shadow-md">
 
 
 </script>
 
 <template>
-   <div class="group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-xl shadow-md border border-purple-300/70 p-4 hover:border-purple-400/80 overflow-hidden transition-all duration-300">
+   <div :class="[props.backgroundClasses ? `group relative overflow-hidden rounded-md shadow-md border border-purple-300/70 p-4 ${props.backgroundClasses}` : 'group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-md shadow-md border border-purple-300/70 p-4 hover:border-purple-400/80 transition-all duration-300']">
         <div class="wrapper-header">
             <div class="wrapper-title">
-                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600  text-white rounded-xl flex items-center justify-center mr-5 shadow-lg">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600  text-white rounded-md flex items-center justify-center mr-5 shadow-lg">
                     <LanguageIcon class="h-6 w-6 text-white" />
                 </div>
                   <div>

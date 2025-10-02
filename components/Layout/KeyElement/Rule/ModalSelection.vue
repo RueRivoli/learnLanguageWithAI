@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import { PencilSquareIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { CheckIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
 import {
   grammarLevelTabs,
 } from "~/utils/learning/grammar";
 const props = withDefaults(
   defineProps<{
+    initialModuleSelectedId: number | null;
     moduleOptions: Record<string, Array<GrammarRuleMeta & {score: number}>> | null;
     id: string;
     title: string;
   }>(),
   {
+    initialModuleSelectedId: null,
     moduleOptions: null,
     id: "",
     title: "",
   },
 );
-
+const emit = defineEmits(["applySelection"]);
 const activeDifficultyLevelTab = ref(1);
+const selectedRuleId = ref<number | null>(null);
+const moduleSelection = ref<Record<number,boolean>>({})
+
+const moduleIds = computed(() => {
+  if (!props.moduleOptions) return [];
+  return [...props.moduleOptions?.Beginner.map(module => module.id), ...props.moduleOptions?.Intermediate.map(module => module.id), ...props.moduleOptions?.Advanced.map(module => module.id)];
+});
 
 const filteredModuleOptions = computed(() => {
     switch (activeDifficultyLevelTab.value) {
@@ -32,7 +41,33 @@ const filteredModuleOptions = computed(() => {
     }
 });
 
+watch(() => props.initialModuleSelectedId, (newModuleId) => {
+  if (newModuleId) {
+      moduleIds.value.forEach(key => {
+        moduleSelection.value[key] = false
+      })
+      moduleSelection.value[newModuleId] = true
+      selectedRuleId.value = newModuleId;
+  }
+}, { immediate: true })
 
+
+
+const handleRuleSelection = (ruleId: number) => {
+  console.log("handleRuleSelection", ruleId, "becomes", !moduleSelection.value[ruleId]);
+  if (!moduleSelection.value[ruleId]) {
+    Object.keys(moduleSelection.value).forEach(key => {
+      moduleSelection.value[key] = false
+    })
+    moduleSelection.value[ruleId] = !moduleSelection.value[ruleId];
+    selectedRuleId.value = ruleId;
+  }
+};
+
+const handleApplySelection = () => {
+  console.log("handleApplySelection", selectedRuleId.value);
+  emit('applySelection', selectedRuleId.value);
+};
 </script>
 
 <template>
@@ -57,7 +92,7 @@ const filteredModuleOptions = computed(() => {
       <div
         class="p-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
       >
-      <LayoutKeyElementRuleOption v-for="(rule, n) in filteredModuleOptions" :key="n" :title="rule.name" :titleEn="rule.nameEn" :symbol="rule.symbol">
+      <LayoutKeyElementRuleOption v-for="(rule, n) in filteredModuleOptions" :key="n" :selected="moduleSelection[rule.id]" :title="rule.name" :titleEn="rule.nameEn" :symbol="rule.symbol" @click="handleRuleSelection(rule.id)">
         <template #details>
               <div class="rounded-lg p-2"
           >
@@ -76,18 +111,21 @@ const filteredModuleOptions = computed(() => {
           </div>
             </template>
         </LayoutKeyElementRuleOption>
-      <div class="modal-action">
-          <button class="btn btn-sm btn-secondary" @click="$emit('cancel')">
-            Cancel
-          </button>
-        <button
-          class="btn btn-sm btn-primary"
-          @click="$emit('applySelection')"
-        >
-          Apply
-        </button>
-      </div>
     </div>
+    <div class="modal-action">
+            <button class="w-40 bg-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50" @click="$emit('cancel')">
+              Cancel
+            </button>
+            <button
+              class="w-40 bg-primary text-white cursor-pointer hover:bg-primary/90 font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              @click="handleApplySelection"
+            >
+            <CheckIcon
+              class="h-5 w-5 mr-2 text-white group-hover:text-neutral"
+            />
+              <span>Apply</span>
+            </button>
+        </div>
   </div>
   </dialog>
 </template>
