@@ -112,7 +112,7 @@ const handleCancel = () => {
               </p>
               <button
                 class="btn btn-primary rounded-lg px-6 py-3 flex items-center gap-2 hover:shadow-lg transition-shadow"
-                @click="router.push('/learning/lessons/new')"
+                @click="router.push('/learning/lessons/new-lesson')"
               >
                 <DocumentIcon class="h-5 w-5" />
                 <span>Create Your First Lesson</span>

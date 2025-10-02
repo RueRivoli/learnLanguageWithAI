@@ -87,7 +87,7 @@ const isActive = (path: string) => {
               <div class="p-4">
                 <NuxtLink
                   class="flex items-center justify-center w-full px-4 py-3 mb-6 rounded-lg bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 transition-all duration-200 ease-in-out group shadow-lg shadow-orange-500/25"
-                  to="/learning/lessons/new"
+                  to="/learning/new-lesson"
                 >
                   <ArrowUturnRightIcon class="h-4 w-4 text-white" />
                   <span class="font-semibold text-white ml-2"
@@ -341,7 +341,7 @@ const isActive = (path: string) => {
       <div class="px-4">
         <NuxtLink
           class="btn btn-warning btn-sm mx-6 group"
-          to="/learning/lessons/new"
+          to="/learning/lessons/new-lesson"
         >
           <ArrowUturnRightIcon
             class="h-4 w-4 text-neutral group-hover:text-neutral"
