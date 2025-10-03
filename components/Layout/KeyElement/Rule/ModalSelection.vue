@@ -114,7 +114,7 @@ const handleApplySelection = () => {
     </div>
     <div class="modal-action">
             <button class="w-40 bg-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50" @click="$emit('cancel')">
-              Cancel
+              <span>Cancel</span>
             </button>
             <button
               class="w-40 bg-primary text-white cursor-pointer hover:bg-primary/90 font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"

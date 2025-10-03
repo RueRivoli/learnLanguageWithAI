@@ -2,29 +2,35 @@
 import type { Lesson } from "~/types/lessons/lesson";
 import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/solid";
-import {
-  lessonMapping,
-} from "~/utils/learning/lesson";
-import { parseRuleData} from "~/utils/learning/grammar";
-import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
+import { lessonUpdateBus } from "~/composables/useLessonUpdates";
+
 definePageMeta({
   layout: "authenticated",
 });
 
 const route = useRoute();
 const lessonId = String(route.params.id);
-const isLoading = ref<boolean>(true);
-const lesson = ref<Lesson | null>(null);
+
+// Use the new lesson composable
+const {
+  lesson,
+  grammarRule,
+  relatedQuiz,
+  isLoading,
+  grammarRuleLoading,
+  sentences,
+  imageUrl,
+  refresh
+} = useLesson(lessonId);
+
+// UI state
 const showEnglishTranslations = ref(false);
 const activeSentenceTranslation = ref<number | null>(null);
 const activeWordTranslation = ref<number | null>(null);
 const activeExpressionTranslation = ref<number | null>(null);
-const grammarRule = ref<GrammarRule | null>(null);
-const grammarRuleLoading = ref<boolean>(false);
 const isStoryShown = ref<boolean>(true);
-const relatedQuiz = ref<any>(null);
 const areWordsExampleShown = ref<boolean>(false);
 const areExpressionsExampleShown = ref<boolean>(false);
 const toggleWordTranslation = (index: number) => {
@@ -39,134 +45,17 @@ const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
 };
 
-const getGrammarRule = async () => {
-  if (!lesson.value?.grammarRuleId) return;
-  try {
-    grammarRuleLoading.value = true;
-    const { data, error } = await useFetch(`/api/grammar/${lesson.value.grammarRuleId}`);
-    if (error.value) throw error;
-    if (data.value) {
-      grammarRule.value = parseRuleData(data.value as any);
-    }
-  } catch (error) {
-    console.log("Error fetching grammar rule:", error);
-  } finally {
-    grammarRuleLoading.value = false;
-  }
-};
-
-
-const getLesson = async () => {
-  try {
-    const { data, error } = await useFetch(`/api/lessons/${lessonId}`)
-    if (error.value) throw error;
-    else if (data.value) {
-      const rawData = data.value as any;
-      console.log("lesson", lesson.value);
-        lesson.value = { 
-          ...Object.fromEntries(
-            Object.entries(lessonMapping).map(([sourceKey, targetKey]) => [
-              targetKey,
-              rawData[sourceKey],
-            ]),
-          ),
-          grammarRuleName: rawData.turkish_grammar_rules.rule_name,
-          grammarRuleNameEn: rawData.turkish_grammar_rules.rule_name_translation,
-          grammarRuleIntro: rawData.turkish_grammar_rules.intro,
-          grammarRuleDescription: rawData.turkish_grammar_rules.description,
-          grammarRuleExtendedDescription: rawData.turkish_grammar_rules.extended_description,
-          introduction: rawData.introduction,
-          grammarRuleId: rawData.grammar_rule_id,
-          level: rawData.turkish_grammar_rules.difficulty_class,
-          imgUrl: rawData.img_url,
-          quizId: rawData.quiz_id,
-          newWords: rawData.turkish_lesson_words
-            .map((w: any) => w.turkish_words)
-            .map(
-              ({
-                text,
-                translation,
-                word_sentence,
-                word_sentence_translation,
-                word_sentence_2,
-                word_sentence_2_translation,
-              }: any) => ({
-                text,
-                textEn: translation,
-                sentence: word_sentence,
-                sentenceEn: word_sentence_translation,
-                sentence2: word_sentence_2,
-                sentence2En: word_sentence_2_translation,
-              }),
-            ),
-          newExpressions: rawData.turkish_lesson_expressions
-            .map((w: any) => w.turkish_expressions)
-            .map(
-              ({
-                text,
-                translation,
-                expression_sentence,
-                expression_sentence_translation,
-                expression_sentence_2,
-                expression_sentence_2_translation,
-              }: any) => ({
-                text,
-                textEn: translation,
-                sentence: expression_sentence,
-                sentenceEn: expression_sentence_translation,
-                sentence2: expression_sentence_2,
-                sentence2En: expression_sentence_2_translation,
-              }))
-            }
-    
-            if (rawData.turkish_quizzes_result) {
-        relatedQuiz.value = { score: rawData.turkish_quizzes_result.score_global, createdAt: rawData.turkish_quizzes_result.created_at, id: rawData.turkish_quizzes_result.id };
-      }
-
-      isLoading.value = false;
-      // Fetch grammar rule after lesson is loaded
-      await getGrammarRule();
-    }
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-getLesson();
+// All data fetching is now handled by the useLesson composable
 
 const handleGenerateQuiz = async () => {
-  isLoading.value = true;
   if (!lesson.value?.grammarRuleId) return;
   await handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`, lessonId);
+  // Refresh lesson data after quiz generation to get updated quizId
+  await refresh();
+  // Notify other components about the lesson modification
+  lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
 };
 
-const sentences = computed(() => {
-  if (!lesson.value) return [];
-  let i = 0;
-  const phrases = [];
-  while ((lesson.value as any)[`sentence${i + 1}`]) {
-    phrases.push({
-      original: (lesson.value as any)[`sentence${i + 1}`],
-      translation: (lesson.value as any)[`sentence${i + 1}En`],
-    });
-    i = i + 1;
-  }
-  return phrases;
-});
-
-const imageUrl = computed(() => {
-  return lesson.value?.imgUrl || '../../../public/toucan.png';
-});
-
-// Image loading state
-const imageLoading = ref(true);
-const imageError = ref(false);
-
-
-const handleImageError = () => {
-  imageLoading.value = false;
-  imageError.value = true;
-};
 
 const sanitizedIntroTemplate = computed(() =>
   DOMPurify.sanitize(lesson.value?.grammarRuleIntro || grammarRule.value?.intro || ""),
@@ -272,41 +161,43 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               <!-- Left Side - Image -->
               <div id="picture" class="flex-shrink-0 w-96">
                 <div class="relative">
-                  <div class="absolute -inset-4 bg-gradient-to-r from-blue-200/40 to-indigo-200/40 rounded-3xl blur-xl"></div>
-                  
-                  <!-- Skeleton placeholder -->
+                  <div class="absolute -inset-4"></div>
+                  <!-- Skeleton placeholder -->    
                   <div 
-                    v-if="imageLoading"
-                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-100 to-slate-200 animate-pulse"
+                    v-if="isLoading"
+                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"
                   >
                     <div class="absolute inset-0 flex items-center justify-center">
                       <div class="flex flex-col items-center gap-4">
-                        <!-- Image icon skeleton -->
-                        <div class="w-16 h-16 bg-slate-300 rounded-lg animate-pulse"></div>
-                        <!-- Loading text -->
-                        <div class="text-slate-500 text-sm font-medium">Image loading...</div>
+                        <!-- Skeleton icon -->
+                        <div class="w-16 h-16 bg-gray-300 rounded-lg animate-pulse"></div>
+                        <!-- Skeleton text lines -->
+                        <div class="space-y-2">
+                          <div class="h-4 bg-gray-300 rounded w-24 animate-pulse"></div>
+                          <div class="h-3 bg-gray-300 rounded w-16 animate-pulse"></div>
+                        </div>
                       </div>
                     </div>
-                    <!-- Shimmer effect -->
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer rounded-3xl"></div>
-                  </div>
-                  
-                  <!-- Error state -->
+                  </div>              
+                  <!-- No image state -->
                   <div 
-                    v-else-if="imageError"
-                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm bg-gradient-to-br from-red-50 to-pink-50"
+                    v-else-if="!imageUrl && !isLoading"
+                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-50 to-gray-100"
                   >
                     <div class="absolute inset-0 flex items-center justify-center">
                       <div class="flex flex-col items-center gap-4">
-                        <!-- Error icon -->
-                        <div class="w-16 h-16 bg-red-200 rounded-lg flex items-center justify-center">
-                          <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                        <!-- Neutral icon -->
+                        <div class="w-16 h-16 bg-gradient-to-br from-slate-200 to-gray-300 rounded-xl flex items-center justify-center shadow-lg">
+                          <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
-                        <!-- Error text -->
-                        <div class="text-red-500 text-sm font-medium text-center">
-                          Image non disponible
+                        <!-- Neutral text -->
+                        <div class="text-slate-600 text-sm font-medium text-center">
+                          No image yet
+                        </div>
+                        <div class="text-slate-400 text-xs text-center">
+                          Lesson image
                         </div>
                       </div>
                     </div>
@@ -314,15 +205,13 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   
                   <!-- Actual image -->
                   <img 
-                    v-else
+                    v-else-if="imageUrl && !isLoading"
                     :src="imageUrl" 
                     alt="Lesson illustration" 
-                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm"
-                    @error="handleImageError"
+                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
                   />
                 </div>
               </div>
-              
               <!-- Right Side - Introduction -->
               <div id="intro" class="flex-1">
                 <div class="relative p-6 overflow-hidden">
@@ -381,15 +270,6 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
                     </button>
                    
-                    <!-- <button 
-                      class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2"
-                      @click="isStoryShown = false"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                      </svg>
-                      Key Rule : {{ lesson.grammarRuleNameEn }}
-                    </button> -->
                     <LayoutKeyElementRuleBadge :title="lesson?.grammarRuleNameEn" :level="getDifficultyNameSafe(lesson?.level)" size="sm"  @click="isStoryShown = false"/>
                     <LayoutKeyElementQuizBadge v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
@@ -403,7 +283,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       class="toggle toggle-primary toggle-sm"
                     />
                   </label>
-                                  </div>
+                  </div>
                   
                   <!-- Grammar Rule Content Section -->
                   <div v-if="grammarRule && !isStoryShown" class="mb-6">
@@ -538,22 +418,22 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         :key="index"
                         class="group relative"
                       >
-                      <LayoutKeyElementExpressionDefinition :expression="expression" :isActive="areExpressionsExampleShown" @click="toggleExpressionTranslation(index)"/>
+                        <LayoutKeyElementExpressionDefinition :expression="expression" :isActive="areExpressionsExampleShown" @click="toggleExpressionTranslation(index)"/>
                       </div>
                   </div>
                   </template>
             </LayoutKeyElementExpressionCard>
 
-              <div class="pt-4 border-t border-gray-100">
+              <div class="p-8">
                   <button
                     v-if="!lesson?.quizId"
-                    class="w-full bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                    class="w-80 m-auto bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
                     :disabled="isLoading"
                     @click="handleGenerateQuiz"
                   >
                     <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
                     <PlayIcon v-else class="w-5 h-5" />
-                    <span>Grow Your Score With this Quiz</span>
+                    <span>Grow your Score with this Quiz</span>
                   </button>
               </div>
           </div>

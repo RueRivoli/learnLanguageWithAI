@@ -1,4 +1,5 @@
 import { getPromptForStoryGeneration } from "../prompts/openai"
+import { lessonUpdateBus } from "~/composables/useLessonUpdates"
 
 const getPromptForImageGeneration = (prompt: string) => {
   const imagePrompt = `Create a very nice image of illustration of the following story: ${prompt}`
@@ -30,10 +31,18 @@ export const generateImageWithPrompt = async (prompt: string, storyId: number, m
   console.log('storyId', storyId)
   switch (model) {
     case "gpt-4.1":
-      await $fetch("/api/gpt/generation/image", {
+      const output = await $fetch("/api/gpt/generation/image", {
         method: 'POST',
         body: { prompt: promptForImageGeneration, storyId: storyId}
       })
+      console.log('🖼️ Image generated successfully:', {
+        storyId,
+        imageUrl: output.image_url
+      });
+      
+      console.log('📢 Emitting image_modified event for lesson:', storyId);
+      lessonUpdateBus.notifyImageAdded(String(storyId), { imgUrl: output.image_url });
+      console.log('✅ Image update event emitted');
       break
     case "replicate":
       await $fetch("/api/replicate/generate", {
