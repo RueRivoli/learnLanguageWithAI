@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { defineEventHandler, readBody } from "h3";
 import { createClient } from "@supabase/supabase-js";
+import { getPromptForImageGeneration } from "../../../utils/gpt/image-generation";
 
 const openai = new OpenAI();
 const supabase = createClient(
@@ -23,7 +24,7 @@ export default defineEventHandler(async (event) => {
     console.log('Generating image with GPT-Image-1...');
     const img = await openai.images.generate({
       model: "gpt-image-1",
-      prompt: body.prompt,
+      prompt: getPromptForImageGeneration(body.prompt),
       n: 1,
       size: body.size || "1024x1024"
     });

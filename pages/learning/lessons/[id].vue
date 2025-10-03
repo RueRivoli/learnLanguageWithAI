@@ -194,10 +194,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </div>
                         <!-- Neutral text -->
                         <div class="text-slate-600 text-sm font-medium text-center">
-                          No image yet
-                        </div>
-                        <div class="text-slate-400 text-xs text-center">
-                          Lesson image
+                         Your image will be generated soon
                         </div>
                       </div>
                     </div>
