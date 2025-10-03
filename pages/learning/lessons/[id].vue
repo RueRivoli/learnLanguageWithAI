@@ -62,66 +62,67 @@ const getLesson = async () => {
     if (error.value) throw error;
     else if (data.value) {
       const rawData = data.value as any;
-      lesson.value = Object.fromEntries(
-        Object.entries(lessonMapping).map(([sourceKey, targetKey]) => [
-          targetKey,
-          rawData[sourceKey],
-        ]),
-      ) as Lesson;
-      lesson.value.grammarRuleName = rawData.turkish_grammar_rules.rule_name;
-      lesson.value.grammarRuleNameEn =
-        rawData.turkish_grammar_rules.rule_name_translation;
-      lesson.value.grammarRuleIntro = rawData.turkish_grammar_rules.intro;
-      lesson.value.grammarRuleDescription =
-        rawData.turkish_grammar_rules.description;
-      lesson.value.grammarRuleExtendedDescription =
-        rawData.turkish_grammar_rules.extended_description;
-      lesson.value.introduction = rawData.introduction;
-      lesson.value.grammarRuleId = rawData.grammar_rule_id;
-      lesson.value.level = rawData.turkish_grammar_rules.difficulty_class;
-      lesson.value.imgUrl = rawData.img_url;
-      lesson.value.quizId = rawData.quiz_id;
-      if (rawData.turkish_quizzes_result) {
+      console.log("lesson", lesson.value);
+        lesson.value = { 
+          ...Object.fromEntries(
+            Object.entries(lessonMapping).map(([sourceKey, targetKey]) => [
+              targetKey,
+              rawData[sourceKey],
+            ]),
+          ),
+          grammarRuleName: rawData.turkish_grammar_rules.rule_name,
+          grammarRuleNameEn: rawData.turkish_grammar_rules.rule_name_translation,
+          grammarRuleIntro: rawData.turkish_grammar_rules.intro,
+          grammarRuleDescription: rawData.turkish_grammar_rules.description,
+          grammarRuleExtendedDescription: rawData.turkish_grammar_rules.extended_description,
+          introduction: rawData.introduction,
+          grammarRuleId: rawData.grammar_rule_id,
+          level: rawData.turkish_grammar_rules.difficulty_class,
+          imgUrl: rawData.img_url,
+          quizId: rawData.quiz_id,
+          newWords: rawData.turkish_lesson_words
+            .map((w: any) => w.turkish_words)
+            .map(
+              ({
+                text,
+                translation,
+                word_sentence,
+                word_sentence_translation,
+                word_sentence_2,
+                word_sentence_2_translation,
+              }: any) => ({
+                text,
+                textEn: translation,
+                sentence: word_sentence,
+                sentenceEn: word_sentence_translation,
+                sentence2: word_sentence_2,
+                sentence2En: word_sentence_2_translation,
+              }),
+            ),
+          newExpressions: rawData.turkish_lesson_expressions
+            .map((w: any) => w.turkish_expressions)
+            .map(
+              ({
+                text,
+                translation,
+                expression_sentence,
+                expression_sentence_translation,
+                expression_sentence_2,
+                expression_sentence_2_translation,
+              }: any) => ({
+                text,
+                textEn: translation,
+                sentence: expression_sentence,
+                sentenceEn: expression_sentence_translation,
+                sentence2: expression_sentence_2,
+                sentence2En: expression_sentence_2_translation,
+              }))
+            }
+    
+            if (rawData.turkish_quizzes_result) {
         relatedQuiz.value = { score: rawData.turkish_quizzes_result.score_global, createdAt: rawData.turkish_quizzes_result.created_at, id: rawData.turkish_quizzes_result.id };
       }
-      lesson.value.newWords = rawData.turkish_lesson_words
-        .map((w: any) => w.turkish_words)
-        .map(
-          ({
-            text,
-            translation,
-            word_sentence,
-            word_sentence_translation,
-            word_sentence_2,
-            word_sentence_2_translation,
-          }: any) => ({
-            text,
-            textEn: translation,
-            sentence: word_sentence,
-            sentenceEn: word_sentence_translation,
-            sentence2: word_sentence_2,
-            sentence2En: word_sentence_2_translation,
-          }),
-        );
-      lesson.value.newExpressions = rawData.turkish_lesson_expressions
-        .map((w: any) => w.turkish_expressions)
-        .map(
-          ({
-            text,
-            translation,
-            expression_sentence,
-            expression_sentence_translation,
-            expression_sentence_2,
-            expression_sentence_2_translation,
-          }: any) => ({
-            text,
-            textEn: translation,
-            sentence: expression_sentence,
-            sentenceEn: expression_sentence_translation,
-            sentence2: expression_sentence_2,
-            sentence2En: expression_sentence_2_translation,
-          }),
-        );
+
       isLoading.value = false;
       // Fetch grammar rule after lesson is loaded
       await getGrammarRule();
@@ -156,6 +157,16 @@ const sentences = computed(() => {
 const imageUrl = computed(() => {
   return lesson.value?.imgUrl || '../../../public/toucan.png';
 });
+
+// Image loading state
+const imageLoading = ref(true);
+const imageError = ref(false);
+
+
+const handleImageError = () => {
+  imageLoading.value = false;
+  imageError.value = true;
+};
 
 const sanitizedIntroTemplate = computed(() =>
   DOMPurify.sanitize(lesson.value?.grammarRuleIntro || grammarRule.value?.intro || ""),
@@ -262,10 +273,52 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               <div id="picture" class="flex-shrink-0 w-96">
                 <div class="relative">
                   <div class="absolute -inset-4 bg-gradient-to-r from-blue-200/40 to-indigo-200/40 rounded-3xl blur-xl"></div>
+                  
+                  <!-- Skeleton placeholder -->
+                  <div 
+                    v-if="imageLoading"
+                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-100 to-slate-200 animate-pulse"
+                  >
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="flex flex-col items-center gap-4">
+                        <!-- Image icon skeleton -->
+                        <div class="w-16 h-16 bg-slate-300 rounded-lg animate-pulse"></div>
+                        <!-- Loading text -->
+                        <div class="text-slate-500 text-sm font-medium">Image loading...</div>
+                      </div>
+                    </div>
+                    <!-- Shimmer effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer rounded-3xl"></div>
+                  </div>
+                  
+                  <!-- Error state -->
+                  <div 
+                    v-else-if="imageError"
+                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm bg-gradient-to-br from-red-50 to-pink-50"
+                  >
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="flex flex-col items-center gap-4">
+                        <!-- Error icon -->
+                        <div class="w-16 h-16 bg-red-200 rounded-lg flex items-center justify-center">
+                          <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                          </svg>
+                        </div>
+                        <!-- Error text -->
+                        <div class="text-red-500 text-sm font-medium text-center">
+                          Image non disponible
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Actual image -->
                   <img 
+                    v-else
                     :src="imageUrl" 
                     alt="Lesson illustration" 
                     class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60 border-8 border-white/90 backdrop-blur-sm"
+                    @error="handleImageError"
                   />
                 </div>
               </div>
@@ -523,7 +576,20 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
   }
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }
 </style>

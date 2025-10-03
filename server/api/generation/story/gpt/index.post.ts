@@ -6,6 +6,7 @@ const supabase = createClient(
   process.env.SERVICE_SUPABASE_KEY,
 );
 
+
 const parseModelResponse = (text: string, ruleId: number, userId: string) => {
   const newLesson = JSON.parse(text)
   return { user_id: userId, grammar_rule_id: ruleId, ...newLesson }

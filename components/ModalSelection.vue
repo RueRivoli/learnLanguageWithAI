@@ -72,7 +72,7 @@ const handleDeleteSelectedItem = (text: string) => {
               @click="$emit('applySelection', listItems)"
             >
             <CheckIcon
-              class="h-5 w-5 mr-2 text-white group-hover:text-neutral"
+              class="h-5 w-5 mr-1 text-white group-hover:text-neutral"
             />
               <span>Apply</span>
             </button>

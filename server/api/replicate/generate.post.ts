@@ -11,6 +11,46 @@ const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
+// Helper function to process ReadableStream
+const processReadableStream = async (stream: ReadableStream): Promise<string | null> => {
+  try {
+    const reader = stream.getReader();
+    const chunks = [];
+    let done = false;
+    
+    while (!done) {
+      const { value, done: streamDone } = await reader.read();
+      done = streamDone;
+      if (value) {
+        chunks.push(value);
+      }
+    }
+    
+    // Convert chunks to string
+    const decoder = new TextDecoder();
+    const streamContent = decoder.decode(new Uint8Array(chunks.flat()));
+    console.log('Stream content:', streamContent);
+    
+    // Try to parse as JSON first
+    try {
+      const parsed = JSON.parse(streamContent);
+      if (parsed.url && typeof parsed.url === 'string' && parsed.url.startsWith('http')) {
+        return parsed.url;
+      }
+    } catch {
+      // If not JSON, check if it's a direct URL
+      if (streamContent.trim().startsWith('http')) {
+        return streamContent.trim();
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error processing ReadableStream:', error);
+    return null;
+  }
+};
+
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
@@ -95,75 +135,56 @@ export default defineEventHandler(async (event) => {
       input: modelInput 
     });
     console.log(`Output type: ${typeof output}, isArray: ${Array.isArray(output)}`);
-    console.log(`Output: ${JSON.stringify(output)}`);
+    console.log(`Output structure:`, JSON.stringify(output, null, 2));
     
     // Handle different output formats from Replicate
     let finalImageUrl: string | null = null;
     
-    if (Array.isArray(output) && output.length > 0) {
-      finalImageUrl = output[0];
-    } else if (typeof output === 'string') {
-      finalImageUrl = output;
-    } else if (output && typeof output === 'object') {
-      // Handle ReadableStream or other complex objects
-      console.log('Attempting to extract URL from object:', output);
-      
-      // Try to find URL in various possible properties
-      if ('url' in output && typeof output.url === 'string') {
-        finalImageUrl = output.url;
-      } else if ('image_url' in output && typeof output.image_url === 'string') {
-        finalImageUrl = output.image_url;
-      } else if ('output' in output && typeof output.output === 'string') {
-        finalImageUrl = output.output;
-      } else {
-        // Handle ReadableStream case - wait for the stream to complete
-        if (output.constructor.name === 'ReadableStream' || 'getReader' in output) {
-          console.log('Detected ReadableStream, waiting for completion...');
-          try {
-            // For Replicate, the stream usually contains the final URL
-            // We need to read the stream to get the URL
-            const reader = (output as ReadableStream).getReader();
-            const chunks = [];
-            let done = false;
-            
-            while (!done) {
-              const { value, done: streamDone } = await reader.read();
-              done = streamDone;
-              if (value) {
-                chunks.push(value);
-              }
+    // Replicate typically returns an array of URLs or a single URL
+    if (Array.isArray(output)) {
+      if (output.length > 0) {
+        const firstOutput = output[0];
+        console.log(`First output type: ${typeof firstOutput}`, firstOutput);
+        
+        if (typeof firstOutput === 'string' && firstOutput.startsWith('http')) {
+          finalImageUrl = firstOutput;
+          console.log('Extracted URL from array:', finalImageUrl);
+        } else if (typeof firstOutput === 'object' && firstOutput !== null) {
+          // Check for common URL properties in objects
+          const urlProperties = ['url', 'image_url', 'output', 'image', 'src'];
+          for (const prop of urlProperties) {
+            if (firstOutput[prop] && typeof firstOutput[prop] === 'string' && firstOutput[prop].startsWith('http')) {
+              finalImageUrl = firstOutput[prop];
+              console.log(`Extracted URL from object property '${prop}':`, finalImageUrl);
+              break;
             }
-            
-            // Convert chunks to string and look for URL
-            const decoder = new TextDecoder();
-            const streamContent = decoder.decode(new Uint8Array(chunks.flat()));
-            console.log('Stream content:', streamContent);
-            
-            // Try to parse as JSON first
+          }
+          
+          // Handle ReadableStream case
+          if (!finalImageUrl && (firstOutput.constructor.name === 'ReadableStream' || 'getReader' in firstOutput)) {
+            console.log('Detected ReadableStream, processing...');
             try {
-              const parsed = JSON.parse(streamContent);
-              if (parsed.url) {
-                finalImageUrl = parsed.url;
-              } else if (typeof parsed === 'string' && parsed.startsWith('http')) {
-                finalImageUrl = parsed;
+              finalImageUrl = await processReadableStream(firstOutput);
+              if (finalImageUrl) {
+                console.log('Extracted URL from ReadableStream:', finalImageUrl);
               }
-            } catch {
-              // If not JSON, check if it's a direct URL
-              if (streamContent.startsWith('http')) {
-                finalImageUrl = streamContent.trim();
-              }
+            } catch (streamError) {
+              console.error('Error processing ReadableStream:', streamError);
             }
-          } catch (streamError) {
-            console.error('Error reading stream:', streamError);
           }
-        } else {
-          // Last resort: convert to string and check if it looks like a URL
-          const stringOutput = output.toString();
-          if (stringOutput.includes('http') && stringOutput !== '[object Object]') {
-            finalImageUrl = stringOutput;
-          } else {
-            console.error('Unable to extract URL from output object:', output);
-          }
+        }
+      }
+    } else if (typeof output === 'string' && (output as string).startsWith('http')) {
+      finalImageUrl = output;
+      console.log('Direct URL from output:', finalImageUrl);
+    } else if (typeof output === 'object' && output !== null) {
+      // Handle single object output
+      const urlProperties = ['url', 'image_url', 'output', 'image', 'src'];
+      for (const prop of urlProperties) {
+        if (output[prop] && typeof output[prop] === 'string' && (output[prop] as string).startsWith('http')) {
+          finalImageUrl = output[prop];
+          console.log(`Extracted URL from object property '${prop}':`, finalImageUrl);
+          break;
         }
       }
     }
@@ -183,12 +204,16 @@ export default defineEventHandler(async (event) => {
             face_enhance: body.face_enhance || false
           }
         });
-        
+        console.log("upscaleOutput", upscaleOutput);
         // Handle upscale output format
         if (typeof upscaleOutput === 'string') {
+          console.log("is a string", upscaleOutput);
           upscaledImageUrl = upscaleOutput;
+          console.log("upscaledImageUrl", upscaledImageUrl);
         } else if (Array.isArray(upscaleOutput) && upscaleOutput.length > 0) {
+          console.log("second if", upscaleOutput);
           upscaledImageUrl = upscaleOutput[0];
+          console.log("upscaledImageUrl", upscaledImageUrl);
         }
         
         if (upscaledImageUrl) {
@@ -207,14 +232,22 @@ export default defineEventHandler(async (event) => {
     
     if (finalImageUrl && typeof finalImageUrl === 'string' && finalImageUrl.startsWith('http')) {
       try {
+        // Validate required environment variables
+        if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_KEY) {
+          console.error('Missing required Supabase environment variables');
+          throw new Error('Supabase configuration incomplete');
+        }
+        
         // Fetch the image from Replicate URL
+        console.log('Fetching image from Replicate URL:', finalImageUrl);
         const imageResponse = await fetch(finalImageUrl);
         if (!imageResponse.ok) {
-          throw new Error(`Failed to fetch image: ${imageResponse.statusText}`);
+          throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
         }
         
         const imageBuffer = await imageResponse.arrayBuffer();
         const imageBlob = new Blob([imageBuffer], { type: 'image/png' });
+        console.log(`Image fetched successfully, size: ${imageBlob.size} bytes`);
         
         // Generate a unique filename
         const timestamp = Date.now();
@@ -223,7 +256,8 @@ export default defineEventHandler(async (event) => {
         
         // Upload to Supabase storage
         const bucketName = process.env.SUPABASE_BUCKET_NAME || 'images';
-        console.log(`Uploading image to Supabase storage: ${fileName} in bucket ${bucketName} `);
+        console.log(`Uploading image to Supabase storage: ${fileName} in bucket ${bucketName}`);
+        
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from(bucketName)
           .upload(fileName, imageBlob, {
@@ -233,19 +267,39 @@ export default defineEventHandler(async (event) => {
           });
 
         if (uploadError) {
-          console.error('Supabase upload error:', uploadError);
+          console.error('Supabase upload error:', {
+            message: uploadError.message,
+            name: uploadError.name,
+            stack: uploadError.stack
+          });
+          
+          // Check if bucket exists
+          const { data: buckets } = await supabase.storage.listBuckets();
+          const bucketExists = buckets?.some(bucket => bucket.name === bucketName);
+          if (!bucketExists) {
+            console.error(`Bucket '${bucketName}' does not exist. Available buckets:`, buckets?.map(b => b.name));
+          }
         } else {
+          console.log('Upload successful:', uploadData);
+          
           // Get the public URL
           const { data: urlData } = supabase.storage
             .from(bucketName)
             .getPublicUrl(uploadData.path);
           
           supabaseImageUrl = urlData.publicUrl;
+          console.log('Supabase public URL generated:', supabaseImageUrl);
         }
       } catch (error) {
-        console.error('Error saving image to Supabase:', error);
+        console.error('Error saving image to Supabase:', {
+          message: error.message,
+          stack: error.stack,
+          finalImageUrl
+        });
         // Continue execution even if storage fails
       }
+    } else {
+      console.warn('Invalid finalImageUrl for Supabase storage:', finalImageUrl);
     }
 
     // Update story if storyId is provided

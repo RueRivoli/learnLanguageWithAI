@@ -212,11 +212,12 @@ const handleGenerateStory = async () => {
       targetedModule.value.name,
       wordList.value.slice(0, 10),
       expressionList.value.slice(0, 3),
-      getDifficultyNameSafe(targetedModule.value.level),
+      targetedModule.value.level,
       10,
     );
+    console.log("newLesson", newLesson);
     const promptForImageGeneration = newLesson.promptForImageGeneration;
-    generateImageWithPrompt(promptForImageGeneration, newLesson.id);
+    generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1");
   }
   router.push(`/learning/lessons/${String(newLesson.id)}`);
   isGeneratingLesson.value = false;
@@ -231,7 +232,7 @@ const handleGenerateStory = async () => {
       <div class="max-w-6xl mx-auto px-6">
         <!-- Header Section -->
         <div class="text-center mb-16">
-          <h1 class="text-4xl md:text-5xl font-light text-white mb-6 tracking-wide text-center mx-auto max-w-4xl leading-tight">
+          <h1 class="text-4xl md:text-3xl font-light text-black mb-6 tracking-wide text-center mx-auto max-w-4xl leading-tight">
             Create your Turkish Personalized Lesson
           </h1>
           <div class="space-y-3 max-w-2xl mx-auto">
@@ -351,10 +352,11 @@ const handleGenerateStory = async () => {
               class="w-80 m-auto bg-warning hover:bg-warning/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
               @click="handleGenerateStory"
             >
-              <span v-if="isGeneratingLesson" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
-              <PlayIcon v-else class="w-5 h-5" />
-              <span>Generate My Personalized Lesson</span>
+                <span v-if="isGeneratingLesson" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                <PlayIcon v-else class="w-5 h-5" />
+                <span>Generate My Personalized Lesson</span>
             </button>
+              <p class="text-sm text-gray-500 mt-2">Your AI-powered Turkish lesson will be ready in moments</p>
             </div>
           </div>
         </div>

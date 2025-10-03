@@ -24,12 +24,22 @@ export const generateAIPoweredStoryWithParameters = async (userId: string, gramm
 }
 
 
-export const generateImageWithPrompt = async (prompt: string, storyId: number) => {
+export const generateImageWithPrompt = async (prompt: string, storyId: number, model: string) => {
   const promptForImageGeneration = getPromptForImageGeneration(prompt)
   console.log('promptForImageGeneration', promptForImageGeneration)
   console.log('storyId', storyId)
-  await $fetch("/api/replicate/generate", {
-      method: 'POST',
-      body: { prompt: promptForImageGeneration, storyId: storyId}
-     })
+  switch (model) {
+    case "gpt-4.1":
+      await $fetch("/api/gpt/generation/image", {
+        method: 'POST',
+        body: { prompt: promptForImageGeneration, storyId: storyId}
+      })
+      break
+    case "replicate":
+      await $fetch("/api/replicate/generate", {
+        method: 'POST',
+        body: { prompt: promptForImageGeneration, storyId: storyId}
+      })
+      break
+  }
 }
