@@ -194,7 +194,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </div>
                         <!-- Neutral text -->
                         <div class="text-slate-600 text-sm font-medium text-center">
-                         Your image will be generated soon
+                         Your image will be generated in less than 1 minute
                         </div>
                       </div>
                     </div>

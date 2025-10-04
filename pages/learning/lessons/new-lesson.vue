@@ -356,7 +356,7 @@ const handleGenerateStory = async () => {
                 <PlayIcon v-else class="w-5 h-5" />
                 <span>Generate My Personalized Lesson</span>
               </button>
-              <p class="text-sm text-gray-500 mt-2">Your AI-powered Turkish lesson will be ready in moments</p>
+              <p class="text-sm text-gray-500 mt-2">Your personalized Turkish Lesson will be ready in less than 10 seconds</p>
             </div>
           </div>
         </div>

@@ -23,27 +23,23 @@ const props = withDefaults(
 <!-- Total Expressions Mastered - Professional Design -->
 <div :class="[
   props.darkerMode 
-    ? 'bg-gradient-to-br from-slate-700/80 via-emerald-800/30 to-slate-700/80 group relative rounded-xl shadow-xl border border-emerald-400/25 p-4 hover:shadow-emerald-400/15 hover:border-emerald-300/40 overflow-hidden transition-all duration-500 backdrop-blur-sm'
+    ? 'bg-gradient-to-br from-slate-700/35 via-slate-500/25 to-slate-700/35 group relative rounded-xl shadow-xl border border-emerald-400/25 p-4 hover:shadow-emerald-400/15 hover:border-emerald-300/40 overflow-hidden transition-all duration-500 backdrop-blur-sm'
     : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-xl shadow-md border border-emerald-300/70 p-4 hover:shadow-xl hover:border-emerald-400/80 overflow-hidden transition-all duration-300'
 ]">
     <!-- Professional background pattern -->
-    <div :class="{'absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-transparent to-emerald-500/10 opacity-70': props.darkerMode, 'absolute inset-0 bg-gradient-to-br from-emerald-100/70 via-green-100/80 to-teal-100/60 opacity-90': !props.darkerMode}"/>
+    <div v-if="!props.darkerMode" class="absolute inset-0 bg-gradient-to-br from-emerald-100/70 via-green-100/80 to-teal-100/60 opacity-90"/>
     
-    <!-- Additional sophisticated overlay for darker mode -->
-    <div v-if="props.darkerMode" class="absolute inset-0 bg-gradient-to-tr from-transparent via-emerald-300/3 to-emerald-400/6 opacity-50"></div>
-    <div v-if="props.darkerMode" class="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.08),transparent_50%)]"></div>
-
     <!-- Success celebration overlay -->
-    <div :class="{'absolute inset-0 bg-gradient-to-br from-emerald-300/6 via-emerald-400/5 to-emerald-500/6 opacity-0 group-hover:opacity-100 transition-all duration-500': props.darkerMode, 'absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-green-500/3 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500': !props.darkerMode}" />
+    <div v-if="!props.darkerMode" class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-green-500/3 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
     <!-- Content container -->
     <div class="h-full relative flex flex-col justify-between z-10">
         <div class="flex items-center justify-between mb-3">
             <div class="flex-1">
-                <h3 :class="{'text-xl text-white mb-0.5': props.darkerMode, 'text-xl text-gray-900 mb-0.5': !props.darkerMode}">
+                <h3 :class="{'text-xl text-gray-900 mb-0.5': props.darkerMode, 'text-xl text-gray-800 mb-0.5': !props.darkerMode}">
                     {{ props.titleEn }}
                 </h3>
-                <p :class="{'text-xs text-gray-100 text-sm font-light': props.darkerMode, 'text-xs text-gray-500 text-sm font-light': !props.darkerMode}"> {{props.title}}</p>
+                <p :class="{'text-sm text-gray-900 font-light': props.darkerMode, 'text-sm text-gray-800 font-light': !props.darkerMode}"> {{props.title}}</p>
             </div>
 
             
