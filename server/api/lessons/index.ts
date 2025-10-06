@@ -1,12 +1,31 @@
 import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getQuery } from "h3";
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+import { defineEventHandler, getQuery, getHeader, createError } from "h3";
+import { createSupabaseClientWithUserAuthToken } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
+  // Get the authorization header from the request
+  const authHeader = getHeader(event, 'authorization')
+  if (!authHeader) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authorization header required'
+    })
+  }
+  // Create Supabase client with user's auth token
+  const supabase = createSupabaseClientWithUserAuthToken(authHeader)
+
+
+
+  // Verify the user is authenticated
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError) throw userError
+  if (!user?.id) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unable to resolve authenticated user'
+    })
+  }
+
   const query = getQuery(event)
   const page = query.page
   const size = query.size
@@ -23,6 +42,7 @@ export default defineEventHandler(async (event) => {
         id,
         title,
         title_en,
+        user_id,
         turkish_grammar_rules (
           difficulty_class,
           rule_name,

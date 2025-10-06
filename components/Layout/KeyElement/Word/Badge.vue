@@ -2,12 +2,14 @@
 const props = withDefaults(
   defineProps<{
     isMastered?: boolean | undefined;
+    darkerMode?: boolean | undefined;
     text?: string | null;
     translation?: string | null;
     size?: 'sm' | 'xs';
   }>(),
   {
     isMastered: false,
+    darkerMode: false,
     text: null,
     translation: null,
     size: 'sm',
@@ -21,16 +23,16 @@ const emit = defineEmits(["click"]);
 
 <template>
 <div 
-class="rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 py-1 px-2 transition-all duration-300"
-@click="emit('click')"
+ :class="{'rounded-md bg-gradient-to-br from-slate-200 to-gray-300 text-slate-800 py-1 px-2 transition-all duration-300': props.darkerMode, 'rounded-md bg-gradient-to-br from-gray-100 to-slate-200 text-slate-700 py-1 px-2 transition-all duration-300': !props.darkerMode}"
+  @click="emit('click')"
 >
 <div class="flex items-center justify-between">
   <div class="flex items-center gap-4">
     <div>
-      <span class="text-base font-medium text-white font-serif">
+      <span class="text-base font-medium font-serif">
       {{ props.text }}
       </span>
-      <span class="text-base font-medium text-white font-serif" v-if="props.isMastered">*</span>
+      <span class="text-base font-medium font-serif" v-if="props.isMastered">*</span>
     </div>
 
     <span v-if="props.translation" class="text-sm text-slate-600 font-light italic">

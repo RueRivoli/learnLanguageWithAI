@@ -225,31 +225,60 @@ const handleGenerateStory = async () => {
 </script>
 
 <template>
-  <div id="new_lesson_page" class="min-h-screen relative overflow-hidden">
+  <div id="new_lesson_page" class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 relative overflow-hidden">
 
-    <!-- Main Content -->
-    <div class="relative py-8">
-      <div class="max-w-6xl mx-auto px-6">
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-          <h1 class="text-4xl md:text-3xl font-light text-black mb-6 tracking-wide text-center mx-auto max-w-4xl leading-tight">
-            Create your Turkish Personalized Lesson
-          </h1>
-          <div class="space-y-3 max-w-2xl mx-auto">
-            <!-- <div class="flex items-center text-lg text-blue-100 font-light">
-              <div class="w-2 h-2 bg-blue-100 rounded-full mr-4 flex-shrink-0"></div>
-              <span>Generate stories adapted to your weakest points with the best AI models</span>
-            </div>
-            <div class="flex items-center text-lg text-blue-100 font-light">
-              <div class="w-2 h-2 bg-blue-100 rounded-full mr-4 flex-shrink-0"></div>
-              <span>Read the story with attention</span>
-            </div>
-            <div class="flex items-center text-lg text-blue-100 font-light">
-              <div class="w-2 h-2 bg-blue-100 rounded-full mr-4 flex-shrink-0"></div>
-              <span>Test your knowledge with a quiz prepared by our real teachers</span>
-            </div> -->
-          </div>
+<!-- Background Elements -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+  <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-100/30 to-indigo-100/20 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-emerald-100/30 to-teal-100/20 rounded-full blur-3xl"></div>
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-100/20 to-pink-100/20 rounded-full blur-3xl"></div>
+</div>
+
+<!-- Main Content -->
+<div class="relative py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header Section -->
+    <div class="text-center mb-20">
+      <div class="inline-flex items-center gap-3 mb-8">
+        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+          <SparklesIcon class="w-6 h-6 text-white" />
         </div>
+        <div class="h-8 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
+        <div class="text-sm font-medium text-gray-600 uppercase tracking-wider">AI-Powered Learning</div>
+      </div>
+      
+      <h1 class="text-5xl md:text-4xl font-light text-gray-900 mb-6 tracking-tight leading-tight">
+        Create Your
+        <span class="font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          Personalized
+        </span>
+        <br class="md:hidden" />
+        Turkish Lesson
+      </h1>
+      
+      <p class="text-xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed mb-8">
+        Generate intelligent stories tailored to your learning needs, featuring your weakest grammar points and vocabulary
+      </p>
+
+      <!-- Feature highlights -->
+      <div class="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">
+        <div class="flex items-center gap-3 text-gray-700">
+          <div class="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+          <!-- <span class="font-medium">Adaptive AI Stories</span> -->
+          <span class="font-medium">Select your Weakest Module</span>
+        </div>
+        <div class="flex items-center gap-3 text-gray-700">
+          <div class="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
+          <!-- <span class="font-medium">Personalized Content</span> -->
+          <span class="font-medium">Select 10 New Words</span>
+        </div>
+        <div class="flex items-center gap-3 text-gray-700">
+          <div class="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
+          <!-- <span class="font-medium">Smart Quizzes</span> -->
+          <span class="font-medium">Select 3 New Expressions</span>
+        </div>
+      </div>
+    </div>
 
         <!-- Main Content Card -->
         <div class="relative rounded-xl overflow-hidden">
@@ -323,7 +352,7 @@ const handleGenerateStory = async () => {
               <template #content>
                 <div class="flex flex-wrap gap-3">
                 <div v-for="(w, n) in wordList.slice(0, 10)" :key="w.text">
-                    <LayoutKeyElementWordBadge :text="w.text"  />
+                    <LayoutKeyElementWordBadge :text="w.text" :darkerMode="true" />
                 </div>
               </div>
                  </template>
@@ -338,7 +367,7 @@ const handleGenerateStory = async () => {
               <template #content>
                   <div class="flex flex-wrap gap-3">
                     <div v-for="(expr, n) in expressionList.slice(0, 3)" :key="expr.text">
-                        <LayoutKeyElementExpressionBadge :text="expr.text"  />
+                        <LayoutKeyElementExpressionBadge :text="expr.text"  :darkerMode="true" />
                     </div>
                 </div>
                 </template>

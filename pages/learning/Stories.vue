@@ -26,8 +26,17 @@ const {
 
 const fetchLessons = async () => {
   isFetchingData.value = true;
+  
+  // Get the current session for authentication
+  const { data: { session } } = await useSupabaseClient().auth.getSession()
+  const headers: Record<string, string> = {}
+  if (session?.access_token) {
+    headers['Authorization'] = `Bearer ${session.access_token}`
+  }
+  
   const results = await $fetch(
     `/api/lessons?page=${currentPage.value}&size=10`,
+    { headers }
   );
   if (results.error) throw results.error;
   else if (results) {
@@ -46,8 +55,17 @@ const handleDeleteLesson = async () => {
   isDeletingLesson.value = true;
   if (lessonNameToDelete.value?.id) {
     console.log("lessonId");
+    
+    // Get the current session for authentication
+    const { data: { session } } = await useSupabaseClient().auth.getSession()
+    const headers: Record<string, string> = {}
+    if (session?.access_token) {
+      headers['Authorization'] = `Bearer ${session.access_token}`
+    }
+    
     await $fetch(`/api/lessons/${lessonNameToDelete.value.id}`, {
       method: "DELETE",
+      headers
     });
   }
   isDeletingLesson.value = false;
