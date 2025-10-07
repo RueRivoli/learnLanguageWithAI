@@ -1,14 +1,16 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    isActive: boolean;
     expression?: any;
+    isActive: boolean;
+    minified: boolean;
     size?: 'sm' | 'xs';
   }>(),
   {
-    word: null,
-    size: 'sm',
+    expression: null,
     isActive: false,
+    minified: false,
+    size: 'sm',
   },
 );
 const emit = defineEmits(["click"]);
@@ -28,23 +30,14 @@ const emit = defineEmits(["click"]);
 >
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-4">
-      <span class="text-base font-medium text-white font-serif">
+      <span class="text-lg text-white font-serif">
         {{ expression.text }}
       </span>
-      <span class="text-sm text-white font-light italic">
-        {{ expression.textEn || 'Translation not available' }}
+      <span v-if="!props.minified" class="text-lg text-pink-50 font-light italic">
+        {{ expression.translation || 'Translation not available' }}
       </span>
       
     </div>
-    <!-- <svg 
-      class="w-4 h-4 text-white transition-all duration-300"
-      :class="{ 'rotate-180': props.isActive }"
-      fill="none" 
-      stroke="currentColor" 
-      viewBox="0 0 24 24"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-    </svg> -->
   </div>
   
   <!-- Example Sentences (shows when clicked) -->
@@ -54,15 +47,32 @@ const emit = defineEmits(["click"]);
   >
     <div
       v-if="expression.sentence"
-      class="text-sm text-white rounded-lg"
+      class="text-md text-white rounded-lg"
     >
-      <span class="font-medium text-white underline">Ex:</span> {{ expression.sentence }}
+      <span>{{ expression.sentence }}</span>
     </div>
     <div
       v-if="expression.sentenceEn"
-      class="text-sm text-white"
+      class="text-pink-50"
     >
-    <span class="ml-6">{{ expression.sentenceEn }}</span>
+      <span class="">{{ expression.sentenceEn }}</span>
+    </div>
+  </div>
+  <div
+    v-if="isActive && (expression.sentence2 || expression.sentence2En)"
+    class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
+  >
+    <div
+      v-if="expression.sentence2"
+      class="text-md text-white rounded-lg"
+    >
+      <span class="text-md text-white rounded-lg">{{ expression.sentence2 }}</span> 
+    </div>
+    <div
+      v-if="expression.sentence2En"
+      class="text-blue-50"
+    >
+    <span class="">{{ expression.sentence2En }}</span>
     </div>
   </div>
 </div>

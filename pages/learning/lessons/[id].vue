@@ -28,18 +28,9 @@ const {
 // UI state
 const showEnglishTranslations = ref(false);
 const activeSentenceTranslation = ref<number | null>(null);
-const activeWordTranslation = ref<number | null>(null);
-const activeExpressionTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
 const areWordsExampleShown = ref<boolean>(false);
 const areExpressionsExampleShown = ref<boolean>(false);
-const toggleWordTranslation = (index: number) => {
-  activeWordTranslation.value = activeWordTranslation.value === index ? null : index;
-};
-
-const toggleExpressionTranslation = (index: number) => {
-  activeExpressionTranslation.value = activeExpressionTranslation.value === index ? null : index;
-};
 
 const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
@@ -271,13 +262,13 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <LayoutKeyElementQuizBadge v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
                   <label class="flex items-center gap-3 cursor-pointer group">
-                    <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
-                      Show All Translations
+                    <span class="text-md text-slate-600 group-hover:text-primary transition-colors">
+                      Show Translations
                     </span>
                     <input
                       v-model="showEnglishTranslations"
                       type="checkbox"
-                      class="toggle toggle-primary toggle-sm"
+                      class="toggle toggle-primary toggle-md"
                     />
                   </label>
                   </div>
@@ -371,13 +362,13 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
              <LayoutKeyElementWordCard title="Key Words">
               <template #top-right-corner>
                 <label class="flex items-center gap-3 cursor-pointer group">
-                    <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
+                    <span class="text-md text-slate-600 group-hover:text-primary transition-colors">
                       Show Examples
                     </span>
                     <input
                       v-model="areWordsExampleShown"
                       type="checkbox"
-                      class="toggle toggle-primary toggle-sm"
+                      class="toggle toggle-primary toggle-md"
                     />
                   </label>
               </template>
@@ -388,23 +379,23 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     :key="index"
                     class="group relative"
                   >
-                  <LayoutKeyElementWordDefinition :word="word" :isActive="areWordsExampleShown" @click="toggleWordTranslation(index)"/>
+                  <LayoutKeyElementWordDefinition :word="word" :isActive="areWordsExampleShown" @click="areWordsExampleShown = !areWordsExampleShown"/>
                   </div>
                 </div>
                  </template>
               </LayoutKeyElementWordCard>
               
                <!-- Key Expressions Section -->
-              <LayoutKeyElementExpressionCard title="Key Expressions">
+              <LayoutKeyElementExpressionCard class="mt-2" title="Key Expressions">
                 <template #top-right-corner>
                 <label class="flex items-center gap-3 cursor-pointer group">
-                    <span class="text-sm font-medium text-slate-600 group-hover:text-primary transition-colors">
+                    <span class="text-md text-slate-600 group-hover:text-expression transition-colors">
                       Show Examples
                     </span>
                     <input
                       v-model="areExpressionsExampleShown"
                       type="checkbox"
-                      class="toggle toggle-primary toggle-sm"
+                      class="toggle toggle-expression toggle-md"
                     />
                   </label>
               </template>
@@ -415,7 +406,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         :key="index"
                         class="group relative"
                       >
-                        <LayoutKeyElementExpressionDefinition :expression="expression" :isActive="areExpressionsExampleShown" @click="toggleExpressionTranslation(index)"/>
+                        <LayoutKeyElementExpressionDefinition :expression="expression" :isActive="areExpressionsExampleShown" @click="areExpressionsExampleShown = !areExpressionsExampleShown"/>
                       </div>
                   </div>
                   </template>

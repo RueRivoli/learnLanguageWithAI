@@ -120,7 +120,7 @@ const currentInfo = computed(() => {
               <div class="flex items-center gap-2">
                 <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
                 <span class="text-md font-medium text-gray-700"
-                  >37.5%</span
+                  >{{ rule.score }}%</span
                 >
               </div>
               <span class="text-xs text-gray-600 ml-2"

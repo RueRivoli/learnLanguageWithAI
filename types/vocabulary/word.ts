@@ -20,16 +20,16 @@ export type Word = {
   // 1st meaning
   role: WordRowFetched['role'];
   translation: WordRowFetched['translation'];
-  wordSentence: WordRowFetched['word_sentence'];
-  wordSentenceEn: WordRowFetched['word_sentence_translation'];
+  sentence: WordRowFetched['word_sentence'];
+  sentenceEn: WordRowFetched['word_sentence_translation'];
   // 2nd meaning
   role2: WordRowFetched['role'];
   translation2: WordRowFetched['translation'];
-  wordSentence2: WordRowFetched['word_sentence_2'];
-  wordSentence2En: WordRowFetched['word_sentence_2_translation'];
+  sentence2: WordRowFetched['word_sentence_2'];
+  sentence2En: WordRowFetched['word_sentence_2_translation'];
   // 3rd meaning
   role3: WordRowFetched['role'];
   translation3: WordRowFetched['translation'];
-  wordSentence3: WordRowFetched['word_sentence_2'];
-  wordSentence3En: WordRowFetched['word_sentence_2_translation'];
+  sentence3: WordRowFetched['word_sentence_2'];
+  sentence3En: WordRowFetched['word_sentence_2_translation'];
 };

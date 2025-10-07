@@ -1,17 +1,26 @@
 <script setup lang="ts">
+import type { Word } from '~/types/vocabulary/word';
+
 const props = withDefaults(
   defineProps<{
     isActive: boolean;
-    word?: any;
+    minified: boolean;
+    word?: Word | null;
     size?: 'sm' | 'xs';
   }>(),
   {
+    minified: false,
     word: null,
     size: 'sm',
     isActive: false,
   },
 );
 const emit = defineEmits(["click"]);
+
+const roles = computed(() => {
+  if (!props.word) return '';
+  return props.word?.role3 ? `${props.word?.role}, ${props.word?.role2}, ${props.word?.role3}` : props.word?.role2 ? `${props.word?.role}, ${props.word?.role2}` : props.word?.role;
+});
 
 /*bg-gradient-to-r from-primary/15 to-primary/25 border border-primary/20 */
 // text-slate-800
@@ -22,53 +31,94 @@ const emit = defineEmits(["click"]);
 
 <template>
     <!-- Enhanced Word Card -->
- 
     <div 
         class="bg-gradient-to-br from-blue-500 to-indigo-600 border border-primary/20 rounded-xl p-4 cursor-pointer transition-all duration-300"
         @click="emit('click')"
     >
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-4">
-              <!-- text-slate-800 -->
-                <span class="text-base font-large text-white font-serif">
+            <div class="flex items-center gap-2">
+                <span class="text-lg text-white font-serif">
                     {{ props.word.text }}
                 </span>
+                <span class="text-md text-white mr-1"> ({{ roles }})</span>
                  <!-- text-slate-600 -->
-                <span class="text-sm text-white font-light italic">
-                    {{ props.word.textEn || 'Translation not available' }}
+                <span v-if="!props.minified" class="text-lg text-blue-50 font-light italic">
+                    {{ props.word.translation || 'Translation not available' }}
                 </span>
             </div>
-            <!-- <svg 
-                class="w-4 h-4 text-white transition-all duration-300"
-                :class="{ 'rotate-180': isActive }"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg> -->
         </div>
                       
-                      <!-- Example Sentences (shows when clicked) -->
-        <div v-if="isActive && (word.sentence || word.sentenceEn)"
+        <!-- Example Sentences (shows when clicked) -->
+        <div v-if="props.isActive && (props.word.sentence || props.word.sentenceEn)"
           class="mt-3 pt-3 border-t border-slate-50/50 space-y-2 animate-fade-in"
         >
+        <!-- Show only if different meaning -->
+        <div v-if="props.word.role2" class="flex items-center gap-2">
+          <span class="text-md text-white font-serif">
+            ({{ props.word.role }})
+          </span>
+          <span class="text-md text-blue-50 font-light italic">
+            {{ props.word.translation }}
+          </span>
+        </div>
             <div
-              v-if="word.sentence"
-              class="text-sm text-white rounded-lg"
+              v-if="props.word.sentence"
+              class="text-md text-white rounded-lg"
               >
-                <span class="font-medium underline">Ex:</span> {{ word.sentence }}
+                <span>{{ props.word.sentence }}</span> 
             </div>
-                        <div
-                          v-if="word.sentenceEn"
-                          class="text-sm text-white"
-                        >
-                        <div class="ml-6">
-                          <span >{{ word.sentenceEn }}</span>
-                        </div>
-                        
-                        </div>
-                      </div>
+            <div
+                v-if="props.word.sentenceEn"
+                class="text-blue-50">
+                  <span>{{ props.word.sentenceEn }}</span>
+              </div>
+        </div>
+        <div v-if="props.isActive && (props.word.sentence2 || props.word.sentence2En)"
+          class="mt-3 pt-3 border-t border-slate-50/50 space-y-2 animate-fade-in"
+        >
+        <div class="flex items-center gap-2">
+          <span class="text-md text-white font-serif">
+            ({{ props.word.role2 }})
+          </span>
+          <span class="text-md text-blue-50 font-light italic">
+            {{ props.word.translation2 }}
+          </span>
+        </div>
+            <div
+              v-if="props.word.sentence2"
+              class="text-md text-white rounded-lg"
+              >
+                <span>{{ props.word.sentence2 }}</span> 
+            </div>
+            <div
+                v-if="props.word.sentence2En"
+                class="text-blue-50">
+                  <span>{{ props.word.sentence2En }}</span>
+              </div>
+        </div>
+        <div v-if="props.isActive && (props.word.sentence3 || props.word.sentence3En)"
+          class="mt-3 pt-3 border-t border-slate-50/50 space-y-2 animate-fade-in"
+        >
+        <div class="flex items-center gap-2">
+          <span class="text-md text-white font-serif">
+            ({{ props.word.role3 }})
+          </span>
+          <span class="text-md text-blue-50 font-light italic">
+            {{ props.word.translation3 }}
+          </span>
+        </div>
+            <div
+              v-if="props.word.sentence2"
+              class="text-md text-white rounded-lg"
+              >
+                <span>{{ props.word.sentence3 }}</span> 
+            </div>
+            <div
+                v-if="props.word.sentence2En"
+                class="text-blue-50">
+                  <span>{{ props.word.sentence3En }}</span>
+              </div>
+        </div>
 </div>
 </template>
 

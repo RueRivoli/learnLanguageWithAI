@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     .select("id, turkish_words(id, text, translation, role)")
     .eq("word_mastered", true)
     .limit(quantity);
-    console.log("HEREEEEE", data);
   if (error) throw error; 
   return { data };
 });

@@ -52,18 +52,18 @@ export const parseWords = (words: WordListFetched): Array<Word> => {
          // 1st meaning
         role: word.role,
         translation: word.translation,
-        wordSentence: word.word_sentence,
-        wordSentenceEn: word.word_sentence_translation,
+        sentence: word.word_sentence,
+        sentenceEn: word.word_sentence_translation,
          // 2nd meaning
-         role2: word.role_2,
-         translation2: word.translation_2,
-         wordSentence2: word.word_sentence_2,
-         wordSentence2En: word.word_sentence_2_translation,
+        role2: word.role_2,
+        translation2: word.translation_2,
+        sentence2: word.word_sentence_2,
+        sentence2En: word.word_sentence_2_translation,
          // 3rd meaning
-         role3: word.role_3,
-         translation3: word.translation_3,
-        wordSentence3: word.word_sentence_3,
-        wordSentence3En: word.word_sentence_3_translation,
+        role3: word.role_3,
+        translation3: word.translation_3,
+        sentence3: word.word_sentence_3,
+        sentence3En: word.word_sentence_3_translation,
     }))
 }
 
@@ -74,10 +74,10 @@ export const parseExpressions = (expressions: ExpressionListFetched) : Array<Exp
       {
         id: expr.id,
         text: expr.text,
-        textEn: expr.translation,
-        expressionSentence: expr.expression_sentence,
-        expressionSentenceEn: expr.expression_sentence_translation,
-        expressionSentence2: expr.expression_sentence_2,
-        expressionSentence2En: expr.expression_sentence_2_translation,
+        translation: expr.translation,
+        sentence: expr.expression_sentence,
+        sentenceEn: expr.expression_sentence_translation,
+        sentence2: expr.expression_sentence_2,
+        sentence2En: expr.expression_sentence_2_translation,
       }))
   }

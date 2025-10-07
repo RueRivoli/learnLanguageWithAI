@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Word } from "~/types/vocabulary/word";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-
 import { ChevronDownIcon } from "@heroicons/vue/24/solid";
 
 definePageMeta({
@@ -18,6 +17,11 @@ const props = withDefaults(
     open: false,
   },
 );
+
+const roles = computed(() => {
+  if (!props.word) return '';
+  return props.word?.role3 ? `${props.word?.role}, ${props.word?.role2}, ${props.word?.role3}` : props.word?.role2 ? `${props.word?.role}, ${props.word?.role2}` : props.word?.role;
+});
 </script>
 
 <template>
@@ -28,7 +32,8 @@ const props = withDefaults(
       >
         <div>
           <span class="font-bold text-md mr-2">{{ word.text }} </span>
-          <span class="text-md italic"> {{ word.textEn }}</span>
+          <span class="text-md italic mr-2"> {{ roles.value }}</span>
+          <span class="text-md italic"> {{ word.translation }}</span>
         </div>
 
         <ChevronDownIcon
@@ -42,10 +47,14 @@ const props = withDefaults(
           <div class="font-semibold">{{ word.sentence }}</div>
           <div>{{ word.sentenceEn }}</div>
         </div>
-        <div v-if="word.sentence2" class="mt-2">
+        <div v-if="word?.sentence2" class="mt-2">
           <div class="font-semibold italic">{{ word.sentence2 }}</div>
           <div>{{ word.sentence2En }}</div>
         </div>
+        <!-- <div v-if="word?.sentence3" class="mt-2">
+          <div class="font-semibold italic">{{ word.sentence3 }}</div>
+          <div>{{ word.sentence3En }}</div>
+        </div> -->
       </DisclosurePanel>
     </Disclosure>
   </div>

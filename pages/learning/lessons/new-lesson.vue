@@ -352,7 +352,7 @@ const handleGenerateStory = async () => {
               <template #content>
                 <div class="flex flex-wrap gap-3">
                 <div v-for="(w, n) in wordList.slice(0, 10)" :key="w.text">
-                    <LayoutKeyElementWordBadge :text="w.text" :darkerMode="true" />
+                    <LayoutKeyElementWordBadge :text="w.text" :lightMode="true" />
                 </div>
               </div>
                  </template>
@@ -367,7 +367,7 @@ const handleGenerateStory = async () => {
               <template #content>
                   <div class="flex flex-wrap gap-3">
                     <div v-for="(expr, n) in expressionList.slice(0, 3)" :key="expr.text">
-                        <LayoutKeyElementExpressionBadge :text="expr.text"  :darkerMode="true" />
+                        <LayoutKeyElementExpressionBadge :text="expr.text"  :lightMode="true" />
                     </div>
                 </div>
                 </template>

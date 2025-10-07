@@ -1,7 +1,7 @@
 export const usePagination = (totalItems: Ref<number>) => {
     const currentPage = ref(1);
     // const totalItems = ref(0);
-    const itemsPerPage = ref(10);
+    const itemsPerPage = ref(28);
 
     const goToPreviousPage = () => {
         if (currentPage.value > 1) {

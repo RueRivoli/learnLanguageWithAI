@@ -2,14 +2,14 @@
 const props = withDefaults(
   defineProps<{
     isMastered?: boolean | undefined;
-    darkerMode?: boolean | undefined;
+    lightMode?: boolean | undefined;
     text?: string | null;
     translation?: string | null;
     size?: 'sm' | 'xs';
   }>(),
   {
     isMastered: false,
-    darkerMode: false,
+    lightMode: false,
     text: null,
     translation: null,
     size: 'sm',
@@ -23,7 +23,7 @@ const emit = defineEmits(["click"]);
 
 <template>
 <div 
- :class="{'rounded-md bg-gradient-to-br from-slate-200 to-gray-300 text-slate-800 py-1 px-2 transition-all duration-300': props.darkerMode, 'rounded-md bg-gradient-to-br from-gray-100 to-slate-200 text-slate-700 py-1 px-2 transition-all duration-300': !props.darkerMode}"
+ :class="{'rounded-md bg-gradient-to-br from-slate-200 to-gray-300 text-slate-800 py-1 px-2 transition-all duration-300': props.lightMode, 'rounded-md bg-gradient-to-br from-gray-100 to-slate-200 text-slate-700 py-1 px-2 transition-all duration-300': !props.lightMode}"
   @click="emit('click')"
 >
 <div class="flex items-center justify-between">

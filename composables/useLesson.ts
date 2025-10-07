@@ -47,19 +47,38 @@ export const useLesson = (lessonId: string | Ref<string>) => {
         ?.map((w: any) => w.turkish_words)
         ?.map(
           ({
+            id,
             text,
+            role,
             translation,
             word_sentence,
             word_sentence_translation,
+            role_2,
+            translation_2,
             word_sentence_2,
             word_sentence_2_translation,
+            role_3,
+            translation_3,
+            word_sentence_3,
+            word_sentence_3_translation,
           }: any) => ({
+            id,
             text,
-            textEn: translation,
+            // 1st meaning
+            role,
+            translation: translation,
             sentence: word_sentence,
             sentenceEn: word_sentence_translation,
+            // 2nd meaning
+            role2: role_2,
+            translation2: translation_2,
             sentence2: word_sentence_2,
             sentence2En: word_sentence_2_translation,
+            // 3rd meaning
+            role3: role_3,
+            translation3: translation_3,
+            sentence3: word_sentence_3,
+            sentence3En: word_sentence_3_translation,
           }),
         ) || [],
       newExpressions: rawData.turkish_lesson_expressions
@@ -74,7 +93,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
             expression_sentence_2_translation,
           }: any) => ({
             text,
-            textEn: translation,
+            translation: translation,
             sentence: expression_sentence,
             sentenceEn: expression_sentence_translation,
             sentence2: expression_sentence_2,
@@ -109,7 +128,12 @@ export const useLesson = (lessonId: string | Ref<string>) => {
     `lesson-${reactiveLessonId.value}`,
     async () => {
         console.log("fetching lesson nb", reactiveLessonId.value);
-      const lessonData = await $fetch(`/api/lessons/${reactiveLessonId.value}`);
+        const { data: { session } } = await useSupabaseClient().auth.getSession()
+        const headers: Record<string, string> = {}
+        if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+        const lessonData = await $fetch(`/api/lessons/${reactiveLessonId.value}`, { 
+          headers,
+        });
       if (!lessonData) throw new Error('Lesson not found');
       return lessonData;
     },

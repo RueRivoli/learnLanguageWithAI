@@ -45,60 +45,58 @@ const emptyMessage = computed(() => {
       </span>
       <br v-if="props.type === 'expression'" />
       <span class="italic">
-        {{ props.type === "word" ? word.translation : expression.textEn }}</span
+        {{ props.type === "word" ? word.translation : expression.translation }}</span
       >
       <div v-if="props.type === 'word'" :class="getClassWordRole(word.role)" class="ml-2">
          {{ word.role }}
        </div>
     </div>
-    <div class="p-2">
+    <div class="mt-2">
       <div>
         <div
           v-if="
             props.type === 'word'
-              ? word.wordSentence
-              : expression.expressionSentence
+              ? word.sentence
+              : expression.sentence
           "
           class="font-semibold"
         >
-          <ArrowLongRightIcon class="h-5 w-5 mr-2 inline" />
           <span>
             {{
               props.type === "word"
-                ? props.word.wordSentence
-                : expression.expressionSentence
+                ? props.word.sentence
+                : expression.sentence
             }}
           </span>
         </div>
         <div class="italic">
           {{
             props.type === "word"
-              ? word.wordSentenceEn
-              : expression.expressionSentenceEn
+              ? word.sentenceEn
+              : expression.sentenceEn
           }}
         </div>
       </div>
       <div
         v-if="
           props.type === 'word'
-            ? word.wordSentence2
-            : expression.expressionSentence2
+            ? word.sentence2
+            : expression.sentence2
         "
         class="mt-2"
       >
         <div class="font-semibold flex items-center">
-          <ArrowLongRightIcon class="h-5 w-5 mr-2" />
           <span>{{
             props.type === "word"
-              ? word.wordSentence2
-              : expression.expressionSentence2
+              ? word.sentence2
+              : expression.sentence2
           }}</span>
         </div>
         <div class="italic">
           {{
             props.type === "word"
-              ? word.wordSentence2En
-              : expression.expressionSentence2En
+              ? word.sentence2En
+              : expression.sentence2En
           }}
         </div>
       </div>

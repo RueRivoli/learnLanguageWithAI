@@ -82,7 +82,7 @@ const getWordList = async () => {
   const headers: Record<string, string> = {}
   if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
   const { data } = await useFetch(
-    `/api/words?page=${currentPage.value}&size=16`,
+    `/api/words?page=${currentPage.value}&size=28`,
     {
       query: { is_learned: showLearnedWords.value },
       headers,
@@ -111,7 +111,7 @@ const getExpressionList = async () => {
   const headers: Record<string, string> = {}
   if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
   const { data: dataExpr } = await useFetch(
-    `/api/expressions?page=${currentPageExpr.value}&size=10`,
+    `/api/expressions?page=${currentPageExpr.value}&size=32`,
     {
       query: { is_learned: showLearnedExpressions.value },
       headers,
@@ -214,19 +214,7 @@ const handleExpressionLearningStatus = async (
   getExpressionList();
   userScoreStore.setVocabularyScores(userStore.$state.id);
 };
-// abandonned because
-// reset currentPage to 1 when switching showLearnedWords
-// trigger race conditions with watchEffect
 
-// watchEffect(async () => {
-//   console.log("WatchEffet", showLearnedWords.value);
-//   await getWordList();
-// });
-
-// watchEffect(async () => {
-//   console.log("WatchEffet", showLearnedExpressions.value);
-// await getExpressionList();
-// });
 </script>
 
 <template>
@@ -359,56 +347,10 @@ const handleExpressionLearningStatus = async (
               v-else
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              <!-- flex flex-col justify-between bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 -->
-              <div
-                v-for="(word, index) in words"
-                :key="word.id"
-                class="group p-4 relative rounded-lg border hover:shadow-md transition-all duration-300 cursor-pointer"
-                :class="{
-                  'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
-                    selectedWord?.id === word.id,
-                  // Apply the same styling as Key Words cards from lesson page
-                  'bg-gradient-to-r from-primary/15 to-primary/25 border-primary/20 rounded-2xl': true,
-                }"
-                @click="selectedWord = word"
-              >
-                <!-- Word content -->
-                <div>
-                  <div
-                    class="text-pretty flex items-start justify-between mb-2"
-                  >
-                    <h3 class="text-xl font-bold text-gray-900 leading-tight">
-                      {{ word.text }}
-                    </h3>
-                    <div :class="getClassWordRole(word.role)">
-                      {{ word.role }}
-                    </div>
-                  </div>
-                  <p class="italic font-medium">
-                    {{ word.translation }}
-                  </p>
-                </div>
-
-                <!-- Bottom section with ID and Learned button - no separator line -->
-                <div class="flex items-center justify-between mt-4">
-                  <!-- Word ID on the left -->
-                  <span class="text-xs text-slate-500 font-medium">
-                    #{{ word.id }}
-                  </span>
-                  
-                  <!-- Learned button on the right -->
-                  <!-- <button
-                    class="flex items-center cursor-pointer gap-1 px-1 py-1 bg-green-100 hover:bg-green-200 text-green-700 hover:text-green-800 text-xs font-medium rounded-lg transition-all duration-200 hover:shadow-sm"
-                    @click.stop="handleWordLearningStatus(word.id, showLearnedWords)"
-                  >
-                    <span v-if="showLearnedWords"></span>
-                    <span v-else></span>
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </button> -->
-                </div>
+              <div v-for="(word, index) in words" :key="word.id">
+                <LayoutKeyElementWordDefinition :word="word" :minified="true" @click="selectedWord = word"/>
               </div>
+
             </div>
             <LayoutTablePagination
               class="mt-2"
@@ -484,37 +426,8 @@ const handleExpressionLearningStatus = async (
               v-else
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              <div
-                v-for="(expression, index) in expressions"
-                :key="index"
-                class="group p-4 relative rounded-lg border hover:shadow-md transition-all duration-300 cursor-pointer"
-                :class="{
-                  'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
-                    selectedExpression?.text === expression.text,
-                  // Apply the same styling as Key Expressions cards from lesson page
-                  'bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/20 border-purple-300/30 rounded-2xl': true,
-                }"
-                @click="selectedExpression = expression"
-              >
-                <!-- Expression content -->
-                <div>
-                  <div class="mb-3">
-                    <h3 class="text-xl font-bold text-gray-900 leading-tight">
-                      {{ expression.text }}
-                    </h3>
-                  </div>
-                  <p class="text-base text-gray-700 font-medium">
-                    {{ expression.textEn }}
-                  </p>
-                </div>
-
-                <!-- Bottom section with ID only -->
-                <div class="flex items-center justify-between mt-4">
-                  <!-- Expression ID on the left -->
-                  <span class="text-xs text-slate-500 font-medium">
-                    #{{ expression.id }}
-                  </span>
-                </div>
+            <div v-for="(expr, index) in expressions" :key="index">
+                <LayoutKeyElementExpressionDefinition :expression="expr" :minified="true" @click="selectedExpression = expr"/>
               </div>
             </div>
             <LayoutTablePagination
@@ -540,12 +453,12 @@ const handleExpressionLearningStatus = async (
       <div class="h-full">
         <LearningItemDefinition
           v-if="activeVocabularyTab === 1"
-          class="bg-white p-5 border-l border-primary/20"
+          class="bg-white p-10 rounded-md border-l border-primary/20"
           :word="selectedWord"
         />
         <LearningItemDefinition
           v-else
-          class="bg-white p-5 border-l border-primary/20"
+          class="bg-white p-10 rounded-md border-l border-primary/20"
           :expression="selectedExpression"
           type="expression"
         />
