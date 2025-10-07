@@ -2,6 +2,17 @@ import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 
 
+export const getScoreBackgroundColorClass = (score: number) => {
+  if (score > 0 && score < 40) {
+    return 'bg-error';
+  } else if (score >= 40 && score < 70) {
+    return 'bg-warning';
+  } else if (score >= 70) {
+    return 'bg-success';
+  }
+  return 'bg-neutral';
+};
+
 export const parseQuestions = (data: any): GrammarQuizQuestion => {
   return {
     id: data.id,

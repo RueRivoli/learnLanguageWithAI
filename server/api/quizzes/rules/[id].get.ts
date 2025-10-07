@@ -1,13 +1,17 @@
-import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam } from "h3";
+import { createError, defineEventHandler, getHeader, getRouterParam } from "h3";
+import { createSupabaseClientWithUserAuthToken } from "../../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
 export default defineEventHandler(async (event) => {
   const ruleId = getRouterParam(event, "id");
+  const authHeader = getHeader(event, 'authorization')
+  if (!authHeader) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authorization header required'
+    })
+  }
+  const supabase = createSupabaseClientWithUserAuthToken(authHeader)
   const { data, error } = await supabase
     .from("turkish_quizzes_result")
     .select("id, created_at, score_global")

@@ -5,15 +5,13 @@ import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import { useRouter } from "vue-router";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { getColorStyleClass } from "~/utils/learning/grammar";
-import QuizResult from "~/components/Quiz/Result.vue";
 
-const router = useRouter();
 const isLoading = ref(false);
 const props = withDefaults(
   defineProps<{
     loading?: boolean;
     rule?: GrammarRule | null;
-    quizs?: any[];
+    quizs?: Array<{id: number, score: number, createdAt: string}>;
   }>(),
   {
     loading: false,
@@ -33,31 +31,6 @@ const handleGenerateQuiz = async () => {
     isLoading.value = false;
   }
 }
-
-// const handleGenerateQuiz = async () => {
-//   try {
-//     isLoading.value = true;
-//     // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
-//     const response = await $fetch(`/api/quizzes/${props.rule?.id}`, {
-//       method: "PUT",
-//     });
-//     console.log("has generated a quizz with the id: ", response);
-//     // response is the id of the new generated quiz
-//     if (response) {
-//       // router.push(`/learning/quizzes/${response}`);
-//       await navigateTo({
-//         path: `/learning/quizzes/${response.quizId}`,
-//       });
-//     }
-//     isLoading.value = false;
-//   } catch (err) {
-//     console.error(
-//       "An error occured while generating a new quiz, please try again.",
-//       err,
-//     );
-//     isLoading.value = false;
-//   }
-// };
 
 const getScoreColor = (score: number) => {
   if (score >= 90) return 'bg-emerald-100 text-emerald-700 border-emerald-200';
@@ -112,12 +85,7 @@ const getScoreColor = (score: number) => {
           </div>
 
           <div v-else class="space-y-3">
-            <!-- <QuizResult
-              v-for="(quiz, index) in props.quizs"
-              :key="index"
-              :quiz="quiz"
-            /> -->
-            <LayoutKeyElementQuizBadge class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :score="quiz.score" size="sm"/>
+            <LayoutKeyElementQuizBadge class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :key="index" :quizId="quiz.id" :score="quiz.score" size="xl"/>
           </div>
 
           <!-- Action Button -->

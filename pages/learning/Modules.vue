@@ -1,12 +1,5 @@
 <script setup lang="ts">
 import {
-  ArrowTrendingUpIcon,
-  BookmarkIcon as BookmarkSolidIcon,
-} from "@heroicons/vue/24/solid";
-import {
-  BookmarkIcon,
-  EyeIcon,
-  LightBulbIcon,
   Square2StackIcon,
 } from "@heroicons/vue/24/outline";
 import {
@@ -33,20 +26,6 @@ const grammarRules = ref<GrammarRule[]>([]);
 const isFetchingGrammarRules = ref(false);
 const activeDifficultyLevelTab = ref(1);
 
-// Helper function to get text color class from background class
-const getTextColorClass = (rule: GrammarRule) => {
-  const bgClass = getGrammarRuleStyleClass(rule);
-  switch (bgClass) {
-    case "bg-success":
-      return "text-success";
-    case "bg-warning":
-      return "text-warning";
-    case "bg-error":
-      return "text-error";
-    default:
-      return "text-slate-700";
-  }
-};
 
 const getDifficultyClassQuery = (tab: number) => {
   switch (tab) {
@@ -70,11 +49,17 @@ watchEffect(async () => {
   try {
     isFetchingGrammarRules.value = true;
     const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
+    const { data: { session } } = await useSupabaseClient().auth.getSession()
+  const headers: Record<string, string> = {}
+  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
     const grammarModules = await $fetch("/api/grammar?order_by=id", {
+      headers,
       query,
     });
+    console.log("grammarModules", grammarModules);
     if (grammarModules && Array.isArray(grammarModules))
       grammarRules.value = parseRules(grammarModules);
+      console.log("test", grammarRules.value);
     isFetchingGrammarRules.value = false;
   } catch (error) {
     console.log(error);
@@ -199,164 +184,28 @@ watchEffect(async () => {
                       </div>
                     </div>
                   </div>
-              <!-- <span class="text-xs text-gray-600"
-                >out of <strong>{{ totalWordsInK }}</strong> total words</span
-              > -->
 
-                   <!-- Highlights -->
-              <!-- <div v-if="(rule as any).highlights" class="mb-3">
-                <div
-                  class="rounded-xl p-3 shadow-sm relative overflow-hidden border border-slate-200/50"
-                >
-                  <div class="absolute inset-0 bg-white/90" />
-                  <div
-                    class="absolute inset-0 opacity-20"
-                    :class="getGrammarRuleStyleClass(rule)"
-                  />
 
-                  <div
-                    class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10"
-                  />
-                  <div
-                    class="absolute inset-0 opacity-30 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.6)_0deg,rgba(255,255,255,0.2)_90deg,rgba(255,255,255,0.3)_180deg,rgba(255,255,255,0.1)_270deg)]"
-                  />
-                  <div
-                    class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4px_4px]"
-                  />
-
-                  <div class="flex items-start relative z-10">
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2 mb-2">
-                        <div
-                          class="w-2 h-2 rounded-full shadow-sm"
-                          :class="getGrammarRuleStyleClass(rule)"
-                        />
-                        <span
-                          class="text-xs font-semibold uppercase tracking-wide"
-                          :class="getTextColorClass(rule)"
-                          >Key Point</span
-                        >
-                      </div>
-                      <p
-                        class="text-sm text-slate-700 font-medium leading-relaxed"
-                      >
-                        <span>{{ (rule as any).highlights }}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </template>
             <template #details>
-              <!-- <button
-                    class="btn btn-sm btn-error btn-link rounded-lg cursor-pointer group mr-2"
-                    @click="router.push(`/learning/modules/${rule.id}`)"
-                  >
-                    <ArrowTrendingUpIcon class="h-4 w-4" />
-                    <span>Practice</span>
-              </button> -->
-              <div class="rounded-lg p-2"
-          >
-            <div class="flex items-center">
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                <span class="text-md font-medium text-gray-700"
-                  >37.5%</span
-                >
-              </div>
-              <span class="text-xs text-gray-600 ml-2"
-                >of correct answers</span
-              >
-            </div>
-          </div>
+                <div class="rounded-lg p-2">
+                  <div class="flex items-center">
+                    <div class="flex items-center gap-2">
+                      <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                      <span class="text-md font-medium text-gray-700"
+                        >{{ rule.score }}%</span
+                      >
+                    </div>
+                    <span class="text-xs text-gray-600 ml-2"
+                      >of correct answers</span
+                    >
+                  </div>
+                </div>
             </template>
-
             </LayoutKeyElementRuleOverview>
           </div>
-
           </div>
-          <!-- Table layout if necessary -->
-          <!-- <table class="table table-pin-rows table-pin-cols">
-            <thead>
-              <tr>
-                <th />
-                <th>Grammar Rule</th>
-                <th>Difficulty</th>
-                <th>Your progress</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(rule, n) in grammarRules">
-                <td>
-                  <div class="font-bold">{{ rule.id }}</div>
-                </td>
-                <td>
-                  <div
-                    class="flex group items-center gap-3 hover:cursor-pointer"
-                    @click="router.push(`/learning/modules/${rule.id}`)"
-                  >
-                    <div
-                      class="avatar group-hover:opacity-70 transition-opacity duration-300"
-                    >
-                      <div class="avatar avatar-placeholder">
-                        <div
-                          class="text-neutral-content w-10 h-10 rounded-xl font-semibold"
-                          :class="getGrammarRuleStyleClass(rule)"
-                        >
-                          <span class="text-xl">{{
-                            getGrammarRuleInitialLetters(rule.ruleName)
-                          }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="hover:cursor-pointer group-hover:opacity-70 transition-opacity duration-300"
-                    >
-                      <div class="font-bold">{{ rule.ruleName }}</div>
-                      <div class="text-sm opacity-50">
-                        {{ rule.ruleNameTranslation }}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <component :is="getLevelLabel(rule.difficultyClass)" />
-                </td>
-                <td>
-                  <div class="flex items-center">
-                    <progress
-                      class="progress text-base-400 w-56"
-                      :class="getProgressBarStyleClass(fakeProgressBar(n))"
-                      :value="fakeProgressBar(n)"
-                      max="100"
-                    />
-                    <div
-                      class="ml-2 font-bold"
-                      :class="getPercentageStyleClass(fakeProgressBar(n))"
-                    >
-                      {{ fakeProgressBar(n) }}%
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <button class="btn btn-ghost">
-                    <ArrowTrendingUpIcon
-                      class="h-5 w-5 font-bold text-black dark:text-white group-hover:text-white"
-                    />
-                  </button>
-                  <button
-                    class="btn btn-ghost"
-                    @click="router.push(`/learning/modules/${rule.id}`)"
-                  >
-                    <EyeIcon
-                      class="h-5 w-5 font-bold text-black dark:text-white group-hover:text-white"
-                    />
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table> -->
+
         </div>
       </div>
     </div>

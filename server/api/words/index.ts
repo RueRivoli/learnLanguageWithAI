@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getQuery } from "h3";
+import { createError, defineEventHandler, getHeader, getQuery } from "h3";
+import { createSupabaseClientWithUserAuthToken } from "../../utils/auth/supabaseClient";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -14,6 +15,16 @@ export default defineEventHandler(async (event) => {
   const to = (Number(page) * Number(size) - 1)
   let request
 
+  const authHeader = getHeader(event, 'authorization')
+  if (!authHeader) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authorization header required'
+    })
+  }
+  // Create Supabase client with user's auth token
+  const supabase = createSupabaseClientWithUserAuthToken(authHeader)
+  
   if (query.is_learned === 'true') {
     request = supabase
     .from("turkish_words")

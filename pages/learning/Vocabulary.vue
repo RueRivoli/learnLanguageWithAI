@@ -78,10 +78,14 @@ const {
 // Fetch data
 const getWordList = async () => {
   isLoadingFetchingWords.value = true;
+  const { data: { session } } = await useSupabaseClient().auth.getSession()
+  const headers: Record<string, string> = {}
+  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
   const { data } = await useFetch(
     `/api/words?page=${currentPage.value}&size=16`,
     {
       query: { is_learned: showLearnedWords.value },
+      headers,
       transform: ({
         data,
         count,
@@ -103,10 +107,14 @@ const getWordList = async () => {
 
 const getExpressionList = async () => {
   isLoadingFetchingExpressions.value = true;
+  const { data: { session } } = await useSupabaseClient().auth.getSession()
+  const headers: Record<string, string> = {}
+  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
   const { data: dataExpr } = await useFetch(
     `/api/expressions?page=${currentPageExpr.value}&size=10`,
     {
       query: { is_learned: showLearnedExpressions.value },
+      headers,
       transform: ({
         data,
         count,
@@ -280,7 +288,7 @@ const handleExpressionLearningStatus = async (
                 <input
                   v-model="showLearnedWords"
                   type="checkbox"
-                  checked="checked"
+                  checked
                   class="toggle toggle-primary"
                   @change="handleShowLearnWordsChange"
                 />
@@ -297,7 +305,7 @@ const handleExpressionLearningStatus = async (
                 <input
                   v-model="showLearnedExpressions"
                   type="checkbox"
-                  checked="checked"
+                  checked
                   class="toggle toggle-primary"
                   @change="handleShowLearnExpressionsChange"
                 />
@@ -437,7 +445,7 @@ const handleExpressionLearningStatus = async (
 
           <!-- Expressions Tab -->
           <div
-            v-if="activeVocabularyTab === 2"
+            v-else-if="activeVocabularyTab === 2"
             class="pt-6 h-full flex flex-col justify-between"
           >
             <!-- Loading Skeleton for Expressions -->
@@ -478,7 +486,7 @@ const handleExpressionLearningStatus = async (
             >
               <div
                 v-for="(expression, index) in expressions"
-                :key="expression.text"
+                :key="index"
                 class="group p-4 relative rounded-lg border hover:shadow-md transition-all duration-300 cursor-pointer"
                 :class="{
                   'ring-1 ring-primary/90 shadow-lg shadow-primary/10':
@@ -512,7 +520,7 @@ const handleExpressionLearningStatus = async (
             <LayoutTablePagination
               class="mt-2"
               :current-page="currentPageExpr"
-              :end-item="endItemExpr"
+              :end-item="endItem"
               :start-item="startItemExpr"
               :items-per-page="itemsPerPageExpr"
               :page-numbers="pageNumbersExpr"

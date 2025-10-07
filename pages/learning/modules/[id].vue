@@ -24,8 +24,14 @@ const getGrammarRule = async () => {
 
 const getlastQuizzes = async () => {
   console.log("grammarRuleId", route.params.id);
+  const { data: { session } } = await useSupabaseClient().auth.getSession()
+  const headers: Record<string, string> = {}
+  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
   const { data, error } = await useFetch(
     `/api/quizzes/rules/${route.params.id}`,
+    {
+      headers,
+    }
   );
   console.log("last quizzes", data.value);
   if (data) {
@@ -34,6 +40,7 @@ const getlastQuizzes = async () => {
       createdAt: created_at,
       score: score_global,
     }));
+    console.log("last quizzes 2", lastQuizzes.value);
     isLoading.value = false;
   }
 };

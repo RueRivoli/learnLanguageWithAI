@@ -15,9 +15,10 @@ const getAverageScore = async (score: number, id: string, ruleId: number) : Prom
   const { data: scores } = await supabase.from("turkish_quizzes_result").select("score_global").eq("user_id", id).eq("rule_id", ruleId);
   console.log('xxxxxx scores xxxxxxxxx', scores)
   const sumScores = scores.reduce((acc, curr) => acc + curr.score_global, 0)
-  return Math.floor((sumScores + score) / scores.length + 1)
+  return Math.floor((sumScores + score) / (scores.length + 1))
 }
 
+// Uncomment this function if you want to remember the quiz selection
 const rememberQuizSelection = async () => {
     // Remember quiz selections ??
     // const updateSelections = Object.keys(questionValues).map(async (key) => {

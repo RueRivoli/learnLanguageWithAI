@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {
   ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/vue/24/outline";
+
 const emit = defineEmits(["goToNextPage", "goToPage", "goToPreviousPage"]);
 
 const props = withDefaults(

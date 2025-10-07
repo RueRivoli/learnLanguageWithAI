@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
         await supabase.from(tableScores).insert({
           rule_id: i,
           user_id: userId,
-          score: 20,
+          score: 0,
         });
       }
   }

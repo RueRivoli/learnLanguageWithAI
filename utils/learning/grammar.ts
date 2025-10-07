@@ -195,7 +195,7 @@ export const parseRules = (modules: Array<Database['public']['Tables']['turkish_
       highlights: module.highlights,
       extendedDescription: module.extended_description,
       symbol: module.symbol,
-      score: module.turkish_grammar_scores,
+      score: module.turkish_grammar_scores[0].score,
       type: module.type,
       bookmarked: module.bookmarked,
     }))

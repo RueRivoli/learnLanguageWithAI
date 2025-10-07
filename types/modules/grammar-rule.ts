@@ -1,7 +1,7 @@
 import type { Database } from "~/supabase/types";
 
 export type GrammarRow = Database['public']['Tables']['turkish_grammar_rules']['Row']
-
+export type GrammarScoreRow = Database['public']['Tables']['turkish_grammar_scores']['Row']
 type GrammarRuleLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert'
 
 export type GrammarRuleMeta = {
@@ -26,5 +26,6 @@ export type GrammarRule = {
   symbol: GrammarRow['rule_name'];
   bookmarked: GrammarRow['bookmarked'];
   type: GrammarRow['type'];
+  score: GrammarScoreRow['score'];
 };
 
