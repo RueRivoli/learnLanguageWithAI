@@ -5,6 +5,8 @@ import {
 import {
   grammarLevelTabs,
   getGrammarRuleStyleClass,
+  getBorderStyleClassFromGrammarRuleLevel,
+  getTextStyleClassFromGrammarRuleLevel,
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { parseRules } from "~/utils/learning/grammar";
@@ -56,7 +58,6 @@ watchEffect(async () => {
       headers,
       query,
     });
-    console.log("grammarModules", grammarModules);
     if (grammarModules && Array.isArray(grammarModules))
       grammarRules.value = parseRules(grammarModules);
       console.log("test", grammarRules.value);
@@ -91,7 +92,7 @@ watchEffect(async () => {
         </div>
         <div class="h-full px-6 overflow-auto pb-3">
           <div
-            class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-2"
+            class="h-full grid grid-cols-1 cursor-pointer md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
             <!-- Loading Skeletons -->
             <template v-if="isFetchingGrammarRules">
@@ -159,11 +160,11 @@ watchEffect(async () => {
               </div>
             </template>
             <div v-else v-for="(rule, n) in grammarRules" :key="n" @click="router.push(`/learning/modules/${rule.id}`)">
-              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score">
+              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true">
                 <template #content>
                   <!-- Professional description box -->
                   <div v-if="(rule as any).highlights" class="mt-3 mb-4">
-                    <div class="relative rounded-xl p-4 bg-gradient-to-br from-emerald-50/80 via-green-50/70 to-teal-50/60 border border-emerald-200/50 shadow-sm overflow-hidden">
+                    <div class="relative rounded-xl p-4 shadow-sm overflow-hidden" :class="getBorderStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)">
                       <!-- Subtle texture overlay -->
                       <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
                       <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
@@ -172,11 +173,11 @@ watchEffect(async () => {
                       <div class="relative z-10">
                         <div class="flex items-center gap-2 mb-2">
                           <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
-                          <svg class="h-3 w-3 text-emerald-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
-                          <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                        </svg>
-                          <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">Key Point</span>
+                          <svg class="h-3 w-3" :class="getTextStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                          </svg>
+                          <span class="text-xs font-semibold uppercase tracking-wide" :class="getTextStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)">Key Point</span>
                         </div>
                         <p class="text-sm text-slate-700 font-medium leading-relaxed">
                           {{ (rule as any).highlights }}
@@ -184,7 +185,6 @@ watchEffect(async () => {
                       </div>
                     </div>
                   </div>
-
 
             </template>
             <template #details>

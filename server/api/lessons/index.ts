@@ -49,7 +49,8 @@ export default defineEventHandler(async (event) => {
           rule_name_translation,
           intro,
           description,
-          extended_description
+          extended_description,
+          symbol
         ),
         turkish_lesson_words (
           turkish_words (

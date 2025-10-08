@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { PencilSquareIcon } from "@heroicons/vue/24/outline";
 import {
-  BookOpenIcon,
-  LanguageIcon,
   PlayIcon,
   SparklesIcon,
-  ViewfinderCircleIcon,
 } from "@heroicons/vue/24/outline";
 import { generateAIPoweredStoryWithParameters, generateImageWithPrompt } from "~/utils/lesson-generation.ts/create";
 import { useUserStore } from "~/stores/user-store";
-import { getDifficultyNameSafe } from "~/utils/learning/grammar";
+import { getBorderStyleClassFromGrammarRuleLevel, getDifficultyNameSafe, getTextStyleClassFromGrammarRuleLevel } from "~/utils/learning/grammar";
 import type { WordMetadata } from "~/types/vocabulary/word";
 import type { ExpressionMetadata } from "~/types/vocabulary/expression";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
@@ -95,7 +92,6 @@ const getModulesWithLowScores = async () => {
           symbol: turkish_grammar_rules.symbol,
           score: score,
         })).sort((a, b) => a.level - b.level);
-        console.log("originalModulesData", originalModulesData.value);
         moduleOptions.value = modules.map(
           ({ rule_id, score, turkish_grammar_rules }) => ({
             value: rule_id,
@@ -295,32 +291,34 @@ const handleGenerateStory = async () => {
                 </template>
                 <template #content>
                   <div class="w-[60%] m-auto">
-                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule.name" :titleEn="targetedModule.nameEn" :symbol="targetedModule.symbol" :score="targetedModule.score" :darkerMode="true">
-                    <template #content>
-                      <!-- Professional description box -->
-                      <div v-if="targetedModule.highlights" class="mt-3 mb-4">
-                        <div class="relative rounded-xl p-4 bg-gradient-to-br from-emerald-50/80 via-green-50/70 to-teal-50/60 border border-emerald-200/50 shadow-sm overflow-hidden">
-                          <!-- Subtle texture overlay -->
-                          <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
-                          <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
-                          
-                          <!-- Content -->
-                          <div class="relative z-10">
-                            <div class="flex items-center gap-2 mb-2">
-                              <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
-                              <svg class="h-3 w-3 text-emerald-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
-                              <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                            </svg>
-                              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">Key Point</span>
-                            </div>
-                            <p class="text-sm text-slate-700 font-medium leading-relaxed">
-                              {{ targetedModule.highlights }}
-                            </p>
-                          </div>
+                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule.name" :titleEn="targetedModule.nameEn" :symbol="targetedModule.symbol" :score="targetedModule.score" :level="targetedModule.level" :lightMode="true">
+                      <template #content>
+                  <!-- Professional description box -->
+                  <div v-if="targetedModule.highlights" class="mt-3 mb-4">
+                    <div class="relative rounded-xl p-4 shadow-sm overflow-hidden" :class="getBorderStyleClassFromGrammarRuleLevel(targetedModule.level ?? 0)">
+                      <!-- Subtle texture overlay -->
+                      <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
+                      <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
+                      
+                      <!-- Content -->
+                      <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-2">
+                          <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
+                          <svg class="h-3 w-3" :class="getTextStyleClassFromGrammarRuleLevel(targetedModule.level ?? 0)" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                          </svg>
+                          <span class="text-xs font-semibold uppercase tracking-wide" :class="getTextStyleClassFromGrammarRuleLevel(targetedModule.level ?? 0)">Key Point</span>
                         </div>
+                        <p class="text-sm text-slate-700 font-medium leading-relaxed">
+                          {{ targetedModule.highlights }}
+                        </p>
                       </div>
+                    </div>
+                  </div>
                 </template>
+
+                
                 <template #details>
               <div class="rounded-lg p-2"
           >

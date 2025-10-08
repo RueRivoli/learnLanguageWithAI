@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { EyeIcon, TrashIcon, DocumentIcon } from "@heroicons/vue/24/outline";
 
-import { DIFFICULTY_LEVELS, getDifficultyNameSafe } from "~/utils/learning/grammar";
+import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 definePageMeta({
   layout: "authenticated",
 });
@@ -54,9 +54,6 @@ watchEffect(async () => {
 const handleDeleteLesson = async () => {
   isDeletingLesson.value = true;
   if (lessonNameToDelete.value?.id) {
-    console.log("lessonId");
-    
-    // Get the current session for authentication
     const { data: { session } } = await useSupabaseClient().auth.getSession()
     const headers: Record<string, string> = {}
     if (session?.access_token) {
@@ -185,10 +182,10 @@ const handleCancel = () => {
                       @click="router.push(`/learning/lessons/${lesson.id}`)"
                     >
                       <div class="hover:cursor-pointer">
-                        <div class="text-md font-serif tracking-tight font-semibold text-slate-800 tracking-wide">
+                        <div class="text-md tracking-tight font-semibold text-slate-800 tracking-wide">
                           {{ lesson.title }}
                         </div>
-                        <div class="text-sm font-light text-slate-600 italic">
+                        <div class="text-sm font-light text-slate-600">
                           {{ lesson.title_en }}
                         </div>
                       </div>
@@ -196,8 +193,8 @@ const handleCancel = () => {
                   </td>
                   <td>
                       <div class="flex items-center hover:cursor-pointe">
-                        <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name_translation" :level="getDifficultyNameSafe(lesson.turkish_grammar_rules.difficulty_class)" size="xs"/>
-                        <LayoutKeyElementQuizBadge score="80" size="xs"/>
+                        <LayoutKeyElementRuleBadgeTest class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
+                        <!-- <LayoutKeyElementQuizBadge score="80" size="xs"/> -->
                       </div>
                     </td>
                   <td class="px-4 py-3">

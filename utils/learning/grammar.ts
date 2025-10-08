@@ -108,16 +108,51 @@ export function getLevelLabel(level: RuleDifficulty): VNode {
 //   }
 // }
 
-export function getGrammarRuleInitialLetters(level: string): string {
-  const words = level.split(" ");
-  let initials = "";
-  let i = 0;
-  while (i < 3 && words[i]) {
-    initials += words[i].charAt(0).toUpperCase();
-    i += 1;
+export function getTextStyleClassFromGrammarRuleLevel(level: number): string {
+  switch (level) {
+    case RuleDifficulty.BEGINNER:
+      return "text-success";
+    case RuleDifficulty.INTERMEDIATE:
+      return "text-warning";
+    case RuleDifficulty.ADVANCED:
+      return "text-error";
+    case RuleDifficulty.EXPERT:
+      return "text-neutral";  
+    default:
+      return "text-neutral";  
   }
-  return initials;
 }
+
+export function getBorderStyleClassFromGrammarRuleLevel(level: number): string {
+  switch (level) {
+    case RuleDifficulty.BEGINNER:
+      return "border border-rounded border-success";
+    case RuleDifficulty.INTERMEDIATE:
+      return "border border-rounded border-warning";
+    case RuleDifficulty.ADVANCED:
+      return "border border-rounded border-error";
+    case RuleDifficulty.EXPERT:
+      return "border border-rounded border-neutral";  
+    default:
+      return "border border-rounded border-neutral";
+  }
+}
+
+export function getBackgroundClassFromGrammarRuleLevel(level: number): string {
+  switch (level) {
+    case RuleDifficulty.BEGINNER:
+      return "bg-success";
+    case RuleDifficulty.INTERMEDIATE:
+      return "bg-warning";
+    case RuleDifficulty.ADVANCED:
+      return "bg-error";
+    case RuleDifficulty.EXPERT:
+      return "bg-neutral";
+    default:
+      return "bg-neutral";
+  }
+}
+
 
 export function getGrammarRuleStyleClass(rule: GrammarRule): string {
   switch (rule.difficultyClass) {
