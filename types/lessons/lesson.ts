@@ -4,6 +4,7 @@ export type Lesson = {
     titleEn: string;
     introduction?: string;
     imgUrl?: string;
+    symbol?: string;
     quizId?: number;
     level: number;
     grammarRuleId?: number;

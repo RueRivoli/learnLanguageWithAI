@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOpenIcon, CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { LanguageIcon } from "@heroicons/vue/24/solid";
 
 import {
   getClassWordRole,
@@ -232,7 +232,7 @@ const handleExpressionLearningStatus = async (
               title="Vocabulary"
               description="Most Common Words and Expressions"
             >
-              <BookOpenIcon class="h-6 w-6 text-primary" />
+              <LanguageIcon class="h-6 w-6 text-primary" />
             </LayoutHeadingPlus>
 
             <!-- Tab Navigation -->
@@ -370,7 +370,7 @@ const handleExpressionLearningStatus = async (
             <!-- <div
                 class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center"
               >
-                <BookOpenIcon class="h-8 w-8 text-gray-400" />
+                <LanguageIcon class="h-8 w-8 text-gray-400" />
               </div> -->
             <!-- <h3 class="text-lg font-medium text-gray-900 mb-2">
                 {{ searchQuery ? "No words found" : "No words available" }}

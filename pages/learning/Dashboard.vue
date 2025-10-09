@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Database } from "~/supabase/types";
-import { ChartBarIcon } from "@heroicons/vue/24/outline";
+import { ChartBarIcon } from "@heroicons/vue/24/solid";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
 import { dashboardCategoryTabs } from "~/utils/dashboard/tabs";

@@ -236,7 +236,7 @@ const handleGenerateStory = async () => {
     <!-- Header Section -->
     <div class="text-center mb-20">
       <div class="inline-flex items-center gap-3 mb-8">
-        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/25">
           <SparklesIcon class="w-6 h-6 text-white" />
         </div>
         <div class="h-8 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>

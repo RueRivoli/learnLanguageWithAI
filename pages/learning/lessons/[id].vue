@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { Lesson } from "~/types/lessons/lesson";
 import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/solid";
-import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import { lessonUpdateBus } from "~/composables/useLessonUpdates";
 
@@ -258,7 +256,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
                     </button>
                    
-                    <LayoutKeyElementRuleBadge :title="lesson?.grammarRuleNameEn" :level="getDifficultyNameSafe(lesson?.level)" size="sm"  @click="isStoryShown = false"/>
+                    <LayoutKeyElementRuleBadge :titleEn="lesson?.grammarRuleNameEn" :level="lesson?.level" size="sm"  :symbol="lesson?.symbol" :lightMode="true" @click="isStoryShown = false"/>
                     <LayoutKeyElementQuizBadge v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
                   <label class="flex items-center gap-3 cursor-pointer group">
@@ -386,7 +384,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               </LayoutKeyElementWordCard>
               
                <!-- Key Expressions Section -->
-              <LayoutKeyElementExpressionCard class="mt-2" title="Key Expressions">
+              <LayoutKeyElementExpressionCard class="mt-8" title="Key Expressions">
                 <template #top-right-corner>
                 <label class="flex items-center gap-3 cursor-pointer group">
                     <span class="text-md text-slate-600 group-hover:text-expression transition-colors">

@@ -42,7 +42,9 @@ export default defineEventHandler(async (event) => {
         id,
         title,
         title_en,
+        img_url,
         user_id,
+        quiz_id,
         turkish_grammar_rules (
           difficulty_class,
           rule_name,
@@ -59,6 +61,9 @@ export default defineEventHandler(async (event) => {
             word_sentence,
             word_sentence_translation
           )
+        ),
+        turkish_quizzes_result (
+          score_global
         )
       `).order('created_at', {ascending: false})
       .range(from, to)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
   Square2StackIcon,
-} from "@heroicons/vue/24/outline";
+} from "@heroicons/vue/24/solid";
 import {
   grammarLevelTabs,
   getGrammarRuleStyleClass,

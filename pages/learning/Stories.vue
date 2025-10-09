@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { EyeIcon, TrashIcon, DocumentIcon } from "@heroicons/vue/24/outline";
+import { EyeIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { DocumentIcon } from "@heroicons/vue/24/solid";
 
-import { getDifficultyNameSafe } from "~/utils/learning/grammar";
 definePageMeta({
   layout: "authenticated",
 });
@@ -40,7 +40,7 @@ const fetchLessons = async () => {
   );
   if (results.error) throw results.error;
   else if (results) {
-    lessons.value = results?.dataResult.data || [];
+    lessons.value = results?.dataResult.data.map(({title_en, img_url, ...lesson}) => ({ ...lesson, titleEn: title_en, imgUrl: img_url})) || [];
     count.value = results?.countResult.count || 0;
   }
   isFetchingData.value = false;
@@ -181,20 +181,22 @@ const handleCancel = () => {
                       class="flex items-center gap-3 hover:cursor-pointer"
                       @click="router.push(`/learning/lessons/${lesson.id}`)"
                     >
-                      <div class="hover:cursor-pointer">
+                      <LayoutHeadingLesson class="hover:cursor-pointer" :title="lesson.title" :titleEn="lesson.titleEn" :storyImgUrl="lesson.imgUrl" />
+                      <!-- <div class="hover:cursor-pointer">
                         <div class="text-md tracking-tight font-semibold text-slate-800 tracking-wide">
                           {{ lesson.title }}
                         </div>
                         <div class="text-sm font-light text-slate-600">
                           {{ lesson.title_en }}
-                        </div>
-                      </div>
+                        </div> 
+                      </div> -->
                     </div>
                   </td>
                   <td>
                       <div class="flex items-center hover:cursor-pointe">
-                        <LayoutKeyElementRuleBadgeTest class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
-                        <!-- <LayoutKeyElementQuizBadge score="80" size="xs"/> -->
+                        <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
+                        <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global" :score="lesson.turkish_quizzes_result.score_global" size="sm" :quizId="lesson.quiz_id" :filledOut="true"/>
+                        <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false"/>
                       </div>
                     </td>
                   <td class="px-4 py-3">

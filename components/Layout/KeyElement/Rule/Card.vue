@@ -22,7 +22,7 @@ const props = withDefaults(
        <div :class="[props.backgroundClasses ? `group relative rounded-md shadow-md border border-green-300/70 p-4 overflow-hidden ${props.backgroundClasses}` : 'group relative bg-gradient-to-br from-green-100/90 via-green-50/95 to-emerald-100/80 rounded-xl shadow-md border border-green-300/70 p-4 hover:border-green-400/80 overflow-hidden transition-all duration-300']">
         <div class="wrapper-header">
             <div class="wrapper-title">
-            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-md flex items-center justify-center mr-5 shadow-lg">
+            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mr-5 shadow-lg">
                 <ViewfinderCircleIcon class="h-6 w-6 text-white" />
                 </div>
                   <div>

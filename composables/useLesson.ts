@@ -37,12 +37,13 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       grammarRuleNameEn: rawData.turkish_grammar_rules.rule_name_translation,
       grammarRuleIntro: rawData.turkish_grammar_rules.intro,
       grammarRuleDescription: rawData.turkish_grammar_rules.description,
+      symbol: rawData.turkish_grammar_rules.symbol,
       grammarRuleExtendedDescription: rawData.turkish_grammar_rules.extended_description,
       introduction: rawData.introduction,
       grammarRuleId: rawData.grammar_rule_id,
       level: rawData.turkish_grammar_rules.difficulty_class,
-      imgUrl: rawData.img_url,
       quizId: rawData.quiz_id,
+      imgUrl: rawData.img_url,
       newWords: rawData.turkish_lesson_words
         ?.map((w: any) => w.turkish_words)
         ?.map(

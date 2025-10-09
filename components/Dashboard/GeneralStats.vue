@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { grammarLevelTabs } from "~/utils/learning/grammar";
-import { Square2StackIcon } from "@heroicons/vue/24/outline";
+import { Square2StackIcon } from "@heroicons/vue/24/solid";
 import { useUserScoreStore } from "~/stores/user-score-store";
 
 const userScoreStore = useUserScoreStore();
@@ -28,21 +28,14 @@ const currentInfo = computed(() => {
     >
       <div class="mb-4 flex items-center justify-between">
         <div class="flex">
-          <div class="flex-shrink-0">
-            <div class="relative">
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-gray-300/20 to-slate-300/20 rounded-lg blur-sm"
-              />
-              <div
-                class="relative p-2 bg-white rounded-lg shadow-lg border border-gray-200"
-              >
-                <Square2StackIcon class="h-5 w-5 text-gray-600" />
-              </div>
-            </div>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-900 ml-3 flex items-center">
+          <LayoutHeadingPlus
+            title="Progress on Modules"
+          >
+            <Square2StackIcon class="h-6 w-6 text-primary" />
+          </LayoutHeadingPlus>
+          <!-- <h3 class="text-lg font-semibold text-gray-900 ml-3 flex items-center">
             Progress on Modules
-          </h3>
+          </h3> -->
         </div>
         <LayoutTabs
           :first-tab="grammarLevelTabs.firstTab"

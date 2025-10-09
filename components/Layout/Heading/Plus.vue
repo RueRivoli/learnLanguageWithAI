@@ -23,10 +23,10 @@ const props = withDefaults(
       <slot />
     </div>
     <div>
-      <h1 class="text-2xl font-bold" :class="props.textColor">
+      <h1 class="text-2xl font-semibold" :class="props.textColor">
         {{ props.title }}
       </h1>
-      <p :class="props.descriptionTextColor">{{ props.description }}</p>
+      <p v-if="props.description" :class="props.descriptionTextColor">{{ props.description }}</p>
     </div>
   </div>
 </template>
