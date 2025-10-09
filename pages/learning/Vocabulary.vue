@@ -43,30 +43,29 @@ const isLoadingFetchingExpressions = ref(true);
 
 const countWords = ref<number>(0);
 const countExpr = ref<number>(0);
+const itemsPerPage = ref(28);
 const {
   currentPage,
   endItem,
   goToNextPage,
   goToPage,
   goToPreviousPage,
-  itemsPerPage,
   pageNumbers,
   startItem,
   totalItems,
   totalPages,
-} = usePagination(countWords);
+} = usePagination(countWords, itemsPerPage);
 
 const {
   currentPage: currentPageExpr,
   goToNextPage: goToNextPageExpr,
   goToPage: goToPageExpr,
   goToPreviousPage: goToPreviousPageExpr,
-  itemsPerPage: itemsPerPageExpr,
   pageNumbers: pageNumbersExpr,
   startItem: startItemExpr,
   totalItems: totalItemsExpr,
   totalPages: totalPagesExpr,
-} = usePagination(countExpr);
+} = usePagination(countExpr, itemsPerPage);
 
 // {
 //   query: { is_learned: showLearnedWords.value },

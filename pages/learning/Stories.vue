@@ -11,18 +11,18 @@ const count = ref<number>(0);
 const lessonNameToDelete = ref<{ title: string; id: number } | null>(null);
 const isFetchingData = ref(false);
 const isDeletingLesson = ref(false);
+const itemsPerPage = ref(10);
 const {
   currentPage,
   endItem,
   goToNextPage,
   goToPage,
   goToPreviousPage,
-  itemsPerPage,
   pageNumbers,
   startItem,
   totalItems,
   totalPages,
-} = usePagination(count);
+} = usePagination(count, itemsPerPage);
 
 const fetchLessons = async () => {
   isFetchingData.value = true;
