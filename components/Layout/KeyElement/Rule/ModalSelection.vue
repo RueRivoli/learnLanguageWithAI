@@ -113,11 +113,11 @@ const handleApplySelection = () => {
         </LayoutKeyElementRuleOption>
     </div>
     <div class="modal-action">
-            <button class="w-40 bg-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50" @click="$emit('cancel')">
+            <button class="bg-secondary cursor-pointer font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50" @click="$emit('cancel')">
               <span>Cancel</span>
             </button>
             <button
-              class="w-40 bg-primary text-white cursor-pointer hover:bg-primary/90 font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              class="bg-primary text-white cursor-pointer hover:bg-primary/90 font-medium px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
               @click="handleApplySelection"
             >
             <CheckIcon

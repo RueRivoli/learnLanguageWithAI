@@ -216,10 +216,9 @@ const grammarClass = computed(() => {
                     <div class="chart-details">
                         <div>
                             <div class="chart-stat">
-                            <div class="stat-label mb-1">Rule:</div>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
+                            <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" :light-mode="true" size="sm" :prefix="false" />
                         </div>
                         </div>
  
@@ -420,20 +419,20 @@ const grammarClass = computed(() => {
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <div v-for="expression in props.detailedResults.expressions.validatedList" :key="expression">
-                     <LayoutKeyElementExpressionBadgeBadge :text="expression.text" :isMastered="expression.isMastered"/>
+                     <LayoutKeyElementExpressionBadge :text="expression.text" :isMastered="expression.isMastered" :light-mode="true"/>
                     </div>
                   </div>
                     </div>
 
                     <div>
                         <div class="chart-stat">
-                    <span class="stat-label mb-1">Invalidated:</span><span class="stat-value expressions-gradient">{{ props.detailedResults.expressions.invalidatedList.length }}</span>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <div v-for="expression in props.detailedResults.expressions.invalidatedList" :key="expression">
-                        <LayoutKeyElementExpression :text="expression.text" :isMastered="expression.isMastered"/>
-                    </div>
-                  </div>
+                            <div class="stat-label mb-1">Invalidated:</div><span class="stat-value expressions-gradient">{{ props.detailedResults.expressions.invalidatedList.length }}</span>
+                        </div>
+                      <div class="flex flex-wrap gap-2">
+                        <div v-for="expression in props.detailedResults.expressions.invalidatedList" :key="expression">
+                            <LayoutKeyElementExpressionBadge :text="expression.text" :isMastered="expression.isMastered" :light-mode="true"/>
+                        </div>
+                      </div>
                 </div>
                 <div>
                     <div class="chart-stat">

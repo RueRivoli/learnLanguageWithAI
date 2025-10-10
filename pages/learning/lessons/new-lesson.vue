@@ -201,7 +201,8 @@ const handleCancelModal = () => {
 
 const handleGenerateStory = async () => {
   let newLesson;
-  if (userStore.$state.tokensAvailable < 10) {
+  console.log("userStore.$state.tokensAvailable", userStore.$state.tokensAvailable);
+  if (userStore.$state.tokensAvailable < 1) {
     my_modal_to_get_tokens.showModal();
     return;
   }

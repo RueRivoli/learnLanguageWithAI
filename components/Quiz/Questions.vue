@@ -173,13 +173,14 @@ const handleReturnToSubject = () => {
     <!-- Progress Sidebar - Calendar Style -->
     <div class="progress-sidebar">
       <div class="sidebar-header">
-        <h3 class="sidebar-title">Progress</h3>
+        <h3 class="sidebar-title">Quiz Progress</h3>
       </div>
 
       <div class="progress-section">
-        <div class="flex items-center justify-between">
+        <div class="">
+          <LayoutKeyElementRuleBadge class="w-48 mb-2" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" size="xs" :lightMode="true"/>
           <h4 class="progress-title">Grammar</h4>
-          <LayoutKeyElementRuleBadge class="ml-2 mb-4" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" size="xs" :lightMode="true"/>
+
         </div>
         
         <!-- Grammar Score -->

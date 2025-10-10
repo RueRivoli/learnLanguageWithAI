@@ -1,10 +1,6 @@
 import { defineEventHandler, getHeader, createError } from 'h3';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SERVICE_SUPABASE_KEY!,
-);
 
 export default defineEventHandler(async (event) => {
   const authHeader = getHeader(event, 'authorization');
@@ -27,7 +23,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 401, statusMessage: 'Invalid user' });
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAuth
     .from('profiles')
     .select('tokens_available, tokens_purchased_total, last_token_purchase_date')
     .eq('id', user.id)
@@ -36,9 +32,9 @@ export default defineEventHandler(async (event) => {
   if (error) throw error;
   
   return {
+    lastTokenPurchaseDate: data?.last_token_purchase_date,
     tokensAvailable: data?.tokens_available || 0,
     tokensPurchasedTotal: data?.tokens_purchased_total || 0,
-    lastTokenPurchaseDate: data?.last_token_purchase_date,
   };
 });
 
