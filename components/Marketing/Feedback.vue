@@ -22,11 +22,6 @@ const faqs = [
     answer: "The cost is 12 euros/month. 8euros/month if engaged for one year.",
   },
   {
-    question: "How can I cancel my subscription ?",
-    answer:
-      "If not subscribed for the year, you can cancel your subscription anytime.",
-  },
-  {
     question: "Can I get a refund ?",
     answer:
       "If you're not satisfied with the platform, you can request a refund anytime by contacting us.",

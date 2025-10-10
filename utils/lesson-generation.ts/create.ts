@@ -13,7 +13,9 @@ const generateStory = async (userId: string, ruleId: number, prompt: string, wor
   const { data } = await useFetch("/api/generation/story/gpt", {
     method: 'POST',
     headers,
-    body: { message: prompt, ruleId, wordIds, expressionIds}
+    body: { 
+      message: prompt, ruleId, wordIds, expressionIds 
+    }
    })
    console.log('X', data.value)
    if (data && data.value) return data.value

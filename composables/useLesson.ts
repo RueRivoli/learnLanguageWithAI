@@ -26,7 +26,8 @@ export const useLesson = (lessonId: string | Ref<string>) => {
 
   // Transform function to map API response to Lesson type
   const transformLessonData = (rawData: any): Lesson => {
-    return {
+    // @ts-expect-error - lessonMapping includes all sentence fields dynamically
+    const result = {
       ...Object.fromEntries(
         Object.entries(lessonMapping).map(([sourceKey, targetKey]) => [
           targetKey,
@@ -102,6 +103,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
           })
         ) || []
     };
+    return result as Lesson;
   };
 
   // Fetch grammar rule
@@ -125,6 +127,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
   };
 
   // Main lesson fetching function using useAsyncData for best practices
+  // @ts-expect-error - Complex type inference with useAsyncData transform and watch options
   const { data: lessonData, error: fetchError, refresh: refreshLesson, pending } = useAsyncData(
     `lesson-${reactiveLessonId.value}`,
     async () => {
@@ -139,9 +142,6 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       return lessonData;
     },
     {
-      // Key changes when lessonId changes - automatically refetches
-      key: computed(() => `lesson-${reactiveLessonId.value}`),
-      
       // Transform the data
       transform: (rawData: any) => {
         const transformedLesson = transformLessonData(rawData);
@@ -164,10 +164,17 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       // Server-side rendering
       server: true,
       
-      // Client-side hydration
-      client: true,
+      // Watch changes to lessonId
+      watch: [reactiveLessonId],
     }
   );
+
+  // Watch for pending state - update isLoading immediately
+  watch(pending, (isPending) => {
+    if (isPending) {
+      isLoading.value = true;
+    }
+  }, { immediate: true });
 
   // Watch for lesson data changes and fetch grammar rule
   watch(lessonData, async (newLesson) => {
@@ -176,7 +183,10 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       await fetchGrammarRule(newLesson.grammarRuleId);
     }
     lesson.value = newLesson;
-    isLoading.value = false;
+    // Only set loading to false when we actually have lesson data
+    if (newLesson) {
+      isLoading.value = false;
+    }
   }, { immediate: true });
 
   // Watch for fetch errors
@@ -187,11 +197,6 @@ export const useLesson = (lessonId: string | Ref<string>) => {
     } else {
       error.value = null;
     }
-  });
-
-  // Watch for pending state
-  watch(pending, (isPending) => {
-    isLoading.value = isPending;
   });
 
   // Manual refresh function

@@ -6,10 +6,11 @@ import {
 } from "@heroicons/vue/24/outline";
 import { generateAIPoweredStoryWithParameters, generateImageWithPrompt } from "~/utils/lesson-generation.ts/create";
 import { useUserStore } from "~/stores/user-store";
-import { getBorderStyleClassFromGrammarRuleLevel, getDifficultyNameSafe, getTextStyleClassFromGrammarRuleLevel } from "~/utils/learning/grammar";
+import { getBorderStyleClassFromGrammarRuleLevel, getTextStyleClassFromGrammarRuleLevel } from "~/utils/learning/grammar";
 import type { WordMetadata } from "~/types/vocabulary/word";
 import type { ExpressionMetadata } from "~/types/vocabulary/expression";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
+import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 
 definePageMeta({
   layout: "authenticated",
@@ -200,6 +201,10 @@ const handleCancelModal = () => {
 
 const handleGenerateStory = async () => {
   let newLesson;
+  if (userStore.$state.tokensAvailable < 10) {
+    my_modal_to_get_tokens.showModal();
+    return;
+  }
   isGeneratingLesson.value = true;
   if (userId.value && targetedModule.value?.name) {
     newLesson = await generateAIPoweredStoryWithParameters(
@@ -208,15 +213,15 @@ const handleGenerateStory = async () => {
       targetedModule.value.name,
       wordList.value.slice(0, 10),
       expressionList.value.slice(0, 3),
-      targetedModule.value.level,
+      DIFFICULTY_LEVELS[targetedModule.value.level],
       10,
     );
     console.log("newLesson", newLesson);
     const promptForImageGeneration = newLesson.promptForImageGeneration;
     generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1");
+    router.push(`/learning/lessons/${String(newLesson.id)}`);
+    isGeneratingLesson.value = false;
   }
-  router.push(`/learning/lessons/${String(newLesson.id)}`);
-  isGeneratingLesson.value = false;
 };
 </script>
 
@@ -419,6 +424,11 @@ const handleGenerateStory = async () => {
             :moduleOptions="groupedModuleOptions"
             :initialModuleSelectedId="initialModuleSelectedId"
             @apply-selection="(newModuleId: number) => handleModuleSelectionChange(newModuleId)"
+            @cancel="handleCancelModal"
+          />
+          <AccountPaymentModal
+            id="my_modal_to_get_tokens"
+            :key="openingModalId"
             @cancel="handleCancelModal"
           />
   </div>

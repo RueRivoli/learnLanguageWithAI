@@ -78,5 +78,8 @@ const handleDeleteSelectedItem = (text: string) => {
             </button>
       </div>
     </div>
+    <form method="dialog" class="modal-backdrop">
+      <button @click="$emit('cancel')">close</button>
+    </form>
   </dialog>
 </template>

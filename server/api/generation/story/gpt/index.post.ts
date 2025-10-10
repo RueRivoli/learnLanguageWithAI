@@ -173,6 +173,7 @@ export default defineEventHandler(async (event) => {
       .single();
 
     if (!profile || (profile.tokens_available || 0) < 1) {
+      console.log('Insufficient tokens. Please purchase more tokens to generate stories.');
       throw new Error('Insufficient tokens. Please purchase more tokens to generate stories.');
     }
 
@@ -190,7 +191,7 @@ export default defineEventHandler(async (event) => {
         ],
         response_format: lessonFormat,
         temperature: 0.7,
-        max_tokens: 1000
+        max_tokens: 2000
       })
     })
     const json = await result.json()

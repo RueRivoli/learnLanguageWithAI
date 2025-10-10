@@ -18,7 +18,7 @@ const props = withDefaults(
     title: "",
   },
 );
-const emit = defineEmits(["applySelection"]);
+const emit = defineEmits(["applySelection", "cancel"]);
 const activeDifficultyLevelTab = ref(1);
 const selectedRuleId = ref<number | null>(null);
 const moduleSelection = ref<Record<number,boolean>>({})
@@ -127,5 +127,8 @@ const handleApplySelection = () => {
             </button>
         </div>
   </div>
+  <form method="dialog" class="modal-backdrop">
+    <button @click="emit('cancel')">close</button>
+  </form>
   </dialog>
 </template>

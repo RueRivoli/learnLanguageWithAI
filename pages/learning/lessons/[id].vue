@@ -64,72 +64,153 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
         <div
           class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/50 overflow-hidden"
         >
-          <div v-if="isLoading" class="w-full p-8">
-            <!-- Lesson Header Skeleton -->
-            <div class="mb-8">
-              <!-- Breadcrumbs Skeleton -->
-              <div class="mb-6 flex items-center gap-2">
-                <div class="h-4 bg-gray-200 rounded w-16 animate-pulse" />
-                <div class="h-4 bg-gray-200 rounded w-4 animate-pulse" />
-                <div class="h-4 bg-gray-200 rounded w-20 animate-pulse" />
-              </div>
+          <div v-if="isLoading || !lesson" class="w-full space-y-8 p-6 bg-gradient-to-b from-slate-50/30 to-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-2xl shadow-slate-200/50 animate-fade-in">
+            <!-- Title Section Skeleton -->
+            <div class="text-center space-y-4">
+              <div class="h-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-3/4 mx-auto animate-shimmer-bg" />
+              <div class="h-8 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-1/2 mx-auto animate-shimmer-bg animation-delay-200" />
+              <div class="w-32 h-0.5 bg-gradient-to-r from-blue-200 via-indigo-300 to-purple-200 mx-auto rounded-full animate-pulse" />
+            </div>
 
-              <!-- Title Skeleton -->
-              <div class="text-center mb-8">
-                <div class="bg-gray-100 rounded-xl p-6 border border-gray-200">
-                  <div
-                    class="h-8 bg-gray-200 rounded w-3/4 mx-auto mb-3 animate-pulse"
-                  />
-                  <div
-                    class="h-6 bg-gray-200 rounded w-1/2 mx-auto animate-pulse"
-                  />
-                </div>
-              </div>
-
-              <!-- Controls Skeleton -->
-              <div
-                class="flex items-center justify-between bg-gray-50/50 rounded-xl p-4 border border-gray-200/50"
-              >
-                <div class="flex-1">
-                  <div class="flex gap-4">
-                    <div class="h-8 bg-gray-200 rounded w-24 animate-pulse" />
-                    <div class="h-8 bg-gray-200 rounded w-24 animate-pulse" />
+            <!-- Picture and Introduction Side by Side Skeleton -->
+            <div class="flex gap-8 items-start">
+              <!-- Left Side - Image Skeleton -->
+              <div class="flex-shrink-0 w-96">
+                <div class="relative">
+                  <div class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 animate-shimmer-bg overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="flex flex-col items-center gap-4">
+                        <!-- Image icon skeleton -->
+                        <div class="w-20 h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-2xl animate-pulse flex items-center justify-center">
+                          <svg class="w-10 h-10 text-gray-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <!-- Loading text -->
+                        <div class="space-y-2">
+                          <div class="h-4 bg-gray-300 rounded-full w-32 animate-pulse" />
+                          <div class="h-3 bg-gray-300 rounded-full w-24 mx-auto animate-pulse animation-delay-300" />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Shimmer overlay effect -->
+                    <div class="absolute inset-0 shimmer-overlay"></div>
                   </div>
                 </div>
-                <div class="flex items-center gap-3">
-                  <div class="h-4 bg-gray-200 rounded w-32 animate-pulse" />
-                  <div class="h-6 bg-gray-200 rounded w-12 animate-pulse" />
+              </div>
+
+              <!-- Right Side - Introduction Skeleton -->
+              <div class="flex-1">
+                <div class="relative p-6">
+                  <!-- Decorative background elements -->
+                  <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/30 to-indigo-100/20 rounded-full blur-2xl -translate-y-16 translate-x-16 animate-pulse" />
+                  <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/25 to-pink-100/15 rounded-full blur-xl translate-y-12 -translate-x-12 animate-pulse animation-delay-500" />
+                  
+                  <!-- Content -->
+                  <div class="relative z-10">
+                    <!-- Heading skeleton -->
+                    <div class="flex items-center gap-3 mb-6">
+                      <div class="w-1 h-8 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-full animate-pulse" />
+                      <div class="h-7 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-40 animate-shimmer-bg" />
+                    </div>
+                    
+                    <!-- Text lines skeleton -->
+                    <div class="space-y-3">
+                      <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-full animate-shimmer-bg" />
+                      <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-11/12 animate-shimmer-bg animation-delay-200" />
+                      <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-10/12 animate-shimmer-bg animation-delay-400" />
+                      <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-9/12 animate-shimmer-bg animation-delay-600" />
+                    </div>
+                    
+                    <!-- Decorative bottom accent -->
+                    <div class="mt-6 flex justify-center">
+                      <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-300 to-transparent rounded-full animate-pulse" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- Content Skeleton -->
-            <div
-              class="bg-white rounded-xl p-8 border border-gray-100 shadow-sm"
-            >
-              <div class="space-y-6">
-                <!-- Sentence Skeletons -->
-                <div
-                  v-for="i in 5"
-                  :key="i"
-                  class="group rounded-lg p-4 border border-gray-100"
-                >
-                  <!-- Turkish Sentence Skeleton -->
-                  <div class="mb-3">
-                    <div class="h-6 bg-gray-200 rounded w-full animate-pulse" />
+            <!-- Story Section Skeleton -->
+            <div class="w-full">
+              <div class="p-3">
+                <!-- Header with controls -->
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50">
+                  <div class="flex items-center gap-4">
+                    <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-20 animate-shimmer-bg" />
+                    <div class="h-8 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 rounded-full w-24 animate-shimmer-bg animation-delay-300" />
                   </div>
-                  <!-- English Translation Skeleton -->
-                  <div class="border-l-4 border-gray-200 pl-4 py-2">
-                    <div class="h-5 bg-gray-200 rounded w-3/4 animate-pulse" />
+                  <div class="flex items-center gap-3">
+                    <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded w-32 animate-shimmer-bg" />
+                    <div class="h-6 w-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-full animate-shimmer-bg animation-delay-200" />
+                  </div>
+                </div>
+
+                <!-- Sentences Skeleton -->
+                <div class="space-y-4">
+                  <div
+                    v-for="i in 6"
+                    :key="i"
+                    class="group relative border border-gray-100 hover:border-blue-100 rounded-xl p-4 transition-all duration-300"
+                  >
+                    <!-- Original Sentence Skeleton -->
+                    <div class="mb-2">
+                      <div 
+                        class="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg animate-shimmer-bg"
+                        :style="{ width: `${Math.random() * 20 + 80}%`, animationDelay: `${i * 100}ms` }"
+                      />
+                    </div>
+                    <!-- Translation Skeleton -->
+                    <div class="pl-4 border-l-2 border-gray-200">
+                      <div 
+                        class="h-5 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-lg animate-shimmer-bg animation-delay-200"
+                        :style="{ width: `${Math.random() * 15 + 70}%` }"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <!-- Action Button Skeleton -->
-              <div class="mt-8 text-center">
-                <div
-                  class="h-12 bg-gray-200 rounded-lg w-64 mx-auto animate-pulse"
-                />
+            <!-- Key Words Section Skeleton -->
+            <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20">
+              <div class="flex justify-between items-center mb-6">
+                <div class="h-7 bg-gradient-to-r from-primary/30 via-primary/40 to-primary/30 rounded-lg w-32 animate-shimmer-bg" />
+                <div class="flex items-center gap-2">
+                  <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded w-28 animate-shimmer-bg" />
+                  <div class="h-6 w-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-full animate-shimmer-bg animation-delay-200" />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div v-for="i in 4" :key="i" class="bg-white/80 rounded-xl p-4 border border-primary/10">
+                  <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-3/4 mb-3 animate-shimmer-bg" :style="{ animationDelay: `${i * 100}ms` }" />
+                  <div class="h-4 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-lg w-full animate-shimmer-bg animation-delay-300" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Expressions Section Skeleton -->
+            <div class="bg-gradient-to-br from-expression/5 to-expression/10 rounded-2xl p-6 border border-expression/20">
+              <div class="flex justify-between items-center mb-6">
+                <div class="h-7 bg-gradient-to-r from-expression/30 via-expression/40 to-expression/30 rounded-lg w-40 animate-shimmer-bg" />
+                <div class="flex items-center gap-2">
+                  <div class="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded w-28 animate-shimmer-bg" />
+                  <div class="h-6 w-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-full animate-shimmer-bg animation-delay-200" />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div v-for="i in 4" :key="i" class="bg-white/80 rounded-xl p-4 border border-expression/10">
+                  <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-4/5 mb-3 animate-shimmer-bg" :style="{ animationDelay: `${i * 150}ms` }" />
+                  <div class="h-4 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-lg w-full animate-shimmer-bg animation-delay-300" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Button Skeleton -->
+            <div class="p-8">
+              <div class="w-80 h-12 bg-gradient-to-r from-primary/40 via-primary/50 to-primary/40 rounded-lg mx-auto animate-shimmer-bg flex items-center justify-center gap-2">
+                <div class="w-5 h-5 rounded-full border-3 border-white/30 border-t-white/70 animate-spin" />
+                <div class="h-5 bg-white/30 rounded w-48" />
               </div>
             </div>
           </div>
@@ -151,26 +232,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               <div id="picture" class="flex-shrink-0 w-96">
                 <div class="relative">
                   <div class="absolute -inset-4"></div>
-                  <!-- Skeleton placeholder -->    
+                  <!-- No image state - image being generated -->
                   <div 
-                    v-if="isLoading"
-                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"
-                  >
-                    <div class="absolute inset-0 flex items-center justify-center">
-                      <div class="flex flex-col items-center gap-4">
-                        <!-- Skeleton icon -->
-                        <div class="w-16 h-16 bg-gray-300 rounded-lg animate-pulse"></div>
-                        <!-- Skeleton text lines -->
-                        <div class="space-y-2">
-                          <div class="h-4 bg-gray-300 rounded w-24 animate-pulse"></div>
-                          <div class="h-3 bg-gray-300 rounded w-16 animate-pulse"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>              
-                  <!-- No image state -->
-                  <div 
-                    v-else-if="!imageUrl && !isLoading"
+                    v-if="!imageUrl"
                     class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-50 to-gray-100"
                   >
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -191,7 +255,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   
                   <!-- Actual image -->
                   <img 
-                    v-else-if="imageUrl && !isLoading"
+                    v-else
                     :src="imageUrl" 
                     alt="Lesson illustration" 
                     class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
@@ -452,11 +516,67 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
   }
 }
 
+@keyframes shimmer-bg {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
 }
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
+}
+
+.animate-shimmer-bg {
+  background-size: 1000px 100%;
+  animation: shimmer-bg 2s infinite linear;
+}
+
+/* Shimmer overlay effect */
+.shimmer-overlay {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-slide 2s infinite;
+}
+
+@keyframes shimmer-slide {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Animation delays for staggered effects */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
 }
 </style>

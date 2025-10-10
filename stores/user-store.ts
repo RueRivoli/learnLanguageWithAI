@@ -21,7 +21,7 @@ export const useUserStore = defineStore("user", {
     };
   },
   getters: {
-    getInitials(state: User): string {
+    getInitials (state: User): string {
       if (!state.fullName) return '';
       const names = state.fullName.trim().split(" ");
       const initials = names.map(n => n[0]?.toUpperCase() || '').join('');
@@ -29,7 +29,7 @@ export const useUserStore = defineStore("user", {
     }
   },
   actions: {
-    setProfile(profile: DatabaseUserProfile) {
+    setProfile (profile: DatabaseUserProfile) {
       this.id = profile.id;
       this.isLoaded = true,
       this.fullName = profile.full_name;
@@ -43,6 +43,9 @@ export const useUserStore = defineStore("user", {
       this.lastTokenPurchaseDate = profile.last_token_purchase_date;
       // this.avatar = profile.avatar;
       //  this.memberSince = profile.memberSince;
-    }
+    },
+    setTokensAvailable (tokens: number) {
+      this.tokensAvailable = tokens;
+    },
   },
 });
