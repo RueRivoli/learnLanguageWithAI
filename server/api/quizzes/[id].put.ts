@@ -34,6 +34,18 @@ export default defineEventHandler(async (event) => {
       throw new Error('Unable to resolve authenticated user')
     }
     const userId = user.id
+
+    // CHECK TOKEN BALANCE (0.5 tokens per quiz)
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('tokens_available')
+      .eq('id', userId)
+      .single();
+
+    if (!profile || (profile.tokens_available || 0) < 0.5) {
+      throw new Error('Insufficient tokens. Please purchase more tokens to generate quizzes.');
+    }
+
     // 1 = easy; 2 = intermediate; 3 = difficult
     const difficultyLevels = numberOfQuestions === 5 ? [
       { category: 1, quantity: 2 },
@@ -70,6 +82,14 @@ export default defineEventHandler(async (event) => {
       })
       .select("id")
       .single();
+
+    // DEDUCT 0.5 TOKENS AFTER SUCCESSFUL QUIZ GENERATION
+    if (data) {
+      await supabase
+        .from('profiles')
+        .update({ tokens_available: profile.tokens_available! - 0.5 })
+        .eq('id', userId);
+    }
     if (error) throw error;
 
     const quizId = data.id;

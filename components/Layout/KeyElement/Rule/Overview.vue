@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DocumentIcon, LanguageIcon } from '@heroicons/vue/24/outline';
-import { getGrammarRuleStyleClass, getBackgroundClassFromGrammarRuleLevel } from '~/utils/learning/grammar';
+import { getGrammarRuleStyleClass, getBackgroundClassFromGrammarRuleLevel, getHoveringBorderStyleClassFromGrammarRuleLevel } from '~/utils/learning/grammar';
 
 const props = withDefaults(
   defineProps<{
@@ -26,7 +26,7 @@ const props = withDefaults(
 <!-- Total Expressions Mastered - Professional Design -->
 <div :class="[
   props.lightMode 
-    ? 'bg-slate-200 group relative rounded-xl shadow-md border border-slate-300 p-4 hover:shadow-lg hover:border-slate-400 overflow-hidden transition-all duration-300'
+    ? `bg-slate-200 group relative rounded-xl shadow-md p-4 hover:shadow-lg overflow-hidden transition-all duration-300 ${getHoveringBorderStyleClassFromGrammarRuleLevel(props.level ?? 0)}`
     : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-xl shadow-md border border-emerald-300/70 p-4 hover:shadow-xl hover:border-emerald-400/80 overflow-hidden transition-all duration-300'
 ]">
     <!-- Professional background pattern -->

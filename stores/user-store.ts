@@ -13,6 +13,9 @@ export const useUserStore = defineStore("user", {
       isSubscribed: false,
       languageLearned: null,
       pseudo: null,
+      tokensAvailable: null,
+      tokensPurchasedTotal: null,
+      lastTokenPurchaseDate: null,
       // avatar: null,
       // memberSince: null,
     };
@@ -30,13 +33,14 @@ export const useUserStore = defineStore("user", {
       this.id = profile.id;
       this.isLoaded = true,
       this.fullName = profile.full_name;
-      this.isSubscribed = profile.subscribed;
       this.languageLearned = profile.language_learned;
       this.pseudo = profile.pseudo;
       this.initials = profile.initials;
       this.email = profile.email;
-      this.isSubscribed = profile.subscribed;
       this.hasFilledInitialForm = profile.has_filled_initial_form;
+      this.tokensAvailable = profile.tokens_available;
+      this.tokensPurchasedTotal = profile.tokens_purchased_total;
+      this.lastTokenPurchaseDate = profile.last_token_purchase_date;
       // this.avatar = profile.avatar;
       //  this.memberSince = profile.memberSince;
     }

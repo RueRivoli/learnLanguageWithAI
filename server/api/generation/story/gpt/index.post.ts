@@ -164,6 +164,18 @@ export default defineEventHandler(async (event) => {
     if (!user?.id) {
       throw new Error('Unable to resolve authenticated user')
     }
+
+    // CHECK TOKEN BALANCE
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('tokens_available')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile || (profile.tokens_available || 0) < 1) {
+      throw new Error('Insufficient tokens. Please purchase more tokens to generate stories.');
+    }
+
     const result = await fetch(process.env.OPENAI_API_URL as string, {
       method: 'POST',
       headers: {
@@ -188,6 +200,12 @@ export default defineEventHandler(async (event) => {
       const lesson = await saveNewLesson(json.choices[0].message.content, body.ruleId, user.id)
       console.log('lesson', lesson)
       if (lesson) {
+        // DEDUCT TOKEN AFTER SUCCESSFUL GENERATION
+        await supabase
+          .from('profiles')
+          .update({ tokens_available: profile.tokens_available! - 1 })
+          .eq('id', user.id);
+
         linkWordsToLesson(body.wordIds, lesson[0].id)
         linkExpressionsToLesson(body.expressionIds, lesson[0].id)
       }

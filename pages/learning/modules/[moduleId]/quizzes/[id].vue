@@ -46,9 +46,11 @@ const getGrammarRuleMetaData = async () => {
   const { data } = await useFetch(`/api/grammar/${moduleId}`);
   if (data.value) {
     grammarRuleMetaData.value = {
-      level: DIFFICULTY_LEVELS[data.value.difficulty_class],
-      name: data.value.rule_name_translation,
+      level: data.value.difficulty_class,
+      name: data.value.rule_name,
+      nameEn: data.value.rule_name_translation,
       id: data.value.id,
+      symbol: data.value.symbol,
     };
   }
 };

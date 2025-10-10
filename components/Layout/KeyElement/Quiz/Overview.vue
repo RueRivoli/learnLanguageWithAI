@@ -94,7 +94,7 @@ const sizeClasses = computed(() => {
   switch (props.size) {
     case 'xs':
       return {
-        container: 'px-3 py-2',
+        container: 'px-2 py-1',
         text: 'text-xs',
         icon: 'w-3.5 h-3.5',
         badge: 'px-2 py-0.5 text-xs',
@@ -102,7 +102,7 @@ const sizeClasses = computed(() => {
       };
     case 'xl':
       return {
-        container: 'px-5 py-3.5',
+        container: 'px-3 py-2',
         text: 'text-base',
         icon: 'w-5 h-5',
         badge: 'px-3 py-1 text-sm',
@@ -111,7 +111,7 @@ const sizeClasses = computed(() => {
     case 'sm':
     default:
       return {
-        container: 'px-4 py-2.5',
+        container: 'px-2 py-1.5',
         text: 'text-sm',
         icon: 'w-4 h-4',
         badge: 'px-2.5 py-0.5 text-sm',
@@ -185,7 +185,7 @@ const currentStyles = computed(() => props.filledOut ? scoreStyles.value : incom
       </div>
       
       <!-- Score Badge -->
-      <div 
+      <!-- <div 
         :class="[
           'rounded-lg shadow-md font-semibold',
           currentStyles.badge,
@@ -197,7 +197,7 @@ const currentStyles = computed(() => props.filledOut ? scoreStyles.value : incom
         <span v-else-if="props.score >= 70">Good</span>
         <span v-else-if="props.score >= 60">Fair</span>
         <span v-else>Try Again</span>
-      </div>
+      </div> -->
     </div>
   </button>
 </template>

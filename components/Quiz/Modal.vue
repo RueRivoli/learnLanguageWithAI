@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ArrowLeftIcon, BookOpenIcon, EyeIcon, LanguageIcon, Square2StackIcon } from '@heroicons/vue/24/outline';
+import { DIFFICULTY_IDS } from '~/utils/learning/grammar';
 
 definePageMeta({
   layout: "authenticated",
@@ -7,7 +8,7 @@ definePageMeta({
 
 const props = withDefaults(
   defineProps<{
-    grammarRuleMetaData: {level: 'beginner' | 'intermediate' | 'advanced' | 'expert', name: string} | null,
+    grammarRuleMetaData: {level: 1 | 2 | 3 | 4, name: string} | null,
     loading?: boolean;
     detailedResults?: any;
     globalScore?: number | null;
@@ -93,28 +94,28 @@ const emit = defineEmits(["close"]);
 
 // Get grammar rule level for color matching
 const grammarRuleLevel = computed(() => {
-  return props.grammarRuleMetaData?.level || 'beginner';
+  return props.grammarRuleMetaData?.level || 1;
 });
 
 // Get grammar colors based on rule level (matching KeyElementRule)
 const grammarColors = computed(() => {
   switch (grammarRuleLevel.value) {
-    case 'beginner':
+    case DIFFICULTY_IDS.BEGINNER:
       return {
         stroke: '#10b981', // emerald-500 #10b981
         text: '#10b981'
       };
-    case 'intermediate':
+    case DIFFICULTY_IDS.INTERMEDIATE:
       return {
         stroke: '#f59e0b', // amber-500
         text: '#f59e0b'
       };
-    case 'advanced':
+    case DIFFICULTY_IDS.ADVANCED:
       return {
         stroke: '#ec4899', // pink-500
         text: '#ec4899'
       };
-    case 'expert':
+    case DIFFICULTY_IDS.EXPERT:
     default:
       return {
         stroke: '#2563eb', // blue-600
@@ -218,7 +219,7 @@ const grammarClass = computed(() => {
                             <div class="stat-label mb-1">Rule:</div>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <LayoutKeyElementRuleBadgeBadge class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
+                            <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
                         </div>
                         </div>
  

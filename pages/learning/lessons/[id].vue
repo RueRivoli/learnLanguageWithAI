@@ -252,11 +252,12 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   <div class="flex items-center gap-4">
                     <button 
                       @click="isStoryShown = true"
+                      class="cursor-pointer"
                     >
                       <h3 class="text-lg font-medium text-slate-700 font-serif">Story</h3>
                     </button>
                    
-                    <LayoutKeyElementRuleBadge :titleEn="lesson?.grammarRuleNameEn" :level="lesson?.level" size="sm"  :symbol="lesson?.symbol" :lightMode="true" @click="isStoryShown = false"/>
+                    <LayoutKeyElementRuleBadge class="cursor-pointer" :titleEn="lesson?.grammarRuleNameEn" :level="lesson?.level" size="sm"  :symbol="lesson?.symbol" :lightMode="true" @click="isStoryShown = false"/>
                     <LayoutKeyElementQuizBadge v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
                   <label class="flex items-center gap-3 cursor-pointer group">

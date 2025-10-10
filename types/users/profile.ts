@@ -9,5 +9,7 @@ export interface User {
     fullName: Database["public"]["Tables"]["profiles"]["Row"]["full_name"] | null
     hasFilledInitialForm: Database["public"]["Tables"]["profiles"]["Row"]["has_filled_initial_form"] | null
     languageLearned: Database["public"]["Tables"]["profiles"]["Row"]["language_learned"] | null
-    isSubscribed: Database["public"]["Tables"]["profiles"]["Row"]["subscribed"] | null
- } 
+    tokensAvailable: Database["public"]["Tables"]["profiles"]["Row"]["tokens_available"] | null
+    tokensPurchasedTotal: Database["public"]["Tables"]["profiles"]["Row"]["tokens_purchased_total"] | null
+    lastTokenPurchaseDate: Database["public"]["Tables"]["profiles"]["Row"]["last_token_purchase_date"] | null
+}

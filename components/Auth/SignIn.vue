@@ -94,7 +94,6 @@ const handleSignInWithGoogle = async () => {
         <XCircleIcon class="h-5 w-5 cursor-pointer text-white" />
         <span class="text-white" v-html="connexionError" />
       </div>
-      {{ state }}
       <form :state="state" novalidate @submit.prevent="handleSignIn">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"

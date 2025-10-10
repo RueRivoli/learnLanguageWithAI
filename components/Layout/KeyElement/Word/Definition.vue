@@ -32,15 +32,16 @@ const roles = computed(() => {
 <template>
     <!-- Enhanced Word Card -->
     <div 
-        class="bg-gradient-to-br from-blue-500 to-indigo-600 border border-primary/20 rounded-xl p-4 cursor-pointer transition-all duration-300"
+        class="bg-gradient-to-br from-blue-500 to-indigo-600 border border-primary/20 rounded-xl cursor-pointer transition-all duration-300"
+        :class="props.minified ? 'p-2' : 'p-4'"
         @click="emit('click')"
     >
-        <div class="flex items-center justify-between">
+        <div class="flex items-center"  :class="props.minified ? 'justify-center' : 'justify-between'">
             <div class="flex items-center gap-2">
                 <span class="text-lg text-white font-serif">
                     {{ props.word.text }}
                 </span>
-                <span class="text-md text-white mr-1"> ({{ roles }})</span>
+                <span class="text-md text-white mr-1" :class="props.minified ? 'italic' : ''"> ({{ roles }})</span>
                  <!-- text-slate-600 -->
                 <span v-if="!props.minified" class="text-lg text-blue-50 font-light italic">
                     {{ props.word.translation || 'Translation not available' }}

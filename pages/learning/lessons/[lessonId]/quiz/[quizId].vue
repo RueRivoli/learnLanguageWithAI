@@ -57,12 +57,16 @@ const getVocabularyFromLesson = async () => {
   const { data } = await useFetch(
     `/api/lessons/${lessonId}/vocabulary`,
   );
+  console.log("data", data.value);
   if (data.value) {
     grammarRuleMetaData.value = {
-      level: DIFFICULTY_LEVELS[data.value.turkish_grammar_rules.difficulty_class],
-      name: data.value.turkish_grammar_rules.rule_name_translation,
+      level: data.value.turkish_grammar_rules.difficulty_class,
+      name: data.value.turkish_grammar_rules.rule_name,
+      nameEn: data.value.turkish_grammar_rules.rule_name_translation,
       id: data.value.turkish_grammar_rules.id,
+      symbol: data.value.turkish_grammar_rules.symbol,
     }
+    console.log("grammarRuleMetaData", grammarRuleMetaData.value);
     wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => {return { ...word.turkish_words, isMastered: false }}));
     expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => {return { ...expression.turkish_expressions, isMastered: false }}));
   }

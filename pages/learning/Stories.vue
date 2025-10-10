@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { EyeIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { DocumentIcon } from "@heroicons/vue/24/solid";
+import { handleGenerationQuiz } from "~/utils/learning/quiz";
 
 definePageMeta({
   layout: "authenticated",
@@ -75,6 +76,11 @@ const handleLessonToDelete = (id: number, title: string) => {
 };
 const handleCancel = () => {
   lessonNameToDelete.value = null;
+};
+const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
+  console.log("handleGenerateQuiz", ruleId, lessonId);
+  if (!ruleId || !lessonId) return;
+  await handleGenerationQuiz(ruleId, `/learning/lessons/${lessonId}/quiz`, String(lessonId));
 };
 </script>
 
@@ -196,7 +202,7 @@ const handleCancel = () => {
                       <div class="flex items-center hover:cursor-pointe">
                         <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
                         <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global" :score="lesson.turkish_quizzes_result.score_global" size="sm" :quizId="lesson.quiz_id" :filledOut="true"/>
-                        <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false"/>
+                        <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false" @click="handleGenerateQuiz(lesson.turkish_grammar_rules.id, lesson.id)"/>
                       </div>
                     </td>
                   <td class="px-4 py-3">

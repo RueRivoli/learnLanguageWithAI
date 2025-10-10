@@ -5,7 +5,7 @@ const showVoucherPromo = ref<boolean>(true);
 
 <template>
   <div class="w-full fixed z-50 font-semibold shadow bg-primary text-white/80">
-    <div
+    <!-- <div
       v-if="showVoucherPromo"
       class="bg-secondary text-primary relative inset-0 bottom-auto border-b border-secondary px-8 py-1.5 text-center text-xs transition-all duration-200"
     >
@@ -34,7 +34,7 @@ const showVoucherPromo = ref<boolean>(true);
           <path d="m6 6 12 12" />
         </svg>
       </button>
-    </div>
+    </div> -->
     <div class="w-full navbar shadow-sm">
       <LayoutLogo />
       <div class="navbar-center">

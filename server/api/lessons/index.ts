@@ -46,6 +46,7 @@ export default defineEventHandler(async (event) => {
         user_id,
         quiz_id,
         turkish_grammar_rules (
+          id,
           difficulty_class,
           rule_name,
           rule_name_translation,

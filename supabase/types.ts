@@ -24,9 +24,11 @@ export type Database = {
           initials: string | null
           language_learned: string | null
           last_name: string | null
+          last_token_purchase_date: string | null
           pseudo: string | null
           second_language_learned: string | null
-          subscribed: boolean | null
+          tokens_available: number | null
+          tokens_purchased_total: number | null
         }
         Insert: {
           email?: string | null
@@ -37,9 +39,11 @@ export type Database = {
           initials?: string | null
           language_learned?: string | null
           last_name?: string | null
+          last_token_purchase_date?: string | null
           pseudo?: string | null
           second_language_learned?: string | null
-          subscribed?: boolean | null
+          tokens_available?: number | null
+          tokens_purchased_total?: number | null
         }
         Update: {
           email?: string | null
@@ -50,9 +54,11 @@ export type Database = {
           initials?: string | null
           language_learned?: string | null
           last_name?: string | null
+          last_token_purchase_date?: string | null
           pseudo?: string | null
           second_language_learned?: string | null
-          subscribed?: boolean | null
+          tokens_available?: number | null
+          tokens_purchased_total?: number | null
         }
         Relationships: []
       }
@@ -732,7 +738,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_enough_tokens: {
+        Args: { required_tokens: number; user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

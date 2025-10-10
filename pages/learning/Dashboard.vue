@@ -110,7 +110,8 @@ getInfoUser();
         <DashboardVocabularyStats />
       </template>
       <template v-else-if="activeTab === 3">
-        <DashboardGrammarStats />
+        <!-- <DashboardGrammarStats /> -->
+        <DashboardGeneralStats />
       </template>
     </div>
 

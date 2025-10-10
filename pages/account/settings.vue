@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { UserIcon, CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/vue/24/solid";
+import { UserIcon, CheckCircleIcon, ExclamationCircleIcon, SparklesIcon } from "@heroicons/vue/24/solid";
+import { loadStripe } from '@stripe/stripe-js';
 
 definePageMeta({
   layout: "authenticated",
@@ -14,7 +15,9 @@ useHead({
   link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
 });
 
+const route = useRoute();
 const userStore = useUserStore();
+const { fetchTokenBalance } = useTokens();
 
 // Form state
 const formData = ref({
@@ -27,6 +30,63 @@ const isSaving = ref(false);
 const showSuccessMessage = ref(false);
 const showErrorMessage = ref(false);
 const errorMessage = ref("");
+const isPurchasing = ref(false);
+
+// Token packages with NEW pricing
+const tokenPackages = [
+  { 
+    tokens: 10, 
+    price: 4.99, 
+    stories: 10, 
+    quizzes: 20,
+    popular: false 
+  },
+  { 
+    tokens: 30, 
+    price: 9.99, 
+    stories: 30, 
+    quizzes: 60,
+    popular: true,
+    discount: 17 
+  },
+  { 
+    tokens: 70, 
+    price: 14.99, 
+    stories: 70, 
+    quizzes: 140,
+    popular: false,
+    discount: 36 
+  },
+  { 
+    tokens: 150, 
+    price: 21.99, 
+    stories: 150, 
+    quizzes: 300,
+    popular: false,
+    discount: 51 
+  },
+];
+
+// Fetch token balance on mount
+onMounted(async () => {
+  await fetchTokenBalance();
+  
+  // Check for payment success/cancelled in URL
+  if (route.query.payment === 'success') {
+    showSuccessMessage.value = true;
+    errorMessage.value = "Payment successful! Your tokens have been added.";
+    await fetchTokenBalance();
+    setTimeout(() => {
+      showSuccessMessage.value = false;
+    }, 5000);
+  } else if (route.query.payment === 'cancelled') {
+    showErrorMessage.value = true;
+    errorMessage.value = "Payment was cancelled.";
+    setTimeout(() => {
+      showErrorMessage.value = false;
+    }, 3000);
+  }
+});
 
 // Validation
 const isPseudoValid = computed(() => {
@@ -74,6 +134,40 @@ const handleSaveSettings = async () => {
   }
 };
 
+const handlePurchase = async (tokens: number) => {
+  if (isPurchasing.value) return;
+  
+  try {
+    isPurchasing.value = true;
+    
+    const { data: { session } } = await useSupabaseClient().auth.getSession();
+    const headers: Record<string, string> = {};
+    if (session?.access_token) {
+      headers['Authorization'] = `Bearer ${session.access_token}`;
+    }
+
+    // Create Stripe checkout session
+    const response = await $fetch<{ sessionId: string; url: string }>('/api/stripe/create-checkout', {
+      method: 'POST',
+      headers,
+      body: { packageType: tokens }
+    });
+
+    if (response?.url) {
+      // Redirect to Stripe checkout
+      window.location.href = response.url;
+    }
+  } catch (error: any) {
+    showErrorMessage.value = true;
+    errorMessage.value = error?.message || 'Failed to start checkout. Please try again.';
+    setTimeout(() => {
+      showErrorMessage.value = false;
+    }, 5000);
+  } finally {
+    isPurchasing.value = false;
+  }
+};
+
 // Watch for store changes
 watch(() => userStore.pseudo, (newPseudo) => {
   if (newPseudo) formData.value.pseudo = newPseudo;
@@ -96,7 +190,8 @@ watch(() => userStore.pseudo, (newPseudo) => {
 
         <!-- Content -->
         <div class="flex-1 p-6">
-          <div class="max-w-2xl mx-auto">
+          <div class="max-w-4xl mx-auto">
+            <AccountPaymentWall />
             <!-- Success Alert -->
             <div
               v-if="showSuccessMessage"
@@ -118,9 +213,16 @@ watch(() => userStore.pseudo, (newPseudo) => {
             </div>
 
             <!-- Settings Card -->
-            <div class="card bg-base-100 shadow-xl border border-gray-100">
+            <div class="card bg-base-100 shadow-xl border border-gray-100 mt-4">
               <div class="card-body">
                 <h2 class="card-title text-xl mb-6 text-neutral">Profile Information</h2>
+                                  <!-- Language Learned Field -->
+                                  <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text font-semibold">Remaining Tokens</span>
+                    </label>
+                   <span class="ml-2 text-2xl font-bold text-primary">{{ userStore.tokensAvailable }}</span>
+                  </div>
 
                 <!-- Form -->
                 <form @submit.prevent="handleSaveSettings" class="space-y-6">
@@ -200,39 +302,6 @@ watch(() => userStore.pseudo, (newPseudo) => {
                     </button>
                   </div>
                 </form>
-              </div>
-            </div>
-
-            <!-- Additional Info Card -->
-            <div class="mt-6 card bg-base-100 shadow-xl border border-gray-100">
-              <div class="card-body">
-                <h3 class="card-title text-lg text-neutral">Account Details</h3>
-                <div class="space-y-3 mt-4">
-                  <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Full Name</span>
-                    <span class="font-medium">{{ userStore.fullName || 'Not set' }}</span>
-                  </div>
-                  <div class="divider my-1"></div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Subscription Status</span>
-                    <span
-                      class="badge"
-                      :class="userStore.isSubscribed ? 'badge-success' : 'badge-neutral'"
-                    >
-                      {{ userStore.isSubscribed ? 'Active' : 'Free' }}
-                    </span>
-                  </div>
-                  <div class="divider my-1"></div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Profile Completed</span>
-                    <span
-                      class="badge"
-                      :class="userStore.hasFilledInitialForm ? 'badge-success' : 'badge-warning'"
-                    >
-                      {{ userStore.hasFilledInitialForm ? 'Yes' : 'No' }}
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

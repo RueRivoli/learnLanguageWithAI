@@ -25,10 +25,11 @@ const emit = defineEmits(["click"]);
 
  <template>
   <div 
-  class="bg-gradient-to-br from-purple-500 to-pink-500 border border-purple-300/30 rounded-xl p-3 cursor-pointer transition-all duration-300"
+  class="bg-gradient-to-br from-purple-500 to-pink-500 border border-purple-300/30 rounded-xl cursor-pointer transition-all duration-300"
+   :class="props.minified ? 'p-2' : 'p-4'"
   @click="emit('click')"
 >
-  <div class="flex items-center justify-between">
+  <div class="flex items-center" :class="props.minified ? 'justify-center' : 'justify-between'">
     <div class="flex items-center gap-4">
       <span class="text-lg text-white font-serif">
         {{ expression.text }}
