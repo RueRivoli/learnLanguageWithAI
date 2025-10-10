@@ -5,7 +5,7 @@ import {
   getClassWordRole,
 } from "~/utils/learning/vocabulary";
 
-import { ArrowLongRightIcon, BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
+import { BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 definePageMeta({
   layout: "authenticated",
 });

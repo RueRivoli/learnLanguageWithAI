@@ -15,6 +15,7 @@ import type {
   DatabaseExpressions,
   DatabaseWords,
 } from "~/utils/learning/vocabulary.ts";
+import { BookOpenIcon } from "@heroicons/vue/24/outline";
 
 definePageMeta({
   layout: "authenticated",
@@ -314,44 +315,34 @@ const handleExpressionLearningStatus = async (
             v-if="activeVocabularyTab === 1"
             class="pt-6 h-full flex flex-col justify-between"
           >
-            <!-- Loading Skeleton for Words -->
-            <div
-              v-if="isLoadingFetchingWords"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
-              <div
-                v-for="i in 12"
-                :key="i"
-                class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse"
-              >
-                <!-- Word content skeleton -->
-                <div>
-                  <div class="flex items-start justify-between mb-2">
-                    <div class="skeleton h-6 w-24 rounded-md bg-gray-200" />
-                    <div class="skeleton h-5 w-16 rounded-full bg-gray-200" />
-                  </div>
-                  <div class="skeleton h-4 w-32 rounded bg-gray-200 mb-2" />
-                  <div class="skeleton h-4 w-28 rounded bg-gray-200" />
-                </div>
-
-                <!-- Actions skeleton -->
-                <div class="flex items-center justify-end pt-4">
-                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200" />
-                </div>
+            <!-- Empty State -->
+            <div v-if="words.length === 0" class="flex flex-col items-center justify-center py-16 px-4">
+              <div v-if="showLearnedWords" class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+                <BookOpenIcon  class="h-10 w-10 text-gray-400" />
               </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                {{ showLearnedWords ? "No Words Learned yet": "" }}
+              </h3>
+              <p class="text-gray-500 text-center max-w-md">
+                {{ showLearnedWords 
+                  ? "Start Learning Words to see them appear here." 
+                  : "" 
+                }}
+              </p>
             </div>
-
-            <!-- Actual Words Content -->
+            
+            <!-- Words Grid -->
             <div
               v-else
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              <div v-for="(word, index) in words" :key="word.id">
+              <div v-for="(word, index) in words" :key="index">
                 <LayoutKeyElementWordDefinition :word="word" :minified="true" @click="selectedWord = word"/>
               </div>
 
             </div>
             <LayoutTablePagination
+              v-if="words.length > 0"
               class="mt-2"
               :current-page="currentPage"
               :end-item="endItem"
@@ -389,38 +380,23 @@ const handleExpressionLearningStatus = async (
             v-else-if="activeVocabularyTab === 2"
             class="pt-6 h-full flex flex-col justify-between"
           >
-            <!-- Loading Skeleton for Expressions -->
-            <div
-              v-if="isLoadingFetchingExpressions"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
-              <div
-                v-for="i in 12"
-                :key="i"
-                class="group p-4 relative bg-white rounded-lg border border-gray-200 animate-pulse"
-              >
-                <!-- Expression content skeleton -->
-                <div>
-                  <div class="mb-3">
-                    <div
-                      class="skeleton h-6 w-32 rounded-md bg-gray-200 mb-2"
-                    />
-                    <div class="skeleton h-5 w-28 rounded bg-gray-200" />
-                  </div>
-                  <div class="skeleton h-4 w-36 rounded bg-gray-200 mb-2" />
-                  <div class="skeleton h-4 w-24 rounded bg-gray-200" />
-                </div>
-
-                <!-- Actions skeleton -->
-                <div
-                  class="flex items-center justify-between pt-4 border-t border-gray-100/60"
-                >
-                  <div class="skeleton h-8 w-32 rounded-md bg-gray-200" />
-                </div>
+            <!-- Empty State -->
+            <div v-if="expressions.length === 0" class="flex flex-col items-center justify-center py-16 px-4">
+              <div v-if="showLearnedExpressions" class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+                <LanguageIcon  class="h-10 w-10 text-gray-400" />
               </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                {{ showLearnedExpressions ? "No expressions learned yet" : "" }}
+              </h3>
+              <p class="text-gray-500 text-center max-w-md">
+                {{ showLearnedExpressions 
+                  ? "Start learning expressions to see them appear here." 
+                  : "" 
+                }}
+              </p>
             </div>
-
-            <!-- Actual Expressions Content -->
+            
+            <!-- Expressions Grid -->
             <div
               v-else
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
@@ -430,6 +406,7 @@ const handleExpressionLearningStatus = async (
               </div>
             </div>
             <LayoutTablePagination
+              v-if="expressions.length > 0"
               class="mt-2"
               :current-page="currentPageExpr"
               :end-item="endItem"
@@ -452,12 +429,12 @@ const handleExpressionLearningStatus = async (
       <div class="h-full">
         <LearningItemDefinition
           v-if="activeVocabularyTab === 1"
-          class="bg-white p-10 rounded-md border-l border-primary/20"
+          class="bg-white p-6 rounded-md border-l border-primary/20"
           :word="selectedWord"
         />
         <LearningItemDefinition
           v-else
-          class="bg-white p-10 rounded-md border-l border-primary/20"
+          class="bg-white p-6 rounded-md border-l border-primary/20"
           :expression="selectedExpression"
           type="expression"
         />
