@@ -78,7 +78,7 @@ const incompleteStyles = {
   text: 'text-rose-900',
   badge: 'bg-rose-500 text-white',
   dot: 'bg-rose-900',
-  icon: 'text-rose-900',
+  icon: 'text-error',
 };
 
 // Size-based classes
@@ -116,9 +116,18 @@ const currentStyles = computed(() => props.filledOut ? scoreStyles.value : incom
 </script>
 
 <template>
+  <button class="btn btn-error btn-outline btn-sm rounded-lg cursor-pointer" v-if="!props.filledOut">
+    <div class="flex items-center gap-3">
+      <div class="rounded-lg flex items-center">
+        <ArrowTrendingUpIcon :class="[sizeClasses.icon, currentStyles.icon]" />
+        <span class="ml-2">Complete Quiz</span>
+      </div>
+    </div>
+  </button>
   <button 
+    v-else
     :class="[
-      'flex items-center justify-between rounded-xl border-2 shadow-lg',
+      'flex items-center justify-between rounded-lg border-2 shadow-lg',
       'transition-all duration-300 ease-in-out',
       currentStyles.bg,
       currentStyles.border,

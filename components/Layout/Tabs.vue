@@ -53,7 +53,7 @@ const handleTabActiveChanged = (id: number) => {
 </script>
 
 <template>
-  <div class="flex items-center space-x-4">
+  <div class="flex items-center justify-center space-x-4">
     <div class="flex items-center bg-gray-100 rounded-lg p-1">
       <button
         v-if="firstTab"

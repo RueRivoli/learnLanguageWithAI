@@ -233,27 +233,32 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 <div class="relative">
                   <div class="absolute -inset-4"></div>
                   <!-- No image state - image being generated -->
-                  <div 
+                                     <!-- Actual image -->
+                  <img 
+                    v-if="!imageUrl"
+                    src="~/public/default-image.png" 
+                    alt="Lesson illustration" 
+                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
+                  />
+                  <!-- <div 
                     v-if="!imageUrl"
                     class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-50 to-gray-100"
                   >
                     <div class="absolute inset-0 flex items-center justify-center">
                       <div class="flex flex-col items-center gap-4">
-                        <!-- Neutral icon -->
                         <div class="w-16 h-16 bg-gradient-to-br from-slate-200 to-gray-300 rounded-xl flex items-center justify-center shadow-lg">
                           <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
-                        <!-- Neutral text -->
                         <div class="text-slate-600 text-sm font-medium text-center">
                          Your image will be generated in less than 1 minute
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   
-                  <!-- Actual image -->
+
                   <img 
                     v-else
                     :src="imageUrl" 

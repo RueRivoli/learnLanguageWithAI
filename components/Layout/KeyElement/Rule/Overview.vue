@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { DocumentIcon, LanguageIcon } from '@heroicons/vue/24/outline';
-import { getGrammarRuleStyleClass, getBackgroundClassFromGrammarRuleLevel, getHoveringBorderStyleClassFromGrammarRuleLevel } from '~/utils/learning/grammar';
+import { getBackgroundClassFromGrammarRuleLevel, getHoveringBorderStyleClassFromGrammarRuleLevel } from '~/utils/learning/grammar';
 
 const props = withDefaults(
   defineProps<{

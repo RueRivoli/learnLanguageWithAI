@@ -54,11 +54,11 @@ const groupedModuleOptions = computed(() => {
   originalModulesData.value.forEach((module: any) => {
     const {id, name, nameEn, symbol, level, score } = module;
     if (level === 1) {
-      grouped['Beginner'].push({ id, name, nameEn, symbol, score });
+      grouped['Beginner'].push({ id, name, nameEn, symbol, score, level });
     } else if (level === 2) {
-      grouped['Intermediate'].push({ id, name, nameEn, symbol, score });
+      grouped['Intermediate'].push({ id, name, nameEn, symbol, score, level });
     } else if (level === 3) {
-      grouped['Advanced'].push({ id, name, nameEn, symbol, score });
+      grouped['Advanced'].push({ id, name, nameEn, symbol, score, level });
     }
   });
   
@@ -291,7 +291,7 @@ const handleGenerateStory = async () => {
 
             <div class="grid grid-cols-2 gap-4">
                           <!-- Module Selection Section -->
-            <LayoutKeyElementRuleCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" class="col-span-1" v-if="targetedModule" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
+            <LayoutKeyElementRuleCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow-sm" class="col-span-1" v-if="targetedModule" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>

@@ -46,18 +46,18 @@ const handleDeleteSelectedItem = (text: string) => {
       <div
         class="mr-2 mb-2 flex flex-wrap gap-2"
       >
-      <LayoutKeyElementWordBadge v-if="props.type === 'word'" v-for="(elt, n) in listItems.slice(0, props.limit)" :key="n" :text="elt.text">
+      <LayoutKeyElementWordBadge v-if="props.type === 'word'" v-for="(elt, n) in listItems.slice(0, props.limit)" :key="n" :text="elt.text" :lightMode="true">
           <template #action>
             <XMarkIcon
-              class="h-4 w-4 text-white cursor-pointer font-semibold group-hover:text-neutral"
+              class="ml-2 h-4 w-4 text-blue-500 cursor-pointer font-semibold group-hover:text-neutral"
               @click="handleDeleteSelectedItem(elt.text)"
             />
           </template>
         </LayoutKeyElementWordBadge>
-      <LayoutKeyElementExpressionBadge v-else-if="props.type === 'expression'" v-for="(elt, index) in listItems.slice(0, props.limit)" :key="index" :text="elt.text">
+      <LayoutKeyElementExpressionBadge v-else-if="props.type === 'expression'" v-for="(elt, index) in listItems.slice(0, props.limit)" :key="index" :text="elt.text" :lightMode="true">
           <template #action>
             <XMarkIcon
-              class="h-4 w-4 text-white cursor-pointer font-semibold group-hover:text-neutral"
+              class="ml-2 h-4 w-4 text-pink-500 cursor-pointer font-semibold group-hover:text-neutral"
               @click="handleDeleteSelectedItem(elt.text)"
             />
           </template>

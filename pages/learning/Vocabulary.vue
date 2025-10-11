@@ -390,7 +390,7 @@ const handleExpressionLearningStatus = async (
               </h3>
               <p class="text-gray-500 text-center max-w-md">
                 {{ showLearnedExpressions 
-                  ? "Start learning expressions to see them appear here." 
+                  ? "Start Learning Expressions to see them appear here." 
                   : "" 
                 }}
               </p>

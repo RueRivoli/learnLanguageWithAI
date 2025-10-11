@@ -12,6 +12,7 @@ import {
   ChartBarIcon,
   DocumentIcon,
   Square2StackIcon,
+  StarIcon,
 } from "@heroicons/vue/24/outline";
 import {
   Dialog,
@@ -32,9 +33,7 @@ const handleSignOut = async () => {
 };
 
 const userPseudo = computed(() => userStore.$state.pseudo);
-// const userEmail = computed(() => userStore.$state.email);
 const userInitials = computed(() => userStore.$state.initials);
-const isUserSubscribed = computed(() => userStore.$state.isSubscribed);
 const sideBarOpened = ref(false);
 const isSideBarMinifiedForDesktopVersion = ref(false);
 
@@ -216,16 +215,10 @@ const isActive = (path: string) => {
                       <div class="font-semibold text-neutral">
                         {{ userPseudo }}
                       </div>
-                      <div>
-                        <CheckBadgeIconSolid
-                          v-if="isUserSubscribed"
-                          class="h-4 w-4 ml-2 text-indigo-600"
-                        />
-                        <CheckBadgeIcon
-                          v-else
-                          class="h-4 w-4 ml-2 text-indigo-600"
-                        />
-                      </div>
+                      <div class="w-full flex items-center">
+                        <StarIcon class="h-4 w-4 ml-2 text-indigo-600" />
+                        <span>{{ userStore.$state.tokensAvailable }}</span>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -483,12 +476,9 @@ const isActive = (path: string) => {
         <div v-if="!isSideBarMinifiedForDesktopVersion" class="ml-3">
           <div class="flex items-center">
             <div class="font-semibold text-neutral">{{ userPseudo }}</div>
-            <div>
-              <CheckBadgeIconSolid
-                v-if="isUserSubscribed"
-                class="h-4 w-4 ml-2 text-indigo-600"
-              />
-              <CheckBadgeIcon v-else class="h-4 w-4 ml-2 text-indigo-600" />
+            <div class="w-full flex items-center">
+              <StarIcon class="h-4 w-4 ml-2 text-indigo-600" />
+              <span>{{ userStore.$state.tokensAvailable }}</span>
             </div>
           </div>
         </div>

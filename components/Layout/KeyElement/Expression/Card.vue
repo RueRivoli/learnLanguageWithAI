@@ -21,7 +21,7 @@ const props = withDefaults(
 </script>
 
 <template>
-   <div :class="[props.backgroundClasses ? `group relative overflow-hidden rounded-md shadow-md border border-purple-300/70 p-4 ${props.backgroundClasses}` : 'group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-md shadow-md border border-purple-300/70 p-4 hover:border-purple-400/80 transition-all duration-300']">
+   <div :class="[props.backgroundClasses ? `group relative overflow-hidden rounded-md shadow-md p-4 ${props.backgroundClasses}` : 'group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-md shadow-md p-4 hover:border-purple-400/80 transition-all duration-300']">
         <div class="wrapper-header">
             <div class="wrapper-title">
                 <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-lg flex items-center justify-center mr-5 shadow-lg">

@@ -23,6 +23,7 @@ const props = withDefaults(
     <div class="flex items-center space-x-3">
         <div class="p-2 rounded-lg">
             <img v-if="props.storyImgUrl" :src="props.storyImgUrl" class="w-10 h-10 rounded-lg" />
+            <img v-else src="~/public/default-image.png" class="w-10 h-10 rounded-lg" />
         </div>
         <div class="hover:cursor-pointer">
             <div class="text-md tracking-tight font-semibold text-slate-800 tracking-wide">
