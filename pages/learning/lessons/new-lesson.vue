@@ -29,7 +29,7 @@ const moduleOptions = ref<Array<{value: number, label: string}>>([]);
 const wordList = ref<WordMetadata[]>([]);
 const expressionList = ref<ExpressionMetadata[]>([]);
 
-const targetedModule = ref<GrammarRuleMeta & {score: number} | null>(null);
+const targetedModule = ref<GrammarRuleMeta & {score: number} | undefined>(undefined);
 const targetedModuleId = ref<number>(0);
 
 // Id of the opened modal
@@ -320,11 +320,11 @@ const handleGenerateStory = async () => {
                 </template>
                 <template #content>
                   <div class="w-[60%] m-auto">
-                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule.name" :titleEn="targetedModule.nameEn" :symbol="targetedModule.symbol" :score="targetedModule.score" :level="targetedModule.level" :lightMode="true">
+                  <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="targetedModule?.name" :titleEn="targetedModule?.nameEn" :symbol="targetedModule?.symbol" :score="targetedModule?.score" :level="targetedModule?.level" :lightMode="true">
                       <template #content>
                   <!-- Professional description box -->
-                  <div v-if="targetedModule.highlights" class="mt-3 mb-4">
-                    <div class="relative rounded-xl p-4 shadow-sm overflow-hidden" :class="getBorderStyleClassFromGrammarRuleLevel(targetedModule.level ?? 0)">
+                  <div v-if="targetedModule?.highlights" class="mt-3 mb-4">
+                    <div class="relative rounded-xl p-4 shadow-sm overflow-hidden" :class="getBorderStyleClassFromGrammarRuleLevel(targetedModule?.level ?? 0)">
                       <!-- Subtle texture overlay -->
                       <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
                       <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
@@ -358,7 +358,7 @@ const handleGenerateStory = async () => {
                 >current score</span
               >
                 <span class="text-md font-medium text-gray-700"
-                  >{{ targetedModule.score }}%</span
+                  >{{ targetedModule?.score }}%</span
                 >
               </div>
 
