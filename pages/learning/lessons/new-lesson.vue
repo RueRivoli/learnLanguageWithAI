@@ -291,7 +291,30 @@ const handleGenerateStory = async () => {
 
             <div class="grid grid-cols-2 gap-4">
                           <!-- Module Selection Section -->
-            <LayoutKeyElementRuleCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow-sm" class="col-span-1" v-if="targetedModule" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
+            <!-- Loading Skeleton for Module -->
+            <div v-if="isFetchingData" class="col-span-1 bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow-sm rounded-2xl p-6 animate-pulse">
+              <div class="flex items-center justify-between mb-4">
+                <div class="skeleton h-6 w-40 bg-gray-200 rounded"></div>
+                <div class="skeleton h-5 w-5 bg-gray-200 rounded"></div>
+              </div>
+              <div class="skeleton h-4 w-48 bg-gray-200 rounded mb-6"></div>
+              <div class="w-[60%] m-auto">
+                <div class="bg-white rounded-xl p-4 border border-gray-200">
+                  <div class="flex items-center justify-center mb-4">
+                    <div class="skeleton h-16 w-16 bg-gray-200 rounded-full"></div>
+                  </div>
+                  <div class="skeleton h-5 w-32 bg-gray-200 rounded mx-auto mb-2"></div>
+                  <div class="skeleton h-4 w-24 bg-gray-200 rounded mx-auto mb-4"></div>
+                  <div class="skeleton h-20 w-full bg-gray-200 rounded"></div>
+                  <div class="mt-3 flex items-center justify-center gap-2">
+                    <div class="skeleton h-4 w-24 bg-gray-200 rounded"></div>
+                    <div class="skeleton h-4 w-12 bg-gray-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow-sm" class="col-span-1" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>
@@ -347,9 +370,21 @@ const handleGenerateStory = async () => {
                 </template>
             </LayoutKeyElementRuleCard>
 
-            <div class="col-span-1 flex flex-col justify-between">                    
+            <div class="col-span-1 flex flex-col justify-between">
+            <!-- Loading Skeleton for Words -->
+            <div v-if="isFetchingData" class="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm rounded-2xl p-6 mb-4 animate-pulse">
+              <div class="flex items-center justify-between mb-4">
+                <div class="skeleton h-6 w-32 bg-gray-200 rounded"></div>
+                <div class="skeleton h-5 w-5 bg-gray-200 rounded"></div>
+              </div>
+              <div class="skeleton h-4 w-40 bg-gray-200 rounded mb-4"></div>
+              <div class="flex flex-wrap gap-3">
+                <div v-for="i in 10" :key="i" class="skeleton h-8 w-20 bg-gray-200 rounded-full"></div>
+              </div>
+            </div>
+                    
             <!-- Words Selection Section -->
-             <LayoutKeyElementWordCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Words to Learn" description="Select 10 words for your lesson">
+             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Words to Learn" description="Select 10 words for your lesson">
                 <template #top-right-corner>
                     <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
@@ -363,8 +398,20 @@ const handleGenerateStory = async () => {
               </LayoutKeyElementWordCard>
 
 
+              <!-- Loading Skeleton for Expressions -->
+              <div v-if="isFetchingData" class="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm rounded-2xl p-6 animate-pulse">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="skeleton h-6 w-40 bg-gray-200 rounded"></div>
+                  <div class="skeleton h-5 w-5 bg-gray-200 rounded"></div>
+                </div>
+                <div class="skeleton h-4 w-48 bg-gray-200 rounded mb-4"></div>
+                <div class="flex flex-wrap gap-3">
+                  <div v-for="i in 3" :key="i" class="skeleton h-8 w-32 bg-gray-200 rounded-full"></div>
+                </div>
+              </div>
+
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>
@@ -384,12 +431,15 @@ const handleGenerateStory = async () => {
               <button
               class="w-80 m-auto bg-warning hover:bg-warning/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
               @click="handleGenerateStory"
+              :disabled="isFetchingData || isGeneratingLesson"
             >
                 <span v-if="isGeneratingLesson" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
                 <PlayIcon v-else class="w-5 h-5" />
                 <span>Generate My Personalized Lesson</span>
               </button>
-              <p class="text-sm text-gray-500 mt-2">Your personalized Turkish Lesson will be ready in less than 10 seconds</p>
+              <p class="text-sm text-gray-500 mt-2">
+                {{ isFetchingData ? 'Loading your personalized options...' : 'Your personalized Turkish Lesson ready in less than 10 seconds' }}
+              </p>
             </div>
           </div>
         </div>
