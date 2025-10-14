@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { defineEventHandler, readBody, getHeader, createError } from 'h3';
 import { createClient } from '@supabase/supabase-js';
-// import { createSupabaseClientWithUserAuthTokenFromHeader } from '../../utils/auth/supabaseClient';
+import { createSupabaseClientWithUserAuthTokenFromHeader } from '../../utils/auth/supabaseClient';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-09-30.clover',
@@ -16,16 +16,30 @@ const tokenPackages = {
 };
 
 export default defineEventHandler(async (event) => {
-    console.log('inside:create-checkout')
-    const { userId } = await readBody(event);
+  console.log('inside:create-checkout')
+  
   try {
     const { packageType } = await readBody(event);
-    // const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
+    
+    // Get authenticated user
+    const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !user) {
+      throw createError({ 
+        statusCode: 401, 
+        statusMessage: 'User not authenticated' 
+      });
+    }
+    
+    const userId = user.id;
     
     const packageInfo = tokenPackages[packageType as keyof typeof tokenPackages];
     if (!packageInfo) {
       throw createError({ statusCode: 400, statusMessage: 'Invalid package type' });
     }
+
+    console.log('Creating checkout for user:', userId, 'package:', packageType);
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({

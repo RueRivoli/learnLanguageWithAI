@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { UserIcon, CheckCircleIcon, ExclamationCircleIcon, SparklesIcon } from "@heroicons/vue/24/solid";
-import { loadStripe } from '@stripe/stripe-js';
 import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
@@ -23,7 +22,7 @@ const { fetchTokenBalance } = useTokens();
 // Form state
 const formData = ref({
   pseudo: userStore.pseudo || "",
-  languageLearned: "tr", // Fixed to Turkish only
+  languageLearned: "tr",
 });
 
 // UI state
@@ -33,40 +32,7 @@ const showErrorMessage = ref(false);
 const errorMessage = ref("");
 const isPurchasing = ref(false);
 
-// Token packages with NEW pricing
-const tokenPackages = [
-  { 
-    tokens: 10, 
-    price: 4.99, 
-    stories: 10, 
-    quizzes: 20,
-    popular: false 
-  },
-  { 
-    tokens: 30, 
-    price: 9.99, 
-    stories: 30, 
-    quizzes: 60,
-    popular: true,
-    discount: 17 
-  },
-  { 
-    tokens: 70, 
-    price: 14.99, 
-    stories: 70, 
-    quizzes: 140,
-    popular: false,
-    discount: 36 
-  },
-  { 
-    tokens: 150, 
-    price: 21.99, 
-    stories: 150, 
-    quizzes: 300,
-    popular: false,
-    discount: 51 
-  },
-];
+
 
 // Fetch token balance on mount
 onMounted(async () => {
@@ -137,38 +103,6 @@ const handleSaveSettings = async () => {
   }
 };
 
-const handlePurchase = async (tokens: number) => {
-  if (isPurchasing.value) return;
-  
-  try {
-    isPurchasing.value = true;
-    
-    const headers = await getAuthToken();
-    // Create Stripe checkout session
-    const response = await $fetch<{ sessionId: string; url: string }>('/api/stripe/create-checkout', {
-      method: 'POST',
-      headers,
-      body: { 
-        packageType: tokens,
-        userId: userStore.id
-       }
-    });
-
-    if (response?.url) {
-      // Redirect to Stripe checkout
-      window.location.href = response.url;
-    }
-  } catch (error: any) {
-    showErrorMessage.value = true;
-    errorMessage.value = error?.message || 'Failed to start checkout. Please try again.';
-    setTimeout(() => {
-      showErrorMessage.value = false;
-    }, 5000);
-  } finally {
-    isPurchasing.value = false;
-  }
-};
-
 // Watch for store changes
 watch(() => userStore.pseudo, (newPseudo) => {
   if (newPseudo) formData.value.pseudo = newPseudo;
@@ -214,91 +148,99 @@ watch(() => userStore.pseudo, (newPseudo) => {
             </div>
 
             <!-- Settings Card -->
-            <div class="card bg-base-100 shadow-xl border border-gray-100 mt-4">
-              <div class="card-body">
-                <h2 class="card-title text-xl mb-6 text-neutral">Profile Information</h2>
-                                  <!-- Language Learned Field -->
-                                  <div class="form-control w-full">
-                    <label class="label">
-                      <span class="label-text font-semibold">Remaining Tokens</span>
-                    </label>
-                   <span class="ml-2 text-2xl font-bold text-primary">{{ userStore.tokensAvailable }}</span>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mt-6">
+              <!-- Header -->
+              <div class="px-8 py-6 border-b border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-900 mb-1">Profile Information</h2>
+                <p class="text-gray-600">Manage your account details and preferences</p>
+              </div>
+
+              <!-- Content -->
+              <div class="p-8">
+                <!-- Token Balance -->
+                <div class="mb-8 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                        <SparklesIcon class="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-700">Remaining Tokens</p>
+                        <p class="text-xs text-gray-500">Available for content generation</p>
+                      </div>
+                    </div>
+                    <div class="text-3xl font-bold text-primary">{{ userStore.tokensAvailable }}</div>
                   </div>
+                </div>
 
                 <!-- Form -->
                 <form @submit.prevent="handleSaveSettings" class="space-y-6">
                   <!-- Pseudo Field -->
-                  <div class="form-control w-full">
-                    <label class="label">
-                      <span class="label-text font-semibold">Pseudo</span>
-                      <span class="label-text-alt text-gray-500">Required</span>
-                    </label>
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <label class="text-sm font-semibold text-gray-900">Pseudo</label>
+                      <span class="text-xs text-gray-500">Required</span>
+                    </div>
                     <input
                       v-model="formData.pseudo"
                       type="text"
                       placeholder="Enter your pseudo"
-                      class="input input-bordered w-full"
+                      class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                       :class="{
-                        'input-error': formData.pseudo && !isPseudoValid,
-                        'input-primary': formData.pseudo && isPseudoValid,
+                        'border-red-500 focus:border-red-500 focus:ring-red-500/20': formData.pseudo && !isPseudoValid,
+                        'border-primary': formData.pseudo && isPseudoValid,
                       }"
                       required
                     />
-                    <label class="label">
-                      <span
-                        class="label-text-alt"
-                        :class="{
-                          'text-error': formData.pseudo && !isPseudoValid,
-                          'text-success': formData.pseudo && isPseudoValid,
-                        }"
-                      >
-                        {{ formData.pseudo && !isPseudoValid ? 'Pseudo must be at least 3 characters' : 'Minimum 3 characters' }}
-                      </span>
-                    </label>
+                    <p
+                      class="text-xs"
+                      :class="{
+                        'text-red-500': formData.pseudo && !isPseudoValid,
+                        'text-gray-500': !formData.pseudo || isPseudoValid,
+                      }"
+                    >
+                      {{ formData.pseudo && !isPseudoValid ? 'Pseudo must be at least 3 characters' : 'Minimum 3 characters' }}
+                    </p>
                   </div>
 
                   <!-- Language Learned Field -->
-                  <div class="form-control w-full">
-                    <label class="label">
-                      <span class="label-text font-semibold">Language Learning</span>
-                      <span class="label-text-alt text-gray-500">Fixed</span>
-                    </label>
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <label class="text-sm font-semibold text-gray-900">Targeted Language</label>
+                      <span class="text-xs text-gray-500">Fixed</span>
+                    </div>
                     <input
                       value="Turkish 🇹🇷"
                       type="text"
-                      class="input input-bordered w-full"
+                      class="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-500 cursor-not-allowed"
                       disabled
                     />
-                    <label class="label">
-                      <span class="label-text-alt">Currently only Turkish is available</span>
-                    </label>
+                    <p class="text-xs text-gray-500">Currently only Turkish is available</p>
                   </div>
 
                   <!-- Email (Read-only) -->
-                  <div class="form-control w-full">
-                    <label class="label">
-                      <span class="label-text font-semibold">Email</span>
-                      <span class="label-text-alt text-gray-500">Read-only</span>
-                    </label>
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <label class="text-sm font-semibold text-gray-900">Email</label>
+                      <span class="text-xs text-gray-500">Read-only</span>
+                    </div>
                     <input
                       :value="userStore.email"
                       type="email"
-                      class="input input-bordered w-full"
+                      class="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-500 cursor-not-allowed"
                       disabled
                     />
-                    <label class="label">
-                      <span class="label-text-alt">Your email cannot be changed</span>
-                    </label>
+                    <p class="text-xs text-gray-500">Your email cannot be changed</p>
                   </div>
 
                   <!-- Actions -->
-                  <div class="card-actions justify-end pt-4">
+                  <div class="flex justify-end pt-4 border-t border-gray-200">
                     <button
                       type="submit"
-                      class="btn btn-primary"
+                      class="px-6 py-2.5 bg-primary text-white rounded-lg font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       :disabled="!isFormValid || isSaving"
                     >
-                      <span v-if="isSaving" class="loading loading-spinner loading-sm"></span>
+                      <span v-if="isSaving" class="loading loading-spinner loading-sm mr-2"></span>
                       {{ isSaving ? 'Saving...' : 'Save Settings' }}
                     </button>
                   </div>
