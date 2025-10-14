@@ -1,14 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getQuery } from "h3";
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const quantity = Number(query.quantity) || 1;
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
 
   const { data, error } = await supabase
     .from("turkish_expressions_knowledge")

@@ -1,28 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getRouterParam, getHeader, createError } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
-  // Get the authorization header from the request
-  const authHeader = getHeader(event, 'authorization')
-  if (!authHeader) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Authorization header required'
-    })
-  }
-
-  // Create Supabase client with user's auth token
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
-    {
-      global: {
-        headers: {
-          Authorization: authHeader
-        }
-      }
-    }
-  )
+const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
 
   // Verify the user is authenticated
   const { data: { user }, error: userError } = await supabase.auth.getUser()

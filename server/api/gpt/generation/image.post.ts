@@ -1,20 +1,19 @@
 import OpenAI from "openai";
 import { defineEventHandler, readBody } from "h3";
-import { createClient } from "@supabase/supabase-js";
 import { getPromptForImageGeneration } from "../../../utils/gpt/image-generation";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/auth/supabaseClient";
 
 const openai = new OpenAI();
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
 export default defineEventHandler(async (event) => {
   try {
+    const supabaseAuthToken = createSupabaseClientWithUserAuthTokenFromHeader(event)
     const body = await readBody(event);
+    const userId = body.userId;
     if (!body.prompt) {
       throw new Error('Missing prompt');
     }
+    console.log('gpt/generation/image.post', body)
 
     // Validate required environment variables
     if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_KEY) {
@@ -36,13 +35,12 @@ export default defineEventHandler(async (event) => {
     // Generate a unique filename
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 15);
-    const fileName = `gpt_image_${timestamp}_${random}.png`;
-
+    const fileName = `${userId}/gpt_image_${timestamp}_${random}.png`;
     // Upload to Supabase storage
     const bucketName = process.env.SUPABASE_BUCKET_NAME || 'images';
     console.log(`Uploading image to Supabase storage: ${fileName} in bucket ${bucketName}`);
 
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { data: uploadData, error: uploadError } = await supabaseAuthToken.storage
       .from(bucketName)
       .upload(fileName, imageBuffer, {
         cacheControl: '3600',
@@ -58,7 +56,7 @@ export default defineEventHandler(async (event) => {
       });
       
       // Check if bucket exists
-      const { data: buckets } = await supabase.storage.listBuckets();
+      const { data: buckets } = await supabaseAuthToken.storage.listBuckets();
       const bucketExists = buckets?.some(bucket => bucket.name === bucketName);
       if (!bucketExists) {
         console.error(`Bucket '${bucketName}' does not exist. Available buckets:`, buckets?.map(b => b.name));
@@ -75,7 +73,7 @@ export default defineEventHandler(async (event) => {
     console.log('Upload successful:', uploadData);
 
     // Get the public URL
-    const { data: urlData } = supabase.storage
+    const { data: urlData } = supabaseAuthToken.storage
       .from(bucketName)
       .getPublicUrl(uploadData.path);
 
@@ -85,11 +83,10 @@ export default defineEventHandler(async (event) => {
     // Update story if storyId is provided
     if (body.storyId) {
       try {
-        await supabase
+        await supabaseAuthToken
           .from("turkish_lessons")
           .update({ img_url: supabaseImageUrl })
           .eq("id", body.storyId);
-        console.log(`Updated story ${body.storyId} with image URL`);
       } catch (updateError) {
         console.error('Error updating story:', updateError);
       }

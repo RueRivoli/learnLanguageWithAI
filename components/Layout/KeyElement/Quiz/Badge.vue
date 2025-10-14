@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ArrowTrendingUpIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/solid';
-import { handleGenerationQuiz } from '~/utils/learning/quiz';
 
 const props = withDefaults(
   defineProps<{

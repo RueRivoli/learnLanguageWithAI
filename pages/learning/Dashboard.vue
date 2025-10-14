@@ -4,6 +4,7 @@ import { ChartBarIcon } from "@heroicons/vue/24/solid";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
 import { dashboardCategoryTabs } from "~/utils/dashboard/tabs";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "authenticated",
@@ -27,12 +28,16 @@ onMounted(async () => {
     userScoreStore.setCount();
   }
 });
+
 watchEffect(async () => {
   if (user.value) {
     const userId = user.value.id;
     try {
+      const headers = await getAuthToken();
+      console.log("headers", headers);
       const profile = await $fetch(`/api/profiles/${userId}`, {
         method: "GET",
+        headers,
       });
       if (profile && !profile[0].language_learned) {
         languageSelectionModal.value?.openModal();
@@ -50,8 +55,10 @@ const handleLanguageUpdated = async (
   userStore.setProfile(profile);
   pseudoDefinitionModal.value?.openModal();
   if (user.value) {
+    const headers = await getAuthToken();
     await $fetch(`/api/grammar-scores/fill/${user.value.id}`, {
       method: "POST",
+      headers,
       body: {
         language_learned: profile.language_learned,
       },

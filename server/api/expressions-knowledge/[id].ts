@@ -1,12 +1,9 @@
-import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getRouterParam } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
     const expressionId = getRouterParam(event, "id");
     const { error } = await supabase
       .from("turkish_expressions_knowledge")

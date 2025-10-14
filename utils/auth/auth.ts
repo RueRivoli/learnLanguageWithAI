@@ -52,3 +52,14 @@ export const testValidEmailPassword = (state: Schema) => {
       return false;
     }
   };
+
+
+  export const getAuthToken = async () => {
+    const { data: { session } } = await useSupabaseClient().auth.getSession();
+    console.log("session", session);
+    const headers: Record<string, string> = {};
+    if (session?.access_token) {
+      headers['Authorization'] = `Bearer ${session.access_token}`;
+    }
+    return headers;
+  }

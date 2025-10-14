@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import type { UserScore, VocabularyScore, GrammarScores } from "~/types/users/score";
+import { getAuthToken } from "~/utils/auth/auth";
 
 export const useUserScoreStore = defineStore("user-score", {
   state: (): UserScore => {
@@ -16,11 +17,14 @@ export const useUserScoreStore = defineStore("user-score", {
   },
   actions: {
     async setCount () {
+      const headers = await getAuthToken();
       const { count: totalWords }= await $fetch('/api/words/count/', {
         method: "GET",
+        headers,
       });
       const { count: totalExpressions } = await $fetch('/api/expressions/count/', {
         method: "GET",
+        headers,
       });
       this.totalWords = totalWords
       this.totalExpressions = totalExpressions

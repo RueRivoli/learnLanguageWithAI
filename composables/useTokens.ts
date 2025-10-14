@@ -1,16 +1,13 @@
+import { getAuthToken } from "~/utils/auth/auth";
+
 export const useTokens = () => {
   const userStore = useUserStore();
   const isLoadingBalance = ref(false);
-
+  const user = useSupabaseUser();
   const fetchTokenBalance = async () => {
     try {
       isLoadingBalance.value = true;
-      const { data: { session } } = await useSupabaseClient().auth.getSession();
-      const headers: Record<string, string> = {};
-      if (session?.access_token) {
-        headers['Authorization'] = `Bearer ${session.access_token}`;
-      }
-
+      const headers = await getAuthToken();
       const balance = await $fetch('/api/tokens/balance', { headers });
       
       if (balance) {

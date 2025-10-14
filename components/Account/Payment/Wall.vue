@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { SparklesIcon } from "@heroicons/vue/24/solid";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "authenticated",
@@ -88,13 +89,7 @@ const handlePurchase = async (tokens: number) => {
   try {
     isPurchasing.value = true;
     
-    const { data: { session } } = await useSupabaseClient().auth.getSession();
-    const headers: Record<string, string> = {};
-    if (session?.access_token) {
-      headers['Authorization'] = `Bearer ${session.access_token}`;
-    }
-
-    // Create Stripe checkout session
+    const headers = await getAuthToken();
     const response = await $fetch<{ sessionId: string; url: string }>('/api/stripe/create-checkout', {
       method: 'POST',
       headers,

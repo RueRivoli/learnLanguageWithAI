@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DOMPurify from "dompurify";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
+import { getAuthToken } from "~/utils/auth/auth";
 import { parseRuleData } from "~/utils/learning/grammar";
 
 definePageMeta({
@@ -8,13 +9,17 @@ definePageMeta({
 });
 
 const route = useRoute();
-const grammarRuleId = route.params.id;
 const isLoading = ref<boolean>(true);
 const lastQuizzes = ref([]);
 const grammarRule = ref<GrammarRule | null>(null);
 
 const getGrammarRule = async () => {
-  const { data, error } = await useFetch(`/api/grammar/${route.params.id}`);
+  const headers = await getAuthToken();
+  const { data } = await useFetch(`/api/grammar/${route.params.id}`, 
+    {
+      headers,
+    }
+  );
   if (data) {
     grammarRule.value = parseRuleData(data.value);
     isLoading.value = false;
@@ -24,23 +29,19 @@ const getGrammarRule = async () => {
 
 const getlastQuizzes = async () => {
   console.log("grammarRuleId", route.params.id);
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
-  const { data, error } = await useFetch(
+  const headers = await getAuthToken();
+  const { data } = await useFetch(
     `/api/quizzes/rules/${route.params.id}`,
     {
       headers,
     }
   );
-  console.log("last quizzes", data.value);
   if (data) {
     lastQuizzes.value = data.value?.map(({ id, created_at, score_global }) => ({
       id,
       createdAt: created_at,
       score: score_global,
     }));
-    console.log("last quizzes 2", lastQuizzes.value);
     isLoading.value = false;
   }
 };

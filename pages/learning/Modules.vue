@@ -10,6 +10,7 @@ import {
 } from "~/utils/learning/grammar";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { parseRules } from "~/utils/learning/grammar";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "authenticated",
@@ -51,9 +52,7 @@ watchEffect(async () => {
   try {
     isFetchingGrammarRules.value = true;
     const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
-    const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+    const headers = await getAuthToken();
     const grammarModules = await $fetch("/api/grammar?order_by=id", {
       headers,
       query,

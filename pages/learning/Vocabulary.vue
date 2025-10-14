@@ -16,6 +16,7 @@ import type {
   DatabaseWords,
 } from "~/utils/learning/vocabulary.ts";
 import { BookOpenIcon } from "@heroicons/vue/24/outline";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "authenticated",
@@ -78,9 +79,7 @@ const {
 // Fetch data
 const getWordList = async () => {
   isLoadingFetchingWords.value = true;
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+  const headers = await getAuthToken();
   const { data } = await useFetch(
     `/api/words?page=${currentPage.value}&size=28`,
     {
@@ -107,9 +106,7 @@ const getWordList = async () => {
 
 const getExpressionList = async () => {
   isLoadingFetchingExpressions.value = true;
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+  const headers = await getAuthToken();
   const { data: dataExpr } = await useFetch(
     `/api/expressions?page=${currentPageExpr.value}&size=32`,
     {
@@ -176,13 +173,17 @@ const handleGoToNextPageForExpressions = async () => {
 const handleWordLearningStatus = async (wordId: number, isLearned: boolean) => {
   console.log("edit learning status word", wordId, isLearned);
   if (isLearned) {
+    const headers = await getAuthToken();
     await $fetch(`/api/words-knowledge/${wordId}`, {
       method: "DELETE",
+      headers,
     });
   } else {
     console.log("tere");
+    const headers = await getAuthToken();
     await $fetch(`/api/words-knowledge/${wordId}`, {
       method: "PUT",
+      headers,
       body: {
         word_mastered: true,
         user_id: userStore.$state.id,
@@ -198,12 +199,16 @@ const handleExpressionLearningStatus = async (
   isLearned: boolean,
 ) => {
   if (isLearned) {
+    const headers = await getAuthToken();
     await $fetch(`/api/expressions-knowledge/${expressionId}`, {
       method: "DELETE",
+      headers,
     });
   } else {
+    const headers = await getAuthToken();
     await $fetch(`/api/expressions-knowledge/${expressionId}`, {
       method: "PUT",
+      headers,
       body: {
         expression_mastered: true,
         user_id: userStore.$state.id,

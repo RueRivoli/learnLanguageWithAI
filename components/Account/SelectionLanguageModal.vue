@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getAuthToken } from "~/utils/auth/auth";
 import { languages } from "~/utils/syllabus";
 const emit = defineEmits(["languageUpdated"]);
 const props = withDefaults(
@@ -18,8 +19,10 @@ const isSavingLanguageLearned = ref(false);
 const handleSelectLanguage = async () => {
   isSavingLanguageLearned.value = true;
   try {
+    const headers = await getAuthToken();
     const profile = await $fetch(`/api/profiles/${props.userId}`, {
       method: "PUT",
+      headers,
       body: {
         language_learned: selectedLanguage.value,
       },

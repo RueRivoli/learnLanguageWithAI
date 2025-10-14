@@ -1,31 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam, getHeader, createError } from "h3";
+import { defineEventHandler, getRouterParam } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const userId = getRouterParam(event, "id");
-  const authHeader = getHeader(event, 'authorization');
-  console.log('authHeader', authHeader)
-  if (!authHeader) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Authorization header required'
-    });
-  }
 
-  // Créer le client avec le token de l'utilisateur
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
-    {
-      global: {
-        headers: {
-          Authorization: authHeader
-        }
-      }
-    }
-  );
-
-  console.log('userId', userId)
   const reqGrammarScores = supabase
   .from("turkish_grammar_scores")
   .select(

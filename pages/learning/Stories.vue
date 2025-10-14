@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { EyeIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { DocumentIcon } from "@heroicons/vue/24/solid";
+import { getAuthToken } from "~/utils/auth/auth";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 
 definePageMeta({
@@ -13,6 +14,7 @@ const lessonNameToDelete = ref<{ title: string; id: number } | null>(null);
 const isFetchingData = ref(false);
 const isDeletingLesson = ref(false);
 const itemsPerPage = ref(10);
+const user = useSupabaseUser();
 const {
   currentPage,
   endItem,
@@ -29,12 +31,7 @@ const fetchLessons = async () => {
   isFetchingData.value = true;
   
   // Get the current session for authentication
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) {
-    headers['Authorization'] = `Bearer ${session.access_token}`
-  }
-  
+  const headers = await getAuthToken();
   const results = await $fetch(
     `/api/lessons?page=${currentPage.value}&size=10`,
     { headers }
@@ -55,12 +52,7 @@ watchEffect(async () => {
 const handleDeleteLesson = async () => {
   isDeletingLesson.value = true;
   if (lessonNameToDelete.value?.id) {
-    const { data: { session } } = await useSupabaseClient().auth.getSession()
-    const headers: Record<string, string> = {}
-    if (session?.access_token) {
-      headers['Authorization'] = `Bearer ${session.access_token}`
-    }
-    
+    const headers = await getAuthToken();
     await $fetch(`/api/lessons/${lessonNameToDelete.value.id}`, {
       method: "DELETE",
       headers
@@ -80,7 +72,8 @@ const handleCancel = () => {
 const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
   console.log("handleGenerateQuiz", ruleId, lessonId);
   if (!ruleId || !lessonId) return;
-  await handleGenerationQuiz(ruleId, `/learning/lessons/${lessonId}/quiz`, String(lessonId));
+  if (!user.value?.id) return;
+  await handleGenerationQuiz(ruleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, String(lessonId));
 };
 </script>
 
@@ -201,7 +194,7 @@ const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
                   <td>
                       <div class="flex items-center hover:cursor-pointe">
                         <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
-                        <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global" :score="lesson.turkish_quizzes_result.score_global" size="sm" :quizId="lesson.quiz_id" :filledOut="true"/>
+                        <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global || lesson.turkish_quizzes_result?.score_global === 0" :score="lesson.turkish_quizzes_result.score_global" size="sm" :quizId="lesson.quiz_id" :filledOut="true"/>
                         <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false" @click="handleGenerateQuiz(lesson.turkish_grammar_rules.id, lesson.id)"/>
                       </div>
                     </td>

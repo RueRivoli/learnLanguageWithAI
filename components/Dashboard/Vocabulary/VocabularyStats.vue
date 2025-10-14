@@ -2,6 +2,7 @@
 import { optionExpressions, optionWords } from "~/utils/dashboard/graphOptions";
 import { useUserScoreStore } from "~/stores/user-score-store";
 import { BookOpenIcon, LanguageIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
+import { getAuthToken } from "~/utils/auth/auth";
 const userScoreStore = useUserScoreStore();
 
 // Grid navigation state
@@ -31,7 +32,9 @@ const fetchWordsForBatch = async () => {
   isLoadingWords.value = true;
   try {
     const page = Math.floor((currentBatch.value * wordsPerBatch) / 16) + 1;
+    const headers = await getAuthToken();
     const { data } = await $fetch(`/api/words?page=${page}&size=16`, {
+      headers,
       query: { is_learned: 'false' }
     });
     
@@ -121,8 +124,10 @@ const fetchExpressionsForBatch = async () => {
   
   isLoadingExpressions.value = true;
   try {
+    const headers = await getAuthToken();
     const page = Math.floor((currentExpressionBatch.value * expressionsPerBatch) / 10) + 1;
     const { data } = await $fetch(`/api/expressions?page=${page}&size=10`, {
+      headers,
       query: { is_learned: 'false' }
     });
     

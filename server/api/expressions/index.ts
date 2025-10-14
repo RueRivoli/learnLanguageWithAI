@@ -1,11 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
-import { createError, defineEventHandler, getHeader, getQuery } from "h3";
-import { createSupabaseClientWithUserAuthToken } from "../../utils/auth/supabaseClient";
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+import { defineEventHandler, getQuery } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -15,15 +9,7 @@ export default defineEventHandler(async (event) => {
   const to = (Number(page) * Number(size) - 1)
   let request
 
-  const authHeader = getHeader(event, 'authorization')
-  if (!authHeader) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Authorization header required'
-    })
-  }
-  const supabase = createSupabaseClientWithUserAuthToken(authHeader)
-
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   if (query.is_learned === 'true') {
     request = supabase
     .from("turkish_expressions")
@@ -38,6 +24,7 @@ export default defineEventHandler(async (event) => {
       "id, turkish_expressions_knowledge!inner(expression_mastered)").eq("turkish_expressions_knowledge.expression_mastered", true)
     if (data) {
         const learnedExpressionIdsToExclude = data.map(({id}) => id)
+        console.log('learnedExpressionIdsToExclude', learnedExpressionIdsToExclude)
         const IdToExclude = `(${learnedExpressionIdsToExclude.join(',')})`
         request = supabase
         .from("turkish_expressions")

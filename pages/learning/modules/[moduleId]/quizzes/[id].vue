@@ -10,6 +10,7 @@ import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "quiz",
@@ -19,7 +20,7 @@ definePageMeta({
 const route = useRoute();
 const moduleId = Number(route.params.moduleId);
 const quizId = Number(route.params.id);
-
+const userId = useSupabaseUser().value?.id;
 const isLoadingQuiz = ref<boolean>(true);
 
 // List of questions for grammar
@@ -43,7 +44,8 @@ const closeResultsModal = () => {
 };
 
 const getGrammarRuleMetaData = async () => {
-  const { data } = await useFetch(`/api/grammar/${moduleId}`);
+  const headers = await getAuthToken();
+  const { data } = await useFetch(`/api/grammar/${moduleId}`, { headers });
   if (data.value) {
     grammarRuleMetaData.value = {
       level: data.value.difficulty_class,
@@ -56,7 +58,9 @@ const getGrammarRuleMetaData = async () => {
 };
 
 const getGrammarQuizData = async () => {
+  const headers = await getAuthToken();
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
+    headers,
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
       return quizQuestions.map((question) => parseGrammarQuizQuestion(question));
     },
@@ -71,14 +75,12 @@ const getGrammarQuizData = async () => {
 const handleSubmitQuiz = async (results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
   console.log('handleSubmitQuiz', results)
   detailedResults.value = results.detailedResults;
-  console.log('detailedResults', detailedResults.value)
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+  const headers = await getAuthToken();
   await $fetch(`/api/quizzes/result/${quizId}`, {
     method: "PUT",
     headers,
     body: {
+      userId,
       ruleId: grammarRuleMetaData.value?.id,
       score: results.score,
       detailedResults: results.detailedResults,

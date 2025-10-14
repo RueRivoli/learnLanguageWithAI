@@ -25,8 +25,8 @@ const props = withDefaults(
 <!-- Total Expressions Mastered - Professional Design -->
 <div :class="[
   props.lightMode 
-    ? 'bg-slate-200 group relative rounded-xl shadow-md border border-slate-300 px-4 py-1 overflow-hidden transition-all duration-300'
-    : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-xl shadow-md border border-emerald-300/70 px-4 py-1 overflow-hidden transition-all duration-300'
+    ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300 px-4 py-1 overflow-hidden transition-all duration-300'
+    : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-lg shadow-md border border-emerald-300/70 px-4 py-1 overflow-hidden transition-all duration-300'
 ]">
     <!-- Professional background pattern -->
     <div v-if="!props.lightMode" class="absolute inset-0 bg-gradient-to-br from-emerald-100/70 via-green-100/80 to-teal-100/60 opacity-90"/>

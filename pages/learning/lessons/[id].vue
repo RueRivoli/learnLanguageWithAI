@@ -29,6 +29,8 @@ const activeSentenceTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
 const areWordsExampleShown = ref<boolean>(false);
 const areExpressionsExampleShown = ref<boolean>(false);
+const loadingImage = computed(() => route.query.loadingImage as string);
+const user = useSupabaseUser();
 
 const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
@@ -38,7 +40,8 @@ const toggleSentenceTranslation = (index: number) => {
 
 const handleGenerateQuiz = async () => {
   if (!lesson.value?.grammarRuleId) return;
-  await handleGenerationQuiz(lesson.value?.grammarRuleId, `/learning/lessons/${lessonId}/quiz`, lessonId);
+  if (!user.value?.id) return;
+  await handleGenerationQuiz(lesson.value?.grammarRuleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, lessonId);
   // Refresh lesson data after quiz generation to get updated quizId
   await refresh();
   // Notify other components about the lesson modification
@@ -234,14 +237,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   <div class="absolute -inset-4"></div>
                   <!-- No image state - image being generated -->
                                      <!-- Actual image -->
-                  <img 
-                    v-if="!imageUrl"
-                    src="~/public/default-image.png" 
-                    alt="Lesson illustration" 
-                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
-                  />
-                  <!-- <div 
-                    v-if="!imageUrl"
+                                     <div 
+                    v-if="!imageUrl && loadingImage === 'true'"
                     class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-50 to-gray-100"
                   >
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -256,7 +253,14 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </div>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
+                  <img 
+                    v-else-if="!imageUrl"
+                    src="~/public/default-image.png" 
+                    alt="Lesson illustration" 
+                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
+                  />
+
                   
 
                   <img 

@@ -1,32 +1,21 @@
-import { defineEventHandler, getHeader, createError } from 'h3';
-import { createClient } from '@supabase/supabase-js';
+import { defineEventHandler, createError, readBody } from 'h3';
+import { createServiceRoleClient, createSupabaseClientWithUserAuthTokenFromHeader } from '../../utils/auth/supabaseClient';
 
+const supabase = createServiceRoleClient()
 
 export default defineEventHandler(async (event) => {
-  const authHeader = getHeader(event, 'authorization');
-  if (!authHeader) {
-    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
-  }
-
-  const supabaseAuth = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_ANON_KEY!,
-    {
-      global: {
-        headers: { Authorization: authHeader }
-      }
-    }
-  );
-
+  const supabaseAuth = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const { data: { user }, error: userError } = await supabaseAuth.auth.getUser();
-  if (userError || !user?.id) {
-    throw createError({ statusCode: 401, statusMessage: 'Invalid user' });
-  }
+  console.log('user', user)
+  console.log('error', userError)
+  // if (userError || !user?.id) {
+  //   throw createError({ statusCode: 401, statusMessage: 'Invalid user' });
+  // }
 
-  const { data, error } = await supabaseAuth
+  const { data, error } = await supabase
     .from('profiles')
     .select('tokens_available, tokens_purchased_total, last_token_purchase_date')
-    .eq('id', user.id)
+    .eq('id', user?.id)
     .single();
 
   if (error) throw error;

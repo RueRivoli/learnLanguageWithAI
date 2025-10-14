@@ -11,6 +11,7 @@ import type { WordMetadata } from "~/types/vocabulary/word";
 import type { ExpressionMetadata } from "~/types/vocabulary/expression";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "authenticated",
@@ -79,8 +80,10 @@ const groupedModuleOptions = computed(() => {
 const getModulesWithLowScores = async () => {
   if (userId.value) {
     try {
+      const headers = await getAuthToken();
       const modules = await $fetch(
         `/api/grammar-scores/${userId.value}?order_by=score`,
+        { headers },
       );
       if (modules) {
         // Store original data for grouping
@@ -112,7 +115,8 @@ const getModulesWithLowScores = async () => {
 const getWordsWithLowScores = async () => {
   if (userId.value) {
     try {
-      const words = await $fetch(`/api/words/levels/${userId.value}?limit=50`);
+      const headers = await getAuthToken();
+      const words = await $fetch(`/api/words/levels/${userId.value}?limit=50`, {headers});
     if (words) wordList.value = words;
   } catch (error) {
     console.log("Error fetching words with low scores", words.error);
@@ -123,8 +127,10 @@ const getWordsWithLowScores = async () => {
 const getExpressionsWithLowScores = async () => {
   if (userId.value) {
     try {
+    const headers = await getAuthToken();
     const expressions = await $fetch(
       `/api/expressions/levels/${userId.value}?limit=50`,
+      {headers}
     );
     if (expressions) expressionList.value = expressions;
   } catch (error) {
@@ -219,8 +225,8 @@ const handleGenerateStory = async () => {
     );
     console.log("newLesson", newLesson);
     const promptForImageGeneration = newLesson.promptForImageGeneration;
-    generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1");
-    router.push(`/learning/lessons/${String(newLesson.id)}`);
+    generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1", userId.value);
+    router.push(`/learning/lessons/${String(newLesson.id)}?loadingImage=true`);
     isGeneratingLesson.value = false;
   }
 };

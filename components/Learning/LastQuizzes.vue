@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { PlayIcon, TrophyIcon, ClockIcon } from "@heroicons/vue/24/outline";
-import { formatDate } from "~/utils/date/date";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
-import { useRouter } from "vue-router";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
-import { getColorStyleClass } from "~/utils/learning/grammar";
 
 const isLoading = ref(false);
+const user = useSupabaseUser();
 const props = withDefaults(
   defineProps<{
     loading?: boolean;
@@ -24,7 +22,8 @@ const handleGenerateQuiz = async () => {
   if (!props.rule?.id) return;
   isLoading.value = true;
   try {
-    await handleGenerationQuiz(props.rule?.id, `/learning/modules/${props.rule.id}/quizzes`, null, 10);
+    if (!user.value?.id) return;
+    await handleGenerationQuiz(props.rule?.id, user.value?.id, `/learning/modules/${props.rule.id}/quizzes`, null, 10);
   } catch (error) {
     console.error("Error generating quiz:", error);
   } finally {

@@ -12,8 +12,10 @@ import {
   ChartBarIcon,
   DocumentIcon,
   Square2StackIcon,
-  StarIcon,
 } from "@heroicons/vue/24/outline";
+import {
+  StarIcon,
+} from "@heroicons/vue/24/solid";
 import {
   Dialog,
   DialogOverlay,
@@ -215,9 +217,9 @@ const isActive = (path: string) => {
                       <div class="font-semibold text-neutral">
                         {{ userPseudo }}
                       </div>
-                      <div class="w-full flex items-center">
+                      <div class="w-full flex items-center justify-end">
                         <StarIcon class="h-4 w-4 ml-2 text-indigo-600" />
-                        <span>{{ userStore.$state.tokensAvailable }}</span>
+                        <span class="text-primary">{{ userStore.$state.tokensAvailable }}</span>
                     </div>
                     </div>
                   </div>
@@ -476,9 +478,9 @@ const isActive = (path: string) => {
         <div v-if="!isSideBarMinifiedForDesktopVersion" class="ml-3">
           <div class="flex items-center">
             <div class="font-semibold text-neutral">{{ userPseudo }}</div>
-            <div class="w-full flex items-center">
-              <StarIcon class="h-4 w-4 ml-2 text-indigo-600" />
-              <span>{{ userStore.$state.tokensAvailable }}</span>
+            <div class="w-full flex items-center justify-end">
+              <StarIcon class="h-4 w-4 text-indigo-600" />
+              <span class="text-primary font-bold">{{ userStore.$state.tokensAvailable }}</span>
             </div>
           </div>
         </div>

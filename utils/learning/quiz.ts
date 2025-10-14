@@ -1,5 +1,6 @@
 import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quizzes/quiz";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
+import { getAuthToken } from "../auth/auth";
 
 
 export const getScoreBackgroundColorClass = (score: number) => {
@@ -48,24 +49,23 @@ export const parseGrammarQuizQuestion = (question: QuizFetchedQuestion): Grammar
 };
 
 
-export const handleGenerationQuiz = async (ruleId: number, redirectionPath: string, lessonId?: string | null, length = 5) => {
+export const handleGenerationQuiz = async (ruleId: number, userId: string, redirectionPath: string, lessonId?: string | null, length = 5) => {
   try {
     // Attach Authorization header from Supabase session for secure server-side auth
-    const { data: { session } } = await useSupabaseClient().auth.getSession()
-    const headers: Record<string, string> = {}
-    if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
-    // Call quizzes endpoint to generate a quiz for ruleId props.rule?.id
+    const headers = await getAuthToken();
     const response = await $fetch<{ quizId: number }>(`/api/quizzes/${ruleId}`, {
       method: "PUT",
       headers,
       body: {
         numberOfQuestions: length,
+        userId: userId,
       },
     });
     console.log("has generated a quiz with the quizId: ", response.quizId);
     // response is the id of the new generated quiz
     if (lessonId) await $fetch(`/api/lessons/${lessonId}`, {
       method: "PUT", 
+      headers,
       body: {
         quizId: response.quizId,
       },

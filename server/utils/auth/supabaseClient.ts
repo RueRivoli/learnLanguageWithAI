@@ -1,5 +1,6 @@
 
 import { createClient } from "@supabase/supabase-js";
+import { createError, getHeader } from "h3";
   // Create Supabase client with user's auth token
   export const createSupabaseClientWithUserAuthToken = (authHeader: string) => {
     return createClient(
@@ -14,3 +15,21 @@ import { createClient } from "@supabase/supabase-js";
         }
       )
   }
+
+export const createSupabaseClientWithUserAuthTokenFromHeader = (event: any) => {
+  const authHeader = getHeader(event, 'authorization')
+  if (!authHeader) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authorization header required'
+    })
+  }
+  return createSupabaseClientWithUserAuthToken(authHeader)
+}
+
+export const createServiceRoleClient = () => {
+  return createClient(
+    process.env.SUPABASE_URL,
+    process.env.SERVICE_SUPABASE_KEY,
+  );
+}

@@ -1,3 +1,4 @@
+import { getAuthToken } from "../auth/auth"
 import { getPromptForStoryGeneration } from "../prompts/openai"
 import { lessonUpdateBus } from "~/composables/useLessonUpdates"
 
@@ -27,15 +28,18 @@ export const generateAIPoweredStoryWithParameters = async (userId: string, gramm
 }
 
 
-export const generateImageWithPrompt = async (prompt: string, storyId: number, model: string) => {
+export const generateImageWithPrompt = async (prompt: string, storyId: number, model: string, userId: string) => {
  // const promptForImageGeneration = getPromptForImageGeneration(prompt)
  // console.log('promptForImageGeneration', promptForImageGeneration)
   console.log('storyId', storyId)
+  console.log('model', model)
+  const headers = await getAuthToken();
   switch (model) {
     case "gpt-4.1":
       const output = await $fetch("/api/gpt/generation/image", {
         method: 'POST',
-        body: { prompt, storyId: storyId}
+        headers,
+        body: { prompt, storyId: storyId, userId: userId}
       })
       console.log('🖼️ Image generated successfully:', {
         storyId,
@@ -49,7 +53,8 @@ export const generateImageWithPrompt = async (prompt: string, storyId: number, m
     case "replicate":
       await $fetch("/api/replicate/generate", {
         method: 'POST',
-        body: { prompt: promptForImageGeneration, storyId: storyId}
+        headers,
+        body: { prompt, storyId: storyId}
       })
       break
   }

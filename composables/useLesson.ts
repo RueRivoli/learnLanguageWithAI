@@ -3,6 +3,7 @@ import { lessonMapping } from "~/utils/learning/lesson";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { parseRuleData } from "~/utils/learning/grammar";
 import { lessonUpdateBus } from "./useLessonUpdates";
+import { getAuthToken } from "~/utils/auth/auth";
 
 export interface LessonWithRelatedData {
   lesson: Lesson | null;
@@ -112,7 +113,8 @@ export const useLesson = (lessonId: string | Ref<string>) => {
     
     try {
       grammarRuleLoading.value = true;
-      const { data, error: grammarError } = await useFetch(`/api/grammar/${grammarRuleId}`);
+      const headers = await getAuthToken();
+      const { data, error: grammarError } = await useFetch(`/api/grammar/${grammarRuleId}`, { headers });
       
       if (grammarError.value) throw grammarError.value;
       

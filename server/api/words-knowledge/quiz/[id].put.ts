@@ -1,12 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getQuery, getRouterParam, readBody } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const userId = getRouterParam(event, "id");
   const body = readBody(event)
   const masteredWordIds = body.word_mastered_id

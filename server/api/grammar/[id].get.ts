@@ -1,11 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler } from "h3";
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const id = event.context.params?.id;
 
   const { data, error } = await supabase

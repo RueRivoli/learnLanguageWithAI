@@ -1,13 +1,10 @@
 import { LanguagesTableKey } from "~/utils/languages";
-import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam } from "h3";
+import { defineEventHandler, getRouterParam, readBody } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const userId = getRouterParam(event, "id");
   if (!userId) {
     throw ("Missing user ID");

@@ -1,29 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 import { createError, defineEventHandler, getHeader, getQuery } from "h3";
-import { createSupabaseClientWithUserAuthToken } from "../../utils/auth/supabaseClient";
+import { createSupabaseClientWithUserAuthToken, createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const query = getQuery(event);
   const page = query.page
   const size = query.size
   const from = (Number(page) - 1) * Number(size)
   const to = (Number(page) * Number(size) - 1)
   let request
-
-  const authHeader = getHeader(event, 'authorization')
-  if (!authHeader) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Authorization header required'
-    })
-  }
-  // Create Supabase client with user's auth token
-  const supabase = createSupabaseClientWithUserAuthToken(authHeader)
   
   if (query.is_learned === 'true') {
     request = supabase

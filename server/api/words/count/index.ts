@@ -1,12 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
 import { defineEventHandler, getQuery } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
-export default defineEventHandler(async () => {
+
+export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
     const {count, error} = await supabase
     .from("turkish_words")
     .select('id', { count: 'exact', head: true })

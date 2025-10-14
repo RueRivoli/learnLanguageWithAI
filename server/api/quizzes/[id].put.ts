@@ -1,39 +1,16 @@
 import { defineEventHandler, getRouterParam, readBody, getHeader } from "h3";
 import { getRandomQuizzes } from "../quiz-models/[id].get";
-import { createClient } from "@supabase/supabase-js";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
 
 export default defineEventHandler(async (event) => {
   console.log('quizzes/[id].put.ts ==> start')
   try {
     const ruleId = getRouterParam(event, "id");
+    const body = await readBody(event);
     const { numberOfQuestions } = await readBody(event);
-    // Resolve current user from Authorization header
-    const authHeader = getHeader(event, 'authorization')
-    if (!authHeader) {
-      throw new Error('Authorization header required')
-    }
-    const supabaseAuth = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_ANON_KEY,
-      {
-        global: {
-          headers: {
-            Authorization: authHeader
-          }
-        }
-      }
-    )
-    const { data: { user }, error: userError } = await supabaseAuth.auth.getUser()
-    if (userError) throw userError
-    if (!user?.id) {
-      throw new Error('Unable to resolve authenticated user')
-    }
-    const userId = user.id
+    const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
+    const userId = body.userId
 
     // CHECK TOKEN BALANCE (0.5 tokens per quiz)
     const { data: profile } = await supabase
@@ -61,6 +38,7 @@ export default defineEventHandler(async (event) => {
     // 2 questions easy, 2 intermediate and 1 difficult
     const quizPromises = difficultyLevels.map(async (level) => {
       const questionsForLevel = await getRandomQuizzes(
+        supabase,
         ruleId,
         level.category,
         level.quantity - 1,
@@ -69,7 +47,7 @@ export default defineEventHandler(async (event) => {
     });
 
     const allQuizzes = await Promise.all(quizPromises);
-
+    console.log('allQuizzes', allQuizzes)
     const finalQuiz = allQuizzes.flat();
     console.log('finalQuiz', finalQuiz[0], finalQuiz[1], finalQuiz[2], finalQuiz[3], finalQuiz[4])
     // register new quiz in result_quizzes
@@ -82,7 +60,7 @@ export default defineEventHandler(async (event) => {
       })
       .select("id")
       .single();
-
+      console.log('data', data)
     // DEDUCT 0.5 TOKENS AFTER SUCCESSFUL QUIZ GENERATION
     if (data) {
       await supabase

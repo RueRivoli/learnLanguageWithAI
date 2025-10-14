@@ -1,13 +1,10 @@
-import { languages } from '~/utils/syllabus';
-import { createClient } from "@supabase/supabase-js";
-import { defineEventHandler, getRouterParam } from "h3";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+import { defineEventHandler, getRouterParam, readBody } from "h3";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from '../../utils/auth/supabaseClient';
+
 
 export default defineEventHandler(async (event) => {
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
   const userId = getRouterParam(event, "id");
   const body = await readBody(event);
   if (!userId) {

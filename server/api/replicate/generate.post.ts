@@ -1,11 +1,8 @@
 import { defineEventHandler, readBody } from "h3";
-import { createClient } from "@supabase/supabase-js";
 import Replicate from "replicate";
+import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
+
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -53,6 +50,7 @@ const processReadableStream = async (stream: ReadableStream): Promise<string | n
 
 export default defineEventHandler(async (event) => {
   try {
+    const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
     const body = await readBody(event);
     
     if (!body.prompt) {

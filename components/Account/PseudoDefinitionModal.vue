@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getInitials } from "~/utils/account/profile";
 import { useUserScoreStore } from "~/stores/user-score-store";
+import { getAuthToken } from "~/utils/auth/auth";
 
 const props = withDefaults(
   defineProps<{
@@ -20,8 +21,10 @@ const isSavingPseudo = ref(false);
 
 const handleDefinePseudo = async () => {
   isSavingPseudo.value = true;
+  const headers = await getAuthToken();
   const profile = await $fetch(`/api/profiles/${props.userId}`, {
     method: "PUT",
+    headers,
     body: {
       pseudo: pseudo.value,
       initials: getInitials(pseudo.value),

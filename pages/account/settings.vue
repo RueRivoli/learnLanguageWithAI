@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { UserIcon, CheckCircleIcon, ExclamationCircleIcon, SparklesIcon } from "@heroicons/vue/24/solid";
 import { loadStripe } from '@stripe/stripe-js';
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "authenticated",
@@ -106,8 +107,10 @@ const handleSaveSettings = async () => {
     showErrorMessage.value = false;
 
     // Update profile via API
+    const headers = await getAuthToken();
     await $fetch(`/api/profiles/${userStore.id}`, {
       method: "PUT",
+      headers,
       body: {
         pseudo: formData.value.pseudo.trim(),
         language_learned: "tr", // Turkish only
@@ -140,17 +143,15 @@ const handlePurchase = async (tokens: number) => {
   try {
     isPurchasing.value = true;
     
-    const { data: { session } } = await useSupabaseClient().auth.getSession();
-    const headers: Record<string, string> = {};
-    if (session?.access_token) {
-      headers['Authorization'] = `Bearer ${session.access_token}`;
-    }
-
+    const headers = await getAuthToken();
     // Create Stripe checkout session
     const response = await $fetch<{ sessionId: string; url: string }>('/api/stripe/create-checkout', {
       method: 'POST',
       headers,
-      body: { packageType: tokens }
+      body: { 
+        packageType: tokens,
+        userId: userStore.id
+       }
     });
 
     if (response?.url) {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getAuthToken } from '~/utils/auth/auth';
+
 const userStore = useUserStore();
 const user = useSupabaseUser();
 const client = useSupabaseClient();
@@ -16,18 +18,17 @@ onMounted(async () => {
 });
 
 watchEffect(async () => {
-  console.log(
-    "watchEffect Authenticated",
-  );
   if (!userStore.$state.isLoaded && user.value) {
-    console.log("userStore is not loaded, we fetch profile again");
+    const headers = await getAuthToken();
     const profile = await $fetch(`/api/profiles/${user.value.id}`, {
       method: "GET",
+      headers,
     });
+    console.log('profile', profile)
     // if (profile && !profile[0].language_learned) {
     //   languageSelectionModal.value?.openModal();
     // }
-    userStore.setProfile(profile[0]);
+    if (profile && profile[0]) userStore.setProfile(profile[0]);
   }
   // else if (!user.value?.id) {
   //   console.log('ici',user.value)

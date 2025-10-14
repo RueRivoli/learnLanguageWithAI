@@ -1,19 +1,14 @@
 import Stripe from 'stripe';
 import { defineEventHandler, readRawBody, createError } from 'h3';
-import { createClient } from '@supabase/supabase-js';
+import { createServiceRoleClient } from '../../utils/auth/supabaseClient';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-09-30.clover',
 });
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SERVICE_SUPABASE_KEY!,
-);
 
 export default defineEventHandler(async (event) => {
   console.log('Stripe webhook received');
-  
   const sig = event.node.req.headers['stripe-signature'];
   const body = await readRawBody(event);
 
@@ -34,6 +29,8 @@ export default defineEventHandler(async (event) => {
     );
 
     console.log('Webhook event type:', stripeEvent.type);
+    
+    const supabase = createServiceRoleClient();
 
     if (stripeEvent.type === 'checkout.session.completed') {
       const session = stripeEvent.data.object as Stripe.Checkout.Session;

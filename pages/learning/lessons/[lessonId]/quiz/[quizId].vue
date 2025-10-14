@@ -15,6 +15,7 @@ import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/generatedQuiz";
 import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
+import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
   layout: "quiz",
@@ -24,7 +25,7 @@ definePageMeta({
 const route = useRoute();
 const lessonId = Number(route.params.lessonId);
 const quizId = Number(route.params.quizId);
-
+const userStore = useUserStore();
 const isLoadingQuiz = ref<boolean>(true);
 
 // List of questions for grammar, words, expressions quizzes
@@ -54,8 +55,12 @@ const closeResultsModal = () => {
 
 // Fetch lesson data
 const getVocabularyFromLesson = async () => {
+  const headers = await getAuthToken();
   const { data } = await useFetch(
     `/api/lessons/${lessonId}/vocabulary`,
+    {
+      headers,
+    },
   );
   console.log("data", data.value);
   if (data.value) {
@@ -73,8 +78,10 @@ const getVocabularyFromLesson = async () => {
 };
 
 const getAdditionnalWordsForQuiz = async () => {
+  const headers = await getAuthToken();
   const { data } = await $fetch(`/api/words/levels/random/?limit=2`, {
     method: "GET",
+    headers,
   });
   if (data) {
     wordsForQuiz.value.push(...(data.map((word: any) => {return { ...word.turkish_words, isMastered: true }})));
@@ -83,8 +90,10 @@ const getAdditionnalWordsForQuiz = async () => {
 
 
 const getAdditionnalExpressionsForQuiz = async () => {
+  const headers = await getAuthToken();
   const data = await $fetch(`/api/expressions/levels/random/?limit=2`, {
     method: "GET",
+    headers,
   });
   if (data && (data as any).data) {
     expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => {return { ...expression.turkish_expressions, isMastered: true }})));
@@ -94,7 +103,9 @@ const getAdditionnalExpressionsForQuiz = async () => {
 
 
 const getGrammarQuizData = async () => {
+  const headers = await getAuthToken();
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
+    headers,
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
       return quizQuestions.map((question) => parseGrammarQuizQuestion(question));
     },
@@ -107,14 +118,17 @@ const getGrammarQuizData = async () => {
 
 const getGeneratedVocabularyQuiz = async () => {
   try {
+    const headers = await getAuthToken();
     // const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/words`, {
     //   method: "POST",
+    //   headers,
     //   body: {
     //     message: promptGeneratedWordQuiz(wordsForQuiz.value)
     //   }
     // });
     
     // const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, {
+    //   headers,
     //   method: "POST",
     //   body: {
     //     message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
@@ -148,13 +162,12 @@ const getGeneratedVocabularyQuiz = async () => {
 
 const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
   detailedResults.value = results.detailedResults;
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+  const headers = await getAuthToken();
   await $fetch(`/api/quizzes/result/${quizId}`, {
     method: "PUT",
     headers,
     body: {
+      userId: userStore.id,
       ruleId: grammarRuleMetaData.value?.id,
       score: results.score,
       detailedResults: results.detailedResults,

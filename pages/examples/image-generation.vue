@@ -166,6 +166,8 @@
 </template>
 
 <script setup lang="ts">
+import { getAuthToken } from '~/utils/auth/auth';
+
 interface GenerateImageForm {
   prompt: string;
   aspect_ratio: string;
@@ -221,8 +223,9 @@ const generateImage = async () => {
     if (form.value.input_image && form.value.input_image.trim()) {
       requestBody.input_image = form.value.input_image;
     }
-
+    const headers = await getAuthToken();
     const response = await $fetch('/api/replica/generate', {
+      headers,
       method: 'POST',
       body: requestBody
     });

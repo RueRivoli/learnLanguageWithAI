@@ -3,18 +3,6 @@ import { createClient } from "@supabase/supabase-js";
 import { quizFormat } from "../../formats/vocabulary";
 import { systemPromptVocabularyQuiz } from "../../prompts";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
-);
-
-const parseModelResponse = (text: string, ruleId: number) => {
-  const newLesson = JSON.parse(text)
-  return { user_id: "502a892f-8e9c-4a73-8635-b932f595d68a", grammar_rule_id: ruleId, ...newLesson }
-}
-
-
-
 
 export default defineEventHandler(async (event) => {
   try {
@@ -39,7 +27,6 @@ export default defineEventHandler(async (event) => {
         max_tokens: 1000
       }
     })
-    console.log('result', result, result.choices[0].message.content)
     if (result && result.choices[0].message.content) {
         console.log('vocabulary quiz', result.choices[0].message.content)
         return result.choices[0].message.content
