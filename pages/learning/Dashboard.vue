@@ -49,14 +49,13 @@ watchEffect(async () => {
   }
 });
 
-const handleLanguageUpdated = async (
-  profile: Database["public"]["Tables"]["profiles"]["Row"],
-) => {
-  userStore.setProfile(profile);
+const handleLanguageUpdated = async (profile: any) => {
+  console.log("handleLanguageUpdated", profile);
+  console.log("openModal");
   pseudoDefinitionModal.value?.openModal();
   if (user.value) {
     const headers = await getAuthToken();
-    await $fetch(`/api/grammar-scores/fill/${user.value.id}`, {
+    await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
       method: "POST",
       headers,
       body: {

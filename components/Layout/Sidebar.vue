@@ -219,7 +219,7 @@ const isActive = (path: string) => {
                       </div>
                       <div class="w-full flex items-center justify-end">
                         <StarIcon class="h-4 w-4 ml-2 text-indigo-600" />
-                        <span class="text-primary">{{ userStore.$state.tokensAvailable }}</span>
+                        <span class="text-primary">{{ userStore.$state.creditsAvailable }}</span>
                     </div>
                     </div>
                   </div>
@@ -480,7 +480,7 @@ const isActive = (path: string) => {
             <div class="font-semibold text-neutral">{{ userPseudo }}</div>
             <div class="w-full flex items-center justify-end">
               <StarIcon class="h-4 w-4 text-indigo-600" />
-              <span class="text-primary font-bold">{{ userStore.$state.tokensAvailable }}</span>
+              <span class="text-primary font-bold">{{ userStore.$state.creditsAvailable }}</span>
             </div>
           </div>
         </div>

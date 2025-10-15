@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import type { DatabaseUserProfile, User } from "~/types/users/profile";
+import { getAuthToken } from "~/utils/auth/auth";
+import { CREDITS_FOR_ONE_LESSON, CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
 
 export const useUserStore = defineStore("user", {
   state: (): User => {
@@ -13,14 +15,22 @@ export const useUserStore = defineStore("user", {
       isSubscribed: false,
       languageLearned: null,
       pseudo: null,
-      tokensAvailable: null,
-      tokensPurchasedTotal: null,
-      lastTokenPurchaseDate: null,
+      creditsAvailable: null,
+      creditsPurchasedTotal: null,
+      lastCreditPurchaseDate: null,
       // avatar: null,
       // memberSince: null,
     };
   },
   getters: {
+    isEnoughTokensForOneLesson(state: User): boolean {
+      if (!state.creditsAvailable) return false;
+      return state.creditsAvailable >= 10;
+    },
+    isEnoughTokensForOneQuiz(state: User): boolean {
+      if (!state.creditsAvailable) return false;
+      return state.creditsAvailable >= 2.5;
+    },
     getInitials(state: User): string {
       if (!state.fullName) return '';
       const names = state.fullName.trim().split(" ");
@@ -38,14 +48,22 @@ export const useUserStore = defineStore("user", {
       this.initials = profile.initials;
       this.email = profile.email;
       this.hasFilledInitialForm = profile.has_filled_initial_form;
-      this.tokensAvailable = profile.tokens_available;
-      this.tokensPurchasedTotal = profile.tokens_purchased_total;
-      this.lastTokenPurchaseDate = profile.last_token_purchase_date;
+      this.creditsAvailable = profile.credits_available;
+      this.creditsPurchasedTotal = profile.credits_purchased_total;
+      this.lastCreditPurchaseDate = profile.last_credit_purchase_date;
       // this.avatar = profile.avatar;
       //  this.memberSince = profile.memberSince;
     },
-    setTokensAvailable(tokens: number) {
-      this.tokensAvailable = tokens;
+    async setCreditsAvailable(credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ) {
+      const headers = await getAuthToken();
+      await $fetch(`/api/credits`, {
+        method: "PUT",
+        headers,
+        body: {
+          credits: this.creditsAvailable,
+        },
+      });
+      this.creditsAvailable = this.creditsAvailable ? this.creditsAvailable - credits : 0;
     },
   },
 });

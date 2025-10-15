@@ -178,7 +178,7 @@ const handleReturnToSubject = () => {
 
       <div class="progress-section">
         <div class="">
-          <LayoutKeyElementRuleBadge class="w-48 mb-2" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" size="xs" :lightMode="true"/>
+          <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" size="xs" :lightMode="true"/>
           <h4 class="progress-title">Grammar</h4>
 
         </div>

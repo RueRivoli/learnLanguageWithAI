@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChartBarIcon, StarIcon, ExclamationCircleIcon } from "@heroicons/vue/24/outline";
+import { ChartBarIcon, ExclamationCircleIcon } from "@heroicons/vue/24/solid";
 
 // Mock data - replace with actual props when available
 const progressData = {

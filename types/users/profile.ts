@@ -9,7 +9,7 @@ export interface User {
     fullName: Database["public"]["Tables"]["profiles"]["Row"]["full_name"] | null
     hasFilledInitialForm: Database["public"]["Tables"]["profiles"]["Row"]["has_filled_initial_form"] | null
     languageLearned: Database["public"]["Tables"]["profiles"]["Row"]["language_learned"] | null
-    tokensAvailable: Database["public"]["Tables"]["profiles"]["Row"]["tokens_available"] | null
-    tokensPurchasedTotal: Database["public"]["Tables"]["profiles"]["Row"]["tokens_purchased_total"] | null
-    lastTokenPurchaseDate: Database["public"]["Tables"]["profiles"]["Row"]["last_token_purchase_date"] | null
+    creditsAvailable: Database["public"]["Tables"]["profiles"]["Row"]["credits_available"] | null
+    creditsPurchasedTotal: Database["public"]["Tables"]["profiles"]["Row"]["credits_purchased_total"] | null
+    lastCreditPurchaseDate: Database["public"]["Tables"]["profiles"]["Row"]["last_credit_purchase_date"] | null
 }

@@ -126,15 +126,15 @@ export function getTextStyleClassFromGrammarRuleLevel(level: number): string {
 export function getHoveringBorderStyleClassFromGrammarRuleLevel(level: number): string {
   switch (level) {
     case RuleDifficulty.BEGINNER:
-      return "border border-rounded border-slate-300 hover:border-success";
+      return "border border-rounded border-slate-300";
     case RuleDifficulty.INTERMEDIATE:
-      return "border border-rounded border-slate-300 hover:border-warning";
+      return "border border-rounded border-slate-300";
     case RuleDifficulty.ADVANCED:
-      return "border border-rounded border-slate-300 hover:border-error";
+      return "border border-rounded border-slate-300";
     case RuleDifficulty.EXPERT:
-      return "border border-rounded border-slate-300 hover:border-neutral";  
+      return "border border-rounded border-slate-300";  
     default:
-      return "border border-rounded border-slate-300 hover:border-neutral";
+      return "border border-rounded border-slate-300";
   }
 }
 

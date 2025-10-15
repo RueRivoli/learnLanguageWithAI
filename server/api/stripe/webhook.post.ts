@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
       // 1. Get current token balance
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
-        .select('tokens_available, tokens_purchased_total')
+        .select('credits_available, credits_purchased_total')
         .eq('id', userId)
         .single();
 
@@ -67,15 +67,15 @@ export default defineEventHandler(async (event) => {
       }
 
       // 2. Update user's token balance
-      const newTokensAvailable = (profile?.tokens_available || 0) + tokens;
-      const newTokensPurchasedTotal = (profile?.tokens_purchased_total || 0) + tokens;
+      const newCreditsAvailable = (profile?.credits_available || 0) + tokens;
+      const newCreditsPurchasedTotal = (profile?.credits_purchased_total || 0) + tokens;
 
       const { error: updateError } = await supabase
         .from('profiles')
         .update({
-          tokens_available: newTokensAvailable,
-          tokens_purchased_total: newTokensPurchasedTotal,
-          last_token_purchase_date: new Date().toISOString(),
+          credits_available: newCreditsAvailable,
+          credits_purchased_total: newCreditsPurchasedTotal,
+          last_credit_purchase_date: new Date().toISOString(),
         })
         .eq('id', userId);
 
@@ -83,12 +83,12 @@ export default defineEventHandler(async (event) => {
         console.error('Error updating user tokens:', updateError);
         throw createError({
           statusCode: 500,
-          statusMessage: 'Failed to update user tokens'
+          statusMessage: 'Failed to update user credits'
         });
       }
 
       console.log('✅ Successfully added', tokens, 'tokens to user', userId);
-      console.log('New balance:', newTokensAvailable);
+      console.log('New balance:', newCreditsAvailable);
       
       return { received: true, processed: true, tokensAdded: tokens };
     }

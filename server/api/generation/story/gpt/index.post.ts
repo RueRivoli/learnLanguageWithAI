@@ -69,13 +69,13 @@ export default defineEventHandler(async (event) => {
     // CHECK TOKEN BALANCE
     const { data: profile } = await supabaseAuthToken
       .from('profiles')
-      .select('tokens_available')
+      .select('credits_available')
       .eq('id', user.id)
       .single();
 
-    if (!profile || (profile.tokens_available || 0) < 1) {
-      console.log('Insufficient tokens. Please purchase more tokens to generate stories.');
-      throw new Error('Insufficient tokens. Please purchase more tokens to generate stories.');
+    if (!profile || (profile.credits_available || 0) < 1) {
+      console.log('Insufficient credits. Please purchase more credits to generate stories.');
+      throw new Error('Insufficient credits. Please purchase more credits to generate stories.');
     }
 
     const result = await fetch(process.env.OPENAI_API_URL as string, {
@@ -103,7 +103,7 @@ export default defineEventHandler(async (event) => {
         // DEDUCT TOKEN AFTER SUCCESSFUL GENERATION
         await supabaseAuthToken
           .from('profiles')
-          .update({ tokens_available: profile.tokens_available! - 1 })
+          .update({ credits_available: profile.credits_available! - 1 })
           .eq('id', user.id);
 
         linkWordsToLesson(body.wordIds, lesson[0].id)

@@ -16,6 +16,8 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          credits_available: number | null
+          credits_purchased_total: number | null
           email: string | null
           first_name: string | null
           full_name: string | null
@@ -23,14 +25,14 @@ export type Database = {
           id: string
           initials: string | null
           language_learned: string | null
+          last_credit_purchase_date: string | null
           last_name: string | null
-          last_token_purchase_date: string | null
           pseudo: string | null
           second_language_learned: string | null
-          tokens_available: number | null
-          tokens_purchased_total: number | null
         }
         Insert: {
+          credits_available?: number | null
+          credits_purchased_total?: number | null
           email?: string | null
           first_name?: string | null
           full_name?: string | null
@@ -38,14 +40,14 @@ export type Database = {
           id: string
           initials?: string | null
           language_learned?: string | null
+          last_credit_purchase_date?: string | null
           last_name?: string | null
-          last_token_purchase_date?: string | null
           pseudo?: string | null
           second_language_learned?: string | null
-          tokens_available?: number | null
-          tokens_purchased_total?: number | null
         }
         Update: {
+          credits_available?: number | null
+          credits_purchased_total?: number | null
           email?: string | null
           first_name?: string | null
           full_name?: string | null
@@ -53,12 +55,10 @@ export type Database = {
           id?: string
           initials?: string | null
           language_learned?: string | null
+          last_credit_purchase_date?: string | null
           last_name?: string | null
-          last_token_purchase_date?: string | null
           pseudo?: string | null
           second_language_learned?: string | null
-          tokens_available?: number | null
-          tokens_purchased_total?: number | null
         }
         Relationships: []
       }
@@ -738,7 +738,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      has_enough_tokens: {
+      has_enough_credits: {
         Args: { required_tokens: number; user_id: string }
         Returns: boolean
       }

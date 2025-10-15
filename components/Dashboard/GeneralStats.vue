@@ -5,6 +5,7 @@ import { useUserScoreStore } from "~/stores/user-score-store";
 
 const userScoreStore = useUserScoreStore();
 const activeLevelTab = ref(1);
+const router = useRouter();
 
 const currentInfo = computed(() => {
   switch (activeLevelTab.value) {
@@ -105,7 +106,7 @@ const currentInfo = computed(() => {
           </div>
         </div>
         <div id="rules_overview" v-for="(rule, index) in currentInfo"  :key="index">
-          <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true">
+          <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true" @click="router.push(`/learning/modules/${rule.ruleId}`)">
             <template #details>
               <div class="rounded-lg p-2"
           >

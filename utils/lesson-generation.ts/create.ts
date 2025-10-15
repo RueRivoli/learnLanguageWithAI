@@ -8,9 +8,7 @@ import { lessonUpdateBus } from "~/composables/useLessonUpdates"
 // }
 const generateStory = async (userId: string, ruleId: number, prompt: string, wordIds: number[], expressionIds: number[]) => {
   // Attach Authorization header from Supabase session for secure server-side auth
-  const { data: { session } } = await useSupabaseClient().auth.getSession()
-  const headers: Record<string, string> = {}
-  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
+  const headers = await getAuthToken();
   const { data } = await useFetch("/api/generation/story/gpt", {
     method: 'POST',
     headers,
@@ -29,10 +27,6 @@ export const generateAIPoweredStoryWithParameters = async (userId: string, gramm
 
 
 export const generateImageWithPrompt = async (prompt: string, storyId: number, model: string, userId: string) => {
- // const promptForImageGeneration = getPromptForImageGeneration(prompt)
- // console.log('promptForImageGeneration', promptForImageGeneration)
-  console.log('storyId', storyId)
-  console.log('model', model)
   const headers = await getAuthToken();
   switch (model) {
     case "gpt-4.1":
@@ -41,12 +35,7 @@ export const generateImageWithPrompt = async (prompt: string, storyId: number, m
         headers,
         body: { prompt, storyId: storyId, userId: userId}
       })
-      console.log('🖼️ Image generated successfully:', {
-        storyId,
-        imageUrl: output.image_url
-      });
       
-      console.log('📢 Emitting image_modified event for lesson:', storyId);
       lessonUpdateBus.notifyImageAdded(String(storyId), { imgUrl: output.image_url });
       console.log('✅ Image update event emitted');
       break

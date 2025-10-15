@@ -16,8 +16,7 @@ useHead({
 });
 
 const route = useRoute();
-const userStore = useUserStore();
-const { fetchTokenBalance } = useTokens();
+const { fetchCreditBalance } = useCredits();
 
 
 // UI state
@@ -27,49 +26,49 @@ const errorMessage = ref("");
 const isPurchasing = ref(false);
 
 
-const tokenPackages = [
+const creditPackages = [
   { 
-    tokens: 10, 
-    price: 4.99, 
+    credits: 100, 
+    price: 5.99, 
     stories: 10, 
     quizzes: 20,
     popular: false 
   },
   { 
-    tokens: 30, 
-    price: 9.99,
+    credits: 300, 
+    price: 13.99,
     stories: 30, 
     quizzes: 60,
     popular: true,
-    discount: 14.97 
+    discount: 17.97 
   },
   { 
-    tokens: 70, 
-    price: 14.99, 
+    credits: 700, 
+    price: 24.99, 
     stories: 70, 
     quizzes: 140,
     popular: false,
-    discount: 34.93 
+    discount: 41.93 
   },
   { 
-    tokens: 150, 
-    price: 21.99, 
+    credits: 1500, 
+    price: 39.99, 
     stories: 150, 
     quizzes: 300,
     popular: false,
-    discount: 74.85  
+    discount: 89.85  
   },
 ];
 
-// Fetch token balance on mount
+// Fetch credit balance on mount
 onMounted(async () => {
-  await fetchTokenBalance();
+  await fetchCreditBalance();
   
   // Check for payment success/cancelled in URL
   if (route.query.payment === 'success') {
     showSuccessMessage.value = true;
-    errorMessage.value = "Payment successful! Your tokens have been added.";
-    await fetchTokenBalance();
+    errorMessage.value = "Payment successful! Your credits have been added.";
+    await fetchCreditBalance();
     setTimeout(() => {
       showSuccessMessage.value = false;
     }, 5000);
@@ -83,7 +82,7 @@ onMounted(async () => {
 });
 
 
-const handlePurchase = async (tokens: number) => {
+const handlePurchase = async (credits: number) => {
   if (isPurchasing.value) return;
   
   try {
@@ -93,7 +92,7 @@ const handlePurchase = async (tokens: number) => {
     const response = await $fetch<{ sessionId: string; url: string }>('/api/stripe/create-checkout', {
       method: 'POST',
       headers,
-      body: { packageType: tokens }
+      body: { packageType: credits }
     });
 
     if (response?.url) {
@@ -120,20 +119,20 @@ const handlePurchase = async (tokens: number) => {
               <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <!-- Header -->
                 <div class="px-8 py-6 border-b border-gray-200">
-                  <h4 class="text-2xl font-bold text-gray-900 mb-1">Choose Your Token Package</h4>
+                  <h4 class="text-2xl font-bold text-gray-900 mb-1">Choose Your Credits Package</h4>
                   <p class="text-gray-600">One-time purchase • No subscription</p>
                 </div>
 
                 <!-- Pricing Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-x divide-gray-200">
                   <div 
-                    v-for="(pkg, index) in tokenPackages" 
-                    :key="pkg.tokens"
+                    v-for="(pkg, index) in creditPackages" 
+                    :key="index"
                     class="relative p-6 transition-all duration-200 hover:bg-gray-50 cursor-pointer group"
                     :class="{ 
                       'bg-primary/5 ring-2 ring-primary ring-inset': pkg.popular,
                     }"
-                    @click="handlePurchase(pkg.tokens)"
+                    @click="handlePurchase(pkg.credits)"
                   >
                     <!-- Popular Badge -->
                     <div v-if="pkg.popular" class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -146,23 +145,25 @@ const handlePurchase = async (tokens: number) => {
                     <div class="space-y-5">
                       <!-- Title -->
                       <div>
-                        <h5 class="text-xl font-bold text-gray-900">{{ pkg.tokens }} Tokens</h5>
+                        <h5 class="text-xl font-bold text-gray-900">{{ pkg.credits }} Credits</h5>
                       </div>
                       
                       <!-- Pricing -->
                       <div>
                         <div class="flex items-baseline gap-1 mb-1">
-                          <span class="text-4xl font-bold text-gray-900">€{{ pkg.price }}</span>
+                          <span class="text-4xl font-bold text-gray-900">${{ pkg.price }}</span>
                         </div>
-                        <div v-if="pkg.discount" class="text-sm text-gray-500 line-through">
-                          €{{ pkg.discount }}
+                        <div v-if="pkg.discount" class="text-md text-gray-500 line-through">
+                          ${{ pkg.discount }}
                         </div>
-                        <div v-else class="h-5"></div>
+                        <div v-else>
+                          <br/>
+                        </div>
                       </div>
 
                       <!-- Purchase Button -->
                       <button 
-                        class="w-full py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200"
+                        class="w-full py-2.5 px-4 cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200"
                         :class="pkg.popular 
                           ? 'bg-primary text-white hover:bg-primary/90 shadow-sm' 
                           : 'bg-gray-900 text-white hover:bg-gray-800'"
@@ -181,13 +182,13 @@ const handlePurchase = async (tokens: number) => {
                             <svg class="w-4 h-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"/>
                             </svg>
-                            <span class="text-gray-700 font-medium">{{ pkg.stories }} AI Stories</span>
+                            <span class="text-gray-700 font-medium">{{ pkg.stories }} AI Lessons</span>
                           </div>
                           <div class="flex items-center gap-2 text-sm">
                             <svg class="w-4 h-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"/>
                             </svg>
-                            <span class="text-gray-700 font-medium">{{ pkg.quizzes }} Grammar Quizzes</span>
+                            <span class="text-gray-700 font-medium">{{ pkg.quizzes }} Quizzes</span>
                           </div>
                         </div>
 

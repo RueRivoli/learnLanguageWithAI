@@ -1,6 +1,7 @@
 import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quizzes/quiz";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { getAuthToken } from "../auth/auth";
+import { CREDITS_FOR_ONE_QUIZ } from "../credits";
 
 
 export const getScoreBackgroundColorClass = (score: number) => {
@@ -51,6 +52,7 @@ export const parseGrammarQuizQuestion = (question: QuizFetchedQuestion): Grammar
 
 export const handleGenerationQuiz = async (ruleId: number, userId: string, redirectionPath: string, lessonId?: string | null, length = 5) => {
   try {
+    const userStore = useUserStore();
     // Attach Authorization header from Supabase session for secure server-side auth
     const headers = await getAuthToken();
     const response = await $fetch<{ quizId: number }>(`/api/quizzes/${ruleId}`, {
@@ -70,6 +72,7 @@ export const handleGenerationQuiz = async (ruleId: number, userId: string, redir
         quizId: response.quizId,
       },
     });
+    userStore.setcreditsAvailable(CREDITS_FOR_ONE_QUIZ);
     await navigateTo({
       path: `${redirectionPath}/${response.quizId}`,
     });

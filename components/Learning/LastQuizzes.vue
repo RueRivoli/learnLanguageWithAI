@@ -17,8 +17,18 @@ const props = withDefaults(
     quizs: () => [],
   },
 );
+const openingModalId = ref(0);
+const userStore = useUserStore();
+
+const handleCancelModal = () => {
+  openingModalId.value = openingModalId.value + 1;
+};
 
 const handleGenerateQuiz = async () => {
+  if (!userStore.isEnoughTokensForOneQuiz) {
+    openingModalId.value = openingModalId.value + 1;
+    return;
+  }
   if (!props.rule?.id) return;
   isLoading.value = true;
   try {
@@ -101,6 +111,11 @@ const getScoreColor = (score: number) => {
           </div>
         </div>
       </div>
+      <AccountPaymentModal
+            id="my_modal_to_get_credits"
+            :key="openingModalId"
+            @cancel="handleCancelModal"
+          />
     </div>
   </div>
 </template>

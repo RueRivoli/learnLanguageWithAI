@@ -12,6 +12,7 @@ import type { ExpressionMetadata } from "~/types/vocabulary/expression";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import { getAuthToken } from "~/utils/auth/auth";
+import { CREDITS_FOR_ONE_LESSON } from "~/utils/credits";
 
 definePageMeta({
   layout: "authenticated",
@@ -207,9 +208,9 @@ const handleCancelModal = () => {
 
 const handleGenerateStory = async () => {
   let newLesson;
-  console.log("userStore.$state.tokensAvailable", userStore.$state.tokensAvailable);
-  if (userStore.$state.tokensAvailable < 1) {
-    my_modal_to_get_tokens.showModal();
+  console.log("userStore.$state.creditsAvailable", userStore.$state.creditsAvailable);
+  if (!userStore.isEnoughTokensForOneLesson) {
+    my_modal_to_get_credits.showModal();
     return;
   }
   isGeneratingLesson.value = true;
@@ -225,7 +226,10 @@ const handleGenerateStory = async () => {
     );
     console.log("newLesson", newLesson);
     const promptForImageGeneration = newLesson.promptForImageGeneration;
-    generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1", userId.value);
+    if (newLesson.id) {
+      generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1", userId.value);
+      userStore.setcreditsAvailable(CREDITS_FOR_ONE_LESSON);
+    }
     router.push(`/learning/lessons/${String(newLesson.id)}?loadingImage=true`);
     isGeneratingLesson.value = false;
   }
@@ -252,7 +256,7 @@ const handleGenerateStory = async () => {
           <SparklesIcon class="w-6 h-6 text-white" />
         </div>
         <div class="h-8 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-        <div class="text-sm font-medium text-gray-600 uppercase tracking-wider">AI-Powered Learning</div>
+        <div class="text-sm font-medium text-gray-600 uppercase tracking-wider">Tailored Lessons with AI</div>
       </div>
       
       <h1 class="text-5xl md:text-4xl font-light text-gray-900 mb-6 tracking-tight leading-tight">
@@ -484,7 +488,7 @@ const handleGenerateStory = async () => {
             @cancel="handleCancelModal"
           />
           <AccountPaymentModal
-            id="my_modal_to_get_tokens"
+            id="my_modal_to_get_credits"
             :key="openingModalId"
             @cancel="handleCancelModal"
           />

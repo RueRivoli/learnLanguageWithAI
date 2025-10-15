@@ -24,6 +24,7 @@ const {
 } = useLesson(lessonId);
 
 // UI state
+const openingModalId = ref(0);
 const showEnglishTranslations = ref(false);
 const activeSentenceTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
@@ -31,6 +32,7 @@ const areWordsExampleShown = ref<boolean>(false);
 const areExpressionsExampleShown = ref<boolean>(false);
 const loadingImage = computed(() => route.query.loadingImage as string);
 const user = useSupabaseUser();
+const userStore = useUserStore();
 
 const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
@@ -39,6 +41,10 @@ const toggleSentenceTranslation = (index: number) => {
 // All data fetching is now handled by the useLesson composable
 
 const handleGenerateQuiz = async () => {
+  if (!userStore.isEnoughTokensForOneQuiz) {
+    openingModalId.value = openingModalId.value + 1;
+    return;
+  }
   if (!lesson.value?.grammarRuleId) return;
   if (!user.value?.id) return;
   await handleGenerationQuiz(lesson.value?.grammarRuleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, lessonId);
@@ -48,6 +54,9 @@ const handleGenerateQuiz = async () => {
   lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
 };
 
+const handleCancelModal = () => {
+  openingModalId.value = openingModalId.value + 1;
+};
 
 const sanitizedIntroTemplate = computed(() =>
   DOMPurify.sanitize(lesson.value?.grammarRuleIntro || grammarRule.value?.intro || ""),
@@ -496,6 +505,11 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <span>Grow your Score with this Quiz</span>
                   </button>
               </div>
+              <AccountPaymentModal
+            id="my_modal_to_get_credits"
+            :key="openingModalId"
+            @cancel="handleCancelModal"
+          />
           </div>
         </div>
       </div>

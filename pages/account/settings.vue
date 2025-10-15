@@ -17,7 +17,7 @@ useHead({
 
 const route = useRoute();
 const userStore = useUserStore();
-const { fetchTokenBalance } = useTokens();
+const { fetchCreditBalance } = useCredits();
 
 // Form state
 const formData = ref({
@@ -36,13 +36,13 @@ const isPurchasing = ref(false);
 
 // Fetch token balance on mount
 onMounted(async () => {
-  await fetchTokenBalance();
+  await fetchCreditBalance();
   
   // Check for payment success/cancelled in URL
   if (route.query.payment === 'success') {
     showSuccessMessage.value = true;
-    errorMessage.value = "Payment successful! Your tokens have been added.";
-    await fetchTokenBalance();
+    errorMessage.value = "Payment successful! Your credits have been added.";
+    await fetchCreditBalance();
     setTimeout(() => {
       showSuccessMessage.value = false;
     }, 5000);
@@ -165,11 +165,11 @@ watch(() => userStore.pseudo, (newPseudo) => {
                         <SparklesIcon class="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <p class="text-sm font-medium text-gray-700">Remaining Tokens</p>
+                        <p class="text-sm font-medium text-gray-700">Remaining Credits</p>
                         <p class="text-xs text-gray-500">Available for content generation</p>
                       </div>
                     </div>
-                    <div class="text-3xl font-bold text-primary">{{ userStore.tokensAvailable }}</div>
+                    <div class="text-3xl font-bold text-primary">{{ userStore.creditsAvailable }}</div>
                   </div>
                 </div>
 
@@ -215,7 +215,7 @@ watch(() => userStore.pseudo, (newPseudo) => {
                       class="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-500 cursor-not-allowed"
                       disabled
                     />
-                    <p class="text-xs text-gray-500">Currently only Turkish is available</p>
+                    <p class="text-xs text-gray-500">Currently only Turkish is available, Spanish and French will be available soon</p>
                   </div>
 
                   <!-- Email (Read-only) -->
