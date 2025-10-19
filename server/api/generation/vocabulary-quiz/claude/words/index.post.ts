@@ -76,7 +76,6 @@ export default defineEventHandler(async (event) => {
     if (result && result.content && result.content[0]?.text) {
       const rawContent = result.content[0].text;
       const cleanContent = extractJSON(rawContent);
-      console.log('words quiz (Claude):', cleanContent);
       return cleanContent;
     }
     

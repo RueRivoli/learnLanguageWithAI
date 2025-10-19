@@ -219,7 +219,7 @@ watch(totalExpressions, () => {
 <template>
   <div>
     <!-- Full-width Vocabulary Progress Grid -->
-    <div class="w-full rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -265,7 +265,7 @@ watch(totalExpressions, () => {
       </div>
       
       <!-- Grid container -->
-      <div class="bg-gray-50 rounded-xl">
+      <div class="rounded-lg">
         <!-- Loading skeleton -->
         <div v-if="isLoadingWords" class="grid gap-0.5" style="grid-template-columns: repeat(50, minmax(0, 1fr));">
           <div 
@@ -281,7 +281,7 @@ watch(totalExpressions, () => {
             v-for="item in gridData" 
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform"
-            :class="item.isMastered ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-200 hover:bg-gray-300'"
+            :class="item.isMastered ? 'bg-blue-500 hover:bg-blue-600' : 'bg-slate-200 hover:bg-gray-300'"
             :title="`${item.text}${item.translation ? ' - ' + item.translation : ''}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
           ></div>
         </div>
@@ -301,7 +301,7 @@ watch(totalExpressions, () => {
     </div>
 
     <!-- Full-width Expression Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -347,7 +347,7 @@ watch(totalExpressions, () => {
       </div>
       
       <!-- Grid container -->
-      <div class="bg-gray-50 rounded-xl">
+      <div class="rounded-lg">
         <!-- Loading skeleton -->
         <div v-if="isLoadingExpressions" class="grid gap-0.5" style="grid-template-columns: repeat(40, minmax(0, 1fr));">
           <div 
@@ -363,7 +363,7 @@ watch(totalExpressions, () => {
             v-for="item in expressionGridData" 
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform"
-            :class="item.isMastered ? 'bg-purple-500 hover:bg-purple-600' : 'bg-gray-200 hover:bg-gray-300'"
+            :class="item.isMastered ? 'bg-purple-500 hover:bg-purple-600' : 'bg-slate hover:bg-white-100'"
             :title="`${item.text}${item.translation ? ' - ' + item.translation : ''}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
           ></div>
         </div>

@@ -176,6 +176,7 @@ const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQu
       // value: formQuiz.value,
     },
   });
+  
   setTimeout(() => {
     openResultsModal();
   }, 200);

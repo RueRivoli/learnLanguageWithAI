@@ -16,18 +16,17 @@ const getAverageScore = async (supabase: any, score: number, id: string, ruleId:
 
 // Uncomment this function if you want to remember the quiz selection
 const rememberQuizSelection = async () => {
-    // Remember quiz selections ??
-    // const updateSelections = Object.keys(questionValues).map(async (key) => {
-    //     const { questionId, selectedOption } = questionValues[key];
-    //     const { error } = await supabase
-    //       .from("turkish_quizzes_series")
-    //       .update({ selected_answer: Number(selectedOption) })
-    //       .eq("id", questionId);
-      
-    //     if (error) {
-    //       console.error(`Error updating question ${questionId}:`, error);
-    //     }
-    //   });
+}
+
+const updateVocabularyCountScores = async (supabase: any, userId: string) => {
+  console.log('updateVocabularyCountScores')
+  const countWordsMastered = await supabase.from("turkish_words_knowledge").select('*', { count: 'exact', head: true }).eq("user_id", userId).eq("word_mastered", true)
+  const countExpressionsMastered = await supabase.from("turkish_expressions_knowledge").select('*', { count: 'exact', head: true }).eq("user_id", userId).eq("expression_mastered", true)
+  console.log('countWordsMastered', countWordsMastered.count)
+  console.log('countExpressionsMastered', countExpressionsMastered.count)
+  console.log('userId', userId)
+  const { error: errorFromVocabularyScores } = await supabase.from("turkish_vocabulary_scores").update({ words_mastered_count: countWordsMastered.count, expressions_mastered_count: countExpressionsMastered.count }).eq("user_id", userId).eq("language", 'tr')
+  if (errorFromVocabularyScores) throw ('An error occured while updating the vocabulary scores, please try again')
 }
 
 const updateVocabularyKnowledge = async (supabase: any, userId: string, newMasteredWordsIds: number[], newForgottenWordIds: number[], newMasteredExpressionsIds: number[], newForgottenExpressionsIds: number[]) => {
@@ -51,13 +50,17 @@ const updateVocabularyKnowledge = async (supabase: any, userId: string, newMaste
     .upsert(newMasteredExpressionsIds.map(exprId => ({user_id: userId, expression_id: exprId, expression_learned: true, expression_mastered: true})))
   if (errorFromExpressionsKnowledge) throw ('An error occured while updating the expressions knowledge, please try again')
 
+    console.log('newForgottenExpressionsIds', newForgottenExpressionsIds)
   // Expressions previously learned are now forgotten
   const { error: errorFromForgottenExpressionsKnowledge } = await supabase
     .from("turkish_expressions_knowledge")
     .delete()
     .eq("user_id", userId)
-    .in("expression_id", newMasteredExpressionsIds)
+    .in("expression_id", newForgottenExpressionsIds)
   if (errorFromForgottenExpressionsKnowledge) throw ('An error occured while updating the forgotten expressions knowledge, please try again')
+  
+  // Update counts
+  await updateVocabularyCountScores(supabase, userId)
 }
 
 export default defineEventHandler(async (event) => {
@@ -83,12 +86,12 @@ export default defineEventHandler(async (event) => {
         }
       };
     
-      const updateUserGrammarScore = async () => {
-        const { error: errorFromGrammarScores } = await supabase.from("turkish_grammar_scores").update({
+    const updateUserGrammarScore = async () => {
+      const { error: errorFromGrammarScores } = await supabase.from("turkish_grammar_scores").update({
               score: grammarRuleScore,
-            }).eq('rule_id', ruleId).eq('user_id', userId)
-            if (errorFromGrammarScores) throw ('An error occured while updating the quiz result, please try again')
-          }; 
+          }).eq('rule_id', ruleId).eq('user_id', userId)
+          if (errorFromGrammarScores) throw ('An error occured while updating the quiz result, please try again')
+      }; 
 
       if (type === 'grammar') { 
         await updateQuizResult()
@@ -101,11 +104,10 @@ export default defineEventHandler(async (event) => {
     const newForgottenWordIds = detailedResults.words.invalidatedList.filter(word => word.isMastered).map(word => word.id)
     const newMasteredExpressionsIds = detailedResults.expressions.validatedList.filter(expr => !expr.isMastered).map(expr => expr.id)
     const newForgottenExpressionsIds = detailedResults.expressions.invalidatedList.filter(expr => expr.isMastered).map(expr => expr.id)
-
+      console.log('newForgottenExpressionsIds', newForgottenExpressionsIds)
       const updateVocabularyData = async () => {
         if (userId) updateVocabularyKnowledge(supabase, userId, newMasteredWordsIds, newForgottenWordIds, newMasteredExpressionsIds, newForgottenExpressionsIds)
       }
-
       // rememberQuizSelection()
       await Promise.all([updateQuizResult(), updateUserGrammarScore(), updateVocabularyData()])
   } catch (error) {
