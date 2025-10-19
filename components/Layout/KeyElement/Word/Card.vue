@@ -3,7 +3,7 @@ import { BookOpenIcon } from '@heroicons/vue/24/outline';
 
 const props = withDefaults(
   defineProps<{
-    backgroundClasses: string | null;
+    backgroundClasses?: string | null;
     title: string | null;
     description: string | null;
   }>(),

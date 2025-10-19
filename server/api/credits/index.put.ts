@@ -9,11 +9,10 @@ export default defineEventHandler(async (event) => {
   // if (userError || !user?.id) {
   //   throw createError({ statusCode: 401, statusMessage: 'Invalid user' });
   // }
-
+  const body = await readBody(event);
   const { data, error } = await supabase
     .from('profiles')
-    .select('credits_available, credits_purchased_total, last_credit_purchase_date')
-    .eq('id', user?.id)
+    .update(body)
     .single();
 
   if (error) throw error;

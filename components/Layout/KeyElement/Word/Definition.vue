@@ -4,7 +4,7 @@ import type { Word } from '~/types/vocabulary/word';
 const props = withDefaults(
   defineProps<{
     isActive: boolean;
-    minified: boolean;
+    minified?: boolean;
     word?: Word | null;
     size?: 'sm' | 'xs';
   }>(),

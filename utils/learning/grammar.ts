@@ -10,7 +10,6 @@ export const grammarLevelTabs = {
 }
 
 
-// Mapping des niveaux de difficulté
 export const DIFFICULTY_LEVELS = {
   1: "beginner",
   2: "intermediate", 

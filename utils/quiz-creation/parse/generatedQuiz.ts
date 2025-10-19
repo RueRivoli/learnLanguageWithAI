@@ -1,16 +1,13 @@
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 
 export const parseVocabularyGeneratedQuiz = (data: any) : VocabularyQuizQuestion[] => {
-   // const parsedData = JSON.parse(data);
-    const parsedData = data;
+   const parsedData = JSON.parse(data);
+   // const parsedData = data;
    const finalQuiz: VocabularyQuizQuestion[] = [];
    let i = 1;
-   console.log("parsedData", parsedData, parsedData[`question${i}`]);
    while (parsedData[`question${i}`]) {
     const questionKey = `question${i}`;
-    console.log('IN', questionKey, parsedData[questionKey]);
     if (parsedData[questionKey]) {
-        console.log("while loop", parsedData[questionKey]);
         finalQuiz.push({
         id: i,
         type: 1, 

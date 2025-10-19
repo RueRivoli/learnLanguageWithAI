@@ -1,3 +1,11 @@
+// Mapping des niveaux de difficulté des lessons/stories
+export const STORY_LEVELS = {
+  1: "very easy",
+  2: "easy", 
+  3: "intermediate",
+  4: "advanced"
+} as const
+
 export const parseLesson = (lesson: any): Array<Lesson> => {
   return words.map((word) => (
     {

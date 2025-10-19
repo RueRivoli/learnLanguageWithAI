@@ -30,6 +30,7 @@ const handleDefinePseudo = async () => {
     body: {
       pseudo: pseudo.value,
       initials: getInitials(pseudo.value),
+      hasFilledPseudo: true,
     },
   });
   pseudoDefinitionModal.value?.close();

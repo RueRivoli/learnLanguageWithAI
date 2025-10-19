@@ -15,11 +15,11 @@ export default defineEventHandler(async (event) => {
     // CHECK TOKEN BALANCE (0.5 tokens per quiz)
     const { data: profile } = await supabase
       .from('profiles')
-      .select('tokens_available')
+      .select('credits_available')
       .eq('id', userId)
       .single();
 
-    if (!profile || (profile.tokens_available || 0) < 0.5) {
+    if (!profile || (profile.credits_available || 0) < 0.5) {
       throw new Error('Insufficient tokens. Please purchase more tokens to generate quizzes.');
     }
 
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
     if (data) {
       await supabase
         .from('profiles')
-        .update({ tokens_available: profile.tokens_available! - 0.5 })
+        .update({ credits_available: profile.credits_available! - 0.5 })
         .eq('id', userId);
     }
     if (error) throw error;
@@ -98,8 +98,8 @@ export default defineEventHandler(async (event) => {
       .from("turkish_quizzes_series")
       .upsert(rowsToUpsert);
     if (errorUpsert) throw errorUpsert;
-    return { quizId };
-  } catch (error) {
-    if (error) throw error;
+      return { quizId };
+    } catch (error) {
+      if (error) throw error;
   }
 });

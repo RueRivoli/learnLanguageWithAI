@@ -10,9 +10,9 @@ import { getBorderStyleClassFromGrammarRuleLevel, getTextStyleClassFromGrammarRu
 import type { WordMetadata } from "~/types/vocabulary/word";
 import type { ExpressionMetadata } from "~/types/vocabulary/expression";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
-import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import { getAuthToken } from "~/utils/auth/auth";
 import { CREDITS_FOR_ONE_LESSON } from "~/utils/credits";
+import { STORY_LEVELS } from "~/utils/learning/lesson";
 
 definePageMeta({
   layout: "authenticated",
@@ -221,14 +221,14 @@ const handleGenerateStory = async () => {
       targetedModule.value.name,
       wordList.value.slice(0, 10),
       expressionList.value.slice(0, 3),
-      DIFFICULTY_LEVELS[targetedModule.value.level],
+      STORY_LEVELS[1],
       10,
     );
     console.log("newLesson", newLesson);
     const promptForImageGeneration = newLesson.promptForImageGeneration;
     if (newLesson.id) {
       generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1", userId.value);
-      userStore.setcreditsAvailable(CREDITS_FOR_ONE_LESSON);
+      userStore.setCreditsAvailable(CREDITS_FOR_ONE_LESSON);
     }
     router.push(`/learning/lessons/${String(newLesson.id)}?loadingImage=true`);
     isGeneratingLesson.value = false;

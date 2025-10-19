@@ -119,39 +119,41 @@ const getGrammarQuizData = async () => {
 const getGeneratedVocabularyQuiz = async () => {
   try {
     const headers = await getAuthToken();
-    // const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/words`, {
-    //   method: "POST",
-    //   headers,
-    //   body: {
-    //     message: promptGeneratedWordQuiz(wordsForQuiz.value)
-    //   }
-    // });
+    const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/claude/words`, {
+      method: "POST",
+      headers,
+      body: {
+        message: promptGeneratedWordQuiz(wordsForQuiz.value)
+      }
+    });
     
-    // const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/gpt/expressions`, {
-    //   headers,
-    //   method: "POST",
-    //   body: {
-    //     message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
-    //   }
-    // });
+    const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/claude/expressions`, {
+      headers,
+      method: "POST",
+      body: {
+        message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
+      }
+    });
     
-    const generatedWordsQuiz = mockNotParsedWordQuizQuestions
-    const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
+    // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
+    // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
 
     const [wordsQuizResult, expressionsQuizResult] = await Promise.all([
       generatedWordsQuiz, 
       generatedExpressionsQuiz
     ]);
-    
+    console.log('wordsQuizResult', wordsQuizResult, expressionsQuizResult);
     if (wordsQuizResult) {
       // change generatedQuiz if using mock data
       wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(wordsQuizResult);
       // wordsQuizQuestions.value = mockWordQuizQuestions;
+      console.log('wordsQuizQuestions', wordsQuizQuestions.value);
     }
     
     if (expressionsQuizResult) {
       // change generatedQuiz if using mock data
       expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(expressionsQuizResult);
+      console.log('expressionsQuizQuestions', expressionsQuizQuestions.value);
       // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
     }
   } catch (error) {

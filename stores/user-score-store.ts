@@ -38,20 +38,10 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setAllScores(userId: string) {
-      
-      // Récupérer le token d'authentification
-      const { data: { session } } = await useSupabaseClient().auth.getSession()
-      
-      if (!session?.access_token) {
-        console.error('No access token found')
-        return
-      }
-      
+      const headers = await getAuthToken();
       const scores = await $fetch(`/api/general-scores/${userId}`, {
         method: "GET",
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
+        headers,
       });
       const grammarScores = scores.grammarScores.data.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  CpuChipIcon,
   EyeIcon,
   EyeSlashIcon,
   XCircleIcon,
@@ -36,7 +35,6 @@ const handleSignUp = async () => {
   }
   isLoading.value = true;
   try {
-    console.log("email/pswd", state.email, state.password);
     const { data, error } = await client.auth.signUp({
       email: state.email,
       password: state.password,
@@ -45,23 +43,13 @@ const handleSignUp = async () => {
           window.location.origin + "/authorization/confirmation-account",
       },
     });
-    console.log("HERE", data);
-    // const res = await fetch(
-    //   "https://dmwvccsjbfhzjyoajgyw.supabase.co/check-email-confirmed",
-    //   {
-    //     method: "POST",
-    //     headers: {  "Content-Type": "application/json" },
-    //     body: JSON.stringify({ user_id: data?.user?.id }),
-    //   },
-    // );
-    // console.log("resXX", res);
     if (error) throw error;
 
     if (data?.user?.id) {
       await navigateTo({
         path: "/successful-message",
         query: {
-          text: "Please check your mailbox to confirm your account",
+          text: "Check your Mailbox to Confirm your Account",
         },
       });
     }

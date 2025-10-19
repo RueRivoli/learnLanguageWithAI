@@ -5,7 +5,7 @@ const props = withDefaults(
   defineProps<{
     title: string | null;
     description: string | null;
-    backgroundClasses: string | null;
+    backgroundClasses?: string | null;
   }>(),
   {
     title: null,

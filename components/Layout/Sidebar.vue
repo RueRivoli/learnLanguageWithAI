@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CheckBadgeIcon as CheckBadgeIconSolid } from "@heroicons/vue/24/solid";
 import {
   ArrowLeftStartOnRectangleIcon,
   ArrowUturnRightIcon,
@@ -200,69 +199,74 @@ const isActive = (path: string) => {
                 </div>
               </div>
 
-              <!-- User Menu Section for Mobile -->
-              <div class="p-4 border-t border-gray-200">
-                <div class="flex items-center mb-4">
-                  <div class="avatar">
-                    <div class="avatar avatar-placeholder">
-                      <div
-                        class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
-                      >
-                        <span class="text-xl">{{ userInitials }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ml-3">
-                    <div class="flex items-center">
-                      <div class="font-semibold text-neutral">
-                        {{ userPseudo }}
-                      </div>
-                      <div class="w-full flex items-center justify-end">
-                        <StarIcon class="h-4 w-4 ml-2 text-indigo-600" />
-                        <span class="text-primary">{{ userStore.$state.creditsAvailable }}</span>
-                    </div>
-                    </div>
-                  </div>
-                </div>
+        <!-- User Menu Section for Mobile-->
+    <div class="p-4 border-t border-gray-200">
+      <div
+        class="flex items-center gap-2 mb-4"
+        :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion, 'justify-between': !isSideBarMinifiedForDesktopVersion }"
+      >
+        <div class="avatar">
+          <div class="avatar avatar-placeholder">
+            <div
+              class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
+            >
+              <span class="text-xl">{{ userInitials }}</span>
+            </div>
+          </div>
+        </div>
+        <div v-if="!isSideBarMinifiedForDesktopVersion" class="font-semibold text-neutral">{{ userPseudo }}</div>
+        <div v-if="!isSideBarMinifiedForDesktopVersion" class="flex items-center justify-end">
+              <StarIcon class="h-4 w-4 text-indigo-600" />
+              <span class="text-primary font-bold">{{ userStore.$state.creditsAvailable }}</span>
+            </div>
+      </div>
 
-                <div class="space-y-1">
-                  <NuxtLink
-                    class="flex items-center w-full px-4 py-3 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
-                    :class="{
-                      'bg-indigo-50 rounded-lg': isActive('/account/settings'),
-                    }"
-                    to="/account/settings"
-                    @click="sideBarOpened = false"
-                  >
-                    <Cog6ToothIcon
-                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-                      :class="{
-                        'text-indigo-600': isActive('/account/settings'),
-                      }"
-                    />
-                    <span
-                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-                      :class="{
-                        'text-indigo-600': isActive('/account/settings'),
-                      }"
-                      >Settings</span
-                    >
-                  </NuxtLink>
+      <div class="mt-4 space-y-1">
+        <NuxtLink
+          class="flex items-center py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+          :class="{
+            'bg-indigo-50 rounded-lg': isActive('/account/settings'),
+            'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+            'px-4': !isSideBarMinifiedForDesktopVersion,
+          }"
+          to="/account/settings"
+        >
+          <Cog6ToothIcon
+            class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            :class="{
+              'text-indigo-600': isActive('/account/settings'),
+            }"
+          />
+          <span
+            v-if="!isSideBarMinifiedForDesktopVersion"
+            class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            :class="{
+              'text-indigo-600': isActive('/account/settings'),
+            }"
+            >Settings</span
+          >
+        </NuxtLink>
 
-                  <button
-                    class="flex items-center w-full px-4 py-3 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50 active:bg-indigo-100 cursor-pointer"
-                    @click="handleSignOut"
-                  >
-                    <ArrowLeftStartOnRectangleIcon
-                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-                    />
-                    <span
-                      class="font-semibold ml-3 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-                      >Log out</span
-                    >
-                  </button>
-                </div>
-              </div>
+        <button
+          class="flex items-center cursor-pointer w-full py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+          :class="{
+            'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+            'px-4': !isSideBarMinifiedForDesktopVersion,
+          }"
+          @click="handleSignOut"
+        >
+          <ArrowLeftStartOnRectangleIcon
+            class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+          />
+          <span
+            v-if="!isSideBarMinifiedForDesktopVersion"
+            class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+            >Log out</span
+          >
+        </button>
+      </div>
+    </div>
+
             </div>
           </div>
         </TransitionChild>
@@ -463,8 +467,8 @@ const isActive = (path: string) => {
     <!-- User Menu Section -->
     <div class="p-4 border-t border-gray-200">
       <div
-        class="flex items-center"
-        :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion }"
+        class="flex items-center gap-2"
+        :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion, 'justify-between': !isSideBarMinifiedForDesktopVersion }"
       >
         <div class="avatar">
           <div class="avatar avatar-placeholder">
@@ -475,15 +479,11 @@ const isActive = (path: string) => {
             </div>
           </div>
         </div>
-        <div v-if="!isSideBarMinifiedForDesktopVersion" class="ml-3">
-          <div class="flex items-center">
-            <div class="font-semibold text-neutral">{{ userPseudo }}</div>
-            <div class="w-full flex items-center justify-end">
+        <div v-if="!isSideBarMinifiedForDesktopVersion" class="font-semibold text-neutral">{{ userPseudo }}</div>
+        <div v-if="!isSideBarMinifiedForDesktopVersion" class="flex items-center justify-end">
               <StarIcon class="h-4 w-4 text-indigo-600" />
               <span class="text-primary font-bold">{{ userStore.$state.creditsAvailable }}</span>
             </div>
-          </div>
-        </div>
       </div>
 
       <div class="mt-4 space-y-1">

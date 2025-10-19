@@ -10,6 +10,7 @@ export const useUserStore = defineStore("user", {
       email: null,
       fullName: null,
       hasFilledInitialForm: false,
+      hasFilledPseudo: false,
       id: null,
       initials: null,
       isSubscribed: false,
@@ -55,15 +56,20 @@ export const useUserStore = defineStore("user", {
       //  this.memberSince = profile.memberSince;
     },
     async setCreditsAvailable(credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ) {
+      try {
       const headers = await getAuthToken();
-      await $fetch(`/api/credits`, {
+      console.log("headers", headers);
+      const response = await $fetch(`/api/credits`, {
         method: "PUT",
         headers,
         body: {
-          credits: this.creditsAvailable,
+          credits_available: this.creditsAvailable ? this.creditsAvailable - credits : 0,
         },
       });
-      this.creditsAvailable = this.creditsAvailable ? this.creditsAvailable - credits : 0;
-    },
+      this.creditsAvailable = response.credits_available;
+    } catch (error) {
+      console.error('Error setting credits available:', error);
+    }
+  }
   },
 });

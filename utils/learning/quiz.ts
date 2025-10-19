@@ -72,7 +72,7 @@ export const handleGenerationQuiz = async (ruleId: number, userId: string, redir
         quizId: response.quizId,
       },
     });
-    userStore.setcreditsAvailable(CREDITS_FOR_ONE_QUIZ);
+    userStore.setCreditsAvailable(CREDITS_FOR_ONE_QUIZ);
     await navigateTo({
       path: `${redirectionPath}/${response.quizId}`,
     });

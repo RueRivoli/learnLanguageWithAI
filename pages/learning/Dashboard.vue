@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Database } from "~/supabase/types";
 import { ChartBarIcon } from "@heroicons/vue/24/solid";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
@@ -30,6 +29,7 @@ onMounted(async () => {
 });
 
 watchEffect(async () => {
+  console.log("watchEffect www");
   if (user.value) {
     const userId = user.value.id;
     try {
@@ -39,8 +39,20 @@ watchEffect(async () => {
         method: "GET",
         headers,
       });
-      if (profile && !profile[0].language_learned) {
-        languageSelectionModal.value?.openModal();
+      // TODO: Uncomment this when the language selection modal is ready
+      // if (profile && !profile[0].language_learned) {
+      //   languageSelectionModal.value?.openModal();
+      // }
+      // For a fresh new user:
+      if (profile && !profile[0].hasFilledPseudo) {
+        pseudoDefinitionModal.value?.openModal();
+        await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
+          method: "POST",
+          headers,
+          body: {
+            language_learned: 'tr',
+          },
+        });
       }
       userStore.setProfile(profile[0]);
     } catch (error) {
@@ -50,18 +62,17 @@ watchEffect(async () => {
 });
 
 const handleLanguageUpdated = async (profile: any) => {
-  console.log("handleLanguageUpdated", profile);
-  console.log("openModal");
   pseudoDefinitionModal.value?.openModal();
   if (user.value) {
-    const headers = await getAuthToken();
-    await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
-      method: "POST",
-      headers,
-      body: {
-        language_learned: profile.language_learned,
-      },
-    });
+    // const headers = await getAuthToken();
+    // TODO: Uncomment this when the language selection is ready
+    // await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
+    //   method: "POST",
+    //   headers,
+    //   body: {
+    //     language_learned: profile.language_learned,
+    //   },
+    // });
   }
 };
 
@@ -122,11 +133,12 @@ getInfoUser();
     </div>
 
     <!-- Modals -->
-    <AccountSelectionLanguageModal
+    <!-- TODO: Uncomment this when the language selection is ready -->
+    <!-- <AccountSelectionLanguageModal
       ref="languageSelectionModal"
       :user-id="user?.id"
       @language-updated="(profile) => handleLanguageUpdated(profile)"
-    />
+    /> -->
     <AccountPseudoDefinitionModal
       ref="pseudoDefinitionModal"
       :user-id="user?.id"
