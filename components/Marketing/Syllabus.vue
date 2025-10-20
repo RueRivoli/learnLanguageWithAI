@@ -50,11 +50,11 @@ watchEffect(async () => {
   <section
     class="bg-primary/20 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
   >
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-7xl mx-auto">
       <h1
         class="text-4xl font-semibold tracking-tight text-pretty text-center text-neutral mb-8"
       >
-        Syllabus
+        Syllabus in your Targeted Language
       </h1>
 
       <div class="flex justify-center space-x-3 mb-8 p-6">

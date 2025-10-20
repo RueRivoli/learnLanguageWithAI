@@ -4,7 +4,8 @@ const showVoucherPromo = ref<boolean>(true);
 </script>
 
 <template>
-  <div class="w-full fixed z-50 font-semibold shadow bg-primary text-white/80">
+  <div class="w-full fixed z-50 font-semibold shadow bg-primary text-white">
+    <!-- Uncomment if Voucher Promo -->
     <!-- <div
       v-if="showVoucherPromo"
       class="bg-secondary text-primary relative inset-0 bottom-auto border-b border-secondary px-8 py-1.5 text-center text-xs transition-all duration-200"

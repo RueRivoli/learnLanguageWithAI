@@ -73,7 +73,7 @@ import {
             </NuxtLink>
           </div>
 
-          <div class="mt-2 inline-flex items-center gap-3 rounded-lg bg-base-200/70 px-4 py-2 ring-1 ring-base-content/10 backdrop-blur-sm">
+          <div class="mt-2 w-full inline-flex items-center gap-3 rounded-lg bg-base-200/70 px-4 py-2 ring-1 ring-base-content/10 backdrop-blur-sm">
             <MarketingUsedBy />
           </div>
         </div>
