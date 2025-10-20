@@ -16,6 +16,7 @@ import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/genera
 import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import { getAuthToken } from "~/utils/auth/auth";
+import { CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
 
 definePageMeta({
   layout: "quiz",
@@ -53,6 +54,13 @@ const closeResultsModal = () => {
   showResultsModal.value = false;
 };
 
+const openingModalId = ref(0);
+
+const handleCancelModal = () => {
+  openingModalId.value = openingModalId.value + 1;
+};
+
+
 // Fetch lesson data
 const getVocabularyFromLesson = async () => {
   const headers = await getAuthToken();
@@ -88,7 +96,6 @@ const getAdditionnalWordsForQuiz = async () => {
   }
 };
 
-
 const getAdditionnalExpressionsForQuiz = async () => {
   const headers = await getAuthToken();
   const data = await $fetch(`/api/expressions/levels/random/?limit=2`, {
@@ -118,6 +125,10 @@ const getGrammarQuizData = async () => {
 
 const getGeneratedVocabularyQuiz = async () => {
   try {
+    if (!userStore.isEnoughTokensForOneQuiz) {
+      openingModalId.value = openingModalId.value + 1;
+      return;
+    }
     const headers = await getAuthToken();
     const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/claude/words`, {
       method: "POST",
@@ -142,20 +153,18 @@ const getGeneratedVocabularyQuiz = async () => {
       generatedWordsQuiz, 
       generatedExpressionsQuiz
     ]);
-    console.log('wordsQuizResult', wordsQuizResult, expressionsQuizResult);
     if (wordsQuizResult) {
       // change generatedQuiz if using mock data
       wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(wordsQuizResult);
       // wordsQuizQuestions.value = mockWordQuizQuestions;
-      console.log('wordsQuizQuestions', wordsQuizQuestions.value);
     }
     
     if (expressionsQuizResult) {
       // change generatedQuiz if using mock data
       expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(expressionsQuizResult);
-      console.log('expressionsQuizQuestions', expressionsQuizQuestions.value);
       // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
     }
+    userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
   } catch (error) {
     console.error('Error generating vocabulary quiz:', error);
     // Handle error appropriately - maybe set some default values or show error message
@@ -176,7 +185,7 @@ const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQu
       // value: formQuiz.value,
     },
   });
-  
+
   setTimeout(() => {
     openResultsModal();
   }, 200);
@@ -210,6 +219,12 @@ isLoadingQuiz.value = false;
      <div v-if="showResultsModal" class="modal-overlay">
       <QuizModal :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" type="full" @close="closeResultsModal" />
      </div>
+
+     <AccountPaymentModal
+        id="my_modal_to_get_credits"
+        :key="openingModalId"
+        @cancel="handleCancelModal"
+      />
   </div>
 </template>
 

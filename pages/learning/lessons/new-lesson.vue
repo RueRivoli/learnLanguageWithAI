@@ -224,11 +224,10 @@ const handleGenerateStory = async () => {
       STORY_LEVELS[1],
       10,
     );
-    console.log("newLesson", newLesson);
     const promptForImageGeneration = newLesson.promptForImageGeneration;
     if (newLesson.id) {
       generateImageWithPrompt(promptForImageGeneration, newLesson.id, "gpt-4.1", userId.value);
-      userStore.setCreditsAvailable(CREDITS_FOR_ONE_LESSON);
+      userStore.creditsUsageUpdate(CREDITS_FOR_ONE_LESSON);
     }
     router.push(`/learning/lessons/${String(newLesson.id)}?loadingImage=true`);
     isGeneratingLesson.value = false;

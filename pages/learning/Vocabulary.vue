@@ -289,7 +289,7 @@ const handleExpressionLearningStatus = async (
                   :class="{
                     'text-primary': showLearnedWords,
                   }"
-                  >See Words You Learned</span
+                  >See Words You Mastered</span
                 >
               </label>
             </div>
@@ -306,7 +306,7 @@ const handleExpressionLearningStatus = async (
                   :class="{
                     'text-primary': showLearnedExpressions,
                   }"
-                  >See Expressions You Learned</span
+                  >See Expressions You Mastered</span
                 >
               </label>
             </div>

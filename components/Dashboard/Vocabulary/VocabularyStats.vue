@@ -31,14 +31,14 @@ const fetchWordsForBatch = async () => {
   
   isLoadingWords.value = true;
   try {
-    const page = Math.floor((currentBatch.value * wordsPerBatch) / 16) + 1;
+    const page = Math.floor((currentBatch.value * wordsPerBatch) / 500) + 1;
     const headers = await getAuthToken();
-    const { data } = await $fetch(`/api/words?page=${page}&size=16`, {
+    const { data } = await $fetch(`/api/words/overall?page=${page}&size=500`, {
       headers,
-      query: { is_learned: 'false' }
     });
-    
+    console.log('data', data)
     if (data) {
+      console.log('wordsFetched', data)
       // Map the fetched words to our grid format
       const startIndex = currentBatch.value * wordsPerBatch;
       const endIndex = Math.min(startIndex + wordsPerBatch, totalWords.value);
@@ -51,7 +51,7 @@ const fetchWordsForBatch = async () => {
           id: wordIndex,
           text: wordData?.text || `Word ${wordIndex}`,
           translation: wordData?.translation || '',
-          isMastered: wordIndex % 3 === 0 || wordIndex % 7 === 0 // ~33% mastered
+          isMastered: wordData?.turkish_words_knowledge[0]?.word_mastered ?? false
         };
       });
     }
@@ -125,12 +125,11 @@ const fetchExpressionsForBatch = async () => {
   isLoadingExpressions.value = true;
   try {
     const headers = await getAuthToken();
-    const page = Math.floor((currentExpressionBatch.value * expressionsPerBatch) / 10) + 1;
-    const { data } = await $fetch(`/api/expressions?page=${page}&size=10`, {
+    const page = Math.floor((currentExpressionBatch.value * expressionsPerBatch) / 200) + 1;
+    const { data } = await $fetch(`/api/expressions/overall?page=${page}&size=200`, {
       headers,
-      query: { is_learned: 'false' }
     });
-    
+    console.log('expressionsFetched', data)
     if (data) {
       // Map the fetched expressions to our grid format
       const startIndex = currentExpressionBatch.value * expressionsPerBatch;
@@ -143,7 +142,7 @@ const fetchExpressionsForBatch = async () => {
           id: expressionIndex,
           text: expressionData?.text || `Expression ${expressionIndex}`,
           translation: expressionData?.translation || '',
-          isMastered: expressionIndex % 4 === 0 || expressionIndex % 9 === 0 // ~25% mastered
+          isMastered: expressionData?.turkish_expressions_knowledge.expression_mastered ?? false
         };
       });
     }
@@ -219,7 +218,7 @@ watch(totalExpressions, () => {
 <template>
   <div>
     <!-- Full-width Vocabulary Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-lg shadow-sm border border-blue-300/70 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -280,9 +279,9 @@ watch(totalExpressions, () => {
           <div 
             v-for="item in gridData" 
             :key="item.id"
-            class="aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform"
-            :class="item.isMastered ? 'bg-blue-500 hover:bg-blue-600' : 'bg-slate-200 hover:bg-gray-300'"
-            :title="`${item.text}${item.translation ? ' - ' + item.translation : ''}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
+            class="aspect-square rounded-sm cursor-pointer transition-transform"
+            :class="item.isMastered ? 'bg-blue-500 hover:bg-blue-600' : 'bg-slate-300 hover:bg-slate-400'"
+            :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
         </div>
       </div>
@@ -301,7 +300,7 @@ watch(totalExpressions, () => {
     </div>
 
     <!-- Full-width Expression Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-lg shadow-sm border border-purple-300/70 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -362,9 +361,9 @@ watch(totalExpressions, () => {
           <div 
             v-for="item in expressionGridData" 
             :key="item.id"
-            class="aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform"
-            :class="item.isMastered ? 'bg-purple-500 hover:bg-purple-600' : 'bg-slate hover:bg-white-100'"
-            :title="`${item.text}${item.translation ? ' - ' + item.translation : ''}: ${item.isMastered ? 'Mastered' : 'Learning'}`"
+            class="aspect-square rounded-sm cursor-pointer"
+            :class="item.isMastered ? 'bg-purple-500 hover:bg-purple-600' : 'bg-slate-300 hover:bg-slate-400'"
+            :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
         </div>
       </div>

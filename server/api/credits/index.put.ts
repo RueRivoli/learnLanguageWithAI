@@ -5,16 +5,14 @@ const supabase = createServiceRoleClient()
 
 export default defineEventHandler(async (event) => {
   const supabaseAuth = createSupabaseClientWithUserAuthTokenFromHeader(event)
-  const { data: { user }, error: userError } = await supabaseAuth.auth.getUser();
-  // if (userError || !user?.id) {
-  //   throw createError({ statusCode: 401, statusMessage: 'Invalid user' });
-  // }
   const body = await readBody(event);
-  const { data, error } = await supabase
+  const { creditsAvailable } = body;
+  const { data, error } = await supabaseAuth
     .from('profiles')
-    .update(body)
+    .update({ credits_available: creditsAvailable }).eq('id', body.userId)
+    .select('credits_available, credits_purchased_total, last_credit_purchase_date')
     .single();
-
+  console.log('data', data)
   if (error) throw error;
   
   return {

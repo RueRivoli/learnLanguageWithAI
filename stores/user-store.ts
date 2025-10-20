@@ -6,24 +6,23 @@ import { CREDITS_FOR_ONE_LESSON, CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
 export const useUserStore = defineStore("user", {
   state: (): User => {
     return {
-      isLoaded: false,
+      creditsAvailable: null,
+      creditsPurchasedTotal: null,
       email: null,
       fullName: null,
       hasFilledInitialForm: false,
       hasFilledPseudo: false,
       id: null,
       initials: null,
-      isSubscribed: false,
+      isLoaded: false,
       languageLearned: null,
-      pseudo: null,
-      creditsAvailable: null,
-      creditsPurchasedTotal: null,
       lastCreditPurchaseDate: null,
-      // avatar: null,
-      // memberSince: null,
+      pseudo: null,
     };
   },
   getters: {
+    // 10 credits for one lesson
+    // 2.5 credits for one quiz
     isEnoughTokensForOneLesson(state: User): boolean {
       if (!state.creditsAvailable) return false;
       return state.creditsAvailable >= 10;
@@ -40,6 +39,23 @@ export const useUserStore = defineStore("user", {
     }
   },
   actions: {
+    async creditsUsageUpdate(credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ) {
+      try {
+        const headers = await getAuthToken();
+        const response = await $fetch(`/api/credits`, {
+          method: "PUT",
+          headers,
+          body: {
+            creditsAvailable: (this.creditsAvailable ?? 0) - credits,
+            userId: this.id,
+          },
+        });
+        console.log('response', response)
+        this.creditsAvailable = response.creditsAvailable;
+      } catch (error) {
+        console.error('Error setting credits available:', error);
+      }
+    },
     setProfile(profile: DatabaseUserProfile) {
       this.id = profile.id;
       this.isLoaded = true,
@@ -54,22 +70,6 @@ export const useUserStore = defineStore("user", {
       this.lastCreditPurchaseDate = profile.last_credit_purchase_date;
       // this.avatar = profile.avatar;
       //  this.memberSince = profile.memberSince;
-    },
-    async setCreditsAvailable(credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ) {
-      try {
-      const headers = await getAuthToken();
-      console.log("headers", headers);
-      const response = await $fetch(`/api/credits`, {
-        method: "PUT",
-        headers,
-        body: {
-          credits_available: this.creditsAvailable ? this.creditsAvailable - credits : 0,
-        },
-      });
-      this.creditsAvailable = response.credits_available;
-    } catch (error) {
-      console.error('Error setting credits available:', error);
     }
-  }
   },
 });

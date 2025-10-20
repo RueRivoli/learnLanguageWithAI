@@ -28,6 +28,7 @@ const openingModalId = ref(0);
 const showEnglishTranslations = ref(false);
 const activeSentenceTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
+const isGeneratingQuiz = ref<boolean>(false);
 const areWordsExampleShown = ref<boolean>(false);
 const areExpressionsExampleShown = ref<boolean>(false);
 const loadingImage = computed(() => route.query.loadingImage as string);
@@ -45,13 +46,14 @@ const handleGenerateQuiz = async () => {
     openingModalId.value = openingModalId.value + 1;
     return;
   }
-  if (!lesson.value?.grammarRuleId) return;
-  if (!user.value?.id) return;
+  isGeneratingQuiz.value = true;
+  if (!lesson.value?.grammarRuleId || !user.value?.id) return;
   await handleGenerationQuiz(lesson.value?.grammarRuleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, lessonId);
   // Refresh lesson data after quiz generation to get updated quizId
   await refresh();
   // Notify other components about the lesson modification
   lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
+  isGeneratingQuiz.value = true;
 };
 
 const handleCancelModal = () => {
@@ -318,6 +320,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 
                 <button
                     class="btn btn-sm btn-error mx-2 btn-outline hover:text-white"
+                    :disabled="isGeneratingQuiz || isLoading"
                     @click="handleGenerateQuiz"
                   >
                   <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
@@ -497,7 +500,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   <button
                     v-if="!lesson?.quizId"
                     class="w-80 m-auto bg-primary cursor-pointer hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
-                    :disabled="isLoading"
+                    :disabled="isGeneratingQuiz || isLoading"
                     @click="handleGenerateQuiz"
                   >
                     <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />

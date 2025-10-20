@@ -17,7 +17,7 @@ const props = withDefaults(
 <template>
 
 <!-- Total Expressions Mastered - Professional Design -->
-<div class="group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-xl shadow-md border border-purple-300/70 p-4 hover:shadow-xl hover:border-purple-400/80 overflow-hidden transition-all duration-300">
+<div class="group relative bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-lg shadow-md border border-purple-300/70 p-4 hover:shadow-xl hover:border-purple-400/80 overflow-hidden transition-all duration-300">
     <!-- Professional background pattern -->
     <div class="absolute inset-0 bg-gradient-to-br from-purple-100/60 via-purple-50/80 to-pink-100/50 opacity-90"/>
 

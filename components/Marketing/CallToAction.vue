@@ -44,26 +44,19 @@ import {
         style="background-image: url(&quot;/_nuxt/assets/img/grid8.png&quot;)"
       /> -->
       <div class="text-center">
-        <!-- <client-only>
-          <Vue3Lottie
-            animation-link="_nuxt/assets/lottie/toucan.json"
-            :height="400"
-            :width="400"
-          />
-        </client-only> -->
         <h1
-          class="text-5xl font-semibold tracking-tight text-balance text-neutral dark:text-white sm:text-7xl"
+          class="text-6xl font-semibold tracking-tight text-balance text-neutral dark:text-white sm:text-7xl"
         >
-          Learn a language
-          <span class="text-primary font-bold">more efficiently</span> with AI
+        <span class="text-warning font-bold"> Feeling stuck</span> <span class="font-bold">in your language learning ?</span><br/>
+         Try <span class="text-primary font-bold">TookanAI</span>        
         </h1>
         <p
           class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"
         >
-          Make progress faster by training on lessons tailored to your weaknesses.
+          Turn your weaknesses into your greatest strength — and watch your progress skyrocket!
         </p>
         <p class="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-          Train on vocabulary to know the most used words and expressions
+          Train with engaging stories tailored to your grammar and vocabulary needs.
         </p>
 
         <div class="mt-10 z-[100] flex items-center justify-center gap-x-6">

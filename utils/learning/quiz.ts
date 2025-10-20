@@ -63,7 +63,6 @@ export const handleGenerationQuiz = async (ruleId: number, userId: string, redir
         userId: userId,
       },
     });
-    console.log("has generated a quiz with the quizId: ", response.quizId);
     // response is the id of the new generated quiz
     if (lessonId) await $fetch(`/api/lessons/${lessonId}`, {
       method: "PUT", 
@@ -72,7 +71,7 @@ export const handleGenerationQuiz = async (ruleId: number, userId: string, redir
         quizId: response.quizId,
       },
     });
-    userStore.setCreditsAvailable(CREDITS_FOR_ONE_QUIZ);
+    userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
     await navigateTo({
       path: `${redirectionPath}/${response.quizId}`,
     });

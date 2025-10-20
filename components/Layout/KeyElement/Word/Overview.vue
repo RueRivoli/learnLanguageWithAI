@@ -17,7 +17,7 @@ const props = withDefaults(
 <template>
  <!-- Total Words Mastered - Professional Design -->
  <div
-    class="group relative bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-xl shadow-md border border-blue-300/70 p-4 hover:shadow-xl hover:border-blue-400/80 overflow-hidden transition-all duration-300"
+    class="group relative bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-lg shadow-md border border-blue-300/70 p-4 hover:shadow-xl hover:border-blue-400/80 overflow-hidden transition-all duration-300"
   >
     <!-- Professional background pattern -->
     <div
