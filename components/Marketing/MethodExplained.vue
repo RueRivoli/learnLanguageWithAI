@@ -10,82 +10,53 @@ import {
   <div class="bg-primary/20 overflow-hidden py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div
-        class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2"
-      >
-        <div class="lg:pt-4 lg:pr-8">
-          <div class="lg:max-w-lg">
-            <h2 class="text-base/7 font-semibold text-primary">
-              Accelerate your language learning with AI
-            </h2>
-            <p
-              class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-neutral sm:text-5xl"
-            >
-              A program designed to evaluate your proficiency and target areas
-              for improvement
-            </p>
-            <p class="mt-6 text-lg/8 text-gray-600">
-              Learn through fun, personalized lessons powered by the most
-              advanced large language models
-            </p>
-            <dl
-              class="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none"
-            >
-              <div class="relative pl-9">
-                <dt class="inline font-semibold text-primary">
-                  <QuestionMarkCircleIcon
-                    class="absolute top-1 left-1 size-5"
-                  />
-                  Fill out a 5 min questionnary.
-                </dt>
-                <dd class="inline">
-                  Our programm using latest AI models assesses your level in the
-                  most important targeted language concepts established by our
-                  experienced teachers and estimated how many words you have
-                  acquired.
-                </dd>
-              </div>
-              <div class="relative pl-9">
-                <dt class="inline font-semibold text-primary">
-                  <BookOpenIcon class="absolute top-1 left-1 size-5" />
-                  Train yourself with fun stories tailored to your level.
-                </dt>
-                <dd class="inline">
-                  Each lesson is made so that you work on your weakness and that
-                  you learn the vocabulary you don't know
-                </dd>
-              </div>
-              <div class="relative pl-9">
-                <dt class="inline font-semibold text-primary">
-                  <ChartBarIcon class="absolute top-1 left-1 size-5" />
-                  Follow your progress.
-                </dt>
-                <dd class="inline">
-                  At the end of each lesson, you fill out a short quiz that
-                  estimates your progress in the target concept and your
-                  knowledge on the new words used. Thus, you can follow with our
-                  charts, how well you are doing in the different key concepts
-                  and how much of the most used words you know
-                </dd>
-              </div>
-            </dl>
+        class="w-full mx-auto"
+      >        
+          <div class="flex items-center gap-4">
+            <div>
+              <h2>1.We track your progress</h2>
+              <span class="text-primary">Your level in your targeted language concepts is tracked through quizzes preapred by our qualified teachers</span>
+            </div>
+            <div>
+             <img src="~/public/syllabus_beginner.png" alt="Beginner Syllabus" class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0" width="1232" height="800" />
           </div>
         </div>
-        <img
-          src="~/assets/img/platform/screen.png"
-          alt="Product screenshot"
-          class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-          width="2432"
-          height="1442"
-        />
-        <!-- <img
-          src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
-          alt="Product screenshot"
-          class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-          width="2432"
-          height="1442"
-        /> -->
+          <div class="mt-4 flex items-center gap-4">
+            <div>
+              <h2>2.We track your known vocabulary</h2>
+              <span class="text-primary">Your knowledge on the most used words and expressions are also tracked through quizzes</span>
+            </div>
+            <div>
+              <img src="~/public/vocabheatmap.png" alt="Beginner Syllabus" class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0" width="1232" height="800" />
+          </div>
+        </div>
+          <div class="mt-4 flex items-center gap-4">
+            <div>
+              <h2>3. Practice with targeted fun stories</h2>
+              <span class="text-primary">Your lessons are targetting your weaknesses concepts and your missing vocabulary</span>
+            </div>
+            <div>
+              <img src="~/public/story1.png" alt="Beginner Syllabus" class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0" width="1232" height="800" />
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div>
+              <h2>4. Testing Fun Quiz</h2>
+              <span class="text-primary">You end each lesson with a quiz to evaluate your progress on the concept and on the vocabulary</span>
+            </div>
+            <div>
+              <img
+                  src="~/assets/img/platform/screen.png"
+                  alt="Product screenshot"
+                  class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+                  width="1232"
+                  height="800"
+              />
+          </div>
+
+        </div>
+        </div>
       </div>
-    </div>
   </div>
 </template>
 

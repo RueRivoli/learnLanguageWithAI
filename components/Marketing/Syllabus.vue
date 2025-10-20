@@ -1,24 +1,55 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
+import type { GrammarRule } from "~/types/modules/grammar-rule";
+import { getBorderStyleClassFromGrammarRuleLevel, getTextStyleClassFromGrammarRuleLevel, grammarLevelTabs, parseSyllabusRules } from "~/utils/learning/grammar";
 
-import { languages, rulesNames } from "~/utils/syllabus";
+import { languages } from "~/utils/syllabus";
 
 const selectedLang = ref("tr");
+const syllabusRules = ref<Array<GrammarRule>>([]);
+const isFetchingGrammarRules = ref(false);
+const activeDifficultyLevelTab = ref(1);
+
+const getDifficultyClassQuery = (tabDifficultyLevel: number) => {
+  switch (tabDifficultyLevel) {
+    case 1:
+      return {
+        difficulty_class: 1,
+      };
+    case 2:
+      return {
+        difficulty_class: 2,
+      };
+    case 3:
+      return {
+        difficulty_class: 3,
+      };
+    default:
+      return {};
+  }
+};
+
+watchEffect(async () => {
+  try {
+    isFetchingGrammarRules.value = true;
+    const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
+    const grammarModules = await $fetch("/api/grammar/syllabus?order_by=id", {
+      query,
+    });
+    if (grammarModules && Array.isArray(grammarModules))
+      syllabusRules.value = parseSyllabusRules(grammarModules);
+      console.log("syllabusRules", syllabusRules.value);
+    isFetchingGrammarRules.value = false;
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
 
 <template>
   <section
-    class="bg-primary/20 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center "
+    class="bg-primary/20 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
   >
-    <div>
-      <client-only>
-        <Vue3Lottie
-          animation-link="_nuxt/assets/lottie/languages.json"
-          :height="400"
-          :width="400"
-        />
-      </client-only>
-    </div>
     <div class="max-w-4xl mx-auto">
       <h1
         class="text-4xl font-semibold tracking-tight text-pretty text-center text-neutral mb-8"
@@ -42,60 +73,49 @@ const selectedLang = ref("tr");
         </button>
       </div>
       <!-- Syllabus Content -->
-      <transition name="fade" mode="out-in">
-        <!-- <div
-          :key="selectedLang"
-          class="w-full text-center text-neutral text-pretty"
-        >
-          <ul class="w-full m-auto bg-base-200 rounded-box shadow-xl p-4">
-            <li
-              v-for="(less, n) in rulesNames[selectedLang]"
-              :key="less.title"
-              class="group transition-all duration-300 rounded-lg my-2"
-            >
-              <div class="flex items-center justify-center gap-4 p-4">
-                <div
-                  class="text-4xl font-extralight text-primary opacity-50 group-hover:opacity-100 transition-opacity duration-300 tabular-nums"
-                >
-                  {{ n + 1 }}
-                </div>
-                <div class="flex flex-col gap-1">
-                  <div
-                    class="text-lg font-medium group-hover:text-primary transition-colors duration-300"
-                  >
-                    {{ less.title }}
+      <LayoutTabs
+              :first-tab="grammarLevelTabs.firstTab"
+              :second-tab="grammarLevelTabs.secondTab"
+              :third-tab="grammarLevelTabs.thirdTab"
+              @tab-active-changed="
+                (activeTab) => (activeDifficultyLevelTab = activeTab)
+              "
+            />
+      <div
+            class="mt-4 grid grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-4"
+          >
+        <div v-for="(rule, n) in syllabusRules" :key="n" class="col-span-1">
+          <transition name="fade" mode="out-in">
+              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true" size="small">
+                <template #content>
+                  <!-- Professional description box -->
+                  <div v-if="(rule as any).highlights" class="mt-3 mb-4">
+                    <div class="relative rounded-xl p-4 shadow-sm overflow-hidden" :class="getBorderStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)">
+                      <!-- Subtle texture overlay -->
+                      <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
+                      <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
+                      
+                      <!-- Content -->
+                      <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-2">
+                          <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
+                          <svg class="h-3 w-3" :class="getTextStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                          </svg>
+                          <span class="text-xs font-semibold uppercase tracking-wide" :class="getTextStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)">Key Point</span>
+                        </div>
+                        <p class="text-xs text-slate-700 font-medium leading-relaxed">
+                          {{ (rule as any).highlights }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    class="text-xs uppercase tracking-wider font-semibold text-base-content/50 group-hover:text-primary/70 transition-colors duration-300"
-                  >
-                    {{ less.titleEn }}
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div> -->
-
-        <div :key="selectedLang" class="overflow-x-auto">
-          <table class="bg-base-200 table table-zebra rounded-lg">
-            <!-- head -->
-            <thead class="bg-neutral/80 text-white">
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Translation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(less, n) in rulesNames[selectedLang]" :key="n">
-                <th>{{ n + 1 }}</th>
-                <td>{{ less.title }}</td>
-                <td>{{ less.titleEn }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </transition>
+            </template>
+            </LayoutKeyElementRuleOverview>
+          </transition>
+          </div>
+          </div>
     </div>
   </section>
 </template>

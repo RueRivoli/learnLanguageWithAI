@@ -8,13 +8,15 @@ const props = withDefaults(
     titleEn: string | null;
     level: number | null;
     symbol: string | null;
+    size?: 'small' | 'large';
   }>(),
   {
     level: null,
-    lightMode:false,
+    lightMode: false,
     title: null,
     titleEn: null,
     symbol: null,
+    size: 'large'
   },
 );
 
@@ -38,10 +40,10 @@ const props = withDefaults(
     <div class="h-full relative flex flex-col justify-between z-10">
         <div class="flex items-center justify-between mb-3">
             <div class="flex-1">
-                <h3 :class="{'text-xl text-gray-900 mb-0.5': props.lightMode, 'text-xl text-gray-800 mb-0.5': !props.lightMode}">
+                <h3 :class="{'text-gray-900 mb-0.5': props.lightMode, 'text-gray-800 mb-0.5': !props.lightMode, 'text-sm': props.size === 'small', 'text-xl': props.size === 'large'}">
                     {{ props.titleEn }}
                 </h3>
-                <p :class="{'text-sm text-gray-900 font-light': props.lightMode, 'text-sm text-gray-800 font-light': !props.lightMode}"> {{props.title}}</p>
+                <p :class="{'text-gray-900 font-light': props.lightMode, 'text-gray-800 font-light': !props.lightMode, 'text-xs': props.size === 'small', 'text-sm': props.size === 'large'}"> {{props.title}}</p>
             </div>
 
             

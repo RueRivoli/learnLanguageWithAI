@@ -7,11 +7,11 @@ import russianFlag from "~/assets/img/language/russian.png";
 
 export const languages = [
   { code: "tr", label: "Turkish", imgSrc: turkeyFlag, activated: true },
-  { code: "fr", label: "French", imgSrc: franceFlag, activated: true },
-  { code: "es", label: "Spanish", imgSrc: spanishFlag, activated: true },
-  { code: "it", label: "Italian", imgSrc: italianFlag, activated: false },
-  { code: "rs", label: "Russian", imgSrc: russianFlag, activated: false },
-  { code: "jp", label: "Japanese", imgSrc: japaneseFlag, activated: false },
+  { code: "fr", label: "French", imgSrc: franceFlag, activated: false },
+  { code: "es", label: "Spanish", imgSrc: spanishFlag, activated: false },
+  // { code: "it", label: "Italian", imgSrc: italianFlag, activated: false },
+  // { code: "rs", label: "Russian", imgSrc: russianFlag, activated: false },
+  // { code: "jp", label: "Japanese", imgSrc: japaneseFlag, activated: false },
 ];
 
 export const rulesNames = {

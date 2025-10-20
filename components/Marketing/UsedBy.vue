@@ -29,35 +29,35 @@
         <input
           type="radio"
           name="rating-4"
-          class="mask mask-star-2 bg-green-500"
+          class="mask mask-star-2 bg-warning"
           aria-label="1 star"
           disabled
         />
         <input
           type="radio"
           name="rating-4"
-          class="mask mask-star-2 bg-green-500"
+          class="mask mask-star-2 bg-warning"
           aria-label="2 star"
           disabled
         />
         <input
           type="radio"
           name="rating-4"
-          class="mask mask-star-2 bg-green-500"
+          class="mask mask-star-2 bg-warning"
           aria-label="3 star"
           disabled
         />
         <input
           type="radio"
           name="rating-4"
-          class="mask mask-star-2 bg-green-500"
+          class="mask mask-star-2 bg-warning"
           aria-label="4 star"
           disabled
         />
         <input
           type="radio"
           name="rating-4"
-          class="mask mask-star-2 bg-green-500"
+          class="mask mask-star-2 bg-warning"
           aria-label="5 star"
           disabled
           checked="checked"

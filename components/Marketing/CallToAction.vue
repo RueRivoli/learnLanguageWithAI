@@ -2,116 +2,141 @@
 import {
   ArrowLongRightIcon,
   ArrowTopRightOnSquareIcon,
+  StarIcon,
+  CheckCircleIcon,
+  ChartBarIcon,
 } from "@heroicons/vue/24/solid";
 </script>
 
 <template>
-  <div class="relative px-6 pt-14 lg:px-8">
-    <div
-      class="absolute inset-0 z-[-10] bg-cover overflow-hidden bg-top bg-no-repeat opacity-30 dark:opacity-80 bg-[url('/_nuxt/assets/img/grid/home.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
-    />
-    <div
-      class="absolute inset-x-0 -top-40 transform-gpu overflow-hidden blur-[85px] sm:-top-80"
-      aria-hidden="true"
-    >
+  <section class="relative overflow-hidden bg-base-100 min-h-[70vh]">
+    <!-- Background: soft gradient base + subtle grid + refined glows -->
+    <div class="absolute inset-0 -z-10 pointer-events-none">
+      <!-- Base gradient wash (slightly stronger) -->
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/15 via-base-100 to-warning/15" />
+      <!-- Texture grid (more visible) -->
+      <div class="absolute inset-0 opacity-[0.16] dark:opacity-[0.22] bg-[url('/_nuxt/assets/img/grid/home.png')] bg-top bg-no-repeat bg-[length:min(100%,100%)]" />
+      <!-- Fine diagonal lines pattern -->
+      <div class="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]" style="background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 10px);" />
+      <!-- Primary glow -->
+      <div class="absolute -top-56 -left-28 w-[700px] h-[700px] rounded-full blur-3xl bg-primary/20" />
+      <!-- Warning glow -->
+      <div class="absolute -bottom-64 -right-24 w-[600px] h-[600px] rounded-full blur-3xl bg-warning/20" />
+      <!-- Neutral soft ring -->
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[860px] h-[860px] rounded-full blur-[110px] bg-neutral/10" />
+      <!-- Angled sheen overlay (slightly stronger) -->
       <div
-        class="relative z-[-1] left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary/50 to-primary/90 opacity-95 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] rotate-[30deg]"
-        style="
-          clip-path: polygon(
-            60% 35%,
-            90% 45%,
-            85% 25%,
-            75% 10%,
-            65% 15%,
-            55% 35%,
-            50% 45%,
-            45% 40%,
-            40% 35%,
-            35% 30%,
-            25% 50%,
-            15% 45%,
-            20% 75%,
-            30% 60%,
-            70% 75%,
-            60% 35%
-          );
-        "
+        class="absolute -top-32 left-1/3 w-[1400px] h-[900px] rotate-[18deg] opacity-60"
+        style="background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.1) 50%, transparent 80%); clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);"
       />
+      <!-- Vignette -->
+      <div class="absolute inset-0 bg-[radial-gradient(1200px_circle_at_center,transparent_40%,rgba(0,0,0,0.08))] dark:bg-[radial-gradient(1200px_circle_at_center,transparent_40%,rgba(0,0,0,0.22))]" />
     </div>
-    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 relative z-10">
-      <!-- <div
-        class="absolute inset-0 z-[-1] bg-cover bg-color-base-200 bg-top bg-no-repeat opacity-40"
-        style="background-image: url(&quot;/_nuxt/assets/img/grid8.png&quot;)"
-      /> -->
-      <div class="text-center">
-        <h1
-          class="text-6xl font-semibold tracking-tight text-balance text-neutral dark:text-white sm:text-7xl"
-        >
-        <span class="text-warning font-bold"> Feeling stuck</span> <span class="font-bold">in your language learning ?</span><br/>
-         Try <span class="text-primary font-bold">TookanAI</span>        
-        </h1>
-        <p
-          class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"
-        >
-          Turn your weaknesses into your greatest strength — and watch your progress skyrocket!
-        </p>
-        <p class="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-          Train with engaging stories tailored to your grammar and vocabulary needs.
-        </p>
 
-        <div class="mt-10 z-[100] flex items-center justify-center gap-x-6">
-          <NuxtLink
-            :to="{
-              path: '/authorization/auth/',
-              query: { toCreateAccount: 'true' }
-            }"
-            class="btn btn-primary animation-bounce cursor-pointer hover:scale-105 transition-transform flex items-center"
-          >
-            <span class="text-lg">Get Started</span>
-            <ArrowLongRightIcon class="ml-1 h-5 w-5" />
-          </NuxtLink>
+    <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 xl:px-12 pt-24 pb-20 sm:pt-36 sm:pb-32 lg:pt-44 lg:pb-40">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <!-- Left: Copy -->
+        <div class="space-y-10">
+          <div class="space-y-6">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral dark:text-white text-balance">
+              The intuitive
+              <span class="text-warning">language</span>
+              platform for fast-growing learners
+            </h1>
+            <p class="text-lg sm:text-xl text-base-content/70 leading-relaxed">
+              Automate your learning with <span class="font-bold text-primary">TookanAI</span> : tailored stories, grammar focus, and vocabulary training — all in one elegant platform.
+            </p>
+          </div>
 
-          <NuxtLink
-            to="/marketing/working-explanation"
-            class="btn btn-ghost cursor-pointer hover:scale-105 transition-transform flex items-center"
-          >
-            <ArrowTopRightOnSquareIcon class="ml-2 h-5 w-5" />
-            <span class="text-lg">Learn More</span>
-          </NuxtLink>
+          <!-- Inline benefits -->
+          <ul class="flex flex-wrap gap-x-6 gap-y-3 text-base text-base-content/70">
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-primary" /><span>Start in minutes</span></li>
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-warning" /><span>Keep progress clean</span></li>
+            <li class="flex items-center gap-2"><ChartBarIcon class="h-5 w-5 text-neutral" /><span>Motivate your growth</span></li>
+          </ul>
+
+          <!-- CTAs + UsedBy -->
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+            <NuxtLink
+              :to="{ path: '/authorization/auth/', query: { toCreateAccount: 'true' } }"
+              class="btn btn-primary text-lg font-semibold px-8 flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+            >
+              Get Started For Free
+              <ArrowLongRightIcon class="h-5 w-5" />
+            </NuxtLink>
+            <NuxtLink
+              to="/marketing/working-explanation"
+              class="btn btn-ghost text-lg font-semibold px-8"
+            >
+              <ArrowTopRightOnSquareIcon class="h-5 w-5" />
+              Learn more
+            </NuxtLink>
+          </div>
+
+          <div class="mt-2 inline-flex items-center gap-3 rounded-lg bg-base-200/70 px-4 py-2 ring-1 ring-base-content/10 backdrop-blur-sm">
+            <MarketingUsedBy />
+          </div>
         </div>
-        <MarketingUsedBy />
+
+        <!-- Right: Product mockup -->
+        <div class="relative mx-auto w-full max-w-xl">
+          <!-- Main card -->
+          <div class="relative rounded-3xl bg-base-100 shadow-2xl ring-1 ring-base-content/10 p-6 sm:p-7">
+            <div class="grid grid-cols-12 gap-4">
+              <!-- Side nav icons -->
+              <div class="col-span-2 sm:col-span-1 flex flex-col items-center gap-3 py-2">
+                <div class="w-8 h-8 rounded-xl bg-primary/10 grid place-items-center text-primary text-sm font-bold">A</div>
+                <div class="w-8 h-8 rounded-xl bg-primary/10 grid place-items-center text-primary text-sm font-bold">B</div>
+                <div class="w-8 h-8 rounded-xl bg-primary/10 grid place-items-center text-primary text-sm font-bold">C</div>
+              </div>
+              <!-- Content -->
+              <div class="col-span-10 sm:col-span-11 space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="rounded-xl ring-1 ring-base-content/10 p-3">
+                    <p class="text-xs text-base-content/60">New quiz</p>
+                    <p class="mt-1 font-semibold">Vocabulary</p>
+                  </div>
+                  <div class="rounded-xl ring-1 ring-base-content/10 p-3">
+                    <p class="text-xs text-base-content/60">Score</p>
+                    <p class="mt-1 font-semibold">92%</p>
+                  </div>
+                </div>
+                <div class="rounded-2xl ring-1 ring-base-content/10 p-4">
+                  <p class="text-sm font-medium mb-3">Ownership</p>
+                  <div class="flex items-center gap-4">
+                    <div class="size-24 rounded-full shadow-inner" style="background:conic-gradient(var(--color-primary) 0 120deg, var(--color-warning) 0 210deg, oklch(80% 0.03 260 / 0.8) 0);"></div>
+                    <ul class="text-xs text-base-content/60 space-y-1">
+                      <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span>Vocabulary</li>
+                      <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-warning inline-block"></span>Grammar</li>
+                      <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-neutral inline-block"></span>Other</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating card bottom-right -->
+          <div class="absolute -right-8 -bottom-8 w-48 sm:w-56 rounded-2xl bg-base-100 shadow-xl ring-1 ring-base-content/10 p-4">
+            <p class="text-xs text-base-content/60">Recent activity</p>
+            <div class="mt-2 flex items-center gap-2">
+              <div class="size-8 rounded-full bg-warning/20" />
+              <div>
+                <p class="text-sm font-medium">New words learned</p>
+                <p class="text-xs text-base-content/60">+18 this week</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating pill top-left -->
+          <div class="absolute -left-6 sm:-left-10 -top-6 sm:-top-10 inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-3 py-2 ring-1 ring-primary/20">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            <span class="text-xs font-medium">Live progress</span>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- -z-10 -->
-    <div
-      class="absolute inset-x-0 top-[calc(100%-13rem)] transform-gpu overflow-hidden blur-[85px] sm:top-[calc(100%-30rem)]"
-      aria-hidden="true"
-    >
-      <div
-        class="relative z-[-1] left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary/50 to-primary/90 opacity-95 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem] rotate-[30deg]"
-        style="
-          clip-path: polygon(
-            60% 35%,
-            90% 45%,
-            85% 25%,
-            75% 10%,
-            65% 15%,
-            55% 35%,
-            50% 45%,
-            45% 40%,
-            40% 35%,
-            35% 30%,
-            25% 50%,
-            15% 45%,
-            20% 75%,
-            30% 60%,
-            70% 75%,
-            60% 35%
-          );
-        "
-      />
-    </div>
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

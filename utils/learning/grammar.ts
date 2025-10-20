@@ -232,6 +232,20 @@ export function getPercentageStyleClass(progress: number): string {
   }
 }
 
+export const parseSyllabusRules = (modules: Array<Database['public']['Tables']['turkish_grammar_rules']['Row']>): Array<any> => {
+  return modules.map((module) => (
+    {
+      id: module.id,
+      ruleName: module.rule_name,
+      ruleNameTranslation: module.rule_name_translation,
+      difficultyClass: module.difficulty_class,
+      description: module.description,
+      highlights: module.highlights,
+      symbol: module.symbol,
+      type: module.type,
+    }))
+}
+
 export const parseRules = (modules: Array<Database['public']['Tables']['turkish_grammar_rules']['Row'] & { 'turkish_grammar_scores': Array<{score: number}>}>): Array<GrammarRule & {score: Array<{score: number}>}> => {
   return modules.map((module) => (
     {
