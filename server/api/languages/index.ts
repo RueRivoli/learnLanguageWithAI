@@ -14,7 +14,12 @@ export default defineEventHandler(async (event) =>  {
   } else if (isSupported === 'false') {
     request = request.eq("is_supported", false);
   }
-   const { data, error } = await request;
+  const { data, error } = await request;
   if (error) throw error;
-  return {data};
+  if (isSupported === 'false') {
+      // Sort by the sum of a_votes + b_votes (descending)
+      const sortedData = data?.sort((a, b) => (b.a_votes + b.b_votes) - (a.a_votes + a.b_votes));
+      return { data: sortedData };
+  }
+  return { data };
 });

@@ -57,8 +57,9 @@ watchEffect(async () => {
         Syllabus in your Targeted Language
       </h1>
 
-      <div class="flex justify-center space-x-3 mb-8 p-6">
-        <button
+      <MarketingSupportedLanguagesList size="small" :showStatus="false" />
+       <div class="flex justify-center space-x-3 mb-8 p-6">
+      <!-- <button
           v-for="lang in languages"
           :key="lang.code"
           :class="[
@@ -70,7 +71,7 @@ watchEffect(async () => {
         >
           <img class="h-8 w-auto" :src="lang.imgSrc" alt="" />
           {{ lang.label }}
-        </button>
+        </button> -->
       </div>
       <!-- Syllabus Content -->
       <LayoutTabs
