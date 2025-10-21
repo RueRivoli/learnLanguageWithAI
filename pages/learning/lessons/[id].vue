@@ -4,13 +4,10 @@ import { PlayIcon } from "@heroicons/vue/24/solid";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import { lessonUpdateBus } from "~/composables/useLessonUpdates";
 
-definePageMeta({
-  layout: "authenticated",
-});
+
 
 const route = useRoute();
 const lessonId = String(route.params.id);
-
 // Use the new lesson composable
 const {
   lesson,
@@ -34,6 +31,11 @@ const areExpressionsExampleShown = ref<boolean>(false);
 const loadingImage = computed(() => route.query.loadingImage as string);
 const user = useSupabaseUser();
 const userStore = useUserStore();
+const quizGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+
+definePageMeta({
+  layout: "authenticated",
+});
 
 const toggleSentenceTranslation = (index: number) => {
   activeSentenceTranslation.value = activeSentenceTranslation.value === index ? null : index;
@@ -46,14 +48,24 @@ const handleGenerateQuiz = async () => {
     openingModalId.value = openingModalId.value + 1;
     return;
   }
+
   isGeneratingQuiz.value = true;
-  if (!lesson.value?.grammarRuleId || !user.value?.id) return;
+  // Open the loading modal
+  quizGenerationModal.value?.openModal();
+  
+  if (!lesson.value?.grammarRuleId || !user.value?.id) {
+    quizGenerationModal.value?.closeModal();
+    isGeneratingQuiz.value = false;
+    return;
+  }
+  
   await handleGenerationQuiz(lesson.value?.grammarRuleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, lessonId);
   // Refresh lesson data after quiz generation to get updated quizId
-  await refresh();
+  // await refresh();
   // Notify other components about the lesson modification
-  lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
-  isGeneratingQuiz.value = true;
+  // lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
+  
+  // Close the loading modal
 };
 
 const handleCancelModal = () => {
@@ -508,11 +520,12 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <span>Grow your Score with this Quiz</span>
                   </button>
               </div>
-              <AccountPaymentModal
-            id="my_modal_to_get_credits"
-            :key="openingModalId"
-            @cancel="handleCancelModal"
-          />
+            <AccountPaymentModal
+              id="my_modal_to_get_credits"
+              :key="openingModalId"
+              @cancel="handleCancelModal"
+            />
+            <QuizGenerationLoadingModal ref="quizGenerationModal" type="quiz"/>
           </div>
         </div>
       </div>

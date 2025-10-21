@@ -277,7 +277,7 @@ const handleReturnToSubject = () => {
 /* Container */
 .quiz-container {
   min-height: 100vh;
-  background: var(--color-base-200);
+  background: var(--color-primary);
   display: flex;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   position: relative;
@@ -289,11 +289,11 @@ const handleReturnToSubject = () => {
   position: absolute;
   inset: 0;
   background-image: 
-    radial-gradient(circle at 25% 25%, var(--color-primary) 0.5px, transparent 0.5px),
-    radial-gradient(circle at 75% 75%, var(--color-primary) 0.5px, transparent 0.5px);
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px);
   background-size: 50px 50px;
   background-position: 0 0, 25px 25px;
-  opacity: 0.03;
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -350,7 +350,7 @@ const handleReturnToSubject = () => {
 
 .quiz-progress-indicator {
   font-size: 1.1rem;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -360,18 +360,19 @@ const handleReturnToSubject = () => {
 
 .quiz-section-name {
   font-weight: 600;
-  color: #374151;
+  color: #ffffff;
   font-size: 1.2rem;
 }
 
 .quiz-counter {
   font-weight: 700;
-  color: #4f46e5;
+  color: #ffffff;
   font-size: 1.4rem;
 }
 
 .quiz-total {
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .quiz-content {
@@ -388,10 +389,11 @@ const handleReturnToSubject = () => {
 .question-text {
   font-size: 2rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   line-height: 1.4;
   margin: 0;
   letter-spacing: -0.025em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Options Section */
@@ -459,12 +461,12 @@ const handleReturnToSubject = () => {
 }
 
 .option-button.selected {
-  border-color: #4f46e5;
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #f59e0b 0%, #fb923c 50%, #fbbf24 100%);
   color: white;
   box-shadow: 
-    0 10px 25px -3px rgba(79, 70, 229, 0.4),
-    0 4px 6px -2px rgba(79, 70, 229, 0.1),
+    0 10px 25px -3px rgba(245, 158, 11, 0.4),
+    0 4px 6px -2px rgba(245, 158, 11, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
@@ -619,15 +621,15 @@ const handleReturnToSubject = () => {
 .loading-spinner {
   width: 3rem;
   height: 3rem;
-  border: 3px solid #e5e7eb;
-  border-top: 3px solid #4f46e5;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
 }
 
 .loading-text {
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
   font-weight: 500;
 }
@@ -713,12 +715,13 @@ const handleReturnToSubject = () => {
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-  color: #6b7280;
-  border: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dce4ed 100%);
+  color: #475569;
+  border: 1px solid #cbd5e1;
   box-shadow: 
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 2px 4px -1px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(148, 163, 184, 0.1);
   position: relative;
   overflow: hidden;
 }

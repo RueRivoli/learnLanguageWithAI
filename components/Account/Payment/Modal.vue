@@ -25,10 +25,7 @@ const handleConfirm = () => {
           <StarIcon class="h-5 w-5 mr-2 text-gray-900 group-hover:text-neutral" />
           <h3 class="text-xl text-gray-900">Get Credits to Generate Stories and Grammar Quizzes</h3>
         </div>
-
-        <div>
           <AccountPaymentWall />
-        </div>
       </div>
       
       <div class="modal-action">
