@@ -277,9 +277,24 @@ const handleReturnToSubject = () => {
 /* Container */
 .quiz-container {
   min-height: 100vh;
-  background: #f8f9fa;
+  background: var(--color-base-200);
   display: flex;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+}
+
+/* Subtle professional background pattern */
+.quiz-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, var(--color-primary) 0.5px, transparent 0.5px),
+    radial-gradient(circle at 75% 75%, var(--color-primary) 0.5px, transparent 0.5px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  opacity: 0.03;
+  pointer-events: none;
 }
 
 /* Main Quiz Section */
@@ -292,6 +307,8 @@ const handleReturnToSubject = () => {
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .quiz-header {
@@ -309,20 +326,20 @@ const handleReturnToSubject = () => {
 .back-button {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background: #f3f4f6;
-  color: #374151;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+  border: 1px solid var(--color-base-300);
+  border-radius: var(--radius-field);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .back-button:hover {
-  background: #e5e7eb;
-  border-color: #9ca3af;
+  background: var(--color-base-100);
+  border-color: var(--color-primary);
 }
 
 .back-icon {
@@ -623,11 +640,11 @@ const handleReturnToSubject = () => {
 /* Progress Sidebar - Calendar Inspired */
 .progress-sidebar {
   width: 320px;
-  background: white;
-  border-left: 1px solid #e5e7eb;
+  background: var(--color-base-100);
+  border-left: 1px solid var(--color-base-300);
   padding: 2rem;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
   overflow-y: auto;
+  position: relative;
 }
 
 .sidebar-header {
@@ -810,9 +827,9 @@ const handleReturnToSubject = () => {
   gap: 0.5rem;
   margin-bottom: 0.75rem;
   padding: 0.5rem 0.75rem;
-  background: #f8fafc;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
+  background: var(--color-base-200);
+  border-radius: var(--radius-field);
+  border: 1px solid var(--color-base-300);
 }
 
 .score-display.small {
@@ -824,13 +841,14 @@ const handleReturnToSubject = () => {
 .score-label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(color-neutral);
+  color: var(--color-base-content);
+  opacity: 0.7;
 }
 
 .score-value {
   font-size: 1rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--color-base-content);
 }
 
 .score-display.small .score-label {
@@ -850,7 +868,7 @@ const handleReturnToSubject = () => {
   .progress-sidebar {
     width: 100%;
     border-left: none;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-base-300);
     order: 2;
   }
   
