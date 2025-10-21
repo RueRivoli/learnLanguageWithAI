@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const from = (Number(page) - 1) * Number(size)
   const to = (Number(page) * Number(size) - 1)
   
-const test  = supabase.from("turkish_words").select("id, text, role, translation, turkish_words_knowledge!left(word_mastered)", { count: "exact"}).order("id", { ascending: true }).range(from, to) 
+const wordsOverall  = supabase.from("turkish_words").select("id, text, role, translation, turkish_words_knowledge!left(word_mastered)", { count: "exact"}).order("id", { ascending: true }).range(from, to) 
 //   if (error) throw error;
-  return test;
+  return wordsOverall;
 });

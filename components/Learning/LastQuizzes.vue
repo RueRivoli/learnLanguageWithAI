@@ -112,10 +112,10 @@ const getScoreColor = (score: number) => {
         </div>
       </div>
       <AccountPaymentModal
-            id="my_modal_to_get_credits"
-            :key="openingModalId"
-            @cancel="handleCancelModal"
-          />
+        id="my_modal_to_get_credits"
+        :key="openingModalId"
+        @cancel="handleCancelModal"
+        />
     </div>
   </div>
 </template>
