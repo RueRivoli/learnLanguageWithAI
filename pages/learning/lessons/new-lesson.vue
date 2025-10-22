@@ -236,7 +236,7 @@ const handleGenerateStory = async () => {
 </script>
 
 <template>
-  <div id="new_lesson_page" class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 relative overflow-hidden">
+  <div id="new_lesson_page" class="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 relative overflow-hidden">
 
 <!-- Background Elements -->
 <div class="absolute inset-0 overflow-hidden pointer-events-none">
