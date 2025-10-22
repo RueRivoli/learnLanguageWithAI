@@ -194,7 +194,7 @@ const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
                   <td>
                       <div class="flex items-center hover:cursor-pointe">
                         <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
-                        <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global || lesson.turkish_quizzes_result?.score_global === 0" :score="lesson.turkish_quizzes_result.score_global" size="sm" :quizId="lesson.quiz_id" :filledOut="true"/>
+                        <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global || lesson.turkish_quizzes_result?.score_global === 0" :score="lesson.turkish_quizzes_result.score_global" size="sm" :filledOut="true"/>
                         <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false" @click="handleGenerateQuiz(lesson.turkish_grammar_rules.id, lesson.id)"/>
                       </div>
                     </td>

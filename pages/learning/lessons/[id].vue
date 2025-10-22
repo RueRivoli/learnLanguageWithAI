@@ -85,10 +85,10 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-    <div class="max-w-7xl p-6">
-      <div class="max-w-6xl mx-auto">
+    <div class="p-6">
+      <div class="mx-auto">
         <div
-          class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/50 overflow-hidden"
+          class="bg-white/90 backdrop-blur-sm rounded-lg shadow-xl border border-white/50 overflow-hidden"
         >
           <div v-if="isLoading || !lesson" class="w-full space-y-8 p-6 bg-gradient-to-b from-slate-50/30 to-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-2xl shadow-slate-200/50 animate-fade-in">
             <!-- Title Section Skeleton -->
@@ -107,7 +107,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <div class="absolute inset-0 flex items-center justify-center">
                       <div class="flex flex-col items-center gap-4">
                         <!-- Image icon skeleton -->
-                        <div class="w-20 h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-2xl animate-pulse flex items-center justify-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg animate-pulse flex items-center justify-center">
                           <svg class="w-10 h-10 text-gray-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
@@ -199,7 +199,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             </div>
 
             <!-- Key Words Section Skeleton -->
-            <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20">
+            <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-6 border border-primary/20">
               <div class="flex justify-between items-center mb-6">
                 <div class="h-7 bg-gradient-to-r from-primary/30 via-primary/40 to-primary/30 rounded-lg w-32 animate-shimmer-bg" />
                 <div class="flex items-center gap-2">
@@ -216,7 +216,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             </div>
 
             <!-- Key Expressions Section Skeleton -->
-            <div class="bg-gradient-to-br from-expression/5 to-expression/10 rounded-2xl p-6 border border-expression/20">
+            <div class="bg-gradient-to-br from-expression/5 to-expression/10 rounded-lg p-6 border border-expression/20">
               <div class="flex justify-between items-center mb-6">
                 <div class="h-7 bg-gradient-to-r from-expression/30 via-expression/40 to-expression/30 rounded-lg w-40 animate-shimmer-bg" />
                 <div class="flex items-center gap-2">
@@ -371,7 +371,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   
                   <!-- Grammar Rule Content Section -->
                   <div v-if="grammarRule && !isStoryShown" class="mb-6">
-                    <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-2xl p-6 border border-blue-200/30 shadow-sm">
+                    <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-lg p-6 border border-blue-200/30 shadow-sm">
                       <!-- Grammar Rule Header -->
                       <div class="flex items-center gap-4 mb-4 pb-3 border-b border-blue-200/40">
                         <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md">
@@ -394,7 +394,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   
                   <!-- Loading state for grammar rule -->
                   <div v-else-if="grammarRuleLoading && !isStoryShown" class="mb-6">
-                    <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-2xl p-6 border border-blue-200/30 shadow-sm animate-pulse">
+                    <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-lg p-6 border border-blue-200/30 shadow-sm animate-pulse">
                       <div class="flex items-center gap-4 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-gray-200"></div>
                         <div class="flex-1">

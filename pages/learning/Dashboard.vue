@@ -22,7 +22,7 @@ const activeTab = ref(1);
 onMounted(async () => {
   console.log("is dashboard data loaded ?", userScoreStore.$state.isLoaded);
   if (!userScoreStore.$state.isLoaded) {
-    console.log("fetch all dashboard data");
+    console.log("fetch all dashboard data", user.value?.id);
     if (user.value?.id) userScoreStore.setAllScores(user.value?.id);
     userScoreStore.setCount();
   }

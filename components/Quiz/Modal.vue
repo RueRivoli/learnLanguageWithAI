@@ -142,24 +142,12 @@ const grammarClass = computed(() => {
 
 <template>
     <!-- Results Modal -->
-      <div class="modal-container" @click.stop>
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <div class="modal-title-section">
-            <h2 class="modal-title">Quiz Results: {{ greetingMessage }}</h2>
-          </div>
-          <button @click="emit('close')" class="modal-close-button">
-            <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
+      <div class="modal-container rounded-lg" @click.stop>
         <!-- Modal Content -->
         <div class="modal-content">
           <!-- Overall Score Section -->
           <div class="overall-score-section">
-            <div class="overall-score-card">
+            <div class="overall-score-card rounded-lg">
               <div>
                 <div class="score-percentage">{{ props.detailedResults.overall.percentage }}%</div>
                 <div class="score-label">Overall Score</div>
@@ -167,6 +155,11 @@ const grammarClass = computed(() => {
               <div class="score-details">
                 <p class="score-description">{{ congratulationsMessage }}</p>
               </div>
+              <button @click="emit('close')" class="modal-close-button">
+                <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -174,7 +167,7 @@ const grammarClass = computed(() => {
           <div class="charts-section">
             <!-- Grammar Chart - Full Width -->
             <div class="grammar-chart-container">
-              <div class="chart-card grammar-full-width" :class="grammarClass">
+              <div class="chart-card grammar-full-width rounded-lg" :class="grammarClass">
                 <div class="chart-header">
                   <div class="chart-title">
                     <div class="flex items-center">
@@ -471,7 +464,6 @@ const grammarClass = computed(() => {
 
 .modal-container {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 16px;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -492,28 +484,6 @@ const grammarClass = computed(() => {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 2rem 1rem 2rem;
-  border-bottom: 1px solid #e5e7eb;
-  position: relative;
-}
-
-.modal-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.02) 0%, transparent 50%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-  pointer-events: none;
 }
 
 .modal-title-section {
@@ -560,8 +530,7 @@ const grammarClass = computed(() => {
 }
 
 .overall-score-card {
-  background: #4f46e5;
-  border-radius: 16px;
+  background: var(--color-primary);
   padding: 1.5rem;
   display: flex;
   align-items: center;
@@ -676,7 +645,6 @@ const grammarClass = computed(() => {
 .chart-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid #e5e7eb;
-  border-radius: 16px;
   padding: 1.25rem;
   box-shadow: 
     0 10px 25px -3px rgba(0, 0, 0, 0.1),

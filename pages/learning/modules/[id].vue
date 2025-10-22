@@ -62,8 +62,8 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 </script>
 
 <template>
-  <div class="w-full grid grid-cols-5 gap-2">
-    <div class="col-span-3 bg-white rounded-lg">
+  <div class="w-full grid grid-cols-8 gap-2">
+    <div class="col-span-5 bg-white rounded-lg">
       <div
         v-if="isLoading"
         class="w-full h-72 flex justify-center items-center"
@@ -71,7 +71,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
         <span class="loading loading-bars loading-xl" />
       </div>
       <div v-else class="p-5">
-        <LayoutHeadingRuleTitle :rule="grammarRule" :main-title="true" />
+        <LayoutHeadingRuleTitle class="px-6" :rule="grammarRule" :main-title="true" />
         <div class="max-w-4xl mx-auto p-6">
           <p v-html="sanitizedIntroTemplate" />
           <p v-html="sanitizedDescriptionTemplate" />
@@ -81,7 +81,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           <!-- <RulesPreciseLocationTemplate /> -->
       </div>
     </div>
-    <div class="col-span-2">
+    <div class="col-span-3">
       <LearningLastQuizzes
         :loading="false"
         :rule="grammarRule"

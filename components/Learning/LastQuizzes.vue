@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { PlayIcon, TrophyIcon, ClockIcon } from "@heroicons/vue/24/outline";
+import { PlayIcon, TrophyIcon } from "@heroicons/vue/24/outline";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 
 const isLoading = ref(false);
 const user = useSupabaseUser();
+const userScoreStore = useUserScoreStore();
 const props = withDefaults(
   defineProps<{
     loading?: boolean;
-    rule?: GrammarRule | null;
     quizs?: Array<{id: number, score: number, createdAt: string}>;
+    rule?: GrammarRule | null;
   }>(),
   {
     loading: false,
@@ -19,6 +20,10 @@ const props = withDefaults(
 );
 const openingModalId = ref(0);
 const userStore = useUserStore();
+
+const averageScore = computed(() => {
+  return props.rule?.id ? userScoreStore.$state.rulesScores?.find((rule) => rule.ruleId === props.rule?.id)?.score : 0;
+});
 
 const handleCancelModal = () => {
   openingModalId.value = openingModalId.value + 1;
@@ -61,7 +66,7 @@ const getScoreColor = (score: number) => {
       <div v-else class="space-y-5">
         <!-- Header -->
         <div class="border-b border-gray-100 pb-4">
-          <div class="flex items-center gap-3">
+          <div class="flex items-center justify-between gap-3">
             <div class="p-2 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg">
               <TrophyIcon class="w-5 h-5 text-primary" />
             </div>
@@ -75,6 +80,12 @@ const getScoreColor = (score: number) => {
                   {{ props.rule?.ruleNameTranslation || "this rule" }}
                 </span>
               </p>
+            </div>
+            <div>
+              <span class="text-3xl font-semibold text-primary">{{ averageScore }}</span>
+              <span class="text-sm text-gray-600">
+                / 100
+              </span>
             </div>
           </div>
         </div>
@@ -94,7 +105,8 @@ const getScoreColor = (score: number) => {
           </div>
 
           <div v-else class="space-y-3">
-            <LayoutKeyElementQuizOverview class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :key="index" :quizId="quiz.id" :score="quiz.score" size="xl"/>
+            <!-- <LayoutKeyElementQuizOverview class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :key="index" :quizId="quiz.id" :score="quiz.score" size="xl" :filledOut="true"/> -->
+            <LayoutKeyElementQuizBadge class="mx-auto w-full" v-for="(quiz, index) in props.quizs" :key="index" :quizId="quiz.id" :score="quiz.score" size="md" :filledOut="true"/>
           </div>
 
           <!-- Action Button -->

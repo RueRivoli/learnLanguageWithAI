@@ -566,7 +566,7 @@ const handleReturnToSubject = () => {
   display: inline-flex;
   align-items: center;
   padding: 0.875rem 2rem;
-  background: #4f46e5;
+  background: var(--color-warning);
   color: white;
   border: none;
   border-radius: 12px;
@@ -578,7 +578,7 @@ const handleReturnToSubject = () => {
 }
 
 .nav-button:hover:not(.disabled) {
-  background: #4338ca;
+  background: var(--color-warning);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
 }

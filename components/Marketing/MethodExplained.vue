@@ -38,7 +38,7 @@ import {
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 order-2 lg:order-1 lg:col-span-2">
             <div class="flex items-center gap-4">
-              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                 <ChartBarIcon class="h-6 w-6 text-primary" />
               </div>
               <div class="text-sm font-semibold text-primary uppercase tracking-wider">Step 1</div>
@@ -56,11 +56,11 @@ import {
           </div>
           <div class="order-1 lg:order-2 lg:col-span-3">
             <div class="relative group">
-              <div class="absolute rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img 
                 src="/syllabus_beginner.png" 
                 alt="Progress tracking dashboard" 
-                class="relative w-full max-w-none rounded-xl ring-1 ring-base-content/10 transition-transform duration-300"
+                class="relative w-full max-w-none rounded-lg ring-1 ring-base-content/10 transition-transform duration-300"
               />
             </div>
           </div>
@@ -70,7 +70,7 @@ import {
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 lg:col-span-2">
             <div class="flex items-center gap-4">
-              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                 <BookOpenIcon class="h-6 w-6 text-primary" />
               </div>
               <div class="text-sm font-semibold text-primary uppercase tracking-wider">Step 2</div>
@@ -88,19 +88,19 @@ import {
           </div>
           <div class="flex flex-col items-center lg:col-span-3">
             <div class="relative group">
-              <div class="absolute rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img 
                 src="/wordsHM.png" 
                 alt="Words Learned Visualization" 
-                class="relative w-full max-w-none rounded-xl ring-1 ring-base-content/10 transition-transform duration-300"
+                class="relative w-full max-w-none rounded-lg ring-1 ring-base-content/10 transition-transform duration-300"
               />
             </div>
             <div class="mt-4 relative group">
-              <div class="absolute rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img 
                 src="/expressionsHM.png" 
                 alt="Expressions Learned Visualization" 
-                class="relative w-full max-w-none rounded-xl ring-1 ring-base-content/10 transition-transform duration-300"
+                class="relative w-full max-w-none rounded-lg ring-1 ring-base-content/10 transition-transform duration-300"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@ import {
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 order-2 lg:order-1 lg:col-span-2">
             <div class="flex items-center gap-4">
-              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                 <SparklesIcon class="h-6 w-6 text-primary" />
               </div>
               <div class="text-sm font-semibold text-primary uppercase tracking-wider">Step 3</div>
@@ -132,7 +132,7 @@ import {
               <img 
                 src="/generate-stories.png" 
                 alt="Generate AI Tailored Stories" 
-                class="relative w-full max-w-none rounded-xl ring-1 ring-base-content/10 transition-transform duration-300"
+                class="relative w-full max-w-none rounded-lg ring-1 ring-base-content/10 transition-transform duration-300"
               />
             </div>
         
@@ -141,7 +141,7 @@ import {
               <img 
                 src="/seriestories.png" 
                 alt="Train with these stories" 
-                class="relative w-full max-w-none rounded-xl ring-1 ring-base-content/10 transition-transform duration-300"
+                class="relative w-full max-w-none rounded-lg ring-1 ring-base-content/10 transition-transform duration-300"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ import {
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 lg:col-span-2">
             <div class="flex items-center gap-4">
-              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                 <AcademicCapIcon class="h-6 w-6 text-primary" />
               </div>
               <div class="text-sm font-semibold text-primary uppercase tracking-wider">Step 4</div>
@@ -171,9 +171,9 @@ import {
             <div class="relative group">
               <div class="absolute -inset-4 bg-gradient-to-r from-warning/20 to-primary/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img 
-                src="/_nuxt/assets/img/platform/screen.png" 
+                src="/quizcapturepurple.png" 
                 alt="Interactive quiz interface" 
-                class="relative w-full max-w-none rounded-xl ring-1 ring-base-content/10 transition-transform duration-300"
+                class="relative w-full max-w-none rounded-lg ring-1 ring-base-content/10 transition-transform duration-300"
               />
             </div>
           </div>
@@ -182,7 +182,7 @@ import {
 
       <!-- Call to Action -->
       <div class="text-center mt-20">
-        <div class="inline-flex items-center gap-3 rounded-xl bg-primary/10 px-6 py-3 ring-1 ring-primary/20">
+        <div class="inline-flex items-center gap-3 rounded-lg bg-primary/10 px-6 py-3 ring-1 ring-primary/20">
           <ArrowRightIcon class="h-5 w-5 text-primary" />
           <span class="text-primary font-semibold">Ready to start learning faster ?</span>
         </div>

@@ -420,7 +420,7 @@ const handleGenerateStory = async () => {
               </div>
 
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border shadow-sm" title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>

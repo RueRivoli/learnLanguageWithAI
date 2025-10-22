@@ -39,20 +39,19 @@ import {
         <div class="space-y-10">
           <div class="space-y-6">
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral dark:text-white text-balance">
-              The intuitive
-              <span class="text-warning">language</span>
-              platform for fast-growing learners
+              Feeling stuck in your language learning?
+              Try <span class="text-warning">Tookan AI</span>
             </h1>
             <p class="text-lg sm:text-xl text-base-content/70 leading-relaxed">
-              Automate your learning with <span class="font-bold text-primary">TookanAI</span> : tailored stories, grammar focus, and vocabulary training — all in one elegant platform.
+              Use the <span class="font-bold text-primary">Best AI Tools</span> to Generate Lessons on your <span class="font-bold text-primary">Weaknesses</span> and Test your Progress with Quizzes Prepared by our <span class="font-bold text-primary">Qualified Teachers</span>
             </p>
           </div>
 
           <!-- Inline benefits -->
           <ul class="flex flex-wrap gap-x-6 gap-y-3 text-base text-base-content/70">
-            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-primary" /><span>Start in minutes</span></li>
-            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-warning" /><span>Keep progress clean</span></li>
-            <li class="flex items-center gap-2"><ChartBarIcon class="h-5 w-5 text-neutral" /><span>Motivate your growth</span></li>
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-primary" /><span>Tailored Lessons</span></li>
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-warning" /><span>Progress x5 Faster</span></li>
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-neutral" /><span>Have Fun Learning</span></li>
           </ul>
 
           <!-- CTAs + UsedBy -->
