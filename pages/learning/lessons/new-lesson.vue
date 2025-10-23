@@ -301,29 +301,29 @@ const handleGenerateStory = async () => {
             <div class="grid grid-cols-2 gap-4">
                           <!-- Module Selection Section -->
             <!-- Loading Skeleton for Module -->
-            <div v-if="isFetchingData" class="col-span-1 bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow-sm rounded-2xl p-6 animate-pulse">
+            <div v-if="isFetchingData" class="col-span-1 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 shadow-lg rounded-2xl p-6 border border-emerald-200/60 animate-pulse">
               <div class="flex items-center justify-between mb-4">
-                <div class="skeleton h-6 w-40 bg-gray-200 rounded"></div>
-                <div class="skeleton h-5 w-5 bg-gray-200 rounded"></div>
+                <div class="skeleton h-6 w-40 bg-emerald-200 rounded"></div>
+                <div class="skeleton h-5 w-5 bg-emerald-200 rounded"></div>
               </div>
-              <div class="skeleton h-4 w-48 bg-gray-200 rounded mb-6"></div>
+              <div class="skeleton h-4 w-48 bg-emerald-200 rounded mb-6"></div>
               <div class="w-[60%] m-auto">
-                <div class="bg-white rounded-xl p-4 border border-gray-200">
+                <div class="bg-white/80 rounded-xl p-4 border border-emerald-200">
                   <div class="flex items-center justify-center mb-4">
-                    <div class="skeleton h-16 w-16 bg-gray-200 rounded-full"></div>
+                    <div class="skeleton h-16 w-16 bg-emerald-200 rounded-full"></div>
                   </div>
-                  <div class="skeleton h-5 w-32 bg-gray-200 rounded mx-auto mb-2"></div>
-                  <div class="skeleton h-4 w-24 bg-gray-200 rounded mx-auto mb-4"></div>
-                  <div class="skeleton h-20 w-full bg-gray-200 rounded"></div>
+                  <div class="skeleton h-5 w-32 bg-emerald-200 rounded mx-auto mb-2"></div>
+                  <div class="skeleton h-4 w-24 bg-emerald-200 rounded mx-auto mb-4"></div>
+                  <div class="skeleton h-20 w-full bg-emerald-200 rounded"></div>
                   <div class="mt-3 flex items-center justify-center gap-2">
-                    <div class="skeleton h-4 w-24 bg-gray-200 rounded"></div>
-                    <div class="skeleton h-4 w-12 bg-gray-200 rounded"></div>
+                    <div class="skeleton h-4 w-24 bg-emerald-200 rounded"></div>
+                    <div class="skeleton h-4 w-12 bg-emerald-200 rounded"></div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow-sm" class="col-span-1" title="Module to Work On" titleEn="Module to Work On" description="Select the Module you want to work on">
+            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 shadow-lg border-2 border-emerald-200/60 hover:border-emerald-300 transition-all duration-300" class="col-span-1" title="Targeted Module" titleEn="Targeted Module" description="Select the Module you want to work on">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>
@@ -379,21 +379,21 @@ const handleGenerateStory = async () => {
                 </template>
             </LayoutKeyElementRuleCard>
 
-            <div class="col-span-1 flex flex-col justify-between">
+            <div class="col-span-1 flex flex-col justify-between gap-6">
             <!-- Loading Skeleton for Words -->
-            <div v-if="isFetchingData" class="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm rounded-2xl p-6 mb-4 animate-pulse">
+            <div v-if="isFetchingData" class="bg-gradient-to-br from-blue-50 via-cyan-50 to-indigo-50 border border-blue-200/60 shadow-lg rounded-2xl p-6 animate-pulse">
               <div class="flex items-center justify-between mb-4">
-                <div class="skeleton h-6 w-32 bg-gray-200 rounded"></div>
-                <div class="skeleton h-5 w-5 bg-gray-200 rounded"></div>
+                <div class="skeleton h-6 w-32 bg-blue-200 rounded"></div>
+                <div class="skeleton h-5 w-5 bg-blue-200 rounded"></div>
               </div>
-              <div class="skeleton h-4 w-40 bg-gray-200 rounded mb-4"></div>
+              <div class="skeleton h-4 w-40 bg-blue-200 rounded mb-4"></div>
               <div class="flex flex-wrap gap-3">
-                <div v-for="i in 10" :key="i" class="skeleton h-8 w-20 bg-gray-200 rounded-full"></div>
+                <div v-for="i in 10" :key="i" class="skeleton h-8 w-20 bg-blue-200 rounded-full"></div>
               </div>
             </div>
                     
             <!-- Words Selection Section -->
-             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm" title="Words to Learn" description="Select 10 words for your lesson">
+             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-blue-50 via-cyan-50 to-indigo-50 shadow-lg border-2 border-blue-200/60 hover:border-blue-300 transition-all duration-300" title="New Words" description="Select 10 words for your lesson">
                 <template #top-right-corner>
                     <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
@@ -408,19 +408,19 @@ const handleGenerateStory = async () => {
 
 
               <!-- Loading Skeleton for Expressions -->
-              <div v-if="isFetchingData" class="bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-gray-200/60 shadow-sm rounded-2xl p-6 animate-pulse">
+              <div v-if="isFetchingData" class="bg-gradient-to-br from-warning-50 via-amber-50 to-orange-50 border border-purple-200/60 shadow-lg rounded-2xl p-6 animate-pulse">
                 <div class="flex items-center justify-between mb-4">
-                  <div class="skeleton h-6 w-40 bg-gray-200 rounded"></div>
-                  <div class="skeleton h-5 w-5 bg-gray-200 rounded"></div>
+                  <div class="skeleton h-6 w-40 bg-purple-200 rounded"></div>
+                  <div class="skeleton h-5 w-5 bg-purple-200 rounded"></div>
                 </div>
-                <div class="skeleton h-4 w-48 bg-gray-200 rounded mb-4"></div>
+                <div class="skeleton h-4 w-48 bg-purple-200 rounded mb-4"></div>
                 <div class="flex flex-wrap gap-3">
-                  <div v-for="i in 3" :key="i" class="skeleton h-8 w-32 bg-gray-200 rounded-full"></div>
+                  <div v-for="i in 3" :key="i" class="skeleton h-8 w-32 bg-purple-200 rounded-full"></div>
                 </div>
               </div>
 
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-gray-50 via-white to-gray-100 border shadow-sm" title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 shadow-lg border-2 border-purple-200/60 hover:border-purple-300 transition-all duration-300" title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>

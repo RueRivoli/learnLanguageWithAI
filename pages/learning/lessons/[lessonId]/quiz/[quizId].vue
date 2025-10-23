@@ -309,7 +309,7 @@ isLoadingQuiz.value = false;
     </div>
 
     <QuizQuestions
-       v-else
+      v-else
       type="full"
       :wordsForQuiz="wordsForQuiz"
       :expressionsForQuiz="expressionsForQuiz"

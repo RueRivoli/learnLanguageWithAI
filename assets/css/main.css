@@ -44,8 +44,6 @@
   --color-expression-content: oklch(98% 0.002 247.839);
   --color-word: oklch(60% 0.2 240);
   --color-word-content: oklch(98% 0.002 247.839);
-  --color-rule: oklch(60% 0.2 160);
-  --color-rule-content: oklch(98% 0.002 247.839);
   --radius-selector: 1rem;
   --radius-field: 0.3rem;
   --radius-box: 0.2rem;
@@ -262,10 +260,6 @@ body {
   color: var(--color-word-content);
 }
 
-.bg-rule {
-  background-color: var(--color-rule);
-  color: var(--color-rule-content);
-}
 
 .text-expression {
   color: var(--color-expression);
@@ -275,9 +269,6 @@ body {
   color: var(--color-word);
 }
 
-.text-rule {
-  color: var(--color-rule);
-}
 
 .border-expression {
   border-color: var(--color-expression);
