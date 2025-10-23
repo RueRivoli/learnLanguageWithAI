@@ -21,7 +21,7 @@ const emit = defineEmits(["click"]);
 </script>
 
 <template>
- <div :class="{'rounded-md bg-gradient-to-br from-slate-200 to-gray-300 text-slate-800 py-1 px-2 transition-all duration-300': props.lightMode, 'rounded-md py-1 px-2 transition-all duration-300 bg-gradient-to-br from-purple-500 to-pink-500': !props.lightMode}" @click="emit('click')">
+ <div :class="{'rounded-md bg-white py-1 px-4 transition-all duration-300 border-l-4 border-warning': props.lightMode, 'rounded-md py-1 px-2 transition-all duration-300 bg-gradient-to-br from-purple-500 to-pink-500 border-l-4 border-warning': !props.lightMode}" @click="emit('click')">
 
       <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">

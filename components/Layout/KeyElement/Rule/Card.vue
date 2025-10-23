@@ -22,7 +22,7 @@ const props = withDefaults(
        <div :class="[props.backgroundClasses ? `group relative rounded-md shadow-md p-4 overflow-hidden ${props.backgroundClasses}` : 'group relative bg-gradient-to-br from-green-100/90 via-green-50/95 to-emerald-100/80 rounded-xl shadow-md border border-green-300/70 p-4 hover:border-green-400/80 overflow-hidden transition-all duration-300']">
         <div class="wrapper-header">
             <div class="wrapper-title">
-            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mr-5 shadow-lg">
+            <div class="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700  rounded-lg flex items-center justify-center mr-5 shadow-lg">
                 <ViewfinderCircleIcon class="h-6 w-6 text-white" />
                 </div>
                   <div>
@@ -94,6 +94,23 @@ const props = withDefaults(
 }
 .blue-bg{
     background: #3b82f6;
-}  
+}
 
+/* Neutral-inspired gradient */
+.bg-gradient-neutral {
+  background: linear-gradient(
+    135deg,
+    oklch(25% 0.035 260) 0%,
+    oklch(12% 0.04 260) 100%
+  );
+}
+
+/* Neutral icon gradient - dark approaching black */
+.bg-gradient-neutral-icon {
+  background: linear-gradient(
+    135deg,
+    oklch(20% 0.038 260) 0%,
+    oklch(6% 0.04 260) 100%
+  );
+}
 </style>

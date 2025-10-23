@@ -361,3 +361,32 @@ body {
   background-color: var(--color-rule) !important;
   color: var(--color-rule-content) !important;
 }
+
+/* Dark Neutral-inspired Gradient */
+.bg-gradient-neutral-dark {
+  background: linear-gradient(
+    135deg,
+    oklch(52% 0.036 260) 0%,
+    oklch(38% 0.039 260) 100%
+  );
+  border: 1px solid oklch(44% 0.035 260);
+}
+
+/* Primary-inspired Gradient Icon */
+.bg-gradient-primary-icon {
+  background: linear-gradient(
+    135deg,
+    oklch(55% 0.25 277) 0%,
+    oklch(45% 0.27 277) 100%
+  );
+}
+
+/* Primary-inspired Gradient Background */
+.bg-gradient-primary-light {
+  background: linear-gradient(
+    135deg,
+    oklch(88% 0.1 277) 0%,
+    oklch(75% 0.15 277) 100%
+  );
+  border: 1px solid oklch(80% 0.12 277);
+}

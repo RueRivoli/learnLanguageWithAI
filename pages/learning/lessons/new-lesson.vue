@@ -251,7 +251,7 @@ const handleGenerateStory = async () => {
     <!-- Header Section -->
     <div class="text-center mb-20">
       <div class="inline-flex items-center gap-3 mb-8">
-        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/25">
+        <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/25">
           <SparklesIcon class="w-6 h-6 text-white" />
         </div>
         <div class="h-8 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
@@ -260,7 +260,7 @@ const handleGenerateStory = async () => {
       
       <h1 class="text-5xl md:text-4xl font-light text-gray-900 mb-6 tracking-tight leading-tight">
         Create Your
-        <span class="font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        <span class="font-semibold bg-primary bg-clip-text text-transparent">
           Personalized
         </span>
         <br class="md:hidden" />
@@ -323,7 +323,7 @@ const handleGenerateStory = async () => {
               </div>
             </div>
             
-            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 shadow-lg border-2 border-emerald-200/60 hover:border-emerald-300 transition-all duration-300" class="col-span-1" title="Targeted Module" titleEn="Targeted Module" description="Select the Module you want to work on">
+            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-neutral/20 shadow-lg transition-all duration-300" class="col-span-1" title="Targeted Module" titleEn="Targeted Module" description="Select the Module you want to work on">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>
@@ -393,7 +393,7 @@ const handleGenerateStory = async () => {
             </div>
                     
             <!-- Words Selection Section -->
-             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-blue-50 via-cyan-50 to-indigo-50 shadow-lg border-2 border-blue-200/60 hover:border-blue-300 transition-all duration-300" title="New Words" description="Select 10 words for your lesson">
+             <LayoutKeyElementWordCard v-else backgroundClasses="bg-primary/20 shadow-lg border-2 border-violet-200/70 hover:border-violet-300/90 transition-all duration-300" title="New Words" description="Select 10 words for your lesson">
                 <template #top-right-corner>
                     <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
@@ -408,7 +408,7 @@ const handleGenerateStory = async () => {
 
 
               <!-- Loading Skeleton for Expressions -->
-              <div v-if="isFetchingData" class="bg-gradient-to-br from-warning-50 via-amber-50 to-orange-50 border border-purple-200/60 shadow-lg rounded-2xl p-6 animate-pulse">
+              <div v-if="isFetchingData" class="bg-warning/20 shadow-lg rounded-2xl p-6 animate-pulse">
                 <div class="flex items-center justify-between mb-4">
                   <div class="skeleton h-6 w-40 bg-purple-200 rounded"></div>
                   <div class="skeleton h-5 w-5 bg-purple-200 rounded"></div>
@@ -420,7 +420,7 @@ const handleGenerateStory = async () => {
               </div>
 
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 shadow-lg border-2 border-purple-200/60 hover:border-purple-300 transition-all duration-300" title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-warning/20 shadow-lg hover:border-purple-300 transition-all duration-300" title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>
