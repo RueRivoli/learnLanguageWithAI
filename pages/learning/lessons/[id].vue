@@ -240,93 +240,106 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               </div>
             </div>
           </div>
-          <div id="lesson_content" v-else class="space-y-8 p-6 bg-gradient-to-b from-slate-50/30 to-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-2xl shadow-slate-200/50">
-            <!-- Lesson Title Section -->
-            <div class="text-center">
-              <h1 class="text-4xl font-light text-slate-800 mb-2 font-serif tracking-tight">
-                {{ lesson?.title }}
-              </h1>
-              <h2 class="text-2xl font-light text-slate-600 italic tracking-wide">
-                {{ lesson?.titleEn }}
-              </h2>
-              <div class="w-32 h-0.5 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 mx-auto mt-3 rounded-full"></div>
-            </div>
-            
-            <!-- Picture and Introduction Side by Side -->
-            <div class="flex gap-8 items-center">
-              <!-- Left Side - Image -->
-              <div id="picture" class="flex-shrink-0 w-96">
-                <div class="relative">
-                  <div class="absolute -inset-4"></div>
-                  <!-- No image state - image being generated -->
-                                     <!-- Actual image -->
-                                     <div 
+
+          <div id="lesson_content" v-else class="space-y-8 bg-gradient-to-b from-slate-50/30 to-white/80 backdrop-blur-sm rounded-xl border border-white/60 shadow-2xl shadow-slate-200/50">
+            <!-- Hero Section - No Padding -->
+            <div class="relative min-h-[500px] overflow-hidden">
+              
+              <!-- Picture Section - Full Height, Width stops before middle -->
+              <div class="absolute left-0 top-0 w-[45%] h-full">
+                <div class="relative h-full">
+                  <!-- Image Loading State -->
+                  <div 
                     v-if="!imageUrl && loadingImage === 'true'"
-                    class="relative w-full h-80 rounded-3xl shadow-2xl shadow-slate-300/60 border-white/90 backdrop-blur-sm bg-gradient-to-br from-slate-50 to-gray-100"
+                    class="relative w-full h-full bg-gradient-to-br from-slate-100 via-slate-50 to-gray-100 flex items-center justify-center"
                   >
-                    <div class="absolute inset-0 flex items-center justify-center">
-                      <div class="flex flex-col items-center gap-4">
-                        <div class="w-16 h-16 bg-gradient-to-br from-slate-200 to-gray-300 rounded-xl flex items-center justify-center shadow-lg">
-                          <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <div class="text-slate-600 text-sm font-medium text-center">
-                         Your image will be generated in less than 1 minute
-                        </div>
+                    <div class="flex flex-col items-center gap-6">
+                      <div class="w-20 h-20 bg-gradient-to-br from-slate-300 to-gray-400 rounded-2xl flex items-center justify-center shadow-lg">
+                        <svg class="w-10 h-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div class="text-slate-600 text-lg font-medium text-center">
+                        Your image will be generated in less than 1 minute
                       </div>
                     </div>
                   </div>
+                  
+                  <!-- Default Image -->
                   <img 
                     v-else-if="!imageUrl"
                     src="~/public/default-image.png" 
                     alt="Lesson illustration" 
-                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
+                    class="w-full h-full object-cover"
                   />
-
                   
-
+                  <!-- Generated Image -->
                   <img 
                     v-else
                     :src="imageUrl" 
                     alt="Lesson illustration" 
-                    class="relative w-full h-auto rounded-3xl shadow-2xl shadow-slate-300/60"
+                    class="w-full h-full object-cover"
                   />
+                  
+                  <!-- Gradient Overlay for better text readability -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/30"></div>
                 </div>
               </div>
-              <!-- Right Side - Introduction -->
-              <div id="intro" class="flex-1">
-                <div class="relative p-6 overflow-hidden">
-                  <!-- Decorative background elements -->
-                  <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/30 to-indigo-100/20 rounded-full blur-2xl -translate-y-16 translate-x-16"></div>
-                  <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-purple-100/25 to-pink-100/15 rounded-full blur-xl translate-y-12 -translate-x-12"></div>
+              
+              <!-- Titles positioned in top right -->
+              <div class="absolute top-8 right-8 z-20">
+                <div class="text-right">
+                  <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-3 font-serif tracking-tight leading-tight">
+                    {{ lesson?.title }}
+                  </h1>
+                  <h2 class="text-xl md:text-2xl font-medium text-slate-600 italic tracking-wide">
+                    {{ lesson?.titleEn }}
+                  </h2>
                   
-                  <!-- Content -->
-                  <div class="relative z-10">
-                    <!-- Enhanced heading -->
-                    <div class="flex items-center gap-3 mb-6">
-                      <div class="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
-                      <h3 class="text-2xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 bg-clip-text text-transparent tracking-tight">
+                  <!-- Professional Decorative Line -->
+                  <div class="flex items-center justify-end gap-3 mt-4">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full"></div>
+                    <div class="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
+                    <div class="w-6 h-0.5 bg-gradient-to-r from-slate-500 to-slate-400 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Introduction with Neutral Background - Overlaps slightly on picture -->
+              <div class="absolute bottom-0 right-0 w-[58%] h-[65%] z-10">
+                <div class="relative h-full p-8">
+                  <!-- Neutral Background -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-neutral-200/95 via-stone-200/90 to-neutral-300/95 rounded-tl-lg border border-neutral-400/60 shadow-lg"></div>
+                  
+                  <!-- Introduction Content -->
+                  <div class="relative z-10 h-full flex flex-col justify-center">
+                    <!-- Introduction Header -->
+                    <div class="flex items-center gap-4 mb-6">
+                      <div class="w-1 h-10 bg-gradient-to-b from-neutral-600 to-neutral-700 rounded-full"></div>
+                      <h3 class="text-2xl font-bold text-neutral-800 tracking-tight">
                         Introduction
                       </h3>
+                      <div class="flex-1 h-px bg-gradient-to-r from-neutral-300 via-neutral-200 to-transparent"></div>
                     </div>
                     
-                    <!-- Beautiful typography for the introduction text -->
+                    <!-- Introduction Text -->
                     <div class="prose prose-lg max-w-none">
-                      <p class="text-xl leading-loose text-slate-700 font-light tracking-wide mb-0">
+                      <p class="text-xl leading-relaxed text-neutral-700 font-light tracking-wide">
                         {{ lesson?.introduction }}
                       </p>
                     </div>
                     
-                    <!-- Decorative bottom accent -->
+                    <!-- Decorative Bottom -->
                     <div class="mt-6 flex justify-center">
-                      <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent rounded-full opacity-60"></div>
+                      <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-neutral-400 to-transparent rounded-full opacity-70"></div>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
+            
+            <!-- Content below with padding -->
+            <div class="p-6">
             <div class="mt-5 italic" v-if="!lesson?.quizId">
               When you're done with the lesson, don't forget <span class="text-primary font-semibold">
                 
@@ -531,6 +544,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
       </div>
     </div>
     </div>
+  </div>
   </div>
 </template>
 
