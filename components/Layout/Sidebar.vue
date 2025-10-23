@@ -299,7 +299,7 @@ const isActive = (path: string) => {
 
   <!-- Desktop NavBar -->
   <div
-    class="h-full hidden md:flex flex-col justify-between bg-white border-r border-primary/20 transition-all duration-300 ease-in-out"
+    class="h-full hidden md:flex flex-col justify-between bg-gradient-to-br from-violet-50 via-purple-50/80 to-violet-50/60 border-r border-primary/30 transition-all duration-300 ease-in-out"
     :class="{
       'w-20': isSideBarMinifiedForDesktopVersion,
       'w-72': !isSideBarMinifiedForDesktopVersion,

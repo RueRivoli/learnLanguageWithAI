@@ -240,17 +240,26 @@ const handleGenerateStory = async () => {
 
 <!-- Background Elements -->
 <div class="absolute inset-0 overflow-hidden pointer-events-none">
-  <!-- Subtle base gradient -->
-  <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50/80"></div>
+  <!-- Beautiful base gradient with warm undertone -->
+  <div class="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-violet-100/50"></div>
   
-  <!-- Soft light accent - top right corner (very subtle primary hint) -->
-  <div class="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-violet-100/15 to-purple-100/10 rounded-full blur-3xl"></div>
+  <!-- Soft primary glow - top right -->
+  <div class="absolute -top-40 -right-48 w-[550px] h-[550px] bg-gradient-to-br from-violet-200/40 via-purple-100/25 to-transparent rounded-full blur-3xl opacity-85" style="filter: blur(50px)"></div>
   
-  <!-- Soft light accent - bottom left corner (very subtle neutral hint) -->
-  <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-slate-100/15 to-slate-50/10 rounded-full blur-3xl"></div>
+  <!-- Soft neutral glow - bottom left -->
+  <div class="absolute -bottom-40 -left-48 w-[600px] h-[600px] bg-gradient-to-tr from-slate-200/35 via-slate-100/20 to-transparent rounded-full blur-3xl opacity-80" style="filter: blur(55px)"></div>
   
-  <!-- Subtle texture overlay for depth -->
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(255,255,255,0.4)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(0,0,0,0.02)_0%,transparent_50%)] opacity-40"></div>
+  <!-- Harmonious center accent -->
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-r from-violet-100/28 via-purple-50/18 to-slate-50/12 rounded-full blur-3xl opacity-75" style="filter: blur(70px)"></div>
+  
+  <!-- Ambient light layer for warmth -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(168,85,247,0.16)_0%,transparent_40%),radial-gradient(ellipse_at_70%_60%,rgba(148,113,233,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_50%_100%,rgba(100,116,139,0.09)_0%,transparent_70%)]"></div>
+  
+  <!-- Subtle premium texture -->
+  <div class="absolute inset-0 opacity-[0.06] bg-[linear-gradient(45deg,transparent_24%,rgba(168,85,247,0.08)_25%,rgba(168,85,247,0.08)_26%,transparent_27%,transparent_74%,rgba(168,85,247,0.08)_75%,rgba(168,85,247,0.08)_76%,transparent_77%,transparent_100%),linear-gradient(-45deg,transparent_24%,rgba(168,85,247,0.08)_25%,rgba(168,85,247,0.08)_26%,transparent_27%,transparent_74%,rgba(168,85,247,0.08)_75%,rgba(168,85,247,0.08)_76%,transparent_77%,transparent_100%)] bg-[length:60px_60px]"></div>
+  
+  <!-- Gentle vignette for depth -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.05)_100%)]"></div>
 </div>
 
 <!-- Main Content -->
