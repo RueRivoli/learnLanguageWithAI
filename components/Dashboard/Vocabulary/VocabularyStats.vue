@@ -222,7 +222,7 @@ watch(totalExpressions, () => {
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
-          <div class="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg">
+          <div class="p-2 bg-primary rounded-lg shadow-lg">
             <BookOpenIcon class="h-5 w-5 text-white" />
           </div>
           <div>
@@ -280,7 +280,7 @@ watch(totalExpressions, () => {
             v-for="item in gridData" 
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer transition-transform"
-            :class="item.isMastered ? 'bg-blue-500 hover:bg-blue-600' : 'bg-slate-300 hover:bg-slate-400'"
+            :class="item.isMastered ? 'bg-primary hover:bg-blue-600' : 'bg-slate-300 hover:bg-slate-400'"
             :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
         </div>
@@ -289,7 +289,7 @@ watch(totalExpressions, () => {
       <!-- Legend -->
       <div class="flex items-center justify-center space-x-8 mt-6">
         <div class="flex items-center space-x-2 text-sm text-gray-600">
-          <div class="w-4 h-4 bg-blue-500 rounded-sm"></div>
+          <div class="w-4 h-4 bg-primary rounded-sm"></div>
           <span class="font-medium">Mastered</span>
         </div>
         <div class="flex items-center space-x-2 text-sm text-gray-600">
@@ -300,11 +300,11 @@ watch(totalExpressions, () => {
     </div>
 
     <!-- Full-width Expression Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-purple-100/90 via-purple-50/95 to-pink-100/80 rounded-lg shadow-sm border border-purple-300/70 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-sm border border-purple-300/70 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
-          <div class="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg shadow-lg">
+          <div class="p-2 bg-warning rounded-lg shadow-lg">
             <LanguageIcon class="h-5 w-5 text-white" />
           </div>
           <div>
@@ -362,7 +362,7 @@ watch(totalExpressions, () => {
             v-for="item in expressionGridData" 
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer"
-            :class="item.isMastered ? 'bg-purple-500 hover:bg-purple-600' : 'bg-slate-300 hover:bg-slate-400'"
+            :class="item.isMastered ? 'bg-warning hover:bg-warning/70' : 'bg-slate-300 hover:bg-slate-400'"
             :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
         </div>
@@ -371,7 +371,7 @@ watch(totalExpressions, () => {
       <!-- Legend -->
       <div class="flex items-center justify-center space-x-8 mt-6">
         <div class="flex items-center space-x-2 text-sm text-gray-600">
-          <div class="w-4 h-4 bg-purple-500 rounded-sm"></div>
+          <div class="w-4 h-4 bg-warning rounded-sm"></div>
           <span class="font-medium">Mastered</span>
         </div>
         <div class="flex items-center space-x-2 text-sm text-gray-600">

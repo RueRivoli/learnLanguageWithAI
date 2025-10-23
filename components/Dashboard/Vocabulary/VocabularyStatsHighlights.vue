@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUserScoreStore } from "~/stores/user-score-store";
-import { BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
+
 
 const userScoreStore = useUserScoreStore();
 
@@ -52,7 +52,7 @@ const totalExpressionsInK = computed(() => {
               </div>
             </template>
             <template #details>
-              <div class="bg-gradient-to-r from-blue-100/90 to-indigo-100/80 rounded-lg p-3 border border-blue-200/80 shadow-sm"
+              <div class="bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg p-3 border border-blue-200/80 shadow-sm"
           >
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -86,12 +86,14 @@ const totalExpressionsInK = computed(() => {
             </template>
             <template #details>
               <!-- Progress details -->
-                <div
-                    class="bg-gradient-to-r from-purple-100/90 to-pink-100/80 rounded-lg p-3 border border-purple-200/80 shadow-sm"
-                  >
+                <div class="group relative bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg p-3 border border-amber-300/70 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                  <!-- Professional background pattern -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-amber-100/60 via-yellow-50/80 to-amber-100/50 opacity-90"/>
+                  <!-- Content -->
+                  <div class="relative z-10">
                     <div class="flex items-center justify-between">
                       <div class="flex items-center gap-2">
-                        <div class="w-1.5 h-1.5 bg-purple-500 rounded-full" />
+                        <div class="w-1.5 h-1.5 bg-amber-500 rounded-full" />
                         <span class="text-lg font-medium text-gray-700"
                           >{{ totalExpressionsMasteredInPercentage }}%</span
                         >
@@ -100,6 +102,7 @@ const totalExpressionsInK = computed(() => {
                         >out of <strong>{{ totalExpressionsInK }}</strong> total expressions</span
                       >
                     </div>
+                  </div>
                   </div>
             </template>
         </LayoutKeyElementExpressionOverview>

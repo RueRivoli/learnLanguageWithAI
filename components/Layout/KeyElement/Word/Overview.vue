@@ -17,11 +17,11 @@ const props = withDefaults(
 <template>
  <!-- Total Words Mastered - Professional Design -->
  <div
-    class="group relative bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-lg shadow-md border border-blue-300/70 p-4 hover:shadow-xl hover:border-blue-400/80 overflow-hidden transition-all duration-300"
+    class="group relative bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-md border border-violet-300/70 p-4 hover:shadow-xl hover:border-violet-400/80 overflow-hidden transition-all duration-300"
   >
     <!-- Professional background pattern -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-blue-100/60 via-blue-50/80 to-indigo-100/50 opacity-90"
+      class="absolute inset-0 bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 opacity-90"
     />
 
     <!-- Success celebration overlay -->
@@ -43,10 +43,10 @@ const props = withDefaults(
         <div class="flex-shrink-0 ml-3">
           <div class="relative">
             <div
-              class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-lg blur-sm"
+              class="absolute inset-0 bg-primary rounded-lg"
             />
             <div
-              class="relative p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg"
+              class="relative p-2 bg-primary rounded-lg shadow-lg"
             >
               <BookOpenIcon class="h-5 w-5 text-white" />
             </div>

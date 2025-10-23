@@ -240,9 +240,17 @@ const handleGenerateStory = async () => {
 
 <!-- Background Elements -->
 <div class="absolute inset-0 overflow-hidden pointer-events-none">
-  <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-100/30 to-indigo-100/20 rounded-full blur-3xl"></div>
-  <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-emerald-100/30 to-teal-100/20 rounded-full blur-3xl"></div>
-  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-100/20 to-pink-100/20 rounded-full blur-3xl"></div>
+  <!-- Subtle base gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50/80"></div>
+  
+  <!-- Soft light accent - top right corner (very subtle primary hint) -->
+  <div class="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-violet-100/15 to-purple-100/10 rounded-full blur-3xl"></div>
+  
+  <!-- Soft light accent - bottom left corner (very subtle neutral hint) -->
+  <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-slate-100/15 to-slate-50/10 rounded-full blur-3xl"></div>
+  
+  <!-- Subtle texture overlay for depth -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(255,255,255,0.4)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(0,0,0,0.02)_0%,transparent_50%)] opacity-40"></div>
 </div>
 
 <!-- Main Content -->
@@ -274,17 +282,17 @@ const handleGenerateStory = async () => {
       <!-- Feature highlights -->
       <div class="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">
         <div class="flex items-center gap-3 text-gray-700">
-          <div class="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+          <div class="w-2 h-2 bg-neutral rounded-full"></div>
           <!-- <span class="font-medium">Adaptive AI Stories</span> -->
           <span class="font-medium">Select your Weakest Module</span>
         </div>
         <div class="flex items-center gap-3 text-gray-700">
-          <div class="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
+          <div class="w-2 h-2 bg-primary rounded-full"></div>
           <!-- <span class="font-medium">Personalized Content</span> -->
           <span class="font-medium">Select 10 New Words</span>
         </div>
         <div class="flex items-center gap-3 text-gray-700">
-          <div class="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
+          <div class="w-2 h-2 bg-warning rounded-full"></div>
           <!-- <span class="font-medium">Smart Quizzes</span> -->
           <span class="font-medium">Select 3 New Expressions</span>
         </div>
@@ -323,7 +331,7 @@ const handleGenerateStory = async () => {
               </div>
             </div>
             
-            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-neutral/20 shadow-lg transition-all duration-300" class="col-span-1" title="Targeted Module" titleEn="Targeted Module" description="Select the Module you want to work on">
+            <LayoutKeyElementRuleCard v-else backgroundClasses="bg-gradient-to-br from-slate-100/90 via-slate-50/95 to-slate-100/80 shadow-lg border border-slate-200/70 hover:border-slate-300/80 transition-all duration-300" class="col-span-1" title="Targeted Module" titleEn="Targeted Module" description="Select the Module you want to work on">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyTargetedModule"/>
                 </template>
@@ -393,7 +401,7 @@ const handleGenerateStory = async () => {
             </div>
                     
             <!-- Words Selection Section -->
-             <LayoutKeyElementWordCard v-else backgroundClasses="bg-primary/20 shadow-lg border-2 border-violet-200/70 hover:border-violet-300/90 transition-all duration-300" title="New Words" description="Select 10 words for your lesson">
+             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 shadow-lg" title="New Words" description="Select 10 words for your lesson">
                 <template #top-right-corner>
                     <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
@@ -420,7 +428,7 @@ const handleGenerateStory = async () => {
               </div>
 
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-warning/20 shadow-lg hover:border-purple-300 transition-all duration-300" title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 shadow-lg" title="Expressions to Learn" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>
