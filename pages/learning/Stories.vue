@@ -8,13 +8,16 @@ definePageMeta({
   layout: "authenticated",
 });
 const router = useRouter();
+const userStore = useUserStore();
+const user = useSupabaseUser();
 const lessons = ref<any[]>([]);
 const count = ref<number>(0);
 const lessonNameToDelete = ref<{ title: string; id: number } | null>(null);
 const isFetchingData = ref(false);
 const isDeletingLesson = ref(false);
 const itemsPerPage = ref(10);
-const user = useSupabaseUser();
+const openingModalId = ref(0);
+
 const {
   currentPage,
   endItem,
@@ -26,6 +29,9 @@ const {
   totalItems,
   totalPages,
 } = usePagination(count, itemsPerPage);
+
+const quizGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 
 const fetchLessons = async () => {
   isFetchingData.value = true;
@@ -49,6 +55,10 @@ watchEffect(async () => {
   if (currentPage.value) await fetchLessons();
 });
 
+const handleCancelModal = () => {
+  myModalToGetCredits.value?.closeModal();
+};
+
 const handleDeleteLesson = async () => {
   isDeletingLesson.value = true;
   if (lessonNameToDelete.value?.id) {
@@ -69,10 +79,17 @@ const handleLessonToDelete = (id: number, title: string) => {
 const handleCancel = () => {
   lessonNameToDelete.value = null;
 };
-const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
-  console.log("handleGenerateQuiz", ruleId, lessonId);
+const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
+  console.log("handleCompleteQuiz");
+  if (!userStore.isEnoughTokensForOneQuiz) {
+    console.log("Not enough credits");
+    myModalToGetCredits.value?.openModal();
+    return;
+  }
+  console.log("handleCompleteQuiz", ruleId, lessonId);
   if (!ruleId || !lessonId) return;
   if (!user.value?.id) return;
+  quizGenerationModal.value?.openModal();
   await handleGenerationQuiz(ruleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, String(lessonId));
 };
 </script>
@@ -195,7 +212,7 @@ const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
                       <div class="flex items-center hover:cursor-pointe">
                         <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
                         <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global || lesson.turkish_quizzes_result?.score_global === 0" :score="lesson.turkish_quizzes_result.score_global" size="sm" :filledOut="true"/>
-                        <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false" @click="handleGenerateQuiz(lesson.turkish_grammar_rules.id, lesson.id)"/>
+                        <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false" @click="handleCompleteQuiz(lesson.turkish_grammar_rules.id, lesson.id)"/>
                       </div>
                     </td>
                   <td class="px-4 py-3">
@@ -243,5 +260,10 @@ const handleGenerateQuiz = async (ruleId: number, lessonId: number) => {
       @cancel="handleCancel"
       @delete="handleDeleteLesson"
     />
+    <AccountPaymentModal
+        ref="myModalToGetCredits"
+        @cancel="handleCancelModal"
+    />
+    <QuizGenerationLoadingModal :key="openingModalId" ref="quizGenerationModal" type="quiz"/>
   </div>
 </template>

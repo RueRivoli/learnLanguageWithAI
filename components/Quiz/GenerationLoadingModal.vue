@@ -35,7 +35,7 @@ defineExpose({
           Generating your {{ props.type }}
         </h3>
         <p class="mt-2 text-sm text-base-content/60">
-          This will only take a moment
+          This will only take a short moment
         </p>
       </div>
       

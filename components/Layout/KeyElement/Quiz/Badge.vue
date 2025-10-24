@@ -115,7 +115,7 @@ const currentStyles = computed(() => props.filledOut ? scoreStyles.value : incom
 </script>
 
 <template>
-  <button v-if="!props.filledOut" class="p-3 btn btn-error btn-outline btn-sm group rounded-lg cursor-pointer">
+  <button v-if="!props.filledOut" class="p-3 btn btn-error btn-outline btn-sm group rounded-lg cursor-pointer"  @click="emit('click')">
     <div class="flex items-center gap-3">
       <div class="rounded-lg flex items-center">
         <ArrowRightCircleIcon :class="[sizeClasses.icon, currentStyles.icon, 'group-hover:text-white']" />

@@ -29,8 +29,8 @@ Assurez-vous que vos variables Supabase sont configurées :
 
 ```env
 SUPABASE_URL=your-supabase-url
-SUPABASE_KEY=your-supabase-anon-key
-SERVICE_SUPABASE_KEY=your-supabase-service-key
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SERVICE_SUPABASE_ANON_KEY=your-supabase-service-key
 ```
 
 ## 🛠️ Utilisation

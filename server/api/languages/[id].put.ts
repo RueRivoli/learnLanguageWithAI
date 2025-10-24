@@ -4,7 +4,7 @@ import { defineEventHandler, getRouterParam, readBody } from "h3";
 export default defineEventHandler(async (event) => {
   const supabase = createClient(
     process.env.SUPABASE_URL,
-    process.env.SERVICE_SUPABASE_KEY,
+    process.env.SERVICE_SUPABASE_ANON_KEY,
   );
   const body = await readBody(event);
   const languageId = getRouterParam(event, "id");

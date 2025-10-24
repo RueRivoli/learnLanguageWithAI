@@ -10,8 +10,8 @@ export default defineNuxtConfig({
       pathPrefix: true,
     },
   ],
-  debug: true,
-  devtools: { enabled: true },
+  debug: process.env.NODE_ENV === 'development',
+  devtools: { enabled: process.env.NODE_ENV === 'development' },
   echarts: {
     renderer: 'canvas',
   },
@@ -29,16 +29,22 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   runtimeConfig: {
+    // Variables privées (serveur uniquement)
+    openaiApiKey: process.env.OPENAI_API_KEY,
+    openaiApiUrl: process.env.OPENAI_API_URL,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    serviceSupabaseKey: process.env.SERVICE_SUPABASE_ANON_KEY,
+    
+    // Variables publiques (client) - Sécurisées par RLS
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
-      supabaseKey: process.env.SUPABASE_KEY,
-      openaiApiKey: process.env.OPENAI_API_KEY,
-      openaiApiUrl: process.env.OPENAI_API_URL,
+      supabaseKey: process.env.SUPABASE_ANON_KEY,
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
     },
   },
   supabase: {
     url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_KEY,
+    key: process.env.SUPABASE_ANON_KEY,
     redirect: false,
     redirectOptions: {
       login: "/auth/auth/",

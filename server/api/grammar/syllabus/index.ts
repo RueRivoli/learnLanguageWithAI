@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const supabase = createClient(
     process.env.SUPABASE_URL,
-    process.env.SERVICE_SUPABASE_KEY,
+    process.env.SERVICE_SUPABASE_ANON_KEY,
   );
   let request = supabase
     .from("turkish_grammar_rules")

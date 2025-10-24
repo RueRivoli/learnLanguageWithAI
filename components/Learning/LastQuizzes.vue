@@ -20,18 +20,19 @@ const props = withDefaults(
 );
 const openingModalId = ref(0);
 const userStore = useUserStore();
+const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 
 const averageScore = computed(() => {
   return props.rule?.id ? userScoreStore.$state.rulesScores?.find((rule) => rule.ruleId === props.rule?.id)?.score : 0;
 });
 
 const handleCancelModal = () => {
-  openingModalId.value = openingModalId.value + 1;
+  myModalToGetCredits.value?.closeModal();
 };
 
 const handleGenerateQuiz = async () => {
   if (!userStore.isEnoughTokensForOneQuiz) {
-    openingModalId.value = openingModalId.value + 1;
+    myModalToGetCredits.value?.openModal();
     return;
   }
   if (!props.rule?.id) return;
@@ -124,8 +125,7 @@ const getScoreColor = (score: number) => {
         </div>
       </div>
       <AccountPaymentModal
-        id="my_modal_to_get_credits"
-        :key="openingModalId"
+        ref="myModalToGetCredits"
         @cancel="handleCancelModal"
         />
     </div>

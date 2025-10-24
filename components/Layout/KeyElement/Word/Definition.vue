@@ -32,18 +32,18 @@ const roles = computed(() => {
 <template>
     <!-- Enhanced Word Card -->
     <div 
-        class="bg-gradient-to-br from-blue-500 to-indigo-600 border border-primary/20 rounded-xl cursor-pointer transition-all duration-300"
-        :class="props.minified ? 'p-2' : 'p-4'"
+        class="bg-white text-slate-800 border-l-4 border-primary rounded-lg cursor-pointer transition-all duration-300"
+        :class="props.minified ? 'p-2' : 'p-3'"
         @click="emit('click')"
     >
         <div class="flex items-center"  :class="props.minified ? 'justify-center' : 'justify-between'">
             <div class="flex items-center gap-2">
-                <span class="text-lg text-white font-serif">
+                <span class="text-lg text-neutral font-serif">
                     {{ props.word.text }}
                 </span>
-                <span class="text-md text-white mr-1" :class="props.minified ? 'italic' : ''"> ({{ roles }})</span>
+                <span class="text-md text-neutral mr-1" :class="props.minified ? 'italic' : ''"> ({{ roles }})</span>
                  <!-- text-slate-600 -->
-                <span v-if="!props.minified" class="text-lg text-blue-50 font-light italic">
+                <span v-if="!props.minified" class="text-lg text-neutral font-light italic">
                     {{ props.word.translation || 'Translation not available' }}
                 </span>
             </div>
@@ -51,72 +51,69 @@ const roles = computed(() => {
                       
         <!-- Example Sentences (shows when clicked) -->
         <div v-if="props.isActive && (props.word.sentence || props.word.sentenceEn)"
-          class="mt-3 pt-3 border-t border-slate-50/50 space-y-2 animate-fade-in"
+          class="mt-3 pt-3 border-t border-primary-50 text-neutral space-y-2 animate-fade-in"
         >
         <!-- Show only if different meaning -->
         <div v-if="props.word.role2" class="flex items-center gap-2">
-          <span class="text-md text-white font-serif">
+          <span class="text-md font-serif">
             ({{ props.word.role }})
           </span>
-          <span class="text-md text-blue-50 font-light italic">
+          <span class="text-md font-light italic">
             {{ props.word.translation }}
           </span>
         </div>
             <div
               v-if="props.word.sentence"
-              class="text-md text-white rounded-lg"
+              class="text-md rounded-lg"
               >
                 <span>{{ props.word.sentence }}</span> 
             </div>
             <div
-                v-if="props.word.sentenceEn"
-                class="text-blue-50">
+                v-if="props.word.sentenceEn">
                   <span>{{ props.word.sentenceEn }}</span>
               </div>
         </div>
         <div v-if="props.isActive && (props.word.sentence2 || props.word.sentence2En)"
-          class="mt-3 pt-3 border-t border-slate-50/50 space-y-2 animate-fade-in"
+          class="mt-3 pt-3 text-neutral border-t border-primary-50 space-y-2 animate-fade-in"
         >
         <div class="flex items-center gap-2">
-          <span class="text-md text-white font-serif">
+          <span class="text-md font-serif">
             ({{ props.word.role2 }})
           </span>
-          <span class="text-md text-blue-50 font-light italic">
+          <span class="text-md font-light italic">
             {{ props.word.translation2 }}
           </span>
         </div>
             <div
               v-if="props.word.sentence2"
-              class="text-md text-white rounded-lg"
+              class="text-md rounded-lg"
               >
                 <span>{{ props.word.sentence2 }}</span> 
             </div>
             <div
-                v-if="props.word.sentence2En"
-                class="text-blue-50">
+                v-if="props.word.sentence2En">
                   <span>{{ props.word.sentence2En }}</span>
               </div>
         </div>
         <div v-if="props.isActive && (props.word.sentence3 || props.word.sentence3En)"
-          class="mt-3 pt-3 border-t border-slate-50/50 space-y-2 animate-fade-in"
+          class="mt-3 pt-3 text-neutral border-t border-primary-50 space-y-2 animate-fade-in"
         >
         <div class="flex items-center gap-2">
-          <span class="text-md text-white font-serif">
+          <span class="text-md font-serif">
             ({{ props.word.role3 }})
           </span>
-          <span class="text-md text-blue-50 font-light italic">
+          <span class="text-md font-light italic">
             {{ props.word.translation3 }}
           </span>
         </div>
             <div
               v-if="props.word.sentence2"
-              class="text-md text-white rounded-lg"
+              class="text-md rounded-lg"
               >
                 <span>{{ props.word.sentence3 }}</span> 
             </div>
             <div
-                v-if="props.word.sentence2En"
-                class="text-blue-50">
+                v-if="props.word.sentence2En">
                   <span>{{ props.word.sentence3En }}</span>
               </div>
         </div>

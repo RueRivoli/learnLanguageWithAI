@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SERVICE_SUPABASE_KEY,
+  process.env.SERVICE_SUPABASE_ANON_KEY,
 );
 
 export default defineEventHandler(async (event) => {
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     // Check environment variables
     const envCheck = {
       SUPABASE_URL: !!process.env.SUPABASE_URL,
-      SERVICE_SUPABASE_KEY: !!process.env.SERVICE_SUPABASE_KEY,
+      SERVICE_SUPABASE_ANON_KEY: !!process.env.SERVICE_SUPABASE_ANON_KEY,
       REPLICATE_API_TOKEN: !!process.env.REPLICATE_API_TOKEN,
       SUPABASE_BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME || 'images'
     };
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
       },
       recommendations: [
         ...(!envCheck.SUPABASE_URL ? ['Set SUPABASE_URL environment variable'] : []),
-        ...(!envCheck.SERVICE_SUPABASE_KEY ? ['Set SERVICE_SUPABASE_KEY environment variable'] : []),
+        ...(!envCheck.SERVICE_SUPABASE_ANON_KEY ? ['Set SERVICE_SUPABASE_ANON_KEY environment variable'] : []),
         ...(!envCheck.REPLICATE_API_TOKEN ? ['Set REPLICATE_API_TOKEN environment variable'] : []),
         ...(!supabaseConnection ? ['Check Supabase connection and credentials'] : []),
         ...(!bucketExists ? [`Create '${envCheck.SUPABASE_BUCKET_NAME}' bucket in Supabase`] : []),
@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
       error: error.message,
       environment: {
         SUPABASE_URL: !!process.env.SUPABASE_URL,
-        SERVICE_SUPABASE_KEY: !!process.env.SERVICE_SUPABASE_KEY,
+        SERVICE_SUPABASE_ANON_KEY: !!process.env.SERVICE_SUPABASE_ANON_KEY,
         REPLICATE_API_TOKEN: !!process.env.REPLICATE_API_TOKEN,
         SUPABASE_BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME || 'images'
       }

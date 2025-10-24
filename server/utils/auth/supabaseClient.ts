@@ -30,6 +30,6 @@ export const createSupabaseClientWithUserAuthTokenFromHeader = (event: any) => {
 export const createServiceRoleClient = () => {
   return createClient(
     process.env.SUPABASE_URL,
-    process.env.SERVICE_SUPABASE_KEY,
+    process.env.SERVICE_SUPABASE_ANON_KEY,
   );
 }

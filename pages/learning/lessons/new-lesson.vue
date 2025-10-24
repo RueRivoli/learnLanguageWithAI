@@ -41,7 +41,8 @@ const isGeneratingLesson = ref(false);
 const isFetchingData = ref<boolean>(false);
 
 const initialModuleSelectedId = ref<number | null>(null);
-
+const quizGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 // Group modules by rule level and order by score within each group
 const groupedModuleOptions = computed(() => {
   if (!originalModulesData.value || originalModulesData.value.length === 0) return {};
@@ -203,16 +204,18 @@ const handleModuleSelectionChange = (newModuleId: number) => {
 };
 
 const handleCancelModal = () => {
-  openingModalId.value = openingModalId.value + 1;
+  myModalToGetCredits.value?.closeModal();
 };
 
 const handleGenerateStory = async () => {
   let newLesson;
   console.log("userStore.$state.creditsAvailable", userStore.$state.creditsAvailable);
   if (!userStore.isEnoughTokensForOneLesson) {
-    my_modal_to_get_credits.showModal();
+    console.log("Not enough credits");
+    myModalToGetCredits.value?.openModal();
     return;
   }
+  quizGenerationModal.value?.openModal();
   isGeneratingLesson.value = true;
   if (userId.value && targetedModule.value?.name) {
     newLesson = await generateAIPoweredStoryWithParameters(
@@ -231,6 +234,7 @@ const handleGenerateStory = async () => {
     }
     router.push(`/learning/lessons/${String(newLesson.id)}?loadingImage=true`);
     isGeneratingLesson.value = false;
+    quizGenerationModal.value?.closeModal();
   }
 };
 </script>
@@ -504,10 +508,10 @@ const handleGenerateStory = async () => {
             @cancel="handleCancelModal"
           />
           <AccountPaymentModal
-            id="my_modal_to_get_credits"
-            :key="openingModalId"
+            ref="myModalToGetCredits"
             @cancel="handleCancelModal"
           />
+          <QuizGenerationLoadingModal ref="quizGenerationModal" type="quiz"/>
   </div>
 </template>
 

@@ -21,10 +21,9 @@ const {
   refresh
 } = useLesson(lessonId);
 
-// UI state
-const openingModalId = ref(0);
-const showEnglishTranslations = ref(true);
-const showTips = ref(true);
+const showAllEnglishTranslations = ref(true);
+const showAllTips = ref(true);
+const showTips = ref({});
 const activeSentenceTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
 const isGeneratingQuiz = ref<boolean>(false);
@@ -34,6 +33,7 @@ const loadingImage = computed(() => route.query.loadingImage as string);
 const user = useSupabaseUser();
 const userStore = useUserStore();
 const quizGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 
 definePageMeta({
   layout: "authenticated",
@@ -47,7 +47,7 @@ const toggleSentenceTranslation = (index: number) => {
 
 const handleGenerateQuiz = async () => {
   if (!userStore.isEnoughTokensForOneQuiz) {
-    openingModalId.value = openingModalId.value + 1;
+    myModalToGetCredits.value?.openModal();
     return;
   }
 
@@ -71,7 +71,7 @@ const handleGenerateQuiz = async () => {
 };
 
 const handleCancelModal = () => {
-  openingModalId.value = openingModalId.value + 1;
+  myModalToGetCredits.value?.closeModal();
 };
 
 const sanitizedIntroTemplate = computed(() =>
@@ -478,7 +478,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       Show Tips
                     </span>
                     <input
-                      v-model="showTips"
+                      v-model="showAllTips"
                       type="checkbox"
                       class="checkbox checkbox-neutral"
                     />
@@ -488,7 +488,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       Show Translations
                     </span>
                     <input
-                      v-model="showEnglishTranslations"
+                      v-model="showAllEnglishTranslations"
                       type="checkbox"
                       class="checkbox checkbox-primary"
                     />
@@ -539,7 +539,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   </div>
                   
                   <!-- Individual Sentences -->
-                <div v-else :class="showEnglishTranslations ? 'space-y-4' : 'space-y-1'">
+                <div v-else :class="showAllEnglishTranslations ? 'space-y-4' : 'space-y-1'">
                   <!-- Compact spacing when translations are off, normal spacing when on -->
                   <div
                     v-for="(sentence, index) in sentences"
@@ -552,9 +552,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     >
                       <span class="inline-flex items-center gap-2">
                         {{ sentence.original }}
-                        <LanguageIcon :class="['ml-3 w-5 h-5 hover:text-primary transition-colors', {'text-primary font-bold': showEnglishTranslations || activeSentenceTranslation === index, 'text-slate-400': !showEnglishTranslations && activeSentenceTranslation !== index}]"                       @click="showEnglishTranslations = !showEnglishTranslations"/>
-                        <LightBulbIcon v-if="sentence.tip" :class="['ml-1 w-5 h-5 hover:text-neutral-500 transition-colors', {'text-neutral font-bold': showTips || activeSentenceTranslation === index, 'text-slate-400': !showTips && activeSentenceTranslation !== index}]"
-                        @click="showTips = !showTips"
+                        <LanguageIcon :class="['ml-3 w-5 h-5 hover:text-primary transition-colors', {'text-primary font-bold': showAllEnglishTranslations || activeSentenceTranslation === index, 'text-slate-400': !showAllEnglishTranslations && activeSentenceTranslation !== index}]"                       @click="showAllEnglishTranslations = !showAllEnglishTranslations"/>
+                        <LightBulbIcon v-if="sentence.tip" :class="['ml-1 w-5 h-5 hover:text-neutral-500 transition-colors', {'text-neutral font-bold': showAllTips || activeSentenceTranslation === index, 'text-slate-400': !showAllTips && activeSentenceTranslation !== index}]"
+                        @click="showAllTips = !showAllTips"
                         />
                       </span>
                     </p>
@@ -562,7 +562,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     
                     <!-- Translation (shows on click or global toggle) -->
                     <div
-                      v-if="showEnglishTranslations || activeSentenceTranslation === index"
+                      v-if="showAllEnglishTranslations || activeSentenceTranslation === index"
                       class="mt-1 p-2 bg-primary/10 backdrop-blur-sm rounded-lg shadow-sm border border-primary/20 animate-fade-in"
                     >
                       <div class="flex items-start gap-3">
@@ -577,7 +577,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </p>
                       </div>
                     </div>
-                      <div v-if="showTips || activeSentenceTranslation === index" class="mt-1 p-2 bg-gradient-to-r from-neutral-100/90 to-slate-100/90 backdrop-blur-sm rounded-lg border border-neutral-300/60 shadow-sm animate-fade-in">
+                      <div v-if="showAllTips || activeSentenceTranslation === index" class="mt-1 p-2 bg-gradient-to-r from-neutral-100/90 to-slate-100/90 backdrop-blur-sm rounded-lg border border-neutral-300/60 shadow-sm animate-fade-in">
                        <div class="flex items-start gap-2">
                          <div class="flex-shrink-0 mt-1">
                           <LightBulbIcon class="w-4 h-4 text-neutral-600 group-hover:text-neutral-500 transition-colors" />
@@ -595,7 +595,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             </div>
             
             <!-- Key Words and Expressions Section -->
-            <div class="space-y-2">
+            <div class="space-y-2 p-3">
               <!-- Words Selection Section -->
              <LayoutKeyElementWordCard title="Key Words">
               <template #top-right-corner>
@@ -663,8 +663,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   </button>
               </div>
             <AccountPaymentModal
-              id="my_modal_to_get_credits"
-              :key="openingModalId"
+              ref="myModalToGetCredits"
               @cancel="handleCancelModal"
             />
             <QuizGenerationLoadingModal ref="quizGenerationModal" type="quiz"/>

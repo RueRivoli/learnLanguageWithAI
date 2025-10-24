@@ -231,7 +231,7 @@ export default defineEventHandler(async (event) => {
     if (finalImageUrl && typeof finalImageUrl === 'string' && finalImageUrl.startsWith('http')) {
       try {
         // Validate required environment variables
-        if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_KEY) {
+        if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_ANON_KEY) {
           console.error('Missing required Supabase environment variables');
           throw new Error('Supabase configuration incomplete');
         }

@@ -15,26 +15,20 @@ const props = withDefaults(
 );
 const emit = defineEmits(["click"]);
 
-/*bg-gradient-to-r from-primary/15 to-primary/25 border border-primary/20 */
-// text-slate-800
-
-// pastel:
-//bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-purple-600/20
-
 </script>
 
  <template>
-  <div 
-  class="bg-gradient-to-br from-purple-500 to-pink-500 border border-purple-300/30 rounded-xl cursor-pointer transition-all duration-300"
-   :class="props.minified ? 'p-2' : 'p-4'"
+  <div
+  class="bg-white border-l-4 border-warning rounded-lg cursor-pointer transition-all duration-300"
+   :class="props.minified ? 'p-2' : 'p-3'"
   @click="emit('click')"
 >
   <div class="flex items-center" :class="props.minified ? 'justify-center' : 'justify-between'">
-    <div class="flex items-center gap-4">
-      <span class="text-lg text-white font-serif">
+    <div class="flex items-center text-neutral gap-4">
+      <span class="text-lg font-serif">
         {{ expression.text }}
       </span>
-      <span v-if="!props.minified" class="text-lg text-pink-50 font-light italic">
+      <span v-if="!props.minified" class="text-lg font-light italic">
         {{ expression.translation || 'Translation not available' }}
       </span>
       
@@ -44,34 +38,32 @@ const emit = defineEmits(["click"]);
   <!-- Example Sentences (shows when clicked) -->
   <div
     v-if="isActive && (expression.sentence || expression.sentenceEn)"
-    class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
+    class="mt-3 pt-3 text-neutral border-t border-warning/20 space-y-2 animate-fade-in"
   >
     <div
       v-if="expression.sentence"
-      class="text-md text-white rounded-lg"
+      class="text-md rounded-lg"
     >
       <span>{{ expression.sentence }}</span>
     </div>
     <div
       v-if="expression.sentenceEn"
-      class="text-pink-50"
     >
       <span class="">{{ expression.sentenceEn }}</span>
     </div>
   </div>
   <div
     v-if="isActive && (expression.sentence2 || expression.sentence2En)"
-    class="mt-3 pt-3 border-t border-primary/20 space-y-2 animate-fade-in"
+    class="mt-3 pt-3 text-neutral border-t border-primary/20 space-y-2 animate-fade-in"
   >
     <div
       v-if="expression.sentence2"
-      class="text-md text-white rounded-lg"
+      class="text-md rounded-lg"
     >
-      <span class="text-md text-white rounded-lg">{{ expression.sentence2 }}</span> 
+      <span class="text-md rounded-lg">{{ expression.sentence2 }}</span> 
     </div>
     <div
       v-if="expression.sentence2En"
-      class="text-blue-50"
     >
     <span class="">{{ expression.sentence2En }}</span>
     </div>

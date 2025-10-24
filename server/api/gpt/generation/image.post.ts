@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     console.log('gpt/generation/image.post', body)
 
     // Validate required environment variables
-    if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_KEY) {
+    if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_ANON_KEY) {
       throw new Error('Supabase configuration incomplete');
     }
 

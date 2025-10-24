@@ -44,6 +44,7 @@ const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
 
 // Results modal state
 const showResultsModal = ref(false);
+const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 
 const detailedResults = ref<DetailedResults | null>(null);
 const globalScore = ref<number>(0);
@@ -57,7 +58,7 @@ const closeResultsModal = () => {
 const openingModalId = ref(0);
 
 const handleCancelModal = () => {
-  openingModalId.value = openingModalId.value + 1;
+  myModalToGetCredits.value?.closeModal();
 };
 
 
@@ -126,7 +127,7 @@ const getGrammarQuizData = async () => {
 const getGeneratedVocabularyQuiz = async () => {
   try {
     if (!userStore.isEnoughTokensForOneQuiz) {
-      openingModalId.value = openingModalId.value + 1;
+      myModalToGetCredits.value?.openModal();
       return;
     }
     const headers = await getAuthToken();
@@ -327,8 +328,7 @@ isLoadingQuiz.value = false;
      </div>
 
      <AccountPaymentModal
-        id="my_modal_to_get_credits"
-        :key="openingModalId"
+        ref="myModalToGetCredits"
         @cancel="handleCancelModal"
       />
   </div>

@@ -4,7 +4,7 @@ import { defineEventHandler, getQuery } from "h3";
 export default defineEventHandler(async (event) =>  {
   const supabase = createClient(
     process.env.SUPABASE_URL,
-    process.env.SERVICE_SUPABASE_KEY,
+    process.env.SERVICE_SUPABASE_ANON_KEY,
   );
   const query = getQuery(event);
   const isSupported = query.is_supported;

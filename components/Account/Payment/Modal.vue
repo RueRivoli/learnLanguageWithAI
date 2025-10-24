@@ -1,24 +1,29 @@
 <script setup lang="ts">
 import { CheckIcon, StarIcon } from "@heroicons/vue/24/outline";
-const props = withDefaults(
-  defineProps<{
-    id: string;
-  }>(),
-  {
-    id: "",
-  },
-);
+
 const emit = defineEmits(["cancel"]);
 
+const dialogRef = ref<HTMLDialogElement | null>(null);
+
+const openModal = () => {
+  dialogRef.value?.showModal();
+};
+const closeModal = () => {
+  dialogRef.value?.close();
+};
+
+defineExpose({
+  openModal,
+  closeModal
+});
 
 const handleConfirm = () => {
-  console.log("cancel");
   emit('cancel');
 };
 </script>
 
 <template>
-  <dialog :id="props.id" class="modal">
+  <dialog ref="dialogRef" class="modal">
     <div class="modal-box max-w-4xl h-auto overflow-y-auto">
       <div class="flex flex-col items-center">
         <div class="flex items-center">
