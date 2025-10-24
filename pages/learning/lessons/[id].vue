@@ -288,19 +288,37 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               
               <!-- Titles positioned in top right -->
               <div class="absolute top-8 right-8 z-20">
-                <div class="text-right">
-                  <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-3 font-serif tracking-tight leading-tight">
-                    {{ lesson?.title }}
-                  </h1>
-                  <h2 class="text-xl md:text-2xl font-medium text-slate-600 italic tracking-wide">
-                    {{ lesson?.titleEn }}
-                  </h2>
+                <div class="relative">
+                  <!-- Modern Primary Background with Pattern -->
+                  <div class="absolute -inset-6 bg-gradient-to-br from-violet-100/60 via-purple-50/40 to-violet-100/60 rounded-xl border border-violet-200/40 shadow-xl backdrop-blur-sm">
+                    <!-- Beautiful Repeated Pattern -->
+                    <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.4)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,rgba(124,58,237,0.3)_0%,transparent_50%),radial-gradient(circle_at_40%_60%,rgba(147,51,234,0.2)_0%,transparent_50%)] bg-[length:60px_60px]"></div>
+                    
+                    <!-- Elegant Grid Pattern -->
+                    <div class="absolute inset-0 opacity-[0.08] bg-[linear-gradient(90deg,rgba(139,92,246,0.15)_1px,transparent_1px),linear-gradient(0deg,rgba(139,92,246,0.15)_1px,transparent_1px)] bg-[length:30px_30px]"></div>
+                    
+                    <!-- Subtle Dot Pattern -->
+                    <div class="absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle,rgba(124,58,237,0.2)_1px,transparent_1px)] bg-[length:25px_25px]"></div>
+                    
+                    <!-- Soft Glow Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-violet-200/30 via-transparent to-purple-200/30 rounded-xl"></div>
+                  </div>
                   
-                  <!-- Professional Decorative Line -->
-                  <div class="flex items-center justify-end gap-3 mt-4">
-                    <div class="w-12 h-0.5 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full"></div>
-                    <div class="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
-                    <div class="w-6 h-0.5 bg-gradient-to-r from-slate-500 to-slate-400 rounded-full"></div>
+                  <!-- Title Content -->
+                  <div class="relative z-10 p-6 text-right">
+                    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-3 font-serif tracking-tight leading-tight drop-shadow-sm">
+                      {{ lesson?.title }}
+                    </h1>
+                    <h2 class="text-xl md:text-2xl font-medium text-slate-600 italic tracking-wide drop-shadow-sm">
+                      {{ lesson?.titleEn }}
+                    </h2>
+                    
+                    <!-- Enhanced Decorative Line -->
+                    <div class="flex items-center justify-end gap-3 mt-4">
+                      <div class="w-12 h-0.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full"></div>
+                      <div class="w-1.5 h-1.5 bg-gradient-to-br from-violet-600 to-purple-700 rounded-full shadow-sm"></div>
+                      <div class="w-6 h-0.5 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -460,6 +478,20 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </p>
                       </div>
                     </div>
+                     <div class="mt-3 p-3 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 rounded-lg border border-blue-200/50 shadow-sm">
+                       <div class="flex items-start gap-2">
+                         <div class="flex-shrink-0 mt-1">
+                           <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                           </svg>
+                         </div>
+                         <div class="flex-1">
+                           <p class="text-sm text-blue-800 font-medium leading-relaxed">
+                             {{ sentence.tip }}
+                           </p>
+                         </div>
+                       </div>
+                     </div>
                   </div>
                 </div>
               </div>

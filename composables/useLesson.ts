@@ -247,6 +247,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       phrases.push({
         original: (lesson.value as any)[`sentence${i + 1}`],
         translation: (lesson.value as any)[`sentence${i + 1}En`],
+        tip: (lesson.value as any)[`tip${i + 1}`],
       });
       i++;
     }
