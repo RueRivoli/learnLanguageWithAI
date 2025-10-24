@@ -3,6 +3,7 @@ import DOMPurify from "dompurify";
 import { PlayIcon } from "@heroicons/vue/24/solid";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
 import { lessonUpdateBus } from "~/composables/useLessonUpdates";
+import { LanguageIcon, LightBulbIcon } from "@heroicons/vue/24/outline";
 
 
 
@@ -22,7 +23,8 @@ const {
 
 // UI state
 const openingModalId = ref(0);
-const showEnglishTranslations = ref(false);
+const showEnglishTranslations = ref(true);
+const showTips = ref(true);
 const activeSentenceTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
 const isGeneratingQuiz = ref<boolean>(false);
@@ -242,24 +244,25 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           </div>
 
           <div id="lesson_content" v-else class="space-y-8 bg-gradient-to-b from-slate-50/30 to-white/80 backdrop-blur-sm rounded-xl border border-white/60 shadow-2xl shadow-slate-200/50">
-            <!-- Hero Section - No Padding -->
-            <div class="relative min-h-[500px] overflow-hidden">
+            <!-- Hero Section - Responsive -->
+            <div class="relative min-h-[400px] md:min-h-[500px] overflow-hidden">
               
-              <!-- Picture Section - Full Height, Width stops before middle -->
-              <div class="absolute left-0 top-0 w-[45%] h-full">
-                <div class="relative h-full">
+              <!-- Mobile Layout: Stacked -->
+              <div class="md:hidden">
+                <!-- Mobile Picture Section -->
+                <div class="relative h-[250px] w-full">
                   <!-- Image Loading State -->
                   <div 
                     v-if="!imageUrl && loadingImage === 'true'"
                     class="relative w-full h-full bg-gradient-to-br from-slate-100 via-slate-50 to-gray-100 flex items-center justify-center"
                   >
-                    <div class="flex flex-col items-center gap-6">
-                      <div class="w-20 h-20 bg-gradient-to-br from-slate-300 to-gray-400 rounded-2xl flex items-center justify-center shadow-lg">
-                        <svg class="w-10 h-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex flex-col items-center gap-4">
+                      <div class="w-16 h-16 bg-gradient-to-br from-slate-300 to-gray-400 rounded-2xl flex items-center justify-center shadow-lg">
+                        <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
-                      <div class="text-slate-600 text-lg font-medium text-center">
+                      <div class="text-slate-600 text-sm font-medium text-center px-4">
                         Your image will be generated in less than 1 minute
                       </div>
                     </div>
@@ -280,51 +283,132 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     alt="Lesson illustration" 
                     class="w-full h-full object-cover"
                   />
+                </div>
+                
+                <!-- Mobile Title Section -->
+                <div class="relative p-4 bg-gradient-to-br from-violet-100/60 via-purple-50/40 to-violet-100/60">
+                  <!-- Mobile Pattern -->
+                  <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.4)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,rgba(124,58,237,0.3)_0%,transparent_50%)] bg-[length:40px_40px]"></div>
+                  <div class="absolute inset-0 opacity-[0.08] bg-[linear-gradient(90deg,rgba(139,92,246,0.15)_1px,transparent_1px),linear-gradient(0deg,rgba(139,92,246,0.15)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
                   
-                  <!-- Gradient Overlay for better text readability -->
-                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/30"></div>
+                  <!-- Mobile Title Content -->
+                  <div class="relative z-10 text-center">
+                    <h1 class="text-2xl font-bold text-slate-800 mb-2 font-serif tracking-tight leading-tight">
+                      {{ lesson?.title }}
+                    </h1>
+                    <h2 class="text-lg font-medium text-slate-600 italic tracking-wide">
+                      {{ lesson?.titleEn }}
+                    </h2>
+                  </div>
                 </div>
               </div>
               
-              <!-- Titles positioned in top right -->
-              <div class="absolute top-8 right-8 z-20">
-                <div class="relative">
+              <!-- Desktop Layout: Side by Side -->
+              <div class="hidden md:block">
+                <!-- Picture Section - Full Height, Width stops before middle -->
+                <div class="absolute left-0 top-0 w-[45%] h-full">
+                  <div class="relative h-full">
+                    <!-- Image Loading State -->
+                    <div 
+                      v-if="!imageUrl && loadingImage === 'true'"
+                      class="relative w-full h-full bg-gradient-to-br from-slate-100 via-slate-50 to-gray-100 flex items-center justify-center"
+                    >
+                      <div class="flex flex-col items-center gap-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-slate-300 to-gray-400 rounded-2xl flex items-center justify-center shadow-lg">
+                          <svg class="w-10 h-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <div class="text-slate-600 text-lg font-medium text-center">
+                          Your image will be generated in less than 1 minute
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Default Image -->
+                    <img 
+                      v-else-if="!imageUrl"
+                      src="~/public/default-image.png" 
+                      alt="Lesson illustration" 
+                      class="w-full h-full object-cover"
+                    />
+                    
+                    <!-- Generated Image -->
+                    <img 
+                      v-else
+                      :src="imageUrl" 
+                      alt="Lesson illustration" 
+                      class="w-full h-full object-cover"
+                    />
+                    
+                    <!-- Gradient Overlay for better text readability -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/30"></div>
+                  </div>
+                </div>
+                
+                <!-- Full Right Side Background with Pattern -->
+                <div class="absolute left-[45%] top-0 w-[55%] h-full z-5">
                   <!-- Modern Primary Background with Pattern -->
-                  <div class="absolute -inset-6 bg-gradient-to-br from-violet-100/60 via-purple-50/40 to-violet-100/60 rounded-xl border border-violet-200/40 shadow-xl backdrop-blur-sm">
+                  <div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-primary/20">
                     <!-- Beautiful Repeated Pattern -->
-                    <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.4)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,rgba(124,58,237,0.3)_0%,transparent_50%),radial-gradient(circle_at_40%_60%,rgba(147,51,234,0.2)_0%,transparent_50%)] bg-[length:60px_60px]"></div>
+                    <div class="absolute inset-0 opacity-[0.15] bg-[radial-gradient(circle_at_20%_20%,hsl(var(--p)/0.3)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,hsl(var(--p)/0.25)_0%,transparent_50%),radial-gradient(circle_at_40%_60%,hsl(var(--p)/0.2)_0%,transparent_50%)] bg-[length:60px_60px]"></div>
                     
                     <!-- Elegant Grid Pattern -->
-                    <div class="absolute inset-0 opacity-[0.08] bg-[linear-gradient(90deg,rgba(139,92,246,0.15)_1px,transparent_1px),linear-gradient(0deg,rgba(139,92,246,0.15)_1px,transparent_1px)] bg-[length:30px_30px]"></div>
+                    <div class="absolute inset-0 opacity-[0.10] bg-[linear-gradient(90deg,hsl(var(--p)/0.2)_1px,transparent_1px),linear-gradient(0deg,hsl(var(--p)/0.2)_1px,transparent_1px)] bg-[length:30px_30px]"></div>
                     
                     <!-- Subtle Dot Pattern -->
-                    <div class="absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle,rgba(124,58,237,0.2)_1px,transparent_1px)] bg-[length:25px_25px]"></div>
+                    <div class="absolute inset-0 opacity-[0.08] bg-[radial-gradient(circle,hsl(var(--p)/0.25)_1px,transparent_1px)] bg-[length:25px_25px]"></div>
                     
                     <!-- Soft Glow Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-br from-violet-200/30 via-transparent to-purple-200/30 rounded-xl"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary/25"></div>
                   </div>
-                  
-                  <!-- Title Content -->
-                  <div class="relative z-10 p-6 text-right">
-                    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-3 font-serif tracking-tight leading-tight drop-shadow-sm">
-                      {{ lesson?.title }}
-                    </h1>
-                    <h2 class="text-xl md:text-2xl font-medium text-slate-600 italic tracking-wide drop-shadow-sm">
-                      {{ lesson?.titleEn }}
-                    </h2>
-                    
-                    <!-- Enhanced Decorative Line -->
-                    <div class="flex items-center justify-end gap-3 mt-4">
-                      <div class="w-12 h-0.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full"></div>
-                      <div class="w-1.5 h-1.5 bg-gradient-to-br from-violet-600 to-purple-700 rounded-full shadow-sm"></div>
-                      <div class="w-6 h-0.5 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full"></div>
+                </div>
+                
+                <!-- Titles positioned in top right -->
+                <div class="absolute top-4 right-8 z-20">
+                  <div class="relative">
+                    <!-- Title Content -->
+                    <div class="relative z-10 p-6 text-right">
+                      <h1 class="text-4xl lg:text-5xl font-bold text-slate-800 mb-3 font-serif tracking-tight leading-tight drop-shadow-sm">
+                        {{ lesson?.title }}
+                      </h1>
+                      <h2 class="text-xl lg:text-2xl font-medium text-slate-600 italic tracking-wide drop-shadow-sm">
+                        {{ lesson?.titleEn }}
+                      </h2>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <!-- Introduction with Neutral Background - Overlaps slightly on picture -->
-              <div class="absolute bottom-0 right-0 w-[58%] h-[65%] z-10">
+              <!-- Introduction Section - Responsive -->
+              <!-- Mobile Introduction -->
+              <div class="md:hidden p-4">
+                <div class="relative bg-gradient-to-br from-neutral-200/95 via-stone-200/90 to-neutral-300/95 rounded-lg border border-neutral-400/60 shadow-lg p-6">
+                  <!-- Introduction Header -->
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-1 h-8 bg-gradient-to-b from-neutral-600 to-neutral-700 rounded-full"></div>
+                    <h3 class="text-xl font-bold text-neutral-800 tracking-tight">
+                      Introduction
+                    </h3>
+                    <div class="flex-1 h-px bg-gradient-to-r from-neutral-300 via-neutral-200 to-transparent"></div>
+                  </div>
+                  
+                  <!-- Introduction Text -->
+                  <div class="prose prose-base max-w-none">
+                    <p class="text-lg leading-relaxed text-neutral-700 font-light tracking-wide">
+                      {{ lesson?.introduction }}
+                    </p>
+                  </div>
+                  
+                  <!-- Decorative Bottom -->
+                  <div class="mt-4 flex justify-center">
+                    <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-neutral-400 to-transparent rounded-full opacity-70"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Desktop Introduction - Overlaps slightly on picture -->
+              <div class="hidden md:block absolute bottom-0 right-0 w-[58%] h-[65%] z-10">
                 <div class="relative h-full p-8">
                   <!-- Neutral Background -->
                   <div class="absolute inset-0 bg-gradient-to-br from-neutral-200/95 via-stone-200/90 to-neutral-300/95 rounded-tl-lg border border-neutral-400/60 shadow-lg"></div>
@@ -388,16 +472,29 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <LayoutKeyElementRuleBadge class="cursor-pointer" :titleEn="lesson?.grammarRuleNameEn" :level="lesson?.level" size="sm"  :symbol="lesson?.symbol" :lightMode="true" @click="isStoryShown = false"/>
                     <LayoutKeyElementQuizBadge v-if="relatedQuiz" :score="relatedQuiz?.score" size="sm"/>
                   </div>
+                  <div class="flex items-center gap-3">
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                    <span class="text-md text-slate-600 group-hover:text-slate-700 transition-colors">
+                      Show Tips
+                    </span>
+                    <input
+                      v-model="showTips"
+                      type="checkbox"
+                      class="checkbox checkbox-neutral"
+                    />
+                  </label>
                   <label class="flex items-center gap-3 cursor-pointer group">
-                    <span class="text-md text-slate-600 group-hover:text-primary transition-colors">
+                    <span class="text-md text-primary group-hover:text-primary-800 transition-colors">
                       Show Translations
                     </span>
                     <input
                       v-model="showEnglishTranslations"
                       type="checkbox"
-                      class="toggle toggle-primary toggle-md"
+                      class="checkbox checkbox-primary"
                     />
                   </label>
+                  </div>
+
                   </div>
                   
                   <!-- Grammar Rule Content Section -->
@@ -452,41 +549,41 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     <!-- Original Sentence -->
                     <p 
                       class="text-xl font-light text-slate-700 leading-relaxed font-serif tracking-wide cursor-pointer hover:bg-primary/10 hover:rounded-lg px-2 py-1 transition-all duration-300"
-                      @click="toggleSentenceTranslation(index)"
                     >
                       <span class="inline-flex items-center gap-2">
                         {{ sentence.original }}
-                        <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                        </svg>
+                        <LanguageIcon :class="['ml-3 w-5 h-5 hover:text-primary transition-colors', {'text-primary font-bold': showEnglishTranslations || activeSentenceTranslation === index, 'text-slate-400': !showEnglishTranslations && activeSentenceTranslation !== index}]"                       @click="showEnglishTranslations = !showEnglishTranslations"/>
+                        <LightBulbIcon v-if="sentence.tip" :class="['ml-1 w-5 h-5 hover:text-neutral-500 transition-colors', {'text-neutral font-bold': showTips || activeSentenceTranslation === index, 'text-slate-400': !showTips && activeSentenceTranslation !== index}]"
+                        @click="showTips = !showTips"
+                        />
                       </span>
                     </p>
+                    
                     
                     <!-- Translation (shows on click or global toggle) -->
                     <div
                       v-if="showEnglishTranslations || activeSentenceTranslation === index"
-                      class="mt-1 p-2 bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-slate-200/60 animate-fade-in"
+                      class="mt-1 p-2 bg-primary/10 backdrop-blur-sm rounded-lg shadow-sm border border-primary/20 animate-fade-in"
                     >
                       <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 mt-1">
-                          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <!-- <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-                          </svg>
+                          </svg> -->
+                          <LanguageIcon class="w-4 h-4 text-primary" />
                         </div>
-                        <p class="text-base text-slate-700 font-light leading-relaxed flex-1">
+                        <p class="text-primary/80 leading-relaxed flex-1">
                           {{ sentence.translation }}
                         </p>
                       </div>
                     </div>
-                     <div class="mt-3 p-3 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 rounded-lg border border-blue-200/50 shadow-sm">
+                      <div v-if="showTips || activeSentenceTranslation === index" class="mt-1 p-2 bg-gradient-to-r from-neutral-100/90 to-slate-100/90 backdrop-blur-sm rounded-lg border border-neutral-300/60 shadow-sm animate-fade-in">
                        <div class="flex items-start gap-2">
                          <div class="flex-shrink-0 mt-1">
-                           <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                           </svg>
+                          <LightBulbIcon class="w-4 h-4 text-neutral-600 group-hover:text-neutral-500 transition-colors" />
                          </div>
                          <div class="flex-1">
-                           <p class="text-sm text-blue-800 font-medium leading-relaxed">
+                           <p class="text-sm text-neutral-700 font-medium leading-relaxed">
                              {{ sentence.tip }}
                            </p>
                          </div>
