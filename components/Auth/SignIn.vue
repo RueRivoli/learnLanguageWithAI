@@ -14,21 +14,17 @@ const isLoading = ref<boolean>(false);
 const showPassword = ref<boolean>(false);
 
 const handleSignIn = async () => {
-  console.log("handleSignIn");
   connexionError.value = null;
   const errorFromCheck = getEmailPasswordInvalidityMessage(state);
-  console.log("errorFromCheck", errorFromCheck);
   if (errorFromCheck !== null) {
     connexionError.value = errorFromCheck;
     return;
   }
-  console.log("email", state, state.email, state.password);
   try {
     const { data, error } = await client.auth.signInWithPassword({
       email: state.email,
       password: state.password,
     });
-    console.log("data", data);
     if (data.user?.id) {
       await navigateTo({
         path: "/learning/dashboard",
@@ -36,7 +32,6 @@ const handleSignIn = async () => {
     }
     if (error) throw error;
   } catch (error) {
-    console.log("error", error);
     if (error.code === "email_not_confirmed") {
       connexionError.value =
         "Please confirm your email to log in.<br/> If the confirmation link has expired, sign up again";
@@ -46,7 +41,6 @@ const handleSignIn = async () => {
 
 //TO DO: change to google
 const handleSignInWithGoogle = async () => {
-  console.log("handleSignInWithGoogle");
   await client.auth.signInWithOAuth({
     provider: "google",
     options: {

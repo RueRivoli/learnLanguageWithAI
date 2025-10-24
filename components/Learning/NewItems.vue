@@ -13,7 +13,6 @@ const props = withDefaults(
     title: "",
   },
 );
-console.log("Valeur reçue :", props.items);
 </script>
 
 <template>

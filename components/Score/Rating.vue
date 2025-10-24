@@ -11,7 +11,6 @@ const props = withDefaults(
 );
 const starChecked = ref<number | null>(null);
 const fixLastStarChecked = () => {
-  console.log("score", props.score);
   if (props.score === 0) starChecked.value = 0;
   else if (props.score <= 10) starChecked.value = 1;
   else if (props.score <= 20) starChecked.value = 2;
@@ -23,18 +22,15 @@ const fixLastStarChecked = () => {
   else if (props.score <= 80) starChecked.value = 8;
   else if (props.score <= 90) starChecked.value = 9;
   else if (props.score <= 100) starChecked.value = 10;
-  console.log('starChecked', starChecked.value)
 };
 
 watchEffect(() => {
-  console.log("SCORE", props.score);
   fixLastStarChecked();
 });
 
 // watch(
 //   () => props.score,
 //   (score) => {
-//     console.log("SCHORE,", score);
 //     if (score === 0) starChecked.value = 0;
 //     else if (score <= 10) starChecked.value = 1;
 //     else if (score <= 20) starChecked.value = 2;

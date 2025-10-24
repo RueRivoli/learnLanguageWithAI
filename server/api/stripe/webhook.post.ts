@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 
 export default defineEventHandler(async (event) => {
-  console.log('Stripe webhook received');
+  if (process.env.NODE_ENV === 'development') console.log('Stripe webhook received');
   const sig = event.node.req.headers['stripe-signature'];
   const body = await readRawBody(event);
 

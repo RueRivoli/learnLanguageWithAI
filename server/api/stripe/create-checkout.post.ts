@@ -16,7 +16,6 @@ const tokenPackages = {
 };
 
 export default defineEventHandler(async (event) => {
-  console.log('inside:create-checkout')
   
   try {
     const { packageType } = await readBody(event);
@@ -38,8 +37,6 @@ export default defineEventHandler(async (event) => {
     if (!packageInfo) {
       throw createError({ statusCode: 400, statusMessage: 'Invalid package type' });
     }
-
-    console.log('Creating checkout for user:', userId, 'package:', packageType);
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({

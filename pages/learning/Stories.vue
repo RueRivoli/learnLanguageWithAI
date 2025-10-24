@@ -51,7 +51,6 @@ const fetchLessons = async () => {
 };
 
 watchEffect(async () => {
-  console.log("currentPage", currentPage.value);
   if (currentPage.value) await fetchLessons();
 });
 
@@ -80,13 +79,10 @@ const handleCancel = () => {
   lessonNameToDelete.value = null;
 };
 const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
-  console.log("handleCompleteQuiz");
   if (!userStore.isEnoughTokensForOneQuiz) {
-    console.log("Not enough credits");
     myModalToGetCredits.value?.openModal();
     return;
   }
-  console.log("handleCompleteQuiz", ruleId, lessonId);
   if (!ruleId || !lessonId) return;
   if (!user.value?.id) return;
   quizGenerationModal.value?.openModal();

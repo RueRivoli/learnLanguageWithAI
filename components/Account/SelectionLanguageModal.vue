@@ -20,7 +20,6 @@ const handleSelectLanguage = async () => {
   isSavingLanguageLearned.value = true;
   try {
     const headers = await getAuthToken();
-    console.log("selectedLanguage", props.userId);
     const profile = await $fetch(`/api/profiles/${props.userId}`, {
       method: "PUT",
       headers,
@@ -28,7 +27,6 @@ const handleSelectLanguage = async () => {
         language_learned: selectedLanguage.value,
       },
     });
-    console.log("profile", profile[0]);
     emit("languageUpdated", profile[0]);
     // Close the modal after successful save
     languageSelectionModal.value?.close();

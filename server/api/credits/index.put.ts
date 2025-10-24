@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
     .update({ credits_available: creditsAvailable }).eq('id', body.userId)
     .select('credits_available, credits_purchased_total, last_credit_purchase_date')
     .single();
-  console.log('data', data)
   if (error) throw error;
   
   return {

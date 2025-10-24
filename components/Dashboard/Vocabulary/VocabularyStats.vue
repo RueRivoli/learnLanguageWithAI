@@ -36,9 +36,7 @@ const fetchWordsForBatch = async () => {
     const { data } = await $fetch(`/api/words/overall?page=${page}&size=500`, {
       headers,
     });
-    console.log('data', data)
     if (data) {
-      console.log('wordsFetched', data)
       // Map the fetched words to our grid format
       const startIndex = currentBatch.value * wordsPerBatch;
       const endIndex = Math.min(startIndex + wordsPerBatch, totalWords.value);
@@ -129,7 +127,6 @@ const fetchExpressionsForBatch = async () => {
     const { data } = await $fetch(`/api/expressions/overall?page=${page}&size=200`, {
       headers,
     });
-    console.log('expressionsFetched', data)
     if (data) {
       // Map the fetched expressions to our grid format
       const startIndex = currentExpressionBatch.value * expressionsPerBatch;

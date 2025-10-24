@@ -133,7 +133,6 @@ export const useLesson = (lessonId: string | Ref<string>) => {
   const { data: lessonData, error: fetchError, refresh: refreshLesson, pending } = useAsyncData(
     `lesson-${reactiveLessonId.value}`,
     async () => {
-        console.log("fetching lesson nb", reactiveLessonId.value);
         const { data: { session } } = await useSupabaseClient().auth.getSession()
         const headers: Record<string, string> = {}
         if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
@@ -180,7 +179,6 @@ export const useLesson = (lessonId: string | Ref<string>) => {
 
   // Watch for lesson data changes and fetch grammar rule
   watch(lessonData, async (newLesson) => {
-    console.log("watch lessonData", newLesson);
     if (newLesson && newLesson.grammarRuleId) {
       await fetchGrammarRule(newLesson.grammarRuleId);
     }
@@ -211,18 +209,18 @@ export const useLesson = (lessonId: string | Ref<string>) => {
   const { subscribeToLessonUpdates } = lessonUpdateBus;
   
   // Subscribe to updates for this specific lesson
-  console.log('🔗 Subscribing to lesson updates for lessonId:', reactiveLessonId.value);
   const unsubscribe = subscribeToLessonUpdates(reactiveLessonId.value, (event) => {
+    if (process.env.NODE_ENV === 'development') {
     console.log('📡 Lesson update event received:', {
       lessonId: reactiveLessonId.value,
-      eventType: event.type,
-      eventData: event.data,
-      timestamp: event.timestamp
-    });
+        eventType: event.type,
+        eventData: event.data,
+        timestamp: event.timestamp
+      });
+    }
     
     // Auto-refresh on certain events
     if (['quiz_completed', 'lesson_modified', 'score_updated', 'image_modified'].includes(event.type)) {
-      console.log('🔄 Auto-refreshing lesson due to update:', event.type);
       refresh();
     }
   });

@@ -9,15 +9,10 @@ const isLoading = ref<boolean>(false);
 
 const handleResetPassword = async () => {
   passwordForgottenError.value = null;
-  console.log("handlePasswordForgotten");
   // Test if email correct
   try {
     if (state.value.email) {
-      console.log(
-        "VALUES",
-        state.value.email,
-        window.location.origin + "/authorization/reset-password/",
-      );
+
       isLoading.value = true;
       const { data, error } = await client.auth.resetPasswordForEmail(
         state.value.email,
@@ -26,8 +21,6 @@ const handleResetPassword = async () => {
         },
       );
       isLoading.value = false;
-      if (data) console.log("data", data);
-      if (error) console.log("error", error);
       if (error) throw error;
     }
   } catch (error) {

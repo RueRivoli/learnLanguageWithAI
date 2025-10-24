@@ -143,7 +143,6 @@ const getExpressionsWithLowScores = async () => {
 
 // Watch for module selection changes
 watch(targetedModuleId, (newModuleId) => {
-  console.log("watch: targetedModuleId", newModuleId);
   if (newModuleId && originalModulesData.value) {
     const selectedModule = originalModulesData.value.find(module => module.id === Number(newModuleId));
     if (selectedModule) {
@@ -156,13 +155,11 @@ watch(targetedModuleId, (newModuleId) => {
         score: selectedModule.score,
         symbol: selectedModule.symbol
       };
-      console.log("targetedModule", targetedModule.value);
     }
   }
 });
 
 watchEffect(async () => {
-  console.log("fetching Data");
   if (userId.value) {
     isFetchingData.value = true;
     await Promise.all([
@@ -187,7 +184,6 @@ const handleModifyTargetedModule = () => {
 };
 
 const handleWordSelectionChange = (newSelection: any[]) => {
-  console.log("handleWordSelectionChange", newSelection);
   wordList.value = newSelection;
   openingModalId.value = openingModalId.value + 1;
 };
@@ -198,7 +194,6 @@ const handleExpressionSelectionChange = (newSelection: any[]) => {
 };
 
 const handleModuleSelectionChange = (newModuleId: number) => {
-  console.log("handleModuleSelectionChange", newModuleId);
   targetedModuleId.value = newModuleId;
   my_modal_to_change_targeted_module.close();
 };
@@ -209,9 +204,7 @@ const handleCancelModal = () => {
 
 const handleGenerateStory = async () => {
   let newLesson;
-  console.log("userStore.$state.creditsAvailable", userStore.$state.creditsAvailable);
   if (!userStore.isEnoughTokensForOneLesson) {
-    console.log("Not enough credits");
     myModalToGetCredits.value?.openModal();
     return;
   }

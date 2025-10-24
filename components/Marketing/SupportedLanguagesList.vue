@@ -47,7 +47,6 @@ const getSupportedLanguages = async () => {
   try {
     isFetchingLanguages.value = true;
   const { data: languages }= await $fetch("/api/languages/?is_supported=true");
-  console.log("languages", languages);
   supportedLanguages.value = languages.map((language: any) => 
   {
     return {
@@ -69,7 +68,6 @@ const getSupportedLanguages = async () => {
 };
 
 const handleLanguageClick = (language: any) => {
-  console.log("emit:language", language);
   emit("click", language);
 }
 // const languages = [

@@ -16,7 +16,6 @@ const generateStory = async (userId: string, ruleId: number, prompt: string, wor
       message: prompt, ruleId, wordIds, expressionIds 
     }
    })
-   console.log('X', data.value)
    if (data && data.value) return data.value
 }
 
@@ -37,7 +36,6 @@ export const generateImageWithPrompt = async (prompt: string, storyId: number, m
       })
       
       lessonUpdateBus.notifyImageAdded(String(storyId), { imgUrl: output.image_url });
-      console.log('✅ Image update event emitted');
       break
     case "replicate":
       await $fetch("/api/replicate/generate", {

@@ -37,7 +37,6 @@ const getImage = (language: string) => {
   return `~/assets/img/language/${language}.png`;
 }
 const voteForLanguage = async (languageId: number, nbVotes: number) => {
-    console.log("voteForLanguage", languageId, nbVotes);
     languagesVoted.value.push(languageId);
   await $fetch(`/api/languages/${languageId}`, {
     method: "PUT",
@@ -51,7 +50,6 @@ const getUnsupportedLanguages = async () => {
   try { 
     isFetchingLanguages.value = true;
   const { data: languages }= await $fetch("/api/languages/?is_supported=false");
-  console.log("languages", languages);
   unsupportedLanguages.value = languages.map((language: any) => 
   {
     return {

@@ -11,7 +11,6 @@ const route = useRoute();
 const createAccountActivated = ref<boolean | null>(false);
 
 watchEffect(() => {
-  console.log("props.query", route.query.toCreateAccount);
   if (route.query.toCreateAccount === "true")
     createAccountActivated.value = true;
   else createAccountActivated.value = false;

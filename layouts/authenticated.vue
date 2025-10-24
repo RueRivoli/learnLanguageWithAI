@@ -6,9 +6,6 @@ const user = useSupabaseUser();
 const client = useSupabaseClient();
 const loading = ref(true);
 onMounted(async () => {
-  console.log(
-    "onMounted",
-  );
   const { data } = await client.auth.getSession();
   loading.value = false;
 
@@ -24,14 +21,12 @@ watchEffect(async () => {
       method: "GET",
       headers,
     });
-    console.log('profile', profile)
     // if (profile && !profile[0].language_learned) {
     //   languageSelectionModal.value?.openModal();
     // }
     if (profile && profile[0]) userStore.setProfile(profile[0]);
   }
   // else if (!user.value?.id) {
-  //   console.log('ici',user.value)
   //     return navigateTo("/authorization/auth/?toCreateAccount=false");
   // }
 });

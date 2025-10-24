@@ -15,7 +15,6 @@ const isEmailAlreadyVerified = ref<string | null>(
 const resendConfirmationMailError = ref(null);
 
 const handleConfirmationMailResend = async () => {
-  console.log("handleConfirmationMailResend", route.query.email);
   if (route.query.email) {
     const { error } = await client.auth.resend({
       type: "signup",

@@ -4,7 +4,6 @@ import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/aut
 
 
 export default defineEventHandler(async (event) => {
-  console.log('quizzes/[id].put.ts ==> start')
   try {
     const ruleId = getRouterParam(event, "id");
     const body = await readBody(event);
@@ -47,9 +46,7 @@ export default defineEventHandler(async (event) => {
     });
 
     const allQuizzes = await Promise.all(quizPromises);
-    console.log('allQuizzes', allQuizzes)
     const finalQuiz = allQuizzes.flat();
-    console.log('finalQuiz', finalQuiz[0], finalQuiz[1], finalQuiz[2], finalQuiz[3], finalQuiz[4])
     // register new quiz in result_quizzes
     const { data, error } = await supabase
       .from("turkish_quizzes_result")
@@ -60,7 +57,6 @@ export default defineEventHandler(async (event) => {
       })
       .select("id")
       .single();
-      console.log('data', data)
     // DEDUCT 0.5 TOKENS AFTER SUCCESSFUL QUIZ GENERATION
     if (data) {
       await supabase

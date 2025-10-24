@@ -171,7 +171,6 @@ const handleGoToNextPageForExpressions = async () => {
 };
 
 const handleWordLearningStatus = async (wordId: number, isLearned: boolean) => {
-  console.log("edit learning status word", wordId, isLearned);
   if (isLearned) {
     const headers = await getAuthToken();
     await $fetch(`/api/words-knowledge/${wordId}`, {
@@ -179,7 +178,6 @@ const handleWordLearningStatus = async (wordId: number, isLearned: boolean) => {
       headers,
     });
   } else {
-    console.log("tere");
     const headers = await getAuthToken();
     await $fetch(`/api/words-knowledge/${wordId}`, {
       method: "PUT",

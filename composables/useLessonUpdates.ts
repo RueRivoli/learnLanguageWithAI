@@ -18,24 +18,19 @@ export const useLessonUpdates = () => {
     lessonId: string, 
     callback: (event: LessonUpdateEvent) => void
   ) => {
-    console.log('📝 Creating subscription for lessonId:', lessonId);
     
     if (!activeSubscriptions.has(lessonId)) {
       activeSubscriptions.set(lessonId, new Set());
-      console.log('🆕 Created new subscription set for lessonId:', lessonId);
     }
     
     const subscribers = activeSubscriptions.get(lessonId)!;
     subscribers.add(callback);
-    console.log(`✅ Added subscriber. Total subscribers for lesson ${lessonId}: ${subscribers.size}`);
 
     // Return unsubscribe function
     return () => {
       subscribers.delete(callback);
-      console.log(`🗑️ Removed subscriber. Remaining subscribers for lesson ${lessonId}: ${subscribers.size}`);
       if (subscribers.size === 0) {
         activeSubscriptions.delete(lessonId);
-        console.log('🧹 Deleted empty subscription set for lessonId:', lessonId);
       }
     };
   };
@@ -49,16 +44,18 @@ export const useLessonUpdates = () => {
       timestamp: new Date()
     };
 
-    console.log('📤 Emitting lesson update event:', {
-      type: fullEvent.type,
-      lessonId: fullEvent.lessonId,
-      subscriberCount: activeSubscriptions.get(event.lessonId)?.size || 0
-    });
+    if (process.env.NODE_ENV === 'development') { 
+      console.log('📤 Emitting lesson update event:', {
+        type: fullEvent.type,
+        lessonId: fullEvent.lessonId,
+        subscriberCount: activeSubscriptions.get(event.lessonId)?.size || 0
+      });
+    }
 
     // Notify specific lesson subscribers
     const subscribers = activeSubscriptions.get(event.lessonId);
     if (subscribers) {
-      console.log(`📋 Notifying ${subscribers.size} subscribers for lesson ${event.lessonId}`);
+      if (process.env.NODE_ENV === 'development') console.log(`📋 Notifying ${subscribers.size} subscribers for lesson ${event.lessonId}`);
       subscribers.forEach(callback => {
         try {
           callback(fullEvent);
@@ -67,7 +64,7 @@ export const useLessonUpdates = () => {
         }
       });
     } else {
-      console.log(`⚠️ No subscribers found for lesson ${event.lessonId}`);
+      if (process.env.NODE_ENV === 'development') console.log(`⚠️ No subscribers found for lesson ${event.lessonId}`);
     }
 
     // Also emit on global event bus for cross-component communication
@@ -109,7 +106,7 @@ export const useLessonUpdates = () => {
     });
   };
 const notifyImageAdded = (lessonId: string, changes: Partial<Lesson>) => {
-    console.log('🚀 notifyImageAdded called:', { lessonId, changes });
+    if (process.env.NODE_ENV === 'development') console.log('🚀 notifyImageAdded called:', { lessonId, changes });
     emitLessonUpdate({
       type: 'image_modified',
       lessonId,

@@ -59,7 +59,6 @@ watchEffect(async () => {
     });
     if (grammarModules && Array.isArray(grammarModules))
       grammarRules.value = parseRules(grammarModules);
-      console.log("test", grammarRules.value);
     isFetchingGrammarRules.value = false;
   } catch (error) {
     console.log(error);

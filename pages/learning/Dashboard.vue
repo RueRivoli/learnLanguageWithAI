@@ -20,21 +20,17 @@ const pseudoDefinitionModal = ref<{ openModal: () => void } | null>(null);
 const activeTab = ref(1);
 
 onMounted(async () => {
-  console.log("is dashboard data loaded ?", userScoreStore.$state.isLoaded);
   if (!userScoreStore.$state.isLoaded) {
-    console.log("fetch all dashboard data", user.value?.id);
     if (user.value?.id) userScoreStore.setAllScores(user.value?.id);
     userScoreStore.setCount();
   }
 });
 
 watchEffect(async () => {
-  console.log("watchEffect www");
   if (user.value) {
     const userId = user.value.id;
     try {
       const headers = await getAuthToken();
-      console.log("headers", headers);
       const profile = await $fetch(`/api/profiles/${userId}`, {
         method: "GET",
         headers,

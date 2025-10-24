@@ -24,9 +24,7 @@ export const useQuiz = (grammarQuizQuestions: Ref<GrammarQuizQuestion[] | null>,
     }, { immediate: true });
     
     watch(() => wordsQuizQuestions.value, (newWordsForQuizQuestions: VocabularyQuizQuestion[] | null) => {
-        console.log("newWordsForQuizQuestions", newWordsForQuizQuestions);
         if (newWordsForQuizQuestions) initializeFormQuiz(formWordsQuiz, newWordsForQuizQuestions);
-        console.log("formWordsQuiz", formWordsQuiz.value);
     }, { immediate: true });
     
     watch(() => expressionsQuizQuestions.value, (newExpressionsForQuizQuestions: VocabularyQuizQuestion[] | null) => {
@@ -74,7 +72,6 @@ export const useQuiz = (grammarQuizQuestions: Ref<GrammarQuizQuestion[] | null>,
 
   // Determine current section and progress
 const currentSection = computed(() => {
-    console.log('currentSection: isGrammar, isVocabulary', isGrammarQuiz.value, isWordsQuiz.value, isExpressionsQuiz.value);
     if (isGrammarQuiz.value) {
       return {
         name: 'Grammar',

@@ -71,9 +71,7 @@ const getGrammarQuizData = async () => {
 };
 
 
-
 const handleSubmitQuiz = async (results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
-  console.log('handleSubmitQuiz', results)
   detailedResults.value = results.detailedResults;
   const headers = await getAuthToken();
   await $fetch(`/api/quizzes/result/${quizId}`, {

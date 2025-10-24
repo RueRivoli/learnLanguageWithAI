@@ -54,7 +54,6 @@ const handleSignUp = async () => {
       });
     }
   } catch (error: unknown) {
-    console.log("Error From handleSignup", error);
     connexionError.value = error.message;
     isLoading.value = false;
   }

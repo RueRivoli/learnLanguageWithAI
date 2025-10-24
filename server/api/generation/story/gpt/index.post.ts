@@ -42,7 +42,6 @@ const linkExpressionsToLesson = async (expressionIds: number[], lessonId: number
 }
 
 const saveNewLesson = async (content: string, ruleId: number, userId: string) => {
-  console.log('saveNewLesson', content, ruleId)
   const newLessonRow = parseModelResponse(content, ruleId, userId)
       // Save new lesson
       const { data: newLesson, error: errorLessons } = await supabase
@@ -74,7 +73,6 @@ export default defineEventHandler(async (event) => {
       .single();
 
     if (!profile || (profile.credits_available || 0) < 1) {
-      console.log('Insufficient credits. Please purchase more credits to generate stories.');
       throw new Error('Insufficient credits. Please purchase more credits to generate stories.');
     }
 
@@ -96,7 +94,6 @@ export default defineEventHandler(async (event) => {
       })
     })
     const json = await result.json()
-    console.log('result', json, json.choices?.[0]?.message?.content)
     if (json && json.choices?.[0]?.message?.content) {
       const lesson = await saveNewLesson(json.choices[0].message.content, body.ruleId, user.id)
       if (lesson) {

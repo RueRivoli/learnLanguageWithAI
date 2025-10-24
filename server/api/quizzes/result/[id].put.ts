@@ -9,7 +9,6 @@ import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/
 // Calculate the average score of the user for that rule
 const getAverageScore = async (supabase: any, score: number, id: string, ruleId: number) : Promise<number> => {
   const { data: scores } = await supabase.from("turkish_quizzes_result").select("score_global").eq("user_id", id).eq("rule_id", ruleId);
-  console.log('xxxxxx scores xxxxxxxxx', scores)
   const sumScores = scores.reduce((acc, curr) => acc + curr.score_global, 0)
   return Math.floor((sumScores + score) / (scores.length + 1))
 }
@@ -19,12 +18,8 @@ const rememberQuizSelection = async () => {
 }
 
 const updateVocabularyCountScores = async (supabase: any, userId: string) => {
-  console.log('updateVocabularyCountScores')
   const countWordsMastered = await supabase.from("turkish_words_knowledge").select('*', { count: 'exact', head: true }).eq("user_id", userId).eq("word_mastered", true)
   const countExpressionsMastered = await supabase.from("turkish_expressions_knowledge").select('*', { count: 'exact', head: true }).eq("user_id", userId).eq("expression_mastered", true)
-  console.log('countWordsMastered', countWordsMastered.count)
-  console.log('countExpressionsMastered', countExpressionsMastered.count)
-  console.log('userId', userId)
   const { error: errorFromVocabularyScores } = await supabase.from("turkish_vocabulary_scores").update({ words_mastered_count: countWordsMastered.count, expressions_mastered_count: countExpressionsMastered.count }).eq("user_id", userId).eq("language", 'tr')
   if (errorFromVocabularyScores) throw ('An error occured while updating the vocabulary scores, please try again')
 }
@@ -50,7 +45,6 @@ const updateVocabularyKnowledge = async (supabase: any, userId: string, newMaste
     .upsert(newMasteredExpressionsIds.map(exprId => ({user_id: userId, expression_id: exprId, expression_learned: true, expression_mastered: true})))
   if (errorFromExpressionsKnowledge) throw ('An error occured while updating the expressions knowledge, please try again')
 
-    console.log('newForgottenExpressionsIds', newForgottenExpressionsIds)
   // Expressions previously learned are now forgotten
   const { error: errorFromForgottenExpressionsKnowledge } = await supabase
     .from("turkish_expressions_knowledge")
@@ -104,7 +98,6 @@ export default defineEventHandler(async (event) => {
     const newForgottenWordIds = detailedResults.words.invalidatedList.filter(word => word.isMastered).map(word => word.id)
     const newMasteredExpressionsIds = detailedResults.expressions.validatedList.filter(expr => !expr.isMastered).map(expr => expr.id)
     const newForgottenExpressionsIds = detailedResults.expressions.invalidatedList.filter(expr => expr.isMastered).map(expr => expr.id)
-      console.log('newForgottenExpressionsIds', newForgottenExpressionsIds)
       const updateVocabularyData = async () => {
         if (userId) updateVocabularyKnowledge(supabase, userId, newMasteredWordsIds, newForgottenWordIds, newMasteredExpressionsIds, newForgottenExpressionsIds)
       }

@@ -36,7 +36,6 @@ const pageNumbers = computed(() => {
       for (let i = 1; i <= totalPages.value; i++) {
         pages.push(i);
       }
-      console.log("totalPages", totalPages.value)
     } else {
       if (currentPage.value <= 3) {
         for (let i = 1; i <= 4; i++) {

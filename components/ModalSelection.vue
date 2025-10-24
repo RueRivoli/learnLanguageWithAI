@@ -20,7 +20,6 @@ const props = withDefaults(
 const listItems = ref(null);
 
 watchEffect(() => {
-  console.log("watchEffect");
   listItems.value = props.list;
 });
 

@@ -56,7 +56,6 @@ watch(() => props.initialModuleSelectedId, (newModuleId) => {
 
 
 const handleRuleSelection = (ruleId: number) => {
-  console.log("handleRuleSelection", ruleId, "becomes", !moduleSelection.value[ruleId]);
   if (!moduleSelection.value[ruleId]) {
     Object.keys(moduleSelection.value).forEach(key => {
       moduleSelection.value[key] = false
@@ -67,7 +66,6 @@ const handleRuleSelection = (ruleId: number) => {
 };
 
 const handleApplySelection = () => {
-  console.log("handleApplySelection", selectedRuleId.value);
   emit('applySelection', selectedRuleId.value);
 };
 </script>
