@@ -18,7 +18,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
+  <div class="bg-neutral/10 h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
     <div class="flex flex-col justify-center items-center">
       <div class="h-full flex justify-center">
         <label class="label">

@@ -3,33 +3,23 @@ import { ref } from "vue";
 import { MinusIcon, PlusIcon } from "@heroicons/vue/24/solid";
 const faqs = [
   {
-    question: "How does this app work ?",
-    answer:
-      "This platform works with stories/lessons adapted to your level. At the end of them, you have to answer a few questions so that the programm re-evaluates your level. Then your new level is assessed and you can generate a new lesson.",
-  },
-  {
     question: "For which language is it working ?",
     answer:
-      "This app is working with Turkish, French and Spanish. In the near future, Russian and Japanese will be supported.",
+      "This app is working with Turkish, French and Spanish. In the near future, Italian, Russian and Japanese will be supported.",
   },
   {
     question: "What level is it for ?",
     answer:
-      "It can fit for any level. It's a good fit for false beginners, people who started to learn and having some trouble to make further progress.",
+      "It can fit for any level. It's a good fit for false beginners, people who started to learn and having some trouble to make strong progress.",
   },
   {
     question: "How much does it cost ?",
-    answer: "The cost is 12 euros/month. 8euros/month if engaged for one year.",
+    answer: "You get free credits when you join. After that, you can buy credits to use the platform. See prices in the settings page after logging in.",
   },
   {
-    question: "How can I cancel my subscription ?",
+    question: "How can I have access to the platform ?",
     answer:
-      "If not subscribed for the year, you can cancel your subscription anytime.",
-  },
-  {
-    question: "Can I get a refund ?",
-    answer:
-      "If you're not satisfied with the platform, you can request a refund anytime by contacting us.",
+      "There is no subscription, you have access to the platform with credits. You can generate lessons as well as quizzes until you use all your credits with no limit of time.",
   },
 ];
 
@@ -41,7 +31,7 @@ function toggle(index) {
 </script>
 
 <template>
-  <section class="bg-primary/50 relative px-4 py-20">
+  <section class="bg-neutral/10 relative px-4 py-20">
     <div class="absolute inset-0 z-[-1]" />
     <div
       class="absolute inset-0 z-[-2] bg-cover overflow-hidden bg-top bg-no-repeat opacity-20 dark:opacity-80 bg-[url('/_nuxt/assets/img/grid/home.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"

@@ -9,7 +9,6 @@ const showPassword = ref<boolean>(false);
 const showConfirmPassword = ref<boolean>(false);
 
 const handleResetPassword = async () => {
-  console.log("handleResetPassword");
   resetPasswordError.value = null;
   isLoading.value = true;
   try {
@@ -25,7 +24,7 @@ const handleResetPassword = async () => {
 </script>
 
 <template>
-  <div class="h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
+  <div class="bg-neutral/10 h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
     <div class="mx-auto">
       <div class="flex flex-col items-center">
         <div class="mx-auto w-sm">

@@ -30,7 +30,7 @@ const handleResetPassword = async () => {
 </script>
 
 <template>
-  <div class="h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
+  <div class="bg-neutral/10 h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
     <div class="mx-auto">
       <div class="text-primary mb-5">
         <NuxtLink

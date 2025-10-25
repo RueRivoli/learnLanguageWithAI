@@ -23,7 +23,7 @@ definePageMeta({
 });
 useHead({
   title: "Vocabulary",
-  titleTemplate: "%s - Learn languages with AI",
+  titleTemplate: "%s - Tookan AI",
   meta: [
     { name: "vocabulary", content: "width=device-width, initial-scale=1" },
   ],

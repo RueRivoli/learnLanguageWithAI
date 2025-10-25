@@ -8,7 +8,7 @@ definePageMeta({
 
 useHead({
   title: "Account Settings",
-  titleTemplate: "%s - Learn languages with AI",
+  titleTemplate: "%s - Tookan AI",
   meta: [
     { name: "settings", content: "width=device-width, initial-scale=1" },
   ],

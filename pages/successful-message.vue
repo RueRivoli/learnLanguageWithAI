@@ -6,7 +6,7 @@ const messageText = ref<string | null>(route.query.text);
 </script>
 
 <template>
-  <div class="h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center">
+  <div class="bg-neutral/10 h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center">
     <div class="w-full flex flex-col justify-center items-center">
       <div>
         <div class="flex flex-col items-center">

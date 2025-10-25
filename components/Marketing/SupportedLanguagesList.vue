@@ -22,6 +22,7 @@ const props = withDefaults(
   },
 );
 const supportedLanguages = ref<any[]>([]);
+const selectedLanguageIndex = ref<number | null>(0);
 const isFetchingLanguages = ref(false);
 const emit = defineEmits(["click"]);
 
@@ -67,69 +68,39 @@ const getSupportedLanguages = async () => {
   }
 };
 
-const handleLanguageClick = (language: any) => {
-  emit("click", language);
+const handleLanguageClick = (index: number) => {
+  selectedLanguageIndex.value = index;
+  emit("click");
 }
-// const languages = [
-//   {
-//     name: "Turkish",
-//     image: turkishFlag,
-//     alt: "Learn Turkish",
-//     status: "Available Now",
-//     bgColor: "bg-gradient-to-br from-red-100 to-red-200"
-//   },
-//   {
-//     name: "French",
-//     image: frenchFlag,
-//     alt: "Learn French",
-//     status: "Available on the 15th of November 2025",
-//     bgColor: "bg-gradient-to-br from-blue-100 to-blue-200"
-//   },
-//   {
-//     name: "Spanish",
-//     image: spanishFlag,
-//     alt: "Learn Spanish",
-//     status: "Available on the 1st of December 2025",
-//     bgColor: "bg-gradient-to-br from-amber-100 to-amber-200"
-//   },
-//   {
-//     name: "Japanese",
-//     image: japaneseFlag,
-//     alt: "Learn Japanese",
-//     status: "Available Soon",
-//     bgColor: "bg-gradient-to-br from-pink-100 to-pink-200"
-//   },
-//   {
-//     name: "Italian",
-//     image: italianFlag,
-//     alt: "Learn Italian",
-//     status: "Available Soon",
-//     bgColor: "bg-gradient-to-br from-emerald-100 to-emerald-200"
-//   },
-//   {
-//     name: "German",
-//     image: germanFlag,
-//     alt: "Learn German",
-//     status: "Available Soon",
-//     bgColor: "bg-gradient-to-br from-slate-100 to-slate-200"
-//   }
-// ];
+
 getSupportedLanguages();
 </script>
 
 <template>
       <div class="mx-auto max-w-5xl">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
           <div
             v-if="!isFetchingLanguages"
-            v-for="language in supportedLanguages"
+            v-for="(language, index) in supportedLanguages"
             :key="language.name"
-            :class="['rounded-lg ring-1 ring-black/5', language.bgColor, {'p-3': props.size === 'small', 'p-6': props.size === 'large'}, {'cursor-pointer': props.isLanguageClickable === true}]"
-            @click="handleLanguageClick(language)"
+            :class="[
+              'rounded-lg ring-1 ring-black/5', 
+              language.bgColor, 
+              {'p-3': props.size === 'small', 'p-6': props.size === 'large'}, 
+              {'cursor-pointer': props.isLanguageClickable === true}, 
+              {
+                'border-2 border-primary': selectedLanguageIndex === index,
+              }
+            ]"
+            @click="handleLanguageClick(index)"
           >
             <div class="flex items-center justify-between">
               <div class="space-y-2">
-                <h2 class="text-2xl font-bold text-neutral">
+                <h2 :class="[
+                  'text-2xl font-bold transition-colors duration-300',
+                  selectedLanguageIndex === index ? 'text-primary' : 'text-neutral'
+                ]">
                   {{ language.name }}
                 </h2>
                 <div v-if="showStatus" class="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-white/60 px-2.5 py-1 rounded-lg">

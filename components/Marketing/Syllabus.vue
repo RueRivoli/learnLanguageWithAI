@@ -54,7 +54,7 @@ watchEffect(async () => {
         Syllabus in your Targeted Language
       </h1>
 
-      <MarketingSupportedLanguagesList size="small" :showStatus="false" />
+      <MarketingSupportedLanguagesList size="small" :showStatus="false" :isLanguageClickable="true" />
        <div class="flex justify-center space-x-3 mb-8 p-6">
       <!-- <button
           v-for="lang in languages"
