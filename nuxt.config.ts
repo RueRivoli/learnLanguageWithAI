@@ -25,6 +25,9 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "nuxt-echarts",
   ],
+  nitro: {
+    preset: 'vercel'
+  },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -76,6 +79,7 @@ export default defineNuxtConfig({
       options: {},
     },
   },
+  ssr: true,
   // typescript: {
   //   typeCheck: true,
   // },

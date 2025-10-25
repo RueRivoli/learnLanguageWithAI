@@ -1,0 +1,1526 @@
+
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+
+CREATE EXTENSION IF NOT EXISTS "pg_net" WITH SCHEMA "extensions";
+
+
+
+
+
+
+COMMENT ON SCHEMA "public" IS 'standard public schema';
+
+
+
+CREATE EXTENSION IF NOT EXISTS "pg_graphql" WITH SCHEMA "graphql";
+
+
+
+
+
+
+CREATE EXTENSION IF NOT EXISTS "pg_stat_statements" WITH SCHEMA "extensions";
+
+
+
+
+
+
+CREATE EXTENSION IF NOT EXISTS "pgcrypto" WITH SCHEMA "extensions";
+
+
+
+
+
+
+CREATE EXTENSION IF NOT EXISTS "pgjwt" WITH SCHEMA "extensions";
+
+
+
+
+
+
+CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
+
+
+
+
+
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION "public"."create_profile_for_new_user"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    AS $$declare
+  first_name text := new.raw_user_meta_data ->> 'given_name';
+  last_name text := new.raw_user_meta_data ->> 'family_name';
+  full_name text := new.raw_user_meta_data ->> 'name';
+  initials text;
+begin
+   if first_name is not null and last_name is not null then
+    initials := upper(left(first_name, 1) || left(last_name, 1));
+
+  -- Sinon, essayer de les extraire du nom complet
+  elsif full_name is not null then
+    initials := (
+      select upper(string_agg(substr(part, 1, 1), ''))
+      from unnest(string_to_array(full_name, ' ')) as part
+      limit 2  -- Prend max 2 lettres
+    );
+
+  else
+    initials := null;
+  end if;
+  insert into public.profiles (id, first_name, last_name, full_name, email, has_filled_initial_form, initials, language_learned)
+  values (new.id, first_name, last_name, case 
+      when full_name is not null and length(trim(full_name)) > 0
+      then full_name
+      else null
+    end, new.email, false, initials, 'tr');
+  return new;
+end;$$;
+
+
+ALTER FUNCTION "public"."create_profile_for_new_user"() OWNER TO "postgres";
+
+
+CREATE OR REPLACE FUNCTION "public"."delete_user_and_data"("user_uuid" "uuid") RETURNS "void"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    AS $$
+BEGIN
+  -- Delete all user-related data in the correct order
+  
+  -- 1. Delete word knowledge
+  DELETE FROM turkish_words_knowledge WHERE user_id = user_uuid;
+  
+  -- 2. Delete expression knowledge
+  DELETE FROM turkish_expressions_knowledge WHERE user_id = user_uuid;
+  
+  -- 3. Delete grammar scores
+  DELETE FROM turkish_grammar_scores WHERE user_id = user_uuid;
+  
+  -- 4. Delete quiz results
+  DELETE FROM turkish_quiz_result WHERE user_id = user_uuid;
+  
+  -- 5. Delete general scores
+  DELETE FROM turkish_scores WHERE user_id = user_uuid;
+  
+  -- 6. Delete lessons (this will cascade to lesson-related tables)
+  DELETE FROM turkish_lessons WHERE user_id = user_uuid;
+  
+  -- 7. Delete profile
+  DELETE FROM profiles WHERE id = user_uuid;
+  
+  -- 8. Delete auth user (requires admin privileges)
+  -- This part needs to be done separately via Supabase admin API
+  
+  RAISE NOTICE 'User % and all related data deleted successfully', user_uuid;
+END;
+$$;
+
+
+ALTER FUNCTION "public"."delete_user_and_data"("user_uuid" "uuid") OWNER TO "postgres";
+
+
+CREATE OR REPLACE FUNCTION "public"."give_free_credits_to_new_users"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+  -- Give 20 free credits to new users
+  IF NEW.credits_available IS NULL THEN
+    NEW.credits_available := 20;
+  END IF;
+  
+  IF NEW.credits_purchased_total IS NULL THEN
+    NEW.credits_purchased_total := 0;
+  END IF;
+  
+  RETURN NEW;
+END;$$;
+
+
+ALTER FUNCTION "public"."give_free_credits_to_new_users"() OWNER TO "postgres";
+
+
+CREATE OR REPLACE FUNCTION "public"."has_enough_credits"("user_id" "uuid", "required_tokens" numeric) RETURNS boolean
+    LANGUAGE "plpgsql"
+    AS $$DECLARE
+  available_credits NUMERIC;
+BEGIN
+  SELECT credits_available INTO available_credits
+  FROM profiles
+  WHERE id = user_id;
+  
+  RETURN available_credits >= required_credits;
+END;$$;
+
+
+ALTER FUNCTION "public"."has_enough_credits"("user_id" "uuid", "required_tokens" numeric) OWNER TO "postgres";
+
+SET default_tablespace = '';
+
+SET default_table_access_method = "heap";
+
+
+CREATE TABLE IF NOT EXISTS "public"."languages_support" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "b_votes" integer,
+    "a_votes" integer,
+    "language" "text",
+    "is_supported" boolean,
+    "is_released" boolean DEFAULT false,
+    "status" "text",
+    "background_classes" "text"
+);
+
+
+ALTER TABLE "public"."languages_support" OWNER TO "postgres";
+
+
+COMMENT ON COLUMN "public"."languages_support"."b_votes" IS 'fake votes';
+
+
+
+COMMENT ON COLUMN "public"."languages_support"."a_votes" IS 'the real votes';
+
+
+
+ALTER TABLE "public"."languages_support" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."languages_support_votes_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."profiles" (
+    "id" "uuid" NOT NULL,
+    "first_name" "text",
+    "last_name" "text",
+    "language_learned" "text",
+    "has_filled_initial_form" boolean,
+    "full_name" "text",
+    "initials" "text",
+    "email" "text",
+    "pseudo" "text",
+    "second_language_learned" "text",
+    "credits_available" real,
+    "credits_purchased_total" real,
+    "last_credit_purchase_date" timestamp with time zone,
+    "hasFilledPseudo" boolean
+);
+
+
+ALTER TABLE "public"."profiles" OWNER TO "postgres";
+
+
+COMMENT ON COLUMN "public"."profiles"."credits_available" IS 'Number of tokens available for generating stories and quizzes. 1 token = 1 story + 2 quizzes';
+
+
+
+COMMENT ON COLUMN "public"."profiles"."credits_purchased_total" IS 'Total number of tokens purchased by the user (lifetime)';
+
+
+
+COMMENT ON COLUMN "public"."profiles"."last_credit_purchase_date" IS 'Timestamp of the last token purchase';
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_expressions" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "text" "text",
+    "translation" "text",
+    "expression_sentence" "text",
+    "expression_sentence_translation" "text",
+    "expression_sentence_2" "text",
+    "expression_sentence_2_translation" "text",
+    "family" "text",
+    "usage" "text",
+    "litteral_translation" "text",
+    "explanation" "text"
+);
+
+
+ALTER TABLE "public"."turkish_expressions" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_expressions" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_expressions_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_expressions_knowledge" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "user_id" "uuid" DEFAULT "gen_random_uuid"(),
+    "expression_id" bigint,
+    "expression_learned" boolean DEFAULT false,
+    "expression_mastered" boolean DEFAULT false
+);
+
+
+ALTER TABLE "public"."turkish_expressions_knowledge" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_expressions_knowledge" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_expressions_knowledge_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_grammar_quizzes" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "grammar_rule_id" bigint,
+    "difficulty_status" smallint,
+    "question_type" smallint,
+    "option_1" "text" NOT NULL,
+    "option_2" "text" NOT NULL,
+    "option_3" "text" NOT NULL,
+    "option_4" "text" NOT NULL,
+    "correct_answer" "text",
+    "text" "text",
+    "note" "text"
+);
+
+
+ALTER TABLE "public"."turkish_grammar_quizzes" OWNER TO "postgres";
+
+
+COMMENT ON TABLE "public"."turkish_grammar_quizzes" IS 'to store questions for each grammar rule';
+
+
+
+COMMENT ON COLUMN "public"."turkish_grammar_quizzes"."text" IS 'question text';
+
+
+
+ALTER TABLE "public"."turkish_grammar_quizzes" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_grammar_quiz_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_grammar_rules" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "rule_name" "text" NOT NULL,
+    "rule_name_translation" "text",
+    "difficulty_class" smallint,
+    "description" "text",
+    "intro" "text",
+    "extended_description" "text",
+    "type" "text",
+    "highlights" "text",
+    "symbol" "text",
+    "bookmarked" boolean DEFAULT false,
+    "checkedBy" "text",
+    "filledWithAI" boolean,
+    "position" smallint
+);
+
+
+ALTER TABLE "public"."turkish_grammar_rules" OWNER TO "postgres";
+
+
+COMMENT ON TABLE "public"."turkish_grammar_rules" IS 'set of turkish grammar rules with description';
+
+
+
+COMMENT ON COLUMN "public"."turkish_grammar_rules"."difficulty_class" IS '1: beginner level, 2: intermediate, 3:advanced, 4:expert';
+
+
+
+COMMENT ON COLUMN "public"."turkish_grammar_rules"."type" IS 'Grammar, Conjugation, Vocabulary';
+
+
+
+ALTER TABLE "public"."turkish_grammar_rules" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_grammar_rules_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_grammar_scores" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "user_id" "uuid" DEFAULT "gen_random_uuid"(),
+    "rule_id" bigint,
+    "score" smallint
+);
+
+
+ALTER TABLE "public"."turkish_grammar_scores" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_grammar_scores" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_grammar_scores_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_lesson_expressions" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "lesson_id" bigint,
+    "expression_id" bigint
+);
+
+
+ALTER TABLE "public"."turkish_lesson_expressions" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_lesson_expressions" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_lesson_expressions_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_lesson_words" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "lesson_id" bigint,
+    "word_id" bigint
+);
+
+
+ALTER TABLE "public"."turkish_lesson_words" OWNER TO "postgres";
+
+
+COMMENT ON TABLE "public"."turkish_lesson_words" IS 'table de liaison lessons-words';
+
+
+
+ALTER TABLE "public"."turkish_lesson_words" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_lesson_words_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_lessons" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "user_id" "uuid" DEFAULT "gen_random_uuid"(),
+    "title" "text",
+    "title_en" "text",
+    "grammar_rule_id" bigint,
+    "quiz_id" bigint,
+    "sentence_1" "text",
+    "sentence_1_en" "text",
+    "sentence_2" "text",
+    "sentence_2_en" "text",
+    "sentence_3" "text",
+    "sentence_3_en" "text",
+    "sentence_4" "text",
+    "sentence_4_en" "text",
+    "sentence_5" "text",
+    "sentence_5_en" "text",
+    "sentence_6" "text",
+    "sentence_6_en" "text",
+    "sentence_7" "text",
+    "sentence_7_en" "text",
+    "sentence_8" "text",
+    "sentence_8_en" "text",
+    "sentence_9" "text",
+    "sentence_9_en" "text",
+    "sentence_10" "text",
+    "sentence_10_en" "text",
+    "sentence_11" "text",
+    "sentence_11_en" "text",
+    "sentence_12" "text",
+    "sentence_12_en" "text",
+    "sentence_13" "text",
+    "sentence_13_en" "text",
+    "sentence_14" "text",
+    "sentence_14_en" "text",
+    "sentence_15" "text",
+    "sentence_15_en" "text",
+    "sentence_16" "text",
+    "sentence_16_en" "text",
+    "sentence_17" "text",
+    "sentence_17_en" "text",
+    "sentence_18" "text",
+    "sentence_18_en" "text",
+    "sentence_19" "text",
+    "sentence_19_en" "text",
+    "sentence_20" "text",
+    "sentence_20_en" "text",
+    "introduction" "text",
+    "conclusion" "text",
+    "img_url" "text",
+    "promptForImageGeneration" "text",
+    "tip_1" "text",
+    "tip_2" "text",
+    "tip_3" "text",
+    "tip_4" "text",
+    "tip_5" "text",
+    "tip_6" "text",
+    "tip_7" "text",
+    "tip_8" "text",
+    "tip_9" "text",
+    "tip_10" "text"
+);
+
+
+ALTER TABLE "public"."turkish_lessons" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_lessons" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_lessons_r_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_quizzes_result" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "score_global" smallint,
+    "user_id" "uuid",
+    "rule_id" bigint
+);
+
+
+ALTER TABLE "public"."turkish_quizzes_result" OWNER TO "postgres";
+
+
+COMMENT ON TABLE "public"."turkish_quizzes_result" IS 'list of quiz with score and the serie id';
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_quizzes_series" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "quiz_id" bigint,
+    "question_id" bigint,
+    "selected_answer" smallint
+);
+
+
+ALTER TABLE "public"."turkish_quizzes_series" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_quizzes_series" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_quizzes_series_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+ALTER TABLE "public"."turkish_quizzes_result" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_result_quiz_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_vocabulary_scores" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "user_id" "uuid" DEFAULT "gen_random_uuid"(),
+    "language" "text",
+    "words_mastered_count" integer,
+    "words_learned_count" integer,
+    "expressions_mastered_count" integer,
+    "expressions_learned_count" integer
+);
+
+
+ALTER TABLE "public"."turkish_vocabulary_scores" OWNER TO "postgres";
+
+
+COMMENT ON TABLE "public"."turkish_vocabulary_scores" IS 'store the number of words/expressions that have been learned or are being learning';
+
+
+
+ALTER TABLE "public"."turkish_vocabulary_scores" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_vocabulary_scores_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_words" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "frecuency_class" smallint,
+    "text" "text",
+    "translation" "text",
+    "word_sentence" "text",
+    "word_sentence_translation" "text",
+    "word_sentence_2" "text",
+    "word_sentence_2_translation" "text",
+    "role" "text",
+    "role_2" "text",
+    "role_3" "text",
+    "word_sentence_3" "text",
+    "word_sentence_3_translation" "text",
+    "translation_2" "text",
+    "translation_3" "text"
+);
+
+
+ALTER TABLE "public"."turkish_words" OWNER TO "postgres";
+
+
+COMMENT ON TABLE "public"."turkish_words" IS 'turkish frecuency dictionnary';
+
+
+
+COMMENT ON COLUMN "public"."turkish_words"."word_sentence_2" IS '2nd example sentence';
+
+
+
+COMMENT ON COLUMN "public"."turkish_words"."role_2" IS '2nd role of the word';
+
+
+
+COMMENT ON COLUMN "public"."turkish_words"."role_3" IS '3rd role of the word';
+
+
+
+ALTER TABLE "public"."turkish_words" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_words_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."turkish_words_knowledge" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "user_id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "word_id" bigint,
+    "word_learned" boolean DEFAULT false,
+    "word_mastered" boolean DEFAULT false
+);
+
+
+ALTER TABLE "public"."turkish_words_knowledge" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."turkish_words_knowledge" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."turkish_words_knowledge_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+ALTER TABLE ONLY "public"."languages_support"
+    ADD CONSTRAINT "languages_support_votes_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."profiles"
+    ADD CONSTRAINT "profiles_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_expressions_knowledge"
+    ADD CONSTRAINT "turkish_expressions_knowledge_expression_id_key" UNIQUE ("expression_id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_expressions_knowledge"
+    ADD CONSTRAINT "turkish_expressions_knowledge_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_expressions"
+    ADD CONSTRAINT "turkish_expressions_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_quizzes"
+    ADD CONSTRAINT "turkish_grammar_quiz_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_rules"
+    ADD CONSTRAINT "turkish_grammar_rules_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_rules"
+    ADD CONSTRAINT "turkish_grammar_rules_position_key" UNIQUE ("position");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_rules"
+    ADD CONSTRAINT "turkish_grammar_rules_symbol_key" UNIQUE ("symbol");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_scores"
+    ADD CONSTRAINT "turkish_grammar_scores_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lesson_expressions"
+    ADD CONSTRAINT "turkish_lesson_expressions_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lesson_words"
+    ADD CONSTRAINT "turkish_lesson_words_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lessons"
+    ADD CONSTRAINT "turkish_lessons_quiz_id_key" UNIQUE ("quiz_id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lessons"
+    ADD CONSTRAINT "turkish_lessons_r_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_quizzes_series"
+    ADD CONSTRAINT "turkish_quizzes_series_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_quizzes_result"
+    ADD CONSTRAINT "turkish_result_quiz_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_vocabulary_scores"
+    ADD CONSTRAINT "turkish_vocabulary_scores_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_words_knowledge"
+    ADD CONSTRAINT "turkish_words_knowledge_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_words"
+    ADD CONSTRAINT "turkish_words_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_expressions_knowledge"
+    ADD CONSTRAINT "unique_user_expression" UNIQUE ("user_id", "expression_id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_words_knowledge"
+    ADD CONSTRAINT "unique_user_word" UNIQUE ("user_id", "word_id");
+
+
+
+CREATE INDEX "idx_profiles_tokens_available" ON "public"."profiles" USING "btree" ("credits_available");
+
+
+
+CREATE OR REPLACE TRIGGER "trigger_give_free_credits" BEFORE INSERT ON "public"."profiles" FOR EACH ROW EXECUTE FUNCTION "public"."give_free_credits_to_new_users"();
+
+
+
+ALTER TABLE ONLY "public"."profiles"
+    ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY "public"."turkish_expressions_knowledge"
+    ADD CONSTRAINT "turkish_expressions_knowledge_expression_id_fkey" FOREIGN KEY ("expression_id") REFERENCES "public"."turkish_expressions"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_expressions_knowledge"
+    ADD CONSTRAINT "turkish_expressions_knowledge_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profiles"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_quizzes"
+    ADD CONSTRAINT "turkish_grammar_quiz_grammar_rule_id_fkey" FOREIGN KEY ("grammar_rule_id") REFERENCES "public"."turkish_grammar_rules"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_scores"
+    ADD CONSTRAINT "turkish_grammar_scores_rule_id_fkey" FOREIGN KEY ("rule_id") REFERENCES "public"."turkish_grammar_rules"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_grammar_scores"
+    ADD CONSTRAINT "turkish_grammar_scores_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lesson_expressions"
+    ADD CONSTRAINT "turkish_lesson_expressions_expression_id_fkey" FOREIGN KEY ("expression_id") REFERENCES "public"."turkish_expressions"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lesson_expressions"
+    ADD CONSTRAINT "turkish_lesson_expressions_lesson_id_fkey" FOREIGN KEY ("lesson_id") REFERENCES "public"."turkish_lessons"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lesson_words"
+    ADD CONSTRAINT "turkish_lesson_words_lesson_id_fkey" FOREIGN KEY ("lesson_id") REFERENCES "public"."turkish_lessons"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lesson_words"
+    ADD CONSTRAINT "turkish_lesson_words_word_id_fkey" FOREIGN KEY ("word_id") REFERENCES "public"."turkish_words"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lessons"
+    ADD CONSTRAINT "turkish_lessons_grammar_rule_id_fkey" FOREIGN KEY ("grammar_rule_id") REFERENCES "public"."turkish_grammar_rules"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_lessons"
+    ADD CONSTRAINT "turkish_lessons_quiz_id_fkey" FOREIGN KEY ("quiz_id") REFERENCES "public"."turkish_quizzes_result"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_quizzes_result"
+    ADD CONSTRAINT "turkish_quizzes_result_rule_id_fkey" FOREIGN KEY ("rule_id") REFERENCES "public"."turkish_grammar_rules"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_quizzes_result"
+    ADD CONSTRAINT "turkish_quizzes_result_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_quizzes_series"
+    ADD CONSTRAINT "turkish_quizzes_series_question_id_fkey" FOREIGN KEY ("question_id") REFERENCES "public"."turkish_grammar_quizzes"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_quizzes_series"
+    ADD CONSTRAINT "turkish_quizzes_series_quiz_id_fkey" FOREIGN KEY ("quiz_id") REFERENCES "public"."turkish_quizzes_result"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_vocabulary_scores"
+    ADD CONSTRAINT "turkish_vocabulary_scores_user_id_fkey1" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_words_knowledge"
+    ADD CONSTRAINT "turkish_words_knowledge_user_id_fkey1" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
+
+
+
+ALTER TABLE ONLY "public"."turkish_words_knowledge"
+    ADD CONSTRAINT "turkish_words_knowledge_word_id_fkey" FOREIGN KEY ("word_id") REFERENCES "public"."turkish_words"("id");
+
+
+
+CREATE POLICY "Enable delete for users based on user_id" ON "public"."turkish_expressions_knowledge" FOR DELETE USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable delete for users based on user_id" ON "public"."turkish_words_knowledge" FOR DELETE USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable insert for authenticated users only" ON "public"."turkish_grammar_quizzes" FOR INSERT TO "authenticated" WITH CHECK (true);
+
+
+
+CREATE POLICY "Enable insert for authenticated users only" ON "public"."turkish_quizzes_series" FOR INSERT TO "authenticated" WITH CHECK (true);
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."turkish_expressions_knowledge" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."turkish_lessons" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."turkish_quizzes_result" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."turkish_vocabulary_scores" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."turkish_words_knowledge" FOR INSERT TO "authenticated" WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."languages_support" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_expressions" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_grammar_quizzes" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_grammar_rules" FOR SELECT TO "authenticated", "anon" USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_lesson_expressions" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_lesson_words" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_quizzes_series" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."turkish_words" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable update for all users" ON "public"."languages_support" FOR UPDATE USING (true);
+
+
+
+CREATE POLICY "Enable update for users based on user_id" ON "public"."profiles" FOR UPDATE USING (("auth"."uid"() = "id")) WITH CHECK (("auth"."uid"() = "id"));
+
+
+
+CREATE POLICY "Enable update for users based on user_id" ON "public"."turkish_vocabulary_scores" FOR UPDATE USING (("auth"."uid"() = "user_id")) WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable users to view their own data only" ON "public"."profiles" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "id"));
+
+
+
+CREATE POLICY "Enable users to view their own data only" ON "public"."turkish_expressions_knowledge" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable users to view their own data only" ON "public"."turkish_lessons" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable users to view their own data only" ON "public"."turkish_quizzes_result" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable users to view their own data only" ON "public"."turkish_vocabulary_scores" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable users to view their own data only" ON "public"."turkish_words_knowledge" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Users can update their own lessons" ON "public"."turkish_lessons" FOR UPDATE USING (("auth"."uid"() = "user_id")) WITH CHECK (("auth"."uid"() = "user_id"));
+
+
+
+CREATE POLICY "Users can update their own scores" ON "public"."turkish_grammar_scores" FOR UPDATE USING (("auth"."uid"() = "user_id"));
+
+
+
+CREATE POLICY "Users can update their own turkish_quizzes_result" ON "public"."turkish_quizzes_result" FOR UPDATE TO "authenticated" USING (("user_id" = "auth"."uid"())) WITH CHECK (("user_id" = "auth"."uid"()));
+
+
+
+CREATE POLICY "insert own grammar scores" ON "public"."turkish_grammar_scores" FOR INSERT TO "authenticated" WITH CHECK (("user_id" = "auth"."uid"()));
+
+
+
+ALTER TABLE "public"."languages_support" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
+
+
+CREATE POLICY "read own grammar scores" ON "public"."turkish_grammar_scores" FOR SELECT TO "authenticated", "anon" USING (("user_id" = "auth"."uid"()));
+
+
+
+ALTER TABLE "public"."turkish_expressions" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_expressions_knowledge" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_grammar_quizzes" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_grammar_rules" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_grammar_scores" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_lesson_expressions" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_lesson_words" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_lessons" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_quizzes_result" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_quizzes_series" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_vocabulary_scores" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_words" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."turkish_words_knowledge" ENABLE ROW LEVEL SECURITY;
+
+
+CREATE POLICY "update own grammar scores" ON "public"."turkish_grammar_scores" FOR UPDATE TO "authenticated" USING (("user_id" = "auth"."uid"())) WITH CHECK (("user_id" = "auth"."uid"()));
+
+
+
+
+
+ALTER PUBLICATION "supabase_realtime" OWNER TO "postgres";
+
+
+
+
+
+GRANT USAGE ON SCHEMA "public" TO "postgres";
+GRANT USAGE ON SCHEMA "public" TO "anon";
+GRANT USAGE ON SCHEMA "public" TO "authenticated";
+GRANT USAGE ON SCHEMA "public" TO "service_role";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRANT ALL ON FUNCTION "public"."create_profile_for_new_user"() TO "anon";
+GRANT ALL ON FUNCTION "public"."create_profile_for_new_user"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."create_profile_for_new_user"() TO "service_role";
+
+
+
+GRANT ALL ON FUNCTION "public"."delete_user_and_data"("user_uuid" "uuid") TO "anon";
+GRANT ALL ON FUNCTION "public"."delete_user_and_data"("user_uuid" "uuid") TO "authenticated";
+GRANT ALL ON FUNCTION "public"."delete_user_and_data"("user_uuid" "uuid") TO "service_role";
+
+
+
+GRANT ALL ON FUNCTION "public"."give_free_credits_to_new_users"() TO "anon";
+GRANT ALL ON FUNCTION "public"."give_free_credits_to_new_users"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."give_free_credits_to_new_users"() TO "service_role";
+
+
+
+GRANT ALL ON FUNCTION "public"."has_enough_credits"("user_id" "uuid", "required_tokens" numeric) TO "anon";
+GRANT ALL ON FUNCTION "public"."has_enough_credits"("user_id" "uuid", "required_tokens" numeric) TO "authenticated";
+GRANT ALL ON FUNCTION "public"."has_enough_credits"("user_id" "uuid", "required_tokens" numeric) TO "service_role";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRANT ALL ON TABLE "public"."languages_support" TO "anon";
+GRANT ALL ON TABLE "public"."languages_support" TO "authenticated";
+GRANT ALL ON TABLE "public"."languages_support" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."languages_support_votes_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."languages_support_votes_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."languages_support_votes_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."profiles" TO "anon";
+GRANT ALL ON TABLE "public"."profiles" TO "authenticated";
+GRANT ALL ON TABLE "public"."profiles" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_expressions" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_expressions" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_expressions" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_expressions_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_expressions_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_expressions_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_expressions_knowledge" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_expressions_knowledge" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_expressions_knowledge" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_expressions_knowledge_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_expressions_knowledge_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_expressions_knowledge_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_grammar_quizzes" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_grammar_quizzes" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_grammar_quizzes" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_quiz_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_quiz_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_quiz_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_grammar_rules" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_grammar_rules" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_grammar_rules" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_rules_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_rules_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_rules_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_grammar_scores" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_grammar_scores" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_grammar_scores" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_scores_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_scores_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_grammar_scores_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_lesson_expressions" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_lesson_expressions" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_lesson_expressions" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_lesson_expressions_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_lesson_expressions_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_lesson_expressions_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_lesson_words" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_lesson_words" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_lesson_words" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_lesson_words_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_lesson_words_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_lesson_words_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_lessons" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_lessons" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_lessons" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_lessons_r_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_lessons_r_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_lessons_r_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_quizzes_result" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_quizzes_result" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_quizzes_result" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_quizzes_series" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_quizzes_series" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_quizzes_series" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_quizzes_series_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_quizzes_series_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_quizzes_series_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_result_quiz_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_result_quiz_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_result_quiz_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_vocabulary_scores" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_vocabulary_scores" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_vocabulary_scores" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_vocabulary_scores_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_vocabulary_scores_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_vocabulary_scores_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_words" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_words" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_words" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_words_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_words_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_words_id_seq" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."turkish_words_knowledge" TO "anon";
+GRANT ALL ON TABLE "public"."turkish_words_knowledge" TO "authenticated";
+GRANT ALL ON TABLE "public"."turkish_words_knowledge" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."turkish_words_knowledge_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."turkish_words_knowledge_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."turkish_words_knowledge_id_seq" TO "service_role";
+
+
+
+
+
+
+
+
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "service_role";
+
+
+
+
+
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "service_role";
+
+
+
+
+
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "service_role";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESET ALL;
