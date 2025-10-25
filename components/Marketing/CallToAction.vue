@@ -6,24 +6,65 @@ import {
   CheckCircleIcon,
   ChartBarIcon,
 } from "@heroicons/vue/24/solid";
+
+// Animation des langues avec effet d'écriture
+const languages = [
+  { name: 'Turkish', color: 'text-red-500' },
+  { name: 'French', color: 'text-blue-500' },
+  { name: 'Spanish', color: 'text-amber-500' }
+];
+const currentLanguageIndex = ref(0);
+const displayedText = ref('');
+const isTyping = ref(false);
+
+const currentLanguage = computed(() => languages[currentLanguageIndex.value]);
+
+const typeText = async (language: { name: string, color: string }) => {
+  isTyping.value = true;
+  displayedText.value = '';
+  
+  // Ajouter un espace et le "?" à la fin du texte
+  const textWithQuestion = language.name + ' ?';
+  
+  for (let i = 0; i <= textWithQuestion.length; i++) {
+    displayedText.value = textWithQuestion.slice(0, i);
+    await new Promise(resolve => setTimeout(resolve, 100)); // Vitesse d'écriture
+  }
+  
+  // Pause avant de commencer à effacer
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
+  // Effacer le texte (y compris le "?")
+  for (let i = textWithQuestion.length; i >= 0; i--) {
+    displayedText.value = textWithQuestion.slice(0, i);
+    await new Promise(resolve => setTimeout(resolve, 50)); // Vitesse d'effacement plus rapide
+  }
+  
+  isTyping.value = false;
+};
+
+onMounted(() => {
+  const cycleLanguages = async () => {
+    for (let i = 0; i < languages.length; i++) {
+      currentLanguageIndex.value = i;
+      await typeText(languages[i]);
+    }
+    // Recommencer le cycle
+    setTimeout(cycleLanguages, 500);
+  };
+  
+  // Démarrer le cycle après un court délai
+  setTimeout(cycleLanguages, 1000);
+});
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-base-100 min-h-[70vh]">
+  <section class="relative overflow-hidden bg-neutral/10 min-h-[70vh]">
     <!-- Background: soft gradient base + subtle grid + refined glows -->
     <div class="absolute inset-0 -z-10 pointer-events-none">
       <!-- Base gradient wash (slightly stronger) -->
-      <div class="absolute inset-0 bg-gradient-to-br from-primary/15 via-base-100 to-warning/15" />
-      <!-- Texture grid (more visible) -->
-      <div class="absolute inset-0 opacity-[0.16] dark:opacity-[0.22] bg-[url('/_nuxt/assets/img/grid/home.png')] bg-top bg-no-repeat bg-[length:min(100%,100%)]" />
-      <!-- Fine diagonal lines pattern -->
-      <div class="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]" style="background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 10px);" />
-      <!-- Primary glow -->
-      <div class="absolute -top-56 -left-28 w-[700px] h-[700px] rounded-full blur-3xl bg-primary/20" />
-      <!-- Warning glow -->
-      <div class="absolute -bottom-64 -right-24 w-[600px] h-[600px] rounded-full blur-3xl bg-warning/20" />
-      <!-- Neutral soft ring -->
-      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[860px] h-[860px] rounded-full blur-[110px] bg-neutral/10" />
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-gray-100/80 to-warning/10 dark:via-gray-800/80" />
+
       <!-- Angled sheen overlay (slightly stronger) -->
       <div
         class="absolute -top-32 left-1/3 w-[1400px] h-[900px] rotate-[18deg] opacity-60"
@@ -39,8 +80,11 @@ import {
         <div class="space-y-10">
           <div class="space-y-6">
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral dark:text-white text-balance">
-              Feeling stuck in your language learning?
-              Try <span class="text-warning">Tookan AI</span>
+              No Progress While Learning<br>
+              <span :class="[currentLanguage.color, 'language-text']">
+                {{ displayedText }}<span class="typing-cursor">|</span>
+              </span> <br></br>
+              Try <span class="text-primary">Tookan AI</span>
             </h1>
             <p class="text-lg sm:text-xl text-base-content/70 leading-relaxed">
               Use the <span class="font-bold text-primary">Best AI Tools</span> to Generate Lessons on your <span class="font-bold text-primary">Weaknesses</span> and Test your Progress with Quizzes Prepared by our <span class="font-bold text-primary">Qualified Teachers</span>
@@ -50,8 +94,8 @@ import {
           <!-- Inline benefits -->
           <ul class="flex flex-wrap gap-x-6 gap-y-3 text-base text-base-content/70">
             <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-primary" /><span>Tailored Lessons</span></li>
-            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-warning" /><span>Progress x5 Faster</span></li>
-            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-neutral" /><span>Have Fun Learning</span></li>
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-warning" /><span>Progress WAY Faster</span></li>
+            <li class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5 text-neutral" /><span>Quizzes From Challenging Teachers</span></li>
           </ul>
 
           <!-- CTAs + UsedBy -->
@@ -138,4 +182,31 @@ import {
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.language-text {
+  display: inline-block;
+  min-width: 120px; /* Assure une largeur fixe pour éviter le décalage */
+  text-align: left;
+  position: relative;
+}
+
+.typing-cursor {
+  animation: blink 1s infinite;
+  color: inherit;
+  font-weight: inherit;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Animation subtile pour le texte qui s'écrit */
+.language-text {
+  transition: all 0.1s ease-in-out;
+}
+</style>

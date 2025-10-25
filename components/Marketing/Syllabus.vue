@@ -3,8 +3,6 @@ import { ref } from "vue";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { getBorderStyleClassFromGrammarRuleLevel, getTextStyleClassFromGrammarRuleLevel, grammarLevelTabs, parseSyllabusRules } from "~/utils/learning/grammar";
 
-import { languages } from "~/utils/syllabus";
-
 const selectedLang = ref("tr");
 const syllabusRules = ref<Array<GrammarRule>>([]);
 const isFetchingGrammarRules = ref(false);
@@ -38,7 +36,6 @@ watchEffect(async () => {
     });
     if (grammarModules && Array.isArray(grammarModules))
       syllabusRules.value = parseSyllabusRules(grammarModules);
-      console.log("syllabusRules", syllabusRules.value);
     isFetchingGrammarRules.value = false;
   } catch (error) {
     console.log(error);
@@ -48,7 +45,7 @@ watchEffect(async () => {
 
 <template>
   <section
-    class="bg-primary/20 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
+    class="bg-primary/10 border border-t-primary border-l-0 border-r-0 border-b-0 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
   >
     <div class="max-w-7xl mx-auto">
       <h1

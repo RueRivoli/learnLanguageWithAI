@@ -3,18 +3,7 @@ import { GlobeAltIcon } from "@heroicons/vue/24/solid";
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-base-100 py-24 sm:py-32">
-    <!-- Background Elements -->
-    <div class="absolute inset-0 -z-10 pointer-events-none">
-      <!-- Subtle gradient -->
-      <div class="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/5" />
-      <!-- Grid pattern -->
-      <div class="absolute inset-0 opacity-[0.08] dark:opacity-[0.12] bg-[url('/_nuxt/assets/img/grid/home.png')] bg-top bg-no-repeat bg-[length:min(100%,100%)]" />
-      <!-- Floating orbs -->
-      <div class="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full blur-3xl bg-primary/8" />
-      <div class="absolute bottom-20 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl bg-primary/6" />
-    </div>
-
+  <section class="relative overflow-hidden bg-primary/10 py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <!-- Header -->
       <div class="text-center mb-16">
