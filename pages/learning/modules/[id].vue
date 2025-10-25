@@ -24,11 +24,9 @@ const getGrammarRule = async () => {
     grammarRule.value = parseRuleData(data.value);
     isLoading.value = false;
   }
-  console.log("grammarRule", grammarRule.value);
 };
 
 const getlastQuizzes = async () => {
-  console.log("grammarRuleId", route.params.id);
   const headers = await getAuthToken();
   const { data } = await useFetch(
     `/api/quizzes/rules/${route.params.id}`,

@@ -86,7 +86,7 @@ const totalExpressionsInK = computed(() => {
             </template>
             <template #details>
               <!-- Progress details -->
-                <div class="group relative bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg p-3 border border-amber-300/70 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <div class="group relative bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg p-3 border border-amber-300/70 shadow-md transition-all duration-300 overflow-hidden">
                   <!-- Professional background pattern -->
                   <div class="absolute inset-0 bg-gradient-to-br from-amber-100/60 via-yellow-50/80 to-amber-100/50 opacity-90"/>
                   <!-- Content -->

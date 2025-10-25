@@ -67,9 +67,9 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="max-w-full max-h-screen grid grid-cols-4">
+  <div class="max-w-full max-h-screen grid grid-cols-4 gap-2">
     <div class="max-h-screen col-span-3">
-      <div class="bg-white shadow-md">
+      <div class="bg-white shadow-md rounded-lg">
         <div class="p-5">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus

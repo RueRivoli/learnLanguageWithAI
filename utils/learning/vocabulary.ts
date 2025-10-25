@@ -11,7 +11,7 @@ export const vocabularyFirstTab = {
 export const vocabularySecondTab = { 
   title: "Expressions", 
   icon: "language",
-  activeBgColorClass: "bg-gradient-to-br from-purple-500 to-pink-500",
+  activeBgColorClass: "bg-warning",
   activeTxtColorClass: "text-white"
 };
 

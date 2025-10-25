@@ -5,7 +5,7 @@ import type { Database } from "~/supabase/types";
 
 export const grammarLevelTabs = {
   firstTab : { title: 'Beginner', icon: 'academic', activeBgColorClass: 'bg-success/80', activeTxtColorClass: 'text-white'},
-  secondTab : { title: 'Intermediate', icon: 'trophy', activeBgColorClass: 'bg-warning/80', activeTxtColorClass: 'text-white'},
+  secondTab : { title: 'Intermediate', icon: 'trophy', activeBgColorClass: 'bg-info/80', activeTxtColorClass: 'text-white'},
   thirdTab : { title: 'Advanced', icon: 'rocket', activeBgColorClass: 'bg-error/80', activeTxtColorClass: 'text-white'}
 }
 
@@ -72,7 +72,7 @@ export function getLevelLabel(level: RuleDifficulty): VNode {
       ]);
     case RuleDifficulty.INTERMEDIATE:
       return h("div", { class: "flex items-center" }, [
-        h("div", { class: "status status-warning mr-2" }),
+        h("div", { class: "status status-info mr-2" }),
         h("div", "intermediate"),
       ]);
     case RuleDifficulty.ADVANCED:
@@ -112,7 +112,7 @@ export function getTextStyleClassFromGrammarRuleLevel(level: number): string {
     case RuleDifficulty.BEGINNER:
       return "text-success";
     case RuleDifficulty.INTERMEDIATE:
-      return "text-warning";
+      return "text-info";
     case RuleDifficulty.ADVANCED:
       return "text-error";
     case RuleDifficulty.EXPERT:
@@ -142,7 +142,7 @@ export function getBorderStyleClassFromGrammarRuleLevel(level: number): string {
     case RuleDifficulty.BEGINNER:
       return "border border-rounded border-success";
     case RuleDifficulty.INTERMEDIATE:
-      return "border border-rounded border-warning";
+      return "border border-rounded border-info";
     case RuleDifficulty.ADVANCED:
       return "border border-rounded border-error";
     case RuleDifficulty.EXPERT:
@@ -157,7 +157,7 @@ export function getBackgroundClassFromGrammarRuleLevel(level: number): string {
     case RuleDifficulty.BEGINNER:
       return "bg-success";
     case RuleDifficulty.INTERMEDIATE:
-      return "bg-warning";
+      return "bg-info";
     case RuleDifficulty.ADVANCED:
       return "bg-error";
     case RuleDifficulty.EXPERT:
@@ -173,7 +173,7 @@ export function getGrammarRuleStyleClass(rule: GrammarRule): string {
     case RuleDifficulty.BEGINNER:
       return "bg-success";
     case RuleDifficulty.INTERMEDIATE:
-      return "bg-warning";
+      return "bg-info";
     case RuleDifficulty.ADVANCED:
       return "bg-error";
     case RuleDifficulty.EXPERT:

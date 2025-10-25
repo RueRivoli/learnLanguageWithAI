@@ -58,7 +58,7 @@ const getScoreColor = (score: number) => {
 
 <template>
   <div class="w-full">
-    <div class="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 rounded-xl shadow-lg border border-gray-300 p-6">
+    <div class="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 rounded-lg shadow-lg border border-gray-300 p-6">
       <!-- Loading State -->
       <div v-if="loading" class="w-full h-32 flex justify-center items-center">
         <div class="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent" />
@@ -68,7 +68,8 @@ const getScoreColor = (score: number) => {
         <!-- Header -->
         <div class="border-b border-gray-100 pb-4">
           <div class="flex items-center justify-between gap-3">
-            <div class="p-2 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg">
+            <div class="flex items-center gap-2">
+              <div class="p-2 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg">
               <TrophyIcon class="w-5 h-5 text-primary" />
             </div>
             <div>
@@ -82,8 +83,10 @@ const getScoreColor = (score: number) => {
                 </span>
               </p>
             </div>
+            </div>
+
             <div>
-              <span class="text-3xl font-semibold text-primary">{{ averageScore }}</span>
+              <span class="text-3xl font-semibold text-primary">{{ averageScore ?? 0}}</span>
               <span class="text-sm text-gray-600">
                 / 100
               </span>

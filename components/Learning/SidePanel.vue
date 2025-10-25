@@ -12,7 +12,7 @@ const progressData = {
 
 <template>
   <div class="w-full">
-    <div class="bg-white shadow-sm overflow-hidden">
+    <div class="bg-white shadow-sm overflow-hidden rounded-lg">
       <!-- Header -->
       <div class="p-5 py-4 border-b border-gray-100">
         <div class="flex items-center gap-3">

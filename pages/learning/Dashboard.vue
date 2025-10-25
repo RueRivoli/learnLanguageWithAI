@@ -82,8 +82,16 @@ getInfoUser();
 </script>
 
 <template>
-  <div class="min-h-screen rounded-lg bg-white p-5">
-    <div class="max-w-7xl mx-auto">
+  <!-- Subtle Background -->
+  <div class="min-h-screen bg-blue-50 relative">
+    <!-- Very subtle pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, hsl(var(--p)) 1px, transparent 0); background-size: 20px 20px;"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 rounded-lg p-5">
+      <div class="max-w-7xl mx-auto">
       <!-- Header Section -->
       <div class="mb-4">
         <div class="flex items-center justify-between">
@@ -97,7 +105,7 @@ getInfoUser();
             :first-tab="dashboardCategoryTabs.firstTab"
             :second-tab="dashboardCategoryTabs.secondTab"
             :third-tab="dashboardCategoryTabs.thirdTab"
-            @tab-active-changed="(activeT) => (activeTab = activeT)"
+            @tab-active-changed="(activeT: number) => (activeTab = activeT)"
           />
         </div>
       </div>
@@ -140,6 +148,7 @@ getInfoUser();
       :user-id="user?.id"
       :full-name="user?.user_metadata?.full_name || ''"
     />
+    </div>
   </div>
 </template>
 
@@ -148,5 +157,33 @@ getInfoUser();
 :deep(.echarts-tooltip) {
   border-radius: 8px !important;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Subtle background styling */
+.bg-gradient-to-br {
+  background-attachment: fixed;
+}
+
+/* Ensure cards maintain proper contrast */
+:deep(.card) {
+  background-color: hsl(var(--b1));
+  border: 1px solid hsl(var(--b3));
+}
+
+/* Very subtle pattern animation */
+@keyframes subtle-shift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+}
+
+.absolute.inset-0.opacity-5 {
+  animation: subtle-shift 30s ease-in-out infinite;
+}
+
+/* Performance optimization */
+@media (prefers-reduced-motion: reduce) {
+  .absolute.inset-0.opacity-5 {
+    animation: none;
+  }
 }
 </style>

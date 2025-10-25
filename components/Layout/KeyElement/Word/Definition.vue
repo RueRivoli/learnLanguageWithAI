@@ -4,15 +4,17 @@ import type { Word } from '~/types/vocabulary/word';
 const props = withDefaults(
   defineProps<{
     isActive: boolean;
+    isDarkMode: boolean;
     minified?: boolean;
-    word?: Word | null;
     size?: 'sm' | 'xs';
+    word?: Word | null;
   }>(),
   {
-    minified: false,
-    word: null,
-    size: 'sm',
     isActive: false,
+    isDarkMode: false,
+    minified: false,
+    size: 'sm',
+    word: null,
   },
 );
 const emit = defineEmits(["click"]);
@@ -32,8 +34,7 @@ const roles = computed(() => {
 <template>
     <!-- Enhanced Word Card -->
     <div 
-        class="bg-white text-slate-800 border-l-4 border-primary rounded-lg cursor-pointer transition-all duration-300"
-        :class="props.minified ? 'p-2' : 'p-3'"
+        :class="['text-slate-800 border-l-4 border-primary rounded-lg cursor-pointer transition-all duration-300', { 'bg-primary/10': props.isDarkMode }, {'bg-white': !props.isDarkMode}, {'p-2': props.minified}, {'p-3': !props.minified}]"
         @click="emit('click')"
     >
         <div class="flex items-center"  :class="props.minified ? 'justify-center' : 'justify-between'">

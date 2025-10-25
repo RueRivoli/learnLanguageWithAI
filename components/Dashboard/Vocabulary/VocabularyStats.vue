@@ -215,7 +215,7 @@ watch(totalExpressions, () => {
 <template>
   <div>
     <!-- Full-width Vocabulary Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-blue-100/90 via-blue-50/95 to-indigo-100/80 rounded-lg shadow-sm border border-blue-300/70 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-sm border border-blue-300/70 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -297,7 +297,7 @@ watch(totalExpressions, () => {
     </div>
 
     <!-- Full-width Expression Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-sm border border-purple-300/70 p-6 mb-8">
+    <div class="w-full bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-sm border border-warning/20 p-6 mb-8">
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
