@@ -338,82 +338,185 @@ onUnmounted(() => {
 
 <style scoped>
 .image-upload-container {
-  @apply space-y-4;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .drop-zone {
-  @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-all duration-200 hover:border-gray-400 hover:bg-gray-50;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drop-zone:hover {
+  border-color: #9ca3af;
+  background-color: #f9fafb;
 }
 
 .drop-zone--active {
-  @apply border-blue-500 bg-blue-50;
+  border-color: #3b82f6;
+  background-color: #eff6ff;
 }
 
 .drop-zone--error {
-  @apply border-red-500 bg-red-50;
+  border-color: #ef4444;
+  background-color: #fef2f2;
 }
 
 .drop-zone--disabled {
-  @apply cursor-not-allowed opacity-60 hover:border-gray-300 hover:bg-transparent;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.drop-zone--disabled:hover {
+  border-color: #d1d5db;
+  background-color: transparent;
 }
 
 .drop-zone__content {
-  @apply flex flex-col items-center justify-center space-y-2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .loading-spinner {
-  @apply w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin;
+  width: 2rem;
+  height: 2rem;
+  border: 4px solid #3b82f6;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .preview-container {
-  @apply mt-4;
+  margin-top: 1rem;
 }
 
 .preview-grid {
-  @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .preview-item {
-  @apply space-y-2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .preview-image-wrapper {
-  @apply relative group;
+  position: relative;
+}
+
+.preview-image-wrapper:hover {
+  /* Group hover styles can be handled with CSS selectors */
 }
 
 .preview-image {
-  @apply w-full h-24 object-cover rounded-lg border;
+  width: 100%;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
 }
 
 .preview-remove-btn {
-  @apply absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600;
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.preview-image-wrapper:hover .preview-remove-btn {
+  opacity: 1;
+}
+
+.preview-remove-btn:hover {
+  background-color: #dc2626;
 }
 
 .preview-name {
-  @apply text-xs text-gray-600 truncate;
+  font-size: 0.75rem;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .results-container {
-  @apply mt-4 p-4 bg-green-50 rounded-lg;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f0fdf4;
+  border-radius: 0.5rem;
 }
 
 .results-list {
-  @apply space-y-2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .result-item {
-  @apply flex items-center space-x-3 p-2 bg-white rounded border;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 0.25rem;
+  border: 1px solid #e5e7eb;
 }
 
 .result-thumbnail {
-  @apply w-12 h-12 object-cover rounded;
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
 }
 
 .result-info {
-  @apply flex-1 min-w-0;
+  flex: 1;
+  min-width: 0;
 }
 
 .result-path {
-  @apply text-sm text-gray-700 truncate;
+  font-size: 0.875rem;
+  color: #374151;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
+

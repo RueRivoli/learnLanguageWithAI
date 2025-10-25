@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
       process.env.STRIPE_WEBHOOK_SECRET!
     );
 
-    console.log('Webhook event type:', stripeEvent.type);
+    if (process.env.NODE_ENV === 'development') console.log('Webhook event type:', stripeEvent.type);
     
     const supabase = createServiceRoleClient();
 
@@ -37,17 +37,17 @@ export default defineEventHandler(async (event) => {
       
       // Verify payment was successful
       if (session.payment_status !== 'paid') {
-        console.log('Payment not completed yet, status:', session.payment_status);
+        if (process.env.NODE_ENV === 'development') console.log('Payment not completed yet, status:', session.payment_status);
         return { received: true, processed: false };
       }
 
       const userId = session.metadata?.userId;
       const tokens = parseInt(session.metadata?.tokens || '0');
 
-      console.log('Processing successful payment for user:', userId, 'tokens:', tokens);
+      if (process.env.NODE_ENV === 'development') console.log('Processing successful payment for user:', userId, 'tokens:', tokens);
 
       if (!userId || tokens <= 0) {
-        console.error('Invalid metadata in session:', { userId, tokens });
+        if (process.env.NODE_ENV === 'development') console.error('Invalid metadata in session:', { userId, tokens });
         return { received: true, processed: false };
       }
 
@@ -87,8 +87,8 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      console.log('✅ Successfully added', tokens, 'tokens to user', userId);
-      console.log('New balance:', newCreditsAvailable);
+      if (process.env.NODE_ENV === 'development') ('✅ Successfully added', tokens, 'tokens to user', userId);
+      if (process.env.NODE_ENV === 'development') console.log('New balance:', newCreditsAvailable);
       
       return { received: true, processed: true, tokensAdded: tokens };
     }

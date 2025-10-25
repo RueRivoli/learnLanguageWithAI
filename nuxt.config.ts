@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
@@ -27,9 +26,6 @@ export default defineNuxtConfig({
   ],
   nitro: {
     preset: 'vercel'
-  },
-  vite: {
-    plugins: [tailwindcss()],
   },
   runtimeConfig: {
     // Variables privées (serveur uniquement)

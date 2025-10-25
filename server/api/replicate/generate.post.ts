@@ -26,7 +26,6 @@ const processReadableStream = async (stream: ReadableStream): Promise<string | n
     // Convert chunks to string
     const decoder = new TextDecoder();
     const streamContent = decoder.decode(new Uint8Array(chunks.flat()));
-    console.log('Stream content:', streamContent);
     
     // Try to parse as JSON first
     try {
