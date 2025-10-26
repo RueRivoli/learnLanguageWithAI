@@ -17,6 +17,52 @@ const state = reactive<Schema>({
 const connexionError = ref<null | string>(null);
 const isLoading = ref<boolean>(false);
 
+// hCaptcha setup
+const {
+  captchaToken,
+  captchaError,
+  isCaptchaLoaded,
+  loadHCaptcha,
+  onCaptchaVerified,
+  onCaptchaExpired,
+  onCaptchaError,
+  validateCaptcha,
+  HCAPTCHA_SITE_KEY,
+} = useHCaptcha();
+
+const captchaContainerRef = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  loadHCaptcha();
+  
+  // Watch for script load and initialize widget
+  watchEffect(() => {
+    if (isCaptchaLoaded.value && captchaContainerRef.value && typeof window !== 'undefined') {
+      // @ts-ignore
+      if (window.hcaptcha && !captchaContainerRef.value.hasAttribute('data-rendered')) {
+        try {
+          // @ts-ignore
+          window.hcaptcha.render(captchaContainerRef.value, {
+            sitekey: HCAPTCHA_SITE_KEY,
+            callback: (token: string) => {
+              onCaptchaVerified(token);
+            },
+            'expired-callback': () => {
+              onCaptchaExpired();
+            },
+            'error-callback': () => {
+              onCaptchaError();
+            },
+          });
+          captchaContainerRef.value.setAttribute('data-rendered', 'true');
+        } catch (error) {
+          console.error('Error rendering hCaptcha widget:', error);
+        }
+      }
+    }
+  });
+});
+
 const handleSignUpWithGoogle = async () => {
   await client.auth.signInWithOAuth({
     provider: "google",
@@ -33,15 +79,27 @@ const handleSignUp = async () => {
     connexionError.value = emailOrPasswordError;
     return;
   }
+  
+  // Validate captcha
+  if (!validateCaptcha()) {
+    connexionError.value = captchaError.value || "Please complete the captcha verification.";
+    return;
+  }
+  
   isLoading.value = true;
   try {
+    const signUpOptions: any = {
+      emailRedirectTo: window.location.origin + "/authorization/confirmation-account",
+    };
+    
+    if (captchaToken.value) {
+      signUpOptions.captchaToken = captchaToken.value;
+    }
+    
     const { data, error } = await client.auth.signUp({
       email: state.email,
       password: state.password,
-      options: {
-        emailRedirectTo:
-          window.location.origin + "/authorization/confirmation-account",
-      },
+      options: signUpOptions,
     });
     if (error) throw error;
 
@@ -55,8 +113,14 @@ const handleSignUp = async () => {
     }
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "An error occurred";
+    
+    // Handle specific error types
     if (errorMessage.includes("over_email_send_rate_limit") || errorMessage.includes("rate limit exceeded")) {
       connexionError.value = "Too many signup attempts. Please wait a few minutes before trying again.";
+    } else if (errorMessage.includes("timeout") || errorMessage.includes("network") || errorMessage.includes("connection")) {
+      connexionError.value = "Connection timeout. Please check your internet connection and try again. If the problem persists, contact support.";
+    } else if (errorMessage.includes("SMTP") || errorMessage.includes("email") || errorMessage.includes("send")) {
+      connexionError.value = "Unable to send confirmation email. Please try again in a few minutes or contact support.";
     } else {
       connexionError.value = errorMessage;
     }
@@ -137,6 +201,13 @@ const handleSignUp = async () => {
                 class="h-5 w-5 cursor-pointer text-gray-500 hover:text-gray-700"
               />
             </button>
+          </div>
+        </div>
+        <div class="mb-4 flex flex-col items-center">
+          <div v-if="!isCaptchaLoaded" class="skeleton h-16 w-64" />
+          <div ref="captchaContainerRef" v-if="isCaptchaLoaded" />
+          <div v-if="captchaError" class="text-error text-xs mt-1">
+            {{ captchaError }}
           </div>
         </div>
         <!-- Remember Me Feature -->

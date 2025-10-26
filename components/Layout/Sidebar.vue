@@ -325,13 +325,13 @@ const isActive = (path: string) => {
           v-if="!isSideBarMinifiedForDesktopVersion"
           alt="LinguaLab Logo"
           class="h-20 w-auto m-auto"
-          src="~/assets/logo/transparent/language-lab.png"
+          src="~/assets/logo/transparent/language-lab-black.png"
         />
         <img
           v-else
           alt="LinguaLab Logo"
           class="h-8 w-auto"
-          src="~~/assets/logo/transparent/language-lab.png"
+          src="~~/assets/logo/transparent/language-lab-toucan-black.png"
         >
       </NuxtLink>
     </div>

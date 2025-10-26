@@ -79,7 +79,6 @@ getSupportedLanguages();
 <template>
       <div class="mx-auto max-w-5xl">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
           <div
             v-if="!isFetchingLanguages"
             v-for="(language, index) in supportedLanguages"

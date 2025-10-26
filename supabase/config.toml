@@ -148,10 +148,10 @@ sign_in_sign_ups = 5
 token_verifications = 5
 
 # Configure one of the supported captcha providers: `hcaptcha`, `turnstile`.
-# [auth.captcha]
-# enabled = true
-# provider = "hcaptcha"
-# secret = ""
+[auth.captcha]
+enabled = true
+provider = "hcaptcha"
+secret = "env(HCAPTCHA_SECRET_KEY)"
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
@@ -180,10 +180,10 @@ pass = "env(BREVO_SMTP_KEY)"
 admin_email = "env(BREVO_ADMIN_EMAIL)"
 sender_name = "TookanAI"
 
-# Uncomment to customize email template
-# [auth.email.template.invite]
-# subject = "You have been invited"
-# content_path = "./supabase/templates/invite.html"
+# Email templates
+[auth.email.template.confirmation]
+subject = "Confirm your Account - TookanAI"
+content_path = "./supabase/templates/confirmation.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.

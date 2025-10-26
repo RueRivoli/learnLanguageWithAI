@@ -5,7 +5,7 @@ const faqs = [
   {
     question: "For which language is it working ?",
     answer:
-      "This app is working with Turkish, French and Spanish. In the near future, Italian, Russian and Japanese will be supported.",
+      "This app is working with Turkish, French and Spanish. In the near future, Italian, German and Japanese will be supported.",
   },
   {
     question: "What level is it for ?",

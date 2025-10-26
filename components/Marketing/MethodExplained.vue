@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowLongRightIcon } from "@heroicons/vue/24/outline";
 import {
   ChartBarIcon,
   BookOpenIcon,
@@ -173,9 +174,14 @@ import {
 
       <!-- Call to Action -->
       <div class="text-center mt-20">
-        <div class="inline-flex items-center gap-3 rounded-lg bg-primary/10 px-6 py-3 ring-1 ring-primary/20">
-          <ArrowRightIcon class="h-5 w-5 text-primary" />
-          <span class="text-primary font-semibold">Ready to start learning faster ?</span>
+        <div class="inline-flex items-center gap-3 rounded-lg bg-primary/10 px-6 py-3 hover:bg-primary/20">
+            <NuxtLink
+              :to="{ path: '/authorization/auth/?toCreateAccount=true', query: { toCreateAccount: 'true' } }"
+              class="flex items-center gap-2 cursor-pointer"
+            >
+              <span class="text-primary font-semibold">Ready to Start Learning Faster ?</span>
+              <ArrowLongRightIcon class="h-5 w-5 text-primary" />
+            </NuxtLink>
         </div>
       </div>
     </div>

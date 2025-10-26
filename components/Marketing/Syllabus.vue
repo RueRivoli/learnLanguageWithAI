@@ -45,7 +45,7 @@ watchEffect(async () => {
 
 <template>
   <section
-    class="bg-primary/10 border border-t-primary border-l-0 border-r-0 border-b-0 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
+    class="bg-primary/10 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
   >
     <div class="max-w-7xl mx-auto">
       <h1
@@ -56,19 +56,6 @@ watchEffect(async () => {
 
       <MarketingSupportedLanguagesList size="small" :showStatus="false" :isLanguageClickable="true" />
        <div class="flex justify-center space-x-3 mb-8 p-6">
-      <!-- <button
-          v-for="lang in languages"
-          :key="lang.code"
-          :class="[
-            'px-4 py-2 btn btn-primary rounded-md font-semibold focus:outline-none',
-            selectedLang === lang.code ? 'btn-primary' : 'btn-secondary',
-          ]"
-          :aria-pressed="selectedLang === lang.code"
-          @click="selectedLang = lang.code"
-        >
-          <img class="h-8 w-auto" :src="lang.imgSrc" alt="" />
-          {{ lang.label }}
-        </button> -->
       </div>
       <!-- Syllabus Content -->
       <LayoutTabs
@@ -84,7 +71,7 @@ watchEffect(async () => {
           >
         <div v-for="(rule, n) in syllabusRules" :key="n" class="col-span-1">
           <transition name="fade" mode="out-in">
-              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true" size="small">
+              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true" size="large">
                 <template #content>
                   <!-- Professional description box -->
                   <div v-if="(rule as any).highlights" class="mt-3 mb-4">

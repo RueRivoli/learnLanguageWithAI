@@ -12,6 +12,51 @@ const state = reactive<Schema>({
 const connexionError = ref<string | null>(null);
 const isLoading = ref<boolean>(false);
 const showPassword = ref<boolean>(false);
+// hCaptcha setup
+const {
+  captchaToken,
+  captchaError,
+  isCaptchaLoaded,
+  loadHCaptcha,
+  onCaptchaVerified,
+  onCaptchaExpired,
+  onCaptchaError,
+  validateCaptcha,
+  HCAPTCHA_SITE_KEY,
+} = useHCaptcha();
+
+const captchaContainerRef = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  loadHCaptcha();
+  
+  // Watch for script load and initialize widget
+  watchEffect(() => {
+    if (isCaptchaLoaded.value && captchaContainerRef.value && typeof window !== 'undefined') {
+      // @ts-ignore
+      if (window.hcaptcha && !captchaContainerRef.value.hasAttribute('data-rendered')) {
+        try {
+          // @ts-ignore
+          window.hcaptcha.render(captchaContainerRef.value, {
+            sitekey: HCAPTCHA_SITE_KEY,
+            callback: (token: string) => {
+              onCaptchaVerified(token);
+            },
+            'expired-callback': () => {
+              onCaptchaExpired();
+            },
+            'error-callback': () => {
+              onCaptchaError();
+            },
+          });
+          captchaContainerRef.value.setAttribute('data-rendered', 'true');
+        } catch (error) {
+          console.error('Error rendering hCaptcha widget:', error);
+        }
+      }
+    }
+  });
+});
 
 const handleSignIn = async () => {
   connexionError.value = null;
@@ -51,7 +96,7 @@ const handleSignInWithGoogle = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center p-7">
+  <div class="flex flex-col grow items-center p-7">
     <div class="mx-auto w-sm">
       <div>
         <button
@@ -131,6 +176,15 @@ const handleSignInWithGoogle = async () => {
             </button>
           </div>
         </div>
+        <div>
+
+          <div v-if="!isCaptchaLoaded" class="skeleton h-16 w-64" />
+          <div ref="captchaContainerRef" v-if="isCaptchaLoaded" />
+          <div v-if="captchaError" class="text-error text-xs mt-1">
+            {{ captchaError }}
+          </div>
+        </div>
+
         <div class="underline text-primary mb-4">
           <NuxtLink to="/authorization/password-forgotten/">
             <span class="underline-offset-4 text-primary dark:text-white"

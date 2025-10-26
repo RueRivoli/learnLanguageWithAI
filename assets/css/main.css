@@ -95,18 +95,6 @@
   --noise: 0;
 }
 
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: var(--color-base-200);
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
 html {
   height: 100%;
 }
@@ -149,15 +137,6 @@ body {
   font-weight: 300;
   font-style: normal;
   background-color: var(--color-base-200);
-}
-.tabs {
-  /* background: linear-gradient(#4f39f6, #7c86ff); */
-}
-.tab {
-  /* color: var(--color-base-100); */
-}
-.tab:checked {
-  /* color: var(--color-neutral); */
 }
 
 /* Ubuntu */
