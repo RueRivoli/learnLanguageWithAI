@@ -15,8 +15,8 @@
       </span> -->
       <img
         alt="LinguaLab Logo"
-        class="h-10 w-auto"
-        src="~/assets/img/navbar/logo.png"
+        class="h-7 w-auto"
+        src="~/assets/img/navbar/logo-transparent.png"
       />
     </NuxtLink>
   </div>

@@ -55,7 +55,7 @@ const handleConfirmationMailResend = async () => {
           <img
             alt="LinguaLab Logo"
             class="h-50 w-auto"
-            src="~/assets/logo/banner/logo1.png"
+            src="~/assets/logo/transparent/language-lab.png"
           />
           <div role="alert" class="alert alert-success">
             <CheckCircleIcon

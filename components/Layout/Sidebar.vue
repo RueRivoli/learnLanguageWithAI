@@ -62,16 +62,16 @@ const isActive = (path: string) => {
           leave-to=" -translate-x-full"
         >
           <div
-            class="md:hidden z-10 max-h-screen h-full flex flex-col w-72 bg-white border-r border-gray-200 shadow-xl"
+            class="md:hidden z-10 max-h-screen h-full flex flex-col w-72 bg-primary border-r border-primary/30 shadow-xl"
           >
             <div
-              class="flex items-center justify-between p-4 border-b border-gray-200"
+              class="flex items-center justify-between p-4 border-b border-primary/30"
             >
               <NuxtLink to="/" class="flex items-center">
                 <img
                   alt="LinguaLab Logo"
                   class="h-8 w-auto"
-                  src="~/assets/logo/transparent/black.png"
+                  src="~/assets/logo/transparent/language-lab.png"
                 >
               </NuxtLink>
               <button
@@ -200,7 +200,7 @@ const isActive = (path: string) => {
               </div>
 
         <!-- User Menu Section for Mobile-->
-    <div class="p-4 border-t border-gray-200">
+    <div class="p-4 border-t border-primary/30">
       <div
         class="flex items-center gap-2 mb-4"
         :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion, 'justify-between': !isSideBarMinifiedForDesktopVersion }"
@@ -299,7 +299,7 @@ const isActive = (path: string) => {
 
   <!-- Desktop NavBar -->
   <div
-    class="h-full hidden md:flex flex-col justify-between bg-gradient-to-br from-violet-50 via-purple-50/80 to-violet-50/60 border-r border-primary/30 transition-all duration-300 ease-in-out"
+    class="h-full hidden md:flex flex-col justify-between bg-primary/20 border-r border-primary/30 transition-all duration-300 ease-in-out"
     :class="{
       'w-20': isSideBarMinifiedForDesktopVersion,
       'w-72': !isSideBarMinifiedForDesktopVersion,
@@ -324,14 +324,14 @@ const isActive = (path: string) => {
         <img
           v-if="!isSideBarMinifiedForDesktopVersion"
           alt="LinguaLab Logo"
-          class="h-15 w-auto m-auto"
-          src="~/assets/logo/transparent/black.png"
+          class="h-20 w-auto m-auto"
+          src="~/assets/logo/transparent/language-lab.png"
         />
         <img
           v-else
           alt="LinguaLab Logo"
           class="h-8 w-auto"
-          src="~/assets/logo/transparent/black.png"
+          src="~~/assets/logo/transparent/language-lab.png"
         >
       </NuxtLink>
     </div>
@@ -465,7 +465,7 @@ const isActive = (path: string) => {
     </div>
 
     <!-- User Menu Section -->
-    <div class="p-4 border-t border-gray-200">
+    <div class="p-4 border-t border-primary/30">
       <div
         class="flex items-center gap-2"
         :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion, 'justify-between': !isSideBarMinifiedForDesktopVersion }"

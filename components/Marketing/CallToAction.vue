@@ -110,7 +110,7 @@ onMounted(() => {
         </div>
 
        <div class="flex flex-col gap-4 items-center justify-center">
-         <img src="/public/heroart.png" alt="" class="w-800 h-auto" />
+         <img src="/public/heroillustration.png" alt="" class="w-800 h-auto" />
  
          <!-- <img src="/public/hero2.png" alt="Call to Action" class="w-600 h-auto" />
          <img src="/public/hero1.png" alt="" class="w-600 h-auto" /> -->
