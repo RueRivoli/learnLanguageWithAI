@@ -89,7 +89,7 @@ onMounted(() => {
           <!-- CTAs + UsedBy -->
           <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
             <NuxtLink
-              :to="{ path: '/authorization/auth/', query: { toCreateAccount: 'true' } }"
+              :to="{ path: '/authorization/auth/?toCreateAccount=true', query: { toCreateAccount: 'true' } }"
               class="btn btn-primary text-lg font-semibold px-8 flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
             >
               Get Started For Free
@@ -104,7 +104,7 @@ onMounted(() => {
             </NuxtLink>
           </div>
 
-          <div class="mt-2 w-full inline-flex items-center gap-3 rounded-lg bg-base-200/70 px-4 py-2 ring-1 ring-base-content/10 backdrop-blur-sm">
+          <div class="mt-2 w-full inline-flex items-center gap-3 rounded-lg bg-base-200/70 px-4 py-2">
             <MarketingUsedBy />
           </div>
         </div>

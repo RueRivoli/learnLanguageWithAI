@@ -54,7 +54,12 @@ const handleSignUp = async () => {
       });
     }
   } catch (error: unknown) {
-    connexionError.value = error.message;
+    const errorMessage = error instanceof Error ? error.message : "An error occurred";
+    if (errorMessage.includes("over_email_send_rate_limit") || errorMessage.includes("rate limit exceeded")) {
+      connexionError.value = "Too many signup attempts. Please wait a few minutes before trying again.";
+    } else {
+      connexionError.value = errorMessage;
+    }
     isLoading.value = false;
   }
 };
