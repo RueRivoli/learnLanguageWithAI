@@ -40,7 +40,7 @@ const handleSignUp = async () => {
       password: state.password,
       options: {
         emailRedirectTo:
-          process.env.FRONTEND_URL + "/authorization/confirmation-account",
+          window.location.origin + "/authorization/confirmation-account",
       },
     });
     if (error) throw error;
