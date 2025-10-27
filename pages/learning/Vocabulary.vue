@@ -228,7 +228,7 @@ const handleExpressionLearningStatus = async (
       >
         <!-- Header -->
         <div
-          class="bg-gradient-to-r from-gray-50/50 to-white p-5 border-b border-gray-100/60"
+          class="bg-gradient-to-r from-gray-50/50 to-white p-5"
         >
           <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
@@ -244,7 +244,7 @@ const handleExpressionLearningStatus = async (
               :first-tab="vocabularyFirstTab"
               :second-tab="vocabularySecondTab"
               @tab-active-changed="
-                (activeTab) => (activeVocabularyTab = activeTab)
+                (activeTab) => {selectedWord = null; selectedExpression = null; (activeVocabularyTab = activeTab)}
               "
             />
           </div>
@@ -431,15 +431,11 @@ const handleExpressionLearningStatus = async (
     <div class="col-span-1 flex flex-col grow-1">
       <div class="h-full">
         <LearningItemDefinition
-          v-if="activeVocabularyTab === 1"
-          class="bg-white p-6 rounded-md border-l border-primary/20"
+          class="p-6 rounded-lg"
+          :class="{'bg-primary/20 border-l-4 border-primary': selectedWord, 'bg-warning/20 border-l-4 border-warning': selectedExpression, 'bg-white': !selectedWord && !selectedExpression}"
           :word="selectedWord"
-        />
-        <LearningItemDefinition
-          v-else
-          class="bg-white p-6 rounded-md border-l border-primary/20"
           :expression="selectedExpression"
-          type="expression"
+          :type="selectedWord ? 'word' : 'expression'"
         />
       </div>
     </div>

@@ -83,12 +83,7 @@ getInfoUser();
 
 <template>
   <!-- Subtle Background -->
-  <div class="min-h-screen bg-blue-50 relative">
-    <!-- Very subtle pattern -->
-    <div class="absolute inset-0 opacity-5">
-      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, hsl(var(--p)) 1px, transparent 0); background-size: 20px 20px;"></div>
-    </div>
-    
+  <div class="min-h-screen bg-base-100 relative">
     <!-- Content -->
     <div class="relative z-10 rounded-lg p-5">
       <div class="max-w-7xl mx-auto">

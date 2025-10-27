@@ -10,7 +10,7 @@ import {
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-primary/10 py-24 sm:py-32">
+  <section id="how-it-works" class="relative overflow-hidden bg-primary/10 py-24 sm:py-32">
 
 
     <div class="mx-auto max-w-[90rem] px-6 lg:px-8">

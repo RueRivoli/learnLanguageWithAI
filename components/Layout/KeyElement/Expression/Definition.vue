@@ -19,7 +19,7 @@ const emit = defineEmits(["click"]);
 
  <template>
   <div
-  class="bg-white border-l-4 border-warning rounded-lg cursor-pointer transition-all duration-300"
+  class="bg-warning/20 border-l-4 border-warning rounded-lg cursor-pointer transition-all duration-300"
    :class="props.minified ? 'p-2' : 'p-3'"
   @click="emit('click')"
 >

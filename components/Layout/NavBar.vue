@@ -39,8 +39,11 @@ const showVoucherPromo = ref<boolean>(true);
     <div class="w-full navbar shadow-sm">
       <LayoutLogo />
       <div class="navbar-center">
-        <NuxtLink to="/marketing/working-explanation">
+        <NuxtLink to="/#how-it-works">
           <div class="cursor ml-20 mr-10">How does it work ?</div>
+        </NuxtLink>
+        <NuxtLink to="/#syllabus">
+          <div class="cursor ml-20 mr-10">What is the program about ?</div>
         </NuxtLink>
         <NuxtLink to="/marketing/supported-languages">
           <div class="cursor">Which language is supported ?</div>
@@ -84,7 +87,7 @@ const showVoucherPromo = ref<boolean>(true);
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <NuxtLink to="/marketing/working-explanation">
+              <NuxtLink to="/#how-it-works">
                 <div>How does it work ?</div>
               </NuxtLink>
               <NuxtLink to="/marketing/supported-languages"

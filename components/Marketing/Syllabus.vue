@@ -45,6 +45,7 @@ watchEffect(async () => {
 
 <template>
   <section
+    id="syllabus"
     class="bg-primary/10 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
   >
     <div class="max-w-7xl mx-auto">

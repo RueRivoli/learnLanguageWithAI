@@ -5,7 +5,7 @@ import type { Database } from "~/supabase/types";
 export const vocabularyFirstTab = { 
   title: "Words", 
   icon: "book",
-  activeBgColorClass: "bg-gradient-to-r from-blue-500 to-indigo-600",
+  activeBgColorClass: "bg-primary",
   activeTxtColorClass: "text-white"
 };
 export const vocabularySecondTab = { 

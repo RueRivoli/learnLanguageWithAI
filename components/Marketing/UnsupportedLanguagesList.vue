@@ -77,7 +77,7 @@ getUnsupportedLanguages();
 
 <template>
       <!-- Vote for Future Languages Section -->
-      <div class="mt-24">
+      <div id="unsupported-languages" class="mt-24">
         <!-- Section Header -->
         <div class="text-center mb-12">
           <div class="flex items-center justify-center gap-3 mb-4">

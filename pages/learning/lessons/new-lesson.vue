@@ -41,7 +41,7 @@ const isGeneratingLesson = ref(false);
 const isFetchingData = ref<boolean>(false);
 
 const initialModuleSelectedId = ref<number | null>(null);
-const quizGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+const lessonGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
 // Group modules by rule level and order by score within each group
 const groupedModuleOptions = computed(() => {
@@ -201,14 +201,13 @@ const handleModuleSelectionChange = (newModuleId: number) => {
 const handleCancelModal = () => {
   myModalToGetCredits.value?.closeModal();
 };
-
 const handleGenerateStory = async () => {
   let newLesson;
   if (!userStore.isEnoughTokensForOneLesson) {
     myModalToGetCredits.value?.openModal();
     return;
   }
-  quizGenerationModal.value?.openModal();
+  lessonGenerationModal.value?.openModal();
   isGeneratingLesson.value = true;
   if (userId.value && targetedModule.value?.name) {
     newLesson = await generateAIPoweredStoryWithParameters(
@@ -227,37 +226,15 @@ const handleGenerateStory = async () => {
     }
     router.push(`/learning/lessons/${String(newLesson.id)}?loadingImage=true`);
     isGeneratingLesson.value = false;
-    quizGenerationModal.value?.closeModal();
+    lessonGenerationModal.value?.closeModal();
   }
 };
+lessonGenerationModal.value?.openModal();
 </script>
 
 <template>
-  <div id="new_lesson_page" class="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 relative overflow-hidden">
+  <div id="new_lesson_page" class="min-h-screen bg-base-200 relative overflow-hidden">
 
-<!-- Background Elements -->
-<div class="absolute inset-0 overflow-hidden pointer-events-none">
-  <!-- Beautiful base gradient with warm undertone -->
-  <div class="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-violet-100/50"></div>
-  
-  <!-- Soft primary glow - top right -->
-  <div class="absolute -top-40 -right-48 w-[550px] h-[550px] bg-gradient-to-br from-violet-200/40 via-purple-100/25 to-transparent rounded-full blur-3xl opacity-85" style="filter: blur(50px)"></div>
-  
-  <!-- Soft neutral glow - bottom left -->
-  <div class="absolute -bottom-40 -left-48 w-[600px] h-[600px] bg-gradient-to-tr from-slate-200/35 via-slate-100/20 to-transparent rounded-full blur-3xl opacity-80" style="filter: blur(55px)"></div>
-  
-  <!-- Harmonious center accent -->
-  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-r from-violet-100/28 via-purple-50/18 to-slate-50/12 rounded-full blur-3xl opacity-75" style="filter: blur(70px)"></div>
-  
-  <!-- Ambient light layer for warmth -->
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(168,85,247,0.16)_0%,transparent_40%),radial-gradient(ellipse_at_70%_60%,rgba(148,113,233,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_50%_100%,rgba(100,116,139,0.09)_0%,transparent_70%)]"></div>
-  
-  <!-- Subtle premium texture -->
-  <div class="absolute inset-0 opacity-[0.06] bg-[linear-gradient(45deg,transparent_24%,rgba(168,85,247,0.08)_25%,rgba(168,85,247,0.08)_26%,transparent_27%,transparent_74%,rgba(168,85,247,0.08)_75%,rgba(168,85,247,0.08)_76%,transparent_77%,transparent_100%),linear-gradient(-45deg,transparent_24%,rgba(168,85,247,0.08)_25%,rgba(168,85,247,0.08)_26%,transparent_27%,transparent_74%,rgba(168,85,247,0.08)_75%,rgba(168,85,247,0.08)_76%,transparent_77%,transparent_100%)] bg-[length:60px_60px]"></div>
-  
-  <!-- Gentle vignette for depth -->
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.05)_100%)]"></div>
-</div>
 
 <!-- Main Content -->
 <div class="relative py-12">
@@ -504,7 +481,7 @@ const handleGenerateStory = async () => {
             ref="myModalToGetCredits"
             @cancel="handleCancelModal"
           />
-          <QuizGenerationLoadingModal ref="quizGenerationModal" type="quiz"/>
+          <QuizGenerationLoadingModal id="my_modal_generate_lesson" ref="lessonGenerationModal" type="story"/>
   </div>
 </template>
 

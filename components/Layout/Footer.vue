@@ -15,15 +15,24 @@
     <nav>
       <h6 class="footer-title">The platform</h6>
       <a class="link link-hover">Blog</a>
-      <a class="link link-hover">How does it work</a>
-      <a class="link link-hover">Languages supported</a>
-      <a class="link link-hover">Request a language</a>
+      <NuxtLink to="/#how-it-works">
+          <div class="link link-hover">How does it work ?</div>
+        </NuxtLink>
+        <NuxtLink to="/marketing/supported-languages">
+          <div class="link link-hover">Languages supported</div>
+        </NuxtLink>
+        <NuxtLink to="/marketing/supported-languages#unsupported-languages">
+          <div class="link link-hover">Request a language</div>
+        </NuxtLink>
     </nav>
     <nav>
       <h6 class="footer-title">About</h6>
-      <a class="link link-hover">Pricing</a>
-      <a class="link link-hover">Refunds & Cancellation policy</a>
-      <a class="link link-hover">Contact</a>
+      <NuxtLink to="/marketing/contact">
+          <div class="link link-hover">Policy</div>
+      </NuxtLink>
+      <NuxtLink to="/marketing/contact">
+          <div class="link link-hover">Contact Us</div>
+      </NuxtLink>
     </nav>
   </footer>
 </template>

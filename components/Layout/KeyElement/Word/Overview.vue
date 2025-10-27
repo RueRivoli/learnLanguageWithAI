@@ -33,7 +33,7 @@ const props = withDefaults(
     <div class="h-full relative flex flex-col justify-between z-10">
       <div class="flex items-center justify-between mb-3">
         <div class="flex-1">
-          <h3 class="text-base font-semibold text-gray-900 mb-0.5">
+          <h3 class="text-gray-900 mb-0.5 text-xl">
             {{ title }}
           </h3>
           <!-- <p class="text-sm text-gray-600">Your vocabulary mastery progress</p> -->

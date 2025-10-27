@@ -223,7 +223,7 @@ watch(totalExpressions, () => {
             <BookOpenIcon class="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 class="text-xl font-semibold text-gray-900">Word Progress</h3>
+            <h3 class="text-gray-900 mb-0.5 text-xl">Word Progress</h3>
             <p class="text-sm text-gray-600">
               Words {{ currentRangeStart }}-{{ currentRangeEnd }} of {{ totalWords }} • 
               Batch {{ currentBatch + 1 }} of {{ totalBatches }}
@@ -305,7 +305,7 @@ watch(totalExpressions, () => {
             <LanguageIcon class="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 class="text-xl font-semibold text-gray-900">Expression Progress</h3>
+            <h3 class="text-gray-900 mb-0.5 text-xl">Expression Progress</h3>
             <p class="text-sm text-gray-600">
               Expressions {{ currentExpressionRangeStart }}-{{ currentExpressionRangeEnd }} of {{ totalExpressions }} • 
               Batch {{ currentExpressionBatch + 1 }} of {{ totalExpressionBatches }}

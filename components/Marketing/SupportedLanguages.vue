@@ -3,7 +3,7 @@ import { GlobeAltIcon } from "@heroicons/vue/24/solid";
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-primary/10 py-24 sm:py-32">
+  <section id="supported-languages-section" class="relative overflow-hidden bg-primary/10 py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <!-- Header -->
       <div class="text-center mb-16">
