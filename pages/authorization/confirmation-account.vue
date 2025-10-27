@@ -4,6 +4,11 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/vue/24/outline";
+
+definePageMeta({
+  layout: "auth",
+}); 
+
 const route = useRoute();
 const client = useSupabaseClient();
 const messageError = ref<string | null>(route.query.error);

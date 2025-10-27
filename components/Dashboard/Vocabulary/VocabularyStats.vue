@@ -139,7 +139,7 @@ const fetchExpressionsForBatch = async () => {
           id: expressionIndex,
           text: expressionData?.text || `Expression ${expressionIndex}`,
           translation: expressionData?.translation || '',
-          isMastered: expressionData?.turkish_expressions_knowledge.expression_mastered ?? false
+          isMastered: expressionData?.turkish_expressions_knowledge?.expression_mastered ?? false
         };
       });
     }

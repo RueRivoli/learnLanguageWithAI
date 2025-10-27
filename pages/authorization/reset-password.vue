@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
+
+definePageMeta({
+  layout: "auth",
+});
 const client = useSupabaseClient();
 const state = ref({ password: "", confirmedPassword: "" });
 
