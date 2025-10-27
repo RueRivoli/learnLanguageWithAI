@@ -9,10 +9,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 // Token packages with prices in cents (euros)
 const tokenPackages = {
-  10: { price: 499, tokens: 10, label: '10 Tokens' },
-  30: { price: 999, tokens: 30, label: '30 Tokens' },
-  70: { price: 1499, tokens: 70, label: '70 Tokens' },
-  150: { price: 2199, tokens: 150, label: '150 Tokens' },
+  100: { price: 599, tokens: 10, label: '10 Tokens' },
+  300: { price: 1399, tokens: 30, label: '30 Tokens' },
+  700: { price: 2499, tokens: 70, label: '70 Tokens' },
+  1500: { price: 3999, tokens: 150, label: '150 Tokens' },
 };
 
 export default defineEventHandler(async (event) => {

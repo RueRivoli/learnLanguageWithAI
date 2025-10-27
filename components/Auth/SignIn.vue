@@ -176,8 +176,7 @@ const handleSignInWithGoogle = async () => {
             </button>
           </div>
         </div>
-        <div>
-
+        <div class="mb-4 flex flex-col items-center">
           <div v-if="!isCaptchaLoaded" class="skeleton h-16 w-64" />
           <div ref="captchaContainerRef" v-if="isCaptchaLoaded" />
           <div v-if="captchaError" class="text-error text-xs mt-1">
@@ -185,7 +184,7 @@ const handleSignInWithGoogle = async () => {
           </div>
         </div>
 
-        <div class="underline text-primary mb-4">
+        <div class="underline text-primary mb-4 mt-2">
           <NuxtLink to="/authorization/password-forgotten/">
             <span class="underline-offset-4 text-primary dark:text-white"
               >Password Forgotten ?</span

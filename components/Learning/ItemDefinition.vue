@@ -44,7 +44,8 @@ const emptyMessage = computed(() => {
         >{{ props.type === "word" ? props.word.text : props.expression.text }}
       </span>
       <br v-if="props.type === 'expression'" />
-      <span class="italic">
+      <LanguageIcon class="w-4 h-4" />
+      <span class="ml-2">
         {{ props.type === "word" ? word.translation : expression.translation }}</span
       >
       <div v-if="props.type === 'word'" :class="getClassWordRole(word.role)" class="ml-2">
