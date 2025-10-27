@@ -666,7 +666,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               ref="myModalToGetCredits"
               @cancel="handleCancelModal"
             />
-            <QuizGenerationLoadingModal ref="quizGenerationModal" type="quiz"/>
+            <QuizGenerationLoadingModal id="my_modal_generate_quiz"  ref="quizGenerationModal" type="quiz"/>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ definePageMeta({
 });
 useHead({
   title: "Language concepts",
-  titleTemplate: "%s - Learn languages with AI",
+  titleTemplate: "%s - Tookan AI",
   meta: [
     { name: "concept-units", content: "width=device-width, initial-scale=1" },
   ],

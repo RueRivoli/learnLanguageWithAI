@@ -201,6 +201,7 @@ const handleModuleSelectionChange = (newModuleId: number) => {
 const handleCancelModal = () => {
   myModalToGetCredits.value?.closeModal();
 };
+
 const handleGenerateStory = async () => {
   let newLesson;
   if (!userStore.isEnoughTokensForOneLesson) {
@@ -229,7 +230,6 @@ const handleGenerateStory = async () => {
     lessonGenerationModal.value?.closeModal();
   }
 };
-lessonGenerationModal.value?.openModal();
 </script>
 
 <template>
@@ -481,7 +481,11 @@ lessonGenerationModal.value?.openModal();
             ref="myModalToGetCredits"
             @cancel="handleCancelModal"
           />
-          <QuizGenerationLoadingModal id="my_modal_generate_lesson" ref="lessonGenerationModal" type="story"/>
+          <QuizGenerationLoadingModal 
+            id="my_modal_generate_lesson" 
+            ref="lessonGenerationModal" 
+            type="story"
+          />
   </div>
 </template>
 

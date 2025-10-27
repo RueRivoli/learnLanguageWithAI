@@ -58,7 +58,6 @@ const pageNumbers = computed(() => {
         pages.push("...");
         pages.push(totalPages.value);
       }
-      console.log("pages", pages)
     }
  
     return pages;

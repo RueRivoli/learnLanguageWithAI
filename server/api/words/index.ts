@@ -22,7 +22,6 @@ export default defineEventHandler(async (event) => {
     .from("turkish_words")
     .select(
       "id, turkish_words_knowledge!inner(word_mastered)").eq("turkish_words_knowledge.word_mastered", true)
-    console.log('data', data)
     if (data) {
       const learnedWordIdsToExclude = data.map(({id}) => id)
       const IdToExclude = `(${learnedWordIdsToExclude.join(',')})`

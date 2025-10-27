@@ -27,14 +27,14 @@ defineExpose({
 </script>
 
 <template>
-  <dialog ref="loadingModal" :id="props.id" class="modal backdrop-blur-sm">
+  <dialog ref="loadingModal" :id="props.id ?? undefined" class="modal backdrop-blur-sm">
     <div class="modal-box max-w-md bg-base-100 p-0 shadow-2xl">
       <!-- Header -->
-      <div class="px-8 pt-8 pb-6 border-b border-base-300">
-        <h3 class="text-2xl font-semibold text-base-content tracking-tight" style="font-family: 'Inter', sans-serif;">
+      <div class="bg-primary text-white p-4 border-b border-base-300">
+        <h3 class="text-2xl font-semibold tracking-tight" style="font-family: 'Inter', sans-serif;">
           Generating your {{ props.type }}
         </h3>
-        <p class="mt-2 text-sm text-base-content/60">
+        <p class="mt-2 text-sm">
           This will only take a short moment
         </p>
       </div>
@@ -44,13 +44,12 @@ defineExpose({
         <div class="flex flex-col items-center justify-center space-y-6">
           <!-- Animated Loading Spinner -->
           <div class="relative">
-            <!-- Outer ring with pulse animation -->
-            <div class="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
-            
-            <!-- Middle ring -->
-            <div class="relative w-20 h-20 rounded-full bg-gradient-to-tr from-primary/30 to-primary/10 flex items-center justify-center">
-              <!-- Inner spinning circle -->
-              <div class="w-16 h-16 rounded-full border-4 border-base-300 border-t-primary animate-spin" />
+            <div class="flex items-center justify-center space-x-4">
+              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-1" />
+              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-2" />
+              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-3" />
+              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-4" />
+              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-5" />
             </div>
           </div>
           
@@ -59,18 +58,6 @@ defineExpose({
             <p class="text-base font-medium text-base-content">
               Creating your personalized {{ props.type }}
             </p>
-            <div class="flex items-center justify-center space-x-1">
-              <span class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0ms;" />
-              <span class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 150ms;" />
-              <span class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 300ms;" />
-            </div>
-          </div>
-          
-          <!-- Progress hint -->
-          <div class="w-full max-w-xs">
-            <div class="bg-base-200 rounded-full h-1.5 overflow-hidden">
-              <div class="bg-gradient-to-r from-primary to-secondary h-full animate-progress" />
-            </div>
           </div>
         </div>
       </div>
@@ -91,5 +78,39 @@ defineExpose({
 .animate-progress {
   animation: progress 1.5s ease-in-out infinite;
   width: 40%;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.bounce-1 {
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.bounce-2 {
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+.bounce-3 {
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.bounce-4 {
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.45s;
+}
+
+.bounce-5 {
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.6s;
 }
 </style>

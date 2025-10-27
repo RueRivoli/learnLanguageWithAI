@@ -71,7 +71,6 @@ const getVocabularyFromLesson = async () => {
       headers,
     },
   );
-  console.log("data", data.value);
   if (data.value) {
     grammarRuleMetaData.value = {
       level: data.value.turkish_grammar_rules.difficulty_class,
@@ -80,7 +79,6 @@ const getVocabularyFromLesson = async () => {
       id: data.value.turkish_grammar_rules.id,
       symbol: data.value.turkish_grammar_rules.symbol,
     }
-    console.log("grammarRuleMetaData", grammarRuleMetaData.value);
     wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => {return { ...word.turkish_words, isMastered: false }}));
     expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => {return { ...expression.turkish_expressions, isMastered: false }}));
   }
@@ -105,7 +103,6 @@ const getAdditionnalExpressionsForQuiz = async () => {
   });
   if (data && (data as any).data) {
     expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => {return { ...expression.turkish_expressions, isMastered: true }})));
-    console.log("expressionsForQuiz", expressionsForQuiz.value);
    }
 }
 

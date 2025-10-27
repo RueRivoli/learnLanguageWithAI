@@ -13,14 +13,12 @@ export default defineEventHandler(async (event) => {
     if (!body.prompt) {
       throw new Error('Missing prompt');
     }
-    console.log('gpt/generation/image.post', body)
 
     // Validate required environment variables
     if (!process.env.SUPABASE_URL || !process.env.SERVICE_SUPABASE_ANON_KEY) {
       throw new Error('Supabase configuration incomplete');
     }
 
-    console.log('Generating image with GPT-Image-1...');
     const img = await openai.images.generate({
       model: "gpt-image-1",
       prompt: getPromptForImageGeneration(body.prompt),
@@ -30,7 +28,6 @@ export default defineEventHandler(async (event) => {
 
     // Convert base64 to buffer
     const imageBuffer = Buffer.from(img.data[0].b64_json, "base64");
-    console.log(`Image generated successfully, size: ${imageBuffer.length} bytes`);
 
     // Generate a unique filename
     const timestamp = Date.now();
@@ -38,7 +35,6 @@ export default defineEventHandler(async (event) => {
     const fileName = `${userId}/gpt_image_${timestamp}_${random}.png`;
     // Upload to Supabase storage
     const bucketName = process.env.SUPABASE_BUCKET_NAME || 'images';
-    console.log(`Uploading image to Supabase storage: ${fileName} in bucket ${bucketName}`);
 
     const { data: uploadData, error: uploadError } = await supabaseAuthToken.storage
       .from(bucketName)
@@ -70,7 +66,6 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    console.log('Upload successful:', uploadData);
 
     // Get the public URL
     const { data: urlData } = supabaseAuthToken.storage
@@ -78,7 +73,6 @@ export default defineEventHandler(async (event) => {
       .getPublicUrl(uploadData.path);
 
     const supabaseImageUrl = urlData.publicUrl;
-    console.log('Supabase public URL generated:', supabaseImageUrl);
 
     // Update story if storyId is provided
     if (body.storyId) {

@@ -260,6 +260,6 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
         ref="myModalToGetCredits"
         @cancel="handleCancelModal"
     />
-    <QuizGenerationLoadingModal :key="openingModalId" ref="quizGenerationModal" type="quiz"/>
+    <QuizGenerationLoadingModal id="my_modal_generate_quiz" :key="openingModalId" ref="quizGenerationModal" type="quiz"/>
   </div>
 </template>

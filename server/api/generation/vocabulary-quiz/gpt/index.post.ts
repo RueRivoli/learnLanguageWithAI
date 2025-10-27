@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
       }
     })
     if (result && result.choices[0].message.content) {
-        console.log('vocabulary quiz', result.choices[0].message.content)
         return result.choices[0].message.content
       }
     } catch (error) {
