@@ -112,9 +112,9 @@ watch(() => userStore.pseudo, (newPseudo) => {
 <template>
   <div class="max-w-full min-h-screen">
     <div class="min-h-screen">
-      <div class="min-h-screen h-full flex flex-col bg-white rounded-lg shadow-md">
+      <div class="min-h-screen h-full flex flex-col rounded-lg shadow-md">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-gray-50/50 to-white p-5 border-b border-gray-100/60">
+        <div class="p-5 border-b border-gray-100/60">
           <LayoutHeadingPlus
             title="Account Settings"
             description="Manage your profile and preferences"

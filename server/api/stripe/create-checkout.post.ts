@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
             currency: 'eur',
             product_data: {
               name: packageInfo.label,
-              description: `Generate ${packageInfo.tokens} stories and ${packageInfo.tokens * 2} grammar quizzes`,
+              description: `Generate ${packageInfo.tokens} Stories, ${packageInfo.tokens * 4} Grammar Quizzes`,
             },
             unit_amount: packageInfo.price,
           },

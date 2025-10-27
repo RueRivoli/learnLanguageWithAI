@@ -38,14 +38,13 @@ const emptyMessage = computed(() => {
 
 <template>
   <div v-if="isExistingItem" class="w-full text-pretty shadow-md">
-    <div class="text-2xl align-center">
+    <div class="text-2xl flex flex-wrap items-center">
       <!-- "font-bold mr-2 underline underline-offset-3" -->
       <span class="font-bold text-gray-900 leading-tight mr-2"
         >{{ props.type === "word" ? props.word.text : props.expression.text }}
       </span>
       <br v-if="props.type === 'expression'" />
-      <LanguageIcon class="w-4 h-4" />
-      <span class="ml-2">
+      <span>
         {{ props.type === "word" ? word.translation : expression.translation }}</span
       >
       <div v-if="props.type === 'word'" :class="getClassWordRole(word.role)" class="ml-2">
@@ -70,13 +69,12 @@ const emptyMessage = computed(() => {
             }}
           </span>
         </div>
-        <div class="italic">
-          {{
+          <div>
+          <span>{{
             props.type === "word"
               ? word.sentenceEn
               : expression.sentenceEn
-          }}
-        </div>
+          }}</span></div>
       </div>
       <div
         v-if="
