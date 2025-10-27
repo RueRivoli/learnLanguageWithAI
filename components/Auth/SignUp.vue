@@ -27,6 +27,7 @@ const {
   onCaptchaExpired,
   onCaptchaError,
   validateCaptcha,
+  resetCaptcha,
   HCAPTCHA_SITE_KEY,
 } = useHCaptcha();
 
@@ -74,15 +75,17 @@ const handleSignUpWithGoogle = async () => {
 
 const handleSignUp = async () => {
   connexionError.value = null;
-  const emailOrPasswordError = getEmailPasswordInvalidityMessage(state);
-  if (emailOrPasswordError !== null) {
-    connexionError.value = emailOrPasswordError;
+  
+  // First validate captcha BEFORE email/password check
+  // This ensures captcha error is shown first if not filled
+  if (!validateCaptcha()) {
+    connexionError.value = captchaError.value || "Please complete the captcha verification.";
     return;
   }
   
-  // Validate captcha
-  if (!validateCaptcha()) {
-    connexionError.value = captchaError.value || "Please complete the captcha verification.";
+  const emailOrPasswordError = getEmailPasswordInvalidityMessage(state);
+  if (emailOrPasswordError !== null) {
+    connexionError.value = emailOrPasswordError;
     return;
   }
   
@@ -115,12 +118,17 @@ const handleSignUp = async () => {
     const errorMessage = error instanceof Error ? error.message : "An error occurred";
     
     // Handle specific error types
-    if (errorMessage.includes("over_email_send_rate_limit") || errorMessage.includes("rate limit exceeded")) {
+    if (errorMessage.includes("captcha") || errorMessage.includes("CAPTCHA")) {
+      connexionError.value = "Captcha verification is required. Please complete the captcha verification.";
+      resetCaptcha();
+    } else if (errorMessage.includes("over_email_send_rate_limit") || errorMessage.includes("rate limit exceeded")) {
       connexionError.value = "Too many signup attempts. Please wait a few minutes before trying again.";
     } else if (errorMessage.includes("timeout") || errorMessage.includes("network") || errorMessage.includes("connection")) {
       connexionError.value = "Connection timeout. Please check your internet connection and try again. If the problem persists, contact support.";
     } else if (errorMessage.includes("SMTP") || errorMessage.includes("email") || errorMessage.includes("send")) {
       connexionError.value = "Unable to send confirmation email. Please try again in a few minutes or contact support.";
+    } else if (errorMessage.includes("Invalid login credentials") || errorMessage.includes("invalid password") || errorMessage.includes("invalid email")) {
+      connexionError.value = "Invalid email or password. Please check your credentials.";
     } else {
       connexionError.value = errorMessage;
     }

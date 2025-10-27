@@ -1,9 +1,7 @@
 export const useHCaptcha = () => {
   // Get hCaptcha site key from Nuxt runtime config
   const config = useRuntimeConfig()
-  const HCAPTCHA_SITE_KEY = config.public.hCaptchaSiteKey 
-  
-  // || '20000000-ffff-ffff-ffff-000000000002' // Demo site key for development
+  const HCAPTCHA_SITE_KEY = config.public.hCaptchaSiteKey || '20000000-ffff-ffff-ffff-000000000002' // Demo site key for development
   const captchaToken = ref<string | null>(null)
   const captchaError = ref<string | null>(null)
   const isCaptchaLoaded = ref(false)
