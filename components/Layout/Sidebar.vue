@@ -121,7 +121,7 @@ const isActive = (path: string) => {
                       :class="{
                         'text-indigo-600': isActive('/learning/dashboard'),
                       }"
-                      >Dashboard</span
+                      >Progress</span
                     >
                   </NuxtLink>
 
@@ -144,7 +144,7 @@ const isActive = (path: string) => {
                       :class="{
                         'text-indigo-600': isActive('/learning/stories'),
                       }"
-                      >Stories</span
+                      >Lessons</span
                     >
                   </NuxtLink>
 
@@ -381,7 +381,7 @@ const isActive = (path: string) => {
               :class="{
                 'text-indigo-600': isActive('/learning/dashboard'),
               }"
-              >Dashboard</span
+              >Progress</span
             >
           </NuxtLink>
 
@@ -406,7 +406,7 @@ const isActive = (path: string) => {
               :class="{
                 'text-indigo-600': isActive('/learning/stories'),
               }"
-              >Stories</span
+              >Lessons</span
             >
           </NuxtLink>
 

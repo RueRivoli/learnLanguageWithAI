@@ -233,7 +233,7 @@ const handleExpressionLearningStatus = async (
           <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
               title="Vocabulary"
-              description="Most Common Words and Expressions"
+              description="Most Common Turkish Words and Expressions"
             >
               <LanguageIcon class="h-6 w-6 text-primary" />
             </LayoutHeadingPlus>

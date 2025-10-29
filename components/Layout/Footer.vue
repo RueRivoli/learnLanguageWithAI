@@ -27,10 +27,10 @@
     </nav>
     <nav>
       <h6 class="footer-title">About</h6>
-      <NuxtLink to="/marketing/contact">
+      <NuxtLink to="/about/contact">
           <div class="link link-hover">Policy</div>
       </NuxtLink>
-      <NuxtLink to="/marketing/contact">
+      <NuxtLink to="/about/contact">
           <div class="link link-hover">Contact Us</div>
       </NuxtLink>
     </nav>

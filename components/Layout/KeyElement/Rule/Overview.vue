@@ -48,7 +48,7 @@ const props = withDefaults(
 
             
             <!-- Icon with professional styling -->
-            <div class="flex-shrink-0 ml-3">
+            <div class="flex-shrink-0 ml-3 self-start">
               <div class="relative">
                   <div
                   class='relative p-2 rounded-lg'

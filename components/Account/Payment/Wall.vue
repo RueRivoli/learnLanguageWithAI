@@ -31,14 +31,14 @@ const creditPackages = [
     credits: 100, 
     price: 5.99, 
     stories: 10, 
-    quizzes: 20,
+    quizzes: 40,
     popular: false 
   },
   { 
     credits: 300, 
     price: 13.99,
     stories: 30, 
-    quizzes: 60,
+    quizzes: 120,
     popular: true,
     discount: 17.97 
   },
@@ -46,7 +46,7 @@ const creditPackages = [
     credits: 700, 
     price: 24.99, 
     stories: 70, 
-    quizzes: 140,
+    quizzes: 280,
     popular: false,
     discount: 41.93 
   },
@@ -54,7 +54,7 @@ const creditPackages = [
     credits: 1500, 
     price: 39.99, 
     stories: 150, 
-    quizzes: 300,
+    quizzes: 600,
     popular: false,
     discount: 89.85  
   },
@@ -188,7 +188,7 @@ const handlePurchase = async (credits: number) => {
                             <svg class="w-4 h-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"/>
                             </svg>
-                            <span class="text-gray-700 font-medium">{{ pkg.quizzes }} Quizzes</span>
+                            <span class="text-gray-700 font-medium">{{ pkg.quizzes }} Grammar Quizzes</span>
                           </div>
                         </div>
 

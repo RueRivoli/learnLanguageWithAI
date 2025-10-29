@@ -384,7 +384,7 @@ const handleGenerateStory = async () => {
             </div>
                     
             <!-- Words Selection Section -->
-             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 shadow-lg" title="New Words" description="Select 10 words for your lesson">
+             <LayoutKeyElementWordCard v-else backgroundClasses="bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 shadow-lg" title="Words" description="Select 10 words for your lesson">
                 <template #top-right-corner>
                     <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyWordList"/>
                 </template>
@@ -411,7 +411,7 @@ const handleGenerateStory = async () => {
               </div>
 
               <!-- Expressions Selection Section -->
-              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 shadow-lg" title="Expressions to Learn" description="Select 3 expressions for your lesson">
+              <LayoutKeyElementExpressionCard v-else backgroundClasses="bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 shadow-lg" title="Expressions" description="Select 3 expressions for your lesson">
                 <template #top-right-corner>
                   <PencilSquareIcon class="h-5 w-5 cursor-pointer inline" @click="handleModifyExpressionList"/>
                 </template>

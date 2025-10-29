@@ -1,4 +1,3 @@
-import { createClient } from "@supabase/supabase-js";
 import { createError, defineEventHandler, getHeader, getQuery } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/auth/supabaseClient";
 

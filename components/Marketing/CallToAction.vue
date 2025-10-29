@@ -62,7 +62,7 @@ onMounted(() => {
   <section class="relative overflow-hidden bg-neutral/10 min-h-[70vh]">
     <!-- Background: soft gradient base + subtle grid + refined glows -->
 
-    <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 xl:px-12 pt-24 pb-20 sm:pt-36 sm:pb-32 lg:pt-44 lg:pb-40">
+    <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 xl:px-12 pt-14 pb-20 sm:pt-36 sm:pb-32 lg:pt-34 lg:pb-40">
       <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <!-- Left: Copy -->
         <div class="space-y-10">

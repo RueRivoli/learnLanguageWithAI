@@ -23,7 +23,6 @@ const {
 
 const showAllEnglishTranslations = ref(true);
 const showAllTips = ref(true);
-const showTips = ref({});
 const activeSentenceTranslation = ref<number | null>(null);
 const isStoryShown = ref<boolean>(true);
 const isGeneratingQuiz = ref<boolean>(false);
@@ -548,7 +547,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   >
                     <!-- Original Sentence -->
                     <p 
-                      class="text-xl font-light text-slate-700 leading-relaxed font-serif tracking-wide cursor-pointer hover:bg-primary/10 hover:rounded-lg px-2 py-1 transition-all duration-300"
+                      class="text-xl font-light text-slate-700 leading-relaxed font-serif tracking-wide cursor-pointer hover:rounded-lg px-2 py-1 transition-all duration-300"
                     >
                       <span class="inline-flex items-center gap-2">
                         {{ sentence.original }}

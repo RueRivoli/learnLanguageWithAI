@@ -80,37 +80,39 @@ defineExpose({
   width: 40%;
 }
 
-@keyframes pulse {
+@keyframes bounce {
   0%, 100% {
-    opacity: 0.3;
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
   }
   50% {
+    transform: translateY(-20px) scale(1.1);
     opacity: 1;
   }
 }
 
 .bounce-1 {
-  animation: pulse 1.5s ease-in-out infinite;
+  animation: bounce 1.4s ease-in-out infinite;
   animation-delay: 0s;
 }
 
 .bounce-2 {
-  animation: pulse 1.5s ease-in-out infinite;
-  animation-delay: 0.15s;
+  animation: bounce 1.4s ease-in-out infinite;
+  animation-delay: 0.1s;
 }
 
 .bounce-3 {
-  animation: pulse 1.5s ease-in-out infinite;
-  animation-delay: 0.3s;
+  animation: bounce 1.4s ease-in-out infinite;
+  animation-delay: 0.2s;
 }
 
 .bounce-4 {
-  animation: pulse 1.5s ease-in-out infinite;
-  animation-delay: 0.45s;
+  animation: bounce 1.4s ease-in-out infinite;
+  animation-delay: 0.3s;
 }
 
 .bounce-5 {
-  animation: pulse 1.5s ease-in-out infinite;
-  animation-delay: 0.6s;
+  animation: bounce 1.4s ease-in-out infinite;
+  animation-delay: 0.4s;
 }
 </style>

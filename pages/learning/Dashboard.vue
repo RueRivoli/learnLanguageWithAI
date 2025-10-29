@@ -91,8 +91,8 @@ getInfoUser();
       <div class="mb-4">
         <div class="flex items-center justify-between">
           <LayoutHeadingPlus
-            title="Dashboard"
-            description="Track your learning progress"
+            title="Progress on Vocabulary"
+            description="Your Knowledge on the Most Important Vocabulary in Turkish"
           >
             <ChartBarIcon class="h-6 w-6 text-primary" />
           </LayoutHeadingPlus>

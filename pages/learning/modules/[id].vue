@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowLongRightIcon } from "@heroicons/vue/24/outline";
 import DOMPurify from "dompurify";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
 import { getAuthToken } from "~/utils/auth/auth";
@@ -69,8 +70,15 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
         <span class="loading loading-bars loading-xl" />
       </div>
       <div v-else class="p-5">
-        <LayoutHeadingRuleTitle class="px-6" :rule="grammarRule" :main-title="true" />
-        <div class="max-w-4xl mx-auto p-6">
+        <div class="max-w-4xl mx-auto px-6">
+          <LayoutHeadingRuleTitle :rule="grammarRule" :main-title="true" >
+            <NuxtLink
+                to="/modules"
+                class="btn btn-ghost font-semibold pl-8"
+              ><span>Back To Modules</span>
+                <ArrowLongRightIcon class="h-5 w-5" />
+              </NuxtLink>
+          </LayoutHeadingRuleTitle>
           <p v-html="sanitizedIntroTemplate" />
           <p v-html="sanitizedDescriptionTemplate" />
           <p v-html="sanitizedExtendedDescriptionTemplate" />

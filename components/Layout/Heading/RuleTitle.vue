@@ -22,7 +22,7 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div class="flex items-center justify-between mb-3">
+  <div class="flex items-center justify-between mb-4">
     <div class="flex items-center space-x-3">
       <div
         v-if="props.rule"
@@ -61,5 +61,6 @@ const props = withDefaults(
         </p>
       </div>
     </div>
+    <slot/>
   </div>
 </template>

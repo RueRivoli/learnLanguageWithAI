@@ -3,20 +3,10 @@
 <template>
   <div class="text-xl px-3 font-bold logo">
     <NuxtLink to="/">
-      <!-- <span class="flex items-center ">
-         <client-only>
-          <Vue3Lottie
-            animation-link="_nuxt/assets/lottie/toucan-logo.json"
-            :height="40"
-            :width="40"
-          />
-        </client-only>
-        <span class="text-neutral">Lingua</span><span>Lab</span>
-      </span> -->
       <img
         alt="LinguaLab Logo"
-        class="h-7 w-auto"
-        src="~/assets/img/navbar/logo-transparent.png"
+        class="h-9 w-auto"
+        src="~/assets/logo/transparent/language-lab-white.png"
       />
     </NuxtLink>
   </div>
