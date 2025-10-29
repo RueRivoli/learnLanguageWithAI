@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { MinusIcon, PlusIcon } from "@heroicons/vue/24/solid";
+import toucanLogoAnimation from "~/assets/lottie/toucan-logo.json";
+
 const faqs = [
   {
     question: "For which language is it working ?",
@@ -39,7 +41,7 @@ function toggle(index) {
     <div class="max-w-7xl mx-auto grid grid-cols-3 gap-8 items-center">
       <div class="col-span-1">
         <Vue3Lottie
-          animation-link="_nuxt/assets/lottie/toucan-logo.json"
+          :animation-data="toucanLogoAnimation"
           :height="400"
           :width="400"
         />

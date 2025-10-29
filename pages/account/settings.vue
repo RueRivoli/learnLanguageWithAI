@@ -12,7 +12,6 @@ useHead({
   meta: [
     { name: "settings", content: "width=device-width, initial-scale=1" },
   ],
-  link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
 });
 
 const route = useRoute();
