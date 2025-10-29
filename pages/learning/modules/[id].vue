@@ -73,7 +73,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
         <div class="max-w-4xl mx-auto px-6">
           <LayoutHeadingRuleTitle :rule="grammarRule" :main-title="true" >
             <NuxtLink
-                to="/modules"
+                to="/learning/modules"
                 class="btn btn-ghost font-semibold pl-8"
               ><span>Back To Modules</span>
                 <ArrowLongRightIcon class="h-5 w-5" />
