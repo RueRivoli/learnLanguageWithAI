@@ -30,21 +30,32 @@ const {
   totalPages,
 } = usePagination(count, itemsPerPage);
 
-const quizGenerationModal = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
-const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+const quizGenerationModal = ref<{
+  openModal: () => void;
+  closeModal: () => void;
+} | null>(null);
+const myModalToGetCredits = ref<{
+  openModal: () => void;
+  closeModal: () => void;
+} | null>(null);
 
 const fetchLessons = async () => {
   isFetchingData.value = true;
-  
+
   // Get the current session for authentication
   const headers = await getAuthToken();
   const results = await $fetch(
     `/api/lessons?page=${currentPage.value}&size=10`,
-    { headers }
+    { headers },
   );
   if (results.error) throw results.error;
   else if (results) {
-    lessons.value = results?.dataResult.data.map(({title_en, img_url, ...lesson}) => ({ ...lesson, titleEn: title_en, imgUrl: img_url})) || [];
+    lessons.value =
+      results?.dataResult.data.map(({ title_en, img_url, ...lesson }) => ({
+        ...lesson,
+        titleEn: title_en,
+        imgUrl: img_url,
+      })) || [];
     count.value = results?.countResult.count || 0;
   }
   isFetchingData.value = false;
@@ -64,7 +75,7 @@ const handleDeleteLesson = async () => {
     const headers = await getAuthToken();
     await $fetch(`/api/lessons/${lessonNameToDelete.value.id}`, {
       method: "DELETE",
-      headers
+      headers,
     });
   }
   isDeletingLesson.value = false;
@@ -86,7 +97,12 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
   if (!ruleId || !lessonId) return;
   if (!user.value?.id) return;
   quizGenerationModal.value?.openModal();
-  await handleGenerationQuiz(ruleId, user.value?.id, `/learning/lessons/${lessonId}/quiz`, String(lessonId));
+  await handleGenerationQuiz(
+    ruleId,
+    user.value?.id,
+    `/learning/lessons/${lessonId}/quiz`,
+    String(lessonId),
+  );
 };
 </script>
 
@@ -178,7 +194,10 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(lesson, index) in lessons" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'">
+                <tr
+                  v-for="(lesson, index) in lessons"
+                  :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
+                >
                   <td class="px-4 py-3">
                     <div class="flex items-center justify-center">
                       <span
@@ -193,7 +212,12 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                       class="flex items-center gap-3 hover:cursor-pointer"
                       @click="router.push(`/learning/lessons/${lesson.id}`)"
                     >
-                      <LayoutHeadingLesson class="hover:cursor-pointer" :title="lesson.title" :titleEn="lesson.titleEn" :storyImgUrl="lesson.imgUrl" />
+                      <LayoutHeadingLesson
+                        class="hover:cursor-pointer"
+                        :title="lesson.title"
+                        :titleEn="lesson.titleEn"
+                        :storyImgUrl="lesson.imgUrl"
+                      />
                       <!-- <div class="hover:cursor-pointer">
                         <div class="text-md tracking-tight font-semibold text-slate-800 tracking-wide">
                           {{ lesson.title }}
@@ -205,12 +229,42 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                     </div>
                   </td>
                   <td>
-                      <div class="flex items-center hover:cursor-pointe">
-                        <LayoutKeyElementRuleBadge class="mr-2" :title="lesson.turkish_grammar_rules.rule_name" :titleEn="lesson.turkish_grammar_rules.rule_name_translation" :level="lesson.turkish_grammar_rules.difficulty_class" :symbol="lesson.turkish_grammar_rules.symbol" :lightMode="true" size="xs"/>
-                        <LayoutKeyElementQuizBadge v-if="lesson.turkish_quizzes_result?.score_global || lesson.turkish_quizzes_result?.score_global === 0" :score="lesson.turkish_quizzes_result.score_global" size="sm" :filledOut="true"/>
-                        <LayoutKeyElementQuizBadge v-else :score="null" size="sm" :quizId="null" :filledOut="false" @click="handleCompleteQuiz(lesson.turkish_grammar_rules.id, lesson.id)"/>
-                      </div>
-                    </td>
+                    <div class="flex items-center hover:cursor-pointe">
+                      <LayoutKeyElementRuleBadge
+                        class="mr-2"
+                        :title="lesson.turkish_grammar_rules.rule_name"
+                        :titleEn="
+                          lesson.turkish_grammar_rules.rule_name_translation
+                        "
+                        :level="lesson.turkish_grammar_rules.difficulty_class"
+                        :symbol="lesson.turkish_grammar_rules.symbol"
+                        :lightMode="true"
+                        size="xs"
+                      />
+                      <LayoutKeyElementQuizBadge
+                        v-if="
+                          lesson.turkish_quizzes_result?.score_global ||
+                          lesson.turkish_quizzes_result?.score_global === 0
+                        "
+                        :score="lesson.turkish_quizzes_result.score_global"
+                        size="sm"
+                        :filledOut="true"
+                      />
+                      <LayoutKeyElementQuizBadge
+                        v-else
+                        :score="null"
+                        size="sm"
+                        :quizId="null"
+                        :filledOut="false"
+                        @click="
+                          handleCompleteQuiz(
+                            lesson.turkish_grammar_rules.id,
+                            lesson.id,
+                          )
+                        "
+                      />
+                    </div>
+                  </td>
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                       <button
@@ -257,9 +311,14 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
       @delete="handleDeleteLesson"
     />
     <AccountPaymentModal
-        ref="myModalToGetCredits"
-        @cancel="handleCancelModal"
+      ref="myModalToGetCredits"
+      @cancel="handleCancelModal"
     />
-    <QuizGenerationLoadingModal id="my_modal_generate_quiz" :key="openingModalId" ref="quizGenerationModal" type="quiz"/>
+    <QuizGenerationLoadingModal
+      id="my_modal_generate_quiz"
+      :key="openingModalId"
+      ref="quizGenerationModal"
+      type="quiz"
+    />
   </div>
 </template>

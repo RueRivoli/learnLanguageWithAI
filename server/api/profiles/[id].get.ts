@@ -2,10 +2,10 @@ import { defineEventHandler, getRouterParam } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
-  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
   const userId = getRouterParam(event, "id");
   if (!userId) {
-    throw ({ statusCode: 400, statusMessage: "Missing user ID" });
+    throw { statusCode: 400, statusMessage: "Missing user ID" };
   }
   const { data, error } = await supabase
     .from("profiles")

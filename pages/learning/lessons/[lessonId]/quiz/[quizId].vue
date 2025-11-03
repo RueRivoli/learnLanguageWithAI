@@ -7,13 +7,23 @@ import type {
 } from "~/types/quizzes/quiz";
 import type { WordContent } from "~/types/vocabulary/word";
 import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
-import { promptGeneratedVocabularyQuiz, promptGeneratedWordQuiz, promptGeneratedExpressionQuiz } from "../../prompts/vocabulary-quiz";
+import {
+  promptGeneratedVocabularyQuiz,
+  promptGeneratedWordQuiz,
+  promptGeneratedExpressionQuiz,
+} from "../../prompts/vocabulary-quiz";
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
-import { mockExpressionQuizQuestions, mockWordQuizQuestions } from "~/mockData/lessons/quiz/index";
+import {
+  mockExpressionQuizQuestions,
+  mockWordQuizQuestions,
+} from "~/mockData/lessons/quiz/index";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/generatedQuiz";
-import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
+import {
+  mockNotParsedExpressionQuizQuestions,
+  mockNotParsedWordQuizQuestions,
+} from "~/mockData/lessons/quiz/notparsed";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import { getAuthToken } from "~/utils/auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
@@ -21,7 +31,6 @@ import { CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
 definePageMeta({
   layout: "quiz",
 });
-
 
 const route = useRoute();
 const lessonId = Number(route.params.lessonId);
@@ -38,13 +47,15 @@ const expressionsQuizQuestions = ref<VocabularyQuizQuestion[] | null>(null);
 const wordsForQuiz = ref<WordContent[]>([]);
 const expressionsForQuiz = ref<ExpressionContent[]>([]);
 
-
 // Information data about the targeted grammar rule to display in the quiz
 const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
 
 // Results modal state
 const showResultsModal = ref(false);
-const myModalToGetCredits = ref<{ openModal: () => void; closeModal: () => void } | null>(null);
+const myModalToGetCredits = ref<{
+  openModal: () => void;
+  closeModal: () => void;
+} | null>(null);
 
 const detailedResults = ref<DetailedResults | null>(null);
 const globalScore = ref<number>(0);
@@ -61,16 +72,12 @@ const handleCancelModal = () => {
   myModalToGetCredits.value?.closeModal();
 };
 
-
 // Fetch lesson data
 const getVocabularyFromLesson = async () => {
   const headers = await getAuthToken();
-  const { data } = await useFetch(
-    `/api/lessons/${lessonId}/vocabulary`,
-    {
-      headers,
-    },
-  );
+  const { data } = await useFetch(`/api/lessons/${lessonId}/vocabulary`, {
+    headers,
+  });
   if (data.value) {
     grammarRuleMetaData.value = {
       level: data.value.turkish_grammar_rules.difficulty_class,
@@ -78,9 +85,19 @@ const getVocabularyFromLesson = async () => {
       nameEn: data.value.turkish_grammar_rules.rule_name_translation,
       id: data.value.turkish_grammar_rules.id,
       symbol: data.value.turkish_grammar_rules.symbol,
-    }
-    wordsForQuiz.value.push(...(data.value.turkish_lesson_words || []).map((word: any) => {return { ...word.turkish_words, isMastered: false }}));
-    expressionsForQuiz.value.push(...(data.value.turkish_lesson_expressions || []).map((expression: any) => {return { ...expression.turkish_expressions, isMastered: false }}));
+    };
+    wordsForQuiz.value.push(
+      ...(data.value.turkish_lesson_words || []).map((word: any) => {
+        return { ...word.turkish_words, isMastered: false };
+      }),
+    );
+    expressionsForQuiz.value.push(
+      ...(data.value.turkish_lesson_expressions || []).map(
+        (expression: any) => {
+          return { ...expression.turkish_expressions, isMastered: false };
+        },
+      ),
+    );
   }
 };
 
@@ -91,7 +108,11 @@ const getAdditionnalWordsForQuiz = async () => {
     headers,
   });
   if (data) {
-    wordsForQuiz.value.push(...(data.map((word: any) => {return { ...word.turkish_words, isMastered: true }})));
+    wordsForQuiz.value.push(
+      ...data.map((word: any) => {
+        return { ...word.turkish_words, isMastered: true };
+      }),
+    );
   }
 };
 
@@ -102,24 +123,28 @@ const getAdditionnalExpressionsForQuiz = async () => {
     headers,
   });
   if (data && (data as any).data) {
-    expressionsForQuiz.value.push(...((data as any).data.map((expression: any) => {return { ...expression.turkish_expressions, isMastered: true }})));
-   }
-}
-
+    expressionsForQuiz.value.push(
+      ...(data as any).data.map((expression: any) => {
+        return { ...expression.turkish_expressions, isMastered: true };
+      }),
+    );
+  }
+};
 
 const getGrammarQuizData = async () => {
   const headers = await getAuthToken();
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
     headers,
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
-      return quizQuestions.map((question) => parseGrammarQuizQuestion(question));
+      return quizQuestions.map((question) =>
+        parseGrammarQuizQuestion(question),
+      );
     },
   });
   if (data.value) {
     grammarQuizQuestions.value = data.value;
   }
 };
-
 
 const getGeneratedVocabularyQuiz = async () => {
   try {
@@ -128,48 +153,60 @@ const getGeneratedVocabularyQuiz = async () => {
       return;
     }
     const headers = await getAuthToken();
-    const generatedWordsQuiz = $fetch(`/api/generation/vocabulary-quiz/claude/words`, {
-      method: "POST",
-      headers,
-      body: {
-        message: promptGeneratedWordQuiz(wordsForQuiz.value)
-      }
-    });
-    
-    const generatedExpressionsQuiz = $fetch(`/api/generation/vocabulary-quiz/claude/expressions`, {
-      headers,
-      method: "POST",
-      body: {
-        message: promptGeneratedExpressionQuiz(expressionsForQuiz.value)
-      }
-    });
-    
+    const generatedWordsQuiz = $fetch(
+      `/api/generation/vocabulary-quiz/claude/words`,
+      {
+        method: "POST",
+        headers,
+        body: {
+          message: promptGeneratedWordQuiz(wordsForQuiz.value),
+        },
+      },
+    );
+
+    const generatedExpressionsQuiz = $fetch(
+      `/api/generation/vocabulary-quiz/claude/expressions`,
+      {
+        headers,
+        method: "POST",
+        body: {
+          message: promptGeneratedExpressionQuiz(expressionsForQuiz.value),
+        },
+      },
+    );
+
     // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
     // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
 
     const [wordsQuizResult, expressionsQuizResult] = await Promise.all([
-      generatedWordsQuiz, 
-      generatedExpressionsQuiz
+      generatedWordsQuiz,
+      generatedExpressionsQuiz,
     ]);
     if (wordsQuizResult) {
       // change generatedQuiz if using mock data
       wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(wordsQuizResult);
       // wordsQuizQuestions.value = mockWordQuizQuestions;
     }
-    
+
     if (expressionsQuizResult) {
       // change generatedQuiz if using mock data
-      expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(expressionsQuizResult);
+      expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(
+        expressionsQuizResult,
+      );
       // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
     }
     userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
   } catch (error) {
-    console.error('Error generating vocabulary quiz:', error);
+    console.error("Error generating vocabulary quiz:", error);
     // Handle error appropriately - maybe set some default values or show error message
   }
 };
 
-const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
+const handleSubmitQuiz = async (results: {
+  score: number;
+  formGrammarQuiz: FormQuizState;
+  detailedResults: DetailedResults;
+}) => {
   detailedResults.value = results.detailedResults;
   const headers = await getAuthToken();
   await $fetch(`/api/quizzes/result/${quizId}`, {
@@ -187,7 +224,7 @@ const handleSubmitQuiz = async(results: { score: number, formGrammarQuiz: FormQu
   setTimeout(() => {
     openResultsModal();
   }, 200);
-}
+};
 
 await Promise.all([
   getGrammarQuizData(),
@@ -217,7 +254,9 @@ isLoadingQuiz.value = false;
           <!-- Question Skeleton -->
           <div class="skeleton-question-section">
             <div class="skeleton-bar skeleton-question skeleton-shimmer"></div>
-            <div class="skeleton-bar skeleton-question-secondary skeleton-shimmer"></div>
+            <div
+              class="skeleton-bar skeleton-question-secondary skeleton-shimmer"
+            ></div>
           </div>
 
           <!-- Options Skeleton -->
@@ -264,7 +303,9 @@ isLoadingQuiz.value = false;
             <div class="spinner-ring"></div>
             <div class="spinner-ring spinner-ring-2"></div>
           </div>
-          <p class="skeleton-loading-text">Preparing your personalized quiz...</p>
+          <p class="skeleton-loading-text">
+            Preparing your personalized quiz...
+          </p>
           <div class="skeleton-progress-bar">
             <div class="skeleton-progress-fill"></div>
           </div>
@@ -274,32 +315,54 @@ isLoadingQuiz.value = false;
       <!-- Sidebar Skeleton -->
       <div class="quiz-skeleton-sidebar">
         <div class="skeleton-sidebar-header">
-          <div class="skeleton-bar skeleton-sidebar-title skeleton-shimmer"></div>
+          <div
+            class="skeleton-bar skeleton-sidebar-title skeleton-shimmer"
+          ></div>
         </div>
 
         <!-- Grammar Section Skeleton -->
         <div class="skeleton-progress-section">
-          <div class="skeleton-bar skeleton-section-title skeleton-shimmer"></div>
+          <div
+            class="skeleton-bar skeleton-section-title skeleton-shimmer"
+          ></div>
           <div class="skeleton-progress-grid">
-            <div v-for="i in 10" :key="`grammar-${i}`" class="skeleton-progress-square skeleton-shimmer"></div>
+            <div
+              v-for="i in 10"
+              :key="`grammar-${i}`"
+              class="skeleton-progress-square skeleton-shimmer"
+            ></div>
           </div>
         </div>
 
         <!-- Vocabulary Section Skeleton -->
         <div class="skeleton-progress-section">
-          <div class="skeleton-bar skeleton-section-title skeleton-shimmer"></div>
+          <div
+            class="skeleton-bar skeleton-section-title skeleton-shimmer"
+          ></div>
           <!-- Words -->
           <div class="skeleton-subsection">
-            <div class="skeleton-bar skeleton-subsection-title skeleton-shimmer"></div>
+            <div
+              class="skeleton-bar skeleton-subsection-title skeleton-shimmer"
+            ></div>
             <div class="skeleton-progress-grid">
-              <div v-for="i in 10" :key="`words-${i}`" class="skeleton-progress-square skeleton-shimmer"></div>
+              <div
+                v-for="i in 10"
+                :key="`words-${i}`"
+                class="skeleton-progress-square skeleton-shimmer"
+              ></div>
             </div>
           </div>
           <!-- Expressions -->
           <div class="skeleton-subsection">
-            <div class="skeleton-bar skeleton-subsection-title skeleton-shimmer"></div>
+            <div
+              class="skeleton-bar skeleton-subsection-title skeleton-shimmer"
+            ></div>
             <div class="skeleton-progress-grid">
-              <div v-for="i in 10" :key="`expressions-${i}`" class="skeleton-progress-square skeleton-shimmer"></div>
+              <div
+                v-for="i in 10"
+                :key="`expressions-${i}`"
+                class="skeleton-progress-square skeleton-shimmer"
+              ></div>
             </div>
           </div>
         </div>
@@ -320,14 +383,21 @@ isLoadingQuiz.value = false;
       @submitQuiz="(results) => handleSubmitQuiz(results)"
     />
     <!-- Results Modal -->
-     <div v-if="showResultsModal" class="modal-overlay">
-      <QuizModal :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" :showResultsModal="showResultsModal" type="full" @close="closeResultsModal" />
-     </div>
-
-     <AccountPaymentModal
-        ref="myModalToGetCredits"
-        @cancel="handleCancelModal"
+    <div v-if="showResultsModal" class="modal-overlay">
+      <QuizModal
+        :detailedResults="detailedResults"
+        :grammarRuleMetaData="grammarRuleMetaData"
+        :globalScore="globalScore"
+        :showResultsModal="showResultsModal"
+        type="full"
+        @close="closeResultsModal"
       />
+    </div>
+
+    <AccountPaymentModal
+      ref="myModalToGetCredits"
+      @cancel="handleCancelModal"
+    />
   </div>
 </template>
 
@@ -366,26 +436,46 @@ isLoadingQuiz.value = false;
   min-height: 100vh;
   background: var(--color-base-200);
   display: flex;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   position: relative;
   animation: fadeIn 0.3s ease-out;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Subtle background pattern */
 .quiz-skeleton-container::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(circle at 25% 25%, var(--color-primary) 0.5px, transparent 0.5px),
-    radial-gradient(circle at 75% 75%, var(--color-primary) 0.5px, transparent 0.5px);
+  background-image:
+    radial-gradient(
+      circle at 25% 25%,
+      var(--color-primary) 0.5px,
+      transparent 0.5px
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      var(--color-primary) 0.5px,
+      transparent 0.5px
+    );
   background-size: 50px 50px;
-  background-position: 0 0, 25px 25px;
+  background-position:
+    0 0,
+    25px 25px;
   opacity: 0.03;
   pointer-events: none;
 }
@@ -473,7 +563,7 @@ isLoadingQuiz.value = false;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   min-height: 100px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -552,7 +642,9 @@ isLoadingQuiz.value = false;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .skeleton-loading-text {
@@ -564,8 +656,13 @@ isLoadingQuiz.value = false;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .skeleton-progress-bar {
@@ -661,7 +758,7 @@ isLoadingQuiz.value = false;
 }
 
 .skeleton-shimmer::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -690,7 +787,7 @@ isLoadingQuiz.value = false;
   .quiz-skeleton-container {
     flex-direction: column;
   }
-  
+
   .quiz-skeleton-sidebar {
     width: 100%;
     border-left: none;
@@ -702,20 +799,18 @@ isLoadingQuiz.value = false;
   .quiz-skeleton-main {
     padding: 1rem;
   }
-  
+
   .skeleton-options-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .skeleton-progress-square {
     width: 40px;
     height: 40px;
   }
-  
+
   .quiz-skeleton-sidebar {
     padding: 1rem;
   }
 }
 </style>
-
-

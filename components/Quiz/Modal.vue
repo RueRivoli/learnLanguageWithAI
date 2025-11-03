@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { ArrowLeftIcon, BookOpenIcon, EyeIcon, LanguageIcon, Square2StackIcon } from '@heroicons/vue/24/outline';
-import { DIFFICULTY_IDS } from '~/utils/learning/grammar';
+import {
+  ArrowLeftIcon,
+  BookOpenIcon,
+  EyeIcon,
+  LanguageIcon,
+  Square2StackIcon,
+} from "@heroicons/vue/24/outline";
+import { DIFFICULTY_IDS } from "~/utils/learning/grammar";
 
 definePageMeta({
   layout: "authenticated",
@@ -8,84 +14,94 @@ definePageMeta({
 
 const props = withDefaults(
   defineProps<{
-    grammarRuleMetaData: {level: 1 | 2 | 3 | 4, name: string} | null,
+    grammarRuleMetaData: { level: 1 | 2 | 3 | 4; name: string } | null;
     loading?: boolean;
     detailedResults?: any;
     globalScore?: number | null;
-    type: 'grammar' | 'vocabulary' | 'full',
+    type: "grammar" | "vocabulary" | "full";
   }>(),
   {
-    type: 'full',
+    type: "full",
     grammarRuleMetaData: null,
     loading: false,
     rule: null,
     detailedResults: null,
-    globalScore: null
+    globalScore: null,
   },
 );
 const greetingMessage = computed(() => {
-    if (!props.globalScore) return `You scored some points!`;
-    if (props.globalScore === 100) {
-      return `Perfect !`;
-    }
-    else if (props.globalScore  >= 90) {
-      return `Close to perfection, some crazy results !`;
-    }
-    else if (props.globalScore  >= 80) {
-      return `Congratulations, your overall score is excellent !`;
-    }
-    else if (props.globalScore  >= 70)  {
-      return `Some very good result here !`;
-    }
-    else if (props.globalScore  >= 60) {
-      return `You did a great job!`;
-    }
-    else if (props.globalScore  >= 50) {
-      return `Quite good!`;
-    } else if (props.globalScore  >= 40) {
-      return `Promising!`;
-    } else if (props.globalScore  >= 30) {
-      return `Not bad at all!`;
-    } else if (props.globalScore  >= 20) {
-      return `You scored some points!`;
-    } else if (props.globalScore  >= 10) {
-      return `Keep up fighting!`;
-    } else if (props.globalScore  >= 0) {
-      return `Don't give up! You'll make it`;
-    }
+  if (!props.globalScore) return `You scored some points!`;
+  if (props.globalScore === 100) {
+    return `Perfect !`;
+  } else if (props.globalScore >= 90) {
+    return `Close to perfection, some crazy results !`;
+  } else if (props.globalScore >= 80) {
+    return `Congratulations, your overall score is excellent !`;
+  } else if (props.globalScore >= 70) {
+    return `Some very good result here !`;
+  } else if (props.globalScore >= 60) {
+    return `You did a great job!`;
+  } else if (props.globalScore >= 50) {
+    return `Quite good!`;
+  } else if (props.globalScore >= 40) {
+    return `Promising!`;
+  } else if (props.globalScore >= 30) {
+    return `Not bad at all!`;
+  } else if (props.globalScore >= 20) {
+    return `You scored some points!`;
+  } else if (props.globalScore >= 10) {
+    return `Keep up fighting!`;
+  } else if (props.globalScore >= 0) {
+    return `Don't give up! You'll make it`;
+  }
 });
 
-
 const congratulationsMessage = computed(() => {
-  if (props.type === 'grammar') {
+  if (props.type === "grammar") {
     return `Well done ! You've accomplished ${props.detailedResults.grammar.percentage}% of success for the ${props.grammarRuleMetaData?.name}`;
   }
   const scores = [
-    { type: 'words', percentage: props.detailedResults.words.percentage, label: 'word list' },
-    { type: 'expressions', percentage: props.detailedResults.expressions.percentage, label: 'expression list' },
-    { type: 'grammar', percentage: props.detailedResults.grammar.percentage, label: 'grammar rule' }
+    {
+      type: "words",
+      percentage: props.detailedResults.words.percentage,
+      label: "word list",
+    },
+    {
+      type: "expressions",
+      percentage: props.detailedResults.expressions.percentage,
+      label: "expression list",
+    },
+    {
+      type: "grammar",
+      percentage: props.detailedResults.grammar.percentage,
+      label: "grammar rule",
+    },
   ];
-  
+
   // Find the maximum score
-  const maxScore = Math.max(...scores.map(s => s.percentage));
-  const maxScoreItem = scores.find(s => s.percentage === maxScore);
-  
+  const maxScore = Math.max(...scores.map((s) => s.percentage));
+  const maxScoreItem = scores.find((s) => s.percentage === maxScore);
+
   // If overall score is at least 60%
   if (props.detailedResults.overall.percentage >= 60 && maxScoreItem) {
     if (maxScore >= 60) {
       return `Well done ! You've accomplished ${maxScore}% of success for the ${maxScoreItem.label}`;
     }
   }
-  
+
   // If max score is between 40 and 60% (excluded)
   if (maxScore >= 40 && maxScore < 60) {
-    const goodScores = scores.filter(s => s.percentage >= 40 && s.percentage < 60);
+    const goodScores = scores.filter(
+      (s) => s.percentage >= 40 && s.percentage < 60,
+    );
     if (goodScores.length > 0) {
-      const bestScore = goodScores.reduce((prev, current) => (prev.percentage > current.percentage) ? prev : current);
+      const bestScore = goodScores.reduce((prev, current) =>
+        prev.percentage > current.percentage ? prev : current,
+      );
       return `Congratulations, you have accomplished a correct score: ${bestScore.percentage}% for the ${bestScore.label}`;
     }
   }
-  
+
   // If no score is above 40%
   return "You've been through the lesson and are showing great effort, keep up the work !";
 });
@@ -102,255 +118,344 @@ const grammarColors = computed(() => {
   switch (grammarRuleLevel.value) {
     case DIFFICULTY_IDS.BEGINNER:
       return {
-        stroke: '#10b981', // emerald-500 #10b981
-        text: '#10b981'
+        stroke: "#10b981", // emerald-500 #10b981
+        text: "#10b981",
       };
     case DIFFICULTY_IDS.INTERMEDIATE:
       return {
-        stroke: '#f59e0b', // amber-500
-        text: '#f59e0b'
+        stroke: "#f59e0b", // amber-500
+        text: "#f59e0b",
       };
     case DIFFICULTY_IDS.ADVANCED:
       return {
-        stroke: '#ec4899', // pink-500
-        text: '#ec4899'
+        stroke: "#ec4899", // pink-500
+        text: "#ec4899",
       };
     case DIFFICULTY_IDS.EXPERT:
     default:
       return {
-        stroke: '#2563eb', // blue-600
-        text: '#2563eb'
+        stroke: "#2563eb", // blue-600
+        text: "#2563eb",
       };
   }
 });
 const grammarClass = computed(() => {
   switch (grammarRuleLevel.value) {
-    case 'beginner':
-      return 'grammar-achievement__beginner';
-    case 'intermediate':
-        return 'grammar-achievement__intermediate';
-    case 'advanced':
-        return 'grammar-achievement__advanced';
-    case 'expert':
-        return 'grammar-achievement__expert';
+    case "beginner":
+      return "grammar-achievement__beginner";
+    case "intermediate":
+      return "grammar-achievement__intermediate";
+    case "advanced":
+      return "grammar-achievement__advanced";
+    case "expert":
+      return "grammar-achievement__expert";
     default:
-        return 'grammar-achievement__beginner';
+      return "grammar-achievement__beginner";
   }
 });
 </script>
 
-
 <template>
-    <!-- Results Modal -->
-      <div class="modal-container rounded-lg" @click.stop>
-        <!-- Modal Content -->
-        <div class="modal-content">
-          <!-- Overall Score Section -->
-          <div class="overall-score-section">
-            <div class="overall-score-card rounded-lg">
-              <div>
-                <div class="score-percentage">{{ props.detailedResults.overall.percentage }}%</div>
-                <div class="score-label">Overall Score</div>
-              </div>
-              <div class="score-details">
-                <p class="score-description">{{ congratulationsMessage }}</p>
-              </div>
-              <button @click="emit('close')" class="modal-close-button">
-                <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+  <!-- Results Modal -->
+  <div class="modal-container rounded-lg" @click.stop>
+    <!-- Modal Content -->
+    <div class="modal-content">
+      <!-- Overall Score Section -->
+      <div class="overall-score-section">
+        <div class="overall-score-card rounded-lg">
+          <div>
+            <div class="score-percentage">
+              {{ props.detailedResults.overall.percentage }}%
             </div>
+            <div class="score-label">Overall Score</div>
           </div>
+          <div class="score-details">
+            <p class="score-description">{{ congratulationsMessage }}</p>
+          </div>
+          <button @click="emit('close')" class="modal-close-button">
+            <svg
+              class="close-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-          <!-- Performance Charts Section -->
-          <div class="charts-section">
-            <!-- Grammar Chart - Full Width -->
-            <div class="grammar-chart-container">
-              <div class="chart-card grammar-full-width rounded-lg" :class="grammarClass">
-                <div class="chart-header">
-                  <div class="chart-title">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <div class="relative">
-                                <div
-                                    :class="[
-                                        'absolute inset-0 rounded-lg blur-sm',
-                                        grammarRuleLevel === 'beginner' ? 'bg-gradient-to-br from-emerald-300/20 to-teal-300/20' :
-                                        grammarRuleLevel === 'intermediate' ? 'bg-gradient-to-br from-amber-300/20 to-orange-300/20' :
-                                        grammarRuleLevel === 'advanced' ? 'bg-gradient-to-br from-pink-300/20 to-rose-300/20' :
-                                        'bg-gradient-to-br from-blue-300/20 to-indigo-300/20'
-                                    ]"
-                                />
-                                <div
-                                    :class="[
-                                        'relative p-2 rounded-lg shadow-lg',
-                                        grammarRuleLevel === 'beginner' ? 'bg-gradient-to-br from-emerald-500 to-teal-600' :
-                                        grammarRuleLevel === 'intermediate' ? 'bg-gradient-to-br from-amber-500 to-orange-600' :
-                                        grammarRuleLevel === 'advanced' ? 'bg-gradient-to-br from-pink-500 to-rose-600' :
-                                        'bg-gradient-to-br from-blue-600 to-indigo-700'
-                                    ]"
-                                >
-                                    <Square2StackIcon class="h-5 w-5 text-white" />
-                                </div>
-                            </div>
-                        </div>
-                        <div clas="flex items-center ml-3">
-                            <h3 class="text-lg font-semibold text-gray-900 ml-3">Key Module & Scores</h3>
-                        </div>
+      <!-- Performance Charts Section -->
+      <div class="charts-section">
+        <!-- Grammar Chart - Full Width -->
+        <div class="grammar-chart-container">
+          <div
+            class="chart-card grammar-full-width rounded-lg"
+            :class="grammarClass"
+          >
+            <div class="chart-header">
+              <div class="chart-title">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <div class="relative">
+                      <div
+                        :class="[
+                          'absolute inset-0 rounded-lg blur-sm',
+                          grammarRuleLevel === 'beginner'
+                            ? 'bg-gradient-to-br from-emerald-300/20 to-teal-300/20'
+                            : grammarRuleLevel === 'intermediate'
+                              ? 'bg-gradient-to-br from-amber-300/20 to-orange-300/20'
+                              : grammarRuleLevel === 'advanced'
+                                ? 'bg-gradient-to-br from-pink-300/20 to-rose-300/20'
+                                : 'bg-gradient-to-br from-blue-300/20 to-indigo-300/20',
+                        ]"
+                      />
+                      <div
+                        :class="[
+                          'relative p-2 rounded-lg shadow-lg',
+                          grammarRuleLevel === 'beginner'
+                            ? 'bg-gradient-to-br from-emerald-500 to-teal-600'
+                            : grammarRuleLevel === 'intermediate'
+                              ? 'bg-gradient-to-br from-amber-500 to-orange-600'
+                              : grammarRuleLevel === 'advanced'
+                                ? 'bg-gradient-to-br from-pink-500 to-rose-600'
+                                : 'bg-gradient-to-br from-blue-600 to-indigo-700',
+                        ]"
+                      >
+                        <Square2StackIcon class="h-5 w-5 text-white" />
+                      </div>
                     </div>
+                  </div>
+                  <div clas="flex items-center ml-3">
+                    <h3 class="text-lg font-semibold text-gray-900 ml-3">
+                      Key Module & Scores
+                    </h3>
+                  </div>
                 </div>
-                <div class="chart-details">   
-                    <div class="chart-percentage" :style="{ color: grammarColors.text }">{{ props.detailedResults.grammar.percentage }}%</div>
+              </div>
+              <div class="chart-details">
+                <div
+                  class="chart-percentage"
+                  :style="{ color: grammarColors.text }"
+                >
+                  {{ props.detailedResults.grammar.percentage }}%
                 </div>
+              </div>
+            </div>
+
+            <div class="grammar-chart-content">
+              <div class="chart-details">
+                <div>
+                  <div class="chart-stat"></div>
+                  <div class="flex flex-wrap gap-2">
+                    <LayoutKeyElementRuleBadge
+                      class="mb-4"
+                      :title="grammarRuleMetaData?.name"
+                      :titleEn="grammarRuleMetaData?.nameEn"
+                      :level="grammarRuleMetaData?.level"
+                      :symbol="grammarRuleMetaData?.symbol"
+                      :light-mode="true"
+                      size="sm"
+                      :prefix="false"
+                    />
+                  </div>
                 </div>
-                
-                <div class="grammar-chart-content">
-                    <div class="chart-details">
-                        <div>
-                            <div class="chart-stat">
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" :light-mode="true" size="sm" :prefix="false" />
-                        </div>
-                        </div>
- 
-                    </div>
-                    <!-- <div class="chart-visual">
+              </div>
+              <!-- <div class="chart-visual">
                       <div class="flex items-center gap-2">
                         <div class="stat-label">Rule:</div>
                         <LayoutKeyElementRule class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
                       </div>
                     </div> -->
 
-                  <div class="chart-visual">
-                    <div class="progress-ring">
-                      <svg class="progress-ring-svg" width="100" height="100">
-                        <circle class="progress-ring-circle-bg" cx="50" cy="50" r="40" />
-                        <circle 
-                          class="progress-ring-circle" 
-                          cx="50" 
-                          cy="50" 
-                          r="40" 
-                          :stroke-dasharray="251"
-                          :stroke-dashoffset="251 - (251 * props.detailedResults.grammar.percentage / 100)"
-                          :stroke="grammarColors.stroke"
-                        />
-                      </svg>
-                      <!-- <div class="progress-ring-text">{{ props.detailedResults.grammar.correct }}/{{ props.detailedResults.grammar.total }}</div> -->
-                      <div class="progress-ring-text">
-                        <div class="flex items-baseline gap-1">
-                            <span :class="grammarClass" class="text-2xl font-bold text-gray-900">
-                                {{ props.detailedResults.grammar.correct }}
-                            </span>
-                            <span class="text-base text-gray-500"
-                                >/{{ props.detailedResults.grammar.total }}</span
-                            >
-                            </div>
-                        </div>
-                      </div>
+              <div class="chart-visual">
+                <div class="progress-ring">
+                  <svg class="progress-ring-svg" width="100" height="100">
+                    <circle
+                      class="progress-ring-circle-bg"
+                      cx="50"
+                      cy="50"
+                      r="40"
+                    />
+                    <circle
+                      class="progress-ring-circle"
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      :stroke-dasharray="251"
+                      :stroke-dashoffset="
+                        251 -
+                        (251 * props.detailedResults.grammar.percentage) / 100
+                      "
+                      :stroke="grammarColors.stroke"
+                    />
+                  </svg>
+                  <!-- <div class="progress-ring-text">{{ props.detailedResults.grammar.correct }}/{{ props.detailedResults.grammar.total }}</div> -->
+                  <div class="progress-ring-text">
+                    <div class="flex items-baseline gap-1">
+                      <span
+                        :class="grammarClass"
+                        class="text-2xl font-bold text-gray-900"
+                      >
+                        {{ props.detailedResults.grammar.correct }}
+                      </span>
+                      <span class="text-base text-gray-500"
+                        >/{{ props.detailedResults.grammar.total }}</span
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <!-- Words and Expressions Charts - Side by Side -->
-            <div v-if="props.type !== 'grammar'" class="vocabulary-charts-grid">
-              <!-- Words Chart -->
-              <div class="chart-card words-chart-bg">
-                <div class="chart-header">
-                  <div class="chart-title">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-shrink-0 mr-3">
-                        <div class="relative">
-                          <div
-                            class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-lg blur-sm"
-                          />
-                          <div
-                            class="relative p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg"
-                          >
-                            <BookOpenIcon class="h-5 w-5 text-white" />
-                          </div>
-                        </div>
+        <!-- Words and Expressions Charts - Side by Side -->
+        <div v-if="props.type !== 'grammar'" class="vocabulary-charts-grid">
+          <!-- Words Chart -->
+          <div class="chart-card words-chart-bg">
+            <div class="chart-header">
+              <div class="chart-title">
+                <div class="flex items-center justify-between">
+                  <div class="flex-shrink-0 mr-3">
+                    <div class="relative">
+                      <div
+                        class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-lg blur-sm"
+                      />
+                      <div
+                        class="relative p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg"
+                      >
+                        <BookOpenIcon class="h-5 w-5 text-white" />
                       </div>
-                    <div class="flex-1">
-                      <h3 class="text-base font-semibold text-gray-900 mb-0.5">
-                        Words Acquired
-                      </h3>
-                    </div>
-
                     </div>
                   </div>
-                  <div class="chart-percentage words-gradient">{{ props.detailedResults.words.percentage }}%</div>
-                </div>
-                <div class="chart-visual">
-                    <div class="progress-ring">
-                      <svg class="progress-ring-svg" width="100" height="100">
-                        <defs>
-                          <linearGradient id="wordsGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
-                          </linearGradient>
-                        </defs>
-                        <circle class="progress-ring-circle-bg" cx="50" cy="50" r="40" />
-                        <circle 
-                          class="progress-ring-circle words" 
-                          cx="50" 
-                          cy="50" 
-                          r="40" 
-                          :stroke-dasharray="251"
-                          :stroke-dashoffset="251 - (251 * props.detailedResults.words.percentage / 100)"
-                        />
-                      </svg>
-                      <!-- <div class="progress-ring-text">{{ props.detailedResults.words.correct }}/{{ props.detailedResults.words.total }}</div> -->
-                      <div class="progress-ring-text">
-                    <div class="flex items-baseline gap-1">
-                        <span class="word-achievement text-2xl font-bold text-gray-900">
-                            {{ props.detailedResults.words.correct }}
-                        </span>
-                        <span class="text-base text-gray-500"
-                            >/{{ props.detailedResults.words.total }}</span
-                        >
-                        </div>
-                    </div>
-                    </div>
+                  <div class="flex-1">
+                    <h3 class="text-base font-semibold text-gray-900 mb-0.5">
+                      Words Acquired
+                    </h3>
                   </div>
-                <div class="chart-details">
-                    <div>
-                        <div class="chart-stat">
-                            <div class="stat-label mb-1">Validated:</div> <span class="stat-value words-gradient">+{{ props.detailedResults.words.validatedList.length }}</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <div v-for="word in props.detailedResults.words.validatedList" :key="word">
-                                <LayoutKeyElementWordBadge :text="word.text" :isMastered="word.isMastered" />
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="chart-stat">
-                        <div class="stat-label mb-1">Invalidated:</div><span class="stat-value words-gradient">{{ props.detailedResults.words.invalidatedList.length }}</span>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <div v-for="word in props.detailedResults.words.invalidatedList" :key="word">
-                        <LayoutKeyElementWordBadge :text="word.text" :isMastered="word.isMastered"/>
-                    </div>
-                </div>
-                    </div>
-                <div>
-                    <div class="chart-stat">
-                    <div class="stat-label mb-1">Note:</div>
-                  </div>
-                  <div class="text-xs text-gray-600">*The quiz may include a few words already known because repetition is the way to memorize</div>
-                </div>
-
                 </div>
               </div>
+              <div class="chart-percentage words-gradient">
+                {{ props.detailedResults.words.percentage }}%
+              </div>
+            </div>
+            <div class="chart-visual">
+              <div class="progress-ring">
+                <svg class="progress-ring-svg" width="100" height="100">
+                  <defs>
+                    <linearGradient
+                      id="wordsGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
+                      <stop
+                        offset="0%"
+                        style="stop-color: #3b82f6; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="100%"
+                        style="stop-color: #3b82f6; stop-opacity: 1"
+                      />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    class="progress-ring-circle-bg"
+                    cx="50"
+                    cy="50"
+                    r="40"
+                  />
+                  <circle
+                    class="progress-ring-circle words"
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    :stroke-dasharray="251"
+                    :stroke-dashoffset="
+                      251 - (251 * props.detailedResults.words.percentage) / 100
+                    "
+                  />
+                </svg>
+                <!-- <div class="progress-ring-text">{{ props.detailedResults.words.correct }}/{{ props.detailedResults.words.total }}</div> -->
+                <div class="progress-ring-text">
+                  <div class="flex items-baseline gap-1">
+                    <span
+                      class="word-achievement text-2xl font-bold text-gray-900"
+                    >
+                      {{ props.detailedResults.words.correct }}
+                    </span>
+                    <span class="text-base text-gray-500"
+                      >/{{ props.detailedResults.words.total }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="chart-details">
+              <div>
+                <div class="chart-stat">
+                  <div class="stat-label mb-1">Validated:</div>
+                  <span class="stat-value words-gradient"
+                    >+{{
+                      props.detailedResults.words.validatedList.length
+                    }}</span
+                  >
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="word in props.detailedResults.words.validatedList"
+                    :key="word"
+                  >
+                    <LayoutKeyElementWordBadge
+                      :text="word.text"
+                      :isMastered="word.isMastered"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="chart-stat">
+                  <div class="stat-label mb-1">Invalidated:</div>
+                  <span class="stat-value words-gradient">{{
+                    props.detailedResults.words.invalidatedList.length
+                  }}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="word in props.detailedResults.words.invalidatedList"
+                    :key="word"
+                  >
+                    <LayoutKeyElementWordBadge
+                      :text="word.text"
+                      :isMastered="word.isMastered"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="chart-stat">
+                  <div class="stat-label mb-1">Note:</div>
+                </div>
+                <div class="text-xs text-gray-600">
+                  *The quiz may include a few words already known because
+                  repetition is the way to memorize
+                </div>
+              </div>
+            </div>
+          </div>
 
-              <!-- Expressions Chart -->
-              <div class="chart-card expressions-chart-bg">
-                <div class="chart-header">
-                  <div class="chart-title">
-                    <div class="flex items-center justify-between">
+          <!-- Expressions Chart -->
+          <div class="chart-card expressions-chart-bg">
+            <div class="chart-header">
+              <div class="chart-title">
+                <div class="flex items-center justify-between">
                   <div class="flex-shrink-0 mr-3">
                     <div class="relative">
                       <div
@@ -368,103 +473,155 @@ const grammarClass = computed(() => {
                       Expressions Acquired
                     </h3>
                   </div>
-        </div>
-                  </div>
-                  <div class="chart-percentage expressions-gradient">{{ props.detailedResults.expressions.percentage }}%</div>
                 </div>
-                    <div class="chart-visual">
-                    <div class="progress-ring">
-                      <svg class="progress-ring-svg" width="100" height="100">
-                        <defs>
-                          <linearGradient id="expressionsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
-                          </linearGradient>
-                        </defs>
-                        <circle class="progress-ring-circle-bg" cx="50" cy="50" r="40" />
-                        <circle 
-                          class="progress-ring-circle expressions" 
-                          cx="50" 
-                          cy="50" 
-                          r="40" 
-                          :stroke-dasharray="251"
-                          :stroke-dashoffset="251 - (251 * props.detailedResults.expressions.percentage / 100)"
-                        />
-                      </svg>
-                      <!-- <div class="progress-ring-text">{{ props.detailedResults.expressions.correct }}/{{ props.detailedResults.expressions.total }}</div> -->
-                    </div>
-                    <div class="progress-ring-text">
-                    <div class="flex items-baseline gap-1">
-                        <span class="expression-achievement text-2xl font-bold text-gray-900">
-                            {{ props.detailedResults.expressions.correct }}
-                        </span>
-                        <span class="text-base text-gray-500"
-                            >/{{ props.detailedResults.expressions.total }}</span
-                        >
-                        </div>
-                    </div>
+              </div>
+              <div class="chart-percentage expressions-gradient">
+                {{ props.detailedResults.expressions.percentage }}%
+              </div>
+            </div>
+            <div class="chart-visual">
+              <div class="progress-ring">
+                <svg class="progress-ring-svg" width="100" height="100">
+                  <defs>
+                    <linearGradient
+                      id="expressionsGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop
+                        offset="0%"
+                        style="stop-color: #8b5cf6; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="50%"
+                        style="stop-color: #ec4899; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="100%"
+                        style="stop-color: #f472b6; stop-opacity: 1"
+                      />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    class="progress-ring-circle-bg"
+                    cx="50"
+                    cy="50"
+                    r="40"
+                  />
+                  <circle
+                    class="progress-ring-circle expressions"
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    :stroke-dasharray="251"
+                    :stroke-dashoffset="
+                      251 -
+                      (251 * props.detailedResults.expressions.percentage) / 100
+                    "
+                  />
+                </svg>
+                <!-- <div class="progress-ring-text">{{ props.detailedResults.expressions.correct }}/{{ props.detailedResults.expressions.total }}</div> -->
+              </div>
+              <div class="progress-ring-text">
+                <div class="flex items-baseline gap-1">
+                  <span
+                    class="expression-achievement text-2xl font-bold text-gray-900"
+                  >
+                    {{ props.detailedResults.expressions.correct }}
+                  </span>
+                  <span class="text-base text-gray-500"
+                    >/{{ props.detailedResults.expressions.total }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="chart-details">
+              <div>
+                <div class="chart-stat">
+                  <span class="stat-label mb-1">Validated:</span
+                  ><span class="stat-value expressions-gradient"
+                    >+{{
+                      props.detailedResults.expressions.validatedList.length
+                    }}</span
+                  >
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="expression in props.detailedResults.expressions
+                      .validatedList"
+                    :key="expression"
+                  >
+                    <LayoutKeyElementExpressionBadge
+                      :text="expression.text"
+                      :isMastered="expression.isMastered"
+                      :light-mode="true"
+                    />
                   </div>
-                <div class="chart-details">
-                    <div>
-                        <div class="chart-stat">
-                    <span class="stat-label mb-1">Validated:</span><span class="stat-value expressions-gradient">+{{ props.detailedResults.expressions.validatedList.length }}</span>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <div v-for="expression in props.detailedResults.expressions.validatedList" :key="expression">
-                     <LayoutKeyElementExpressionBadge :text="expression.text" :isMastered="expression.isMastered" :light-mode="true"/>
-                    </div>
-                  </div>
-                    </div>
+                </div>
+              </div>
 
-                    <div>
-                        <div class="chart-stat">
-                            <div class="stat-label mb-1">Invalidated:</div><span class="stat-value expressions-gradient">{{ props.detailedResults.expressions.invalidatedList.length }}</span>
-                        </div>
-                      <div class="flex flex-wrap gap-2">
-                        <div v-for="expression in props.detailedResults.expressions.invalidatedList" :key="expression">
-                            <LayoutKeyElementExpressionBadge :text="expression.text" :isMastered="expression.isMastered" :light-mode="true"/>
-                        </div>
-                      </div>
+              <div>
+                <div class="chart-stat">
+                  <div class="stat-label mb-1">Invalidated:</div>
+                  <span class="stat-value expressions-gradient">{{
+                    props.detailedResults.expressions.invalidatedList.length
+                  }}</span>
                 </div>
-                <div>
-                    <div class="chart-stat">
-                    <div class="stat-label mb-1">Note:</div>
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="expression in props.detailedResults.expressions
+                      .invalidatedList"
+                    :key="expression"
+                  >
+                    <LayoutKeyElementExpressionBadge
+                      :text="expression.text"
+                      :isMastered="expression.isMastered"
+                      :light-mode="true"
+                    />
                   </div>
-                  <div class="text-xs text-gray-600">*The quiz may include a few expressions already known because repetition is the way to memorize</div>
                 </div>
-
+              </div>
+              <div>
+                <div class="chart-stat">
+                  <div class="stat-label mb-1">Note:</div>
+                </div>
+                <div class="text-xs text-gray-600">
+                  *The quiz may include a few expressions already known because
+                  repetition is the way to memorize
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Action Buttons -->
-          <div class="modal-actions">
-            <button 
-              class="btn-ghost px-4 py-2 text-sm font-medium cursor-pointer flex items-center gap-2"
-              @click="$router.push(`/learning/stories/`)"
-            >
-                <ArrowLeftIcon class="h-5 w-5" />
-                <span>Back To Lessons</span>
-          </button>
-            <button
-              class="bg-primary hover:bg-primary/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
-              @click="emit('close')"
-            >
-              <EyeIcon class="h-5 w-5" />
-              <span>See Answers</span>
-            </button>
-          </div>
         </div>
       </div>
+
+      <!-- Action Buttons -->
+      <div class="modal-actions">
+        <button
+          class="btn-ghost px-4 py-2 text-sm font-medium cursor-pointer flex items-center gap-2"
+          @click="$router.push(`/learning/stories/`)"
+        >
+          <ArrowLeftIcon class="h-5 w-5" />
+          <span>Back To Lessons</span>
+        </button>
+        <button
+          class="bg-primary hover:bg-primary/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+          @click="emit('close')"
+        >
+          <EyeIcon class="h-5 w-5" />
+          <span>See Answers</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-
 .modal-container {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  box-shadow: 
+  box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.1);
   max-width: 900px;
@@ -537,21 +694,29 @@ const grammarClass = computed(() => {
   gap: 1.25rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 20px 40px -12px rgba(79, 70, 229, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .overall-score-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 255, 255, 0.05) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
 
@@ -646,7 +811,7 @@ const grammarClass = computed(() => {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid #e5e7eb;
   padding: 1.25rem;
-  box-shadow: 
+  box-shadow:
     0 10px 25px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -655,14 +820,18 @@ const grammarClass = computed(() => {
 }
 
 .chart-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.02) 0%, transparent 50%),
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(120, 119, 198, 0.02) 0%,
+      transparent 50%
+    ),
     linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -795,7 +964,6 @@ const grammarClass = computed(() => {
   .expression-achievement__expert {
     color: #f472b6;
   }
-
 }
 
 .chart-details {
@@ -868,59 +1036,57 @@ const grammarClass = computed(() => {
     width: 95%;
     max-height: 98vh;
   }
-  
+
   .modal-header {
     padding: 1rem 1.5rem 0.75rem 1.5rem;
   }
-  
+
   .modal-title {
     font-size: 1.5rem;
   }
-  
+
   .modal-content {
     padding: 1rem 1.5rem;
   }
-  
+
   .overall-score-card {
     flex-direction: column;
     text-align: center;
     padding: 1.5rem;
     gap: 1rem;
   }
-  
+
   .score-circle {
     width: 80px;
     height: 80px;
   }
-  
+
   .score-percentage {
     font-size: 1.75rem;
   }
-  
+
   .score-title {
     font-size: 1.5rem;
   }
-  
+
   .vocabulary-charts-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .grammar-chart-content {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
+
   .chart-card {
     padding: 1rem;
   }
-  
+
   .modal-actions {
     flex-direction: column;
     gap: 0.75rem;
   }
 }
 </style>
-
-

@@ -26,5 +26,5 @@ const props = withDefaults(
       </h1>
       <p :class="props.descriptionTextColor">{{ props.description }}</p>
     </div>
-</div>
+  </div>
 </template>

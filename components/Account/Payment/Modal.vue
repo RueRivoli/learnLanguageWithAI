@@ -14,11 +14,11 @@ const closeModal = () => {
 
 defineExpose({
   openModal,
-  closeModal
+  closeModal,
 });
 
 const handleConfirm = () => {
-  emit('cancel');
+  emit("cancel");
 };
 </script>
 
@@ -27,12 +27,16 @@ const handleConfirm = () => {
     <div class="modal-box max-w-4xl h-auto overflow-y-auto">
       <div class="flex flex-col items-center">
         <div class="flex items-center">
-          <StarIcon class="h-5 w-5 mr-2 text-gray-900 group-hover:text-neutral" />
-          <h3 class="text-xl text-gray-900">Get Credits to Generate Stories and Grammar Quizzes</h3>
+          <StarIcon
+            class="h-5 w-5 mr-2 text-gray-900 group-hover:text-neutral"
+          />
+          <h3 class="text-xl text-gray-900">
+            Get Credits to Generate Stories and Grammar Quizzes
+          </h3>
         </div>
-          <AccountPaymentWall />
+        <AccountPaymentWall />
       </div>
-      
+
       <div class="modal-action">
         <button
           class="bg-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"

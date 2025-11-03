@@ -3,7 +3,9 @@
     <!-- Header -->
     <div class="border-b border-gray-200 pb-4">
       <div class="flex items-start gap-3">
-        <div class="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+        <div
+          class="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1"
+        >
           <svg
             class="w-5 h-5 text-primary"
             fill="none"
@@ -19,9 +21,12 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-2xl font-bold text-gray-900 mb-2">Ce/Ca Form - -ce/-ca</h1>
+          <h1 class="text-2xl font-bold text-gray-900 mb-2">
+            Ce/Ca Form - -ce/-ca
+          </h1>
           <p class="text-gray-700 leading-relaxed">
-            The -ce/-ca suffix is used to form adverbs and to express manner or way of doing something.
+            The -ce/-ca suffix is used to form adverbs and to express manner or
+            way of doing something.
           </p>
         </div>
       </div>
@@ -29,18 +34,26 @@
 
     <!-- How to Form -->
     <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
-      <h2 class="text-lg font-semibold text-gray-900 mb-3">How to Form -ce/-ca</h2>
+      <h2 class="text-lg font-semibold text-gray-900 mb-3">
+        How to Form -ce/-ca
+      </h2>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-          <span>
-            <strong>Step 1:</strong> Take the noun or adjective
-          </span>
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          />
+          <span> <strong>Step 1:</strong> Take the noun or adjective </span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <strong>Step 2:</strong> Add <code class="bg-white px-2 py-1 rounded border text-sm">-ce/-ca</code> based on vowel harmony
+            <strong>Step 2:</strong> Add
+            <code class="bg-white px-2 py-1 rounded border text-sm"
+              >-ce/-ca</code
+            >
+            based on vowel harmony
           </span>
         </li>
       </ul>
@@ -51,15 +64,21 @@
       <h2 class="text-lg font-semibold text-gray-900 mb-3">Examples</h2>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <span class="font-medium">Türkçe</span> - <em>Turkish (language)</em>
+            <span class="font-medium">Türkçe</span> -
+            <em>Turkish (language)</em>
           </span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <span class="font-medium">İngilizce</span> - <em>English (language)</em>
+            <span class="font-medium">İngilizce</span> -
+            <em>English (language)</em>
           </span>
         </li>
       </ul>

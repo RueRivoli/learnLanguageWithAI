@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <br/>
+    <br />
     <!-- How to Form -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
@@ -76,7 +76,7 @@
         </li>
       </ul>
     </div>
-    <br >
+    <br />
     <div id="stem_creation">
       <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
         <div class="flex items-center mb-3">
@@ -250,7 +250,7 @@
         </div>
       </div>
     </div>
-    <br/>
+    <br />
     <div>
       <div>
         <div>
@@ -508,7 +508,7 @@
         </div>
       </div>
     </div>
-    <br >
+    <br />
     <!-- Vowel Harmony Rules -->
 
     <div id="ending_addition">
@@ -535,8 +535,7 @@
         </div>
         <div id="table_present_endings">
           <h3 class="p-3 font-semibold text-gray-900 mb-2">
-            Once you get the stem, you add the same endings as the form "to
-            be":
+            Once you get the stem, you add the same endings as the form "to be":
           </h3>
           <div
             class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
@@ -578,7 +577,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Ben</span
                         >
@@ -616,7 +615,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Sen</span
                         >
@@ -654,7 +653,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >O</span
                         >
@@ -688,7 +687,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span
                           class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                           >Biz</span
@@ -727,7 +726,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Siz</span
                         >
@@ -765,7 +764,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >Onlar</span
                         >
@@ -808,7 +807,7 @@
       </div>
     </div>
     <div>
-      <br/>
+      <br />
       <div class="flex items-center gap-2 mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -854,7 +853,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -878,7 +877,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -902,7 +901,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -922,7 +921,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -946,7 +945,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -970,7 +969,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -996,7 +995,7 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div id="table_present_examples_2">
         <div
           class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
@@ -1024,7 +1023,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -1048,7 +1047,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -1072,7 +1071,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -1092,7 +1091,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -1116,7 +1115,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -1140,7 +1139,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -1166,7 +1165,7 @@
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div id="table_present_examples_3">
         <div
           class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
@@ -1194,7 +1193,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -1218,7 +1217,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -1242,7 +1241,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -1262,7 +1261,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -1286,7 +1285,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -1310,7 +1309,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -1338,7 +1337,7 @@
       </div>
     </div>
 
-    <br >
+    <br />
 
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center">
@@ -1362,8 +1361,9 @@
         </h2>
       </div>
       <p class="p-4 font-semibold text-gray-900 mb-3">
-        For the negative present tense, it's quite simple.  <br/>
-        You'll need to add the following endings to the verb stem (verb without -mak/-mek):
+        For the negative present tense, it's quite simple. <br />
+        You'll need to add the following endings to the verb stem (verb without
+        -mak/-mek):
       </p>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
@@ -1401,194 +1401,185 @@
     <br />
     <!-- Negative Examples -->
     <div class="flex items-center gap-2 mb-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-5 w-5 text-success"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-          />
-        </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-5 w-5 text-success"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+        />
+      </svg>
 
-        <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
-      </div>
+      <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
+    </div>
 
-      <div id="table_present_examples_2">
-        <div
-          class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
-        >
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead>
-                <tr
-                  class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+    <div id="table_present_examples_2">
+      <div
+        class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+              >
+                <th>Verbs</th>
+                <th
+                  class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
                 >
-                  <th>Verbs</th>
-                  <th
-                    class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                  almak(al) - to buy
+                </th>
+                <th
+                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                >
+                  bilmek(bil) - to know
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900">Ben</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                   >
-                    almak(al) - to buy
-                  </th>
-                  <th
-                    class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                    al-mam
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                   >
-                    bilmek(bil) - to know
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                      <span class="text-sm font-semibold text-gray-900"
-                        >Ben</span
-                      >
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
-                      al-mam
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
-                      bil-mem
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                      <span class="text-sm font-semibold text-gray-900"
-                        >Sen</span
-                      >
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
+                    bil-mem
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900">Sen</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
                     al-mazsın
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    bil-mezsin
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900">O</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >al-maz</span
+                  >
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >bil-mez</span
+                  >
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="font-semibold rounded-lg text-gray-700"
+                      >Biz</span
                     >
-                      bil-mezsin
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                      <span class="text-sm font-semibold text-gray-900">O</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >al-maz</span
-                    >
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >bil-mez</span
-                    >
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                      <span class="font-semibold rounded-lg text-gray-700"
-                        >Biz</span
-                      >
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
                     al-mayız
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
-                      bil-meyiz
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                      <span class="text-sm font-semibold text-gray-900"
-                        >Siz</span
-                      >
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    bil-meyiz
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900">Siz</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
                     al-mazsınız
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    bil-mezsiniz
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Onlar</span
                     >
-                      bil-mezsiniz
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                      <span class="text-sm font-semibold text-gray-900"
-                        >Onlar</span
-                      >
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
                     al-mazlar
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span
-                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                    >
-                      bil-mezler
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    bil-mezler
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-
+    </div>
   </div>
 </template>
 

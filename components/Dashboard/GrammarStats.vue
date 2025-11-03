@@ -164,10 +164,9 @@ const averageScore = computed(() => {
           </div>
           <div clas="flex items-center ml-3">
             <h3 class="text-lg font-semibold text-gray-900 ml-3">
-            Your Progress on the Different Modules
-          </h3>
+              Your Progress on the Different Modules
+            </h3>
           </div>
-
         </div>
 
         <!-- Grammar Level Switch -->

@@ -1,37 +1,40 @@
-export const usePagination = (totalItems: Ref<number>, itemsPerPage: Ref<number>) => {
-    const currentPage = ref(1);
+export const usePagination = (
+  totalItems: Ref<number>,
+  itemsPerPage: Ref<number>,
+) => {
+  const currentPage = ref(1);
 
-    const goToPreviousPage = () => {
-        if (currentPage.value > 1) {
-          currentPage.value--;
-        }
-      };
-      const goToNextPage = () => {
-        if (currentPage.value < totalPages.value) {
-          currentPage.value++;
-        }
-      };
-      // Pagination methods
-    const goToPage = (page: number) => {  
-      if (page >= 1 && page <= totalPages.value) {
-        currentPage.value = page;
-      }
-    };
-    const totalPages = computed(() =>
-        Math.ceil(totalItems.value / itemsPerPage.value),
-      );
-      const startItem = computed(
-        () => (currentPage.value - 1) * itemsPerPage.value + 1,
-      );
-      const endItem = computed(() =>
-        Math.min(currentPage.value * itemsPerPage.value, totalItems.value),
-      );
+  const goToPreviousPage = () => {
+    if (currentPage.value > 1) {
+      currentPage.value--;
+    }
+  };
+  const goToNextPage = () => {
+    if (currentPage.value < totalPages.value) {
+      currentPage.value++;
+    }
+  };
+  // Pagination methods
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages.value) {
+      currentPage.value = page;
+    }
+  };
+  const totalPages = computed(() =>
+    Math.ceil(totalItems.value / itemsPerPage.value),
+  );
+  const startItem = computed(
+    () => (currentPage.value - 1) * itemsPerPage.value + 1,
+  );
+  const endItem = computed(() =>
+    Math.min(currentPage.value * itemsPerPage.value, totalItems.value),
+  );
 
-      // Generate page numbers for pagination
-const pageNumbers = computed(() => {
+  // Generate page numbers for pagination
+  const pageNumbers = computed(() => {
     const pages: (number | string)[] = [];
     const maxVisiblePages = 5;
-  
+
     if (totalPages.value <= maxVisiblePages) {
       for (let i = 1; i <= totalPages.value; i++) {
         pages.push(i);
@@ -59,20 +62,19 @@ const pageNumbers = computed(() => {
         pages.push(totalPages.value);
       }
     }
- 
+
     return pages;
   });
 
-    return {
-        currentPage,
-        endItem,
-        goToNextPage,
-        goToPage,
-        goToPreviousPage,
-        pageNumbers,
-        startItem,
-        totalItems,
-        totalPages
-    };
+  return {
+    currentPage,
+    endItem,
+    goToNextPage,
+    goToPage,
+    goToPreviousPage,
+    pageNumbers,
+    startItem,
+    totalItems,
+    totalPages,
   };
-  
+};

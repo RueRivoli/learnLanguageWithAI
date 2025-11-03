@@ -1,7 +1,6 @@
 import { defineEventHandler, getRouterParam } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
-
 export const getRandomQuizzes = async (
   supabase: any,
   ruleId: string,
@@ -19,7 +18,7 @@ export const getRandomQuizzes = async (
 };
 
 export default defineEventHandler(async (event) => {
-  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
   const ruleId = getRouterParam(event, "id");
   const difficultyClass = Number(getRouterParam(event, "difficultyClass"));
   const quantity = Number(getRouterParam(event, "quantity"));

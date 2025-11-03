@@ -15,8 +15,9 @@ export interface LessonWithRelatedData {
 
 export const useLesson = (lessonId: string | Ref<string>) => {
   // Convert to reactive reference if needed
-  const reactiveLessonId = typeof lessonId === 'string' ? ref(lessonId) : lessonId;
-  
+  const reactiveLessonId =
+    typeof lessonId === "string" ? ref(lessonId) : lessonId;
+
   // Reactive state
   const isLoading = ref(true);
   const error = ref<string | null>(null);
@@ -40,69 +41,72 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       grammarRuleIntro: rawData.turkish_grammar_rules.intro,
       grammarRuleDescription: rawData.turkish_grammar_rules.description,
       symbol: rawData.turkish_grammar_rules.symbol,
-      grammarRuleExtendedDescription: rawData.turkish_grammar_rules.extended_description,
+      grammarRuleExtendedDescription:
+        rawData.turkish_grammar_rules.extended_description,
       introduction: rawData.introduction,
       grammarRuleId: rawData.grammar_rule_id,
       level: rawData.turkish_grammar_rules.difficulty_class,
       quizId: rawData.quiz_id,
       imgUrl: rawData.img_url,
-      newWords: rawData.turkish_lesson_words
-        ?.map((w: any) => w.turkish_words)
-        ?.map(
-          ({
-            id,
-            text,
-            role,
-            translation,
-            word_sentence,
-            word_sentence_translation,
-            role_2,
-            translation_2,
-            word_sentence_2,
-            word_sentence_2_translation,
-            role_3,
-            translation_3,
-            word_sentence_3,
-            word_sentence_3_translation,
-          }: any) => ({
-            id,
-            text,
-            // 1st meaning
-            role,
-            translation: translation,
-            sentence: word_sentence,
-            sentenceEn: word_sentence_translation,
-            // 2nd meaning
-            role2: role_2,
-            translation2: translation_2,
-            sentence2: word_sentence_2,
-            sentence2En: word_sentence_2_translation,
-            // 3rd meaning
-            role3: role_3,
-            translation3: translation_3,
-            sentence3: word_sentence_3,
-            sentence3En: word_sentence_3_translation,
-          }),
-        ) || [],
-      newExpressions: rawData.turkish_lesson_expressions
-        ?.map((w: any) => w.turkish_expressions)
-        ?.map(
-          ({
-            text,
-            translation,
-            expression_sentence,
-            expression_sentence_translation,
-            expression_sentence_2,
-            expression_sentence_2_translation,
-          }: any) => ({
-            text,
-            translation: translation,
-            sentence: expression_sentence,
-            sentenceEn: expression_sentence_translation,
-            sentence2: expression_sentence_2,
-            sentence2En: expression_sentence_2_translation,
-          })
-        ) || []
+      newWords:
+        rawData.turkish_lesson_words
+          ?.map((w: any) => w.turkish_words)
+          ?.map(
+            ({
+              id,
+              text,
+              role,
+              translation,
+              word_sentence,
+              word_sentence_translation,
+              role_2,
+              translation_2,
+              word_sentence_2,
+              word_sentence_2_translation,
+              role_3,
+              translation_3,
+              word_sentence_3,
+              word_sentence_3_translation,
+            }: any) => ({
+              id,
+              text,
+              // 1st meaning
+              role,
+              translation: translation,
+              sentence: word_sentence,
+              sentenceEn: word_sentence_translation,
+              // 2nd meaning
+              role2: role_2,
+              translation2: translation_2,
+              sentence2: word_sentence_2,
+              sentence2En: word_sentence_2_translation,
+              // 3rd meaning
+              role3: role_3,
+              translation3: translation_3,
+              sentence3: word_sentence_3,
+              sentence3En: word_sentence_3_translation,
+            }),
+          ) || [],
+      newExpressions:
+        rawData.turkish_lesson_expressions
+          ?.map((w: any) => w.turkish_expressions)
+          ?.map(
+            ({
+              text,
+              translation,
+              expression_sentence,
+              expression_sentence_translation,
+              expression_sentence_2,
+              expression_sentence_2_translation,
+            }: any) => ({
+              text,
+              translation: translation,
+              sentence: expression_sentence,
+              sentenceEn: expression_sentence_translation,
+              sentence2: expression_sentence_2,
+              sentence2En: expression_sentence_2_translation,
+            }),
+          ) || [],
     };
     return result as Lesson;
   };
@@ -110,14 +114,17 @@ export const useLesson = (lessonId: string | Ref<string>) => {
   // Fetch grammar rule
   const fetchGrammarRule = async (grammarRuleId: number) => {
     if (!grammarRuleId) return;
-    
+
     try {
       grammarRuleLoading.value = true;
       const headers = await getAuthToken();
-      const { data, error: grammarError } = await useFetch(`/api/grammar/${grammarRuleId}`, { headers });
-      
+      const { data, error: grammarError } = await useFetch(
+        `/api/grammar/${grammarRuleId}`,
+        { headers },
+      );
+
       if (grammarError.value) throw grammarError.value;
-      
+
       if (data.value) {
         grammarRule.value = parseRuleData(data.value as any);
       }
@@ -130,69 +137,88 @@ export const useLesson = (lessonId: string | Ref<string>) => {
 
   // Main lesson fetching function using useAsyncData for best practices
   // @ts-expect-error - Complex type inference with useAsyncData transform and watch options
-  const { data: lessonData, error: fetchError, refresh: refreshLesson, pending } = useAsyncData(
+  const {
+    data: lessonData,
+    error: fetchError,
+    refresh: refreshLesson,
+    pending,
+  } = useAsyncData(
     `lesson-${reactiveLessonId.value}`,
     async () => {
-        const { data: { session } } = await useSupabaseClient().auth.getSession()
-        const headers: Record<string, string> = {}
-        if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`
-        const lessonData = await $fetch(`/api/lessons/${reactiveLessonId.value}`, { 
+      const {
+        data: { session },
+      } = await useSupabaseClient().auth.getSession();
+      const headers: Record<string, string> = {};
+      if (session?.access_token)
+        headers["Authorization"] = `Bearer ${session.access_token}`;
+      const lessonData = await $fetch(
+        `/api/lessons/${reactiveLessonId.value}`,
+        {
           headers,
-        });
-      if (!lessonData) throw new Error('Lesson not found');
+        },
+      );
+      if (!lessonData) throw new Error("Lesson not found");
       return lessonData;
     },
     {
       // Transform the data
       transform: (rawData: any) => {
         const transformedLesson = transformLessonData(rawData);
-        
+
         // Set related quiz data
         if (rawData.turkish_quizzes_result) {
-          relatedQuiz.value = { 
-            score: rawData.turkish_quizzes_result.score_global, 
-            createdAt: rawData.turkish_quizzes_result.created_at, 
-            id: rawData.turkish_quizzes_result.id 
+          relatedQuiz.value = {
+            score: rawData.turkish_quizzes_result.score_global,
+            createdAt: rawData.turkish_quizzes_result.created_at,
+            id: rawData.turkish_quizzes_result.id,
           };
         }
-        
+
         return transformedLesson;
       },
-      
+
       // Default value
       default: () => null,
-      
+
       // Server-side rendering
       server: true,
-      
+
       // Watch changes to lessonId
       watch: [reactiveLessonId],
-    }
+    },
   );
 
   // Watch for pending state - update isLoading immediately
-  watch(pending, (isPending) => {
-    if (isPending) {
-      isLoading.value = true;
-    }
-  }, { immediate: true });
+  watch(
+    pending,
+    (isPending) => {
+      if (isPending) {
+        isLoading.value = true;
+      }
+    },
+    { immediate: true },
+  );
 
   // Watch for lesson data changes and fetch grammar rule
-  watch(lessonData, async (newLesson) => {
-    if (newLesson && newLesson.grammarRuleId) {
-      await fetchGrammarRule(newLesson.grammarRuleId);
-    }
-    lesson.value = newLesson;
-    // Only set loading to false when we actually have lesson data
-    if (newLesson) {
-      isLoading.value = false;
-    }
-  }, { immediate: true });
+  watch(
+    lessonData,
+    async (newLesson) => {
+      if (newLesson && newLesson.grammarRuleId) {
+        await fetchGrammarRule(newLesson.grammarRuleId);
+      }
+      lesson.value = newLesson;
+      // Only set loading to false when we actually have lesson data
+      if (newLesson) {
+        isLoading.value = false;
+      }
+    },
+    { immediate: true },
+  );
 
   // Watch for fetch errors
   watch(fetchError, (newError) => {
     if (newError) {
-      error.value = newError.message || 'Failed to fetch lesson';
+      error.value = newError.message || "Failed to fetch lesson";
       isLoading.value = false;
     } else {
       error.value = null;
@@ -207,23 +233,33 @@ export const useLesson = (lessonId: string | Ref<string>) => {
 
   // Listen for lesson updates and auto-refresh when needed
   const { subscribeToLessonUpdates } = lessonUpdateBus;
-  
+
   // Subscribe to updates for this specific lesson
-  const unsubscribe = subscribeToLessonUpdates(reactiveLessonId.value, (event) => {
-    if (process.env.NODE_ENV === 'development') {
-    console.log('📡 Lesson update event received:', {
-      lessonId: reactiveLessonId.value,
-        eventType: event.type,
-        eventData: event.data,
-        timestamp: event.timestamp
-      });
-    }
-    
-    // Auto-refresh on certain events
-    if (['quiz_completed', 'lesson_modified', 'score_updated', 'image_modified'].includes(event.type)) {
-      refresh();
-    }
-  });
+  const unsubscribe = subscribeToLessonUpdates(
+    reactiveLessonId.value,
+    (event) => {
+      if (process.env.NODE_ENV === "development") {
+        console.log("📡 Lesson update event received:", {
+          lessonId: reactiveLessonId.value,
+          eventType: event.type,
+          eventData: event.data,
+          timestamp: event.timestamp,
+        });
+      }
+
+      // Auto-refresh on certain events
+      if (
+        [
+          "quiz_completed",
+          "lesson_modified",
+          "score_updated",
+          "image_modified",
+        ].includes(event.type)
+      ) {
+        refresh();
+      }
+    },
+  );
 
   // Cleanup subscription on unmount
   onUnmounted(() => {
@@ -232,15 +268,17 @@ export const useLesson = (lessonId: string | Ref<string>) => {
 
   // Computed properties
   const hasError = computed(() => !!error.value);
-  const isReady = computed(() => !isLoading.value && !error.value && !!lesson.value);
+  const isReady = computed(
+    () => !isLoading.value && !error.value && !!lesson.value,
+  );
 
   // Computed sentences for template usage
   const sentences = computed(() => {
     if (!lesson.value) return [];
-    
+
     const phrases = [];
     let i = 0;
-    
+
     while ((lesson.value as any)[`sentence${i + 1}`]) {
       phrases.push({
         original: (lesson.value as any)[`sentence${i + 1}`],
@@ -249,7 +287,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       });
       i++;
     }
-    
+
     return phrases;
   });
 
@@ -266,13 +304,13 @@ export const useLesson = (lessonId: string | Ref<string>) => {
     isLoading: readonly(isLoading),
     grammarRuleLoading: readonly(grammarRuleLoading),
     error: readonly(error),
-    
+
     // Computed properties
     hasError: readonly(hasError),
     isReady: readonly(isReady),
     sentences: readonly(sentences),
     imageUrl: readonly(imageUrl),
-    
+
     // Methods
     refresh,
     refreshLesson,

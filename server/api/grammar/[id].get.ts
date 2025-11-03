@@ -2,7 +2,7 @@ import { defineEventHandler } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
-  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
   const id = event.context.params?.id;
 
   const { data, error } = await supabase

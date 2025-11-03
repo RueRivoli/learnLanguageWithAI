@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  EyeIcon,
-  EyeSlashIcon,
-  XCircleIcon,
-} from "@heroicons/vue/24/outline";
+import { EyeIcon, EyeSlashIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
 import type { Schema } from "~/utils/auth/auth";
 
@@ -35,12 +31,19 @@ const captchaContainerRef = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   loadHCaptcha();
-  
+
   // Watch for script load and initialize widget
   watchEffect(() => {
-    if (isCaptchaLoaded.value && captchaContainerRef.value && typeof window !== 'undefined') {
+    if (
+      isCaptchaLoaded.value &&
+      captchaContainerRef.value &&
+      typeof window !== "undefined"
+    ) {
       // @ts-ignore
-      if (window.hcaptcha && !captchaContainerRef.value.hasAttribute('data-rendered')) {
+      if (
+        window.hcaptcha &&
+        !captchaContainerRef.value.hasAttribute("data-rendered")
+      ) {
         try {
           // @ts-ignore
           window.hcaptcha.render(captchaContainerRef.value, {
@@ -48,16 +51,16 @@ onMounted(() => {
             callback: (token: string) => {
               onCaptchaVerified(token);
             },
-            'expired-callback': () => {
+            "expired-callback": () => {
               onCaptchaExpired();
             },
-            'error-callback': () => {
+            "error-callback": () => {
               onCaptchaError();
             },
           });
-          captchaContainerRef.value.setAttribute('data-rendered', 'true');
+          captchaContainerRef.value.setAttribute("data-rendered", "true");
         } catch (error) {
-          console.error('Error rendering hCaptcha widget:', error);
+          console.error("Error rendering hCaptcha widget:", error);
         }
       }
     }
@@ -75,30 +78,32 @@ const handleSignUpWithGoogle = async () => {
 
 const handleSignUp = async () => {
   connexionError.value = null;
-  
+
   // First validate captcha BEFORE email/password check
   // This ensures captcha error is shown first if not filled
   if (!validateCaptcha()) {
-    connexionError.value = captchaError.value || "Please complete the captcha verification.";
+    connexionError.value =
+      captchaError.value || "Please complete the captcha verification.";
     return;
   }
-  
+
   const emailOrPasswordError = getEmailPasswordInvalidityMessage(state);
   if (emailOrPasswordError !== null) {
     connexionError.value = emailOrPasswordError;
     return;
   }
-  
+
   isLoading.value = true;
   try {
     const signUpOptions: any = {
-      emailRedirectTo: window.location.origin + "/authorization/confirmation-account",
+      emailRedirectTo:
+        window.location.origin + "/authorization/confirmation-account",
     };
-    
+
     if (captchaToken.value) {
       signUpOptions.captchaToken = captchaToken.value;
     }
-    
+
     const { data, error } = await client.auth.signUp({
       email: state.email,
       password: state.password,
@@ -115,20 +120,41 @@ const handleSignUp = async () => {
       });
     }
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "An error occurred";
-    
+    const errorMessage =
+      error instanceof Error ? error.message : "An error occurred";
+
     // Handle specific error types
     if (errorMessage.includes("captcha") || errorMessage.includes("CAPTCHA")) {
-      connexionError.value = "Captcha verification is required. Please complete the captcha verification.";
+      connexionError.value =
+        "Captcha verification is required. Please complete the captcha verification.";
       resetCaptcha();
-    } else if (errorMessage.includes("over_email_send_rate_limit") || errorMessage.includes("rate limit exceeded")) {
-      connexionError.value = "Too many signup attempts. Please wait a few minutes before trying again.";
-    } else if (errorMessage.includes("timeout") || errorMessage.includes("network") || errorMessage.includes("connection")) {
-      connexionError.value = "Connection timeout. Please check your internet connection and try again. If the problem persists, contact support.";
-    } else if (errorMessage.includes("SMTP") || errorMessage.includes("email") || errorMessage.includes("send")) {
-      connexionError.value = "Unable to send confirmation email. Please try again in a few minutes or contact support.";
-    } else if (errorMessage.includes("Invalid login credentials") || errorMessage.includes("invalid password") || errorMessage.includes("invalid email")) {
-      connexionError.value = "Invalid email or password. Please check your credentials.";
+    } else if (
+      errorMessage.includes("over_email_send_rate_limit") ||
+      errorMessage.includes("rate limit exceeded")
+    ) {
+      connexionError.value =
+        "Too many signup attempts. Please wait a few minutes before trying again.";
+    } else if (
+      errorMessage.includes("timeout") ||
+      errorMessage.includes("network") ||
+      errorMessage.includes("connection")
+    ) {
+      connexionError.value =
+        "Connection timeout. Please check your internet connection and try again. If the problem persists, contact support.";
+    } else if (
+      errorMessage.includes("SMTP") ||
+      errorMessage.includes("email") ||
+      errorMessage.includes("send")
+    ) {
+      connexionError.value =
+        "Unable to send confirmation email. Please try again in a few minutes or contact support.";
+    } else if (
+      errorMessage.includes("Invalid login credentials") ||
+      errorMessage.includes("invalid password") ||
+      errorMessage.includes("invalid email")
+    ) {
+      connexionError.value =
+        "Invalid email or password. Please check your credentials.";
     } else {
       connexionError.value = errorMessage;
     }
@@ -225,7 +251,7 @@ const handleSignUp = async () => {
                 id="remember"
                 type="checkbox"
                 value=""
-                class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300"
                 required
               />
             </div>

@@ -21,7 +21,7 @@ const isSavingPseudo = ref(false);
 
 const handleDefinePseudo = async () => {
   if (!pseudo.value) return;
-  
+
   isSavingPseudo.value = true;
   const headers = await getAuthToken();
   const profile = await $fetch(`/api/profiles/${props.userId}`, {
@@ -55,19 +55,22 @@ defineExpose({
     <div class="modal-box max-w-md bg-base-100 p-0">
       <!-- Header -->
       <div class="px-8 pt-8 pb-6 border-b border-base-300">
-        <h3 class="text-2xl font-semibold text-base-content tracking-tight" style="font-family: 'Inter', sans-serif;">
-         How should we call you ?
+        <h3
+          class="text-2xl font-semibold text-base-content tracking-tight"
+          style="font-family: &quot;Inter&quot;, sans-serif"
+        >
+          How should we call you ?
         </h3>
-        <p class="mt-2 text-sm text-base-content/60">
-          Choose your pseudo
-        </p>
+        <p class="mt-2 text-sm text-base-content/60">Choose your pseudo</p>
       </div>
-      
+
       <!-- Content -->
       <div class="px-8 py-6">
         <div class="form-control w-full">
           <label class="label">
-            <span class="label-text text-sm font-medium text-base-content">Username</span>
+            <span class="label-text text-sm font-medium text-base-content"
+              >Username</span
+            >
           </label>
           <input
             v-model="pseudo"
@@ -78,15 +81,14 @@ defineExpose({
           />
         </div>
       </div>
-      
+
       <!-- Footer -->
-      <div class="px-8 pb-8 flex justify-end gap-3 border-t border-base-300 pt-6">
+      <div
+        class="px-8 pb-8 flex justify-end gap-3 border-t border-base-300 pt-6"
+      >
         <button
           :disabled="!pseudo || isSavingPseudo"
-          :class="[
-            'btn btn-primary min-w-[120px]',
-            !pseudo && 'btn-disabled',
-          ]"
+          :class="['btn btn-primary min-w-[120px]', !pseudo && 'btn-disabled']"
           @click="handleDefinePseudo"
         >
           <span

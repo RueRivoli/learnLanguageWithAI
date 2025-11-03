@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOpenIcon } from '@heroicons/vue/24/outline';
+import { BookOpenIcon } from "@heroicons/vue/24/outline";
 
 const props = withDefaults(
   defineProps<{
@@ -11,12 +11,11 @@ const props = withDefaults(
     description: null,
   },
 );
-
 </script>
 
 <template>
- <!-- Total Words Mastered - Professional Design -->
- <div
+  <!-- Total Words Mastered - Professional Design -->
+  <div
     class="group relative bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-md border border-violet-300/70 p-4 overflow-hidden transition-all duration-300"
   >
     <!-- Professional background pattern -->
@@ -42,12 +41,8 @@ const props = withDefaults(
         <!-- Icon with professional styling -->
         <div class="flex-shrink-0 ml-3">
           <div class="relative">
-            <div
-              class="absolute inset-0 bg-primary rounded-lg"
-            />
-            <div
-              class="relative p-2 bg-primary rounded-lg shadow-lg"
-            >
+            <div class="absolute inset-0 bg-primary rounded-lg" />
+            <div class="relative p-2 bg-primary rounded-lg shadow-lg">
               <BookOpenIcon class="h-5 w-5 text-white" />
             </div>
           </div>
@@ -55,7 +50,7 @@ const props = withDefaults(
       </div>
 
       <!-- Main statistics -->
-        <slot name="content" />
+      <slot name="content" />
 
       <!-- Progress details -->
       <slot name="details"></slot>
@@ -63,6 +58,4 @@ const props = withDefaults(
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

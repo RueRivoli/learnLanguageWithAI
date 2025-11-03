@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { GrammarRuleMeta } from '~/types/modules/grammar-rule';
-import type { GrammarQuizQuestion } from '~/types/quizzes/quiz';
-import type { VocabularyQuizQuestion } from '~/types/quizzes/vocabulary-quiz';
-import type { ExpressionContent } from '~/types/vocabulary/expression';
-import type { WordContent } from '~/types/vocabulary/word';
-import { useQuiz } from '~/composables/useQuiz';
+import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
+import type { GrammarQuizQuestion } from "~/types/quizzes/quiz";
+import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
+import type { ExpressionContent } from "~/types/vocabulary/expression";
+import type { WordContent } from "~/types/vocabulary/word";
+import { useQuiz } from "~/composables/useQuiz";
 
 definePageMeta({
   layout: "quiz",
@@ -16,7 +16,7 @@ const router = useRouter();
 
 const props = withDefaults(
   defineProps<{
-    type: 'full' | 'vocabulary' | 'grammar';
+    type: "full" | "vocabulary" | "grammar";
     // Lesson Id or Module Id
     subjetId: number | null;
     wordsForQuiz: WordContent[] | null;
@@ -29,7 +29,7 @@ const props = withDefaults(
     isLoading: boolean;
   }>(),
   {
-    type: 'full',
+    type: "full",
     wordsForQuiz: null,
     expressionsForQuiz: null,
     grammarQuizQuestions: null,
@@ -40,40 +40,44 @@ const props = withDefaults(
   },
 );
 
-
 const {
-    currentQuestion,
-    currentQuestionIndex,
-    currentQuestionOptions,
-    currentSection,
-    expressionsProgress,
-    expressionsScore,
-    getUserAnswer,
-    goToNextQuestion,
-    goToNextQuestionInReview,
-    goToPreviousQuestionInReview,
-    goToQuestion,
-    grammarProgress,
-    grammarScore,
-    isLastQuestion,
-    isQuizCompleted,
-    selectAnswer,
-    selectedAnswer,
-    totalQuestions,
-    wordsProgress,
-    wordsScore,
-  } = useQuiz(ref(props.grammarQuizQuestions), ref(props.wordsQuizQuestions), ref(props.expressionsQuizQuestions), ref(props.wordsForQuiz), ref(props.expressionsForQuiz), props.type, emit);
-
-
+  currentQuestion,
+  currentQuestionIndex,
+  currentQuestionOptions,
+  currentSection,
+  expressionsProgress,
+  expressionsScore,
+  getUserAnswer,
+  goToNextQuestion,
+  goToNextQuestionInReview,
+  goToPreviousQuestionInReview,
+  goToQuestion,
+  grammarProgress,
+  grammarScore,
+  isLastQuestion,
+  isQuizCompleted,
+  selectAnswer,
+  selectedAnswer,
+  totalQuestions,
+  wordsProgress,
+  wordsScore,
+} = useQuiz(
+  ref(props.grammarQuizQuestions),
+  ref(props.wordsQuizQuestions),
+  ref(props.expressionsQuizQuestions),
+  ref(props.wordsForQuiz),
+  ref(props.expressionsForQuiz),
+  props.type,
+  emit,
+);
 
 const handleReturnToSubject = () => {
-  if (props.type === 'full') {
+  if (props.type === "full") {
     router.push(`/learning/lessons/${props.subjetId}`);
   } else {
     router.push(`/learning/modules/${props.subjetId}`);
   }
-}
-
+};
 </script>
 
 <template>
@@ -83,8 +87,18 @@ const handleReturnToSubject = () => {
       <div class="quiz-header">
         <div v-if="isQuizCompleted" class="back-button-container">
           <button @click="handleReturnToSubject" class="back-button">
-            <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            <svg
+              class="back-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
             <span v-if="props.type === 'full'">Back to the Lesson</span>
             <span v-else>Back to the Module</span>
@@ -99,7 +113,6 @@ const handleReturnToSubject = () => {
       <div v-if="currentQuestion && !props.isLoading" class="quiz-content">
         <!-- Back to lessons button -->
 
-        
         <!-- Question -->
         <div class="question-section">
           <h2 class="question-text">{{ currentQuestion.question }}</h2>
@@ -116,11 +129,20 @@ const handleReturnToSubject = () => {
                 'option-button',
                 selectedAnswer === option ? 'selected' : '',
                 isQuizCompleted ? 'completed-quiz' : '',
-                isQuizCompleted && index + 1 === Number(currentQuestion.correctAnswer) ? 'correct-answer' : '',
-                isQuizCompleted && index + 1 === getUserAnswer(currentQuestionIndex) && index + 1 !== Number(currentQuestion.correctAnswer) ? 'incorrect-answer' : ''
+                isQuizCompleted &&
+                index + 1 === Number(currentQuestion.correctAnswer)
+                  ? 'correct-answer'
+                  : '',
+                isQuizCompleted &&
+                index + 1 === getUserAnswer(currentQuestionIndex) &&
+                index + 1 !== Number(currentQuestion.correctAnswer)
+                  ? 'incorrect-answer'
+                  : '',
               ]"
             >
-              <span class="option-letter">{{ String.fromCharCode(65 + index) }}</span>
+              <span class="option-letter">{{
+                String.fromCharCode(65 + index)
+              }}</span>
               <span class="option-text">{{ option }}</span>
             </button>
           </div>
@@ -135,29 +157,56 @@ const handleReturnToSubject = () => {
             :disabled="currentQuestionIndex <= 0"
             :class="[
               'nav-button prev-button',
-              currentQuestionIndex <= 0 ? 'disabled' : ''
+              currentQuestionIndex <= 0 ? 'disabled' : '',
             ]"
           >
-            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
             <span>Previous</span>
           </button>
 
           <!-- Next Button -->
           <button
-            @click="isQuizCompleted ? goToNextQuestionInReview() : goToNextQuestion()"
+            @click="
+              isQuizCompleted ? goToNextQuestionInReview() : goToNextQuestion()
+            "
             :disabled="!isQuizCompleted && !selectedAnswer"
             :class="[
               'nav-button next-button',
-              !isQuizCompleted && !selectedAnswer ? 'disabled' : ''
+              !isQuizCompleted && !selectedAnswer ? 'disabled' : '',
             ]"
           >
             <span v-if="!isQuizCompleted && isLastQuestion">Finish Quiz</span>
-            <span v-else-if="isQuizCompleted && currentQuestionIndex >= totalQuestions - 1">Last Question</span>
+            <span
+              v-else-if="
+                isQuizCompleted && currentQuestionIndex >= totalQuestions - 1
+              "
+              >Last Question</span
+            >
             <span v-else>Next Question</span>
-            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </div>
@@ -178,17 +227,24 @@ const handleReturnToSubject = () => {
 
       <div class="progress-section">
         <div class="">
-          <LayoutKeyElementRuleBadge class="mb-4" :title="grammarRuleMetaData?.name" :titleEn="grammarRuleMetaData?.nameEn" :level="grammarRuleMetaData?.level" :symbol="grammarRuleMetaData?.symbol" size="xs" :lightMode="true"/>
+          <LayoutKeyElementRuleBadge
+            class="mb-4"
+            :title="grammarRuleMetaData?.name"
+            :titleEn="grammarRuleMetaData?.nameEn"
+            :level="grammarRuleMetaData?.level"
+            :symbol="grammarRuleMetaData?.symbol"
+            size="xs"
+            :lightMode="true"
+          />
           <h4 class="progress-title">Grammar</h4>
-
         </div>
-        
+
         <!-- Grammar Score -->
         <div v-if="isQuizCompleted" class="score-display">
           <span class="score-label">Score:</span>
           <span class="score-value">{{ grammarScore }}%</span>
         </div>
-    
+
         <div class="progress-grid grammar-grid">
           <div
             v-for="(item, index) in grammarProgress"
@@ -200,7 +256,7 @@ const handleReturnToSubject = () => {
               item.current ? 'current' : '',
               isQuizCompleted && item.correct === true ? 'correct' : '',
               isQuizCompleted && item.correct === false ? 'incorrect' : '',
-              isQuizCompleted ? 'clickable' : ''
+              isQuizCompleted ? 'clickable' : '',
             ]"
           >
             {{ index + 1 }}
@@ -208,9 +264,12 @@ const handleReturnToSubject = () => {
         </div>
       </div>
 
-      <div class="progress-section" v-if="props.type === 'full' || props.type === 'vocabulary'">
+      <div
+        class="progress-section"
+        v-if="props.type === 'full' || props.type === 'vocabulary'"
+      >
         <h4 class="progress-title">Vocabulary</h4>
-        
+
         <!-- Words Subsection -->
         <div class="progress-subsection">
           <div class="flex items-center justify-between">
@@ -232,7 +291,7 @@ const handleReturnToSubject = () => {
                 item.current ? 'current' : '',
                 isQuizCompleted && item.correct === true ? 'correct' : '',
                 isQuizCompleted && item.correct === false ? 'incorrect' : '',
-                isQuizCompleted ? 'clickable' : ''
+                isQuizCompleted ? 'clickable' : '',
               ]"
             >
               {{ index + 1 }}
@@ -261,7 +320,7 @@ const handleReturnToSubject = () => {
                 item.current ? 'current' : '',
                 isQuizCompleted && item.correct === true ? 'correct' : '',
                 isQuizCompleted && item.correct === false ? 'incorrect' : '',
-                isQuizCompleted ? 'clickable' : ''
+                isQuizCompleted ? 'clickable' : '',
               ]"
             >
               {{ index + 1 }}
@@ -269,7 +328,7 @@ const handleReturnToSubject = () => {
           </div>
         </div>
       </div>
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -279,20 +338,36 @@ const handleReturnToSubject = () => {
   min-height: 100vh;
   background: var(--color-primary);
   display: flex;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   position: relative;
 }
 
 /* Subtle professional background pattern */
 .quiz-container::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px),
-    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px);
+  background-image:
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(255, 255, 255, 0.05) 0.5px,
+      transparent 0.5px
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(255, 255, 255, 0.05) 0.5px,
+      transparent 0.5px
+    );
   background-size: 50px 50px;
-  background-position: 0 0, 25px 25px;
+  background-position:
+    0 0,
+    25px 25px;
   opacity: 0.5;
   pointer-events: none;
 }
@@ -423,7 +498,7 @@ const handleReturnToSubject = () => {
   text-align: left;
   width: 100%;
   min-height: 100px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -432,15 +507,23 @@ const handleReturnToSubject = () => {
 }
 
 .option-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(120, 119, 198, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    ),
     linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -450,7 +533,7 @@ const handleReturnToSubject = () => {
 .option-button:hover {
   border-color: #d1d5db;
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 10px 25px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -464,7 +547,7 @@ const handleReturnToSubject = () => {
   border-color: #f59e0b;
   background: linear-gradient(135deg, #f59e0b 0%, #fb923c 50%, #fbbf24 100%);
   color: white;
-  box-shadow: 
+  box-shadow:
     0 10px 25px -3px rgba(245, 158, 11, 0.4),
     0 4px 6px -2px rgba(245, 158, 11, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -473,9 +556,17 @@ const handleReturnToSubject = () => {
 
 .option-button.selected::before {
   opacity: 1;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .option-letter {
@@ -506,7 +597,7 @@ const handleReturnToSubject = () => {
   background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
   border-color: #10b981;
   color: white;
-  box-shadow: 
+  box-shadow:
     0 10px 25px -3px rgba(16, 185, 129, 0.4),
     0 4px 6px -2px rgba(16, 185, 129, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -514,9 +605,17 @@ const handleReturnToSubject = () => {
 
 .option-button.correct-answer::before {
   opacity: 1;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .option-button.correct-answer .option-letter {
@@ -528,7 +627,7 @@ const handleReturnToSubject = () => {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
   border-color: #ef4444;
   color: white;
-  box-shadow: 
+  box-shadow:
     0 10px 25px -3px rgba(239, 68, 68, 0.4),
     0 4px 6px -2px rgba(239, 68, 68, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -536,9 +635,17 @@ const handleReturnToSubject = () => {
 
 .option-button.incorrect-answer::before {
   opacity: 1;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .option-button.incorrect-answer .option-letter {
@@ -635,8 +742,12 @@ const handleReturnToSubject = () => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Progress Sidebar - Calendar Inspired */
@@ -718,7 +829,7 @@ const handleReturnToSubject = () => {
   background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dce4ed 100%);
   color: #475569;
   border: 1px solid #cbd5e1;
-  box-shadow: 
+  box-shadow:
     0 2px 4px -1px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     inset 0 -1px 0 rgba(148, 163, 184, 0.1);
@@ -727,43 +838,53 @@ const handleReturnToSubject = () => {
 }
 
 .progress-square::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.02) 0%, transparent 50%),
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(120, 119, 198, 0.02) 0%,
+      transparent 50%
+    ),
     linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
-
-
 .progress-square.completed:not(.correct):not(.incorrect) {
   background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
   color: white;
   border-color: #10b981;
-  box-shadow: 
+  box-shadow:
     0 4px 8px -2px rgba(16, 185, 129, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .progress-square.completed:not(.correct):not(.incorrect)::before {
   opacity: 1;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .progress-square.current {
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
   color: white;
   border-color: #4f46e5;
-  box-shadow: 
+  box-shadow:
     0 6px 12px -2px rgba(79, 70, 229, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: scale(1.05);
@@ -771,41 +892,75 @@ const handleReturnToSubject = () => {
 
 .progress-square.current::before {
   opacity: 1;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .progress-square.correct {
-  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%) !important;
+  background: linear-gradient(
+    135deg,
+    #10b981 0%,
+    #059669 50%,
+    #047857 100%
+  ) !important;
   color: white !important;
   border-color: #10b981 !important;
-  box-shadow: 
+  box-shadow:
     0 4px 8px -2px rgba(16, 185, 129, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .progress-square.correct::before {
   opacity: 1 !important;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%) !important;
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    ) !important;
 }
 
 .progress-square.incorrect {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%) !important;
+  background: linear-gradient(
+    135deg,
+    #ef4444 0%,
+    #dc2626 50%,
+    #b91c1c 100%
+  ) !important;
   color: white !important;
   border-color: #ef4444 !important;
-  box-shadow: 
+  box-shadow:
     0 4px 8px -2px rgba(239, 68, 68, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .progress-square.incorrect::before {
   opacity: 1 !important;
-  background: 
-    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%) !important;
+  background:
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    ) !important;
 }
 
 .progress-square.clickable {
@@ -814,7 +969,7 @@ const handleReturnToSubject = () => {
 
 .progress-square.clickable:hover {
   transform: scale(1.05);
-  box-shadow: 
+  box-shadow:
     0 6px 16px -4px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
@@ -867,14 +1022,14 @@ const handleReturnToSubject = () => {
   .quiz-container {
     flex-direction: column;
   }
-  
+
   .progress-sidebar {
     width: 100%;
     border-left: none;
     border-top: 1px solid var(--color-base-300);
     order: 2;
   }
-  
+
   .quiz-main {
     order: 1;
   }
@@ -884,38 +1039,34 @@ const handleReturnToSubject = () => {
   .quiz-main {
     padding: 1rem;
   }
-  
+
   .question-text {
     font-size: 1.5rem;
   }
-  
+
   .options-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
     max-width: 400px;
   }
-  
+
   .option-button {
     padding: 1rem 1.25rem;
     min-height: 90px;
   }
-  
+
   .option-text {
     font-size: 0.9rem;
   }
-  
+
   .progress-sidebar {
     padding: 1rem;
   }
-  
+
   .progress-square {
     width: 40px;
     height: 40px;
     font-size: 0.75rem;
   }
-  
-
 }
 </style>
-
-

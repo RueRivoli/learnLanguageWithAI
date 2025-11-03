@@ -1,16 +1,19 @@
-function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'diagonal') {
-  if (!document) return 
-  const canvas = document?.createElement('canvas');
+function createPattern(
+  color = "#ccc",
+  type: "diagonal" | "dots" | "cross" = "diagonal",
+) {
+  if (!document) return;
+  const canvas = document?.createElement("canvas");
   canvas.width = 16;
   canvas.height = 16;
-  const ctx = canvas.getContext('2d')!;
+  const ctx = canvas.getContext("2d")!;
   ctx.clearRect(0, 0, 16, 16);
   ctx.globalAlpha = 0.18;
   ctx.strokeStyle = color;
   ctx.fillStyle = color;
   ctx.lineWidth = 2;
 
-  if (type === 'diagonal') {
+  if (type === "diagonal") {
     // Diagonal lines
     ctx.beginPath();
     ctx.moveTo(0, 16);
@@ -24,7 +27,7 @@ function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'di
     ctx.moveTo(0, 8);
     ctx.lineTo(8, 0);
     ctx.stroke();
-  } else if (type === 'dots') {
+  } else if (type === "dots") {
     // Dots
     for (let x = 4; x < 16; x += 8) {
       for (let y = 4; y < 16; y += 8) {
@@ -33,7 +36,7 @@ function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'di
         ctx.fill();
       }
     }
-  } else if (type === 'cross') {
+  } else if (type === "cross") {
     // Crosshatch
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -47,9 +50,15 @@ function createPattern(color = '#ccc', type: 'diagonal' | 'dots' | 'cross' = 'di
   return canvas;
 }
 
-export const optionWords = (totalWordsMastered: number, totalWordsLearned: number, totalWords: number, totalWordsInK: string): ECOption => { 
-  const totalWordsToLearn = totalWords - (totalWordsMastered + totalWordsLearned)
-  return  {
+export const optionWords = (
+  totalWordsMastered: number,
+  totalWordsLearned: number,
+  totalWords: number,
+  totalWordsInK: string,
+): ECOption => {
+  const totalWordsToLearn =
+    totalWords - (totalWordsMastered + totalWordsLearned);
+  return {
     animation: false,
     title: {
       text: `Out of ${totalWordsInK} words`,
@@ -59,12 +68,12 @@ export const optionWords = (totalWordsMastered: number, totalWordsLearned: numbe
       textStyle: {
         fontSize: 18,
         fontWeight: 400,
-        color: "#1f2937"
+        color: "#1f2937",
       },
       subtextStyle: {
         fontSize: 12,
-        color: "#6b7280"
-      }
+        color: "#6b7280",
+      },
     },
     tooltip: {
       trigger: "item",
@@ -73,9 +82,10 @@ export const optionWords = (totalWordsMastered: number, totalWordsLearned: numbe
       borderColor: "#e5e7eb",
       borderWidth: 1,
       textStyle: {
-        color: "#374151"
+        color: "#374151",
       },
-      extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;"
+      extraCssText:
+        "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
     },
     legend: {
       orient: "vertical",
@@ -86,7 +96,7 @@ export const optionWords = (totalWordsMastered: number, totalWordsLearned: numbe
       itemHeight: 12,
       textStyle: {
         fontSize: 12,
-        color: "#6b7280"
+        color: "#6b7280",
       },
       // formatter: function(name) {
       //   const data = (optionWords.series as any[])[0]?.data || [];
@@ -106,56 +116,71 @@ export const optionWords = (totalWordsMastered: number, totalWordsLearned: numbe
           borderColor: "#f9fafb",
           borderWidth: 2,
           shadowBlur: 8,
-          shadowColor: "rgba(0,0,0,0.06)"
+          shadowColor: "rgba(0,0,0,0.06)",
         },
         label: {
-          show: false
+          show: false,
         },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(0, 0, 0, 0.13)"
-          }
+            shadowColor: "rgba(0, 0, 0, 0.13)",
+          },
         },
         labelLine: {
-          show: false
+          show: false,
         },
         data: [
           {
             value: totalWordsMastered,
             name: "Mastered",
             itemStyle: {
-              color: { image: createPattern('oklch(72% 0.16 162.48)', 'diagonal'), repeat: 'repeat' },
-              borderColor: 'oklch(72% 0.16 162.48)',
-              borderWidth: 2
-            }
+              color: {
+                image: createPattern("oklch(72% 0.16 162.48)", "diagonal"),
+                repeat: "repeat",
+              },
+              borderColor: "oklch(72% 0.16 162.48)",
+              borderWidth: 2,
+            },
           },
           {
             value: totalWordsLearned,
             name: "Learning",
             itemStyle: {
-              color: { image: createPattern('oklch(71% 0.14 237.323)', 'dots'), repeat: 'repeat' },
-              borderColor: 'oklch(71% 0.14 237.323)',
-              borderWidth: 2
-            }
+              color: {
+                image: createPattern("oklch(71% 0.14 237.323)", "dots"),
+                repeat: "repeat",
+              },
+              borderColor: "oklch(71% 0.14 237.323)",
+              borderWidth: 2,
+            },
           },
           {
             value: totalWordsToLearn,
             name: "To Learn",
             itemStyle: {
-              color: { image: createPattern('oklch(78% 0.13 55.934)', 'cross'), repeat: 'repeat' },
-              borderColor: 'oklch(78% 0.13 55.934)',
-              borderWidth: 2
-            }
+              color: {
+                image: createPattern("oklch(78% 0.13 55.934)", "cross"),
+                repeat: "repeat",
+              },
+              borderColor: "oklch(78% 0.13 55.934)",
+              borderWidth: 2,
+            },
           },
         ],
       },
     ],
   };
 };
-  
-export const optionExpressions = (totalExpressionsMastered: number, totalExpressionsLearned: number, totalExpressions: number, totalExpressionsInK: string): ECOption => {
-  const totalExpressionsToLearn = totalExpressions - (totalExpressionsMastered + totalExpressionsLearned)
+
+export const optionExpressions = (
+  totalExpressionsMastered: number,
+  totalExpressionsLearned: number,
+  totalExpressions: number,
+  totalExpressionsInK: string,
+): ECOption => {
+  const totalExpressionsToLearn =
+    totalExpressions - (totalExpressionsMastered + totalExpressionsLearned);
   return {
     animation: false,
     title: {
@@ -166,12 +191,12 @@ export const optionExpressions = (totalExpressionsMastered: number, totalExpress
       textStyle: {
         fontSize: 18,
         fontWeight: 400,
-        color: "#1f2937"
+        color: "#1f2937",
       },
       subtextStyle: {
         fontSize: 12,
-        color: "#6b7280"
-      }
+        color: "#6b7280",
+      },
     },
     tooltip: {
       trigger: "item",
@@ -180,9 +205,10 @@ export const optionExpressions = (totalExpressionsMastered: number, totalExpress
       borderColor: "#e5e7eb",
       borderWidth: 1,
       textStyle: {
-        color: "#374151"
+        color: "#374151",
       },
-      extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;"
+      extraCssText:
+        "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
     },
     legend: {
       orient: "vertical",
@@ -193,7 +219,7 @@ export const optionExpressions = (totalExpressionsMastered: number, totalExpress
       itemHeight: 12,
       textStyle: {
         fontSize: 12,
-        color: "#6b7280"
+        color: "#6b7280",
       },
       // formatter: function(name) {
       //   const data = (optionExpressions.series as any[])[0]?.data || [];
@@ -213,57 +239,68 @@ export const optionExpressions = (totalExpressionsMastered: number, totalExpress
           borderColor: "#f9fafb",
           borderWidth: 2,
           shadowBlur: 8,
-          shadowColor: "rgba(0,0,0,0.06)"
+          shadowColor: "rgba(0,0,0,0.06)",
         },
         label: {
-          show: false
+          show: false,
         },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(0, 0, 0, 0.13)"
-          }
+            shadowColor: "rgba(0, 0, 0, 0.13)",
+          },
         },
         labelLine: {
-          show: false
+          show: false,
         },
         data: [
           {
             value: totalExpressionsMastered,
             name: "Mastered",
             itemStyle: {
-              color: { image: createPattern('oklch(72% 0.16 162.48)', 'diagonal'), repeat: 'repeat' },
-              borderColor: 'oklch(72% 0.16 162.48)',
-              borderWidth: 2
-            }
+              color: {
+                image: createPattern("oklch(72% 0.16 162.48)", "diagonal"),
+                repeat: "repeat",
+              },
+              borderColor: "oklch(72% 0.16 162.48)",
+              borderWidth: 2,
+            },
           },
           {
             value: totalExpressionsLearned,
             name: "Learning",
             itemStyle: {
-              color: { image: createPattern('oklch(71% 0.14 237.323)', 'dots'), repeat: 'repeat' },
-              borderColor: 'oklch(71% 0.14 237.323)',
-              borderWidth: 2
-            }
+              color: {
+                image: createPattern("oklch(71% 0.14 237.323)", "dots"),
+                repeat: "repeat",
+              },
+              borderColor: "oklch(71% 0.14 237.323)",
+              borderWidth: 2,
+            },
           },
           {
             value: totalExpressionsToLearn,
             name: "To Learn",
             itemStyle: {
-              color: { image: createPattern('oklch(78% 0.13 55.934)', 'cross'), repeat: 'repeat' },
-              borderColor: 'oklch(78% 0.13 55.934)',
-              borderWidth: 2
-            }
+              color: {
+                image: createPattern("oklch(78% 0.13 55.934)", "cross"),
+                repeat: "repeat",
+              },
+              borderColor: "oklch(78% 0.13 55.934)",
+              borderWidth: 2,
+            },
           },
         ],
       },
     ],
   };
-}
-  
+};
 
 // Grammar options
-export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
+export const optionBeginnerGrammar = (
+  scores: Array<number>,
+  names: Array<string>,
+): ECOption => {
   return {
     title: {
       text: "Beginner concepts",
@@ -273,12 +310,12 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       textStyle: {
         fontSize: 18,
         fontWeight: 600,
-        color: "#1f2937"
+        color: "#1f2937",
       },
       subtextStyle: {
         fontSize: 12,
-        color: "#6b7280"
-      }
+        color: "#6b7280",
+      },
     },
     tooltip: {
       trigger: "axis",
@@ -286,38 +323,39 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       borderColor: "#e5e7eb",
       borderWidth: 1,
       textStyle: {
-        color: "#374151"
+        color: "#374151",
       },
-      extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
-      formatter: function(params: any) {
+      extraCssText:
+        "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
+      formatter: function (params: any) {
         const data = params[0];
         return `<div class="font-semibold">${data.name}</div>
                 <div class="text-sm">Exercises: <span class="font-medium">${data.value}</span></div>`;
-      }
+      },
     },
     grid: {
       left: "10%",
       right: "10%",
       top: "20%",
       bottom: "15%",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
       data: names,
       axisLine: {
         lineStyle: {
-          color: "#e5e7eb"
-        }
+          color: "#e5e7eb",
+        },
       },
       axisTick: {
-        show: false
+        show: false,
       },
       axisLabel: {
         color: "#6b7280",
         fontSize: 12,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     yAxis: {
       type: "value",
@@ -325,22 +363,22 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       max: 100,
       interval: 50,
       axisLine: {
-        show: false
+        show: false,
       },
       axisTick: {
-        show: false
+        show: false,
       },
       splitLine: {
         lineStyle: {
           color: "#f3f4f6",
-          type: "dashed"
-        }
+          type: "dashed",
+        },
       },
       axisLabel: {
         color: "#6b7280",
         fontSize: 12,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     series: [
       {
@@ -350,7 +388,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
         showBackground: true,
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
-          borderRadius: [4, 4, 0, 0]
+          borderRadius: [4, 4, 0, 0],
         },
         itemStyle: {
           color: {
@@ -362,32 +400,34 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
             colorStops: [
               {
                 offset: 0,
-                color: "#8b5cf6"
+                color: "#8b5cf6",
               },
               {
                 offset: 1,
-                color: "#7c3aed"
-              }
-            ]
+                color: "#7c3aed",
+              },
+            ],
           },
           borderRadius: [4, 4, 0, 0],
           shadowBlur: 10,
-          shadowColor: "rgba(139, 92, 246, 0.2)"
+          shadowColor: "rgba(139, 92, 246, 0.2)",
         },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(139, 92, 246, 0.4)"
-          }
-        }
-      }
-    ]
-  }
-    
+            shadowColor: "rgba(139, 92, 246, 0.4)",
+          },
+        },
+      },
+    ],
   };
-  
-  export const optionIntermediateGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
-    return {
+};
+
+export const optionIntermediateGrammar = (
+  scores: Array<number>,
+  names: Array<string>,
+): ECOption => {
+  return {
     title: {
       text: "Intermediate concepts",
       // subtext: "Weekly grammar exercises completed",
@@ -396,12 +436,12 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       textStyle: {
         fontSize: 18,
         fontWeight: 600,
-        color: "#1f2937"
+        color: "#1f2937",
       },
       subtextStyle: {
         fontSize: 12,
-        color: "#6b7280"
-      }
+        color: "#6b7280",
+      },
     },
     tooltip: {
       trigger: "axis",
@@ -409,38 +449,39 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       borderColor: "#e5e7eb",
       borderWidth: 1,
       textStyle: {
-        color: "#374151"
+        color: "#374151",
       },
-      extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
-      formatter: function(params: any) {
+      extraCssText:
+        "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
+      formatter: function (params: any) {
         const data = params[0];
         return `<div class="font-semibold">${data.name}</div>
                 <div class="text-sm">Exercises: <span class="font-medium">${data.value}</span></div>`;
-      }
+      },
     },
     grid: {
       left: "10%",
       right: "10%",
       top: "20%",
       bottom: "15%",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
       data: names,
       axisLine: {
         lineStyle: {
-          color: "#e5e7eb"
-        }
+          color: "#e5e7eb",
+        },
       },
       axisTick: {
-        show: false
+        show: false,
       },
       axisLabel: {
         color: "#6b7280",
         fontSize: 12,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     yAxis: {
       type: "value",
@@ -448,22 +489,22 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       max: 100,
       interval: 50,
       axisLine: {
-        show: false
+        show: false,
       },
       axisTick: {
-        show: false
+        show: false,
       },
       splitLine: {
         lineStyle: {
           color: "#f3f4f6",
-          type: "dashed"
-        }
+          type: "dashed",
+        },
       },
       axisLabel: {
         color: "#6b7280",
         fontSize: 12,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     series: [
       {
@@ -473,7 +514,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
         showBackground: true,
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
-          borderRadius: [4, 4, 0, 0]
+          borderRadius: [4, 4, 0, 0],
         },
         itemStyle: {
           color: {
@@ -485,32 +526,34 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
             colorStops: [
               {
                 offset: 0,
-                color: "#8b5cf6"
+                color: "#8b5cf6",
               },
               {
                 offset: 1,
-                color: "#7c3aed"
-              }
-            ]
+                color: "#7c3aed",
+              },
+            ],
           },
           borderRadius: [4, 4, 0, 0],
           shadowBlur: 10,
-          shadowColor: "rgba(139, 92, 246, 0.2)"
+          shadowColor: "rgba(139, 92, 246, 0.2)",
         },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(139, 92, 246, 0.4)"
-          }
-        }
-      }
-    ]
-  }
+            shadowColor: "rgba(139, 92, 246, 0.4)",
+          },
+        },
+      },
+    ],
   };
-  
-    
-  export const optionAdvancedGrammar = (scores: Array<number>, names: Array<string>): ECOption => {
-    return {
+};
+
+export const optionAdvancedGrammar = (
+  scores: Array<number>,
+  names: Array<string>,
+): ECOption => {
+  return {
     title: {
       text: "Advanced concepts",
       // subtext: "Weekly grammar exercises completed",
@@ -519,12 +562,12 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       textStyle: {
         fontSize: 18,
         fontWeight: 600,
-        color: "#1f2937"
+        color: "#1f2937",
       },
       subtextStyle: {
         fontSize: 12,
-        color: "#6b7280"
-      }
+        color: "#6b7280",
+      },
     },
     tooltip: {
       trigger: "axis",
@@ -532,38 +575,39 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       borderColor: "#e5e7eb",
       borderWidth: 1,
       textStyle: {
-        color: "#374151"
+        color: "#374151",
       },
-      extraCssText: "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
-      formatter: function(params: any) {
+      extraCssText:
+        "box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px;",
+      formatter: function (params: any) {
         const data = params[0];
         return `<div class="font-semibold">${data.name}</div>
                 <div class="text-sm">Exercises: <span class="font-medium">${data.value}</span></div>`;
-      }
+      },
     },
     grid: {
       left: "10%",
       right: "10%",
       top: "20%",
       bottom: "15%",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
       data: names,
       axisLine: {
         lineStyle: {
-          color: "#e5e7eb"
-        }
+          color: "#e5e7eb",
+        },
       },
       axisTick: {
-        show: false
+        show: false,
       },
       axisLabel: {
         color: "#6b7280",
         fontSize: 12,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     yAxis: {
       type: "value",
@@ -571,22 +615,22 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
       max: 100,
       interval: 50,
       axisLine: {
-        show: false
+        show: false,
       },
       axisTick: {
-        show: false
+        show: false,
       },
       splitLine: {
         lineStyle: {
           color: "#f3f4f6",
-          type: "dashed"
-        }
+          type: "dashed",
+        },
       },
       axisLabel: {
         color: "#6b7280",
         fontSize: 12,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     series: [
       {
@@ -596,7 +640,7 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
         showBackground: true,
         backgroundStyle: {
           color: "rgba(180, 180, 180, 0.1)",
-          borderRadius: [4, 4, 0, 0]
+          borderRadius: [4, 4, 0, 0],
         },
         itemStyle: {
           color: {
@@ -608,26 +652,25 @@ export const optionBeginnerGrammar = (scores: Array<number>, names: Array<string
             colorStops: [
               {
                 offset: 0,
-                color: "#8b5cf6"
+                color: "#8b5cf6",
               },
               {
                 offset: 1,
-                color: "#7c3aed"
-              }
-            ]
+                color: "#7c3aed",
+              },
+            ],
           },
           borderRadius: [4, 4, 0, 0],
           shadowBlur: 10,
-          shadowColor: "rgba(139, 92, 246, 0.2)"
+          shadowColor: "rgba(139, 92, 246, 0.2)",
         },
         emphasis: {
           itemStyle: {
             shadowBlur: 20,
-            shadowColor: "rgba(139, 92, 246, 0.4)"
-          }
-        }
-      }
-    ]
-  }
+            shadowColor: "rgba(139, 92, 246, 0.4)",
+          },
+        },
+      },
+    ],
   };
-  
+};

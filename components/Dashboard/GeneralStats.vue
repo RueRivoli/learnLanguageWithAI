@@ -24,14 +24,10 @@ const currentInfo = computed(() => {
 <template>
   <!-- General Dashboard -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <div
-      class="col-span-2"
-    >
+    <div class="col-span-2">
       <div class="mb-4 flex items-center justify-between">
         <div class="flex">
-          <LayoutHeadingPlus
-            title="Progress on Modules"
-          >
+          <LayoutHeadingPlus title="Progress on Modules">
             <Square2StackIcon class="h-6 w-6 text-primary" />
           </LayoutHeadingPlus>
           <!-- <h3 class="text-lg font-semibold text-gray-900 ml-3 flex items-center">
@@ -105,26 +101,37 @@ const currentInfo = computed(() => {
             </div>
           </div>
         </div>
-        <div id="rules_overview" v-for="(rule, index) in currentInfo"  :key="index">
-          <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true" @click="router.push(`/learning/modules/${rule.ruleId}`)">
-            <template #details>
-              <div class="rounded-lg p-2"
+        <div
+          id="rules_overview"
+          v-for="(rule, index) in currentInfo"
+          :key="index"
+        >
+          <LayoutKeyElementRuleOverview
+            class="h-full cursor-pointer"
+            :title="rule.ruleName"
+            :titleEn="rule.ruleNameTranslation"
+            :symbol="rule.symbol"
+            :score="rule.score"
+            :level="rule.difficultyClass"
+            :lightMode="true"
+            @click="router.push(`/learning/modules/${rule.ruleId}`)"
           >
-            <div class="flex items-center">
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                <span class="text-md font-medium text-gray-700"
-                  >{{ rule.score }}%</span
-                >
+            <template #details>
+              <div class="rounded-lg p-2">
+                <div class="flex items-center">
+                  <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    <span class="text-md font-medium text-gray-700"
+                      >{{ rule.score }}%</span
+                    >
+                  </div>
+                  <span class="text-xs text-gray-600 ml-2"
+                    >of correct answers</span
+                  >
+                </div>
               </div>
-              <span class="text-xs text-gray-600 ml-2"
-                >of correct answers</span
-              >
-            </div>
-          </div>
             </template>
-
-            </LayoutKeyElementRuleOverview>
+          </LayoutKeyElementRuleOverview>
         </div>
         <div
           v-for="(rule, index) in currentInfo"

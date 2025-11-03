@@ -210,8 +210,8 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            The forms in the table below are the equivalent
-            of "Mine", "Yours" ... in English.
+            The forms in the table below are the equivalent of "Mine", "Yours"
+            ... in English.
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -219,7 +219,7 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-           Mind that the -ki suffix do not necessary follow the vowel harmony
+            Mind that the -ki suffix do not necessary follow the vowel harmony
           </span>
         </li>
       </ul>
@@ -256,7 +256,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >benim<strong class="text-primary">ki</strong></span
                     >
@@ -273,7 +273,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >senin<strong class="text-primary">ki</strong></span
                     >
@@ -290,7 +290,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >onun<strong class="text-primary">ki</strong>
                     </span>
@@ -307,7 +307,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >bizim<strong class="text-primary">ki</strong>
                     </span>
@@ -324,7 +324,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >sizin<strong class="text-primary">ki</strong>
                     </span>
@@ -341,7 +341,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >onların<strong class="text-primary">ki</strong>
                     </span>
@@ -412,10 +412,8 @@
               ></span>
               <span>
                 <span
-                  >Yeni televizyon almak lazım. <strong
-                    class="text-success"
-                    >Benimki</strong
-                  > eskidi
+                  >Yeni televizyon almak lazım.
+                  <strong class="text-success">Benimki</strong> eskidi
                 </span>
                 — <em>we need to buy a new television. Mine is old.</em>
               </span>
@@ -426,10 +424,8 @@
               ></span>
               <span>
                 <span
-                  ><strong
-                    class="text-success"
-                    >Sizinki </strong
-                  > gerçekten çok güzel bir fikir!
+                  ><strong class="text-success">Sizinki </strong> gerçekten çok
+                  güzel bir fikir!
                 </span>
                 — <em>yours is really a very good idea.</em>
               </span>
@@ -440,10 +436,8 @@
               ></span>
               <span>
                 <span
-                  >Arabalar benzeyen ama <strong
-                    class="text-success"
-                    >onlarınki </strong
-                  > daha eski 
+                  >Arabalar benzeyen ama
+                  <strong class="text-success">onlarınki </strong> daha eski
                 </span>
                 — <em>the cars look similar, but theirs is older.</em>
               </span>
@@ -483,7 +477,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Kimin<strong class="text-primary">ki</strong></span
                     >?
@@ -500,7 +494,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Kimsenin<strong class="text-primary">ki</strong>
                     </span>
@@ -517,7 +511,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >hepimizin<strong class="text-primary">ki</strong>
                     </span>
@@ -534,7 +528,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Can'ın<strong class="text-primary">ki</strong>
                     </span>
@@ -588,13 +582,11 @@
               ></span>
               <span>
                 <span class=""
-                  >Benim telefonum siyah, Hasan <strong class="text-success">'ınki
-                  </strong>beyaz
+                  >Benim telefonum siyah, Hasan
+                  <strong class="text-success">'ınki </strong>beyaz
                 </span>
                 —
-                <em
-                  >my phone is black. Hasan's is white.</em
-                >
+                <em>my phone is black. Hasan's is white.</em>
               </span>
             </li>
             <li class="flex items-start gap-2">
@@ -603,10 +595,8 @@
               ></span>
               <span>
                 <span
-                  ><strong
-                    class="text-success"
-                    >Kiminki </strong
-                  > peki? Onunki mi, benimki mi? 
+                  ><strong class="text-success">Kiminki </strong> peki? Onunki
+                  mi, benimki mi?
                 </span>
                 — <em>whose is it then? His or mine?</em>
               </span>
@@ -617,10 +607,8 @@
               ></span>
               <span>
                 <span
-                  >Bu ceket <strong
-                    class="text-success"
-                    >kimseninki </strong
-                  > değil
+                  >Bu ceket
+                  <strong class="text-success">kimseninki </strong> değil
                 </span>
                 — <em>this jacket is nobody's</em>.
               </span>
@@ -631,9 +619,9 @@
     </div>
     <!-- End Exemples section -->
 
-    <br/>
-        <!-- Important Primary section -->
-        <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
+    <br />
+    <!-- Important Primary section -->
+    <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -661,7 +649,8 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            ‑ki is used a lot to differentiate objects or people based on their location
+            ‑ki is used a lot to differentiate objects or people based on their
+            location
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -669,7 +658,8 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            It is similar to saying, “the one over here,” or, “the one over there” in English.
+            It is similar to saying, “the one over here,” or, “the one over
+            there” in English.
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -677,17 +667,18 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            You almost always have to add the locative suffix:  <code
-                  class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
-                  >‑da/-de/-ta/-te</code
-                >  before adding ‑ki
+            You almost always have to add the locative suffix:
+            <code
+              class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
+              >‑da/-de/-ta/-te</code
+            >
+            before adding ‑ki
           </span>
-         
         </li>
       </ul>
     </div>
     <!-- End Important Primary Section -->
-<br/>
+    <br />
 
     <!-- Table Template -->
 
@@ -717,7 +708,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Önde<strong class="text-primary">ki</strong></span
                     >
@@ -734,7 +725,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Arkada<strong class="text-primary">ki</strong>
                     </span>
@@ -751,7 +742,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Yanda<strong class="text-primary">ki</strong>
                     </span>
@@ -768,7 +759,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Altta<strong class="text-primary">ki</strong>
                     </span>
@@ -785,7 +776,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Arada<strong class="text-primary">ki</strong>
                     </span>
@@ -802,7 +793,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Üstte<strong class="text-primary">ki</strong>
                     </span>
@@ -819,7 +810,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Dışarıda<strong class="text-primary">ki</strong>
                     </span>
@@ -836,7 +827,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >İçeride<strong class="text-primary">ki</strong>
                     </span>
@@ -853,7 +844,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >İzmir’de<strong class="text-primary">ki</strong>
                     </span>
@@ -870,7 +861,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Burada<strong class="text-primary">ki</strong>
                     </span>
@@ -887,7 +878,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4 text-center">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm font-semibold text-gray-900"
                       >Orada<strong class="text-primary">ki</strong>
                     </span>
@@ -908,376 +899,8 @@
     </div>
     <!-- End Table Template -->
 
-    <br/>
-     <!-- Example section -->
-     <div>
-      <div class="flex items-center gap-2 mb-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-5 w-5 text-success"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-          />
-        </svg>
-
-        <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
-      </div>
-
-      <div class="space-y-4">
-        <!-- Proper Names -->
-        <div class="border-l-4 border-success pl-4">
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span class=""
-                  >Dışarıda<strong class="text-success">ki 
-                  </strong>kediler çok kötü
-                </span>
-                —
-                <em
-                  >the outdoor cats are very mean</em
-                >
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span
-                  ><strong
-                    class="text-success"
-                    >Buradaki </strong
-                  >insanlar çok yardımsever 
-                </span>
-                — <em>the people here are very helpful</em>
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span
-                  ><strong
-                    class="text-success"
-                    >Alttaki </strong
-                  >çekmeceyi açar mısın? 
-                </span>
-                — <em>can you open the bottom drawer?</em>
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span
-                  ><strong
-                    class="text-success"
-                    >Öndeki </strong
-                  >araba çok yavaş gidiyor 
-                </span>
-                — <em>the car in front is going very slow</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <br />
-          <!-- Exceptions template examples -->
-  <div>
-      <div class="flex items-center gap-2">
-        <svg
-          class="w-5 h-5 text-amber-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-          />
-        </svg>
-        <h2 class="text-lg font-semibold text-gray-900">
-          Exceptions
-        </h2>
-      </div>
-      <p class="mt-2 mb-3 font-semibold">Some words describing a location don't need necessary the locative suffix with -ki. <br/>Both forms are possible.</p>
-      <div class="space-y-4">
-        <!-- Proper Names -->
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Öteki / Ötedeki — The other one
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >O yazarın  <strong class="text-amber-600">öteki</strong>  kitaplarını da okurum
-                 —
-                <em>I also read that writer’s other books.</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Yukarıki / Yukarıdaki  — The one that is above
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >Ben de <strong class="text-amber-600">yukarıki </strong> izlenimlerimi anlattım 
-                 —
-                <em>I also told about my above impressions</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Aşağıki / Aşağıdaki  — The one that is below
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  ><strong class="text-amber-600">Aşağıki </strong>oda misafirler için hazırlandı
-                 —
-                <em>the room downstairs was prepared for the guests</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Beriki / Berideki — The latter / the one that is closer
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  ><strong class="text-amber-600">Beriki  </strong> kitapları alıp buraya getirebilir misin?
-                 —
-                <em>can you take those books over there and bring them here?</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <br/>
-        <!-- Important Primary section -->
-        <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
-      <div class="flex items-center mb-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-5 w-5 text-primary mr-2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-          />
-        </svg>
-
-        <h2 class="text-lg font-semibold text-gray-900">
-          How To Use -Ki with Time-related Words?
-        </h2>
-      </div>
-
-      <ul class="space-y-2 text-gray-700">
-        <li class="flex items-start gap-2">
-          <span
-            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
-          ></span>
-          <span>
-            To point at something based on the time that it happened, you can add directly the -ki suffix to the word
-          </span>
-        </li>
-      </ul>
-    </div>
-    <!-- End Important Primary Section -->
- <br />
-    <!-- Table Template -->
-
-    <div id="table_present_endings">
-      <div
-        class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
-      >
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead>
-              <tr
-                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
-              >
-                <th
-                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
-                >
-                  Turkish
-                </th>
-                <th
-                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
-                >
-                  English
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >yarın<strong class="text-primary">ki</strong></span
-                    >
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span class="">the one that is tomorrow</span>
-                  </span>
-                </td>
-              </tr>
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4 text-center">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >şuan<strong class="text-primary">ki</strong> / şu an<strong class="text-primary">ki</strong></span
-                    >
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span>the one that is now</span>
-                  </span>
-                </td>
-              </tr>
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4 text-center">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >şimdi<strong class="text-primary">ki</strong>
-                    </span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span>the one that is now</span>
-                  </span>
-                </td>
-              </tr>
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4 text-center">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >sonraki<strong class="text-primary">ki</strong>
-                    </span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span>the one that is after</span>
-                  </span>
-                </td>
-              </tr>
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4 text-center">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >hafta<strong class="text-primary">ki</strong>
-                    </span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span>the one that is this week</span>
-                  </span>
-                </td>
-              </tr>
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4 text-center">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >geçen hafta<strong class="text-primary">ki</strong>
-                    </span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span>the one that is next week</span>
-                  </span>
-                </td>
-              </tr>
-              <tr class="hover:bg-primary/5 transition-colors duration-150">
-                <td class="px-6 py-4 text-center">
-                  <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                    <span class="text-sm font-semibold text-gray-900"
-                      >her zaman<strong class="text-primary">ki</strong>
-                    </span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <span
-                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                  >
-                    <span>the one that happens all the time</span>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <!-- End Table Template -->
-     <br/>
-        <!-- Example section -->
+    <br />
+    <!-- Example section -->
     <div>
       <div class="flex items-center gap-2 mb-3">
         <svg
@@ -1306,209 +929,635 @@
               <span
                 class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
               ></span>
-              <span>Bir
+              <span>
                 <span class=""
-                  >önceki<strong class="text-success">
-                    albüm daha duyguluydu
-                  </strong>
-                  —
-                  <em
-                  > The previous album was more emotional</em
-                >
+                  >Dışarıda<strong class="text-success">ki </strong>kediler çok
+                  kötü
                 </span>
+                —
+                <em>the outdoor cats are very mean</em>
               </span>
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
               ></span>
-              <span>Ben şu an öğrenmenim. Bu da benim 
-                <span class=""
-                  >şu anki <strong class="text-success">
-                    mesleğim
-                  </strong>
-                  —
-                  <em
-                  > I am currently a teacher. This is my current profession </em
-                >
+              <span>
+                <span
+                  ><strong class="text-success">Buradaki </strong>insanlar çok
+                  yardımsever
                 </span>
+                — <em>the people here are very helpful</em>
               </span>
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span><span>
-                <span>Bu <strong class="text-success">
-                    haftaki
-                  </strong>maç büyük önem taşıyor
-                  —
-                  <em
-                  > this week’s match is of great importance.</em
-                >
+              ></span>
+              <span>
+                <span
+                  ><strong class="text-success">Alttaki </strong>çekmeceyi açar
+                  mısın?
                 </span>
+                — <em>can you open the bottom drawer?</em>
+              </span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span
+                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+              ></span>
+              <span>
+                <span
+                  ><strong class="text-success">Öndeki </strong>araba çok yavaş
+                  gidiyor
+                </span>
+                — <em>the car in front is going very slow</em>
               </span>
             </li>
           </ul>
         </div>
         <br />
+        <!-- Exceptions template examples -->
         <div>
-      <div class="flex items-center gap-2">
-        <svg
-          class="w-5 h-5 text-amber-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-          />
-        </svg>
-        <h2 class="text-lg font-semibold text-gray-900">
-          Exceptions & Remarks
-        </h2>
+          <div class="flex items-center gap-2">
+            <svg
+              class="w-5 h-5 text-amber-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+              />
+            </svg>
+            <h2 class="text-lg font-semibold text-gray-900">Exceptions</h2>
+          </div>
+          <p class="mt-2 mb-3 font-semibold">
+            Some words describing a location don't need necessary the locative
+            suffix with -ki. <br />Both forms are possible.
+          </p>
+          <div class="space-y-4">
+            <!-- Proper Names -->
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h3 class="font-semibold text-gray-900 mb-2">
+                Öteki / Ötedeki — The other one
+              </h3>
+
+              <ul class="space-y-1 text-sm text-gray-700">
+                <li class="flex items-start gap-2">
+                  <span
+                    class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                  ></span>
+                  <span class=""
+                    >O yazarın
+                    <strong class="text-amber-600">öteki</strong> kitaplarını da
+                    okurum —
+                    <em>I also read that writer’s other books.</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h3 class="font-semibold text-gray-900 mb-2">
+                Yukarıki / Yukarıdaki — The one that is above
+              </h3>
+
+              <ul class="space-y-1 text-sm text-gray-700">
+                <li class="flex items-start gap-2">
+                  <span
+                    class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                  ></span>
+                  <span class=""
+                    >Ben de
+                    <strong class="text-amber-600">yukarıki </strong>
+                    izlenimlerimi anlattım —
+                    <em>I also told about my above impressions</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h3 class="font-semibold text-gray-900 mb-2">
+                Aşağıki / Aşağıdaki — The one that is below
+              </h3>
+
+              <ul class="space-y-1 text-sm text-gray-700">
+                <li class="flex items-start gap-2">
+                  <span
+                    class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                  ></span>
+                  <span class=""
+                    ><strong class="text-amber-600">Aşağıki </strong>oda
+                    misafirler için hazırlandı —
+                    <em>the room downstairs was prepared for the guests</em>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h3 class="font-semibold text-gray-900 mb-2">
+                Beriki / Berideki — The latter / the one that is closer
+              </h3>
+
+              <ul class="space-y-1 text-sm text-gray-700">
+                <li class="flex items-start gap-2">
+                  <span
+                    class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                  ></span>
+                  <span class=""
+                    ><strong class="text-amber-600">Beriki </strong> kitapları
+                    alıp buraya getirebilir misin? —
+                    <em
+                      >can you take those books over there and bring them
+                      here?</em
+                    >
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <br />
+            <!-- Important Primary section -->
+            <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
+              <div class="flex items-center mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-5 w-5 text-primary mr-2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                  />
+                </svg>
+
+                <h2 class="text-lg font-semibold text-gray-900">
+                  How To Use -Ki with Time-related Words?
+                </h2>
+              </div>
+
+              <ul class="space-y-2 text-gray-700">
+                <li class="flex items-start gap-2">
+                  <span
+                    class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+                  ></span>
+                  <span>
+                    To point at something based on the time that it happened,
+                    you can add directly the -ki suffix to the word
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <!-- End Important Primary Section -->
+            <br />
+            <!-- Table Template -->
+
+            <div id="table_present_endings">
+              <div
+                class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+              >
+                <div class="overflow-x-auto">
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          Turkish
+                        </th>
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          English
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >yarın<strong class="text-primary"
+                                >ki</strong
+                              ></span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span class="">the one that is tomorrow</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >şuan<strong class="text-primary">ki</strong> / şu
+                              an<strong class="text-primary">ki</strong></span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span>the one that is now</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >şimdi<strong class="text-primary">ki</strong>
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span>the one that is now</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >sonraki<strong class="text-primary">ki</strong>
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span>the one that is after</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >hafta<strong class="text-primary">ki</strong>
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span>the one that is this week</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >geçen hafta<strong class="text-primary"
+                                >ki</strong
+                              >
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span>the one that is next week</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >her zaman<strong class="text-primary">ki</strong>
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            <span>the one that happens all the time</span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- End Table Template -->
+            <br />
+            <!-- Example section -->
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-5 w-5 text-success"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                  />
+                </svg>
+
+                <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
+              </div>
+
+              <div class="space-y-4">
+                <!-- Proper Names -->
+                <div class="border-l-4 border-success pl-4">
+                  <ul class="space-y-1 text-sm text-gray-700">
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                      ></span>
+                      <span
+                        >Bir
+                        <span class=""
+                          >önceki<strong class="text-success">
+                            albüm daha duyguluydu
+                          </strong>
+                          —
+                          <em> The previous album was more emotional</em>
+                        </span>
+                      </span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                      ></span>
+                      <span
+                        >Ben şu an öğrenmenim. Bu da benim
+                        <span class=""
+                          >şu anki
+                          <strong class="text-success"> mesleğim </strong>
+                          —
+                          <em>
+                            I am currently a teacher. This is my current
+                            profession
+                          </em>
+                        </span>
+                      </span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                      ></span
+                      ><span>
+                        <span
+                          >Bu <strong class="text-success"> haftaki </strong>maç
+                          büyük önem taşıyor —
+                          <em> this week’s match is of great importance.</em>
+                        </span>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <br />
+                <div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      class="w-5 h-5 text-amber-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+                      />
+                    </svg>
+                    <h2 class="text-lg font-semibold text-gray-900">
+                      Exceptions & Remarks
+                    </h2>
+                  </div>
+                  <p class="mt-2 mb-3 font-semibold">
+                    Some time-related words respect the vowel harmony with -ki
+                  </p>
+                  <div class="space-y-4">
+                    <div class="border-l-4 border-amber-200 pl-4">
+                      <h3 class="font-semibold text-gray-900 mb-2">
+                        Dünkü — the one that happens yesterday
+                      </h3>
+
+                      <ul class="space-y-1 text-sm text-gray-700">
+                        <li class="flex items-start gap-2">
+                          <span
+                            class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                          ></span>
+                          <span class=""
+                            ><strong class="text-amber-600">Dünkü </strong>
+                            haberi hâlâ herkes konuşuyor —
+                            <em
+                              >everyone is still talking about yesterday’s
+                              news</em
+                            >.
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="border-l-4 border-amber-200 pl-4">
+                      <h3 class="font-semibold text-gray-900 mb-2">
+                        Bugünkü — the one that is today
+                      </h3>
+
+                      <ul class="space-y-1 text-sm text-gray-700">
+                        <li class="flex items-start gap-2">
+                          <span
+                            class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                          ></span>
+                          <span class=""
+                            >O açıdan
+                            <strong class="text-amber-600"> bugünkü </strong>
+                            toplantı çok önemliydi —
+                            <em
+                              >from that perspective, today’s meeting was very
+                              important.</em
+                            >
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="border-l-4 border-amber-200 pl-4">
+                      <h3 class="font-semibold text-gray-900 mb-2">
+                        Pazartesi, Salı ... günkü — the one that happens on
+                        Monday, Tuesday ...
+                      </h3>
+
+                      <ul class="space-y-1 text-sm text-gray-700">
+                        <li class="flex items-start gap-2">
+                          <span
+                            class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                          ></span>
+                          <span class=""
+                            ><strong class="text-amber-600"
+                              >Cumartesi günkü
+                            </strong>
+                            parti gerçekten çok eğlenceliydi —
+                            <em>saturday’s party was really fun</em>.
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="mt-2 mb-3 font-semibold">
+                      Some time-related words can use the locative suffix
+                      -da/-de with -ki
+                    </p>
+                    <div class="space-y-4">
+                      <div class="border-l-4 border-amber-200 pl-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">
+                          In the following examples, the time-related words can
+                          be used with or without the locative suffix
+                        </h3>
+
+                        <ul class="space-y-1 text-sm text-gray-700">
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span class=""
+                              >İlk 7
+                              <strong class="text-amber-600">aydaki </strong>
+                              açık 718 milyon dolar —
+                              <em
+                                >the deficit in the first 7 months was 718
+                                million dollars</em
+                              >.
+                            </span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span class=""
+                              >Birinci
+                              <strong class="text-amber-600">haftadaki </strong>
+                              sonuçları çok merak ediyorum —
+                              <em
+                                >I am very curious about the results from the
+                                first week</em
+                              >.
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p class="mt-2 mb-3 text-gray-900 font-semibold">
+                      When words ending with -ki are used at the accusative,
+                      locative, ablative, dative, genitive form a "n buffer" is
+                      added before
+                    </p>
+                    <div class="space-y-4">
+                      <div class="border-l-4 border-amber-200 pl-4">
+                        <h3 class="font-semibold mb-2">
+                          In the following examples, the time-related words can
+                          be used with or without the locative suffix
+                        </h3>
+
+                        <ul class="space-y-1 text-sm text-gray-700">
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span class=""
+                              >Benimki<strong class="text-amber-600">n</strong>e
+                              bir hediye aldım —
+                              <em>I bought a gift for mine (my wife)</em>.
+                            </span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span class=""
+                              >O resimdeki<strong class="text-amber-600"
+                                >n</strong
+                              >den daha tatlı birisin —
+                              <em>you're cuter than the one in the picture</em>.
+                            </span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span class=""
+                              >Sizinki<strong class="text-amber-600">n</strong>i
+                              çok beğendim — <em>I really liked yours</em>.
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Exemples section -->
+          </div>
+        </div>
+        <!-- End Exceptions template examples -->
       </div>
-      <p class="mt-2 mb-3 font-semibold">Some time-related words respect the vowel harmony with -ki</p>
-      <div class="space-y-4">
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Dünkü — the one that happens yesterday
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  ><strong class="text-amber-600">Dünkü </strong> haberi hâlâ herkes konuşuyor
-                 —
-                <em>everyone is still talking about yesterday’s news</em>.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Bugünkü  — the one that is today
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >O açıdan <strong class="text-amber-600"> bugünkü </strong> toplantı çok önemliydi 
-                 —
-                <em>from that perspective, today’s meeting was very important.</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            Pazartesi, Salı ... günkü — the one that happens on Monday, Tuesday ...
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  ><strong class="text-amber-600">Cumartesi günkü </strong> parti gerçekten çok eğlenceliydi  
-                 —
-                <em>saturday’s party was really fun</em>.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <p class="mt-2 mb-3 font-semibold">Some time-related words can use the locative suffix -da/-de with -ki</p>
-      <div class="space-y-4">
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            In the following examples, the time-related words can be used with or without the locative suffix
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >İlk 7 <strong class="text-amber-600">aydaki </strong> açık 718 milyon dolar
-                 —
-                <em>the deficit in the first 7 months was 718 million dollars</em>.
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >Birinci <strong class="text-amber-600">haftadaki </strong> sonuçları çok merak ediyorum 
-                 —
-                <em>I am very curious about the results from the first week</em>.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <p class="mt-2 mb-3 text-gray-900 font-semibold">When words ending with -ki are used at the accusative, locative, ablative, dative, genitive form a "n buffer" is added before</p>
-      <div class="space-y-4">
-        <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold  mb-2">
-            In the following examples, the time-related words can be used with or without the locative suffix
-          </h3>
-
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >Benimki<strong class="text-amber-600">n</strong>e bir hediye aldım 
-                 —
-                <em>I bought a gift for mine (my wife)</em>.
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >O resimdeki<strong class="text-amber-600">n</strong>den daha tatlı birisin
-                 —
-                <em>you're cuter than the one in the picture</em>.
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-                <span class=""
-                  >Sizinki<strong class="text-amber-600">n</strong>i çok beğendim
-                 —
-                <em>I really liked yours</em>.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
     </div>
     <!-- End Exemples section -->
-      </div>
-    </div>
-  <!-- End Exceptions template examples -->
-      </div>
-    </div>
-    <!-- End Exemples section -->
-
   </div>
 </template>

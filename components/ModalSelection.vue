@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { CheckIcon, PencilSquareIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+  CheckIcon,
+  PencilSquareIcon,
+  XMarkIcon,
+} from "@heroicons/vue/24/outline";
 const props = withDefaults(
   defineProps<{
     list: any[];
@@ -42,10 +46,14 @@ const handleDeleteSelectedItem = (text: string) => {
         <!-- Add description here -->
       </p>
 
-      <div
-        class="mr-2 mb-2 flex flex-wrap gap-2"
-      >
-      <LayoutKeyElementWordBadge v-if="props.type === 'word'" v-for="(elt, n) in listItems.slice(0, props.limit)" :key="n" :text="elt.text" :lightMode="true">
+      <div class="mr-2 mb-2 flex flex-wrap gap-2">
+        <LayoutKeyElementWordBadge
+          v-if="props.type === 'word'"
+          v-for="(elt, n) in listItems.slice(0, props.limit)"
+          :key="n"
+          :text="elt.text"
+          :lightMode="true"
+        >
           <template #action>
             <XMarkIcon
               class="ml-2 h-4 w-4 text-blue-500 cursor-pointer font-semibold group-hover:text-neutral"
@@ -53,7 +61,13 @@ const handleDeleteSelectedItem = (text: string) => {
             />
           </template>
         </LayoutKeyElementWordBadge>
-      <LayoutKeyElementExpressionBadge v-else-if="props.type === 'expression'" v-for="(elt, index) in listItems.slice(0, props.limit)" :key="index" :text="elt.text" :lightMode="true">
+        <LayoutKeyElementExpressionBadge
+          v-else-if="props.type === 'expression'"
+          v-for="(elt, index) in listItems.slice(0, props.limit)"
+          :key="index"
+          :text="elt.text"
+          :lightMode="true"
+        >
           <template #action>
             <XMarkIcon
               class="ml-2 h-4 w-4 text-pink-500 cursor-pointer font-semibold group-hover:text-neutral"
@@ -63,18 +77,19 @@ const handleDeleteSelectedItem = (text: string) => {
         </LayoutKeyElementExpressionBadge>
       </div>
       <div class="modal-action">
-        <button class="btn btn-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50" @click="$emit('cancel')">
-              Cancel
-            </button>
-            <button
-              class="btn btn-primary text-white cursor-pointer hover:bg-primary/90 font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50"
-              @click="$emit('applySelection', listItems)"
-            >
-            <CheckIcon
-              class="h-5 w-5 mr-1 text-white group-hover:text-neutral"
-            />
-              <span>Apply</span>
-            </button>
+        <button
+          class="btn btn-secondary cursor-pointer font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50"
+          @click="$emit('cancel')"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn btn-primary text-white cursor-pointer hover:bg-primary/90 font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50"
+          @click="$emit('applySelection', listItems)"
+        >
+          <CheckIcon class="h-5 w-5 mr-1 text-white group-hover:text-neutral" />
+          <span>Apply</span>
+        </button>
       </div>
     </div>
     <form method="dialog" class="modal-backdrop">

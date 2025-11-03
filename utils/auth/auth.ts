@@ -29,24 +29,26 @@ export const getEmailPasswordInvalidityMessage = (
 
 // Probably to delete, same function as above
 export const testValidEmailPassword = (state: Schema) => {
-    if (schema.safeParse(state).success) {
-      return true;
+  if (schema.safeParse(state).success) {
+    return true;
+  } else {
+    if (!z.string().email().safeParse(state.email).success) {
+      connexionError.value = "Please input a valid email";
     } else {
-      if (!z.string().email().safeParse(state.email).success) {
-        connexionError.value = "Please input a valid email";
-      } else {
-        connexionError.value =
-          "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
-      }
-      return false;
+      connexionError.value =
+        "Please input a valid password: more than 8 characters, 1 number, 1 letter and 1 special character";
     }
-  };
-
-  export const getAuthToken = async () => {
-    const { data: { session } } = await useSupabaseClient().auth.getSession();
-    const headers: Record<string, string> = {};
-    if (session?.access_token) {
-      headers['Authorization'] = `Bearer ${session.access_token}`;
-    }
-    return headers;
+    return false;
   }
+};
+
+export const getAuthToken = async () => {
+  const {
+    data: { session },
+  } = await useSupabaseClient().auth.getSession();
+  const headers: Record<string, string> = {};
+  if (session?.access_token) {
+    headers["Authorization"] = `Bearer ${session.access_token}`;
+  }
+  return headers;
+};

@@ -7,7 +7,7 @@
       :class="{
         'drop-zone--active': isDragOver,
         'drop-zone--error': hasError,
-        'drop-zone--disabled': disabled || isUploading
+        'drop-zone--disabled': disabled || isUploading,
       }"
       @drop="handleDrop"
       @dragover.prevent="handleDragOver"
@@ -33,9 +33,12 @@
         </div>
 
         <div v-else-if="hasError" class="error-state">
-          <Icon name="heroicons:exclamation-triangle" class="w-12 h-12 text-red-500" />
+          <Icon
+            name="heroicons:exclamation-triangle"
+            class="w-12 h-12 text-red-500"
+          />
           <p class="text-sm text-red-600">{{ errorMessage }}</p>
-          <button 
+          <button
             @click.stop="clearError"
             class="btn btn-sm btn-outline btn-error mt-2"
           >
@@ -44,13 +47,16 @@
         </div>
 
         <div v-else class="upload-prompt">
-          <Icon name="heroicons:cloud-arrow-up" class="w-12 h-12 text-gray-400" />
+          <Icon
+            name="heroicons:cloud-arrow-up"
+            class="w-12 h-12 text-gray-400"
+          />
           <p class="text-lg font-medium text-gray-700">
-            {{ multiple ? 'Glissez vos images ici' : 'Glissez votre image ici' }}
+            {{
+              multiple ? "Glissez vos images ici" : "Glissez votre image ici"
+            }}
           </p>
-          <p class="text-sm text-gray-500">
-            ou cliquez pour sélectionner
-          </p>
+          <p class="text-sm text-gray-500">ou cliquez pour sélectionner</p>
           <p class="text-xs text-gray-400 mt-2">
             {{ acceptedTypesText }} • Max {{ maxSizeMB }}MB
           </p>
@@ -67,11 +73,7 @@
           class="preview-item"
         >
           <div class="preview-image-wrapper">
-            <img
-              :src="image.url"
-              :alt="image.name"
-              class="preview-image"
-            />
+            <img :src="image.url" :alt="image.name" class="preview-image" />
             <button
               @click="removePreview(index)"
               class="preview-remove-btn"
@@ -94,7 +96,11 @@
           :key="result.path"
           class="result-item"
         >
-          <img :src="result.publicUrl" :alt="result.path" class="result-thumbnail" />
+          <img
+            :src="result.publicUrl"
+            :alt="result.path"
+            class="result-thumbnail"
+          />
           <div class="result-info">
             <p class="result-path">{{ result.path }}</p>
             <button
@@ -111,229 +117,234 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageUploadOptions, UploadResult } from '~/composables/useImageUpload'
+import type {
+  ImageUploadOptions,
+  UploadResult,
+} from "~/composables/useImageUpload";
 
 interface Props {
-  bucket?: string
-  maxSizeMB?: number
-  acceptedTypes?: string[]
-  multiple?: boolean
-  disabled?: boolean
-  autoUpload?: boolean
-  resize?: boolean
-  maxWidth?: number
-  maxHeight?: number
-  quality?: number
+  bucket?: string;
+  maxSizeMB?: number;
+  acceptedTypes?: string[];
+  multiple?: boolean;
+  disabled?: boolean;
+  autoUpload?: boolean;
+  resize?: boolean;
+  maxWidth?: number;
+  maxHeight?: number;
+  quality?: number;
 }
 
 interface Emits {
-  (e: 'upload-success', results: UploadResult[]): void
-  (e: 'upload-error', error: Error): void
-  (e: 'files-selected', files: File[]): void
+  (e: "upload-success", results: UploadResult[]): void;
+  (e: "upload-error", error: Error): void;
+  (e: "files-selected", files: File[]): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  bucket: 'images',
+  bucket: "images",
   maxSizeMB: 50,
-  acceptedTypes: () => ['image/png', 'image/jpeg', 'image/webp', 'image/gif'],
+  acceptedTypes: () => ["image/png", "image/jpeg", "image/webp", "image/gif"],
   multiple: false,
   disabled: false,
   autoUpload: true,
   resize: false,
   maxWidth: 1920,
   maxHeight: 1080,
-  quality: 0.8
-})
+  quality: 0.8,
+});
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<Emits>();
 
 // Composables
-const { uploadImage, uploadMultipleImages, resizeImage, validateFile } = useImageUpload()
+const { uploadImage, uploadMultipleImages, resizeImage, validateFile } =
+  useImageUpload();
 
 // État réactif
-const dropZone = ref<HTMLDivElement>()
-const fileInput = ref<HTMLInputElement>()
-const isDragOver = ref(false)
-const isUploading = ref(false)
-const hasError = ref(false)
-const errorMessage = ref('')
-const previewImages = ref<Array<{ url: string; name: string; file: File }>>([])
-const uploadResults = ref<UploadResult[]>([])
+const dropZone = ref<HTMLDivElement>();
+const fileInput = ref<HTMLInputElement>();
+const isDragOver = ref(false);
+const isUploading = ref(false);
+const hasError = ref(false);
+const errorMessage = ref("");
+const previewImages = ref<Array<{ url: string; name: string; file: File }>>([]);
+const uploadResults = ref<UploadResult[]>([]);
 
 // Propriétés calculées
 const acceptedTypesText = computed(() => {
-  return props.acceptedTypes.map(type => type.split('/')[1].toUpperCase()).join(', ')
-})
+  return props.acceptedTypes
+    .map((type) => type.split("/")[1].toUpperCase())
+    .join(", ");
+});
 
 // Méthodes
 const openFileDialog = () => {
   if (!props.disabled && !isUploading.value) {
-    fileInput.value?.click()
+    fileInput.value?.click();
   }
-}
+};
 
 const handleFileSelect = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const files = Array.from(target.files || [])
-  processFiles(files)
-}
+  const target = event.target as HTMLInputElement;
+  const files = Array.from(target.files || []);
+  processFiles(files);
+};
 
 const handleDrop = (event: DragEvent) => {
-  event.preventDefault()
-  isDragOver.value = false
-  
-  if (props.disabled || isUploading.value) return
-  
-  const files = Array.from(event.dataTransfer?.files || [])
-  processFiles(files)
-}
+  event.preventDefault();
+  isDragOver.value = false;
+
+  if (props.disabled || isUploading.value) return;
+
+  const files = Array.from(event.dataTransfer?.files || []);
+  processFiles(files);
+};
 
 const handleDragOver = (event: DragEvent) => {
-  event.preventDefault()
+  event.preventDefault();
   if (!props.disabled && !isUploading.value) {
-    isDragOver.value = true
+    isDragOver.value = true;
   }
-}
+};
 
 const handleDragLeave = (event: DragEvent) => {
-  event.preventDefault()
+  event.preventDefault();
   // Vérifier si on sort vraiment de la zone
-  const rect = dropZone.value?.getBoundingClientRect()
+  const rect = dropZone.value?.getBoundingClientRect();
   if (rect) {
-    const x = event.clientX
-    const y = event.clientY
+    const x = event.clientX;
+    const y = event.clientY;
     if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
-      isDragOver.value = false
+      isDragOver.value = false;
     }
   }
-}
+};
 
 const processFiles = async (files: File[]) => {
   try {
-    clearError()
-    
+    clearError();
+
     // Valider les fichiers
     for (const file of files) {
       validateFile(file, {
         maxSize: props.maxSizeMB,
-        allowedTypes: props.acceptedTypes
-      })
+        allowedTypes: props.acceptedTypes,
+      });
     }
 
     // Créer les prévisualisations
-    const previews = files.map(file => ({
+    const previews = files.map((file) => ({
       url: URL.createObjectURL(file),
       name: file.name,
-      file
-    }))
+      file,
+    }));
 
     if (props.multiple) {
-      previewImages.value.push(...previews)
+      previewImages.value.push(...previews);
     } else {
-      previewImages.value = [previews[0]]
+      previewImages.value = [previews[0]];
     }
 
-    emit('files-selected', files)
+    emit("files-selected", files);
 
     // Upload automatique si activé
     if (props.autoUpload) {
-      await uploadFiles()
+      await uploadFiles();
     }
   } catch (error) {
-    showError(error as Error)
+    showError(error as Error);
   }
-}
+};
 
 const uploadFiles = async () => {
   try {
-    isUploading.value = true
-    clearError()
+    isUploading.value = true;
+    clearError();
 
-    let filesToUpload = previewImages.value.map(p => p.file)
+    let filesToUpload = previewImages.value.map((p) => p.file);
 
     // Redimensionner si nécessaire
     if (props.resize) {
       filesToUpload = await Promise.all(
-        filesToUpload.map(file => 
-          resizeImage(file, props.maxWidth, props.maxHeight, props.quality)
-        )
-      )
+        filesToUpload.map((file) =>
+          resizeImage(file, props.maxWidth, props.maxHeight, props.quality),
+        ),
+      );
     }
 
     // Options d'upload
     const uploadOptions: ImageUploadOptions = {
       bucket: props.bucket,
       maxSize: props.maxSizeMB,
-      allowedTypes: props.acceptedTypes
-    }
+      allowedTypes: props.acceptedTypes,
+    };
 
     // Upload
-    const results = props.multiple 
+    const results = props.multiple
       ? await uploadMultipleImages(filesToUpload, uploadOptions)
-      : [await uploadImage(filesToUpload[0], uploadOptions)]
+      : [await uploadImage(filesToUpload[0], uploadOptions)];
 
-    uploadResults.value = results
-    emit('upload-success', results)
+    uploadResults.value = results;
+    emit("upload-success", results);
 
     // Nettoyer les prévisualisations
-    previewImages.value.forEach(preview => {
-      URL.revokeObjectURL(preview.url)
-    })
-    previewImages.value = []
-
+    previewImages.value.forEach((preview) => {
+      URL.revokeObjectURL(preview.url);
+    });
+    previewImages.value = [];
   } catch (error) {
-    showError(error as Error)
+    showError(error as Error);
   } finally {
-    isUploading.value = false
+    isUploading.value = false;
   }
-}
+};
 
 const removePreview = (index: number) => {
-  const preview = previewImages.value[index]
-  URL.revokeObjectURL(preview.url)
-  previewImages.value.splice(index, 1)
-}
+  const preview = previewImages.value[index];
+  URL.revokeObjectURL(preview.url);
+  previewImages.value.splice(index, 1);
+};
 
 const showError = (error: Error) => {
-  hasError.value = true
-  errorMessage.value = error.message
-  emit('upload-error', error)
-}
+  hasError.value = true;
+  errorMessage.value = error.message;
+  emit("upload-error", error);
+};
 
 const clearError = () => {
-  hasError.value = false
-  errorMessage.value = ''
-}
+  hasError.value = false;
+  errorMessage.value = "";
+};
 
 const copyUrl = async (url: string) => {
   try {
-    await navigator.clipboard.writeText(url)
+    await navigator.clipboard.writeText(url);
     // Vous pouvez ajouter une notification toast ici
   } catch (error) {
-    console.error('Erreur copie URL:', error)
+    console.error("Erreur copie URL:", error);
   }
-}
+};
 
 // Méthodes exposées
 defineExpose({
   uploadFiles,
   clearPreviews: () => {
-    previewImages.value.forEach(preview => {
-      URL.revokeObjectURL(preview.url)
-    })
-    previewImages.value = []
+    previewImages.value.forEach((preview) => {
+      URL.revokeObjectURL(preview.url);
+    });
+    previewImages.value = [];
   },
   clearResults: () => {
-    uploadResults.value = []
-  }
-})
+    uploadResults.value = [];
+  },
+});
 
 // Nettoyage
 onUnmounted(() => {
-  previewImages.value.forEach(preview => {
-    URL.revokeObjectURL(preview.url)
-  })
-})
+  previewImages.value.forEach((preview) => {
+    URL.revokeObjectURL(preview.url);
+  });
+});
 </script>
 
 <style scoped>
@@ -519,4 +530,3 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 </style>
-

@@ -7,8 +7,8 @@ export const useCredits = () => {
     try {
       isLoadingBalance.value = true;
       const headers = await getAuthToken();
-      const balance = await $fetch('/api/credits/balance', { headers });
-      
+      const balance = await $fetch("/api/credits/balance", { headers });
+
       if (balance) {
         userStore.creditsAvailable = balance.creditsAvailable;
         userStore.creditsPurchasedTotal = balance.creditsPurchasedTotal;
@@ -16,7 +16,7 @@ export const useCredits = () => {
       }
       return balance;
     } catch (error) {
-      console.error('Error fetching token balance:', error);
+      console.error("Error fetching token balance:", error);
       throw error;
     } finally {
       isLoadingBalance.value = false;
@@ -33,4 +33,3 @@ export const useCredits = () => {
     isLoadingBalance,
   };
 };
-

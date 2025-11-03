@@ -2,12 +2,12 @@
 const props = withDefaults(
   defineProps<{
     id: string | null;
-    type: 'quiz' | 'story'
+    type: "quiz" | "story";
   }>(),
   {
     id: null,
     type: "quiz",
-  }
+  },
 );
 
 const loadingModal = ref<HTMLDialogElement | null>(null);
@@ -27,32 +27,57 @@ defineExpose({
 </script>
 
 <template>
-  <dialog ref="loadingModal" :id="props.id ?? undefined" class="modal backdrop-blur-sm">
+  <dialog
+    ref="loadingModal"
+    :id="props.id ?? undefined"
+    class="modal backdrop-blur-sm"
+  >
     <div class="modal-box max-w-md bg-base-100 p-0 shadow-2xl">
       <!-- Header -->
       <div class="bg-primary text-white p-4 border-b border-base-300">
-        <h3 class="text-2xl font-semibold tracking-tight" style="font-family: 'Inter', sans-serif;">
+        <h3
+          class="text-2xl font-semibold tracking-tight"
+          style="font-family: &quot;Inter&quot;, sans-serif"
+        >
           Generating your {{ props.type }}
         </h3>
-        <p class="mt-2 text-sm">
-          This will only take a short moment
-        </p>
+        <p class="mt-2 text-sm">This will only take a short moment</p>
       </div>
-      
+
       <!-- Content -->
       <div class="px-8 py-12">
         <div class="flex flex-col items-center justify-center space-y-6">
           <!-- Animated Loading Spinner -->
           <div class="relative">
             <div class="flex items-center justify-center space-x-4">
-              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-1" />
-              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-2" />
-              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-3" />
-              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-4" />
-              <img src="~/assets/logo/transparent/language-lab-toucan-black.png" alt="Loading" class="w-15 h-auto bounce-5" />
+              <img
+                src="~/assets/logo/transparent/language-lab-toucan-black.png"
+                alt="Loading"
+                class="w-15 h-auto bounce-1"
+              />
+              <img
+                src="~/assets/logo/transparent/language-lab-toucan-black.png"
+                alt="Loading"
+                class="w-15 h-auto bounce-2"
+              />
+              <img
+                src="~/assets/logo/transparent/language-lab-toucan-black.png"
+                alt="Loading"
+                class="w-15 h-auto bounce-3"
+              />
+              <img
+                src="~/assets/logo/transparent/language-lab-toucan-black.png"
+                alt="Loading"
+                class="w-15 h-auto bounce-4"
+              />
+              <img
+                src="~/assets/logo/transparent/language-lab-toucan-black.png"
+                alt="Loading"
+                class="w-15 h-auto bounce-5"
+              />
             </div>
           </div>
-          
+
           <!-- Loading text with typing animation -->
           <div class="text-center space-y-2">
             <p class="text-base font-medium text-base-content">
@@ -81,7 +106,8 @@ defineExpose({
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) scale(1);
     opacity: 0.7;
   }

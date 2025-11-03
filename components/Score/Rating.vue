@@ -48,7 +48,9 @@ watchEffect(() => {
 
 <template>
   <div class="flex items-center cursor-not-allowed">
-    <div class="flex items-center rating rating-xs rating-half cursor-not-allowed">
+    <div
+      class="flex items-center rating rating-xs rating-half cursor-not-allowed"
+    >
       <input type="radio" name="rating-11" class="rating-hidden" disabled />
       <input
         type="radio"
@@ -130,7 +132,6 @@ watchEffect(() => {
         :checked="starChecked === 10 ? true : false"
         disabled
       />
-
     </div>
     <!-- <div class="ml-2 font-bold">{{ score }}/5</div> -->
     <div class="ml-2 font-bold">3.5 / 5</div>

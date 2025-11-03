@@ -27,11 +27,11 @@
           <p class="text-white/90 leading-relaxed font-semibold">
             Mastering Turkish suffixes like -ci, -cik, -li, and -lik is a key
             step toward building a rich and expressive vocabulary. <br />
-            These suffixes help you 
+            These suffixes help you
             <span class="underline"
-              >form professions, describe belongings, create diminutives, and express
-              relationships between objects and places.</span
-            ><br/>
+              >form professions, describe belongings, create diminutives, and
+              express relationships between objects and places.</span
+            ><br />
             With just a few patterns, you’ll unlock dozens of new words—making
             your Turkish both more natural and more precise. Keep going—you’re
             building a strong foundation!
@@ -72,9 +72,9 @@
             <code class="border bg-white text-primary rounded p-1"
               >-ci / -cı / -cu / -cü</code
             >
-            according to <strong class="text-primary">
-              i-type vowel harmony
-            </strong> is added to a noun to form a profession or occupational title
+            according to
+            <strong class="text-primary"> i-type vowel harmony </strong> is
+            added to a noun to form a profession or occupational title
           </div>
         </li>
         <li class="flex items-start gap-2">
@@ -96,7 +96,9 @@
         </li>
       </ul>
 
-      <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+      <div
+        class="bg-white p-4 w-full rounded-lg border border-gray-200 shadow-sm"
+      >
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
@@ -252,8 +254,8 @@
                   <span class="text-gray-600">(married)</span>
                 </td>
               </tr>
+              <tr></tr>
               <tr>
-                <tr>
                 <td class="py-2 px-3">
                   <span class="font-medium">Gözlük</span>
                   <span class="text-gray-600">(glasses)</span>

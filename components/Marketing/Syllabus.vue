@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
-import { getBorderStyleClassFromGrammarRuleLevel, getTextStyleClassFromGrammarRuleLevel, grammarLevelTabs, parseSyllabusRules } from "~/utils/learning/grammar";
+import {
+  getBorderStyleClassFromGrammarRuleLevel,
+  getTextStyleClassFromGrammarRuleLevel,
+  grammarLevelTabs,
+  parseSyllabusRules,
+} from "~/utils/learning/grammar";
 
 const selectedLang = ref("tr");
 const syllabusRules = ref<Array<GrammarRule>>([]);
@@ -55,53 +60,101 @@ watchEffect(async () => {
         Syllabus in your Targeted Language
       </h1>
 
-      <MarketingSupportedLanguagesList size="small" :showStatus="false" :isLanguageClickable="true" />
-       <div class="flex justify-center space-x-3 mb-8 p-6">
-      </div>
+      <MarketingSupportedLanguagesList
+        size="small"
+        :showStatus="false"
+        :isLanguageClickable="true"
+      />
+      <div class="flex justify-center space-x-3 mb-8 p-6"></div>
       <!-- Syllabus Content -->
       <LayoutTabs
-              :first-tab="grammarLevelTabs.firstTab"
-              :second-tab="grammarLevelTabs.secondTab"
-              :third-tab="grammarLevelTabs.thirdTab"
-              @tab-active-changed="
-                (activeTab) => (activeDifficultyLevelTab = activeTab)
-              "
-            />
-      <div
-            class="mt-4 grid grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-4"
-          >
+        :first-tab="grammarLevelTabs.firstTab"
+        :second-tab="grammarLevelTabs.secondTab"
+        :third-tab="grammarLevelTabs.thirdTab"
+        @tab-active-changed="
+          (activeTab) => (activeDifficultyLevelTab = activeTab)
+        "
+      />
+      <div class="mt-4 grid grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-4">
         <div v-for="(rule, n) in syllabusRules" :key="n" class="col-span-1">
           <transition name="fade" mode="out-in">
-              <LayoutKeyElementRuleOverview class="h-full cursor-pointer" :title="rule.ruleName" :titleEn="rule.ruleNameTranslation" :symbol="rule.symbol" :score="rule.score" :level="rule.difficultyClass" :lightMode="true" size="large">
-                <template #content>
-                  <!-- Professional description box -->
-                  <div v-if="(rule as any).highlights" class="mt-3 mb-4">
-                    <div class="relative rounded-xl p-4 shadow-sm overflow-hidden" :class="getBorderStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)">
-                      <!-- Subtle texture overlay -->
-                      <div class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"></div>
-                      <div class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"></div>
-                      
-                      <!-- Content -->
-                      <div class="relative z-10">
-                        <div class="flex items-center gap-2 mb-2">
-                          <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
-                          <svg class="h-3 w-3" :class="getTextStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
-                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                          </svg>
-                          <span class="text-xs font-semibold uppercase tracking-wide" :class="getTextStyleClassFromGrammarRuleLevel(rule.difficultyClass ?? 0)">Key Point</span>
-                        </div>
-                        <p class="text-xs text-slate-700 font-medium leading-relaxed">
-                          {{ (rule as any).highlights }}
-                        </p>
+            <LayoutKeyElementRuleOverview
+              class="h-full cursor-pointer"
+              :title="rule.ruleName"
+              :titleEn="rule.ruleNameTranslation"
+              :symbol="rule.symbol"
+              :score="rule.score"
+              :level="rule.difficultyClass"
+              :lightMode="true"
+              size="large"
+            >
+              <template #content>
+                <!-- Professional description box -->
+                <div v-if="(rule as any).highlights" class="mt-3 mb-4">
+                  <div
+                    class="relative rounded-xl p-4 shadow-sm overflow-hidden"
+                    :class="
+                      getBorderStyleClassFromGrammarRuleLevel(
+                        rule.difficultyClass ?? 0,
+                      )
+                    "
+                  >
+                    <!-- Subtle texture overlay -->
+                    <div
+                      class="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/5 opacity-60"
+                    ></div>
+                    <div
+                      class="absolute inset-0 opacity-20 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(255,255,255,0.4)_0deg,rgba(255,255,255,0.1)_90deg,rgba(255,255,255,0.2)_180deg,rgba(255,255,255,0.05)_270deg)]"
+                    ></div>
+
+                    <!-- Content -->
+                    <div class="relative z-10">
+                      <div class="flex items-center gap-2 mb-2">
+                        <!-- <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-sm"></div> -->
+                        <svg
+                          class="h-3 w-3"
+                          :class="
+                            getTextStyleClassFromGrammarRuleLevel(
+                              rule.difficultyClass ?? 0,
+                            )
+                          "
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                            fill="none"
+                          />
+                          <circle cx="12" cy="12" r="3" fill="currentColor" />
+                        </svg>
+                        <span
+                          class="text-xs font-semibold uppercase tracking-wide"
+                          :class="
+                            getTextStyleClassFromGrammarRuleLevel(
+                              rule.difficultyClass ?? 0,
+                            )
+                          "
+                          >Key Point</span
+                        >
                       </div>
+                      <p
+                        class="text-xs text-slate-700 font-medium leading-relaxed"
+                      >
+                        {{ (rule as any).highlights }}
+                      </p>
                     </div>
                   </div>
-            </template>
+                </div>
+              </template>
             </LayoutKeyElementRuleOverview>
           </transition>
-          </div>
-          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>

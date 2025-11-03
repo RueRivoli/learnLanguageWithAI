@@ -1,18 +1,21 @@
-import type { FormQuizState, QuizFetchedQuestion, GrammarQuizQuestion } from "~/types/quizzes/quiz";
+import type {
+  FormQuizState,
+  QuizFetchedQuestion,
+  GrammarQuizQuestion,
+} from "~/types/quizzes/quiz";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { getAuthToken } from "../auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "../credits";
 
-
 export const getScoreBackgroundColorClass = (score: number) => {
   if (score > 0 && score < 40) {
-    return 'bg-error';
+    return "bg-error";
   } else if (score >= 40 && score < 70) {
-    return 'bg-warning';
+    return "bg-warning";
   } else if (score >= 70) {
-    return 'bg-success';
+    return "bg-success";
   }
-  return 'bg-neutral';
+  return "bg-neutral";
 };
 
 export const parseQuestions = (data: any): GrammarQuizQuestion => {
@@ -30,8 +33,9 @@ export const parseQuestions = (data: any): GrammarQuizQuestion => {
   };
 };
 
-
-export const parseGrammarQuizQuestion = (question: QuizFetchedQuestion): GrammarQuizQuestion => {
+export const parseGrammarQuizQuestion = (
+  question: QuizFetchedQuestion,
+): GrammarQuizQuestion => {
   return {
     id: question.id,
     type: question.turkish_grammar_quizzes.question_type ?? null,
@@ -49,28 +53,37 @@ export const parseGrammarQuizQuestion = (question: QuizFetchedQuestion): Grammar
   };
 };
 
-
-export const handleGenerationQuiz = async (ruleId: number, userId: string, redirectionPath: string, lessonId?: string | null, length = 5) => {
+export const handleGenerationQuiz = async (
+  ruleId: number,
+  userId: string,
+  redirectionPath: string,
+  lessonId?: string | null,
+  length = 5,
+) => {
   try {
     const userStore = useUserStore();
     // Attach Authorization header from Supabase session for secure server-side auth
     const headers = await getAuthToken();
-    const response = await $fetch<{ quizId: number }>(`/api/quizzes/${ruleId}`, {
-      method: "PUT",
-      headers,
-      body: {
-        numberOfQuestions: length,
-        userId: userId,
+    const response = await $fetch<{ quizId: number }>(
+      `/api/quizzes/${ruleId}`,
+      {
+        method: "PUT",
+        headers,
+        body: {
+          numberOfQuestions: length,
+          userId: userId,
+        },
       },
-    });
+    );
     // response is the id of the new generated quiz
-    if (lessonId) await $fetch(`/api/lessons/${lessonId}`, {
-      method: "PUT", 
-      headers,
-      body: {
-        quizId: response.quizId,
-      },
-    });
+    if (lessonId)
+      await $fetch(`/api/lessons/${lessonId}`, {
+        method: "PUT",
+        headers,
+        body: {
+          quizId: response.quizId,
+        },
+      });
     userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
     await navigateTo({
       path: `${redirectionPath}/${response.quizId}`,
@@ -83,8 +96,10 @@ export const handleGenerationQuiz = async (ruleId: number, userId: string, redir
   }
 };
 
-
-export const initializeFormQuiz = (quiz: Ref<FormQuizState>, questions: GrammarQuizQuestion[] | VocabularyQuizQuestion[]): void => {
+export const initializeFormQuiz = (
+  quiz: Ref<FormQuizState>,
+  questions: GrammarQuizQuestion[] | VocabularyQuizQuestion[],
+): void => {
   quiz.value = questions.reduce(
     (
       acc: FormQuizState,
@@ -100,5 +115,4 @@ export const initializeFormQuiz = (quiz: Ref<FormQuizState>, questions: GrammarQ
     },
     {},
   );
-}
-
+};

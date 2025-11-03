@@ -5,5 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-<div>Here are our policies</div>
+  <div>Here are our policies</div>
 </template>

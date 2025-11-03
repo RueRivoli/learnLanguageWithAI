@@ -32,14 +32,16 @@ export const useUserStore = defineStore("user", {
       return state.creditsAvailable >= 2.5;
     },
     getInitials(state: User): string {
-      if (!state.fullName) return '';
+      if (!state.fullName) return "";
       const names = state.fullName.trim().split(" ");
-      const initials = names.map(n => n[0]?.toUpperCase() || '').join('');
+      const initials = names.map((n) => n[0]?.toUpperCase() || "").join("");
       return initials;
-    }
+    },
   },
   actions: {
-    async creditsUsageUpdate(credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ) {
+    async creditsUsageUpdate(
+      credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ,
+    ) {
       try {
         const headers = await getAuthToken();
         const response = await $fetch(`/api/credits`, {
@@ -50,16 +52,15 @@ export const useUserStore = defineStore("user", {
             userId: this.id,
           },
         });
-        console.log('response', response)
+        console.log("response", response);
         this.creditsAvailable = response.creditsAvailable;
       } catch (error) {
-        console.error('Error setting credits available:', error);
+        console.error("Error setting credits available:", error);
       }
     },
     setProfile(profile: DatabaseUserProfile) {
       this.id = profile.id;
-      this.isLoaded = true,
-      this.fullName = profile.full_name;
+      (this.isLoaded = true), (this.fullName = profile.full_name);
       this.languageLearned = profile.language_learned;
       this.pseudo = profile.pseudo;
       this.initials = profile.initials;
@@ -70,6 +71,6 @@ export const useUserStore = defineStore("user", {
       this.lastCreditPurchaseDate = profile.last_credit_purchase_date;
       // this.avatar = profile.avatar;
       //  this.memberSince = profile.memberSince;
-    }
+    },
   },
 });

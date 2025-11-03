@@ -11,9 +11,7 @@ import {
   DocumentIcon,
   Square2StackIcon,
 } from "@heroicons/vue/24/outline";
-import {
-  StarIcon,
-} from "@heroicons/vue/24/solid";
+import { StarIcon } from "@heroicons/vue/24/solid";
 import {
   Dialog,
   DialogOverlay,
@@ -71,7 +69,7 @@ const isActive = (path: string) => {
                   alt="LinguaLab Logo"
                   class="h-8 w-auto"
                   src="~/assets/logo/transparent/language-lab.png"
-                >
+                />
               </NuxtLink>
               <button
                 class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors duration-200"
@@ -198,74 +196,86 @@ const isActive = (path: string) => {
                 </div>
               </div>
 
-        <!-- User Menu Section for Mobile-->
-    <div class="p-4 border-t border-primary/30">
-      <div
-        class="flex items-center gap-2 mb-4"
-        :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion, 'justify-between': !isSideBarMinifiedForDesktopVersion }"
-      >
-        <div class="avatar">
-          <div class="avatar avatar-placeholder">
-            <div
-              class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
-            >
-              <span class="text-xl">{{ userInitials }}</span>
-            </div>
-          </div>
-        </div>
-        <div v-if="!isSideBarMinifiedForDesktopVersion" class="font-semibold text-neutral">{{ userPseudo }}</div>
-        <div v-if="!isSideBarMinifiedForDesktopVersion" class="flex items-center justify-end">
-              <StarIcon class="h-4 w-4 text-indigo-600" />
-              <span class="text-primary font-bold">{{ userStore.$state.creditsAvailable }}</span>
-            </div>
-      </div>
+              <!-- User Menu Section for Mobile-->
+              <div class="p-4 border-t border-primary/30">
+                <div
+                  class="flex items-center gap-2 mb-4"
+                  :class="{
+                    'justify-center': isSideBarMinifiedForDesktopVersion,
+                    'justify-between': !isSideBarMinifiedForDesktopVersion,
+                  }"
+                >
+                  <div class="avatar">
+                    <div class="avatar avatar-placeholder">
+                      <div
+                        class="bg-indigo-600 text-neutral-content w-10 h-10 rounded-full"
+                      >
+                        <span class="text-xl">{{ userInitials }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="!isSideBarMinifiedForDesktopVersion"
+                    class="font-semibold text-neutral"
+                  >
+                    {{ userPseudo }}
+                  </div>
+                  <div
+                    v-if="!isSideBarMinifiedForDesktopVersion"
+                    class="flex items-center justify-end"
+                  >
+                    <StarIcon class="h-4 w-4 text-indigo-600" />
+                    <span class="text-primary font-bold">{{
+                      userStore.$state.creditsAvailable
+                    }}</span>
+                  </div>
+                </div>
 
-      <div class="mt-4 space-y-1">
-        <NuxtLink
-          class="flex items-center py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
-          :class="{
-            'bg-indigo-50 rounded-lg': isActive('/account/settings'),
-            'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
-            'px-4': !isSideBarMinifiedForDesktopVersion,
-          }"
-          to="/account/settings"
-        >
-          <Cog6ToothIcon
-            class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-            :class="{
-              'text-indigo-600': isActive('/account/settings'),
-            }"
-          />
-          <span
-            v-if="!isSideBarMinifiedForDesktopVersion"
-            class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-            :class="{
-              'text-indigo-600': isActive('/account/settings'),
-            }"
-            >Settings</span
-          >
-        </NuxtLink>
+                <div class="mt-4 space-y-1">
+                  <NuxtLink
+                    class="flex items-center py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+                    :class="{
+                      'bg-indigo-50 rounded-lg': isActive('/account/settings'),
+                      'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+                      'px-4': !isSideBarMinifiedForDesktopVersion,
+                    }"
+                    to="/account/settings"
+                  >
+                    <Cog6ToothIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/account/settings'),
+                      }"
+                    />
+                    <span
+                      v-if="!isSideBarMinifiedForDesktopVersion"
+                      class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      :class="{
+                        'text-indigo-600': isActive('/account/settings'),
+                      }"
+                      >Settings</span
+                    >
+                  </NuxtLink>
 
-        <button
-          class="flex items-center cursor-pointer w-full py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
-          :class="{
-            'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
-            'px-4': !isSideBarMinifiedForDesktopVersion,
-          }"
-          @click="handleSignOut"
-        >
-          <ArrowLeftStartOnRectangleIcon
-            class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-          />
-          <span
-            v-if="!isSideBarMinifiedForDesktopVersion"
-            class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
-            >Log out</span
-          >
-        </button>
-      </div>
-    </div>
-
+                  <button
+                    class="flex items-center cursor-pointer w-full py-2.5 group transition-all duration-200 ease-in-out hover:rounded-lg hover:bg-indigo-50"
+                    :class="{
+                      'px-2 justify-center': isSideBarMinifiedForDesktopVersion,
+                      'px-4': !isSideBarMinifiedForDesktopVersion,
+                    }"
+                    @click="handleSignOut"
+                  >
+                    <ArrowLeftStartOnRectangleIcon
+                      class="h-5 w-5 font-semibold text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                    />
+                    <span
+                      v-if="!isSideBarMinifiedForDesktopVersion"
+                      class="font-semibold ml-2 text-neutral transition-colors duration-200 group-hover:text-indigo-600"
+                      >Log out</span
+                    >
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </TransitionChild>
@@ -290,15 +300,13 @@ const isActive = (path: string) => {
       class="flex-shrink-0 flex items-center justify-center px-2 py-2 w-10 h-10 rounded-full"
       @click="sideBarOpened = true"
     >
-      <Bars3Icon
-        class="h-6 w-6 text-indigo-600 group-hover:text-indigo-8000"
-      />
+      <Bars3Icon class="h-6 w-6 text-indigo-600 group-hover:text-indigo-8000" />
     </button>
   </div>
 
   <!-- Desktop NavBar -->
   <div
-    class="h-full hidden md:flex flex-col justify-between bg-primary/20 border-r border-primary/30 transition-all duration-300 ease-in-out"
+    class="min-h-screen hidden md:flex flex-col justify-between bg-primary/20 border-r border-primary/30 transition-all duration-300 ease-in-out"
     :class="{
       'w-20': isSideBarMinifiedForDesktopVersion,
       'w-72': !isSideBarMinifiedForDesktopVersion,
@@ -331,7 +339,7 @@ const isActive = (path: string) => {
           alt="LinguaLab Logo"
           class="h-8 w-auto"
           src="~~/assets/logo/transparent/language-lab-toucan-black.png"
-        >
+        />
       </NuxtLink>
     </div>
 
@@ -355,7 +363,7 @@ const isActive = (path: string) => {
       <div class="px-4">
         <h3
           v-if="!isSideBarMinifiedForDesktopVersion"
-          class="mx-6 mt-4 mb-2 text-xs text-gray-800 dark:text-black uppercase tracking-widest font-bold"
+          class="mx-6 mt-4 mb-2 text-xs text-gray-800 uppercase tracking-widest font-bold"
         >
           Learning
         </h3>
@@ -467,7 +475,10 @@ const isActive = (path: string) => {
     <div class="p-4 border-t border-primary/30">
       <div
         class="flex items-center gap-2"
-        :class="{ 'justify-center': isSideBarMinifiedForDesktopVersion, 'justify-between': !isSideBarMinifiedForDesktopVersion }"
+        :class="{
+          'justify-center': isSideBarMinifiedForDesktopVersion,
+          'justify-between': !isSideBarMinifiedForDesktopVersion,
+        }"
       >
         <div class="avatar">
           <div class="avatar avatar-placeholder">
@@ -478,11 +489,21 @@ const isActive = (path: string) => {
             </div>
           </div>
         </div>
-        <div v-if="!isSideBarMinifiedForDesktopVersion" class="font-semibold text-neutral">{{ userPseudo }}</div>
-        <div v-if="!isSideBarMinifiedForDesktopVersion" class="flex items-center justify-end">
-              <StarIcon class="h-4 w-4 text-indigo-600" />
-              <span class="text-primary font-bold">{{ userStore.$state.creditsAvailable }}</span>
-            </div>
+        <div
+          v-if="!isSideBarMinifiedForDesktopVersion"
+          class="font-semibold text-neutral"
+        >
+          {{ userPseudo }}
+        </div>
+        <div
+          v-if="!isSideBarMinifiedForDesktopVersion"
+          class="flex items-center justify-end"
+        >
+          <StarIcon class="h-4 w-4 text-indigo-600" />
+          <span class="text-primary font-bold">{{
+            userStore.$state.creditsAvailable
+          }}</span>
+        </div>
       </div>
 
       <div class="mt-4 space-y-1">

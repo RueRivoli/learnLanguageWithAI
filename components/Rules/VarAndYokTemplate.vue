@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto p-6 space-y-6">    
+  <div class="max-w-4xl mx-auto p-6 space-y-6">
     <!-- Header -->
     <div
       class="border border-gray-200 border-primary bg-primary text-white rounded-lg p-4"
@@ -25,10 +25,11 @@
         </div>
         <div>
           <p class="text-white/90 leading-relaxed font-semibold">
-            In Turkish, "var" and "yok" are essential expressions used to indicate
+            In Turkish, "var" and "yok" are essential expressions used to
+            indicate
             <span class="underline">presence and absence.</span>
-            They function much like "there is/are" and "there isn't/aren't" in English,
-            helping you describe everyday situations with ease.
+            They function much like "there is/are" and "there isn't/aren't" in
+            English, helping you describe everyday situations with ease.
           </p>
         </div>
       </div>
@@ -116,27 +117,30 @@
         <h2 class="text-lg font-semibold text-gray-900">Usage Rules</h2>
       </div>
       <p class="font-semibold text-gray-700 mb-3">
-        "Var" and "yok" usually appear at the end of the sentence and can be used in four key ways:
+        "Var" and "yok" usually appear at the end of the sentence and can be
+        used in four key ways:
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Positive Statement</h3>
-          <p class="font-medium text-gray-900 mb-2">
-            Location + noun + var
-          </p>
+          <p class="font-medium text-gray-900 mb-2">Location + noun + var</p>
           <div class="text-gray-700">
-            <span class="font-medium">Odada örümcek <strong class="text-primary">var</strong></span> -
+            <span class="font-medium"
+              >Odada örümcek <strong class="text-primary">var</strong></span
+            >
+            -
             <em>There is a spider in the room</em>
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Negative Statement</h3>
-          <p class="font-medium text-gray-900 mb-2">
-            Location + noun + yok
-          </p>
+          <p class="font-medium text-gray-900 mb-2">Location + noun + yok</p>
           <div class="text-gray-700">
-            <span class="font-medium">Garajda araba <strong class="text-primary">yok</strong></span> -
+            <span class="font-medium"
+              >Garajda araba <strong class="text-primary">yok</strong></span
+            >
+            -
             <em>There isn't a car in the garage</em>
           </div>
         </div>
@@ -146,7 +150,10 @@
             Location + noun + var + mı?
           </p>
           <div class="text-gray-700">
-            <span class="font-medium">Garajda araba <strong class="text-primary">var mı</strong>?</span> -
+            <span class="font-medium"
+              >Garajda araba <strong class="text-primary">var mı</strong>?</span
+            >
+            -
             <em>Is there a car in the garage?</em>
           </div>
         </div>
@@ -156,7 +163,10 @@
             Location + noun + yok + mu?
           </p>
           <div class="text-gray-700">
-            <span class="font-medium">Parkta annen <strong class="text-primary">yok mu</strong>?</span> -
+            <span class="font-medium"
+              >Parkta annen <strong class="text-primary">yok mu</strong>?</span
+            >
+            -
             <em>Isn't there your mother in the park?</em>
           </div>
         </div>
@@ -211,7 +221,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Parkta bisiklet <strong class="text-success">var</strong></span
+                  >Parkta bisiklet
+                  <strong class="text-success">var</strong></span
                 >
                 <em> – There is a bicycle in the park.</em>
               </span>
@@ -222,7 +233,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Futbol sahasında top <strong class="text-success">var</strong></span
+                  >Futbol sahasında top
+                  <strong class="text-success">var</strong></span
                 >
                 <em> – There is a ball on the football field.</em>
               </span>
@@ -233,7 +245,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Bahçede bir kişi <strong class="text-success">var</strong></span
+                  >Bahçede bir kişi
+                  <strong class="text-success">var</strong></span
                 >
                 <em> – There is a person in the garden.</em>
               </span>
@@ -248,7 +261,8 @@
             Negative Statements – "Yok"
           </h3>
           <p class="text-gray-700 text-sm mb-2">
-            "Yok" expresses the absence of something, meaning "there isn't" or "there aren't."
+            "Yok" expresses the absence of something, meaning "there isn't" or
+            "there aren't."
           </p>
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
@@ -268,7 +282,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Mağazada çocuk <strong class="text-success">yok</strong></span
+                  >Mağazada çocuk
+                  <strong class="text-success">yok</strong></span
                 >
                 <em> – There isn't a child in the store.</em>
               </span>
@@ -279,7 +294,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Camide müezzin <strong class="text-success">yok</strong></span
+                  >Camide müezzin
+                  <strong class="text-success">yok</strong></span
                 >
                 <em> – There isn't a muezzin in the mosque.</em>
               </span>
@@ -294,7 +310,8 @@
             Positive Questions – "Var mı?"
           </h3>
           <p class="text-gray-700 text-sm mb-2">
-            To form a yes/no question, simply add "mı/mi/mu/mü" to "var," following vowel harmony.
+            To form a yes/no question, simply add "mı/mi/mu/mü" to "var,"
+            following vowel harmony.
           </p>
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
@@ -303,7 +320,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Garajda araba <strong class="text-success">var mı</strong>?</span
+                  >Garajda araba
+                  <strong class="text-success">var mı</strong>?</span
                 >
                 <em> – Is there a car in the garage?</em>
               </span>
@@ -314,7 +332,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Trende yolcu <strong class="text-success">var mı</strong>?</span
+                  >Trende yolcu
+                  <strong class="text-success">var mı</strong>?</span
                 >
                 <em> – Is there a passenger on the train?</em>
               </span>
@@ -338,7 +357,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Parkta çocuk <strong class="text-success">yok mu</strong>?</span
+                  >Parkta çocuk
+                  <strong class="text-success">yok mu</strong>?</span
                 >
                 <em> – Isn't there a child in the park?</em>
               </span>
@@ -349,7 +369,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Futbol sahasında top <strong class="text-success">yok mu</strong>?</span
+                  >Futbol sahasında top
+                  <strong class="text-success">yok mu</strong>?</span
                 >
                 <em> – Isn't there a ball on the football field?</em>
               </span>
@@ -364,6 +385,3 @@
 <script setup lang="ts">
 // Component logic can be added here if needed
 </script>
-
-
-  

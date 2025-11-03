@@ -15,7 +15,6 @@ const handleResetPassword = async () => {
   // Test if email correct
   try {
     if (state.value.email) {
-
       isLoading.value = true;
       const { data, error } = await client.auth.resetPasswordForEmail(
         state.value.email,
@@ -33,7 +32,9 @@ const handleResetPassword = async () => {
 </script>
 
 <template>
-  <div class="bg-neutral/10 h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center">
+  <div
+    class="bg-neutral/10 h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center"
+  >
     <div class="mx-auto">
       <div class="text-primary mb-5">
         <NuxtLink

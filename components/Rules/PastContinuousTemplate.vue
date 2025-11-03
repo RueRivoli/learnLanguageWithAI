@@ -25,8 +25,10 @@
         </div>
         <div>
           <p class="text-white/90 leading-relaxed font-semibold">
-            Mastering <span class="underline">-ıyordu</span>: Talking About What Was Happening in Turkish 🇹🇷
-            Want to sound more natural and fluent in Turkish? Meet -ıyordu — your go-to tool for talking about ongoing actions in the past.
+            Mastering <span class="underline">-ıyordu</span>: Talking About What
+            Was Happening in Turkish 🇹🇷 Want to sound more natural and fluent in
+            Turkish? Meet -ıyordu — your go-to tool for talking about ongoing
+            actions in the past.
           </p>
         </div>
       </div>
@@ -53,56 +55,70 @@
         <h2 class="text-lg font-semibold text-gray-900">When to Use -ıyordu</h2>
       </div>
       <p class="text-gray-700 mb-3">
-        This ending is perfect when you want to talk about things that were happening in the past — either actions, situations, or habits. Here's what it covers:
+        This ending is perfect when you want to talk about things that were
+        happening in the past — either actions, situations, or habits. Here's
+        what it covers:
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-8 h-8 bg-primary/70 rounded-lg flex items-center justify-center">
+            <div
+              class="w-8 h-8 bg-primary/70 rounded-lg flex items-center justify-center"
+            >
               <span class="text-white text-lg">🏞️</span>
             </div>
             <h3 class="font-semibold text-gray-900">Setting the scene</h3>
           </div>
           <p class="text-sm text-gray-700">
-            "It was raining when we left."<br/>
+            "It was raining when we left."<br />
             <strong class="text-primary">Yağmur yağıyordu.</strong>
           </p>
         </div>
         <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-8 h-8 bg-success/70 rounded-lg flex items-center justify-center">
+            <div
+              class="w-8 h-8 bg-success/70 rounded-lg flex items-center justify-center"
+            >
               <span class="text-white text-lg">🔄</span>
             </div>
             <h3 class="font-semibold text-gray-900">Regular past habits</h3>
           </div>
           <p class="text-sm text-gray-700">
-            "I used to go there every summer."<br/>
+            "I used to go there every summer."<br />
             <strong class="text-success">Her yaz oraya gidiyordum.</strong>
           </p>
         </div>
         <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-8 h-8 bg-neutral/70 rounded-lg flex items-center justify-center">
+            <div
+              class="w-8 h-8 bg-neutral/70 rounded-lg flex items-center justify-center"
+            >
               <span class="text-white text-lg">🕰️</span>
             </div>
-            <h3 class="font-semibold text-gray-900">Ongoing states in the past</h3>
+            <h3 class="font-semibold text-gray-900">
+              Ongoing states in the past
+            </h3>
           </div>
           <p class="text-sm text-gray-700">
-            "We were living in the same city."<br/>
+            "We were living in the same city."<br />
             <strong class="text-neutral">Aynı şehirde oturuyorduk.</strong>
           </p>
         </div>
         <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center">
+            <div
+              class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center"
+            >
               <span class="text-white text-lg">😱</span>
             </div>
             <h3 class="font-semibold text-gray-900">"Almost" moments</h3>
           </div>
           <p class="text-sm text-gray-700">
-            "I was going to fall!"<br/>
-            <strong class="text-amber-600">Düşüyordum!</strong><br/>
-            <em class="text-xs text-gray-600">(Often used with words like az daha or neredeyse = "almost")</em>
+            "I was going to fall!"<br />
+            <strong class="text-amber-600">Düşüyordum!</strong><br />
+            <em class="text-xs text-gray-600"
+              >(Often used with words like az daha or neredeyse = "almost")</em
+            >
           </p>
         </div>
       </div>
@@ -126,19 +142,22 @@
             d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"
           />
         </svg>
-        <h2 class="text-lg font-semibold text-gray-900"></h2>How to Build It</h2>
+        <h2 class="text-lg font-semibold text-gray-900">How to Build It</h2>
       </div>
       <p class="text-gray-700 mb-3">
         It's simpler than it looks. Just combine:
       </p>
       <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
         <div class="text-center mb-4">
-          <code class="bg-gray-100 px-4 py-2 rounded-lg text-lg font-mono text-primary border border-primary">
+          <code
+            class="bg-gray-100 px-4 py-2 rounded-lg text-lg font-mono text-primary border border-primary"
+          >
             [Verb stem] + (ı/i/u/ü) + yor + du + [personal ending]
           </code>
         </div>
         <p class="text-sm text-gray-600 text-center">
-          <strong>💡 Pro tip:</strong> In -ıyor, the o never changes! That's why you'll usually see -du after it for vowel harmony.
+          <strong>💡 Pro tip:</strong> In -ıyor, the o never changes! That's why
+          you'll usually see -du after it for vowel harmony.
         </p>
       </div>
     </div>
@@ -161,16 +180,34 @@
             d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           />
         </svg>
-        <h2 class="text-lg font-semibold text-gray-900">Conjugation with yapmak (to do)</h2>
+        <h2 class="text-lg font-semibold text-gray-900">
+          Conjugation with yapmak (to do)
+        </h2>
       </div>
-      <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <div
+        class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+      >
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">Person</th>
-                <th class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide">Turkish</th>
-                <th class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide">English</th>
+              <tr
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+              >
+                <th
+                  class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                >
+                  Person
+                </th>
+                <th
+                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                >
+                  Turkish
+                </th>
+                <th
+                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                >
+                  English
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -182,9 +219,13 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <span class="font-semibold px-3 py-1 rounded-lg text-primary">Yapıyordum</span>
+                  <span class="font-semibold px-3 py-1 rounded-lg text-primary"
+                    >Yapıyordum</span
+                  >
                 </td>
-                <td class="px-6 py-4 text-center text-sm text-gray-700">I was doing</td>
+                <td class="px-6 py-4 text-center text-sm text-gray-700">
+                  I was doing
+                </td>
               </tr>
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
@@ -194,9 +235,13 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <span class="font-semibold px-3 py-1 rounded-lg text-primary">Yapıyordun</span>
+                  <span class="font-semibold px-3 py-1 rounded-lg text-primary"
+                    >Yapıyordun</span
+                  >
                 </td>
-                <td class="px-6 py-4 text-center text-sm text-gray-700">You were doing</td>
+                <td class="px-6 py-4 text-center text-sm text-gray-700">
+                  You were doing
+                </td>
               </tr>
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
@@ -206,9 +251,13 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <span class="font-semibold px-3 py-1 rounded-lg text-primary">Yapıyordu</span>
+                  <span class="font-semibold px-3 py-1 rounded-lg text-primary"
+                    >Yapıyordu</span
+                  >
                 </td>
-                <td class="px-6 py-4 text-center text-sm text-gray-700">He/She was doing</td>
+                <td class="px-6 py-4 text-center text-sm text-gray-700">
+                  He/She was doing
+                </td>
               </tr>
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
@@ -218,9 +267,13 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <span class="font-semibold px-3 py-1 rounded-lg text-primary">Yapıyorduk</span>
+                  <span class="font-semibold px-3 py-1 rounded-lg text-primary"
+                    >Yapıyorduk</span
+                  >
                 </td>
-                <td class="px-6 py-4 text-center text-sm text-gray-700">We were doing</td>
+                <td class="px-6 py-4 text-center text-sm text-gray-700">
+                  We were doing
+                </td>
               </tr>
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
@@ -230,21 +283,31 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <span class="font-semibold px-3 py-1 rounded-lg text-primary">Yapıyordunuz</span>
+                  <span class="font-semibold px-3 py-1 rounded-lg text-primary"
+                    >Yapıyordunuz</span
+                  >
                 </td>
-                <td class="px-6 py-4 text-center text-sm text-gray-700">You (plural/formal) were doing</td>
+                <td class="px-6 py-4 text-center text-sm text-gray-700">
+                  You (plural/formal) were doing
+                </td>
               </tr>
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Onlar</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Onlar</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <span class="font-semibold px-3 py-1 rounded-lg text-primary">Yapıyorlardı</span>
+                  <span class="font-semibold px-3 py-1 rounded-lg text-primary"
+                    >Yapıyorlardı</span
+                  >
                 </td>
-                <td class="px-6 py-4 text-center text-sm text-gray-700">They were doing</td>
+                <td class="px-6 py-4 text-center text-sm text-gray-700">
+                  They were doing
+                </td>
               </tr>
             </tbody>
           </table>
@@ -270,31 +333,43 @@
             d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           />
         </svg>
-        <h2 class="text-lg font-semibold text-gray-900">Examples You'll Actually Use</h2>
+        <h2 class="text-lg font-semibold text-gray-900">
+          Examples You'll Actually Use
+        </h2>
       </div>
       <div class="space-y-4">
         <div class="border-l-4 border-success pl-4">
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
-              <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+              <span
+                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+              ></span>
               <span>
                 <span class=""
-                  >Meltem domates çorbası iç<strong class="text-success">iyordu</strong>.
+                  >Meltem domates çorbası iç<strong class="text-success"
+                    >iyordu</strong
+                  >.
                 </span>
                 — <em>Meltem was drinking tomato soup.</em> 🥣
               </span>
             </li>
             <li class="flex items-start gap-2">
-              <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+              <span
+                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+              ></span>
               <span>
                 <span class=""
-                  >Her şey çok güzel gid<strong class="text-success">iyordu</strong>.
+                  >Her şey çok güzel gid<strong class="text-success"
+                    >iyordu</strong
+                  >.
                 </span>
                 — <em>Everything was going really well.</em> 🌟
               </span>
             </li>
             <li class="flex items-start gap-2">
-              <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+              <span
+                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+              ></span>
               <span>
                 <span class=""
                   >Dışarıda kar yağ<strong class="text-success">ıyordu</strong>.
@@ -303,16 +378,22 @@
               </span>
             </li>
             <li class="flex items-start gap-2">
-              <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+              <span
+                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+              ></span>
               <span>
                 <span class=""
-                  >Gerçekten çok iyi anlaş<strong class="text-success">ıyorduk</strong>.
+                  >Gerçekten çok iyi anlaş<strong class="text-success"
+                    >ıyorduk</strong
+                  >.
                 </span>
                 — <em>We were getting along really well.</em> 🤝
               </span>
             </li>
             <li class="flex items-start gap-2">
-              <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+              <span
+                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+              ></span>
               <span>
                 <span class=""
                   >Az kalsın unut<strong class="text-success">uyordum</strong>!
@@ -343,22 +424,31 @@
             d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
           />
         </svg>
-        <h2 class="text-lg font-semibold text-gray-900">Making Negatives Is Easy</h2>
+        <h2 class="text-lg font-semibold text-gray-900">
+          Making Negatives Is Easy
+        </h2>
       </div>
-      <p class="text-gray-700 mb-3">
-        Just add -m before -ıyordu:
-      </p>
+      <p class="text-gray-700 mb-3">Just add -m before -ıyordu:</p>
       <div class="space-y-2 text-gray-700">
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
-          <span><strong>Film ilerlemiyordu.</strong> → The movie wasn't progressing. 🎬</span>
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          ></span>
+          <span
+            ><strong>Film ilerlemiyordu.</strong> → The movie wasn't
+            progressing. 🎬</span
+          >
         </div>
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          ></span>
           <span><strong>Ben istemiyordum.</strong> → I didn't want it.</span>
         </div>
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          ></span>
           <span><strong>Kıpırdamıyordu.</strong> → He wasn't moving.</span>
         </div>
       </div>
@@ -385,15 +475,20 @@
         <h2 class="text-lg font-semibold text-gray-900">Asking Questions</h2>
       </div>
       <p class="text-gray-700 mb-3">
-        To make a yes/no question, simply insert mu/mi/mu/mü between -ıyor and -du:
+        To make a yes/no question, simply insert mu/mi/mu/mü between -ıyor and
+        -du:
       </p>
       <div class="space-y-2 text-gray-700">
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-success rounded-full mt-2 flex-shrink-0"></span>
+          <span
+            class="w-1.5 h-1.5 bg-success rounded-full mt-2 flex-shrink-0"
+          ></span>
           <span><strong>Korkuyor muydun?</strong> → Were you afraid? 😨</span>
         </div>
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-success rounded-full mt-2 flex-shrink-0"></span>
+          <span
+            class="w-1.5 h-1.5 bg-success rounded-full mt-2 flex-shrink-0"
+          ></span>
           <span><strong>Biliyor muydunuz?</strong> → Did you know? 🤔</span>
         </div>
       </div>
@@ -419,26 +514,31 @@
         </svg>
         <h2 class="text-lg font-semibold text-gray-900">The "Almost" Trick</h2>
       </div>
-      <p class="text-gray-700 mb-3">
-        Sometimes -ıyordu means "was about to":
-      </p>
+      <p class="text-gray-700 mb-3">Sometimes -ıyordu means "was about to":</p>
       <div class="space-y-2 text-gray-700">
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0"></span>
+          <span
+            class="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+          ></span>
           <span><strong>Az daha ölüyordum!</strong> → I almost died!</span>
         </div>
         <div class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0"></span>
-          <span><strong>Neredeyse iptal ediyordum!</strong> → I nearly canceled it.</span>
+          <span
+            class="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+          ></span>
+          <span
+            ><strong>Neredeyse iptal ediyordum!</strong> → I nearly canceled
+            it.</span
+          >
         </div>
       </div>
       <div class="mt-3 p-3 bg-amber-100 border border-amber-300 rounded-lg">
         <p class="text-sm text-amber-800">
-          <strong>Note:</strong> This works, but Turkish often prefers -acaktı for "was going to" — still, you'll hear both.
+          <strong>Note:</strong> This works, but Turkish often prefers -acaktı
+          for "was going to" — still, you'll hear both.
         </p>
       </div>
     </div>
-
   </div>
 </template>
 

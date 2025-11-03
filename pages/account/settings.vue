@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { UserIcon, CheckCircleIcon, ExclamationCircleIcon, SparklesIcon } from "@heroicons/vue/24/solid";
+import {
+  UserIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  SparklesIcon,
+} from "@heroicons/vue/24/solid";
 import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
@@ -9,9 +14,7 @@ definePageMeta({
 useHead({
   title: "Account Settings",
   titleTemplate: "%s - Tookan AI",
-  meta: [
-    { name: "settings", content: "width=device-width, initial-scale=1" },
-  ],
+  meta: [{ name: "settings", content: "width=device-width, initial-scale=1" }],
 });
 
 const route = useRoute();
@@ -31,21 +34,19 @@ const showErrorMessage = ref(false);
 const errorMessage = ref("");
 const isPurchasing = ref(false);
 
-
-
 // Fetch token balance on mount
 onMounted(async () => {
   await fetchCreditBalance();
-  
+
   // Check for payment success/cancelled in URL
-  if (route.query.payment === 'success') {
+  if (route.query.payment === "success") {
     showSuccessMessage.value = true;
     errorMessage.value = "Payment successful! Your credits have been added.";
     await fetchCreditBalance();
     setTimeout(() => {
       showSuccessMessage.value = false;
     }, 5000);
-  } else if (route.query.payment === 'cancelled') {
+  } else if (route.query.payment === "cancelled") {
     showErrorMessage.value = true;
     errorMessage.value = "Payment was cancelled.";
     setTimeout(() => {
@@ -93,7 +94,8 @@ const handleSaveSettings = async () => {
     }, 3000);
   } catch (error: any) {
     showErrorMessage.value = true;
-    errorMessage.value = error?.message || "Failed to save settings. Please try again.";
+    errorMessage.value =
+      error?.message || "Failed to save settings. Please try again.";
     setTimeout(() => {
       showErrorMessage.value = false;
     }, 5000);
@@ -103,9 +105,12 @@ const handleSaveSettings = async () => {
 };
 
 // Watch for store changes
-watch(() => userStore.pseudo, (newPseudo) => {
-  if (newPseudo) formData.value.pseudo = newPseudo;
-});
+watch(
+  () => userStore.pseudo,
+  (newPseudo) => {
+    if (newPseudo) formData.value.pseudo = newPseudo;
+  },
+);
 </script>
 
 <template>
@@ -147,28 +152,44 @@ watch(() => userStore.pseudo, (newPseudo) => {
             </div>
 
             <!-- Settings Card -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mt-6">
+            <div
+              class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mt-6"
+            >
               <!-- Header -->
               <div class="px-8 py-6 border-b border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-900 mb-1">Profile Information</h2>
-                <p class="text-gray-600">Manage your account details and preferences</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-1">
+                  Profile Information
+                </h2>
+                <p class="text-gray-600">
+                  Manage your account details and preferences
+                </p>
               </div>
 
               <!-- Content -->
               <div class="p-8">
                 <!-- Token Balance -->
-                <div class="mb-8 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                <div
+                  class="mb-8 p-4 bg-primary/5 border border-primary/20 rounded-lg"
+                >
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                      <div
+                        class="w-10 h-10 rounded-full bg-primary flex items-center justify-center"
+                      >
                         <SparklesIcon class="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <p class="text-sm font-medium text-gray-700">Remaining Credits</p>
-                        <p class="text-xs text-gray-500">Available for content generation</p>
+                        <p class="text-sm font-medium text-gray-700">
+                          Remaining Credits
+                        </p>
+                        <p class="text-xs text-gray-500">
+                          Available for content generation
+                        </p>
                       </div>
                     </div>
-                    <div class="text-3xl font-bold text-primary">{{ userStore.creditsAvailable }}</div>
+                    <div class="text-3xl font-bold text-primary">
+                      {{ userStore.creditsAvailable }}
+                    </div>
                   </div>
                 </div>
 
@@ -177,7 +198,9 @@ watch(() => userStore.pseudo, (newPseudo) => {
                   <!-- Pseudo Field -->
                   <div class="space-y-2">
                     <div class="flex items-center justify-between">
-                      <label class="text-sm font-semibold text-gray-900">Pseudo</label>
+                      <label class="text-sm font-semibold text-gray-900"
+                        >Pseudo</label
+                      >
                       <span class="text-xs text-gray-500">Required</span>
                     </div>
                     <input
@@ -186,7 +209,8 @@ watch(() => userStore.pseudo, (newPseudo) => {
                       placeholder="Enter your pseudo"
                       class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                       :class="{
-                        'border-red-500 focus:border-red-500 focus:ring-red-500/20': formData.pseudo && !isPseudoValid,
+                        'border-red-500 focus:border-red-500 focus:ring-red-500/20':
+                          formData.pseudo && !isPseudoValid,
                         'border-primary': formData.pseudo && isPseudoValid,
                       }"
                       required
@@ -198,14 +222,20 @@ watch(() => userStore.pseudo, (newPseudo) => {
                         'text-gray-500': !formData.pseudo || isPseudoValid,
                       }"
                     >
-                      {{ formData.pseudo && !isPseudoValid ? 'Pseudo must be at least 3 characters' : 'Minimum 3 characters' }}
+                      {{
+                        formData.pseudo && !isPseudoValid
+                          ? "Pseudo must be at least 3 characters"
+                          : "Minimum 3 characters"
+                      }}
                     </p>
                   </div>
 
                   <!-- Language Learned Field -->
                   <div class="space-y-2">
                     <div class="flex items-center justify-between">
-                      <label class="text-sm font-semibold text-gray-900">Targeted Language</label>
+                      <label class="text-sm font-semibold text-gray-900"
+                        >Targeted Language</label
+                      >
                       <span class="text-xs text-gray-500">Fixed</span>
                     </div>
                     <input
@@ -214,13 +244,18 @@ watch(() => userStore.pseudo, (newPseudo) => {
                       class="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-500 cursor-not-allowed"
                       disabled
                     />
-                    <p class="text-xs text-gray-500">Currently only Turkish is available, Spanish and French will be available soon</p>
+                    <p class="text-xs text-gray-500">
+                      Currently only Turkish is available, Spanish and French
+                      will be available soon
+                    </p>
                   </div>
 
                   <!-- Email (Read-only) -->
                   <div class="space-y-2">
                     <div class="flex items-center justify-between">
-                      <label class="text-sm font-semibold text-gray-900">Email</label>
+                      <label class="text-sm font-semibold text-gray-900"
+                        >Email</label
+                      >
                       <span class="text-xs text-gray-500">Read-only</span>
                     </div>
                     <input
@@ -229,7 +264,9 @@ watch(() => userStore.pseudo, (newPseudo) => {
                       class="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-500 cursor-not-allowed"
                       disabled
                     />
-                    <p class="text-xs text-gray-500">Your email cannot be changed</p>
+                    <p class="text-xs text-gray-500">
+                      Your email cannot be changed
+                    </p>
                   </div>
 
                   <!-- Actions -->
@@ -239,8 +276,11 @@ watch(() => userStore.pseudo, (newPseudo) => {
                       class="px-6 py-2.5 bg-primary text-white rounded-lg font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       :disabled="!isFormValid || isSaving"
                     >
-                      <span v-if="isSaving" class="loading loading-spinner loading-sm mr-2"></span>
-                      {{ isSaving ? 'Saving...' : 'Save Settings' }}
+                      <span
+                        v-if="isSaving"
+                        class="loading loading-spinner loading-sm mr-2"
+                      ></span>
+                      {{ isSaving ? "Saving..." : "Save Settings" }}
                     </button>
                   </div>
                 </form>

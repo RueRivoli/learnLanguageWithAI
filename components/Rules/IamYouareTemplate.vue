@@ -27,13 +27,15 @@
           <p class="text-white/90 leading-relaxed font-semibold">
             In Turkish, the way we express sentences such as:
           </p>
-          
-          <ul class="text-white/90 leading-relaxed font-semibold mt-2 ml-4 list-disc list-inside">
+
+          <ul
+            class="text-white/90 leading-relaxed font-semibold mt-2 ml-4 list-disc list-inside"
+          >
             <li>I am an engineer</li>
             <li>You aren't smart</li>
             <li>Is he tall?</li>
           </ul>
-          
+
           <p class="text-white/90 leading-relaxed font-semibold">
             <span class="underline">
               differs significantly from how they're formed in English.
@@ -73,11 +75,11 @@
         </li>
       </ul>
     </div>
-    <br/>
-    
+    <br />
+
     <!-- Four Essential Forms -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
-        <div class="flex items-center mb-3">
+      <div class="flex items-center mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -94,13 +96,13 @@
         </svg>
 
         <h2 class="text-lg font-semibold text-gray-900">
-            Four Essential Forms
+          Four Essential Forms
         </h2>
       </div>
       <p class="font-semibold text-gray-700 mb-3">
         There are four essential forms to consider when building these types of
-        sentences: positive statements, negative statements, positive
-        questions, and negative questions:
+        sentences: positive statements, negative statements, positive questions,
+        and negative questions:
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -152,7 +154,7 @@
         vowel harmony
       </p>
     </div>
-    <br/>
+    <br />
     <!-- Personal Suffixes -->
     <div>
       <h2 class="text-lg font-semibold text-gray-900 mb-1">
@@ -198,30 +200,44 @@
         </div>
       </div>
     </div>
-    <br/>
+    <br />
     <div>
       <h2 class="text-lg font-semibold text-gray-900 mb-3">
         Positive statement
       </h2>
       <div id="table_positive">
-        <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+        <div
+          class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+        >
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead>
-                <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                  <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
+                <tr
+                  class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                >
+                  <th
+                    class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                  >
                     Last Vowel
                   </th>
-                  <th class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide">
+                  <th
+                    class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  >
                     a/ı
                   </th>
-                  <th class="px-6 py-4 text-center  text-sm font-bold text-gray-700 tracking-wide">
+                  <th
+                    class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  >
                     e/i
                   </th>
-                  <th class="px-6 py-4 text-center  text-sm font-bold text-gray-700 tracking-wide">
+                  <th
+                    class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  >
                     o/u
                   </th>
-                  <th class="px-6 py-4 text-center  text-sm font-bold text-gray-700 tracking-wide">
+                  <th
+                    class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  >
                     ö/ü
                   </th>
                 </tr>
@@ -231,158 +247,221 @@
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Ben</span
+                      >
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]ım
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]im
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]um
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]üm
                     </span>
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
+                  <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Sen</span
+                      >
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sın
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sin
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sun
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sün
                     </span>
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
+                  <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
                   <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">∅ </span>
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                      >∅
+                    </span>
                   </td>
                   <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">∅ </span>
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                      >∅
+                    </span>
                   </td>
                   <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">∅ </span>
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                      >∅
+                    </span>
                   </td>
                   <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">∅</span>
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                      >∅</span
+                    >
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
+                  <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">Biz</span>
+                      <span
+                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                        >Biz</span
+                      >
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]ız
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]iz
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]uz
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -[y]üz
                     </span>
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
+                  <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Siz</span
+                      >
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sınız
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -siniz
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sunuz
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -sünüz
                     </span>
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
+                  <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Onlar</span
+                      >
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -lar
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -ler
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -lar
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                  <td class="px-6 py-4 text-center">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -ler
                     </span>
                   </td>
@@ -391,26 +470,36 @@
             </table>
           </div>
         </div>
-        <br/>
+        <br />
         <div id="table_positive_example">
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full">
-                  <thead>
-                    <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                      <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                        öğretmen
-                      </th>
-                      <th class="px-6 py-4 text-left font-medium text-sm text-gray-700 tracking-wide">
-                        teacher
-                      </th>
-                    </tr>
-                  </thead>
+          <div
+            class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+          >
+            <table class="w-full">
+              <thead>
+                <tr
+                  class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                >
+                  <th
+                    class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                  >
+                    öğretmen
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left font-medium text-sm text-gray-700 tracking-wide"
+                  >
+                    teacher
+                  </th>
+                </tr>
+              </thead>
               <tbody class="divide-y divide-gray-100">
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben öğretmenim</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Ben öğretmenim</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -418,13 +507,14 @@
                       I am a teacher
                     </span>
                   </td>
-                  
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen öğretmensin</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Sen öğretmensin</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -432,13 +522,14 @@
                       You are a teacher
                     </span>
                   </td>
-                  
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O öğretmen</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >O öğretmen</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -448,10 +539,12 @@
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz öğretmeniz</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Biz öğretmeniz</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -461,10 +554,12 @@
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz öğretmensiniz</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Siz öğretmensiniz</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -474,10 +569,12 @@
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar öğretmenler</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Onlar öğretmenler</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -488,27 +585,33 @@
                 </tr>
               </tbody>
             </table>
-            </div>
+          </div>
         </div>
       </div>
     </div>
-    <br/>
+    <br />
     <div>
       <h2 class="text-lg font-semibold text-gray-900 mb-3">
         Negative statement
       </h2>
       <div id="table_positive">
-        <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+        <div
+          class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+        >
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead>
-                <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                  <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
+                <tr
+                  class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                >
+                  <th
+                    class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                  >
                     For all verbs
                   </th>
-                  <th class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide">
-                    
-                  </th>
+                  <th
+                    class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  ></th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
@@ -516,11 +619,15 @@
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Ben</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
                       -değilim
                     </span>
                   </td>
@@ -529,12 +636,16 @@
                   <td class="px-6 py-4 text-left">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Sen</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        -değilsin
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
+                      -değilsin
                     </span>
                   </td>
                 </tr>
@@ -546,75 +657,97 @@
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">-değil</span>
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                      >-değil</span
+                    >
                   </td>
-
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-left">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="font-semibold rounded-lg text-gray-700">Biz</span>
+                      <span class="font-semibold rounded-lg text-gray-700"
+                        >Biz</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                     -değiliz
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
+                      -değiliz
                     </span>
                   </td>
-
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Siz</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        -değilsiniz
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
+                      -değilsiniz
                     </span>
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
+                  <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Onlar</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        -değiller
+                    <span
+                      class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                    >
+                      -değiller
                     </span>
                   </td>
-                 
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <br/>
+        <br />
         <div id="table_negative_example">
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full">
-                  <thead>
-                    <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                      <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                        güzel
-                      </th>
-                      <th class="font-medium px-6 py-4 text-left text-sm text-gray-700 tracking-wide">
-                        beautiful
-                      </th>
-                    </tr>
-                  </thead>
+          <div
+            class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+          >
+            <table class="w-full">
+              <thead>
+                <tr
+                  class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                >
+                  <th
+                    class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                  >
+                    güzel
+                  </th>
+                  <th
+                    class="font-medium px-6 py-4 text-left text-sm text-gray-700 tracking-wide"
+                  >
+                    beautiful
+                  </th>
+                </tr>
+              </thead>
               <tbody class="divide-y divide-gray-100">
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben güzel değilim</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Ben güzel değilim</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -622,13 +755,14 @@
                       I am not beautiful
                     </span>
                   </td>
-                  
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen güzel değilsin</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Sen güzel değilsin</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -636,13 +770,14 @@
                       You are not beautiful
                     </span>
                   </td>
-                  
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O güzel değil</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >O güzel değil</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -652,10 +787,12 @@
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz güzel değiliz</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Biz güzel değiliz</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -665,10 +802,12 @@
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz güzel değilsiniz</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Siz güzel değilsiniz</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -678,10 +817,12 @@
                   </td>
                 </tr>
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
+                  <td class="px-6 py-4">
                     <div class="flex items-center">
                       <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar güzel değiller</span>
+                      <span class="text-sm font-semibold text-gray-900"
+                        >Onlar güzel değiller</span
+                      >
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -692,707 +833,1030 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div>
+            <br />
+            <h2 class="text-lg font-semibold text-gray-900 mb-3">
+              Positive question
+            </h2>
+            <div id="table_positive">
+              <div
+                class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+              >
+                <div class="overflow-x-auto">
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          Last Vowel
+                        </th>
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          a/ı
+                        </th>
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          e/i
+                        </th>
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          o/u
+                        </th>
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          ö/ü
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Ben</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mıyım
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            miyim
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            muyum
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            müyüm
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Sen</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mısın
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            misin
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            musun
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            müsün
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >O</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                            >mı</span
+                          >
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                            >mi
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                            >mu
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                            >mü</span
+                          >
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="font-semibold rounded-lg text-gray-700"
+                              >Biz</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mıyız
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            miyiz
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            muyuz
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            müyüz
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Siz</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mısınız
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            misiniz
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            musunuz
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            müsünüz
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Onlar</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mı
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mi
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mu
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            mü
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br />
+              <div id="table_positive_example">
+                <div
+                  class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+                >
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          aktör
+                        </th>
+                        <th
+                          class="px-6 py-4 text-left font-medium text-sm text-gray-700 tracking-wide"
+                        >
+                          actor
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Ben aktör müyüm?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Am I an actor ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Sen aktör müsün?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you an actor ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >O aktör mü?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Is he/she an actor ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Biz aktör müyüz?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are we actors ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Siz aktör müsünüz?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you actors ? - Are you an actor ? (plural)
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Onlar aktör mü?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are they actors ?
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br />
+              <div id="table_positive_example">
+                <div
+                  class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+                >
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          akıllı
+                        </th>
+                        <th
+                          class="px-6 py-4 text-left font-medium text-sm text-gray-700 tracking-wide"
+                        >
+                          smart
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Ben akıllı mıyım?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Am I smart ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Sen akıllı mısın?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you smart ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >O akıllı mı?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Is he/she smart ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Biz akıllı mıyız?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are we smart ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Siz akıllı mısınız?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you smart ? (plural)
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Onlar akıllı mı?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are they smart ?
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-            <div>
-       <br/>
-      <h2 class="text-lg font-semibold text-gray-900 mb-3">
-        Positive question
-      </h2>
-      <div id="table_positive">
-        <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead>
-                <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                  <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                    Last Vowel
-                  </th>
-                  <th class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide">
-                    a/ı
-                  </th>
-                  <th class="px-6 py-4 text-center  text-sm font-bold text-gray-700 tracking-wide">
-                    e/i
-                  </th>
-                  <th class="px-6 py-4 text-center  text-sm font-bold text-gray-700 tracking-wide">
-                    o/u
-                  </th>
-                  <th class="px-6 py-4 text-center  text-sm font-bold text-gray-700 tracking-wide">
-                    ö/ü
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mıyım
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        miyim
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        muyum
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        müyüm
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mısın	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        misin	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        musun	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        müsün
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">mı</span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">mi </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">mu </span>
-                  </td>
-                  <td class="px-6 py-4 text-center">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">mü</span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="font-semibold rounded-lg text-gray-700">Biz</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mıyız	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        miyiz	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        muyuz
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        müyüz
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mısınız	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        misiniz
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        musunuz
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        müsünüz
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center ">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mı	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mi	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mu	
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-center ">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        mü
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          </div>
+
+          <br />
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900 mb-3">
+              Negative question
+            </h2>
+            <div id="table_positive">
+              <div
+                class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+              >
+                <div class="overflow-x-auto">
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          For all verbs
+                        </th>
+                        <th
+                          class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                        ></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Ben</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-left">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            değil miyim
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Sen</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-left">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            değil misin
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >O</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-left">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            değil mi</span
+                          >
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="font-semibold rounded-lg text-gray-700"
+                              >Biz</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-left">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            değil miyiz
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Siz</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-left">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            değil misiniz
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4 text-center">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Onlar</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4 text-left">
+                          <span
+                            class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                          >
+                            değiller mi
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br />
+              <div id="table_negative_question_example">
+                <div
+                  class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+                >
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          hızlı
+                        </th>
+                        <th
+                          class="font-medium px-6 py-4 text-left text-sm text-gray-700 tracking-wide"
+                        >
+                          fast
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Ben hızlı değil miyim?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Am I not fast ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Sen hızlı değil misin?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you not fast ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >O hızlı değil mi?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Is he/she not fast ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Biz hızlı değil miyiz?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are we not fast ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Siz hızlı değil misiniz?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you not fast ? (plural)
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Onlar hızlı değiller mi?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are they not fast ?
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br />
+              <div id="table_negative_question_example_2">
+                <div
+                  class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+                >
+                  <table class="w-full">
+                    <thead>
+                      <tr
+                        class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                      >
+                        <th
+                          class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                        >
+                          mimar
+                        </th>
+                        <th
+                          class="font-medium px-6 py-4 text-left text-sm text-gray-700 tracking-wide"
+                        >
+                          architect
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Ben mimar değil miyim?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Am I not an architect ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Sen mimar değil misin?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you not an architect ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >O mimar değil mi?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Is he/she not an architect ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Biz mimar değil miyiz?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are we not architects ?
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Siz mimar değil misiniz?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are you architects ? - Are you not an architect ?
+                            (plural)
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        class="hover:bg-primary/5 transition-colors duration-150"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center">
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
+                            <span class="text-sm font-semibold text-gray-900"
+                              >Onlar mimar değiller mi?</span
+                            >
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <span class="px-3 py-1 rounded-lg text-gray-700">
+                            Are they not architects ?
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <br/>
-        <div id="table_positive_example">
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full">
-                  <thead>
-                    <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                      <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                        aktör
-                      </th>
-                      <th class="px-6 py-4 text-left font-medium text-sm text-gray-700 tracking-wide">
-                        actor
-                      </th>
-                    </tr>
-                  </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben aktör müyüm?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Am I an actor ?
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen aktör müsün?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are you an actor ? 
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O aktör mü?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Is he/she an actor ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz aktör müyüz?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are we actors ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz aktör müsünüz?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                     Are you actors ? - Are you an actor ? (plural)
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar aktör mü?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                        Are they actors ?
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-        </div>
-        <br/>
-        <div id="table_positive_example">
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full">
-                  <thead>
-                    <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                      <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                        akıllı
-                      </th>
-                      <th class="px-6 py-4 text-left font-medium text-sm text-gray-700 tracking-wide">
-                        smart
-                      </th>
-                    </tr>
-                  </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben akıllı mıyım?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Am I smart ?
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen akıllı mısın?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are you smart ? 
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O akıllı mı?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Is he/she smart ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz akıllı mıyız?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are we smart ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz akıllı mısınız?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                     Are you smart ? (plural)
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar akıllı mı?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                        Are they smart ?
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-        </div>
-      </div>
-    </div>
-           
-    <br/>
-    <div>
-      <h2 class="text-lg font-semibold text-gray-900 mb-3">
-        Negative question
-      </h2>
-      <div id="table_positive">
-        <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead>
-                <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                  <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                    For all verbs
-                  </th>
-                  <th class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide">
-                    
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        değil miyim
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        değil misin
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">	değil mi</span>
-                  </td>
-
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="font-semibold rounded-lg text-gray-700">Biz</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        değil miyiz
-                    </span>
-                  </td>
-
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        değil misiniz
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4 text-center">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-left">
-                    <span class="font-semibold px-3 py-1 rounded-lg text-gray-700">
-                        değiller mi
-                    </span>
-                  </td>
-                 
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <br/>
-        <div id="table_negative_question_example">
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full">
-                  <thead>
-                    <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                      <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                        hızlı
-                      </th>
-                      <th class="font-medium px-6 py-4 text-left text-sm text-gray-700 tracking-wide">
-                        fast
-                      </th>
-                    </tr>
-                  </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben hızlı değil miyim?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Am I not fast ?
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen hızlı değil misin?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are you not fast ?
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O hızlı değil mi?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Is he/she not fast ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz hızlı değil miyiz?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are we not fast ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz hızlı değil misiniz?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are you not fast ? (plural)
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar hızlı değiller mi?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are they not fast ?
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-        </div>
-        <br/>
-        <div id="table_negative_question_example_2">
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full">
-                  <thead>
-                    <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                      <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide">
-                        mimar
-                      </th>
-                      <th class="font-medium px-6 py-4 text-left text-sm text-gray-700 tracking-wide">
-                        architect
-                      </th>
-                    </tr>
-                  </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Ben mimar değil miyim?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Am I not an architect ?
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Sen mimar değil misin?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are you not an architect ?
-                    </span>
-                  </td>
-                  
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">O mimar değil mi?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Is he/she not an architect ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Biz mimar değil miyiz?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are we not architects ?
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Siz mimar değil misiniz?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are you architects ? - Are you not an architect ? (plural)
-                    </span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      <span class="text-sm font-semibold text-gray-900">Onlar mimar değiller mi?</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-lg text-gray-700">
-                      Are they not architects ?
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-            <div>
-        </div>
+        <div></div>
       </div>
     </div>
   </div>

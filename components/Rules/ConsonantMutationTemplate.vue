@@ -183,7 +183,9 @@
           Special Cases & Exceptions
         </h2>
       </div>
-      <p class="mt-2 mb-3 font-semibold">Consonant mutation doesn't apply in these cases:</p>
+      <p class="mt-2 mb-3 font-semibold">
+        Consonant mutation doesn't apply in these cases:
+      </p>
       <div class="space-y-4">
         <!-- Proper Names -->
         <div class="border-l-4 border-amber-200 pl-4">
@@ -198,7 +200,10 @@
               ></span>
               <span>
                 <span class=""
-                  >top → <span class="line-through">tobu</span> to<strong class="text-amber-600">p</strong>u</span
+                  >top → <span class="line-through">tobu</span> to<strong
+                    class="text-amber-600"
+                    >p</strong
+                  >u</span
                 >
                 -
                 <em>his/her ball</em>
@@ -210,7 +215,9 @@
               ></span>
               <span>
                 <span class=""
-                  >çobanın koç + u  → <span class="line-through">Çobanın kocu</span> Çobanın ko<strong class="text-amber-600">ç</strong>u</span
+                  >çobanın koç + u →
+                  <span class="line-through">Çobanın kocu</span> Çobanın
+                  ko<strong class="text-amber-600">ç</strong>u</span
                 >
                 -
                 <em>The shepherd's goat</em>
@@ -222,7 +229,11 @@
               ></span>
               <span>
                 <span class=""
-                  >süt + ü bardağa dök  → <span class="line-through">Südü bardağa dök</span> Sü<strong class="text-amber-600">t</strong>ü bardağa dök</span
+                  >süt + ü bardağa dök →
+                  <span class="line-through">Südü bardağa dök</span> Sü<strong
+                    class="text-amber-600"
+                    >t</strong
+                  >ü bardağa dök</span
                 >
                 -
                 <em>Pour the milk into the glass</em>
@@ -239,9 +250,13 @@
               ></span>
               <span>
                 <span class=""
-                  >internet + i her gün kullanıyorum → <span class="line-through">internedi her gün kullanıyorum </span>   interne<strong class="text-amber-600">t</strong
-                  >i her gün kullanıyorum </span
-                >
+                  >internet + i her gün kullanıyorum →
+                  <span class="line-through"
+                    >internedi her gün kullanıyorum
+                  </span>
+                  interne<strong class="text-amber-600">t</strong>i her gün
+                  kullanıyorum
+                </span>
                 -
                 <em>I use the internet everyday</em>
               </span>
@@ -252,7 +267,10 @@
               ></span>
               <span>
                 <span class=""
-                  >bilet + ini unutma → <span class="line-through">Biledini unutma</span>  Bile<strong class="text-amber-600">t</strong
+                  >bilet + ini unutma →
+                  <span class="line-through">Biledini unutma</span> Bile<strong
+                    class="text-amber-600"
+                    >t</strong
                   >ini unutma</span
                 >
                 -
@@ -271,7 +289,10 @@
               ></span>
               <span>
                 <span class=""
-                  >göz renk + i → <span class="line-through">göz renği</span>  göz ren<strong class="text-amber-600">g</strong
+                  >göz renk + i →
+                  <span class="line-through">göz renği</span> göz ren<strong
+                    class="text-amber-600"
+                    >g</strong
                   >i</span
                 >
                 -
@@ -289,7 +310,10 @@
               ></span>
               <span>
                 <span class=""
-                  >Zeynep → <span class="line-through">Zeyneb'in</span>  Zeyne<strong class="text-amber-600">p</strong
+                  >Zeynep →
+                  <span class="line-through">Zeyneb'in</span> Zeyne<strong
+                    class="text-amber-600"
+                    >p</strong
                   >'in çantası</span
                 >
                 -
@@ -302,7 +326,10 @@
               ></span>
               <span>
                 <span class=""
-                  >Tokat + ın nüfusu → <span class="line-through">Tokadın nüfusu</span>  Toka<strong class="text-amber-600">t</strong
+                  >Tokat + ın nüfusu →
+                  <span class="line-through">Tokadın nüfusu</span> Toka<strong
+                    class="text-amber-600"
+                    >t</strong
                   >'in nüfusu</span
                 >
                 -
@@ -316,7 +343,7 @@
     <br />
     <!-- Rule 2: Suffix Consonant Mutation -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
-        <div class="flex items-center mb-3">
+      <div class="flex items-center mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -333,12 +360,12 @@
         </svg>
 
         <h2 class="text-lg font-semibold text-gray-900">
-            Rule 2: Suffix Consonant Mutation
+          Rule 2: Suffix Consonant Mutation
         </h2>
       </div>
       <p class="text-gray-700 mb-3">
-        Sometimes suffixes mutate too. If a word ends in p / ç / t / k / f / h / s / ş
-        and a suffix starting with d or c is added, those sounds harden:
+        Sometimes suffixes mutate too. If a word ends in p / ç / t / k / f / h /
+        s / ş and a suffix starting with d or c is added, those sounds harden:
       </p>
 
       <div
@@ -376,7 +403,7 @@
 
         <h3 class="font-medium text-gray-900">Examples</h3>
       </div>
-     
+
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
           <span
@@ -386,8 +413,7 @@
             <span class="font-medium">Türk + ce</span> →
             <span class="font-medium"
               >Türk<strong class="text-primary">ç</strong></span
-            >e
-            — <em>Turkish</em>
+            >e — <em>Turkish</em>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -398,8 +424,7 @@
             <span class="font-medium">git + di</span> →
             <span class="font-medium"
               >git<strong class="text-primary">t</strong></span
-            >i
-            — <em>he/she went</em>
+            >i — <em>he/she went</em>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -410,8 +435,7 @@
             <span class="font-medium">(Bu bir) kitap + dir</span> →
             <span class="font-medium"
               >kitap<strong class="text-primary">t</strong></span
-            >ir
-            — <em>This is a book</em>
+            >ir — <em>This is a book</em>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -422,8 +446,7 @@
             <span class="font-medium">et + di</span> →
             <span class="font-medium"
               >et<strong class="text-primary">t</strong></span
-            >i
-            — <em>he/she did</em>
+            >i — <em>he/she did</em>
           </span>
         </li>
       </ul>

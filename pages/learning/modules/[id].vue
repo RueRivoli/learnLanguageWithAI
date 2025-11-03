@@ -16,11 +16,9 @@ const grammarRule = ref<GrammarRule | null>(null);
 
 const getGrammarRule = async () => {
   const headers = await getAuthToken();
-  const { data } = await useFetch(`/api/grammar/${route.params.id}`, 
-    {
-      headers,
-    }
-  );
+  const { data } = await useFetch(`/api/grammar/${route.params.id}`, {
+    headers,
+  });
   if (data) {
     grammarRule.value = parseRuleData(data.value);
     isLoading.value = false;
@@ -29,12 +27,9 @@ const getGrammarRule = async () => {
 
 const getlastQuizzes = async () => {
   const headers = await getAuthToken();
-  const { data } = await useFetch(
-    `/api/quizzes/rules/${route.params.id}`,
-    {
-      headers,
-    }
-  );
+  const { data } = await useFetch(`/api/quizzes/rules/${route.params.id}`, {
+    headers,
+  });
   if (data) {
     lastQuizzes.value = data.value?.map(({ id, created_at, score_global }) => ({
       id,
@@ -71,20 +66,21 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
       </div>
       <div v-else class="p-5">
         <div class="max-w-4xl mx-auto px-6">
-          <LayoutHeadingRuleTitle :rule="grammarRule" :main-title="true" >
+          <LayoutHeadingRuleTitle :rule="grammarRule" :main-title="true">
             <NuxtLink
-                to="/learning/modules"
-                class="btn btn-ghost font-semibold pl-8"
+              to="/learning/modules"
+              class="btn btn-ghost font-semibold pl-8"
               ><span>Back To Modules</span>
-                <ArrowLongRightIcon class="h-5 w-5" />
-              </NuxtLink>
+              <ArrowLongRightIcon class="h-5 w-5" />
+            </NuxtLink>
           </LayoutHeadingRuleTitle>
           <p v-html="sanitizedIntroTemplate" />
           <p v-html="sanitizedDescriptionTemplate" />
           <p v-html="sanitizedExtendedDescriptionTemplate" />
         </div>
         <!-- <RulesPresentContinuousTemplate /> -->
-          <!-- <RulesPreciseLocationTemplate /> -->
+        <!-- <RulesPreciseLocationTemplate /> -->
+        <!-- <RulesTestDesignTemplate /> -->
       </div>
     </div>
     <div class="col-span-3">

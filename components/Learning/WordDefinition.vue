@@ -19,14 +19,22 @@ const props = withDefaults(
 );
 
 const roles = computed(() => {
-  if (!props.word) return '';
-  return props.word?.role3 ? `${props.word?.role}, ${props.word?.role2}, ${props.word?.role3}` : props.word?.role2 ? `${props.word?.role}, ${props.word?.role2}` : props.word?.role;
+  if (!props.word) return "";
+  return props.word?.role3
+    ? `${props.word?.role}, ${props.word?.role2}, ${props.word?.role3}`
+    : props.word?.role2
+      ? `${props.word?.role}, ${props.word?.role2}`
+      : props.word?.role;
 });
 </script>
 
 <template>
   <div class="w-full">
-    <Disclosure v-slot="{ open }" as="div" class="bg-secondary m-auto max-w-full rounded-lg">
+    <Disclosure
+      v-slot="{ open }"
+      as="div"
+      class="bg-secondary m-auto max-w-full rounded-lg"
+    >
       <DisclosureButton
         class="cursor-pointer text-pretty flex items-center w-full justify-between rounded-lg text-neutral px-3 py-2 text-left text-sm font-medium hover:opacity-90 focus:outline-none focus-visible:ring focus-visible:primary/75"
       >

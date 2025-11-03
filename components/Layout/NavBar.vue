@@ -50,7 +50,10 @@ const showVoucherPromo = ref<boolean>(true);
         </NuxtLink>
       </div>
       <div class="navbar-end grow">
-        <NuxtLink class="flex items-center w-20" to="/authorization/auth/?toCreateAccount=false">
+        <NuxtLink
+          class="flex items-center w-20"
+          to="/authorization/auth/?toCreateAccount=false"
+        >
           <div class="flex-1 text-right">Log In</div>
           <ArrowLongRightIcon class="ml-2 h-5 w-5" />
         </NuxtLink>
@@ -105,12 +108,3 @@ const showVoucherPromo = ref<boolean>(true);
     </div> -->
   </div>
 </template>
-
-<style scoped>
-.logo {
-  font-family: "Tagesschrift", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-</style>
-

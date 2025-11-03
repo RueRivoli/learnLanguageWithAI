@@ -63,11 +63,11 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            For the owner suffix use:<br>
+            For the owner suffix use:<br />
             <code
               class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
               >-nın/nin/nun/nün</code
-            > 
+            >
             or
             <code
               class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
@@ -79,10 +79,10 @@
         </li>
         <li class="flex items-start gap-2 leading-relaxed">
           <span
-            class=" w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            For the owned item/person suffix use:<br>
+            For the owned item/person suffix use:<br />
             <code
               class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
               >-sı/si/su/sü</code
@@ -151,8 +151,7 @@
                 class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
               ></span>
               <span class=""
-                >Çocuğ<strong class="text-success">un</strong
-                >kalem<strong
+                >Çocuğ<strong class="text-success">un</strong>kalem<strong
                   class="text-success"
                   >i</strong
                 >
@@ -165,7 +164,6 @@
     </div>
     <br />
 
-
     <!-- Possesive pronouns -->
     <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
       <h2 class="text-lg font-semibold text-gray-900 mb-3">
@@ -177,11 +175,16 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            If you are using a pronoun such as<span>sen</span> (you) or <span>ben </span>(me) to talk about the owner of
-            something, you still mark that pronoun with the "owner" ending
+            If you are using a pronoun such as<span>sen</span> (you) or
+            <span>ben </span>(me) to talk about the owner of something, you
+            still mark that pronoun with the "owner" ending
             <span class="px-1">
-              <code class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm">‑nın</code>
-             </span> <br />
+              <code
+                class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
+                >‑nın</code
+              >
+            </span>
+            <br />
           </span>
         </li>
         <li class="flex items-start gap-2 leading-relaxed">
@@ -191,7 +194,12 @@
           <span>
             But the first person pronouns "ben" and "biz" get a slightly
             different "owner" ending
-            <span class="px-1"> <code class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm">‑ım</code></span>
+            <span class="px-1">
+              <code
+                class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
+                >‑ım</code
+              ></span
+            >
           </span>
         </li>
       </ul>
@@ -224,7 +232,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-smtext-gray-900">Benim (my)</span>
                   </div>
                 </td>
@@ -237,7 +245,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm text-gray-900">Senin (your)</span>
                   </div>
                 </td>
@@ -250,7 +258,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm text-gray-900"
                       >Onun (his/her/its)</span
                     >
@@ -265,7 +273,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm text-gray-900">Bizim (our)</span>
                   </div>
                 </td>
@@ -278,7 +286,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="text-sm text-gray-900"
                       >Sizin (your - plural)</span
                     >
@@ -294,7 +302,7 @@
               <tr class="hover:bg-primary/5 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
-                    <div class="w-2 h-2 bg-indigo-500 rounded-full mr-3" ></div>
+                    <div class="w-2 h-2 bg-indigo-500 rounded-full mr-3"></div>
                     <span class="text-sm text-gray-900">Onların (their)</span>
                   </div>
                 </td>
@@ -311,9 +319,8 @@
     </div>
     <br />
 
-
-     <!-- Careful -->
-     <div>
+    <!-- Careful -->
+    <div>
       <div class="flex items-center gap-2 mb-3">
         <svg
           class="w-5 h-5 text-amber-600"
@@ -328,18 +335,14 @@
             d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
           />
         </svg>
-        <h2 class="text-lg font-semibold text-gray-900">
-          Careful
-        </h2>
+        <h2 class="text-lg font-semibold text-gray-900">Careful</h2>
       </div>
 
       <div class="space-y-4">
         <!-- Proper Names -->
         <div class="border-l-4 border-amber-200 pl-4">
           <h3 class="font-semibold text-gray-900 mb-2">Proper Names</h3>
-          <p class="text-gray-700 text-sm mb-2">
-            In the table above:
-          </p>
+          <p class="text-gray-700 text-sm mb-2">In the table above:</p>
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
               <span
@@ -347,8 +350,9 @@
               ></span>
               <span>
                 <span class=""
-                  ><strong class="text-amber-600">ı/i/u/ü </strong>is added 
-                  only if preceded by a <strong class="text-amber-600">consonant</strong></span
+                  ><strong class="text-amber-600">ı/i/u/ü </strong>is added only
+                  if preceded by a
+                  <strong class="text-amber-600">consonant</strong></span
                 >
               </span>
             </li>
@@ -358,8 +362,9 @@
               ></span>
               <span>
                 <span class=""
-                  ><strong class="text-amber-600">s</strong> is added 
-                  only if preceded by a <strong class="text-amber-600">vowel</strong></span
+                  ><strong class="text-amber-600">s</strong> is added only if
+                  preceded by a
+                  <strong class="text-amber-600">vowel</strong></span
                 >
               </span>
             </li>
@@ -466,33 +471,33 @@
               <span
                 class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
               ></span>
-          <span>
-            <span class=""
-              >Benim anne<strong class="text-success">m</strong> bir
-              mimar</span
-            >
-            -
-            <em>My mother is an architect</em>
-          </span>
+              <span>
+                <span class=""
+                  >Benim anne<strong class="text-success">m</strong> bir
+                  mimar</span
+                >
+                -
+                <em>My mother is an architect</em>
+              </span>
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
               ></span>
-          <span>
-            <span class=""
-              >Bu ben<strong class="text-success">im</strong> oğlum</span
-            >
-            -
-            <em>This is my son</em>
-          </span>
-        </li>
+              <span>
+                <span class=""
+                  >Bu ben<strong class="text-success">im</strong> oğlum</span
+                >
+                -
+                <em>This is my son</em>
+              </span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
     <br />
-    
+
     <!-- Special Cases -->
     <div>
       <div class="flex items-center gap-2 mb-3">
@@ -516,12 +521,15 @@
 
       <div class="space-y-4">
         <div class="border-l-4 border-amber-200 pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">Voiceless consonants get impacted</h3>
+          <h3 class="font-semibold text-gray-900 mb-2">
+            Voiceless consonants get impacted
+          </h3>
           <p class="text-gray-700 text-sm mb-2">
             <code
               class="bg-white px-2 py-1 rounded border border-amber-200 text-neutral text-sm"
               >ç / p / t / k</code
-            >  are impacted as usual by adding a suffix starting with a vowel
+            >
+            are impacted as usual by adding a suffix starting with a vowel
           </p>
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
@@ -530,10 +538,11 @@
               ></span>
               <span>
                 <span class=""
-                  >Ara<strong class="text-amber-600">ç</strong> <em>(vehicule)</em> -> 
-                  Senin ara<strong class="text-amber-600">cın</strong>
-                  </span
-                >
+                  >Ara<strong class="text-amber-600">ç</strong>
+                  <em>(vehicule)</em> -> Senin ara<strong class="text-amber-600"
+                    >cın</strong
+                  >
+                </span>
                 -
                 <em>(your vehicule)</em>
               </span>
@@ -544,17 +553,19 @@
               ></span>
               <span>
                 <span class=""
-                  >Kâğı<strong class="text-amber-600">t</strong> <em>(paper)</em> -> 
-                  Çocu<strong class="text-amber-600">ğun</strong> kâğı<strong class="text-amber-600">dı</strong>
-                  </span
-                >
+                  >Kâğı<strong class="text-amber-600">t</strong>
+                  <em>(paper)</em> -> Çocu<strong class="text-amber-600"
+                    >ğun</strong
+                  >
+                  kâğı<strong class="text-amber-600">dı</strong>
+                </span>
                 -
                 <em>(the child's paper)</em>
               </span>
             </li>
           </ul>
         </div>
-       
+
         <!-- Proper Names -->
         <div class="border-l-4 border-amber-200 pl-4">
           <h3 class="font-semibold text-gray-900 mb-2">Proper Names</h3>
@@ -604,28 +615,41 @@
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
-              <span><span class="px-1">izin <em>(permission)</em> → benim <strong
-                    class="text-amber-600"
-                    >iznim</strong
-                  > - <em>(my permission)</em></span></span>
+              <span
+                ><span class="px-1"
+                  >izin <em>(permission)</em> → benim
+                  <strong class="text-amber-600">iznim</strong> -
+                  <em>(my permission)</em></span
+                ></span
+              >
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
-              <span><span class="px-1">oğul <em>(son)</em> → Onun<strong
-                    class="text-amber-600"
-                    > oğlu </strong
-                  > - <em>(his/her son)</em></span></span>
+              <span
+                ><span class="px-1"
+                  >oğul <em>(son)</em> → Onun<strong class="text-amber-600">
+                    oğlu
+                  </strong>
+                  - <em>(his/her son)</em></span
+                ></span
+              >
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
-              <span><span class="px-1">şehir <em>(city)</em> → (bizim)<strong
+              <span
+                ><span class="px-1"
+                  >şehir <em>(city)</em> → (bizim)<strong
                     class="text-amber-600"
-                    > şehrimiz</strong
-                  > - <em>(our city)</em></span></span>
+                  >
+                    şehrimiz</strong
+                  >
+                  - <em>(our city)</em></span
+                ></span
+              >
             </li>
           </ul>
         </div>
@@ -640,7 +664,8 @@
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              > </span>
+              >
+              </span>
               <span
                 ><span class="">Bizim mahalle</span> -
                 <em>Our neighborhood</em></span
@@ -649,7 +674,8 @@
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              > </span>
+              >
+              </span>
               <span
                 ><span class="">Bizim annem</span> - <em>Our mother</em></span
               >
@@ -671,10 +697,10 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
               <span
-                ><span class="px-1">hat → hat<strong
-                    class="text-amber-600"
-                    >tım</strong
-                  > </span> - <em>my line</em></span
+                ><span class="px-1"
+                  >hat → hat<strong class="text-amber-600">tım</strong>
+                </span>
+                - <em>my line</em></span
               >
             </li>
             <li class="flex items-start gap-2">
@@ -682,11 +708,10 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
               <span
-                ><span class="px-1">hak → hak<strong
-                    class="text-amber-600"
-                    >kın</strong
-                  > </span> -
-                <em>your right</em></span
+                ><span class="px-1"
+                  >hak → hak<strong class="text-amber-600">kın</strong>
+                </span>
+                - <em>your right</em></span
               >
             </li>
           </ul>
@@ -699,33 +724,33 @@
             A few Turkish words repeat the vowel instead of adding an s
           </p>
           <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span
-                ><span class="px-1">
-                  cami <em>(mosque)</em> → mahallenin cami<strong
-                    class="text-amber-600"
-                    >i</strong
-                  ></span
-                >
-                - <em>(the neighborhood's mosque)</em></span
+            <span
+              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+            ></span>
+            <span
+              ><span class="px-1">
+                cami <em>(mosque)</em> → mahallenin cami<strong
+                  class="text-amber-600"
+                  >i</strong
+                ></span
               >
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span
-                ><span class="px-1">
-                  mevzu <em>(topic)</em> → kavganın mevzu<strong
-                    class="text-amber-600"
-                    >u</strong
-                  ></span
-                >
-                - <em>(the topic of the fight)</em></span
+              - <em>(the neighborhood's mosque)</em></span
+            >
+          </li>
+          <li class="flex items-start gap-2">
+            <span
+              class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
+            ></span>
+            <span
+              ><span class="px-1">
+                mevzu <em>(topic)</em> → kavganın mevzu<strong
+                  class="text-amber-600"
+                  >u</strong
+                ></span
               >
-            </li>
+              - <em>(the topic of the fight)</em></span
+            >
+          </li>
         </div>
 
         <!-- NK to NG -->
@@ -739,11 +764,12 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
               <span
-                ><span class="px-1">renk <em>(color)</em> → ren<strong
-                    class="text-amber-600"
+                ><span class="px-1"
+                  >renk <em>(color)</em> → ren<strong class="text-amber-600"
                     >g</strong
-                  >im</span> -
-                <em>(my color)</em></span
+                  >im</span
+                >
+                - <em>(my color)</em></span
               >
             </li>
           </ul>
@@ -763,11 +789,13 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               ></span>
               <span
-                ><span class="px-1">su <em>(water)</em>→ banyonun su<strong
+                ><span class="px-1"
+                  >su <em>(water)</em>→ banyonun su<strong
                     class="text-amber-600"
                     >y</strong
-                  >u</span> -
-                <em>(the bath's water)</em></span
+                  >u</span
+                >
+                - <em>(the bath's water)</em></span
               >
             </li>
           </ul>

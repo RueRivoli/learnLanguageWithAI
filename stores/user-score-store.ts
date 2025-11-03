@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
-import type { UserScore, VocabularyScore, GrammarScores } from "~/types/users/score";
+import type {
+  UserScore,
+  VocabularyScore,
+  GrammarScores,
+} from "~/types/users/score";
 import { getAuthToken } from "~/utils/auth/auth";
 
 export const useUserScoreStore = defineStore("user-score", {
@@ -16,18 +20,21 @@ export const useUserScoreStore = defineStore("user-score", {
     };
   },
   actions: {
-    async setCount () {
+    async setCount() {
       const headers = await getAuthToken();
-      const { count: totalWords }= await $fetch('/api/words/count/', {
+      const { count: totalWords } = await $fetch("/api/words/count/", {
         method: "GET",
         headers,
       });
-      const { count: totalExpressions } = await $fetch('/api/expressions/count/', {
-        method: "GET",
-        headers,
-      });
-      this.totalWords = totalWords
-      this.totalExpressions = totalExpressions
+      const { count: totalExpressions } = await $fetch(
+        "/api/expressions/count/",
+        {
+          method: "GET",
+          headers,
+        },
+      );
+      this.totalWords = totalWords;
+      this.totalExpressions = totalExpressions;
     },
     setScores(grammarScores: GrammarScores, vocabScores: VocabularyScore) {
       this.isLoaded = true;
@@ -52,7 +59,7 @@ export const useUserScoreStore = defineStore("user-score", {
           symbol: turkish_grammar_rules.symbol,
           difficultyClass: turkish_grammar_rules.difficulty_class,
         }),
-      )
+      );
       const vocabScores = scores.vocabScores.data.map(
         ({
           expressions_learned_count,
@@ -78,18 +85,20 @@ export const useUserScoreStore = defineStore("user-score", {
     },
     async setGrammarScores(userId: string) {
       // Récupérer le token d'authentification
-      const { data: { session } } = await useSupabaseClient().auth.getSession()
-      
+      const {
+        data: { session },
+      } = await useSupabaseClient().auth.getSession();
+
       if (!session?.access_token) {
-        console.error('No access token found')
-        return
+        console.error("No access token found");
+        return;
       }
-      
+
       const scores = await $fetch(`/api/general-scores/${userId}`, {
         method: "GET",
         headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
       const grammarScores = scores.grammarScores.data.map(
         ({ rule_id, score, turkish_grammar_rules }) => ({
@@ -104,20 +113,21 @@ export const useUserScoreStore = defineStore("user-score", {
       this.rulesScores = grammarScores;
     },
     async setVocabularyScores(userId: string) {
-      
       // Récupérer le token d'authentification
-      const { data: { session } } = await useSupabaseClient().auth.getSession()
-      
+      const {
+        data: { session },
+      } = await useSupabaseClient().auth.getSession();
+
       if (!session?.access_token) {
-        console.error('No access token found')
-        return
+        console.error("No access token found");
+        return;
       }
-      
+
       const scores = await $fetch(`/api/general-scores/${userId}`, {
         method: "GET",
         headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
       const vocabScores = scores.vocabScores.data.map(
         ({
@@ -130,54 +140,132 @@ export const useUserScoreStore = defineStore("user-score", {
           totalWordsLearned: words_learned_count,
           totalExpressionsMastered: expressions_mastered_count,
           totalExpressionsLearned: expressions_learned_count,
-        }))
+        }),
+      );
       const score = vocabScores[0] || {};
       this.isLoaded = true;
       this.totalWordsMastered = score.totalWordsMastered;
       this.totalWordsLearned = score.totalWordsLearned;
       this.totalExpressionsMastered = score.totalExpressionsMastered;
       this.totalExpressionsLearned = score.totalExpressionsLearned;
-    }
+    },
   },
   getters: {
     advancedGrammarRulesInfo(state: UserScore): Array<any> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 3).map(({difficultyClass, ruleNameEn, ruleId, ruleName, score, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, ruleName, score, symbol})) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 3)
+          .map(
+            ({
+              difficultyClass,
+              ruleNameEn,
+              ruleId,
+              ruleName,
+              score,
+              symbol,
+            }) => ({
+              ruleNameTranslation: ruleNameEn,
+              difficultyClass,
+              ruleId,
+              ruleName,
+              score,
+              symbol,
+            }),
+          ) ?? []
+      );
     },
     beginnerGrammarRulesInfo(state: UserScore): Array<any> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({difficultyClass, ruleNameEn, ruleId, score, ruleName, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, score, ruleName, symbol})) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 1)
+          .map(
+            ({
+              difficultyClass,
+              ruleNameEn,
+              ruleId,
+              score,
+              ruleName,
+              symbol,
+            }) => ({
+              ruleNameTranslation: ruleNameEn,
+              difficultyClass,
+              ruleId,
+              score,
+              ruleName,
+              symbol,
+            }),
+          ) ?? []
+      );
     },
     intermediateGrammarRulesInfo(state: UserScore): Array<any> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({difficultyClass, ruleNameEn, ruleId, ruleName, score, symbol }) => ({ruleNameTranslation: ruleNameEn, difficultyClass, ruleId, ruleName, score, symbol})) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 2)
+          .map(
+            ({
+              difficultyClass,
+              ruleNameEn,
+              ruleId,
+              ruleName,
+              score,
+              symbol,
+            }) => ({
+              ruleNameTranslation: ruleNameEn,
+              difficultyClass,
+              ruleId,
+              ruleName,
+              score,
+              symbol,
+            }),
+          ) ?? []
+      );
     },
     beginnerGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 1).map(({ruleScore, ruleId}) => ({ruleId, ruleScore})) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 1)
+          .map(({ ruleScore, ruleId }) => ({ ruleId, ruleScore })) ?? []
+      );
     },
     intermediateGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 2).map(({ruleScore}) => ruleScore) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 2)
+          .map(({ ruleScore }) => ruleScore) ?? []
+      );
     },
     advancedGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 3).map(({ruleScore}) => ruleScore) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 3)
+          .map(({ ruleScore }) => ruleScore) ?? []
+      );
     },
     expertGrammarRulesScores(state: UserScore): Array<number> {
-      return state.rulesScores?.filter((rule) => rule.difficultyClass === 4).map(({ruleScore}) => ruleScore) ?? [];
+      return (
+        state.rulesScores
+          ?.filter((rule) => rule.difficultyClass === 4)
+          .map(({ ruleScore }) => ruleScore) ?? []
+      );
     },
     totalWordsMasteredInPercentage(state: UserScore): string {
       const totalWords = state.totalWords ?? 0;
       const totalWordsMastered = state.totalWordsMastered ?? 0;
-            
-      if (totalWords === 0) return '0.0';
-      
+
+      if (totalWords === 0) return "0.0";
+
       // Calculer le pourcentage exact : (mots maîtrisés / total mots) * 100
       const percentage = (totalWordsMastered / totalWords) * 100;
-      
+
       // Garder exactement 1 chiffre après la virgule sans arrondi
       return percentage.toFixed(1);
     },
     totalExpressionsMasteredInPercentage(state: UserScore): string {
       const totalExpressions = state.totalExpressions ?? 0;
 
-      if (totalExpressions === 0) return '0.0';
-      const percentage = ((state.totalExpressionsMastered ?? 0) / totalExpressions) * 100;
+      if (totalExpressions === 0) return "0.0";
+      const percentage =
+        ((state.totalExpressionsMastered ?? 0) / totalExpressions) * 100;
       return percentage.toFixed(1);
     },
     totalWordsInK(state: UserScore): string {
@@ -193,7 +281,7 @@ export const useUserScoreStore = defineStore("user-score", {
           ((state.totalExpressions ?? 0) - nbK * 1000) / 100,
         );
         return nbKCent !== 0 ? `${nbK}${nbKCent} K` : `${nbK} K`;
-      } else return state.totalExpressions?.toString() ?? '';
+      } else return state.totalExpressions?.toString() ?? "";
     },
   },
 });

@@ -46,7 +46,7 @@ watchEffect(async () => {
           method: "POST",
           headers,
           body: {
-            language_learned: 'tr',
+            language_learned: "tr",
           },
         });
       }
@@ -87,62 +87,64 @@ getInfoUser();
     <!-- Content -->
     <div class="relative z-10 rounded-lg p-5">
       <div class="max-w-7xl mx-auto">
-      <!-- Header Section -->
-      <div class="mb-4">
-        <div class="flex items-center justify-between">
-          <LayoutHeadingPlus
-            title="Progress on Vocabulary"
-            description="Your Knowledge on the Most Important Vocabulary in Turkish"
-          >
-            <ChartBarIcon class="h-6 w-6 text-primary" />
-          </LayoutHeadingPlus>
-          <LayoutTabs
-            :first-tab="dashboardCategoryTabs.firstTab"
-            :second-tab="dashboardCategoryTabs.secondTab"
-            :third-tab="dashboardCategoryTabs.thirdTab"
-            @tab-active-changed="(activeT: number) => (activeTab = activeT)"
-          />
+        <!-- Header Section -->
+        <div class="mb-4">
+          <div class="flex items-center justify-between">
+            <LayoutHeadingPlus
+              title="Progress on Vocabulary"
+              description="Your Knowledge on the Most Important Vocabulary in Turkish"
+            >
+              <ChartBarIcon class="h-6 w-6 text-primary" />
+            </LayoutHeadingPlus>
+            <LayoutTabs
+              :first-tab="dashboardCategoryTabs.firstTab"
+              :second-tab="dashboardCategoryTabs.secondTab"
+              :third-tab="dashboardCategoryTabs.thirdTab"
+              @tab-active-changed="(activeT: number) => (activeTab = activeT)"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- Stats Highlights Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Stats Highlights Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <template v-if="activeTab === 1">
+            <DashboardGeneralStatsHighlights
+              :pseudo="userStore.$state.pseudo"
+            />
+          </template>
+          <template v-else-if="activeTab === 2">
+            <DashboardVocabularyStatsHighlights />
+          </template>
+          <template v-else>
+            <DashboardGrammarStatsHighlights />
+          </template>
+        </div>
+
+        <!-- Charts Section -->
         <template v-if="activeTab === 1">
-          <DashboardGeneralStatsHighlights :pseudo="userStore.$state.pseudo" />
+          <DashboardGeneralStats />
         </template>
         <template v-else-if="activeTab === 2">
-          <DashboardVocabularyStatsHighlights />
+          <DashboardVocabularyStats />
         </template>
-        <template v-else>
-          <DashboardGrammarStatsHighlights />
+        <template v-else-if="activeTab === 3">
+          <!-- <DashboardGrammarStats /> -->
+          <DashboardGeneralStats />
         </template>
       </div>
 
-      <!-- Charts Section -->
-      <template v-if="activeTab === 1">
-        <DashboardGeneralStats />
-      </template>
-      <template v-else-if="activeTab === 2">
-        <DashboardVocabularyStats />
-      </template>
-      <template v-else-if="activeTab === 3">
-        <!-- <DashboardGrammarStats /> -->
-        <DashboardGeneralStats />
-      </template>
-    </div>
-
-    <!-- Modals -->
-    <!-- TODO: Uncomment this when the language selection is ready -->
-    <!-- <AccountSelectionLanguageModal
+      <!-- Modals -->
+      <!-- TODO: Uncomment this when the language selection is ready -->
+      <!-- <AccountSelectionLanguageModal
       ref="languageSelectionModal"
       :user-id="user?.id"
       @language-updated="(profile) => handleLanguageUpdated(profile)"
     /> -->
-    <AccountPseudoDefinitionModal
-      ref="pseudoDefinitionModal"
-      :user-id="user?.id"
-      :full-name="user?.user_metadata?.full_name || ''"
-    />
+      <AccountPseudoDefinitionModal
+        ref="pseudoDefinitionModal"
+        :user-id="user?.id"
+        :full-name="user?.user_metadata?.full_name || ''"
+      />
     </div>
   </div>
 </template>
@@ -167,8 +169,13 @@ getInfoUser();
 
 /* Very subtle pattern animation */
 @keyframes subtle-shift {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(2px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2px);
+  }
 }
 
 .absolute.inset-0.opacity-5 {

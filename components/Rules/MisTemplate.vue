@@ -26,8 +26,9 @@
         <div>
           <p class="text-white/90 leading-relaxed font-semibold">
             In addition to the standard past tense suffix ‑dı, Turkish also uses
-            the suffix -mış to express a <span class="underline">mışdifferent
-            kind of past action</span>. Let's have a look to discover this very widely used past form
+            the suffix -mış to express a
+            <span class="underline">mışdifferent kind of past action</span>.
+            Let's have a look to discover this very widely used past form
           </p>
         </div>
       </div>
@@ -91,7 +92,7 @@
         </svg>
 
         <h2 class="text-lg font-semibold text-gray-900">
-            How to Form a Verb With -Mış ?
+          How to Form a Verb With -Mış ?
         </h2>
       </div>
 
@@ -116,7 +117,7 @@
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >-mış / -miş / -muş / -müş</code
             >
-             based on  <strong> i-type vowel harmony</strong>
+            based on <strong> i-type vowel harmony</strong>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -124,7 +125,8 @@
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
           <span>
-            <strong>Step 3:</strong> Add the personal suffix according to the vowel harmony
+            <strong>Step 3:</strong> Add the personal suffix according to the
+            vowel harmony
           </span>
         </li>
       </ul>
@@ -161,7 +163,8 @@
               ></span>
               <span>
                 <span class=""
-                  >değişmek <em>(to change)</em> -> sen çok değiş<strong class="text-success"
+                  >değişmek <em>(to change)</em> -> sen çok değiş<strong
+                    class="text-success"
                     >mişsin</strong
                   >
                 </span>
@@ -174,7 +177,8 @@
               ></span>
               <span>
                 <span class=""
-                  >yaşamak <em>(to live)</em> -> o burada yaşa<strong class="text-success"
+                  >yaşamak <em>(to live)</em> -> o burada yaşa<strong
+                    class="text-success"
                     >mış</strong
                   >
                 </span>
@@ -187,7 +191,8 @@
               ></span>
               <span>
                 <span class=""
-                  >evlenmek <em>(to get married)</em> -> Ayşe evlen<strong class="text-success"
+                  >evlenmek <em>(to get married)</em> -> Ayşe evlen<strong
+                    class="text-success"
                     >miş</strong
                   >
                 </span>
@@ -200,7 +205,7 @@
     </div>
     <!-- End Exemples section -->
     <br />
-   
+
     <!-- 
         Many usages section -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
@@ -223,7 +228,8 @@
         <h2 class="text-lg font-semibold text-gray-900">Many usages</h2>
       </div>
       <p class="font-semibold text-gray-700 mb-3">
-        The ‑mış suffix has a variety of uses in Turkish. Let’s explore some of the most common ones:
+        The ‑mış suffix has a variety of uses in Turkish. Let’s explore some of
+        the most common ones:
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -236,8 +242,9 @@
             <span class="font-medium"
               >Öğretmenin öğlu kaza geçir<strong class="text-primary"
                 >miş
-              </strong> </span
-            > -
+              </strong>
+            </span>
+            -
             <em>the teacher's son got an accident (I heard about it)</em>
           </div>
         </div>
@@ -248,8 +255,9 @@
           </p>
           <div class="text-gray-700">
             <span class="font-medium"
-              >Bak !  Can gel<strong class="text-primary">miş! </strong> </span
-            > -
+              >Bak ! Can gel<strong class="text-primary">miş! </strong>
+            </span>
+            -
             <em>look, Can came!</em>
           </div>
         </div>
@@ -260,16 +268,18 @@
           </p>
           <div class="text-gray-700">
             <span class="font-medium"
-              >Saçların çok güzel ol<strong class="text-primary">muş</strong>
-            </span>!
-            -
+              >Saçların çok güzel ol<strong class="text-primary"
+                >muş</strong
+              > </span
+            >! -
             <em>your hair looks beautiful!</em>
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">For Stories</h3>
           <p class="font-medium text-gray-900 mb-2">
-            In many fairy tales, the ‑mış ending is used to signal that the story is fictional
+            In many fairy tales, the ‑mış ending is used to signal that the
+            story is fictional
           </p>
           <div class="text-gray-700">
             <span class="font-medium"
@@ -280,7 +290,9 @@
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-          <h3 class="font-medium text-primary">Turn a verb into an adjective</h3>
+          <h3 class="font-medium text-primary">
+            Turn a verb into an adjective
+          </h3>
           <p class="font-medium text-gray-900 mb-2">
             Associated to a noun, it takes the role of an adjective
           </p>
@@ -295,7 +307,8 @@
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Talking to a baby</h3>
           <p class="font-medium text-gray-900 mb-2">
-            ‑miş implies that the speaker noticed or found out something — perfect for babies who can’t directly report their actions
+            ‑miş implies that the speaker noticed or found out something —
+            perfect for babies who can’t directly report their actions
           </p>
           <div class="text-gray-700">
             <span class="font-medium"

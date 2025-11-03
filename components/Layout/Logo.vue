@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="text-xl px-3 font-bold logo">
+  <div class="text-xl px-3 font-bold">
     <NuxtLink to="/">
       <img
         alt="LinguaLab Logo"
@@ -11,5 +11,3 @@
     </NuxtLink>
   </div>
 </template>
-
-<!-- LinguaForge Weak2Woke SkillDrill FluencyFix LinguaLab FluentEdge LanguageRx GapHunter TargetLingua FocusLingua -->

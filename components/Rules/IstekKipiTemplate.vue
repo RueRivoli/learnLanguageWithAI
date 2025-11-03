@@ -3,7 +3,9 @@
     <!-- Header -->
     <div class="border-b border-gray-200 pb-4">
       <div class="flex items-start gap-3">
-        <div class="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+        <div
+          class="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1"
+        >
           <svg
             class="w-5 h-5 text-primary"
             fill="none"
@@ -19,9 +21,12 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-2xl font-bold text-gray-900 mb-2">İstek Kipi - Optative Mood</h1>
+          <h1 class="text-2xl font-bold text-gray-900 mb-2">
+            İstek Kipi - Optative Mood
+          </h1>
           <p class="text-gray-700 leading-relaxed">
-            The optative mood is used to express wishes, desires, or polite requests in Turkish.
+            The optative mood is used to express wishes, desires, or polite
+            requests in Turkish.
           </p>
         </div>
       </div>
@@ -29,25 +34,36 @@
 
     <!-- How to Form -->
     <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
-      <h2 class="text-lg font-semibold text-gray-900 mb-3">How to Form the Optative Mood</h2>
+      <h2 class="text-lg font-semibold text-gray-900 mb-3">
+        How to Form the Optative Mood
+      </h2>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <strong>Step 1:</strong> Take the verb stem (remove <code class="bg-white px-2 py-1 rounded border text-sm">-mak/-mek</code>)
+            <strong>Step 1:</strong> Take the verb stem (remove
+            <code class="bg-white px-2 py-1 rounded border text-sm"
+              >-mak/-mek</code
+            >)
           </span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <strong>Step 2:</strong> Add <code class="bg-white px-2 py-1 rounded border text-sm">-e/-a</code> based on vowel harmony
+            <strong>Step 2:</strong> Add
+            <code class="bg-white px-2 py-1 rounded border text-sm">-e/-a</code>
+            based on vowel harmony
           </span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-          <span>
-            <strong>Step 3:</strong> Add personal endings
-          </span>
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          />
+          <span> <strong>Step 3:</strong> Add personal endings </span>
         </li>
       </ul>
     </div>
@@ -57,15 +73,21 @@
       <h2 class="text-lg font-semibold text-gray-900 mb-3">Examples</h2>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <span class="font-medium">Gelesin.</span> - <em>May you come. / I hope you come.</em>
+            <span class="font-medium">Gelesin.</span> -
+            <em>May you come. / I hope you come.</em>
           </span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+          <span
+            class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"
+          />
           <span>
-            <span class="font-medium">Başarılı olasın.</span> - <em>May you be successful.</em>
+            <span class="font-medium">Başarılı olasın.</span> -
+            <em>May you be successful.</em>
           </span>
         </li>
       </ul>

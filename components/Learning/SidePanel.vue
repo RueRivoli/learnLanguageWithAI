@@ -6,7 +6,7 @@ const progressData = {
   improvement: 15,
   skill: "Vowel Harmony",
   streak: 7,
-  totalLessons: 24
+  totalLessons: 24,
 };
 </script>
 
@@ -16,11 +16,15 @@ const progressData = {
       <!-- Header -->
       <div class="p-5 py-4 border-b border-gray-100">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+          <div
+            class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center"
+          >
             <ChartBarIcon class="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h3 class="text-lg font-semibold text-gray-900">Learning Progress</h3>
+            <h3 class="text-lg font-semibold text-gray-900">
+              Learning Progress
+            </h3>
             <p class="text-sm text-gray-600">Your recent achievements</p>
           </div>
         </div>
@@ -78,7 +82,7 @@ const progressData = {
                 Keep up the great work!
               </p>
               <p class="text-xs text-gray-600 leading-relaxed">
-                Start improving your skills. 
+                Start improving your skills.
               </p>
             </div>
           </div>

@@ -26,9 +26,9 @@ const selectedRule = ref(grammarRules[0]);
     <Listbox v-model="selectedRule">
       <div class="relative mt-1">
         <ListboxButton
-          class="relative w-full cursor-default rounded-lg dark:bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+          class="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
         >
-          <span class="block truncate dark:text-indigo:500">{{
+          <span class="block truncate text-indigo-500">{{
             selectedRule.name
           }}</span>
           <span

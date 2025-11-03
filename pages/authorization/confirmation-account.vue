@@ -7,7 +7,7 @@ import {
 
 definePageMeta({
   layout: "auth",
-}); 
+});
 
 const route = useRoute();
 const client = useSupabaseClient();
@@ -35,7 +35,9 @@ const handleConfirmationMailResend = async () => {
 </script>
 
 <template>
-  <div class="bg-neutral/10 h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center">
+  <div
+    class="bg-neutral/10 h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center"
+  >
     <div class="w-full flex flex-col justify-center items-center">
       <div v-if="route.query.error" role="alert" class="alert alert-error">
         <XCircleIcon class="h-5 w-5 text-neutral group-hover:text-indigo-800" />

@@ -1,13 +1,19 @@
 // Example `tailwind.config.js` file
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+const config: Config & { daisyui?: any; safelist?: any[] } = {
   content: [
-    "./src/pages/**/*.{js, ts, jsx, tsx, mdx}",
-    "./src/components/**/*.{js, ts, jsx, tsx, mdx}",
-    "./src/app/**/*.{js, ts, jsx, tsx, mdx}",
+    "./components/**/*.{js,vue,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./plugins/**/*.{js,ts}",
+    "./app.vue",
   ],
   darkMode: "class",
+  daisyui: {
+    themes: ["light"], // Force uniquement le thème light
+    darkTheme: "light", // Même en mode sombre, utilise le thème light
+  },
   theme: {
     fontFamily: {
         sans: ["Graphik", "sans-serif"],
@@ -26,13 +32,29 @@ const config: Config = {
       },
     },
   },
-  variants: {
-    darkMode: "class",
-    extend: {
-      borderColor: ["focus-visible"],
-      opacity: ["disabled"],
+  safelist: [
+    // Safelister des classes spécifiques
+    'bg-warning/30',
+    'bg-warning/10',
+    'border-warning/10',
+    'border-warning/20',
+    'bg-neutral/10',
+    'bg-neutral/30',
+    'bg-base-200', 
+    
+    // Ou utiliser un pattern pour plusieurs variantes
+    {
+      pattern: /bg-(warning|error|success|info)\/(10|20|30|40|50)/,
+      variants: ['hover', 'focus'],
     },
-  },
+  ],
+  // variants: {
+  //   darkMode: "class",
+  //   extend: {
+  //     borderColor: ["focus-visible"],
+  //     opacity: ["disabled"],
+  //   },
+  // },
 };
 
 export default config;

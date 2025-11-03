@@ -16,7 +16,8 @@ const faqs = [
   },
   {
     question: "How much does it cost ?",
-    answer: "You get free credits when you join. After that, you can buy credits to use the platform. See prices in the settings page after logging in.",
+    answer:
+      "You get free credits when you join. After that, you can buy credits to use the platform. See prices in the settings page after logging in.",
   },
   {
     question: "How can I have access to the platform ?",
@@ -36,15 +37,17 @@ function toggle(index) {
   <section class="bg-neutral/10 relative px-4 py-20">
     <div class="absolute inset-0 z-[-1]" />
     <div
-      class="absolute inset-0 z-[-2] bg-cover overflow-hidden bg-top bg-no-repeat opacity-20 dark:opacity-80 bg-[url('/_nuxt/assets/img/grid/home.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
+      class="absolute inset-0 z-[-2] bg-cover overflow-hidden bg-top bg-no-repeat opacity-20 bg-[url('/_nuxt/assets/img/grid/home.png')] bg-[length:min(100%,100%)] [mask-image:radial-gradient(ellipse_at_center,rgba(0,0,0,0.6)_30%,black_80%)]"
     />
     <div class="max-w-7xl mx-auto grid grid-cols-3 gap-8 items-center">
       <div class="col-span-1">
-        <Vue3Lottie
-          :animation-data="toucanLogoAnimation"
-          :height="400"
-          :width="400"
-        />
+        <ClientOnly>
+          <Vue3Lottie
+            :animation-data="toucanLogoAnimation"
+            :height="400"
+            :width="400"
+          />
+        </ClientOnly>
       </div>
       <div class="col-span-2 relative z-10">
         <h2

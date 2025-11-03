@@ -61,6 +61,6 @@ const props = withDefaults(
         </p>
       </div>
     </div>
-    <slot/>
+    <slot />
   </div>
 </template>

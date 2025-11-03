@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
@@ -9,14 +10,14 @@ export default defineNuxtConfig({
       pathPrefix: true,
     },
   ],
-  debug: process.env.NODE_ENV === 'development',
-  devtools: { enabled: process.env.NODE_ENV === 'development' },
+  debug: process.env.NODE_ENV === "development",
+  devtools: { enabled: process.env.NODE_ENV === "development" },
   echarts: {
-    renderer: 'canvas',
+    renderer: "canvas",
   },
+  
   modules: [
     "@nuxt/eslint",
-    "@nuxt/ui",
     "@nuxt/devtools",
     "@nuxtjs/supabase",
     "@compodium/nuxt",
@@ -25,7 +26,7 @@ export default defineNuxtConfig({
     "nuxt-echarts",
   ],
   nitro: {
-    preset: 'vercel'
+    preset: "vercel",
   },
   runtimeConfig: {
     // Variables privées (serveur uniquement)
@@ -33,13 +34,18 @@ export default defineNuxtConfig({
     openaiApiUrl: process.env.OPENAI_API_URL,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     serviceSupabaseKey: process.env.SERVICE_SUPABASE_ANON_KEY,
-    
+
     // Variables publiques (client) - Sécurisées par RLS
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseKey: process.env.SUPABASE_ANON_KEY,
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       hCaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY,
+    },
+  },
+  postcss: {
+    plugins: {
+      '@tailwindcss/postcss': {},
     },
   },
   supabase: {
@@ -56,8 +62,8 @@ export default defineNuxtConfig({
     // Génération automatique des types
     typegen: {
       enabled: true,
-      outputPath: 'supabase/types.ts'
-    }
+      outputPath: "supabase/types.ts",
+    },
   },
   stripe: {
     // Server
@@ -79,20 +85,52 @@ export default defineNuxtConfig({
   ssr: true,
   app: {
     head: {
+      htmlAttrs: {
+        "data-theme": "light",
+      },
       link: [
         // Standard favicons
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "16x16",
+          href: "/favicon-16x16.png",
+        },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "32x32",
+          href: "/favicon-32x32.png",
+        },
         // Apple touch icon
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        {
+          rel: "apple-touch-icon",
+          sizes: "180x180",
+          href: "/apple-touch-icon.png",
+        },
         // Android Chrome icons
-        { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-chrome-192x192.png' },
-        { rel: 'icon', type: 'image/png', sizes: '512x512', href: '/android-chrome-512x512.png' },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "192x192",
+          href: "/android-chrome-192x192.png",
+        },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "512x512",
+          href: "/android-chrome-512x512.png",
+        },
         // Web manifest
-        { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: "manifest", href: "/site.webmanifest" },
       ],
     },
+  },
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
   },
   // typescript: {
   //   typeCheck: true,

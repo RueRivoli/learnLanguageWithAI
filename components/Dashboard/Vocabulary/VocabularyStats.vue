@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { optionExpressions, optionWords } from "~/utils/dashboard/graphOptions";
 import { useUserScoreStore } from "~/stores/user-score-store";
-import { BookOpenIcon, LanguageIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
+import {
+  BookOpenIcon,
+  LanguageIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/vue/24/outline";
 import { getAuthToken } from "~/utils/auth/auth";
 const userScoreStore = useUserScoreStore();
 
@@ -13,22 +18,26 @@ const wordsPerBatch = 500;
 const totalWords = computed(() => userScoreStore.$state.totalWords || 0);
 
 // Calculate total batches
-const totalBatches = computed(() => Math.ceil(totalWords.value / wordsPerBatch));
+const totalBatches = computed(() =>
+  Math.ceil(totalWords.value / wordsPerBatch),
+);
 
 // Calculate how many squares to show in current batch
 const currentBatchSize = computed(() => {
-  const remainingWords = totalWords.value - (currentBatch.value * wordsPerBatch);
+  const remainingWords = totalWords.value - currentBatch.value * wordsPerBatch;
   return Math.min(wordsPerBatch, remainingWords);
 });
 
 // Store for actual words data
-const wordsData = ref<Array<{id: number, text: string, translation: string, isMastered: boolean}>>([]);
+const wordsData = ref<
+  Array<{ id: number; text: string; translation: string; isMastered: boolean }>
+>([]);
 const isLoadingWords = ref(false);
 
 // Fetch words for current batch
 const fetchWordsForBatch = async () => {
   if (isLoadingWords.value) return;
-  
+
   isLoadingWords.value = true;
   try {
     const page = Math.floor((currentBatch.value * wordsPerBatch) / 500) + 1;
@@ -40,29 +49,33 @@ const fetchWordsForBatch = async () => {
       // Map the fetched words to our grid format
       const startIndex = currentBatch.value * wordsPerBatch;
       const endIndex = Math.min(startIndex + wordsPerBatch, totalWords.value);
-      
-      wordsData.value = Array.from({ length: currentBatchSize.value }, (_, i) => {
-        const wordIndex = startIndex + i + 1;
-        const wordData = data[i] || null;
-        
-        return {
-          id: wordIndex,
-          text: wordData?.text || `Word ${wordIndex}`,
-          translation: wordData?.translation || '',
-          isMastered: wordData?.turkish_words_knowledge[0]?.word_mastered ?? false
-        };
-      });
+
+      wordsData.value = Array.from(
+        { length: currentBatchSize.value },
+        (_, i) => {
+          const wordIndex = startIndex + i + 1;
+          const wordData = data[i] || null;
+
+          return {
+            id: wordIndex,
+            text: wordData?.text || `Word ${wordIndex}`,
+            translation: wordData?.translation || "",
+            isMastered:
+              wordData?.turkish_words_knowledge[0]?.word_mastered ?? false,
+          };
+        },
+      );
     }
   } catch (error) {
-    console.error('Error fetching words:', error);
+    console.error("Error fetching words:", error);
     // Fallback to original behavior
     wordsData.value = Array.from({ length: currentBatchSize.value }, (_, i) => {
       const wordIndex = currentBatch.value * wordsPerBatch + i + 1;
       return {
         id: wordIndex,
         text: `Word ${wordIndex}`,
-        translation: '',
-        isMastered: wordIndex % 3 === 0 || wordIndex % 7 === 0
+        translation: "",
+        isMastered: wordIndex % 3 === 0 || wordIndex % 7 === 0,
       };
     });
   } finally {
@@ -91,70 +104,97 @@ const goToNextBatch = () => {
 };
 
 // Computed properties for UI
-const currentRangeStart = computed(() => currentBatch.value * wordsPerBatch + 1);
-const currentRangeEnd = computed(() => Math.min((currentBatch.value + 1) * wordsPerBatch, totalWords.value));
+const currentRangeStart = computed(
+  () => currentBatch.value * wordsPerBatch + 1,
+);
+const currentRangeEnd = computed(() =>
+  Math.min((currentBatch.value + 1) * wordsPerBatch, totalWords.value),
+);
 const canGoBack = computed(() => currentBatch.value > 0);
-const canGoForward = computed(() => currentBatch.value < totalBatches.value - 1);
+const canGoForward = computed(
+  () => currentBatch.value < totalBatches.value - 1,
+);
 
 // Expression grid navigation state
 const currentExpressionBatch = ref(0);
 const expressionsPerBatch = 400;
 
 // Get total expressions from store
-const totalExpressions = computed(() => userScoreStore.$state.totalExpressions || 0);
+const totalExpressions = computed(
+  () => userScoreStore.$state.totalExpressions || 0,
+);
 
 // Calculate total expression batches
-const totalExpressionBatches = computed(() => Math.ceil(totalExpressions.value / expressionsPerBatch));
+const totalExpressionBatches = computed(() =>
+  Math.ceil(totalExpressions.value / expressionsPerBatch),
+);
 
 // Calculate how many squares to show in current expression batch
 const currentExpressionBatchSize = computed(() => {
-  const remainingExpressions = totalExpressions.value - (currentExpressionBatch.value * expressionsPerBatch);
+  const remainingExpressions =
+    totalExpressions.value - currentExpressionBatch.value * expressionsPerBatch;
   return Math.min(expressionsPerBatch, remainingExpressions);
 });
 
 // Store for actual expressions data
-const expressionsData = ref<Array<{id: number, text: string, translation: string, isMastered: boolean}>>([]);
+const expressionsData = ref<
+  Array<{ id: number; text: string; translation: string; isMastered: boolean }>
+>([]);
 const isLoadingExpressions = ref(false);
 
 // Fetch expressions for current batch
 const fetchExpressionsForBatch = async () => {
   if (isLoadingExpressions.value) return;
-  
+
   isLoadingExpressions.value = true;
   try {
     const headers = await getAuthToken();
-    const page = Math.floor((currentExpressionBatch.value * expressionsPerBatch) / 200) + 1;
-    const { data } = await $fetch(`/api/expressions/overall?page=${page}&size=200`, {
-      headers,
-    });
+    const page =
+      Math.floor((currentExpressionBatch.value * expressionsPerBatch) / 200) +
+      1;
+    const { data } = await $fetch(
+      `/api/expressions/overall?page=${page}&size=200`,
+      {
+        headers,
+      },
+    );
     if (data) {
       // Map the fetched expressions to our grid format
       const startIndex = currentExpressionBatch.value * expressionsPerBatch;
-      
-      expressionsData.value = Array.from({ length: currentExpressionBatchSize.value }, (_, i) => {
-        const expressionIndex = startIndex + i + 1;
-        const expressionData = data[i] || null;
-        
-        return {
-          id: expressionIndex,
-          text: expressionData?.text || `Expression ${expressionIndex}`,
-          translation: expressionData?.translation || '',
-          isMastered: expressionData?.turkish_expressions_knowledge?.expression_mastered ?? false
-        };
-      });
+
+      expressionsData.value = Array.from(
+        { length: currentExpressionBatchSize.value },
+        (_, i) => {
+          const expressionIndex = startIndex + i + 1;
+          const expressionData = data[i] || null;
+
+          return {
+            id: expressionIndex,
+            text: expressionData?.text || `Expression ${expressionIndex}`,
+            translation: expressionData?.translation || "",
+            isMastered:
+              expressionData?.turkish_expressions_knowledge
+                ?.expression_mastered ?? false,
+          };
+        },
+      );
     }
   } catch (error) {
-    console.error('Error fetching expressions:', error);
+    console.error("Error fetching expressions:", error);
     // Fallback to original behavior
-    expressionsData.value = Array.from({ length: currentExpressionBatchSize.value }, (_, i) => {
-      const expressionIndex = currentExpressionBatch.value * expressionsPerBatch + i + 1;
-      return {
-        id: expressionIndex,
-        text: `Expression ${expressionIndex}`,
-        translation: '',
-        isMastered: expressionIndex % 4 === 0 || expressionIndex % 9 === 0
-      };
-    });
+    expressionsData.value = Array.from(
+      { length: currentExpressionBatchSize.value },
+      (_, i) => {
+        const expressionIndex =
+          currentExpressionBatch.value * expressionsPerBatch + i + 1;
+        return {
+          id: expressionIndex,
+          text: `Expression ${expressionIndex}`,
+          translation: "",
+          isMastered: expressionIndex % 4 === 0 || expressionIndex % 9 === 0,
+        };
+      },
+    );
   } finally {
     isLoadingExpressions.value = false;
   }
@@ -181,41 +221,67 @@ const goToNextExpressionBatch = () => {
 };
 
 // Expression computed properties for UI
-const currentExpressionRangeStart = computed(() => currentExpressionBatch.value * expressionsPerBatch + 1);
-const currentExpressionRangeEnd = computed(() => Math.min((currentExpressionBatch.value + 1) * expressionsPerBatch, totalExpressions.value));
+const currentExpressionRangeStart = computed(
+  () => currentExpressionBatch.value * expressionsPerBatch + 1,
+);
+const currentExpressionRangeEnd = computed(() =>
+  Math.min(
+    (currentExpressionBatch.value + 1) * expressionsPerBatch,
+    totalExpressions.value,
+  ),
+);
 const canGoBackExpression = computed(() => currentExpressionBatch.value > 0);
-const canGoForwardExpression = computed(() => currentExpressionBatch.value < totalExpressionBatches.value - 1);
-
+const canGoForwardExpression = computed(
+  () => currentExpressionBatch.value < totalExpressionBatches.value - 1,
+);
 
 // Watch for batch changes and fetch words
-watch(currentBatch, () => {
-  fetchWordsForBatch();
-}, { immediate: true });
+watch(
+  currentBatch,
+  () => {
+    fetchWordsForBatch();
+  },
+  { immediate: true },
+);
 
 // Watch for total words changes to fetch initial data
-watch(totalWords, () => {
-  if (totalWords.value > 0) {
-    fetchWordsForBatch();
-  }
-}, { immediate: true });
+watch(
+  totalWords,
+  () => {
+    if (totalWords.value > 0) {
+      fetchWordsForBatch();
+    }
+  },
+  { immediate: true },
+);
 
 // Watch for expression batch changes and fetch expressions
-watch(currentExpressionBatch, () => {
-  fetchExpressionsForBatch();
-}, { immediate: true });
+watch(
+  currentExpressionBatch,
+  () => {
+    fetchExpressionsForBatch();
+  },
+  { immediate: true },
+);
 
 // Watch for total expressions changes to fetch initial data
-watch(totalExpressions, () => {
-  if (totalExpressions.value > 0) {
-    fetchExpressionsForBatch();
-  }
-}, { immediate: true });
+watch(
+  totalExpressions,
+  () => {
+    if (totalExpressions.value > 0) {
+      fetchExpressionsForBatch();
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
   <div>
     <!-- Full-width Vocabulary Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-sm border border-blue-300/70 p-6 mb-8">
+    <div
+      class="w-full bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-sm border border-blue-300/70 p-6 mb-8"
+    >
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -225,64 +291,89 @@ watch(totalExpressions, () => {
           <div>
             <h3 class="text-gray-900 mb-0.5 text-xl">Word Progress</h3>
             <p class="text-sm text-gray-600">
-              Words {{ currentRangeStart }}-{{ currentRangeEnd }} of {{ totalWords }} • 
-              Batch {{ currentBatch + 1 }} of {{ totalBatches }}
+              Words {{ currentRangeStart }}-{{ currentRangeEnd }} of
+              {{ totalWords }} • Batch {{ currentBatch + 1 }} of
+              {{ totalBatches }}
             </p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
-          <button 
+          <button
             @click="goToPreviousBatch"
             :disabled="!canGoBack"
             class="group p-2 rounded-lg border transition-all duration-200"
-            :class="canGoBack 
-              ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md' 
-              : 'border-gray-100 bg-gray-50 cursor-not-allowed'"
+            :class="
+              canGoBack
+                ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md'
+                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+            "
           >
-            <ChevronLeftIcon 
+            <ChevronLeftIcon
               class="h-5 w-5 transition-colors"
-              :class="canGoBack ? 'text-gray-600 group-hover:text-blue-600' : 'text-gray-300'"
+              :class="
+                canGoBack
+                  ? 'text-gray-600 group-hover:text-blue-600'
+                  : 'text-gray-300'
+              "
             />
           </button>
-          <button 
+          <button
             @click="goToNextBatch"
             :disabled="!canGoForward"
             class="group p-2 rounded-lg border transition-all duration-200"
-            :class="canGoForward 
-              ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md' 
-              : 'border-gray-100 bg-gray-50 cursor-not-allowed'"
+            :class="
+              canGoForward
+                ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md'
+                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+            "
           >
-            <ChevronRightIcon 
+            <ChevronRightIcon
               class="h-5 w-5 transition-colors"
-              :class="canGoForward ? 'text-gray-600 group-hover:text-blue-600' : 'text-gray-300'"
+              :class="
+                canGoForward
+                  ? 'text-gray-600 group-hover:text-blue-600'
+                  : 'text-gray-300'
+              "
             />
           </button>
         </div>
       </div>
-      
+
       <!-- Grid container -->
       <div class="rounded-lg">
         <!-- Loading skeleton -->
-        <div v-if="isLoadingWords" class="grid gap-0.5" style="grid-template-columns: repeat(50, minmax(0, 1fr));">
-          <div 
-            v-for="i in currentBatchSize" 
+        <div
+          v-if="isLoadingWords"
+          class="grid gap-0.5"
+          style="grid-template-columns: repeat(50, minmax(0, 1fr))"
+        >
+          <div
+            v-for="i in currentBatchSize"
             :key="`skeleton-${i}`"
             class="aspect-square rounded-sm bg-gray-200 animate-pulse"
           ></div>
         </div>
-        
+
         <!-- Actual grid data -->
-        <div v-else class="grid gap-0.5" style="grid-template-columns: repeat(50, minmax(0, 1fr));">
-          <div 
-            v-for="item in gridData" 
+        <div
+          v-else
+          class="grid gap-0.5"
+          style="grid-template-columns: repeat(50, minmax(0, 1fr))"
+        >
+          <div
+            v-for="item in gridData"
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer transition-transform"
-            :class="item.isMastered ? 'bg-primary hover:bg-blue-600' : 'bg-slate-300 hover:bg-slate-400'"
+            :class="
+              item.isMastered
+                ? 'bg-primary hover:bg-blue-600'
+                : 'bg-slate-300 hover:bg-slate-400'
+            "
             :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
         </div>
       </div>
-      
+
       <!-- Legend -->
       <div class="flex items-center justify-center space-x-8 mt-6">
         <div class="flex items-center space-x-2 text-sm text-gray-600">
@@ -297,7 +388,9 @@ watch(totalExpressions, () => {
     </div>
 
     <!-- Full-width Expression Progress Grid -->
-    <div class="w-full bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-sm border border-warning/20 p-6 mb-8">
+    <div
+      class="w-full bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-sm border border-warning/20 p-6 mb-8"
+    >
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
@@ -307,64 +400,91 @@ watch(totalExpressions, () => {
           <div>
             <h3 class="text-gray-900 mb-0.5 text-xl">Expression Progress</h3>
             <p class="text-sm text-gray-600">
-              Expressions {{ currentExpressionRangeStart }}-{{ currentExpressionRangeEnd }} of {{ totalExpressions }} • 
-              Batch {{ currentExpressionBatch + 1 }} of {{ totalExpressionBatches }}
+              Expressions {{ currentExpressionRangeStart }}-{{
+                currentExpressionRangeEnd
+              }}
+              of {{ totalExpressions }} • Batch
+              {{ currentExpressionBatch + 1 }} of {{ totalExpressionBatches }}
             </p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
-          <button 
+          <button
             @click="goToPreviousExpressionBatch"
             :disabled="!canGoBackExpression"
             class="group p-2 rounded-lg border transition-all duration-200"
-            :class="canGoBackExpression 
-              ? 'border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md' 
-              : 'border-gray-100 bg-gray-50 cursor-not-allowed'"
+            :class="
+              canGoBackExpression
+                ? 'border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md'
+                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+            "
           >
-            <ChevronLeftIcon 
+            <ChevronLeftIcon
               class="h-5 w-5 transition-colors"
-              :class="canGoBackExpression ? 'text-gray-600 group-hover:text-purple-600' : 'text-gray-300'"
+              :class="
+                canGoBackExpression
+                  ? 'text-gray-600 group-hover:text-purple-600'
+                  : 'text-gray-300'
+              "
             />
           </button>
-          <button 
+          <button
             @click="goToNextExpressionBatch"
             :disabled="!canGoForwardExpression"
             class="group p-2 rounded-lg border transition-all duration-200"
-            :class="canGoForwardExpression 
-              ? 'border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md' 
-              : 'border-gray-100 bg-gray-50 cursor-not-allowed'"
+            :class="
+              canGoForwardExpression
+                ? 'border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md'
+                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+            "
           >
-            <ChevronRightIcon 
+            <ChevronRightIcon
               class="h-5 w-5 transition-colors"
-              :class="canGoForwardExpression ? 'text-gray-600 group-hover:text-purple-600' : 'text-gray-300'"
+              :class="
+                canGoForwardExpression
+                  ? 'text-gray-600 group-hover:text-purple-600'
+                  : 'text-gray-300'
+              "
             />
           </button>
         </div>
       </div>
-      
+
       <!-- Grid container -->
       <div class="rounded-lg">
         <!-- Loading skeleton -->
-        <div v-if="isLoadingExpressions" class="grid gap-0.5" style="grid-template-columns: repeat(40, minmax(0, 1fr));">
-          <div 
-            v-for="i in currentExpressionBatchSize" 
+        <div
+          v-if="isLoadingExpressions"
+          class="grid gap-0.5"
+          style="grid-template-columns: repeat(40, minmax(0, 1fr))"
+        >
+          <div
+            v-for="i in currentExpressionBatchSize"
             :key="`expression-skeleton-${i}`"
             class="aspect-square rounded-sm bg-gray-200 animate-pulse"
           ></div>
         </div>
-        
+
         <!-- Actual grid data -->
-        <div v-else class="grid gap-0.5" style="grid-template-columns: repeat(40, minmax(0, 1fr));">
-          <div 
-            v-for="item in expressionGridData" 
+        <div
+          v-else
+          class="grid gap-0.5"
+          style="grid-template-columns: repeat(40, minmax(0, 1fr))"
+        >
+          <div
+            v-for="item in expressionGridData"
             :key="item.id"
             class="aspect-square rounded-sm cursor-pointer"
-            :class="item.isMastered ? 'bg-warning hover:bg-warning/70' : 'bg-slate-300 hover:bg-slate-400'"
+            :class="
+              item.isMastered
+                ? 'bg-warning hover:bg-warning/70'
+                : 'bg-slate-300 hover:bg-slate-400'
+            "
             :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
         </div>
       </div>
-      
+
       <!-- Legend -->
       <div class="flex items-center justify-center space-x-8 mt-6">
         <div class="flex items-center space-x-2 text-sm text-gray-600">
@@ -378,9 +498,9 @@ watch(totalExpressions, () => {
       </div>
     </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <VocabularyChartsWords />
-    <VocabularyChartsExpressions />
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <VocabularyChartsWords />
+      <VocabularyChartsExpressions />
+    </div>
   </div>
-</div>
 </template>

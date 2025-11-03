@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getAuthToken } from '~/utils/auth/auth';
+import { getAuthToken } from "~/utils/auth/auth";
 
 const userStore = useUserStore();
 const user = useSupabaseUser();
@@ -37,7 +37,10 @@ watchEffect(async () => {
     <div class="flex">
       <LayoutSidebar />
       <!-- Main content -->
-      <main v-if="!loading" class="max-h-screen w-full bg-base-200 overflow-y-auto">
+      <main
+        v-if="!loading"
+        class="max-h-screen w-full bg-base-200 overflow-y-auto"
+      >
         <!-- <div class="h-10 border-b border-primary/20">
           <LayoutHeader />
         </div> -->

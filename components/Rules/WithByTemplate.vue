@@ -87,9 +87,9 @@
       </ul>
     </div>
     <!-- End Important Primary Section -->
-    <br/>
- <!-- Example section -->
- <div>
+    <br />
+    <!-- Example section -->
+    <div>
       <div class="flex items-center gap-2 mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +159,7 @@
       </div>
     </div>
     <!-- End Exemples section -->
-     <br/>
+    <br />
     <div>
       <div class="flex items-center gap-2">
         <svg
@@ -177,7 +177,7 @@
         </svg>
         <h2 class="text-lg font-semibold text-gray-900">Remarks</h2>
       </div>
-      <br/>
+      <br />
       <div class="space-y-4">
         <!-- Proper Names -->
         <div class="border-l-4 border-amber-200 pl-4">
@@ -221,7 +221,8 @@
         <div class="border-l-4 border-amber-200 pl-4">
           <h3 class="font-semibold text-gray-900 mb-2">
             Different other endings can be added before the
-            "<strong>yle</strong>" suffix, such as the possessive or plural suffixes:
+            "<strong>yle</strong>" suffix, such as the possessive or plural
+            suffixes:
           </h3>
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
@@ -230,7 +231,10 @@
               ></span>
               <span>
                 <span class=""
-                  >çocuk <em>(child)</em> -> çocuklar<strong class="text-amber-600">la</strong>
+                  >çocuk <em>(child)</em> -> çocuklar<strong
+                    class="text-amber-600"
+                    >la</strong
+                  >
                 </span>
                 <em> (with the children)</em>
               </span>
@@ -241,7 +245,10 @@
               ></span>
               <span>
                 <span class=""
-                  >arkadaş <em>(friend)</em> -> arkadaşı<strong class="text-amber-600">yla</strong>
+                  >arkadaş <em>(friend)</em> -> arkadaşı<strong
+                    class="text-amber-600"
+                    >yla</strong
+                  >
                   sinemaya gitti
                 </span>
                 <em> (he/she went to the cinema with his/her friend)</em>
@@ -252,8 +259,6 @@
       </div>
     </div>
     <!-- End Exceptions template examples -->
-
-   
 
     <br />
 
@@ -278,45 +283,56 @@
 
         <h2 class="text-lg font-semibold text-gray-900">Many usages</h2>
       </div>
-      <p class="font-semibold text-gray-700 mb-3">The suffix -(y) la/le can be used in different contexts</p>
+      <p class="font-semibold text-gray-700 mb-3">
+        The suffix -(y) la/le can be used in different contexts
+      </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Instrumental</h3>
-          <p class="font-medium text-gray-900 mb-2">for an action made with an object as a tool or instrument</p>
+          <p class="font-medium text-gray-900 mb-2">
+            for an action made with an object as a tool or instrument
+          </p>
           <div class="text-gray-700">
             <span class="font-medium"
-              >Yumurtaları bir çırpıcı<strong class="text-primary">yla </strong>
-            </span>çırptım
-            -
+              >Yumurtaları bir çırpıcı<strong class="text-primary"
+                >yla
+              </strong> </span
+            >çırptım -
             <em>I beat the eggs with a whisk</em>
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Accompaniment</h3>
-          <p class="font-medium text-gray-900 mb-2">for an action made with other people or objects</p>
+          <p class="font-medium text-gray-900 mb-2">
+            for an action made with other people or objects
+          </p>
           <div class="text-gray-700">
             <span class="font-medium"
-              >Sırt çantam<strong class="text-primary">la </strong>
-            </span>yürüyorum
-            -
+              >Sırt çantam<strong class="text-primary">la </strong> </span
+            >yürüyorum -
             <em>I am walking with my backpack</em>
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Meaning "And"</h3>
-          <p class="font-medium text-gray-900 mb-2">In certain cases, you can use "ile” instead of “ve” as a conjunction to mean “and”</p>
+          <p class="font-medium text-gray-900 mb-2">
+            In certain cases, you can use "ile” instead of “ve” as a conjunction
+            to mean “and”
+          </p>
           <div class="text-gray-700">
             <span class="font-medium"
               >Ali<strong class="text-primary"> ile</strong>
-            </span> Can
-            -
+            </span>
+            Can -
             <em>Ali and Can</em>
           </div>
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">With pronouns</h3>
-          <p class="font-medium text-gray-900 mb-2">In that case, the pronoun is put at its possessive form</p>
+          <p class="font-medium text-gray-900 mb-2">
+            In that case, the pronoun is put at its possessive form
+          </p>
           <div class="text-gray-700">
             <span class="font-medium"
               >Senin<strong class="text-primary">le </strong>
@@ -327,10 +343,13 @@
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">Within a question</h3>
-          <p class="font-medium text-gray-900 mb-2">With 'ne' or 'kim', you can ask with whom/what an action was done</p>
+          <p class="font-medium text-gray-900 mb-2">
+            With 'ne' or 'kim', you can ask with whom/what an action was done
+          </p>
           <div class="text-gray-700">
             <span class="font-medium"
-              >Kim + ler + <strong class="text-primary"> le</strong> sinamaya gittin?
+              >Kim + ler + <strong class="text-primary"> le</strong> sinamaya
+              gittin?
             </span>
             -
             <em>with whom did you go to the cinema?</em>
@@ -338,12 +357,15 @@
         </div>
         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
           <h3 class="font-medium text-primary">To say "between"</h3>
-          <p class="font-medium text-gray-900 mb-2">Noun+ile + noun + arasında</p>
+          <p class="font-medium text-gray-900 mb-2">
+            Noun+ile + noun + arasında
+          </p>
           <div class="text-gray-700">
             <span class="font-medium"
               >Baban<strong class="text-primary">la </strong>
-            </span> erkek kardeş <strong class="text-primary">arasında</strong> tartışma vardır
-            -
+            </span>
+            erkek kardeş <strong class="text-primary">arasında</strong> tartışma
+            vardır -
             <em>there was an argument between your father and your brother </em>
           </div>
         </div>

@@ -42,11 +42,11 @@
           />
           <span>
             <strong>Owner suffix: </strong>
-            <code class="bg-white px-2 py-1 rounded border text-sm "
+            <code class="bg-white px-2 py-1 rounded border text-sm"
               >-nın/nin/nun/nün</code
             >
             (or
-            <code class="bg-white px-2 py-1 rounded border text-sm "
+            <code class="bg-white px-2 py-1 rounded border text-sm"
               >-ın/in/un/ün</code
             >
             if the word ends in a consonant)
@@ -58,11 +58,11 @@
           />
           <span>
             <strong>Owned item suffix:</strong>
-            <code class="bg-white px-2 py-1 rounded border text-sm "
+            <code class="bg-white px-2 py-1 rounded border text-sm"
               >-sı/si/su/sü</code
             >
             (or
-            <code class="bg-white px-2 py-1 rounded border text-sm "
+            <code class="bg-white px-2 py-1 rounded border text-sm"
               >-ı/i/u/ü</code
             >
             if it ends in a consonant)
@@ -111,7 +111,9 @@
     <!-- Possessive Pronouns -->
     <div>
       <div class="flex items-center gap-2 mb-4">
-        <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+        <div
+          class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center"
+        >
           <svg
             class="w-4 h-4 text-primary"
             fill="none"
@@ -129,18 +131,28 @@
         <h2 class="text-xl font-bold text-gray-900">Possessive Pronouns</h2>
       </div>
 
-      <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <div
+        class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+      >
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wide">
+              <tr
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+              >
+                <th
+                  class="px-6 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wide"
+                >
                   Pronoun
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wide">
+                <th
+                  class="px-6 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wide"
+                >
                   Form
                 </th>
-                <th class="px-6 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wide">
+                <th
+                  class="px-6 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wide"
+                >
                   Example
                 </th>
               </tr>
@@ -150,11 +162,15 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Benim (my)</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Benim (my)</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border">
+                  <code
+                    class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border"
+                  >
                     (noun + ı/i/u/ü + m)
                   </code>
                 </td>
@@ -168,11 +184,15 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Senin (your)</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Senin (your)</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border">
+                  <code
+                    class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border"
+                  >
                     (noun + ı/i/u/ü + n)
                   </code>
                 </td>
@@ -186,11 +206,15 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Bizim (our)</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Bizim (our)</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border">
+                  <code
+                    class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border"
+                  >
                     (noun + ı/i/u/ü + mız/miz/muz/müz)
                   </code>
                 </td>
@@ -204,11 +228,15 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Sizin (your - plural)</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Sizin (your - plural)</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border">
+                  <code
+                    class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border"
+                  >
                     (noun + ı/i/u/ü + nız/niz/nuz/nüz)
                   </code>
                 </td>
@@ -222,11 +250,15 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Onun (his/her/its)</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Onun (his/her/its)</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border">
+                  <code
+                    class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border"
+                  >
                     (noun + s + ı/i/u/ü)
                   </code>
                 </td>
@@ -240,17 +272,22 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="w-2 h-2 bg-indigo-500 rounded-full mr-3"></div>
-                    <span class="text-sm font-semibold text-gray-900">Onların (their)</span>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Onların (their)</span
+                    >
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border">
+                  <code
+                    class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-mono text-gray-700 border"
+                  >
                     (noun + (s) + ı/i/u/ü or + lar/ler + ı/i/u/ü)
                   </code>
                 </td>
                 <td class="px-6 py-4">
                   <span class="text-sm text-gray-700">
-                    <span class="font-medium">Onların arabaları</span> – Their car(s)
+                    <span class="font-medium">Onların arabaları</span> – Their
+                    car(s)
                   </span>
                 </td>
               </tr>
@@ -435,31 +472,19 @@
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
-              <span
-                ><span class="px-1"
-                  >izin → iznim</span
-                ></span
-              >
+              <span><span class="px-1">izin → iznim</span></span>
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
-              <span
-                ><span class="px-1"
-                  >vakit → vaktin</span
-                ></span
-              >
+              <span><span class="px-1">vakit → vaktin</span></span>
             </li>
             <li class="flex items-start gap-2">
               <span
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
-              <span
-                ><span class="px-1"
-                  >şehir → şehrimiz</span
-                ></span
-              >
+              <span><span class="px-1">şehir → şehrimiz</span></span>
             </li>
           </ul>
         </div>
@@ -485,8 +510,7 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
               <span
-                ><span class="">Bizim annem</span> -
-                <em>Our mother</em></span
+                ><span class="">Bizim annem</span> - <em>Our mother</em></span
               >
             </li>
           </ul>
@@ -506,10 +530,7 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
               <span
-                ><span class="px-1"
-                  >hat → hattım</span
-                >
-                - <em>my line</em></span
+                ><span class="px-1">hat → hattım</span> - <em>my line</em></span
               >
             </li>
             <li class="flex items-start gap-2">
@@ -517,10 +538,8 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
               <span
-                ><span class="px-1"
-                  >hak → hakkın</span
-                >
-                - <em>your right</em></span
+                ><span class="px-1">hak → hakkın</span> -
+                <em>your right</em></span
               >
             </li>
           </ul>
@@ -565,10 +584,8 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
               <span
-                ><span class="px-1"
-                  >renk → rengim</span
-                >
-                - <em>my color</em></span
+                ><span class="px-1">renk → rengim</span> -
+                <em>my color</em></span
               >
             </li>
           </ul>
@@ -585,10 +602,8 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
               <span
-                ><span class="px-1"
-                  >su → suyumuz</span
-                >
-                - <em>our water</em></span
+                ><span class="px-1">su → suyumuz</span> -
+                <em>our water</em></span
               >
             </li>
             <li class="flex items-start gap-2">
@@ -596,8 +611,7 @@
                 class="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"
               />
               <span
-                ><span class="">neyin nesi</span> -
-                <em>what is this?</em></span
+                ><span class="">neyin nesi</span> - <em>what is this?</em></span
               >
             </li>
           </ul>
@@ -608,7 +622,7 @@
 </template>
 
 <script setup lang="ts">
-import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 
 // Component logic can be added here if needed
 </script>

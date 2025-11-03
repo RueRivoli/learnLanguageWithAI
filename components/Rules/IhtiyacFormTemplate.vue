@@ -35,7 +35,7 @@
     </div>
 
     <!-- End Header -->
-    <br/>
+    <br />
     <!-- Info gray section -->
     <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
       <h2 class="text-lg font-semibold text-gray-900 mb-3">
@@ -71,7 +71,7 @@
       </ul>
     </div>
     <!-- End Info gray section -->
-    <br/>
+    <br />
     <!-- Primary important section with steps -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
@@ -90,7 +90,7 @@
           />
         </svg>
 
-        <h2 class="text-lg font-semibold text-gray-900 ">
+        <h2 class="text-lg font-semibold text-gray-900">
           How to Use "İhtiyaç" With a Noun?
         </h2>
       </div>
@@ -109,7 +109,7 @@
             d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           />
         </svg>
-        <span> For a a general need for something, with no word ending:  </span>
+        <span> For a a general need for something, with no word ending: </span>
       </p>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
@@ -118,9 +118,8 @@
           ></span>
           <span>
             <strong>Step 1:</strong> Add
-            <code class="bg-white px-2 py-1 rounded border text-sm"
-              >-y</code
-            > to the noun if it ends in a vowel
+            <code class="bg-white px-2 py-1 rounded border text-sm">-y</code> to
+            the noun if it ends in a vowel
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -129,10 +128,8 @@
           ></span>
           <span>
             <strong>Step 2:</strong> Add
-            <code class="bg-white px-2 py-1 rounded border text-sm"
-              >-a/-e</code
-            > (dative suffix)
-            based on <strong>e-vowel harmony</strong>
+            <code class="bg-white px-2 py-1 rounded border text-sm">-a/-e</code>
+            (dative suffix) based on <strong>e-vowel harmony</strong>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -162,7 +159,7 @@
             d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           />
         </svg>
-        <span> When you want to specify a person, use a personal ending:  </span>
+        <span> When you want to specify a person, use a personal ending: </span>
       </p>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
@@ -171,9 +168,8 @@
           ></span>
           <span>
             <strong>Step 1:</strong> Add
-            <code class="bg-white px-2 py-1 rounded border text-sm"
-              >-y</code
-            > to the noun if it ends in a vowel
+            <code class="bg-white px-2 py-1 rounded border text-sm">-y</code> to
+            the noun if it ends in a vowel
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -182,10 +178,8 @@
           ></span>
           <span>
             <strong>Step 2:</strong> Add
-            <code class="bg-white px-2 py-1 rounded border text-sm"
-              >-a/-e</code
-            > (dative suffix)
-            based on <strong>e-vowel harmony</strong>
+            <code class="bg-white px-2 py-1 rounded border text-sm">-a/-e</code>
+            (dative suffix) based on <strong>e-vowel harmony</strong>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -196,7 +190,8 @@
             <strong>Step 3:</strong> End the sentence with
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >ihtiyaç</code
-            > + possessive ending
+            >
+            + possessive ending
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -239,9 +234,7 @@
       <div class="space-y-4">
         <!-- Proper Names -->
         <div class="border-l-4 border-success pl-4">
-          <h3 class="font-semibold text-gray-900 mb-2">
-            General need
-          </h3>
+          <h3 class="font-semibold text-gray-900 mb-2">General need</h3>
           <ul class="space-y-1 text-sm text-gray-700">
             <li class="flex items-start gap-2">
               <span
@@ -249,10 +242,10 @@
               ></span>
               <span>
                 <span class=""
-                  >Ekolojik davranış<strong
-                    class="text-success"
+                  >Ekolojik davranış<strong class="text-success"
                     >a ihtiyaç</strong
-                  > var - <em>there is a need for ecological behavior</em> 
+                  >
+                  var - <em>there is a need for ecological behavior</em>
                 </span>
               </span>
             </li>
@@ -265,7 +258,8 @@
                   >Sıcak hava dalgaları dönemlerinde suy<strong
                     class="text-success"
                     >a ihtiyaç</strong
-                  > vardır - <em>there is a need for water during heatwaves</em> 
+                  >
+                  vardır - <em>there is a need for water during heatwaves</em>
                 </span>
               </span>
             </li>
@@ -283,10 +277,10 @@
               ></span>
               <span>
                 <span class=""
-                  >Sadece biraz zaman<strong
-                    class="text-success"
+                  >Sadece biraz zaman<strong class="text-success"
                     >a ihtiyacım</strong
-                  > var - <em>I just need a little of time</em>
+                  >
+                  var - <em>I just need a little of time</em>
                 </span>
               </span>
             </li>
@@ -296,10 +290,8 @@
               ></span>
               <span>
                 <span class=""
-                  >Şeker<strong
-                    class="text-success"
-                    >e ihtiyacımız</strong
-                  > var - <em>we need sugar</em>
+                  >Şeker<strong class="text-success">e ihtiyacımız</strong> var
+                  - <em>we need sugar</em>
                 </span>
               </span>
             </li>
@@ -310,8 +302,8 @@
     <!-- End Exemples section -->
     <br />
 
-       <!-- Primary important section with steps -->
-       <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
+    <!-- Primary important section with steps -->
+    <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -328,7 +320,7 @@
           />
         </svg>
 
-        <h2 class="text-lg font-semibold text-gray-900 ">
+        <h2 class="text-lg font-semibold text-gray-900">
           How to Use "İhtiyaç" With a Verb?
         </h2>
       </div>
@@ -347,7 +339,7 @@
             d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           />
         </svg>
-        <span> First you need to turn the noun into a verb:  </span>
+        <span> First you need to turn the noun into a verb: </span>
       </p>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
@@ -358,7 +350,8 @@
             <strong>Step 1:</strong> Remove
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >-mak/-mek</code
-            > to the stem verb
+            >
+            to the stem verb
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -379,9 +372,8 @@
           ></span>
           <span>
             <strong>Step 3:</strong> Add
-            <code class="bg-white px-2 py-1 rounded border text-sm"
-              >-y</code
-            > to the noun if it ends in a vowel
+            <code class="bg-white px-2 py-1 rounded border text-sm">-y</code> to
+            the noun if it ends in a vowel
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -390,10 +382,8 @@
           ></span>
           <span>
             <strong>Step 4:</strong> Add
-            <code class="bg-white px-2 py-1 rounded border text-sm"
-              >-a/-e</code
-            > (dative suffix)
-            based on <strong>e-vowel harmony</strong>
+            <code class="bg-white px-2 py-1 rounded border text-sm">-a/-e</code>
+            (dative suffix) based on <strong>e-vowel harmony</strong>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -404,7 +394,8 @@
             <strong>Step 5:</strong> End the sentence with
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >ihtiyaç</code
-            > + possessive ending
+            >
+            + possessive ending
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -454,10 +445,10 @@
               ></span>
               <span>
                 <span class=""
-                  >Çok çalış<strong
-                    class="text-success"
+                  >Çok çalış<strong class="text-success"
                     >maya ihtiyacı var</strong
-                  >  - <em>he needs to work hard</em>
+                  >
+                  - <em>he needs to work hard</em>
                 </span>
               </span>
             </li>
@@ -467,8 +458,7 @@
               ></span>
               <span>
                 <span class=""
-                  >Dinlen<strong
-                    class="text-success"
+                  >Dinlen<strong class="text-success"
                     >meye ihtiyaçımız var</strong
                   >
                 </span>
@@ -481,8 +471,7 @@
               ></span>
               <span>
                 <span class=""
-                  >Daha iyi hisset<strong
-                    class="text-success"
+                  >Daha iyi hisset<strong class="text-success"
                     >meye ihtiyacı var</strong
                   >
                 </span>

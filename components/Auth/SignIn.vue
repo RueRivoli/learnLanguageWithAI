@@ -29,12 +29,19 @@ const captchaContainerRef = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   loadHCaptcha();
-  
+
   // Watch for script load and initialize widget
   watchEffect(() => {
-    if (isCaptchaLoaded.value && captchaContainerRef.value && typeof window !== 'undefined') {
+    if (
+      isCaptchaLoaded.value &&
+      captchaContainerRef.value &&
+      typeof window !== "undefined"
+    ) {
       // @ts-ignore
-      if (window.hcaptcha && !captchaContainerRef.value.hasAttribute('data-rendered')) {
+      if (
+        window.hcaptcha &&
+        !captchaContainerRef.value.hasAttribute("data-rendered")
+      ) {
         try {
           // @ts-ignore
           window.hcaptcha.render(captchaContainerRef.value, {
@@ -42,16 +49,16 @@ onMounted(() => {
             callback: (token: string) => {
               onCaptchaVerified(token);
             },
-            'expired-callback': () => {
+            "expired-callback": () => {
               onCaptchaExpired();
             },
-            'error-callback': () => {
+            "error-callback": () => {
               onCaptchaError();
             },
           });
-          captchaContainerRef.value.setAttribute('data-rendered', 'true');
+          captchaContainerRef.value.setAttribute("data-rendered", "true");
         } catch (error) {
-          console.error('Error rendering hCaptcha widget:', error);
+          console.error("Error rendering hCaptcha widget:", error);
         }
       }
     }
@@ -186,7 +193,7 @@ const handleSignInWithGoogle = async () => {
 
         <div class="underline text-primary mb-4 mt-2">
           <NuxtLink to="/authorization/password-forgotten/">
-            <span class="underline-offset-4 text-primary dark:text-white"
+            <span class="underline-offset-4 text-primary"
               >Password Forgotten ?</span
             >
           </NuxtLink>

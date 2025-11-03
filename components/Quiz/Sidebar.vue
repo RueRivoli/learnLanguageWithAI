@@ -3,7 +3,7 @@ const props = withDefaults(
   defineProps<{
     formQuiz?: any;
     quiz?: boolean;
-    task: "completion"
+    task: "completion";
   }>(),
   {
     formQuiz: null,

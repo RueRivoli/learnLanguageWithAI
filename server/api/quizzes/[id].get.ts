@@ -1,9 +1,8 @@
 import { defineEventHandler, getRouterParam } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
-
 export default defineEventHandler(async (event) => {
-  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
   const id = getRouterParam(event, "id");
   const { data, error } = await supabase
     .from("turkish_quizzes_series")

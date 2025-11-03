@@ -25,9 +25,12 @@
         </div>
         <div>
           <p class="text-white/90 leading-relaxed font-semibold">
-            Ever heard someone say "çoluk çocuk" or "falan filan" in Turkish? These catchy word pairs aren't random at all — they're part of a fascinating linguistic phenomenon called
+            Ever heard someone say "çoluk çocuk" or "falan filan" in Turkish?
+            These catchy word pairs aren't random at all — they're part of a
+            fascinating linguistic phenomenon called
             <span class="underline">rhythmic reduplication.</span>
-            Turkish loves pairing up similar-sounding words to add flavor, energy, and emotion to everyday speech.
+            Turkish loves pairing up similar-sounding words to add flavor,
+            energy, and emotion to everyday speech.
           </p>
         </div>
       </div>
@@ -54,7 +57,10 @@
         <h2 class="text-lg font-semibold text-gray-900">What Are Word Duos?</h2>
       </div>
       <p class="text-gray-700 mb-3">
-        These nearly-repeating pairs aren't just cute; they transform meaning. Sometimes they intensify an idea, sometimes they soften or tweak the nuance, and sometimes they freeze history — many of these words are no longer used anywhere else in modern Turkish!
+        These nearly-repeating pairs aren't just cute; they transform meaning.
+        Sometimes they intensify an idea, sometimes they soften or tweak the
+        nuance, and sometimes they freeze history — many of these words are no
+        longer used anywhere else in modern Turkish!
       </p>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
@@ -73,7 +79,10 @@
           <span
             class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
           ></span>
-          <span>They can <strong>freeze history</strong> — many words are no longer used elsewhere</span>
+          <span
+            >They can <strong>freeze history</strong> — many words are no longer
+            used elsewhere</span
+          >
         </li>
       </ul>
     </div>
@@ -82,7 +91,9 @@
     <!-- The Four Main Types -->
     <div class="bg-gray-50 border-base-200 rounded-xl p-5 border shadow-sm">
       <div class="flex items-center gap-3 mb-6">
-        <h2 class="text-xl font-bold text-gray-900">The Four Main Types of Word Duos</h2>
+        <h2 class="text-xl font-bold text-gray-900">
+          The Four Main Types of Word Duos
+        </h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -103,19 +114,32 @@
               "Everything, Everyone, Everywhere"
             </div>
             <p class="text-sm text-gray-700">
-              These pairs group things together — usually meaning "all," "every," or "the whole lot."
+              These pairs group things together — usually meaning "all,"
+              "every," or "the whole lot."
             </p>
             <ul class="space-y-1 mt-2 text-sm text-gray-700">
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>çoluk çocuk</strong> → the whole family, kids included</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>çoluk çocuk</strong> → the whole family, kids
+                  included</span
+                >
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>eş dost</strong> → all your friends and close ones</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>eş dost</strong> → all your friends and close
+                  ones</span
+                >
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
                 <span><strong>iş güç</strong> → every task, every job</span>
               </li>
             </ul>
@@ -143,15 +167,21 @@
             </p>
             <ul class="space-y-1 mt-2 text-sm text-gray-700">
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
                 <span><strong>ufak tefek</strong> → tiny, insignificant</span>
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
                 <span><strong>mutlu mesut</strong> → blissfully happy</span>
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
                 <span><strong>saçma sapan</strong> → totally absurd</span>
               </li>
             </ul>
@@ -175,20 +205,36 @@
               "Energy, Action, and Drama"
             </div>
             <p class="text-sm text-gray-700">
-              When Turkish doubles up on verbs, it adds movement, duration, or intensity.
+              When Turkish doubles up on verbs, it adds movement, duration, or
+              intensity.
             </p>
             <ul class="space-y-1 mt-2 text-sm text-gray-700">
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>düşündüm taşındım</strong> → thought long and hard</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>düşündüm taşındım</strong> → thought long and
+                  hard</span
+                >
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>bağırdı çağırdı</strong> → shouted loudly and repeatedly</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>bağırdı çağırdı</strong> → shouted loudly and
+                  repeatedly</span
+                >
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>hoplaya zıplaya</strong> → skipping and hopping joyfully</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>hoplaya zıplaya</strong> → skipping and hopping
+                  joyfully</span
+                >
               </li>
             </ul>
           </div>
@@ -204,26 +250,40 @@
             >
               <span class="text-white font-bold text-sm">4</span>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900">Sound-Imitating Duos</h3>
+            <h3 class="text-lg font-semibold text-gray-900">
+              Sound-Imitating Duos
+            </h3>
           </div>
           <div class="space-y-2">
             <div class="text-sm text-gray-600 font-medium mb-2">
               "The Language of Noise"
             </div>
             <p class="text-sm text-gray-700">
-              Some pairs are pure sound effects — mimicking splashes, crashes, rustles, and thuds.
+              Some pairs are pure sound effects — mimicking splashes, crashes,
+              rustles, and thuds.
             </p>
             <ul class="space-y-1 mt-2 text-sm text-gray-700">
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>paldır küldür</strong> → crash! chaos everywhere</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>paldır küldür</strong> → crash! chaos
+                  everywhere</span
+                >
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
-                <span><strong>şakır şukur</strong> → splash, bang, clatter</span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
+                <span
+                  ><strong>şakır şukur</strong> → splash, bang, clatter</span
+                >
               </li>
               <li class="flex items-start gap-2">
-                <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"></span>
+                <span
+                  class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                ></span>
                 <span><strong>abur cubur</strong> → junk food, snacks</span>
               </li>
             </ul>
@@ -261,7 +321,8 @@
               ></span>
               <span>
                 <span class=""
-                  >"Çoluk çocuk geldiler." → They came with the whole family, kids and all.</span
+                  >"Çoluk çocuk geldiler." → They came with the whole family,
+                  kids and all.</span
                 >
               </span>
             </li>
@@ -271,7 +332,8 @@
               ></span>
               <span>
                 <span class=""
-                  >"Bağırdı çağırdı ama kimse dinlemedi." → He yelled and screamed, but no one listened.</span
+                  >"Bağırdı çağırdı ama kimse dinlemedi." → He yelled and
+                  screamed, but no one listened.</span
                 >
               </span>
             </li>
@@ -281,7 +343,8 @@
               ></span>
               <span>
                 <span class=""
-                  >"Evin içi allak bullak!" → The house is a complete mess!</span
+                  >"Evin içi allak bullak!" → The house is a complete
+                  mess!</span
                 >
               </span>
             </li>

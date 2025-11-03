@@ -7,20 +7,20 @@ import { quizFormat } from "../../../formats/words";
  */
 const extractJSON = (content: string): string => {
   const trimmed = content.trim();
-  
+
   // Check if content starts with markdown code block
-  if (trimmed.startsWith('```')) {
+  if (trimmed.startsWith("```")) {
     // Find the end of the first line (the opening ```)
-    const firstLineEnd = trimmed.indexOf('\n');
+    const firstLineEnd = trimmed.indexOf("\n");
     // Find the last occurrence of ``` (the closing one)
-    const lastBackticks = trimmed.lastIndexOf('```');
-    
+    const lastBackticks = trimmed.lastIndexOf("```");
+
     if (firstLineEnd !== -1 && lastBackticks > firstLineEnd) {
       // Extract content between opening and closing ```
       return trimmed.substring(firstLineEnd + 1, lastBackticks).trim();
     }
   }
-  
+
   // If no markdown blocks, return as is
   return trimmed;
 };
@@ -50,41 +50,41 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     if (!body.message) {
-      throw new Error('Missing prompt for words quiz')
+      throw new Error("Missing prompt for words quiz");
     }
-    
+
     const result = await $fetch(process.env.ANTHROPIC_API_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'Content-Type': 'application/json',
+        "x-api-key": process.env.ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "Content-Type": "application/json",
       },
       body: {
-        model: 'claude-sonnet-4-5-20250929',
+        model: "claude-sonnet-4-5-20250929",
         max_tokens: 1424,
         temperature: 0.7,
-        system: systemPromptVocabularyQuiz + '\n\n' + jsonSchemaInstruction,
+        system: systemPromptVocabularyQuiz + "\n\n" + jsonSchemaInstruction,
         messages: [
-          { 
-            role: 'user', 
-            content: body.message 
-          }
-        ]
-      }
-    })
+          {
+            role: "user",
+            content: body.message,
+          },
+        ],
+      },
+    });
     if (result && result.content && result.content[0]?.text) {
       const rawContent = result.content[0].text;
       const cleanContent = extractJSON(rawContent);
       return cleanContent;
     }
-    
-    throw new Error('Invalid response from Claude API');
+
+    throw new Error("Invalid response from Claude API");
   } catch (error) {
-    console.error('Error API Claude For Words Quiz:', error);
+    console.error("Error API Claude For Words Quiz:", error);
     return {
       success: false,
-      error: error?.message ?? 'Unknown error'
-    }
+      error: error?.message ?? "Unknown error",
+    };
   }
 });

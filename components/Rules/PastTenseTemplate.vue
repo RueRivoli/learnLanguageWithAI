@@ -303,7 +303,6 @@
     <!-- End Exemples section -->
     <br />
 
-
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
         <svg
@@ -349,7 +348,8 @@
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >-ma / -me</code
             >
-            based on <strong class="text-primary"> e-type vowel harmony </strong>
+            based on
+            <strong class="text-primary"> e-type vowel harmony </strong>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -361,7 +361,8 @@
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >-dı / -di / -du / -dü</code
             >
-            based on <strong class="text-primary"> i-type vowel harmony </strong>
+            based on
+            <strong class="text-primary"> i-type vowel harmony </strong>
           </span>
         </li>
         <li class="flex items-start gap-2">
@@ -475,10 +476,13 @@
           />
         </svg>
 
-        <h2 class="text-lg font-semibold text-gray-900">How To Form Yes/No Questions in the Past?</h2>
+        <h2 class="text-lg font-semibold text-gray-900">
+          How To Form Yes/No Questions in the Past?
+        </h2>
       </div>
       <p class="p-2 text-gray-900 italic mb-3">
-        Note that the personal suffix is added to the verb not to the interrogative particule (unlike Present Continuous Tense)
+        Note that the personal suffix is added to the verb not to the
+        interrogative particule (unlike Present Continuous Tense)
       </p>
       <ul class="space-y-2 text-gray-700">
         <li class="flex items-start gap-2">
@@ -501,7 +505,8 @@
             <code class="bg-white px-2 py-1 rounded border text-sm"
               >-dı / -di / -du / -dü</code
             >
-            based on <strong class="text-primary"> i-type vowel harmony </strong>
+            based on
+            <strong class="text-primary"> i-type vowel harmony </strong>
           </span>
         </li>
         <li class="flex items-start gap-2">

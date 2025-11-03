@@ -217,7 +217,6 @@ const handleExpressionLearningStatus = async (
   getExpressionList();
   userScoreStore.setVocabularyScores(userStore.$state.id);
 };
-
 </script>
 
 <template>
@@ -227,9 +226,7 @@ const handleExpressionLearningStatus = async (
         class="min-h-screen h-full flex flex-col bg-white rounded-lg shadow-md"
       >
         <!-- Header -->
-        <div
-          class="bg-gradient-to-r from-gray-50/50 to-white p-5"
-        >
+        <div class="bg-gradient-to-r from-gray-50/50 to-white p-5">
           <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
               title="Vocabulary"
@@ -244,7 +241,11 @@ const handleExpressionLearningStatus = async (
               :first-tab="vocabularyFirstTab"
               :second-tab="vocabularySecondTab"
               @tab-active-changed="
-                (activeTab) => {selectedWord = null; selectedExpression = null; (activeVocabularyTab = activeTab)}
+                (activeTab) => {
+                  selectedWord = null;
+                  selectedExpression = null;
+                  activeVocabularyTab = activeTab;
+                }
               "
             />
           </div>
@@ -319,30 +320,41 @@ const handleExpressionLearningStatus = async (
             class="pt-6 h-full flex flex-col justify-between"
           >
             <!-- Empty State -->
-            <div v-if="words.length === 0" class="flex flex-col items-center justify-center py-16 px-4">
-              <div v-if="showLearnedWords" class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                <BookOpenIcon  class="h-10 w-10 text-gray-400" />
+            <div
+              v-if="words.length === 0"
+              class="flex flex-col items-center justify-center py-16 px-4"
+            >
+              <div
+                v-if="showLearnedWords"
+                class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center"
+              >
+                <BookOpenIcon class="h-10 w-10 text-gray-400" />
               </div>
               <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                {{ showLearnedWords ? "No Words Learned yet": "" }}
+                {{ showLearnedWords ? "No Words Learned yet" : "" }}
               </h3>
               <p class="text-gray-500 text-center max-w-md">
-                {{ showLearnedWords 
-                  ? "Start Learning Words to see them appear here." 
-                  : "" 
+                {{
+                  showLearnedWords
+                    ? "Start Learning Words to see them appear here."
+                    : ""
                 }}
               </p>
             </div>
-            
+
             <!-- Words Grid -->
             <div
               v-else
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               <div v-for="(word, index) in words" :key="index">
-                <LayoutKeyElementWordDefinition :word="word" :minified="true" :is-dark-mode="true" @click="selectedWord = word"/>
+                <LayoutKeyElementWordDefinition
+                  :word="word"
+                  :minified="true"
+                  :is-dark-mode="true"
+                  @click="selectedWord = word"
+                />
               </div>
-
             </div>
             <LayoutTablePagination
               v-if="words.length > 0"
@@ -384,28 +396,39 @@ const handleExpressionLearningStatus = async (
             class="pt-6 h-full flex flex-col justify-between"
           >
             <!-- Empty State -->
-            <div v-if="expressions.length === 0" class="flex flex-col items-center justify-center py-16 px-4">
-              <div v-if="showLearnedExpressions" class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                <LanguageIcon  class="h-10 w-10 text-gray-400" />
+            <div
+              v-if="expressions.length === 0"
+              class="flex flex-col items-center justify-center py-16 px-4"
+            >
+              <div
+                v-if="showLearnedExpressions"
+                class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center"
+              >
+                <LanguageIcon class="h-10 w-10 text-gray-400" />
               </div>
               <h3 class="text-xl font-semibold text-gray-900 mb-2">
                 {{ showLearnedExpressions ? "No expressions learned yet" : "" }}
               </h3>
               <p class="text-gray-500 text-center max-w-md">
-                {{ showLearnedExpressions 
-                  ? "Start Learning Expressions to see them appear here." 
-                  : "" 
+                {{
+                  showLearnedExpressions
+                    ? "Start Learning Expressions to see them appear here."
+                    : ""
                 }}
               </p>
             </div>
-            
+
             <!-- Expressions Grid -->
             <div
               v-else
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-            <div v-for="(expr, index) in expressions" :key="index">
-                <LayoutKeyElementExpressionDefinition :expression="expr" :minified="true" @click="selectedExpression = expr"/>
+              <div v-for="(expr, index) in expressions" :key="index">
+                <LayoutKeyElementExpressionDefinition
+                  :expression="expr"
+                  :minified="true"
+                  @click="selectedExpression = expr"
+                />
               </div>
             </div>
             <LayoutTablePagination
@@ -432,7 +455,11 @@ const handleExpressionLearningStatus = async (
       <div class="h-full">
         <LearningItemDefinition
           class="p-6 rounded-lg"
-          :class="{'bg-primary/20 border-l-4 border-primary': selectedWord, 'bg-warning/20 border-l-4 border-warning': selectedExpression, 'bg-white': !selectedWord && !selectedExpression}"
+          :class="{
+            'bg-primary/10 border-l-4 border-primary': selectedWord,
+            'bg-warning/10 border-l-4 border-warning': selectedExpression,
+            'bg-white': !selectedWord && !selectedExpression,
+          }"
           :word="selectedWord"
           :expression="selectedExpression"
           :type="selectedWord ? 'word' : 'expression'"

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import type {
   QuizFetchedQuestion,
   GrammarQuizQuestion,
@@ -16,7 +15,6 @@ definePageMeta({
   layout: "quiz",
 });
 
-
 const route = useRoute();
 const moduleId = Number(route.params.moduleId);
 const quizId = Number(route.params.id);
@@ -25,7 +23,6 @@ const isLoadingQuiz = ref<boolean>(true);
 
 // List of questions for grammar
 const grammarQuizQuestions = ref<GrammarQuizQuestion[] | null>(null);
-
 
 // Information data about the targeted grammar rule to display in the quiz
 const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
@@ -62,7 +59,9 @@ const getGrammarQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
     headers,
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
-      return quizQuestions.map((question) => parseGrammarQuizQuestion(question));
+      return quizQuestions.map((question) =>
+        parseGrammarQuizQuestion(question),
+      );
     },
   });
   if (data.value) {
@@ -70,8 +69,11 @@ const getGrammarQuizData = async () => {
   }
 };
 
-
-const handleSubmitQuiz = async (results: { score: number, formGrammarQuiz: FormQuizState, detailedResults: DetailedResults }) => {
+const handleSubmitQuiz = async (results: {
+  score: number;
+  formGrammarQuiz: FormQuizState;
+  detailedResults: DetailedResults;
+}) => {
   detailedResults.value = results.detailedResults;
   const headers = await getAuthToken();
   await $fetch(`/api/quizzes/result/${quizId}`, {
@@ -82,38 +84,43 @@ const handleSubmitQuiz = async (results: { score: number, formGrammarQuiz: FormQ
       ruleId: grammarRuleMetaData.value?.id,
       score: results.score,
       detailedResults: results.detailedResults,
-      type: 'grammar',
+      type: "grammar",
       // value: formQuiz.value,
     },
   });
   setTimeout(() => {
     openResultsModal();
   }, 200);
-}
-
+};
 
 await Promise.all([getGrammarQuizData(), getGrammarRuleMetaData()]);
 isLoadingQuiz.value = false;
-
 </script>
 
 <template>
-    <QuizQuestions
-      type="grammar"
-      :wordsForQuiz="null"
-      :expressionsForQuiz="null"
-      :grammarQuizQuestions="grammarQuizQuestions"
+  <QuizQuestions
+    type="grammar"
+    :wordsForQuiz="null"
+    :expressionsForQuiz="null"
+    :grammarQuizQuestions="grammarQuizQuestions"
+    :grammarRuleMetaData="grammarRuleMetaData"
+    :wordsQuizQuestions="null"
+    :expressionsQuizQuestions="null"
+    :subjetId="moduleId"
+    :isLoading="isLoadingQuiz"
+    @submitQuiz="(results) => handleSubmitQuiz(results)"
+  />
+  <!-- Results Modal -->
+  <div v-if="showResultsModal" class="modal-overlay">
+    <QuizModal
+      :detailedResults="detailedResults"
       :grammarRuleMetaData="grammarRuleMetaData"
-      :wordsQuizQuestions="null"
-      :expressionsQuizQuestions="null"
-      :subjetId="moduleId"
-      :isLoading="isLoadingQuiz"
-      @submitQuiz="(results) => handleSubmitQuiz(results)"
+      :globalScore="globalScore"
+      type="grammar"
+      :showResultsModal="showResultsModal"
+      @close="closeResultsModal"
     />
-    <!-- Results Modal -->
-     <div v-if="showResultsModal" class="modal-overlay">
-      <QuizModal :detailedResults="detailedResults" :grammarRuleMetaData="grammarRuleMetaData" :globalScore="globalScore" type="grammar" :showResultsModal="showResultsModal" @close="closeResultsModal" />
-     </div>
+  </div>
 </template>
 
 <style scoped>

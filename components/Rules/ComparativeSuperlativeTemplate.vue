@@ -283,7 +283,7 @@
                     >"the color that I like the most"</span
                   >,
                   <span class="text-primary font-semibold"
-                  >"the film we saw the most"</span
+                    >"the film we saw the most"</span
                   >. To say these kinds of sentences, we'll need to use a
                   certain form of the verb.
                 </span>
@@ -293,7 +293,8 @@
                   class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
                 ></span>
                 <span>
-                  To make such phrases, use: "<strong class="text-primary font-semibold"
+                  To make such phrases, use: "<strong
+                    class="text-primary font-semibold"
                     >en</strong
                   >" + <strong class="text-primary">verb stem</strong> +
                   <code
@@ -302,7 +303,10 @@
                   >
                   following i-type vowel harmony (with possibly a consonant
                   mutation) +
-                  <span class="text-primary font-semibold">personal suffix</span> +
+                  <span class="text-primary font-semibold"
+                    >personal suffix</span
+                  >
+                  +
                   <span class="text-primary font-semibold">noun</span>
                   <br />
                 </span>
@@ -310,7 +314,7 @@
             </ul>
           </div>
           <!-- End Primary important section with code samples -->
-          <br/>
+          <br />
           <!-- Example section -->
           <div>
             <div class="flex items-center gap-2 mb-3">

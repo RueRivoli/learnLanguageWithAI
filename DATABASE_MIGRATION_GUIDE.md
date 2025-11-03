@@ -1,16 +1,20 @@
 # Database Migration Guide: tookan_ai → tookanai_prod
 
 ## Overview
+
 This guide will help you migrate your database from the development environment (`tookan_ai`) to the production environment (`tookanai_prod`) using Supabase CLI and PostgreSQL tools.
 
 ## Prerequisites
+
 - Supabase CLI installed
 - PostgreSQL client tools (`pg_dump`, `psql`) installed
 - Access to both database projects
 - Database passwords for both environments
 
 ## Database Information
+
 - **Source Database**: `tookan_ai` (dmwvccsjbfhzjyoajgyw)
+
   - Host: `db.dmwvccsjbfhzjyoajgyw.supabase.co`
   - Version: PostgreSQL 15.8.1.126
   - Region: Southeast Asia (Singapore)
@@ -23,6 +27,7 @@ This guide will help you migrate your database from the development environment 
 ## Migration Methods
 
 ### Method 1: Automated Script (Recommended)
+
 Run the provided migration script:
 
 ```bash
@@ -30,6 +35,7 @@ Run the provided migration script:
 ```
 
 This script will:
+
 1. Export schema and data from source database
 2. Import schema and data to target database
 3. Verify the migration was successful
@@ -40,6 +46,7 @@ This script will:
 #### Step 1: Export from Source Database
 
 **Export Schema Only:**
+
 ```bash
 pg_dump -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
         -U postgres \
@@ -51,6 +58,7 @@ pg_dump -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
 ```
 
 **Export Data Only:**
+
 ```bash
 pg_dump -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
         -U postgres \
@@ -62,6 +70,7 @@ pg_dump -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
 ```
 
 **Export Complete Database:**
+
 ```bash
 pg_dump -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
         -U postgres \
@@ -74,6 +83,7 @@ pg_dump -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
 #### Step 2: Import to Target Database
 
 **Import Schema:**
+
 ```bash
 psql -h db.fkggvollieqtmatgajcg.supabase.co \
      -U postgres \
@@ -82,6 +92,7 @@ psql -h db.fkggvollieqtmatgajcg.supabase.co \
 ```
 
 **Import Data:**
+
 ```bash
 psql -h db.fkggvollieqtmatgajcg.supabase.co \
      -U postgres \
@@ -92,6 +103,7 @@ psql -h db.fkggvollieqtmatgajcg.supabase.co \
 #### Step 3: Verification
 
 **Count Tables:**
+
 ```bash
 # Source database
 psql -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
@@ -107,6 +119,7 @@ psql -h db.fkggvollieqtmatgajcg.supabase.co \
 ```
 
 **Check Data Integrity:**
+
 ```bash
 # Compare row counts for each table
 psql -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
@@ -196,6 +209,7 @@ psql -h db.dmwvccsjbfhzjyoajgyw.supabase.co \
 ## Support
 
 If you encounter issues during migration:
+
 1. Check the Supabase documentation
 2. Review the migration logs
 3. Contact Supabase support if needed

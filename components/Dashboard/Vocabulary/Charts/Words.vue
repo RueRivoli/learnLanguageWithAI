@@ -13,15 +13,13 @@ const optionChartWords = computed(() => {
     userScoreStore.totalWordsInK,
   );
 });
-
 </script>
 
 <template>
-
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <div class="mb-4 flex">        
-        <div class="flex-shrink-0 ">
+      <div class="mb-4 flex">
+        <div class="flex-shrink-0">
           <div class="relative">
             <div
               class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-lg blur-sm"

@@ -2,12 +2,12 @@ import { defineEventHandler, getQuery } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
 export default defineEventHandler(async (event) => {
-  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event)
-  const query = getQuery(event)
-  const page = query.page
-  const size = query.size
-  const from = (Number(page) - 1) * Number(size)
-  const to = (Number(page) * Number(size) - 1)
+  const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
+  const query = getQuery(event);
+  const page = query.page;
+  const size = query.size;
+  const from = (Number(page) - 1) * Number(size);
+  const to = Number(page) * Number(size) - 1;
 
   const [countResult, dataResult] = await Promise.all([
     supabase
@@ -15,7 +15,8 @@ export default defineEventHandler(async (event) => {
       .select("*", { count: "exact", head: true }),
     supabase
       .from("turkish_lessons")
-      .select(`
+      .select(
+        `
         id,
         title,
         title_en,
@@ -43,13 +44,15 @@ export default defineEventHandler(async (event) => {
         turkish_quizzes_result (
           score_global
         )
-      `).order('created_at', {ascending: false})
-      .range(from, to)
-  ])
-  const error = countResult.error || dataResult.error
+      `,
+      )
+      .order("created_at", { ascending: false })
+      .range(from, to),
+  ]);
+  const error = countResult.error || dataResult.error;
   if (error) {
-    console.error("Error fetching lessons :", error)
+    console.error("Error fetching lessons :", error);
     throw error;
   }
-  return { countResult, dataResult};
+  return { countResult, dataResult };
 });

@@ -22,7 +22,7 @@ A personal dashboard monitors your proficiency in:
 
 - generate welcome quiz
 - quiz fin leçon
-    - enregistrer résultats
+  - enregistrer résultats
 - page settings
 
 ## Content
@@ -33,14 +33,13 @@ A personal dashboard monitors your proficiency in:
 
 - interesting color: blue-500
 
-##  Welcoming page
+## Welcoming page
 
 <img width="1512" alt="Welcoming Page" src="https://github.com/user-attachments/assets/7214d00b-3e0c-42a2-99a3-05af943a200e" />
 
 ## The program
 
 <img width="1512" alt="The Program" src="https://github.com/user-attachments/assets/99142540-6453-4de1-953c-be510a03101b" />
-
 
 ## 🛠️ Built With
 
@@ -70,5 +69,7 @@ yarn dev
 bun run dev
 ```
 
-
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+Checkout this icon library:
+https://icon-sets.iconify.design/circle-flags/

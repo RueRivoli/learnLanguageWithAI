@@ -439,7 +439,10 @@
                     <span class=""
                       >Hasta <strong class="text-success">değilse</strong>,
                       okula gelmeli diye düşünüyorum -
-                      <em>if he/she's not sick, I think he has to come to school</em>
+                      <em
+                        >if he/she's not sick, I think he has to come to
+                        school</em
+                      >
                     </span>
                   </span>
                 </li>
@@ -564,9 +567,8 @@
                   ></span>
                   <span>
                     <span class=""
-                      >Bagajları
-                      <strong class="text-success">varsa</strong>, bunları
-                      odada bırakmaları gerekir -
+                      >Bagajları <strong class="text-success">varsa</strong>,
+                      bunları odada bırakmaları gerekir -
                       <em
                         >if they have luggages, they must leave it in the
                         room</em
@@ -801,10 +803,9 @@
                     class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
                   ></span>
                   <span>
-                    <span class=""
-                      >
-                      <strong class="text-success">Yapabilirse</strong> yapacaktır
-                       -
+                    <span class="">
+                      <strong class="text-success">Yapabilirse</strong>
+                      yapacaktır -
                       <em>if she can do it, she will do it</em>
                     </span>
                   </span>
@@ -817,9 +818,7 @@
                     <span class=""
                       >Piyano <strong class="text-success">çalıyorsa</strong>
                       seni duyamaz -
-                      <em
-                        >if she's playing the piano she can't hear you</em
-                      >
+                      <em>if she's playing the piano she can't hear you</em>
                     </span>
                   </span>
                 </li>
@@ -829,7 +828,10 @@
                   ></span>
                   <span>
                     <span class=""
-                      >Eğer bir kere başardı<strong class="text-success">ysak</strong> ikinci kez başarabiliriz -
+                      >Eğer bir kere başardı<strong class="text-success"
+                        >ysak</strong
+                      >
+                      ikinci kez başarabiliriz -
                       <em
                         >if we managed it one time, we can do it a second time
                       </em>

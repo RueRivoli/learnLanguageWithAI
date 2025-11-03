@@ -4,63 +4,78 @@ import type { GrammarRule } from "~/types/modules/grammar-rule";
 import type { Database } from "~/supabase/types";
 
 export const grammarLevelTabs = {
-  firstTab : { title: 'Beginner', icon: 'academic', activeBgColorClass: 'bg-success/80', activeTxtColorClass: 'text-white'},
-  secondTab : { title: 'Intermediate', icon: 'trophy', activeBgColorClass: 'bg-info/80', activeTxtColorClass: 'text-white'},
-  thirdTab : { title: 'Advanced', icon: 'rocket', activeBgColorClass: 'bg-error/80', activeTxtColorClass: 'text-white'}
-}
-
+  firstTab: {
+    title: "Beginner",
+    icon: "academic",
+    activeBgColorClass: "bg-success/80",
+    activeTxtColorClass: "text-white",
+  },
+  secondTab: {
+    title: "Intermediate",
+    icon: "trophy",
+    activeBgColorClass: "bg-info/80",
+    activeTxtColorClass: "text-white",
+  },
+  thirdTab: {
+    title: "Advanced",
+    icon: "rocket",
+    activeBgColorClass: "bg-error/80",
+    activeTxtColorClass: "text-white",
+  },
+};
 
 export const DIFFICULTY_LEVELS = {
   1: "beginner",
-  2: "intermediate", 
+  2: "intermediate",
   3: "advanced",
-  4: "expert"
-} as const
+  4: "expert",
+} as const;
 
 // Mapping inverse pour obtenir l'ID depuis le nom
 export const DIFFICULTY_IDS = {
-  "BEGINNER": 1,
-  "INTERMEDIATE": 2,
-  "ADVANCED": 3,
-  "EXPERT": 4
-} as const
+  BEGINNER: 1,
+  INTERMEDIATE: 2,
+  ADVANCED: 3,
+  EXPERT: 4,
+} as const;
 
 // Types dérivés
-export type DifficultyLevel = typeof DIFFICULTY_LEVELS[keyof typeof DIFFICULTY_LEVELS]
-export type DifficultyId = typeof DIFFICULTY_IDS[keyof typeof DIFFICULTY_IDS]
+export type DifficultyLevel =
+  (typeof DIFFICULTY_LEVELS)[keyof typeof DIFFICULTY_LEVELS];
+export type DifficultyId = (typeof DIFFICULTY_IDS)[keyof typeof DIFFICULTY_IDS];
 
 // Enum pour une meilleure compatibilité avec le code existant
 export enum RuleDifficulty {
   BEGINNER = 1,
   INTERMEDIATE = 2,
   ADVANCED = 3,
-  EXPERT = 4
+  EXPERT = 4,
 }
 
 // Fonctions utilitaires pour les mappings
 export function getDifficultyName(id: number): DifficultyLevel | null {
-  return DIFFICULTY_LEVELS[id as keyof typeof DIFFICULTY_LEVELS] || null
+  return DIFFICULTY_LEVELS[id as keyof typeof DIFFICULTY_LEVELS] || null;
 }
 
 export function getDifficultyNameSafe(id: number): DifficultyLevel {
-  return DIFFICULTY_LEVELS[id as keyof typeof DIFFICULTY_LEVELS] || "beginner"
+  return DIFFICULTY_LEVELS[id as keyof typeof DIFFICULTY_LEVELS] || "beginner";
 }
 
 export function getDifficultyId(name: string): DifficultyId | null {
-  return DIFFICULTY_IDS[name as keyof typeof DIFFICULTY_IDS] || null
+  return DIFFICULTY_IDS[name as keyof typeof DIFFICULTY_IDS] || null;
 }
 
 export function isDifficultyId(id: number): id is DifficultyId {
-  return id in DIFFICULTY_LEVELS
+  return id in DIFFICULTY_LEVELS;
 }
 
 export function isDifficultyLevel(name: string): name is DifficultyLevel {
-  return name in DIFFICULTY_IDS
+  return name in DIFFICULTY_IDS;
 }
 
 export function getLevelText(level: RuleDifficulty): string {
-  const difficultyName = getDifficultyName(level)
-  return difficultyName ? difficultyName.toLowerCase() : "beginner"
+  const difficultyName = getDifficultyName(level);
+  return difficultyName ? difficultyName.toLowerCase() : "beginner";
 }
 
 export function getLevelLabel(level: RuleDifficulty): VNode {
@@ -116,13 +131,15 @@ export function getTextStyleClassFromGrammarRuleLevel(level: number): string {
     case RuleDifficulty.ADVANCED:
       return "text-error";
     case RuleDifficulty.EXPERT:
-      return "text-neutral";  
+      return "text-neutral";
     default:
-      return "text-neutral";  
+      return "text-neutral";
   }
 }
 
-export function getHoveringBorderStyleClassFromGrammarRuleLevel(level: number): string {
+export function getHoveringBorderStyleClassFromGrammarRuleLevel(
+  level: number,
+): string {
   switch (level) {
     case RuleDifficulty.BEGINNER:
       return "border border-rounded border-slate-300";
@@ -131,7 +148,7 @@ export function getHoveringBorderStyleClassFromGrammarRuleLevel(level: number): 
     case RuleDifficulty.ADVANCED:
       return "border border-rounded border-slate-300";
     case RuleDifficulty.EXPERT:
-      return "border border-rounded border-slate-300";  
+      return "border border-rounded border-slate-300";
     default:
       return "border border-rounded border-slate-300";
   }
@@ -146,7 +163,7 @@ export function getBorderStyleClassFromGrammarRuleLevel(level: number): string {
     case RuleDifficulty.ADVANCED:
       return "border border-rounded border-error";
     case RuleDifficulty.EXPERT:
-      return "border border-rounded border-neutral";  
+      return "border border-rounded border-neutral";
     default:
       return "border border-rounded border-neutral";
   }
@@ -166,7 +183,6 @@ export function getBackgroundClassFromGrammarRuleLevel(level: number): string {
       return "bg-neutral";
   }
 }
-
 
 export function getGrammarRuleStyleClass(rule: GrammarRule): string {
   switch (rule.difficultyClass) {
@@ -232,39 +248,47 @@ export function getPercentageStyleClass(progress: number): string {
   }
 }
 
-export const parseSyllabusRules = (modules: Array<Database['public']['Tables']['turkish_grammar_rules']['Row']>): Array<any> => {
-  return modules.map((module) => (
-    {
-      id: module.id,
-      ruleName: module.rule_name,
-      ruleNameTranslation: module.rule_name_translation,
-      difficultyClass: module.difficulty_class,
-      description: module.description,
-      highlights: module.highlights,
-      symbol: module.symbol,
-      type: module.type,
-    }))
-}
+export const parseSyllabusRules = (
+  modules: Array<Database["public"]["Tables"]["turkish_grammar_rules"]["Row"]>,
+): Array<any> => {
+  return modules.map((module) => ({
+    id: module.id,
+    ruleName: module.rule_name,
+    ruleNameTranslation: module.rule_name_translation,
+    difficultyClass: module.difficulty_class,
+    description: module.description,
+    highlights: module.highlights,
+    symbol: module.symbol,
+    type: module.type,
+  }));
+};
 
-export const parseRules = (modules: Array<Database['public']['Tables']['turkish_grammar_rules']['Row'] & { 'turkish_grammar_scores': Array<{score: number}>}>): Array<GrammarRule & {score: Array<{score: number}>}> => {
-  return modules.map((module) => (
-    {
-      id: module.id,
-      ruleName: module.rule_name,
-      ruleNameTranslation: module.rule_name_translation,
-      difficultyClass: module.difficulty_class,
-      intro: module.intro,
-      description: module.description,
-      highlights: module.highlights,
-      extendedDescription: module.extended_description,
-      symbol: module.symbol,
-      score: module.turkish_grammar_scores[0].score,
-      type: module.type,
-      bookmarked: module.bookmarked,
-    }))
-}
+export const parseRules = (
+  modules: Array<
+    Database["public"]["Tables"]["turkish_grammar_rules"]["Row"] & {
+      turkish_grammar_scores: Array<{ score: number }>;
+    }
+  >,
+): Array<GrammarRule & { score: Array<{ score: number }> }> => {
+  return modules.map((module) => ({
+    id: module.id,
+    ruleName: module.rule_name,
+    ruleNameTranslation: module.rule_name_translation,
+    difficultyClass: module.difficulty_class,
+    intro: module.intro,
+    description: module.description,
+    highlights: module.highlights,
+    extendedDescription: module.extended_description,
+    symbol: module.symbol,
+    score: module.turkish_grammar_scores[0].score,
+    type: module.type,
+    bookmarked: module.bookmarked,
+  }));
+};
 
-export const parseRuleData = (data: Database['public']['Tables']['turkish_grammar_rules']['Row']): GrammarRule  => {
+export const parseRuleData = (
+  data: Database["public"]["Tables"]["turkish_grammar_rules"]["Row"],
+): GrammarRule => {
   return {
     id: data.id,
     ruleName: data.rule_name,

@@ -455,7 +455,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -479,7 +479,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -503,7 +503,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -525,7 +525,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Biz</span
                       >
@@ -549,7 +549,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Siz</span
                       >
@@ -573,7 +573,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Onlar</span
                       >
@@ -630,7 +630,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Bu</span
                       >
@@ -652,7 +652,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Şun</span
                       >
@@ -674,7 +674,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -694,7 +694,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >bunlar</span
                       >
@@ -716,7 +716,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >şunlar</span
                       >
@@ -738,7 +738,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >onlar</span
                       >
@@ -763,153 +763,155 @@
         </div>
       </div>
     </div>
-<br>
+    <br />
 
     <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
-          <h2 class="text-lg font-semibold text-gray-900 mb-3">
-            How To Use Ablative With Locative Pronouns ?
-          </h2>
-          <ul class="space-y-2 text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span class="font-medium"
-                  >Add the accurate suffix following the vowel harmony</span
+      <h2 class="text-lg font-semibold text-gray-900 mb-3">
+        How To Use Ablative With Locative Pronouns ?
+      </h2>
+      <ul class="space-y-2 text-gray-700">
+        <li class="flex items-start gap-2">
+          <span
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"
+          ></span>
+          <span>
+            <span class="font-medium"
+              >Add the accurate suffix following the vowel harmony</span
+            >
+          </span>
+        </li>
+      </ul>
+    </div>
+    <br />
+    <div id="table_present_endings">
+      <div
+        class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr
+                class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+              >
+                <th
+                  class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
                 >
-              </span>
-            </li>
-          </ul>
-        </div>
-        <br>
-        <div id="table_present_endings">
-          <div
-            class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm"
-          >
-            <div class="overflow-x-auto">
-              <table class="w-full">
-                <thead>
-                  <tr
-                    class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200"
+                  Locative Pronoun
+                </th>
+                <th
+                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                >
+                  Ablative Form
+                </th>
+                <th
+                  class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                >
+                  Meaning
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Ne(re)</span
+                    >
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                   >
-                    <th
-                      class="px-6 py-4 text-left text-sm font-bold text-gray-700 tracking-wide"
+                    <span class="">nereden</span>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span class="">from where</span>
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Bu(ra)</span
                     >
-                      Locative Pronoun
-                    </th>
-                    <th
-                      class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span class="">buradan</span>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span class="">from here</span>
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >Şu(ra)</span
                     >
-                    Ablative Form
-                    </th>
-                    <th
-                      class="px-6 py-4 text-center text-sm font-bold text-gray-700 tracking-wide"
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span>şuradan</span>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span class="">from here/there</span>
+                  </span>
+                </td>
+              </tr>
+              <tr class="hover:bg-primary/5 transition-colors duration-150">
+                <td class="px-6 py-4 text-center">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                    <span class="text-sm font-semibold text-gray-900"
+                      >O(ra)</span
                     >
-                      Meaning
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100">
-                    <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                      <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                        <span class="text-sm font-semibold text-gray-900"
-                          >Ne(re)</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span class="">nereden</span>
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span class="">from where</span>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4">
-                      <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                        <span class="text-sm font-semibold text-gray-900"
-                          >Bu(ra)</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span class="">buradan</span>
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span class="">from here</span>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4 text-center">
-                      <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                        <span class="text-sm font-semibold text-gray-900"
-                          >Şu(ra)</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span>şuradan</span>
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span class="">from here/there</span>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr class="hover:bg-primary/5 transition-colors duration-150">
-                    <td class="px-6 py-4 text-center">
-                      <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
-                        <span class="text-sm font-semibold text-gray-900">O(ra)</span>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span>oradan</span>
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                      <span
-                        class="font-semibold px-3 py-1 rounded-lg text-gray-700"
-                      >
-                        <span class="">from there</span>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span>oradan</span>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <span
+                    class="font-semibold px-3 py-1 rounded-lg text-gray-700"
+                  >
+                    <span class="">from there</span>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+    </div>
     <br />
     <!-- Four Essential Forms -->
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
@@ -1059,7 +1061,9 @@
         </p>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Bu kitap o kitap<strong class="text-success">tan daha </strong
@@ -1068,7 +1072,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Ben sen<strong class="text-success">den daha </strong>hızlı
@@ -1084,7 +1090,9 @@
         </h3>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Adamlar<strong class="text-success">dan biri </strong> seninle
@@ -1093,7 +1101,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Meyveler<strong class="text-success">den birkaç </strong>
@@ -1102,7 +1112,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Bunlar<strong class="text-success">dan 5 tane </strong>
@@ -1118,7 +1130,9 @@
         </h3>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Bu poşetler plastik<strong class="text-success">ten </strong
@@ -1127,7 +1141,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Bu cam<strong class="text-success"
@@ -1148,7 +1164,9 @@
         </p>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Anahtarları cam<strong class="text-success">dan </strong>bana
@@ -1157,7 +1175,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Bu cam
@@ -1174,7 +1194,9 @@
         </h3>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Saat sekiz<strong class="text-success">en önce </strong>gel -
@@ -1183,7 +1205,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >10 Kasım <strong class="text-success">’dan sonra</strong> her
@@ -1198,7 +1222,9 @@
         <h3 class="font-semibold text-gray-900 mb-2">Showing a cause/reason</h3>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Yağmur<strong class="text-success">dan </strong>evde kalıyor -
@@ -1207,7 +1233,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >On<strong class="text-success">dan </strong>geç kalıyorsun -
@@ -1224,7 +1252,9 @@
         </p>
         <ul class="space-y-1 text-sm text-gray-700">
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Kız kardeşim örumcek<strong class="text-success">ten </strong
@@ -1233,7 +1263,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Havuzda yüzmek<strong class="text-success">ten </strong
@@ -1242,7 +1274,9 @@
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" ></span>
+            <span
+              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+            ></span>
             <span>
               <span class=""
                 >Mehmet fare<strong class="text-success">den çekiniyor</strong

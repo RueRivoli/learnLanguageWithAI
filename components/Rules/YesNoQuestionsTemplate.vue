@@ -134,7 +134,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >a, ı</span
                       >
@@ -165,7 +165,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >e, i</span
                       >
@@ -196,7 +196,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >o, u</span
                       >
@@ -227,7 +227,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >ö, ü</span
                       >
@@ -420,9 +420,7 @@
           />
         </svg>
         <!-- <ExclamationTriangleIcon class="h-5 w-5 mr-2 text-warning" /> -->
-        <h2 class="text-lg font-semibold text-gray-900">
-          Remarks
-        </h2>
+        <h2 class="text-lg font-semibold text-gray-900">Remarks</h2>
       </div>
       <div class="mt-2 space-y-4">
         <!-- Proper Names -->
@@ -431,16 +429,18 @@
             Impact on emphasis and pronunciation
           </h3>
           <p>
-            In the yes/no questions, the interrogative particle <strong class="text-warning"
-              >shifts the
-              sentence’s emphasis to the syllable immediately before it</strong
+            In the yes/no questions, the interrogative particle
+            <strong class="text-warning"
+              >shifts the sentence’s emphasis to the syllable immediately before
+              it</strong
             >. <br />
-            This changes the stress pattern of the words, because the stress is made on the last syllable before 'mi'. <br />
-            For example, in “O mutlu” (He is happy), the emphasis is on mut. <br />But
-            in “O mutlu mu?” (Is he happy?), the stress shifts to lu. <br />Because
-            the stressed syllable often marks the focus of the sentence,
-            changing the position of the question particle can shift the meaning
-            or emphasis by drawing attention to a different word.
+            This changes the stress pattern of the words, because the stress is
+            made on the last syllable before 'mi'. <br />
+            For example, in “O mutlu” (He is happy), the emphasis is on mut.
+            <br />But in “O mutlu mu?” (Is he happy?), the stress shifts to lu.
+            <br />Because the stressed syllable often marks the focus of the
+            sentence, changing the position of the question particle can shift
+            the meaning or emphasis by drawing attention to a different word.
           </p>
         </div>
 

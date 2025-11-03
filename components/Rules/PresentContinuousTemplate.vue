@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <br/>
+    <br />
     <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
       <div class="flex items-center mb-3">
         <svg
@@ -126,7 +126,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >a, ı</span
                       >
@@ -150,7 +150,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >e, i</span
                       >
@@ -174,7 +174,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >o, u</span
                       >
@@ -196,7 +196,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >ö, ü</span
                       >
@@ -223,7 +223,7 @@
         </div>
       </div>
     </div>
-    <br>
+    <br />
     <div>
       <div class="flex items-center gap-2 mb-3">
         <svg
@@ -277,7 +277,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Ben</span
                       >
@@ -308,7 +308,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900"
                         >Sen</span
                       >
@@ -339,7 +339,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="text-sm font-semibold text-gray-900">O</span>
                     </div>
                   </td>
@@ -368,7 +368,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Biz</span
                       >
@@ -399,7 +399,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Siz</span
                       >
@@ -430,7 +430,7 @@
                 <tr class="hover:bg-primary/5 transition-colors duration-150">
                   <td class="px-6 py-4 text-center">
                     <div class="flex items-center">
-                      <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                      <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                       <span class="font-semibold rounded-lg text-gray-700"
                         >Onlar</span
                       >
@@ -464,28 +464,27 @@
         </div>
       </div>
     </div>
-<br>
+    <br />
     <div>
       <div class="flex items-center gap-2 mb-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-5 w-5 text-success"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                />
-              </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5 text-success"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+          />
+        </svg>
 
-              <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
-            </div>
+        <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
+      </div>
       <div class="space-y-4">
-
         <!-- Proper Names -->
         <div class="border-l-4 border-success pl-4">
           <ul class="space-y-1 text-sm text-gray-700">
@@ -646,7 +645,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >a, ı</span
                         >
@@ -672,7 +671,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >e, i</span
                         >
@@ -696,7 +695,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="text-sm font-semibold text-gray-900"
                           >o, u</span
                         >
@@ -718,7 +717,7 @@
                   <tr class="hover:bg-primary/5 transition-colors duration-150">
                     <td class="px-6 py-4 text-center">
                       <div class="flex items-center">
-                        <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         <span class="font-semibold rounded-lg text-gray-700"
                           >ö, ü</span
                         >
@@ -799,7 +798,9 @@
                       >
                         <td class="px-6 py-4">
                           <div class="flex items-center">
-                            <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
                             <span class="text-sm font-semibold text-gray-900"
                               >Ben</span
                             >
@@ -834,7 +835,9 @@
                       >
                         <td class="px-6 py-4 text-center">
                           <div class="flex items-center">
-                            <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
                             <span class="text-sm font-semibold text-gray-900"
                               >Sen</span
                             >
@@ -869,7 +872,9 @@
                       >
                         <td class="px-6 py-4 text-center">
                           <div class="flex items-center">
-                            <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
                             <span class="text-sm font-semibold text-gray-900"
                               >O</span
                             >
@@ -902,7 +907,9 @@
                       >
                         <td class="px-6 py-4 text-center">
                           <div class="flex items-center">
-                            <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
                             <span class="font-semibold rounded-lg text-gray-700"
                               >Biz</span
                             >
@@ -937,7 +944,9 @@
                       >
                         <td class="px-6 py-4 text-center">
                           <div class="flex items-center">
-                            <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
                             <span class="font-semibold rounded-lg text-gray-700"
                               >Siz</span
                             >
@@ -976,7 +985,9 @@
                       >
                         <td class="px-6 py-4 text-center">
                           <div class="flex items-center">
-                            <div class="w-2 h-2 bg-primary rounded-full mr-3" ></div>
+                            <div
+                              class="w-2 h-2 bg-primary rounded-full mr-3"
+                            ></div>
                             <span class="font-semibold rounded-lg text-gray-700"
                               >Onlar</span
                             >
@@ -1012,23 +1023,23 @@
               </div>
               <br />
               <div class="flex items-center gap-2 mb-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-5 w-5 text-success"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-5 w-5 text-success"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                  />
+                </svg>
 
-              <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
-            </div>
+                <h2 class="text-lg font-semibold text-gray-900">Examples</h2>
+              </div>
               <div class="space-y-4">
                 <!-- Proper Names -->
                 <div class="border-l-4 border-success pl-4">
@@ -1091,7 +1102,7 @@
                 </div>
               </div>
 
-                <!-- extended description -->
+              <!-- extended description -->
               <br />
               <div class="bg-primary/10 rounded-lg p-5 border border-gray-200">
                 <div class="flex items-center mb-3">
@@ -1148,7 +1159,8 @@
                         class="bg-white px-2 py-1 rounded border border-primary text-primary text-sm"
                         >mu</code
                       >
-                     (regardless of the verb's last vowel) + the personal ending
+                      (regardless of the verb's last vowel) + the personal
+                      ending
                     </span>
                   </li>
                 </ul>
@@ -1477,14 +1489,18 @@
                                 <span
                                   class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                                 >
-                                  gel-<strong class="text-primary">iyor mu?</strong>
+                                  gel-<strong class="text-primary"
+                                    >iyor mu?</strong
+                                  >
                                 </span>
                               </td>
                               <td class="px-6 py-4 text-center">
                                 <span
                                   class="font-semibold px-3 py-1 rounded-lg text-gray-700"
                                 >
-                                  gör-<strong class="text-primary">üyor mu?</strong>
+                                  gör-<strong class="text-primary"
+                                    >üyor mu?</strong
+                                  >
                                 </span>
                               </td>
                             </tr>
@@ -1618,82 +1634,90 @@
                         </table>
                       </div>
                     </div>
-                    <br>
+                    <br />
                     <div class="flex items-center gap-2 mb-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="h-5 w-5 text-success"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5 text-success"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                        />
+                      </svg>
 
-                    <h2 class="text-lg font-semibold text-gray-900">
-                      Examples
-                    </h2>
-                  </div>
+                      <h2 class="text-lg font-semibold text-gray-900">
+                        Examples
+                      </h2>
+                    </div>
                     <div class="space-y-4">
-        <!-- Proper Names -->
-        <div class="border-l-4 border-success pl-4">
-          <ul class="space-y-1 text-sm text-gray-700">
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span class=""
-                  >Sen beni gör<strong class="text-success">üyor musun?</strong>
-                </span>
-                —
-                <em> Are you seeing me?</em>
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span class=""
-                  >Ayşe gel<strong class="text-success">iyor mu?</strong>
-                </span>
-                —
-                <em> Is Ayşe coming?</em>
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span class=""
-                  >Çocuk kitap ok<strong class="text-success">uyor mu?</strong>
-                </span>
-                —
-                <em> Is the child reading a book?</em>
-              </span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span
-                class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
-              ></span>
-              <span>
-                <span class=""
-                  >Ali çalış<strong class="text-success">ıyor mu?</strong>
-                </span>
-                —
-                <em> Is Ali working?</em>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
+                      <!-- Proper Names -->
+                      <div class="border-l-4 border-success pl-4">
+                        <ul class="space-y-1 text-sm text-gray-700">
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span>
+                              <span class=""
+                                >Sen beni gör<strong class="text-success"
+                                  >üyor musun?</strong
+                                >
+                              </span>
+                              —
+                              <em> Are you seeing me?</em>
+                            </span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span>
+                              <span class=""
+                                >Ayşe gel<strong class="text-success"
+                                  >iyor mu?</strong
+                                >
+                              </span>
+                              —
+                              <em> Is Ayşe coming?</em>
+                            </span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span>
+                              <span class=""
+                                >Çocuk kitap ok<strong class="text-success"
+                                  >uyor mu?</strong
+                                >
+                              </span>
+                              —
+                              <em> Is the child reading a book?</em>
+                            </span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span
+                              class="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0"
+                            ></span>
+                            <span>
+                              <span class=""
+                                >Ali çalış<strong class="text-success"
+                                  >ıyor mu?</strong
+                                >
+                              </span>
+                              —
+                              <em> Is Ali working?</em>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

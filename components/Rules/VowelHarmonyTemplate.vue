@@ -35,7 +35,7 @@
     </div>
     <!-- End Header -->
     <!-- Vowel Groups -->
-     <br />
+    <br />
     <div class="bg-gray-50 border-base-200 rounded-xl p-5 border shadow-sm">
       <div class="flex items-center gap-3 mb-6">
         <h2 class="text-xl font-bold text-gray-900">Vowel Groups</h2>
@@ -245,7 +245,5 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ArrowLongRightIcon,
-} from "@heroicons/vue/24/outline";
+import { ArrowLongRightIcon } from "@heroicons/vue/24/outline";
 </script>
