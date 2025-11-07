@@ -96,8 +96,8 @@ const handleSignUp = async () => {
   isLoading.value = true;
   try {
     const signUpOptions: any = {
-      // emailRedirectTo:
-      //   window.location.origin + "/authorization/confirmation-account",
+      emailRedirectTo:
+        window.location.origin + "/authorization/confirmation-account",
     };
 
     if (captchaToken.value) {
