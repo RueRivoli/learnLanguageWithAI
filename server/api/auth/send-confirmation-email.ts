@@ -1,7 +1,6 @@
-import type { H3Event } from "h3";
 import { defineEventHandler, createError, readBody } from "h3";
 
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event);
   const body = await readBody(event);
   const { email, confirmationUrl } = body;
@@ -23,7 +22,8 @@ export default defineEventHandler(async (event: H3Event) => {
       message: "Email and confirmation URL are required",
     });
   }
-
+  console.log(brevoApiKey, templateId);
+  console.log(email, confirmationUrl);
   try {
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
