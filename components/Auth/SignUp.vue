@@ -96,8 +96,8 @@ const handleSignUp = async () => {
   isLoading.value = true;
   try {
     const signUpOptions: any = {
-      emailRedirectTo:
-        window.location.origin + "/authorization/confirmation-account",
+      // emailRedirectTo:
+      //   window.location.origin + "/authorization/confirmation-account",
     };
 
     if (captchaToken.value) {
@@ -112,12 +112,33 @@ const handleSignUp = async () => {
     if (error) throw error;
 
     if (data?.user?.id) {
-      await navigateTo({
-        path: "/successful-message",
-        query: {
-          text: "Check your Mailbox to Confirm your Account",
-        },
-      });
+      try {
+        // 1. Générer un token de confirmation sécurisé
+        const { confirmationUrl } = await $fetch('/api/auth/generate-confirmation-token', {
+          method: 'POST',
+          body: { email: state.email }
+        });
+
+        // 2. Envoyer l'email via Brevo avec le template Brevo
+        await $fetch('/api/auth/send-confirmation-email', {
+          method: 'POST',
+          body: {
+            email: state.email,
+            confirmationUrl: confirmationUrl  // Token sécurisé généré par Supabase
+          }
+        });
+
+        // 3. Rediriger vers la page de succès
+        await navigateTo({
+          path: "/successful-message",
+          query: {
+            text: "Check your Mailbox to Confirm your Account",
+          },
+        });
+      } catch (emailError) {
+        console.error("Error sending confirmation email:", emailError);
+        connexionError.value = "Account created but failed to send confirmation email. Please contact support.";
+      }
     }
   } catch (error: unknown) {
     const errorMessage =
@@ -197,7 +218,7 @@ const handleSignUp = async () => {
       <form :state="state" novalidate @submit.prevent="handleSignUp">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
-            >Your email</label
+            >Email</label
           >
           <input
             id="email"
@@ -210,7 +231,7 @@ const handleSignUp = async () => {
         </div>
         <div class="mb-4">
           <label for="password" class="block mb-2 text-sm font-medium"
-            >Your password</label
+            >Password</label
           >
           <div class="relative">
             <input

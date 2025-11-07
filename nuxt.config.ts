@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   echarts: {
     renderer: "canvas",
   },
-  
+
   modules: [
     "@nuxt/eslint",
     "@nuxt/devtools",
@@ -34,6 +34,8 @@ export default defineNuxtConfig({
     openaiApiUrl: process.env.OPENAI_API_URL,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     serviceSupabaseKey: process.env.SERVICE_SUPABASE_ANON_KEY,
+    brevoApiKey: process.env.BREVO_API_KEY,
+    brevoConfirmationTemplateId: process.env.BREVO_CONFIRMATION_TEMPLATE_ID,
 
     // Variables publiques (client) - Sécurisées par RLS
     public: {
@@ -45,7 +47,7 @@ export default defineNuxtConfig({
   },
   postcss: {
     plugins: {
-      '@tailwindcss/postcss': {},
+      "@tailwindcss/postcss": {},
     },
   },
   supabase: {
@@ -128,9 +130,7 @@ export default defineNuxtConfig({
     },
   },
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
   },
   // typescript: {
   //   typeCheck: true,

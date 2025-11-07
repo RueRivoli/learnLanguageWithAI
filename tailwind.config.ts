@@ -16,8 +16,8 @@ const config: Config & { daisyui?: any; safelist?: any[] } = {
   },
   theme: {
     fontFamily: {
-        sans: ["Graphik", "sans-serif"],
-        serif: ["Merriweather", "serif"],
+      sans: ["Graphik", "sans-serif"],
+      serif: ["Merriweather", "serif"],
     },
     extend: {
       colors: {},
@@ -34,18 +34,28 @@ const config: Config & { daisyui?: any; safelist?: any[] } = {
   },
   safelist: [
     // Safelister des classes spécifiques
-    'bg-warning/30',
-    'bg-warning/10',
-    'border-warning/10',
-    'border-warning/20',
-    'bg-neutral/10',
-    'bg-neutral/30',
-    'bg-base-200', 
-    
+    "bg-warning/30",
+    "bg-warning/10",
+    "border-warning/10",
+    "border-warning/20",
+    "bg-neutral/10",
+    "bg-neutral/30",
+    "bg-base-200",
+    "bg-primary/5",
+    "bg-primary/30",
+    "bg-success/15",
+    "bg-success/5",
+    "border-base-300/50",
+    "-left-8",
+    "left-3",
+    "top-3",
+    "bottom-3",
+    "w-px",
+
     // Ou utiliser un pattern pour plusieurs variantes
     {
       pattern: /bg-(warning|error|success|info)\/(10|20|30|40|50)/,
-      variants: ['hover', 'focus'],
+      variants: ["hover", "focus"],
     },
   ],
   // variants: {

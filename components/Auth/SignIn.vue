@@ -143,7 +143,7 @@ const handleSignInWithGoogle = async () => {
       <form :state="state" novalidate @submit.prevent="handleSignIn">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
-            >Your email</label
+            >Email</label
           >
           <input
             id="email"
@@ -156,7 +156,7 @@ const handleSignInWithGoogle = async () => {
         </div>
         <div class="mb-2">
           <label for="password" class="block mb-2 text-sm font-medium"
-            >Your password</label
+            >Password</label
           >
           <div class="relative">
             <input

@@ -4,7 +4,6 @@
 @plugin "daisyui";
 /* Use NuxtUIcons */
 
-
 @theme {
   --font-poppins: Poppins, sans-serif;
   --font-inter: Inter, sans-serif;
