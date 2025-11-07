@@ -33,7 +33,7 @@ const handleResetPassword = async () => {
 
 <template>
   <div
-    class="bg-neutral/10 h-[calc(100vh-4rem)] pt-[4rem] flex justify-center items-center"
+    class="bg-neutral/10 h-full pt-[4rem] flex justify-center items-center"
   >
     <div class="mx-auto">
       <div class="text-primary mb-5">

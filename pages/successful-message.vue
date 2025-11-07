@@ -10,7 +10,7 @@ const messageText = ref<string | null>(route.query.text);
 
 <template>
   <div
-    class="bg-neutral/10 h-[calc(100vh-4rem)] space-y-12 flex justify-center items-center"
+    class="h-full space-y-12 flex justify-center items-center"
   >
     <div class="w-full flex flex-col justify-center items-center">
       <div>
@@ -23,7 +23,7 @@ const messageText = ref<string | null>(route.query.text);
             />
           </div>
 
-          <div role="alert" class="alert alert-primary alert-soft text-white">
+          <div role="alert" class="alert alert-primary">
             <CheckCircleIcon class="h-5 w-5" />
             <span>{{ messageText }}</span>
           </div>
