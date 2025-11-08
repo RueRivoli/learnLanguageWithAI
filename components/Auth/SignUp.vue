@@ -95,10 +95,7 @@ const handleSignUp = async () => {
 
   isLoading.value = true;
   try {
-    const signUpOptions: any = {
-      emailRedirectTo:
-        window.location.origin + "/authorization/confirmation-account",
-    };
+    const signUpOptions: any = {};
 
     if (captchaToken.value) {
       signUpOptions.captchaToken = captchaToken.value;
@@ -113,19 +110,19 @@ const handleSignUp = async () => {
 
     if (data?.user?.id) {
       try {
-        // 1. Générer un token de confirmation sécurisé
-        const { confirmationUrl } = await $fetch('/api/auth/generate-confirmation-token', {
-          method: 'POST',
-          body: { email: state.email }
+        // 1. Générer un lien de confirmation sécurisé via Supabase Admin API
+        const { confirmationUrl } = await $fetch("/api/auth/generate-confirmation-token", {
+          method: "POST",
+          body: { email: state.email },
         });
 
-        // 2. Envoyer l'email via Brevo avec le template Brevo
-        await $fetch('/api/auth/send-confirmation-email', {
-          method: 'POST',
+        // 2. Envoyer l'email via Brevo (template Brevo)
+        await $fetch("/api/auth/send-confirmation-email", {
+          method: "POST",
           body: {
             email: state.email,
-            confirmationUrl: confirmationUrl  // Token sécurisé généré par Supabase
-          }
+            confirmationUrl,
+          },
         });
 
         // 3. Rediriger vers la page de succès
@@ -137,7 +134,8 @@ const handleSignUp = async () => {
         });
       } catch (emailError) {
         console.error("Error sending confirmation email:", emailError);
-        connexionError.value = "Account created but failed to send confirmation email. Please contact support.";
+        connexionError.value =
+          "Account created but failed to send confirmation email. Please contact support.";
       }
     }
   } catch (error: unknown) {

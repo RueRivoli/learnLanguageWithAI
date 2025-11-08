@@ -22,8 +22,6 @@ export default defineEventHandler(async (event) => {
       message: "Email and confirmation URL are required",
     });
   }
-  console.log(brevoApiKey, templateId);
-  console.log(email, confirmationUrl);
   try {
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
