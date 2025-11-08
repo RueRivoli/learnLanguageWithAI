@@ -117,7 +117,7 @@ const handleSignUp = async () => {
       options: signUpOptions,
     });
     if (error) throw error;
-
+    console.log('data.user.id', data?.user?.id);
     if (data?.user?.id) {
       try {
         // 1. Générer un lien de confirmation sécurisé via Supabase Admin API
@@ -125,7 +125,7 @@ const handleSignUp = async () => {
           method: "POST",
           body: { email: props.state.email },
         });
-
+        console.log('confirmationUrl', confirmationUrl);
         // 2. Envoyer l'email via Brevo (template Brevo)
         await $fetch("/api/auth/send-confirmation-email", {
           method: "POST",

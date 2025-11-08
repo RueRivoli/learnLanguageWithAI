@@ -38,7 +38,7 @@ import {
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
               <span class="text-sm font-medium">Step 1</span>
             </div>
-            <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
+            <h3 class="text-3xl sm:text-4xl text-neutral">
               It Tracks Your <span class="text-warning">Abilities</span> in the
               <span class="text-warning">50+</span> Most Important Key Concepts
             </h3>
@@ -68,10 +68,10 @@ import {
         <!-- Step 2: Vocabulary Mapping -->
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 lg:col-span-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
               <span class="text-sm font-medium">Step 2</span>
             </div>
-            <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
+            <h3 class="text-3xl sm:text-4xl  text-neutral">
               It Tracks your
               <span class="text-warning">Vocabulary Knowledge</span> among the
               <span class="text-warning">30%</span> Most Used Words and
@@ -116,7 +116,7 @@ import {
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
               <span class="text-sm font-medium">Step 3</span>
             </div>
-            <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
+            <h3 class="text-3xl sm:text-4xl  text-neutral">
               Practice with <span class="text-warning">Targeted Stories</span>
             </h3>
             <p class="text-lg sm:text-xl text-base-content/70 leading-relaxed">
@@ -159,7 +159,7 @@ import {
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
               <span class="text-sm font-medium">Step 4</span>
             </div>
-            <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
+            <h3 class="text-3xl sm:text-4xl  text-neutral">
               Evaluate Your Progress Through
               <span class="text-warning">Challenging Quizzes</span>
             </h3>
