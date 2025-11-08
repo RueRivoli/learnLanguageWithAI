@@ -23,7 +23,7 @@ const messageText = ref<string | null>(route.query.text);
             />
           </div>
 
-          <div role="alert" class="alert alert-primary">
+          <div role="alert" class="alert alert-success text-white">
             <CheckCircleIcon class="h-5 w-5" />
             <span>{{ messageText }}</span>
           </div>

@@ -181,9 +181,6 @@ admin_email = "env(BREVO_ADMIN_EMAIL)"
 sender_name = "TookanAI"
 
 # Email templates
-[auth.email.template.confirmation]
-subject = "Confirm your Account - TookanAI"
-content_path = "./supabase/templates/confirmation.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.
