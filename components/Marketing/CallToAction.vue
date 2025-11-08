@@ -132,7 +132,7 @@ onMounted(() => {
           </div>
 
           <div
-            class="mt-2 w-full inline-flex items-center gap-3 rounded-lg bg-base-200/70 px-4 py-2"
+            class="mt-2 w-full inline-flex items-center gap-3 px-4 py-2"
           >
             <MarketingUsedBy />
           </div>

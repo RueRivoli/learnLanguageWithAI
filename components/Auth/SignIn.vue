@@ -133,13 +133,6 @@ const handleSignInWithGoogle = async () => {
 
       <div class="divider divider-neutral text-sm">OR</div>
       <br />
-
-      <!-- <div
-        v-if="connexionError"
-        class="w-full bg-error mb-2 border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-      >
-        {{ connexionError }}
-      </div> -->
       <div
         v-if="connexionError"
         role="alert"
@@ -162,7 +155,7 @@ const handleSignInWithGoogle = async () => {
             required
           />
         </div>
-        <div class="mb-2">
+        <div class="mb-4">
           <label for="password" class="block mb-2 text-sm font-medium"
             >Password</label
           >
