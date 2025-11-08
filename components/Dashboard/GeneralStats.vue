@@ -113,7 +113,6 @@ const currentInfo = computed(() => {
             :symbol="rule.symbol"
             :score="rule.score"
             :level="rule.difficultyClass"
-            :lightMode="true"
             @click="router.push(`/learning/modules/${rule.ruleId}`)"
           >
             <template #details>

@@ -63,7 +63,7 @@ function toggle(index) {
           >
             <button
               :id="'faq-header-' + index"
-              class="w-full flex justify-between cursor-pointer items-center px-6 py-4 text-left text-lg font-semibold text-white hover:bg-primary/50 focus:outline-none focus-visible:ring focus-visible:ring-primary rounded-lg"
+              class="w-full flex justify-between cursor-pointer items-center px-6 py-4 text-left text-lg text-white hover:bg-primary/50 focus:outline-none focus-visible:ring focus-visible:ring-primary rounded-lg"
               :aria-expanded="openIndex === index"
               :aria-controls="'faq-panel-' + index"
               @click="toggle(index)"
@@ -86,7 +86,7 @@ function toggle(index) {
               <div
                 v-show="openIndex === index"
                 :id="'faq-panel-' + index"
-                class="px-6 py-3 text-white prose max-w-none font-medium text-pretty"
+                class="px-6 py-3 text-white prose max-w-none text-pretty"
                 :aria-labelledby="'faq-header-' + index"
                 role="region"
               >

@@ -6,7 +6,7 @@ import {
 
 const props = withDefaults(
   defineProps<{
-    lightMode?: boolean;
+    backgroundClasses?: string | null;
     title: string | null;
     titleEn: string | null;
     level: number | null;
@@ -14,8 +14,8 @@ const props = withDefaults(
     size?: "small" | "large";
   }>(),
   {
+    backgroundClasses: null,
     level: null,
-    lightMode: false,
     title: null,
     titleEn: null,
     symbol: null,
@@ -27,23 +27,17 @@ const props = withDefaults(
 <template>
   <!-- Total Expressions Mastered - Professional Design -->
   <div
-    :class="[
-      props.lightMode
-        ? `bg-slate-200 group relative rounded-xl shadow-md p-4 hover:shadow-lg overflow-hidden transition-all duration-300 ${getHoveringBorderStyleClassFromGrammarRuleLevel(props.level ?? 0)}`
-        : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-xl shadow-md border border-emerald-300/70 p-4 hover:shadow-xl hover:border-emerald-400/80 overflow-hidden transition-all duration-300',
+    :class="[`group relative rounded-xl shadow-md p-4 hover:shadow-lg overflow-hidden transition-all duration-300 ${getHoveringBorderStyleClassFromGrammarRuleLevel(props.level ?? 0)}`,
+    {'bg-slate-200': backgroundClasses === null}, { [`${props.backgroundClasses}`]: backgroundClasses !== null }
     ]"
   >
     <!-- Professional background pattern -->
-    <div
-      v-if="!props.lightMode"
+    <!-- <div
       class="absolute inset-0 bg-gradient-to-br from-emerald-100/70 via-green-100/80 to-teal-100/60 opacity-90"
     />
-
-    <!-- Success celebration overlay -->
     <div
-      v-if="!props.lightMode"
       class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-green-500/3 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"
-    />
+    /> -->
 
     <!-- Content container -->
     <div class="h-full relative flex flex-col justify-between z-10">

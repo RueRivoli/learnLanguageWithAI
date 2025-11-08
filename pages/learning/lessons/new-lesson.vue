@@ -396,7 +396,6 @@ const handleGenerateStory = async () => {
                       :symbol="targetedModule?.symbol"
                       :score="targetedModule?.score"
                       :level="targetedModule?.level"
-                      :lightMode="true"
                     >
                       <template #content>
                         <!-- Professional description box -->

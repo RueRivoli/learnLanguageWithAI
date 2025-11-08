@@ -59,7 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-neutral/10 min-h-[70vh]">
+  <section class="relative overflow-hidden bg-white/20 min-h-[70vh]">
     <!-- Background: soft gradient base + subtle grid + refined glows -->
 
     <div
@@ -95,17 +95,17 @@ onMounted(() => {
           >
             <li class="flex items-center gap-2">
               <CheckCircleIcon class="h-5 w-5 text-primary" /><span
-                >Tailored Lessons</span
+                >Very Personalized Lessons</span
               >
             </li>
             <li class="flex items-center gap-2">
               <CheckCircleIcon class="h-5 w-5 text-warning" /><span
-                >Progress WAY Faster</span
+                >Progress Much Faster</span
               >
             </li>
             <li class="flex items-center gap-2">
               <CheckCircleIcon class="h-5 w-5 text-neutral" /><span
-                >Quizzes From Challenging Teachers</span
+                >Get Tested By Quizzes From Challenging Teachers</span
               >
             </li>
           </ul>
@@ -123,7 +123,7 @@ onMounted(() => {
               <ArrowLongRightIcon class="h-5 w-5" />
             </NuxtLink>
             <NuxtLink
-              to="/marketing/working-explanation"
+              to="/#how-it-works"
               class="btn btn-ghost text-lg font-semibold px-8"
             >
               <ArrowTopRightOnSquareIcon class="h-5 w-5" />

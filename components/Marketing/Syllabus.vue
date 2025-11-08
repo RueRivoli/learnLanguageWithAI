@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import type { GrammarRule } from "~/types/modules/grammar-rule";
+import { rulesNames } from "~/utils/syllabus";
 import {
   getBorderStyleClassFromGrammarRuleLevel,
   getTextStyleClassFromGrammarRuleLevel,
@@ -8,10 +9,19 @@ import {
   parseSyllabusRules,
 } from "~/utils/learning/grammar";
 
-const selectedLang = ref("tr");
-const syllabusRules = ref<Array<GrammarRule>>([]);
+// Import images
+import turkishFlag from "~/assets/img/language/turkish.png";
+import frenchFlag from "~/assets/img/language/french.png";
+import spanishFlag from "~/assets/img/language/spanish.png";
+import japaneseFlag from "~/assets/img/language/japanese.png";
+import italianFlag from "~/assets/img/language/italian.png";
+import germanFlag from "~/assets/img/language/german.png";
+
 const isFetchingGrammarRules = ref(false);
 const activeDifficultyLevelTab = ref(1);
+const supportedLanguages = ref<any[]>([]);
+const isFetchingLanguages = ref(false);
+const selectedLanguageCode = ref<string>("tr");
 
 const getDifficultyClassQuery = (tabDifficultyLevel: number) => {
   switch (tabDifficultyLevel) {
@@ -32,40 +42,93 @@ const getDifficultyClassQuery = (tabDifficultyLevel: number) => {
   }
 };
 
-watchEffect(async () => {
-  try {
-    isFetchingGrammarRules.value = true;
-    const query = getDifficultyClassQuery(activeDifficultyLevelTab.value);
-    const grammarModules = await $fetch("/api/grammar/syllabus?order_by=id", {
-      query,
-    });
-    if (grammarModules && Array.isArray(grammarModules))
-      syllabusRules.value = parseSyllabusRules(grammarModules);
-    isFetchingGrammarRules.value = false;
-  } catch (error) {
-    console.log(error);
+const grammarModules = computed(() => selectedLanguageCode.value ? rulesNames[selectedLanguageCode.value as keyof typeof rulesNames][activeDifficultyLevelTab.value] : []);
+
+const getImage = (language: string) => {
+  switch (language) {
+    case "turkish":
+      return turkishFlag;
+    case "french":
+      return frenchFlag;
+    case "spanish":
+      return spanishFlag;
+    case "japanese":
+      return japaneseFlag;
+    case "italian":
+      return italianFlag;
+    case "german":
+      return germanFlag;
   }
+  return `~/assets/img/language/${language}.png`;
+};
+
+const getSupportedLanguages = async () => {
+  try {
+    isFetchingLanguages.value = true;
+    const { data: languages } = await $fetch(
+      "/api/languages/?is_supported=true",
+    );
+    supportedLanguages.value = languages.map((language: any) => {
+      return {
+        name:
+          language.language.charAt(0).toUpperCase() +
+          language.language.slice(1).toLowerCase(),
+        code: language.code,
+        image: getImage(language.language),
+        id: language.id,
+        alt: `Learn ${language.language}`,
+        totalVotes: language.a_votes + language.b_votes,
+        realVotes: language.a_votes,
+        status: language.status,
+        bgColor: language.background_classes,
+        isReleased: language.is_released,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching supported languages", error);
+    isFetchingLanguages.value = false;
+  } finally {
+    isFetchingLanguages.value = false;
+  }
+};
+
+const handleLanguageClick = (languageCode: string) => {
+  selectedLanguageCode.value = languageCode;
+};
+
+const getBackgroundClasses = computed(() => {
+  return supportedLanguages.value.find((language) => language.code === selectedLanguageCode.value)?.bgColor || '';
 });
+
+onMounted( async () => {
+  await getSupportedLanguages();
+  handleLanguageClick(supportedLanguages.value[0].code);
+});
+
 </script>
 
 <template>
   <section
     id="syllabus"
-    class="bg-primary/10 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
+    class="bg-white/20 inset-0 z-[-1] bg-cover px-4 py-12 flex items-center"
   >
     <div class="max-w-7xl mx-auto">
       <h1
-        class="text-4xl font-semibold tracking-tight text-pretty text-center text-neutral mb-8"
+        class="text-5xl tracking-tight text-pretty text-center text-neutral mb-16"
       >
         Syllabus in your Targeted Language
       </h1>
 
       <MarketingSupportedLanguagesList
+        class="mb-16"
         size="small"
         :showStatus="false"
         :isLanguageClickable="true"
+        :selectedLanguageCode="selectedLanguageCode"
+        :supportedLanguages="supportedLanguages"
+        :isFetchingLanguages="isFetchingLanguages"
+        @click="(languageCode) => handleLanguageClick(languageCode)"
       />
-      <div class="flex justify-center space-x-3 mb-8 p-6"></div>
       <!-- Syllabus Content -->
       <LayoutTabs
         :first-tab="grammarLevelTabs.firstTab"
@@ -75,17 +138,16 @@ watchEffect(async () => {
           (activeTab) => (activeDifficultyLevelTab = activeTab)
         "
       />
-      <div class="mt-4 grid grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-4">
-        <div v-for="(rule, n) in syllabusRules" :key="n" class="col-span-1">
+      <div class="mt-4 grid grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <div v-for="(rule, n) in grammarModules" :key="n" class="col-span-1">
           <transition name="fade" mode="out-in">
             <LayoutKeyElementRuleOverview
               class="h-full cursor-pointer"
+              :backgroundClasses="getBackgroundClasses"
               :title="rule.ruleName"
               :titleEn="rule.ruleNameTranslation"
               :symbol="rule.symbol"
-              :score="rule.score"
               :level="rule.difficultyClass"
-              :lightMode="true"
               size="large"
             >
               <template #content>
@@ -143,7 +205,7 @@ watchEffect(async () => {
                         >
                       </div>
                       <p
-                        class="text-xs text-slate-700 font-medium leading-relaxed"
+                        class="leading-relaxed"
                       >
                         {{ (rule as any).highlights }}
                       </p>

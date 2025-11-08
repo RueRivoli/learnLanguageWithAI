@@ -35,17 +35,8 @@ import {
         <!-- Step 1: Track Progress -->
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 order-2 lg:order-1 lg:col-span-2">
-            <div class="flex items-center gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center"
-              >
-                <ChartBarIcon class="h-6 w-6 text-primary" />
-              </div>
-              <div
-                class="text-sm font-semibold text-primary uppercase tracking-wider"
-              >
-                Step 1
-              </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
+              <span class="text-sm font-medium">Step 1</span>
             </div>
             <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
               It Tracks Your <span class="text-warning">Abilities</span> in the
@@ -77,17 +68,8 @@ import {
         <!-- Step 2: Vocabulary Mapping -->
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 lg:col-span-2">
-            <div class="flex items-center gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center"
-              >
-                <BookOpenIcon class="h-6 w-6 text-primary" />
-              </div>
-              <div
-                class="text-sm font-semibold text-primary uppercase tracking-wider"
-              >
-                Step 2
-              </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
+              <span class="text-sm font-medium">Step 2</span>
             </div>
             <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
               It Tracks your
@@ -131,17 +113,8 @@ import {
         <!-- Step 3: Targeted Stories -->
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 order-2 lg:order-1 lg:col-span-2">
-            <div class="flex items-center gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center"
-              >
-                <SparklesIcon class="h-6 w-6 text-primary" />
-              </div>
-              <div
-                class="text-sm font-semibold text-primary uppercase tracking-wider"
-              >
-                Step 3
-              </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
+              <span class="text-sm font-medium">Step 3</span>
             </div>
             <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
               Practice with <span class="text-warning">Targeted Stories</span>
@@ -183,17 +156,8 @@ import {
         <!-- Step 4: Assessment -->
         <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           <div class="space-y-6 lg:col-span-2">
-            <div class="flex items-center gap-4">
-              <div
-                class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center"
-              >
-                <AcademicCapIcon class="h-6 w-6 text-primary" />
-              </div>
-              <div
-                class="text-sm font-semibold text-primary uppercase tracking-wider"
-              >
-                Step 4
-              </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white w-fit">
+              <span class="text-sm font-medium">Step 4</span>
             </div>
             <h3 class="text-3xl sm:text-4xl font-bold text-neutral">
               Evaluate Your Progress Through

@@ -1,5 +1,63 @@
 <script setup lang="ts">
 import { GlobeAltIcon } from "@heroicons/vue/24/solid";
+
+// Import images
+import turkishFlag from "~/assets/img/language/turkish.png";
+import frenchFlag from "~/assets/img/language/french.png";
+import spanishFlag from "~/assets/img/language/spanish.png";
+import japaneseFlag from "~/assets/img/language/japanese.png";
+import italianFlag from "~/assets/img/language/italian.png";
+import germanFlag from "~/assets/img/language/german.png";
+
+const supportedLanguages = ref<any[]>([]);
+const isFetchingLanguages = ref(false);
+
+const getImage = (language: string) => {
+  switch (language) {
+    case "turkish":
+      return turkishFlag;
+    case "french":
+      return frenchFlag;
+    case "spanish":
+      return spanishFlag;
+    case "japanese":
+      return japaneseFlag;
+    case "italian":
+      return italianFlag;
+    case "german":
+      return germanFlag;
+  }
+  return `~/assets/img/language/${language}.png`;
+};
+
+const getSupportedLanguages = async () => {
+  try {
+    isFetchingLanguages.value = true;
+    const { data: languages } = await $fetch(
+      "/api/languages/?is_supported=true",
+    );
+    supportedLanguages.value = languages.map((language: any) => {
+      return {
+        name:
+          language.language.charAt(0).toUpperCase() +
+          language.language.slice(1).toLowerCase(),
+        image: getImage(language.language),
+        alt: `Learn ${language.language}`,
+        totalVotes: language.a_votes + language.b_votes,
+        realVotes: language.a_votes,
+        status: language.status,
+        bgColor: `${language.background_classes}`,
+        isReleased: language.is_released,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching supported languages", error);
+    isFetchingLanguages.value = false;
+  } finally {
+    isFetchingLanguages.value = false;
+  }
+};
+getSupportedLanguages();
 </script>
 
 <template>

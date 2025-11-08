@@ -1,90 +1,40 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// Import images
-import turkishFlag from "~/assets/img/language/turkish.png";
-import frenchFlag from "~/assets/img/language/french.png";
-import spanishFlag from "~/assets/img/language/spanish.png";
-import japaneseFlag from "~/assets/img/language/japanese.png";
-import italianFlag from "~/assets/img/language/italian.png";
-import germanFlag from "~/assets/img/language/german.png";
-
 const props = withDefaults(
   defineProps<{
+    isFetchingLanguages: boolean;
     isLanguageClickable?: boolean;
+    selectedLanguageCode: string | null;
     size?: "small" | "large";
     showStatus?: boolean;
+    supportedLanguages: Array<any> | null;
   }>(),
   {
+    isFetchingLanguages: false,
     isLanguageClickable: false,
+    selectedLanguageCode: null,
     size: "large",
     showStatus: true,
+    supportedLanguages: null,
   },
 );
-const supportedLanguages = ref<any[]>([]);
-const selectedLanguageIndex = ref<number | null>(0);
-const isFetchingLanguages = ref(false);
+
 const emit = defineEmits(["click"]);
 
-const getImage = (language: string) => {
-  switch (language) {
-    case "turkish":
-      return turkishFlag;
-    case "french":
-      return frenchFlag;
-    case "spanish":
-      return spanishFlag;
-    case "japanese":
-      return japaneseFlag;
-    case "italian":
-      return italianFlag;
-    case "german":
-      return germanFlag;
-  }
-  return `~/assets/img/language/${language}.png`;
+const handleLanguageClick = (languageCode: string) => {
+  emit("click", languageCode);
 };
 
-const getSupportedLanguages = async () => {
-  try {
-    isFetchingLanguages.value = true;
-    const { data: languages } = await $fetch(
-      "/api/languages/?is_supported=true",
-    );
-    supportedLanguages.value = languages.map((language: any) => {
-      return {
-        name:
-          language.language.charAt(0).toUpperCase() +
-          language.language.slice(1).toLowerCase(),
-        image: getImage(language.language),
-        alt: `Learn ${language.language}`,
-        totalVotes: language.a_votes + language.b_votes,
-        realVotes: language.a_votes,
-        status: language.status,
-        bgColor: `rounded-lg ring-1 ring-black/5 ${language.background_classes}`,
-        isReleased: language.is_released,
-      };
-    });
-  } catch (error) {
-    console.error("Error fetching supported languages", error);
-    isFetchingLanguages.value = false;
-  } finally {
-    isFetchingLanguages.value = false;
-  }
-};
 
-const handleLanguageClick = (index: number) => {
-  selectedLanguageIndex.value = index;
-  emit("click");
-};
-
-getSupportedLanguages();
 </script>
 
 <template>
   <div class="mx-auto max-w-5xl">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
       <div
-        v-if="!isFetchingLanguages"
+        v-if="!isFetchingLanguages && supportedLanguages !== null"
         v-for="(language, index) in supportedLanguages"
         :key="language.name"
         :class="[
@@ -92,18 +42,18 @@ getSupportedLanguages();
           language.bgColor,
           { 'p-3': props.size === 'small', 'p-6': props.size === 'large' },
           { 'cursor-pointer': props.isLanguageClickable === true },
-          {
-            'border-2 border-primary': selectedLanguageIndex === index,
-          },
+          // {
+          //   'border-primary': selectedLanguageId === language.id,
+          // },
         ]"
-        @click="handleLanguageClick(index)"
-      >
+        @click="handleLanguageClick(language.code)"
+      > 
         <div class="flex items-center justify-between">
           <div class="space-y-2">
             <h2
               :class="[
-                'text-2xl font-bold transition-colors duration-300',
-                selectedLanguageIndex === index
+                'text-2xl duration-300',
+                selectedLanguageCode === language.code
                   ? 'text-primary'
                   : 'text-neutral',
               ]"

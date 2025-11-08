@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   let request = supabase
     .from("languages_support")
     .select(
-      "id, language, a_votes, b_votes, status, background_classes, is_supported, is_released",
+      "id, code, language, a_votes, b_votes, status, background_classes, is_supported, is_released",
     )
     .order("id", { ascending: true });
   if (isSupported === "true") {
