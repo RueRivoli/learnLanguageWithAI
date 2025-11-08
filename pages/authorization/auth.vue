@@ -2,14 +2,12 @@
 import { ArrowLeftIcon } from "@heroicons/vue/24/outline";
 
 const route = useRoute();
-// const props = withDefaults(
-//   defineProps<{
-//     toCreateAccount?: boolean;
-//   }>(),
-//   {
-//     toCreateAccount: false,
-//   },
-// );
+
+const state = reactive<Schema>({
+  email: "",
+  password: "",
+});
+
 const createAccountActivated = ref<boolean | null>(false);
 definePageMeta({
   layout: "auth",
@@ -59,8 +57,8 @@ watchEffect(() => {
           >
         </label>
       </div>
-      <AuthSignUp v-if="createAccountActivated" />
-      <AuthSignIn v-else />
+      <AuthSignUp v-if="createAccountActivated" :state="state" />
+      <AuthSignIn v-else :state="state" />
     </div>
   </div>
 </template>

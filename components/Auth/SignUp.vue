@@ -4,11 +4,21 @@ import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
 import type { Schema } from "~/utils/auth/auth";
 
 const client = useSupabaseClient();
+
+const props = withDefaults(
+  defineProps<{
+    state: Schema;
+  }>(),
+  {
+    state: {
+      email: "",
+      password: "",
+    },
+  },
+);
+
 const showPassword = ref<boolean>(false);
-const state = reactive<Schema>({
-  email: "",
-  password: "",
-});
+
 
 const connexionError = ref<null | string>(null);
 const isLoading = ref<boolean>(false);
@@ -87,7 +97,7 @@ const handleSignUp = async () => {
     return;
   }
 
-  const emailOrPasswordError = getEmailPasswordInvalidityMessage(state);
+  const emailOrPasswordError = getEmailPasswordInvalidityMessage(props.state);
   if (emailOrPasswordError !== null) {
     connexionError.value = emailOrPasswordError;
     return;
@@ -102,8 +112,8 @@ const handleSignUp = async () => {
     }
 
     const { data, error } = await client.auth.signUp({
-      email: state.email,
-      password: state.password,
+      email: props.state.email,
+      password: props.state.password,
       options: signUpOptions,
     });
     if (error) throw error;
@@ -113,14 +123,14 @@ const handleSignUp = async () => {
         // 1. Générer un lien de confirmation sécurisé via Supabase Admin API
         const { confirmationUrl } = await $fetch("/api/auth/generate-confirmation-token", {
           method: "POST",
-          body: { email: state.email },
+          body: { email: props.state.email },
         });
 
         // 2. Envoyer l'email via Brevo (template Brevo)
         await $fetch("/api/auth/send-confirmation-email", {
           method: "POST",
           body: {
-            email: state.email,
+            email: props.state.email,
             confirmationUrl,
           },
         });
@@ -213,14 +223,14 @@ const handleSignUp = async () => {
         <XCircleIcon class="h-5 w-5 cursor-pointer text-white" />
         <span class="text-white" v-html="connexionError" />
       </div>
-      <form :state="state" novalidate @submit.prevent="handleSignUp">
+      <form :state="props.state" novalidate @submit.prevent="handleSignUp">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
             >Email</label
           >
           <input
             id="email"
-            v-model="state.email"
+            v-model="props.state.email"
             type="email"
             class="w-full bg-base-200 border rounded-lg focus:primary focus:border-primary block p-2.5 placeholder-base-20"
             placeholder="email"
@@ -234,7 +244,7 @@ const handleSignUp = async () => {
           <div class="relative">
             <input
               id="password"
-              v-model="state.password"
+              v-model="props.state.password"
               :type="showPassword ? 'text' : 'password'"
               class="w-full bg-base-200 border rounded-lg focus:primary focus:border-primary block p-2.5 placeholder-base-20"
               placeholder="password"

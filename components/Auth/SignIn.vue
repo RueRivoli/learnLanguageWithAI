@@ -4,10 +4,18 @@ import { getEmailPasswordInvalidityMessage } from "~/utils/auth/auth";
 import type { Schema } from "~/utils/auth/auth";
 
 const client = useSupabaseClient();
-const state = reactive<Schema>({
-  email: "",
-  password: "",
-});
+
+const props = withDefaults(
+  defineProps<{
+    state: Schema;
+  }>(),
+  {
+    state: {
+      email: "",
+      password: "",
+    },
+  },
+);
 
 const connexionError = ref<string | null>(null);
 const isLoading = ref<boolean>(false);
@@ -67,15 +75,15 @@ onMounted(() => {
 
 const handleSignIn = async () => {
   connexionError.value = null;
-  const errorFromCheck = getEmailPasswordInvalidityMessage(state);
+  const errorFromCheck = getEmailPasswordInvalidityMessage(props.state);
   if (errorFromCheck !== null) {
     connexionError.value = errorFromCheck;
     return;
   }
   try {
     const { data, error } = await client.auth.signInWithPassword({
-      email: state.email,
-      password: state.password,
+      email: props.state.email,
+      password: props.state.password,
     });
     if (data.user?.id) {
       await navigateTo({
@@ -140,14 +148,14 @@ const handleSignInWithGoogle = async () => {
         <XCircleIcon class="h-5 w-5 cursor-pointer text-white" />
         <span class="text-white" v-html="connexionError" />
       </div>
-      <form :state="state" novalidate @submit.prevent="handleSignIn">
+      <form :state="props.state" novalidate @submit.prevent="handleSignIn">
         <div class="mb-2">
           <label for="email" class="block mb-2 text-sm font-medium"
             >Email</label
           >
           <input
             id="email"
-            v-model="state.email"
+            v-model="props.state.email"
             class="w-full bg-base-200 border rounded-lg focus:ring-primary p-2.5"
             placeholder="email"
             type="email"
@@ -161,7 +169,7 @@ const handleSignInWithGoogle = async () => {
           <div class="relative">
             <input
               id="password"
-              v-model="state.password"
+              v-model="props.state.password"
               class="w-full bg-base-200 border rounded-lg focus:border-primary p-2.5"
               placeholder="password"
               :type="showPassword ? 'text' : 'password'"
