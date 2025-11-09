@@ -161,7 +161,7 @@ enable_signup = true
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
 # If enabled, users need to confirm their email address before signing in.
-enable_confirmations = false
+enable_confirmations = true
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
@@ -182,6 +182,25 @@ admin_email = "env(BREVO_ADMIN_EMAIL)"
 sender_name = "TookanAI"
 
 # Email templates
+# Confirmation email (signup, email change, etc)
+[auth.email.template.confirmation]
+subject = "Confirm your email - TookanAI"
+content_path = "./supabase/templates/confirmation.html"
+
+# Password recovery email
+[auth.email.template.recovery]
+subject = "Réinitialiser votre mot de passe - TookanAI"
+content_path = "./supabase/templates/recovery.html"
+
+# Magic link email
+[auth.email.template.magic_link]
+subject = "Connexion à TookanAI"
+# content_path = "./supabase/templates/magic_link.html"
+
+# Email change confirmation
+[auth.email.template.email_change]
+subject = "Confirmez votre nouvelle adresse email - TookanAI"
+# content_path = "./supabase/templates/email_change.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.

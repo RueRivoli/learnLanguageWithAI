@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Confirm your email - TookanAI</title>
+    <title>Réinitialiser votre mot de passe - TookanAI</title>
   </head>
   <body
     style="
@@ -41,12 +41,12 @@
             <tr>
               <td style="padding: 40px 30px">
                 <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 24px">
-                  Confirm your registration
+                  Réinitialiser votre mot de passe
                 </h2>
 
                 <p style="color: #4b5563; line-height: 1.6; margin: 0 0 20px 0">
-                  Thank you for signing up on TookanAI! Click the button below
-                  to confirm your email address.
+                  Vous avez demandé à réinitialiser votre mot de passe. 
+                  Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe.
                 </p>
 
                 <table role="presentation" style="width: 100%; margin: 30px 0">
@@ -64,18 +64,42 @@
                           font-weight: 600;
                         "
                       >
-                        Confirm my email
+                        Réinitialiser mon mot de passe
                       </a>
                     </td>
                   </tr>
                 </table>
 
                 <p style="color: #6b7280; font-size: 14px; margin: 20px 0 0 0">
-                  Or copy and paste this link into your browser:<br />
+                  Ou copiez et collez ce lien dans votre navigateur :<br />
                   <span style="word-break: break-all; color: #2563eb"
                     >{{ .ConfirmationURL }}</span
                   >
                 </p>
+
+                <div
+                  style="
+                    background-color: #fef3c7;
+                    border-left: 4px solid #f59e0b;
+                    padding: 15px;
+                    margin: 30px 0;
+                    border-radius: 4px;
+                  "
+                >
+                  <p
+                    style="
+                      color: #92400e;
+                      font-size: 14px;
+                      margin: 0;
+                      font-weight: 600;
+                    "
+                  >
+                    ⚠️ Important
+                  </p>
+                  <p style="color: #92400e; font-size: 13px; margin: 10px 0 0 0">
+                    Ce lien expire dans 1 heure pour des raisons de sécurité.
+                  </p>
+                </div>
 
                 <hr
                   style="
@@ -86,8 +110,9 @@
                 />
 
                 <p style="color: #6b7280; font-size: 12px; margin: 0">
-                  If you did not create an account on TookanAI, you can safely
-                  ignore this email.
+                  Si vous n'avez pas demandé de réinitialisation de mot de passe, 
+                  vous pouvez ignorer cet email en toute sécurité. Votre mot de passe 
+                  actuel restera inchangé.
                 </p>
               </td>
             </tr>
@@ -97,10 +122,10 @@
       <tr>
         <td style="padding: 20px; text-align: center">
           <p style="color: #9ca3af; font-size: 12px; margin: 0 0 10px 0">
-            © 2024 TookanAI. All rights reserved.
+            © 2024 TookanAI. Tous droits réservés.
           </p>
           <p style="color: #9ca3af; font-size: 11px; margin: 0">
-            Need help? Contact us at 
+            Besoin d'aide ? Contactez-nous à 
             <a
               href="mailto:support@tookanai.com"
               style="color: #2563eb; text-decoration: none"
@@ -112,3 +137,4 @@
     </table>
   </body>
 </html>
+

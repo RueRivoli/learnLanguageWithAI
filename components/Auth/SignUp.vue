@@ -146,6 +146,8 @@ const handleSignUp = async () => {
         console.error("Error sending confirmation email:", emailError);
         connexionError.value =
           "Account created but failed to send confirmation email. Please contact support.";
+        // Reset captcha after error to allow retry with a new token
+        resetCaptcha();
       }
     }
   } catch (error: unknown) {
@@ -156,7 +158,6 @@ const handleSignUp = async () => {
     if (errorMessage.includes("captcha") || errorMessage.includes("CAPTCHA")) {
       connexionError.value =
         "Captcha verification is required. Please complete the captcha verification.";
-      resetCaptcha();
     } else if (
       errorMessage.includes("over_email_send_rate_limit") ||
       errorMessage.includes("rate limit exceeded")
@@ -187,6 +188,9 @@ const handleSignUp = async () => {
     } else {
       connexionError.value = errorMessage;
     }
+    
+    // IMPORTANT: Always reset captcha after any error to prevent token reuse
+    resetCaptcha();
     isLoading.value = false;
   }
 };
