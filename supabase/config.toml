@@ -189,7 +189,7 @@ content_path = "./supabase/templates/confirmation.html"
 
 # Password recovery email
 [auth.email.template.recovery]
-subject = "Réinitialiser votre mot de passe - TookanAI"
+subject = "Reset your password - TookanAI"
 content_path = "./supabase/templates/recovery.html"
 
 # Magic link email
