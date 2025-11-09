@@ -114,7 +114,7 @@ const handleSignUp = async () => {
     const { data, error } = await client.auth.signUp({
       email: props.state.email,
       password: props.state.password,
-      // options: signUpOptions,
+      options: signUpOptions,
     });
     if (error) throw error;
     console.log('data.user.id', data?.user?.id);
