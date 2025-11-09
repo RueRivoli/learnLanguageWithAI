@@ -43,8 +43,10 @@ const handleResendEmail = async () => {
             <span>{{ messageText }}</span>
           </div>
           <div class="mt-4">
-            <span class="text-error">Haven't received the email? </span>
-            <button class="btn btn-primary btn-sm" @click="handleResendEmail">Resend Email</button>
+            <div class="mb-2">
+              <span>Haven't Received Any Email? </span>
+            </div>
+            <button class="btn btn-secondary btn-sm" @click="handleResendEmail">Resend the ConfirmationEmail</button>
           </div>
         </div>
       </div>

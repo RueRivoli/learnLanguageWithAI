@@ -122,6 +122,7 @@ const handleSignUp = async () => {
           path: "/successful-message",
           query: {
             text: "Check your Mailbox to Confirm your Account",
+            email: props.state.email,
           },
         });
     }
