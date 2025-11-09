@@ -117,38 +117,13 @@ const handleSignUp = async () => {
       options: signUpOptions,
     });
     if (error) throw error;
-    console.log('data.user.id', data?.user?.id);
     if (data?.user?.id) {
-      try {
-        // 1. Générer un lien de confirmation sécurisé via Supabase Admin API
-        const { confirmationUrl } = await $fetch("/api/auth/generate-confirmation-token", {
-          method: "POST",
-          body: { email: props.state.email },
-        });
-        console.log('confirmationUrl', confirmationUrl);
-        // 2. Envoyer l'email via Brevo (template Brevo)
-        await $fetch("/api/auth/send-confirmation-email", {
-          method: "POST",
-          body: {
-            email: props.state.email,
-            confirmationUrl,
-          },
-        });
-
-        // 3. Rediriger vers la page de succès
         await navigateTo({
           path: "/successful-message",
           query: {
             text: "Check your Mailbox to Confirm your Account",
           },
         });
-      } catch (emailError) {
-        console.error("Error sending confirmation email:", emailError);
-        connexionError.value =
-          "Account created but failed to send confirmation email. Please contact support.";
-        // Reset captcha after error to allow retry with a new token
-        resetCaptcha();
-      }
     }
   } catch (error: unknown) {
     const errorMessage =

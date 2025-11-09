@@ -81,9 +81,15 @@ const handleSignIn = async () => {
     return;
   }
   try {
+    const signUpOptions: any = {};
+
+    if (captchaToken.value) {
+      signUpOptions.captchaToken = captchaToken.value;
+    }
     const { data, error } = await client.auth.signInWithPassword({
       email: props.state.email,
       password: props.state.password,
+      options: signUpOptions,
     });
     if (data.user?.id) {
       await navigateTo({
@@ -91,11 +97,17 @@ const handleSignIn = async () => {
       });
     }
     if (error) throw error;
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "An error occurred";
     if (error.code === "email_not_confirmed") {
       connexionError.value =
         "Please confirm your email to log in.<br/> If the confirmation link has expired, sign up again";
-    } else connexionError.value = "Invalid email or password";
+    } else if (errorMessage.includes("captcha") || errorMessage.includes("CAPTCHA")) {
+      connexionError.value =
+        "Captcha verification is required. Please complete the captcha verification.";
+    } else {
+      connexionError.value = "Invalid email or password";
+    }
   }
 };
 
