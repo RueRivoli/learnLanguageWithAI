@@ -1,11 +1,26 @@
 <script setup lang="ts">
 import { CheckCircleIcon } from "@heroicons/vue/24/outline";
 const route = useRoute();
+const client = useSupabaseClient();
 
 definePageMeta({
   layout: "auth",
 });
 const messageText = ref<string | null>(route.query.text);
+
+const handleResendEmail = async () => {
+  if (route.query.email) {
+    try {
+      const { error } = await client.auth.resend({
+          type: 'signup',
+          email: route.query.email,
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 </script>
 
 <template>
@@ -26,6 +41,10 @@ const messageText = ref<string | null>(route.query.text);
           <div role="alert" class="alert alert-success text-white">
             <CheckCircleIcon class="h-5 w-5" />
             <span>{{ messageText }}</span>
+          </div>
+          <div class="mt-4">
+            <span class="text-error">Haven't received the email? </span>
+            <button class="btn btn-primary btn-sm" @click="handleResendEmail">Resend Email</button>
           </div>
         </div>
       </div>
