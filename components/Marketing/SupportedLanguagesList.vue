@@ -25,14 +25,11 @@ const emit = defineEmits(["click"]);
 const handleLanguageClick = (languageCode: string) => {
   emit("click", languageCode);
 };
-
-
 </script>
 
 <template>
   <div class="mx-auto max-w-5xl">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
       <div
         v-if="!isFetchingLanguages && supportedLanguages !== null"
         v-for="(language, index) in supportedLanguages"
@@ -47,7 +44,7 @@ const handleLanguageClick = (languageCode: string) => {
           // },
         ]"
         @click="handleLanguageClick(language.code)"
-      > 
+      >
         <div class="flex items-center justify-between">
           <div class="space-y-2">
             <h2

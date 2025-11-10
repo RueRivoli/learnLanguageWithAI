@@ -15,12 +15,12 @@ export default defineEventHandler(async (event) => {
   // Créer un client Supabase avec la clé service role (admin)
   const supabase = createClient(
     config.public.supabaseUrl,
-    config.serviceSupabaseKey
+    config.serviceSupabaseKey,
   );
 
   // Générer un lien de confirmation sécurisé via l'API Admin
   const { data, error } = await supabase.auth.admin.generateLink({
-    type: 'signup',
+    type: "signup",
     email: email,
   });
 

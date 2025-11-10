@@ -12,7 +12,8 @@ export default defineEventHandler(async (event) => {
   if (!brevoApiKey || !templateId) {
     throw createError({
       statusCode: 500,
-      message: "Brevo configuration is missing. Please check BREVO_API_KEY and BREVO_CONFIRMATION_TEMPLATE_ID environment variables.",
+      message:
+        "Brevo configuration is missing. Please check BREVO_API_KEY and BREVO_CONFIRMATION_TEMPLATE_ID environment variables.",
     });
   }
 

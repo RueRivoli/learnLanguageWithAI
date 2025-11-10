@@ -98,11 +98,15 @@ const handleSignIn = async () => {
     }
     if (error) throw error;
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "An error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "An error occurred";
     if (error.code === "email_not_confirmed") {
       connexionError.value =
         "Please confirm your email to log in.<br/> If the confirmation link has expired, sign up again";
-    } else if (errorMessage.includes("captcha") || errorMessage.includes("CAPTCHA")) {
+    } else if (
+      errorMessage.includes("captcha") ||
+      errorMessage.includes("CAPTCHA")
+    ) {
       connexionError.value =
         "Captcha verification is required. Please complete the captcha verification.";
     } else {

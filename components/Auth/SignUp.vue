@@ -19,7 +19,6 @@ const props = withDefaults(
 
 const showPassword = ref<boolean>(false);
 
-
 const connexionError = ref<null | string>(null);
 const isLoading = ref<boolean>(false);
 
@@ -118,13 +117,12 @@ const handleSignUp = async () => {
     });
     if (error) throw error;
     if (data?.user?.id) {
-        await navigateTo({
-          path: "/successful-message",
-          query: {
-            text: "Check your Mailbox to Confirm your Account",
-            email: props.state.email,
-          },
-        });
+      await navigateTo({
+        path: "/email-confirmation",
+        query: {
+          email: props.state.email,
+        },
+      });
     }
   } catch (error: unknown) {
     const errorMessage =
@@ -164,7 +162,7 @@ const handleSignUp = async () => {
     } else {
       connexionError.value = errorMessage;
     }
-    
+
     // IMPORTANT: Always reset captcha after any error to prevent token reuse
     resetCaptcha();
     isLoading.value = false;

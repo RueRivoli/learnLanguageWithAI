@@ -28,9 +28,7 @@ const handleResetPassword = async () => {
 </script>
 
 <template>
-  <div
-    class="bg-neutral/10 h-full pt-[4rem] flex justify-center items-center"
-  >
+  <div class="bg-neutral/10 h-full pt-[4rem] flex justify-center items-center">
     <div class="mx-auto">
       <div class="flex flex-col items-center">
         <div class="mx-auto w-sm">

@@ -131,15 +131,17 @@ onMounted(() => {
             </NuxtLink>
           </div>
 
-          <div
-            class="mt-2 w-full inline-flex items-center gap-3 px-4 py-2"
-          >
+          <div class="mt-2 w-full inline-flex items-center gap-3 px-4 py-2">
             <MarketingUsedBy />
           </div>
         </div>
 
         <div class="flex flex-col gap-4 items-center justify-center">
-          <img src="/public/heroillustrationtransparent.png" alt="" class="w-800 h-auto" />
+          <img
+            src="/public/heroillustrationtransparent.png"
+            alt=""
+            class="w-800 h-auto"
+          />
 
           <!-- <img src="/public/hero2.png" alt="Call to Action" class="w-600 h-auto" />
          <img src="/public/hero1.png" alt="" class="w-600 h-auto" /> -->

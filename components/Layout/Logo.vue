@@ -10,7 +10,9 @@
       />
     </NuxtLink> -->
     <NuxtLink to="/#how-it-works">
-        <div class="cursor text-startml-20 mr-10">Tookan<span class="text-warning">AI</span></div>
+      <div class="cursor text-startml-20 mr-10">
+        Tookan<span class="text-warning">AI</span>
+      </div>
     </NuxtLink>
   </div>
 </template>

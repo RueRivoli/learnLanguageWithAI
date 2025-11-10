@@ -11,9 +11,12 @@ export const useHCaptcha = () => {
   // Get user's language from browser
   const getUserLanguage = (): string => {
     if (typeof window === "undefined") return "en";
-    
+
     // Use browser language
-    const browserLang = navigator.language || (navigator.languages && navigator.languages[0]) || "en";
+    const browserLang =
+      navigator.language ||
+      (navigator.languages && navigator.languages[0]) ||
+      "en";
     // Extract just the language code (e.g., "fr" from "fr-FR")
     return browserLang.split("-")[0];
   };

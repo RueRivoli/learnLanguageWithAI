@@ -54,12 +54,10 @@ defineExpose({
   <dialog ref="pseudoDefinitionModal" class="modal">
     <div class="modal-box max-w-md bg-base-100 p-0">
       <!-- Header -->
-      <div class="bg-primary text-white px-8 pt-8 pb-6 border-b border-base-300">
-        <h3
-          class="text-2xl tracking-tight"
-        >
-          Welcome to TookanAI!
-        </h3>
+      <div
+        class="bg-primary text-white px-8 pt-8 pb-6 border-b border-base-300"
+      >
+        <h3 class="text-2xl tracking-tight">Welcome to TookanAI!</h3>
       </div>
 
       <!-- Content -->

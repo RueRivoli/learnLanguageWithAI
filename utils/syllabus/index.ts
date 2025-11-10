@@ -20,13 +20,11 @@ export const languages = [
   // { code: "jp", label: "Japanese", imgSrc: japaneseFlag, activated: false },
 ];
 
-
-
 export const rulesNames = {
-  'tr': turkishRules,
-  'fr': frenchRules,
-  'sp': spanishRules,
-  'it': italianRules,
-  'jp': japaneseRules,
-  'ge': germanRules,
-}
+  tr: turkishRules,
+  fr: frenchRules,
+  sp: spanishRules,
+  it: italianRules,
+  jp: japaneseRules,
+  ge: germanRules,
+};

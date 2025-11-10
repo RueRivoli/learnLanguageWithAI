@@ -31,27 +31,25 @@ const handleResetPassword = async () => {
 </script>
 
 <template>
-  <div
-    class="bg-neutral/10 h-full pt-[4rem] flex justify-center items-center"
-  >
+  <div class="bg-neutral/10 h-full pt-[4rem] flex justify-center items-center">
     <div>
       <div class="flex justify-start mb-4">
         <NuxtLink
-            class="flex items-center px-3 py-1.5 btn btn-ghost btn-sm group"
-            :to="{
+          class="flex items-center px-3 py-1.5 btn btn-ghost btn-sm group"
+          :to="{
             path: '/authorization/auth/',
             query: { toCreateAccount: 'false' },
           }"
-          >
-            <ArrowLeftIcon class="h-5 w-5" />
-            <span class="ml-1">Back To Login</span>
-          </NuxtLink>
+        >
+          <ArrowLeftIcon class="h-5 w-5" />
+          <span class="ml-1">Back To Login</span>
+        </NuxtLink>
       </div>
       <div class="mx-auto flex flex-col items-center">
         <div class="mx-auto w-sm">
-            <label class="label text-neutral mb-2 text-xl">
-              <span>Reset Your Password</span>
-            </label>
+          <label class="label text-neutral mb-2 text-xl">
+            <span>Reset Your Password</span>
+          </label>
           <div
             v-if="passwordForgottenError"
             class="w-full bg-error mb-2 border text-white border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"

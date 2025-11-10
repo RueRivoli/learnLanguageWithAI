@@ -42,7 +42,13 @@ const getDifficultyClassQuery = (tabDifficultyLevel: number) => {
   }
 };
 
-const grammarModules = computed(() => selectedLanguageCode.value ? rulesNames[selectedLanguageCode.value as keyof typeof rulesNames][activeDifficultyLevelTab.value] : []);
+const grammarModules = computed(() =>
+  selectedLanguageCode.value
+    ? rulesNames[selectedLanguageCode.value as keyof typeof rulesNames][
+        activeDifficultyLevelTab.value
+      ]
+    : [],
+);
 
 const getImage = (language: string) => {
   switch (language) {
@@ -97,14 +103,17 @@ const handleLanguageClick = (languageCode: string) => {
 };
 
 const getBackgroundClasses = computed(() => {
-  return supportedLanguages.value.find((language) => language.code === selectedLanguageCode.value)?.bgColor || '';
+  return (
+    supportedLanguages.value.find(
+      (language) => language.code === selectedLanguageCode.value,
+    )?.bgColor || ""
+  );
 });
 
-onMounted( async () => {
+onMounted(async () => {
   await getSupportedLanguages();
   handleLanguageClick(supportedLanguages.value[0].code);
 });
-
 </script>
 
 <template>
@@ -204,9 +213,7 @@ onMounted( async () => {
                           >Key Point</span
                         >
                       </div>
-                      <p
-                        class="leading-relaxed"
-                      >
+                      <p class="leading-relaxed">
                         {{ (rule as any).highlights }}
                       </p>
                     </div>
