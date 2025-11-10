@@ -25,7 +25,7 @@ const handleResendEmail = async () => {
       const { error } = await client.auth.resend({
         type: "signup",
         email: route.query.email,
-        options: signUpOptions,
+        // options: signUpOptions,
       });
       if (error) throw error;
     } catch (error) {
@@ -139,8 +139,8 @@ onMounted(() => {
             <div class="mb-4 flex flex-col items-center">
               <div v-if="!isCaptchaLoaded" class="skeleton h-16 w-64" />
               <div ref="captchaContainerRef" v-if="isCaptchaLoaded" />
-              <div v-if="captchaError" class="text-error text-xs mt-1">
-                {{ captchaError }}
+              <div v-if="resendError" class="text-error text-xs mt-1">
+                {{ resendError }}
               </div>
             </div>
             <button class="btn btn-ghost btn-sm" @click="handleResendEmail">
