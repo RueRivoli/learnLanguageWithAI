@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckCircleIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon, CheckCircleIcon } from "@heroicons/vue/24/outline";
 const route = useRoute();
 const client = useSupabaseClient();
 
@@ -11,11 +11,6 @@ const captchaToken = ref(route.query.captchaToken);
 
 const handleResendEmail = async () => {
   resendError.value = null;
-  if (!validateCaptcha()) {
-    resendError.value =
-      captchaError.value || "Please complete the captcha verification.";
-    return;
-  }
 
   if (route.query.email) {
     try {
@@ -58,66 +53,9 @@ const handleResendEmail = async () => {
       resendError.value = errorMessage;
     }
 
-    // IMPORTANT: Always reset captcha after any error to prevent token reuse
-    resetCaptcha();
-
     }
   }
 };
-
-const {
-  captchaToken,
-  captchaError,
-  isCaptchaLoaded,
-  loadHCaptcha,
-  onCaptchaVerified,
-  onCaptchaExpired,
-  onCaptchaError,
-  validateCaptcha,
-  resetCaptcha,
-  HCAPTCHA_SITE_KEY,
-} = useHCaptcha();
-
-
-const captchaContainerRef = ref<HTMLElement | null>(null);
-
-onMounted(() => {
-  loadHCaptcha();
-
-  // Watch for script load and initialize widget
-  watchEffect(() => {
-    if (
-      isCaptchaLoaded.value &&
-      captchaContainerRef.value &&
-      typeof window !== "undefined"
-    ) {
-      // @ts-ignore
-      if (
-        window.hcaptcha &&
-        !captchaContainerRef.value.hasAttribute("data-rendered")
-      ) {
-        try {
-          // @ts-ignore
-          window.hcaptcha.render(captchaContainerRef.value, {
-            sitekey: HCAPTCHA_SITE_KEY,
-            callback: (token: string) => {
-              onCaptchaVerified(token);
-            },
-            "expired-callback": () => {
-              onCaptchaExpired();
-            },
-            "error-callback": () => {
-              onCaptchaError();
-            },
-          });
-          captchaContainerRef.value.setAttribute("data-rendered", "true");
-        } catch (error) {
-          console.error("Error rendering hCaptcha widget:", error);
-        }
-      }
-    }
-  });
-});
 
 </script>
 
@@ -147,7 +85,8 @@ onMounted(() => {
               </div>
             </div>
             <button class="btn btn-ghost btn-sm" @click="handleResendEmail">
-              Resend the Confirmation Mail
+              <ArrowPathIcon class="h-5 w-5" />
+              <span>Resend the Confirmation Mail</span>
             </button>
           </div>
         </div>
