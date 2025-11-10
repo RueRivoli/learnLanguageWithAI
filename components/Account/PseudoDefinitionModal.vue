@@ -54,28 +54,26 @@ defineExpose({
   <dialog ref="pseudoDefinitionModal" class="modal">
     <div class="modal-box max-w-md bg-base-100 p-0">
       <!-- Header -->
-      <div class="px-8 pt-8 pb-6 border-b border-base-300">
+      <div class="bg-primary text-white px-8 pt-8 pb-6 border-b border-base-300">
         <h3
-          class="text-2xl font-semibold text-base-content tracking-tight"
-          style="font-family: &quot;Inter&quot;, sans-serif"
+          class="text-2xl tracking-tight"
         >
-          How should we call you ?
+          Welcome to TookanAI!
         </h3>
-        <p class="mt-2 text-sm text-base-content/60">Choose your pseudo</p>
       </div>
 
       <!-- Content -->
       <div class="px-8 py-6">
         <div class="form-control w-full">
-          <label class="label">
+          <label class="label mb-4">
             <span class="label-text text-sm font-medium text-base-content"
-              >Username</span
+              >Pseudo</span
             >
           </label>
           <input
             v-model="pseudo"
             type="text"
-            placeholder="Enter your username"
+            placeholder="Pseudo"
             class="input input-bordered w-full bg-base-200 focus:bg-base-100 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200"
             @keyup.enter="pseudo && handleDefinePseudo()"
           />

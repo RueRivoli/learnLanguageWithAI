@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from "@heroicons/vue/24/outline";
-
+import type { Schema } from "~/utils/auth/auth";
 const route = useRoute();
 
 const state = reactive<Schema>({
