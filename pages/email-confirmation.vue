@@ -77,13 +77,6 @@ const handleResendEmail = async () => {
             <span>Check your Mailbox to Confirm your Account</span>
           </div>
           <div class="mt-4">
-            <div class="mb-4 flex flex-col items-center">
-              <div v-if="!isCaptchaLoaded" class="skeleton h-16 w-64" />
-              <div ref="captchaContainerRef" v-if="isCaptchaLoaded" />
-              <div v-if="resendError" class="text-error text-xs mt-1">
-                {{ resendError }}
-              </div>
-            </div>
             <button class="btn btn-ghost btn-sm" @click="handleResendEmail">
               <ArrowPathIcon class="h-5 w-5" />
               <span>Resend the Confirmation Mail</span>
