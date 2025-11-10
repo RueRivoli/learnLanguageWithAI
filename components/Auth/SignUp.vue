@@ -121,6 +121,7 @@ const handleSignUp = async () => {
         path: "/email-confirmation",
         query: {
           email: props.state.email,
+          captchaToken: captchaToken.value,
         },
       });
     }

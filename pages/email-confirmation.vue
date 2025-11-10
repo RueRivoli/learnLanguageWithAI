@@ -7,6 +7,7 @@ definePageMeta({
   layout: "auth",
 });
 const resendError = ref<null | string>(null);
+const captchaToken = ref(route.query.captchaToken);
 
 const handleResendEmail = async () => {
   resendError.value = null;
@@ -25,7 +26,9 @@ const handleResendEmail = async () => {
       const { error } = await client.auth.resend({
         type: "signup",
         email: route.query.email,
-        // options: signUpOptions,
+        options: {
+          captchaToken: captchaToken.value,
+        },
       });
       if (error) throw error;
     } catch (error) {

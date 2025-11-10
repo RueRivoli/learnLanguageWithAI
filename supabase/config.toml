@@ -144,7 +144,7 @@ anonymous_users = 5
 token_refresh = 20
 # Number of sign up and sign-in requests that can be made in a 5 minute interval per IP address (excludes anonymous users).
 # CHANGE IT !!!
-sign_in_sign_ups = 90
+sign_in_sign_ups = 999
 # Number of OTP / Magic link verifications that can be made in a 5 minute interval per IP address.
 token_verifications = 50
 
