@@ -84,10 +84,10 @@ defineExpose({
         <!-- Input Field -->
         <div class="w-full mb-6">
           <fieldset class="fieldset">
-            <legend class="fieldset-legend">Pseudo</legend>
+            <legend class="fieldset-legend text-lg">Pseudo</legend>
             <input
               type="text"
-              class="input rounded-lg"
+              class="input w-full rounded-lg"
               placeholder="Choose a Pseudo"
               v-model="profileFormData.pseudo"
               required
@@ -95,8 +95,8 @@ defineExpose({
           </fieldset>
 
           <fieldset class="fieldset">
-            <legend class="fieldset-legend">Targeted Language</legend>
-            <select class="select rounded-lg" v-model="profileFormData.languageLearned">
+            <legend class="fieldset-legend text-lg">Targeted Language</legend>
+            <select class="select w-full rounded-lg" v-model="profileFormData.languageLearned">
               <option disabled selected>Language</option>
               <option value="fr">French</option>
               <option value="sp">Spanish</option>
@@ -113,9 +113,8 @@ defineExpose({
           :disabled="!profileFormData.pseudo || !profileFormData.languageLearned || isSavingProfileSettings"
           :class="[
             'w-full py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200',
-            'text-white',
             profileFormData.pseudo && !isSavingProfileSettings
-              ? 'bg-black hover:bg-gray-800'
+              ? 'btn btn-primary hover:btn-primary-focus'
               : 'bg-gray-300 cursor-not-allowed',
           ]"
           @click="handleSaveProfileData"
