@@ -7,7 +7,7 @@ export interface User {
   isLoaded: boolean;
   email: Database["public"]["Tables"]["profiles"]["Row"]["email"] | null;
   initials: Database["public"]["Tables"]["profiles"]["Row"]["initials"] | null;
-  hasFilledPseudo:
+  hasFilledProfileSettings:
     | Database["public"]["Tables"]["profiles"]["Row"]["has_filled_pseudo"]
     | null;
   pseudo: Database["public"]["Tables"]["profiles"]["Row"]["pseudo"] | null;

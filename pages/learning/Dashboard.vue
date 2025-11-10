@@ -13,8 +13,7 @@ const user = useSupabaseUser();
 const client = useSupabaseClient();
 const userStore = useUserStore();
 const userScoreStore = useUserScoreStore();
-const languageSelectionModal = ref<{ openModal: () => void } | null>(null);
-const pseudoDefinitionModal = ref<{ openModal: () => void } | null>(null);
+const accountSettingsModal = ref<{ openModal: () => void } | null>(null);
 
 // 1 = Overview, 2 = Vocabulary,  3 = Modules
 const activeTab = ref(1);
@@ -35,13 +34,8 @@ watchEffect(async () => {
         method: "GET",
         headers,
       });
-      // TODO: Uncomment this when the language selection modal is ready
-      // if (profile && !profile[0].language_learned) {
-      //   languageSelectionModal.value?.openModal();
-      // }
-      // For a fresh new user:
-      if (profile && !profile[0].hasFilledPseudo) {
-        pseudoDefinitionModal.value?.openModal();
+      if (profile && !profile[0].hasFilledProfileSettings) {
+        accountSettingsModal.value?.openModal();
         await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
           method: "POST",
           headers,
@@ -58,7 +52,7 @@ watchEffect(async () => {
 });
 
 const handleLanguageUpdated = async (profile: any) => {
-  pseudoDefinitionModal.value?.openModal();
+  accountSettingsModal.value?.openModal();
   if (user.value) {
     // const headers = await getAuthToken();
     // TODO: Uncomment this when the language selection is ready
@@ -133,15 +127,8 @@ getInfoUser();
         </template>
       </div>
 
-      <!-- Modals -->
-      <!-- TODO: Uncomment this when the language selection is ready -->
-      <!-- <AccountSelectionLanguageModal
-      ref="languageSelectionModal"
-      :user-id="user?.id"
-      @language-updated="(profile) => handleLanguageUpdated(profile)"
-    /> -->
-      <AccountPseudoDefinitionModal
-        ref="pseudoDefinitionModal"
+      <AccountSelectionModal
+        ref="accountSettingsModal"
         :user-id="user?.id"
         :full-name="user?.user_metadata?.full_name || ''"
       />

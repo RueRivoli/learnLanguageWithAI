@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "credits_available" real,
     "credits_purchased_total" real,
     "last_credit_purchase_date" timestamp with time zone,
-    "hasFilledPseudo" boolean
+    "hasFilledProfileSettings" boolean
 );
 
 

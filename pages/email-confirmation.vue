@@ -28,35 +28,36 @@ const handleResendEmail = async () => {
       if (error) throw error;
     } catch (error) {
       console.error(error);
-    const errorMessage =
-      error instanceof Error ? error.message : "An error occurred";
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred";
 
-    // Handle specific error types
-    if (errorMessage.includes("captcha") || errorMessage.includes("CAPTCHA")) {
-      resendError.value =
-        "Captcha verification is required. Please complete the captcha verification.";
-    }  else if (
-      errorMessage.includes("timeout") ||
-      errorMessage.includes("network") ||
-      errorMessage.includes("connection")
-    ) {
-      resendError.value =
-        "Connection timeout. Please check your internet connection and try again. If the problem persists, contact support.";
-    } else if (
-      errorMessage.includes("SMTP") ||
-      errorMessage.includes("email") ||
-      errorMessage.includes("send")
-    ) {
-      resendError.value =
-        "Unable to send confirmation email. Please try again in a few minutes or contact support.";
-    } else {
-      resendError.value = errorMessage;
-    }
-
+      // Handle specific error types
+      if (
+        errorMessage.includes("captcha") ||
+        errorMessage.includes("CAPTCHA")
+      ) {
+        resendError.value =
+          "Captcha verification is required. Please complete the captcha verification.";
+      } else if (
+        errorMessage.includes("timeout") ||
+        errorMessage.includes("network") ||
+        errorMessage.includes("connection")
+      ) {
+        resendError.value =
+          "Connection timeout. Please check your internet connection and try again. If the problem persists, contact support.";
+      } else if (
+        errorMessage.includes("SMTP") ||
+        errorMessage.includes("email") ||
+        errorMessage.includes("send")
+      ) {
+        resendError.value =
+          "Unable to send confirmation email. Please try again in a few minutes or contact support.";
+      } else {
+        resendError.value = errorMessage;
+      }
     }
   }
 };
-
 </script>
 
 <template>

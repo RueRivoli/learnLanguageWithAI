@@ -80,8 +80,8 @@ export const useUserScoreStore = defineStore("user-score", {
       this.totalExpressionsMastered = score.totalExpressionsMastered;
       this.totalExpressionsLearned = score.totalExpressionsLearned;
       this.rulesScores = grammarScores;
-      console.log("HERE");
-      console.log("this.rulesScores", this.rulesScores);
+      console.log("fetched user scores ==>");
+      console.log("rules :: ", this.rulesScores);
     },
     async setGrammarScores(userId: string) {
       // Récupérer le token d'authentification

@@ -11,7 +11,7 @@ export const useUserStore = defineStore("user", {
       email: null,
       fullName: null,
       hasFilledInitialForm: false,
-      hasFilledPseudo: false,
+      hasFilledProfileSettings: false,
       id: null,
       initials: null,
       isLoaded: false,
