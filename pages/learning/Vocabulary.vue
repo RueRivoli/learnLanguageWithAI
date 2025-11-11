@@ -427,6 +427,7 @@ const handleExpressionLearningStatus = async (
                 <LayoutKeyElementExpressionDefinition
                   :expression="expr"
                   :minified="true"
+                  :is-dark-mode="true"
                   @click="selectedExpression = expr"
                 />
               </div>

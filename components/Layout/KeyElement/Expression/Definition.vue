@@ -3,12 +3,14 @@ const props = withDefaults(
   defineProps<{
     expression?: any;
     isActive: boolean;
+    isDarkMode: boolean;
     minified: boolean;
     size?: "sm" | "xs";
   }>(),
   {
     expression: null,
     isActive: false,
+    isDarkMode: false,
     minified: false,
     size: "sm",
   },
@@ -18,8 +20,13 @@ const emit = defineEmits(["click"]);
 
 <template>
   <div
-    class="bg-warning/20 border-l-4 border-warning rounded-lg cursor-pointer transition-all duration-300"
-    :class="props.minified ? 'p-2' : 'p-3'"
+    :class="[
+      'text-slate-800 border-l-4 border-warning rounded-lg cursor-pointer transition-all duration-300',
+      { 'bg-warning/20': props.isDarkMode },
+      { 'bg-white': !props.isDarkMode },
+      { 'p-2': props.minified },
+      { 'p-3': !props.minified },
+    ]"
     @click="emit('click')"
   >
     <div

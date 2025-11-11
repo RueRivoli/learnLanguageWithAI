@@ -19,14 +19,14 @@ const props = withDefaults(
   <div
     :class="[
       props.backgroundClasses
-        ? `group relative overflow-hidden rounded-md shadow-md rounded-md border border-primary/20  p-4 ${props.backgroundClasses}`
+        ? `group relative overflow-hidden rounded-md shadow-md rounded-lg p-4 ${props.backgroundClasses}`
         : 'group relative bg-primary/20 rounded-md shadow-md border border-primary/20 p-4 overflow-hidden transition-all duration-300',
     ]"
   >
     <div class="wrapper-header">
       <div class="wrapper-title">
         <div
-          class="w-10 h-10 bg-gradient-primary-icon text-white rounded-lg flex items-center justify-center mr-5 shadow-lg"
+          class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mr-5 shadow-lg"
         >
           <BookOpenIcon class="h-6 w-6 text-white" />
         </div>

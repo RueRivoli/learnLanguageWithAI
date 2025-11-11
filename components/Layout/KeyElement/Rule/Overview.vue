@@ -28,8 +28,8 @@ const props = withDefaults(
   <!-- Total Expressions Mastered - Professional Design -->
   <div
     :class="[
-      `group relative rounded-xl shadow-md p-4 hover:shadow-lg overflow-hidden transition-all duration-300 ${getHoveringBorderStyleClassFromGrammarRuleLevel(props.level ?? 0)}`,
-      { 'bg-slate-200': backgroundClasses === null },
+      `p-4 group relative rounded-lg shadow-md hover:shadow-lg ${getHoveringBorderStyleClassFromGrammarRuleLevel(props.level ?? 0)}`,
+      { 'bg-slate-200 border border-slate-300': backgroundClasses === null },
       { [`${props.backgroundClasses}`]: backgroundClasses !== null },
     ]"
   >

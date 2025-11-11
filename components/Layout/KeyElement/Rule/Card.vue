@@ -26,7 +26,7 @@ const props = withDefaults(
     <div class="wrapper-header">
       <div class="wrapper-title">
         <div
-          class="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg flex items-center justify-center mr-5 shadow-lg"
+          class="w-10 h-10 bg-neutral rounded-lg flex items-center justify-center mr-5 shadow-lg"
         >
           <ViewfinderCircleIcon class="h-6 w-6 text-white" />
         </div>

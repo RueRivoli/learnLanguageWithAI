@@ -334,40 +334,24 @@ const handleGenerateStory = async () => {
               <!-- Loading Skeleton for Module -->
               <div
                 v-if="isFetchingData"
-                class="col-span-1 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 shadow-lg rounded-2xl p-6 border border-emerald-200/60 animate-pulse"
+                class="col-span-1 bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
               >
                 <div class="flex items-center justify-between mb-4">
-                  <div class="skeleton h-6 w-40 bg-emerald-200 rounded"></div>
-                  <div class="skeleton h-5 w-5 bg-emerald-200 rounded"></div>
+                  <div class="skeleton h-6 w-40 rounded"></div>
+                  <div class="skeleton h-5 w-5 rounded"></div>
                 </div>
-                <div
-                  class="skeleton h-4 w-48 bg-emerald-200 rounded mb-6"
-                ></div>
+                <div class="skeleton h-4 w-48 rounded mb-6"></div>
                 <div class="w-[60%] m-auto">
-                  <div
-                    class="bg-white/80 rounded-xl p-4 border border-emerald-200"
-                  >
+                  <div class="bg-white/80 rounded-xl p-4 border border-white/40">
                     <div class="flex items-center justify-center mb-4">
-                      <div
-                        class="skeleton h-16 w-16 bg-emerald-200 rounded-full"
-                      ></div>
+                      <div class="skeleton h-16 w-16 rounded-full"></div>
                     </div>
-                    <div
-                      class="skeleton h-5 w-32 bg-emerald-200 rounded mx-auto mb-2"
-                    ></div>
-                    <div
-                      class="skeleton h-4 w-24 bg-emerald-200 rounded mx-auto mb-4"
-                    ></div>
-                    <div
-                      class="skeleton h-20 w-full bg-emerald-200 rounded"
-                    ></div>
+                    <div class="skeleton h-5 w-32 rounded mx-auto mb-2"></div>
+                    <div class="skeleton h-4 w-24 rounded mx-auto mb-4"></div>
+                    <div class="skeleton h-20 w-full rounded"></div>
                     <div class="mt-3 flex items-center justify-center gap-2">
-                      <div
-                        class="skeleton h-4 w-24 bg-emerald-200 rounded"
-                      ></div>
-                      <div
-                        class="skeleton h-4 w-12 bg-emerald-200 rounded"
-                      ></div>
+                      <div class="skeleton h-4 w-24 rounded"></div>
+                      <div class="skeleton h-4 w-12 rounded"></div>
                     </div>
                   </div>
                 </div>
@@ -375,7 +359,7 @@ const handleGenerateStory = async () => {
 
               <LayoutKeyElementRuleCard
                 v-else
-                backgroundClasses="bg-gradient-to-br from-slate-100/90 via-slate-50/95 to-slate-100/80 shadow-lg border border-slate-200/70 hover:border-slate-300/80 transition-all duration-300"
+                backgroundClasses="bg-slate-200 border border-slate-300 shadow-md hover:shadow-lgtransition-all duration-300"
                 class="col-span-1"
                 title="Targeted Module"
                 titleEn="Targeted Module"
@@ -391,6 +375,7 @@ const handleGenerateStory = async () => {
                   <div class="w-[60%] m-auto">
                     <LayoutKeyElementRuleOverview
                       class="h-full cursor-pointer"
+                      backgroundClasses="bg-white border border-white/20"
                       :title="targetedModule?.name"
                       :titleEn="targetedModule?.nameEn"
                       :symbol="targetedModule?.symbol"
@@ -491,22 +476,22 @@ const handleGenerateStory = async () => {
                 </template>
               </LayoutKeyElementRuleCard>
 
-              <div class="col-span-1 flex flex-col justify-between gap-6">
+              <div class="col-span-1 flex flex-col justify-between gap-4">
                 <!-- Loading Skeleton for Words -->
                 <div
                   v-if="isFetchingData"
-                  class="bg-gradient-to-br from-blue-50 via-cyan-50 to-indigo-50 border border-blue-200/60 shadow-lg rounded-2xl p-6 animate-pulse"
+                class="bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
                 >
                   <div class="flex items-center justify-between mb-4">
-                    <div class="skeleton h-6 w-32 bg-blue-200 rounded"></div>
-                    <div class="skeleton h-5 w-5 bg-blue-200 rounded"></div>
+                  <div class="skeleton h-6 w-32 rounded"></div>
+                  <div class="skeleton h-5 w-5 rounded"></div>
                   </div>
-                  <div class="skeleton h-4 w-40 bg-blue-200 rounded mb-4"></div>
+                <div class="skeleton h-4 w-40 rounded mb-4"></div>
                   <div class="flex flex-wrap gap-3">
                     <div
                       v-for="i in 10"
                       :key="i"
-                      class="skeleton h-8 w-20 bg-blue-200 rounded-full"
+                    class="skeleton h-8 w-24 rounded-full"
                     ></div>
                   </div>
                 </div>
@@ -514,7 +499,7 @@ const handleGenerateStory = async () => {
                 <!-- Words Selection Section -->
                 <LayoutKeyElementWordCard
                   v-else
-                  backgroundClasses="bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 shadow-lg"
+                  backgroundClasses="bg-slate-200 shadow-lg border border-slate-300"
                   title="Words"
                   description="Select 10 words for your lesson"
                 >
@@ -542,20 +527,18 @@ const handleGenerateStory = async () => {
                 <!-- Loading Skeleton for Expressions -->
                 <div
                   v-if="isFetchingData"
-                  class="bg-warning/20 shadow-lg rounded-2xl p-6 animate-pulse"
+                class="bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
                 >
                   <div class="flex items-center justify-between mb-4">
-                    <div class="skeleton h-6 w-40 bg-purple-200 rounded"></div>
-                    <div class="skeleton h-5 w-5 bg-purple-200 rounded"></div>
+                  <div class="skeleton h-6 w-40 rounded"></div>
+                  <div class="skeleton h-5 w-5 rounded"></div>
                   </div>
-                  <div
-                    class="skeleton h-4 w-48 bg-purple-200 rounded mb-4"
-                  ></div>
+                <div class="skeleton h-4 w-48 rounded mb-4"></div>
                   <div class="flex flex-wrap gap-3">
                     <div
                       v-for="i in 3"
                       :key="i"
-                      class="skeleton h-8 w-32 bg-purple-200 rounded-full"
+                    class="skeleton h-8 w-32 rounded-full"
                     ></div>
                   </div>
                 </div>
@@ -563,7 +546,7 @@ const handleGenerateStory = async () => {
                 <!-- Expressions Selection Section -->
                 <LayoutKeyElementExpressionCard
                   v-else
-                  backgroundClasses="bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 shadow-lg"
+                  backgroundClasses="bg-slate-200 shadow-lg border border-slate-300 grow"
                   title="Expressions"
                   description="Select 3 expressions for your lesson"
                 >
@@ -574,7 +557,7 @@ const handleGenerateStory = async () => {
                     />
                   </template>
                   <template #content>
-                    <div class="flex flex-wrap gap-3">
+                    <div class="flex flex-wrap grow gap-3">
                       <div
                         v-for="(expr, n) in expressionList.slice(0, 3)"
                         :key="expr.text"
@@ -593,7 +576,7 @@ const handleGenerateStory = async () => {
             <!-- Generate Button Section -->
             <div class="text-center pt-8">
               <button
-                class="w-80 m-auto bg-warning hover:bg-warning/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                class="w-80 m-auto bg-neutral hover:bg-neutral-dark cursor-pointer text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
                 @click="handleGenerateStory"
                 :disabled="isFetchingData || isGeneratingLesson"
               >

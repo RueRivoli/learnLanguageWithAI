@@ -35,7 +35,7 @@ const totalExpressionsInK = computed(() => {
 
 <template>
   <!-- Main statistics -->
-  <LayoutKeyElementWordOverview title="Words Acquired" description="test">
+  <LayoutKeyElementWordOverview title="Words Acquired" description="test" :lightMode="true">
     <template #content>
       <div class="mb-3">
         <div class="flex items-baseline gap-2">
@@ -51,7 +51,7 @@ const totalExpressionsInK = computed(() => {
     </template>
     <template #details>
       <div
-        class="bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg p-3 border border-blue-200/80 shadow-sm"
+        class="p-3 bg-slate-200 group relative rounded-lg shadow-sm border border-slate-300"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -72,6 +72,7 @@ const totalExpressionsInK = computed(() => {
   <LayoutKeyElementExpressionOverview
     title="Expressions Acquired"
     description="test"
+    :lightMode="true"
   >
     <template #content>
       <div class="mb-3">
@@ -89,12 +90,8 @@ const totalExpressionsInK = computed(() => {
     <template #details>
       <!-- Progress details -->
       <div
-        class="group relative bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg p-3 border border-amber-300/70 shadow-md transition-all duration-300 overflow-hidden"
+        class="p-3 group relative bg-slate-200 rounded-lg border border-slate-300 shadow-sm"
       >
-        <!-- Professional background pattern -->
-        <div
-          class="absolute inset-0 bg-gradient-to-br from-amber-100/60 via-yellow-50/80 to-amber-100/50 opacity-90"
-        />
         <!-- Content -->
         <div class="relative z-10">
           <div class="flex items-center justify-between">

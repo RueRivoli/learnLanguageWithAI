@@ -70,10 +70,10 @@ watchEffect(async () => {
         <div class="p-5">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
-              title="Modules"
-              description="Area of Improvements"
+              title="Key Modules"
+              description="Key Modules of Turkish Language"
             >
-              <Square2StackIcon class="h-6 w-6 text-primary" />
+              <Square2StackIcon class="h-6 w-6 text-neutral" />
             </LayoutHeadingPlus>
             <LayoutTabs
               :first-tab="grammarLevelTabs.firstTab"
@@ -167,7 +167,6 @@ watchEffect(async () => {
                 :symbol="rule.symbol"
                 :score="rule.score"
                 :level="rule.difficultyClass"
-                :lightMode="true"
               >
                 <template #content>
                   <!-- Professional description box -->

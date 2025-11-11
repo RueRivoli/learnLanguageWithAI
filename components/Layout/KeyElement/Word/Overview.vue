@@ -3,12 +3,14 @@ import { BookOpenIcon } from "@heroicons/vue/24/outline";
 
 const props = withDefaults(
   defineProps<{
-    title: string | null;
     description: string | null;
+    lightMode?: boolean;
+    title: string | null;
   }>(),
   {
-    title: null,
     description: null,
+    lightMode: false,
+    title: null,
   },
 );
 </script>
@@ -16,15 +18,20 @@ const props = withDefaults(
 <template>
   <!-- Total Words Mastered - Professional Design -->
   <div
-    class="group relative bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-md border border-violet-300/70 p-4 overflow-hidden transition-all duration-300"
+    :class="[
+      'group p-4 relative rounded-lg shadow-md hover:shadow-lg',
+      lightMode ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300' : 'bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-md border border-violet-300/70',
+    ]"
   >
     <!-- Professional background pattern -->
     <div
+      v-if="!lightMode"
       class="absolute inset-0 bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 opacity-90"
     />
 
     <!-- Success celebration overlay -->
     <div
+    v-if="!lightMode"
       class="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/3 to-green-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"
     />
 

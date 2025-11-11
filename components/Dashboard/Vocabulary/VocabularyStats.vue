@@ -280,7 +280,7 @@ watch(
   <div>
     <!-- Full-width Vocabulary Progress Grid -->
     <div
-      class="w-full bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-sm border border-blue-300/70 p-6 mb-8"
+      class="p-4 w-full bg-slate-200 rounded-lg shadow-md border border-slate-300 mb-8"
     >
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
@@ -289,7 +289,7 @@ watch(
             <BookOpenIcon class="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 class="text-gray-900 mb-0.5 text-xl">Word Progress</h3>
+            <h3 class="text-gray-900 mb-0.5 text-xl">Words Acquired</h3>
             <p class="text-sm text-gray-600">
               Words {{ currentRangeStart }}-{{ currentRangeEnd }} of
               {{ totalWords }} • Batch {{ currentBatch + 1 }} of
@@ -389,7 +389,7 @@ watch(
 
     <!-- Full-width Expression Progress Grid -->
     <div
-      class="w-full bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-sm border border-warning/20 p-6 mb-8"
+      class="p-4 w-full bg-slate-200 rounded-lg shadow-md border border-slate-300 mb-8"
     >
       <!-- Header with navigation -->
       <div class="flex items-center justify-between mb-6">
@@ -398,7 +398,7 @@ watch(
             <LanguageIcon class="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 class="text-gray-900 mb-0.5 text-xl">Expression Progress</h3>
+            <h3 class="text-gray-900 mb-0.5 text-xl">Expressions Acquired</h3>
             <p class="text-sm text-gray-600">
               Expressions {{ currentExpressionRangeStart }}-{{
                 currentExpressionRangeEnd

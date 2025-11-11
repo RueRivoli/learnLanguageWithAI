@@ -903,7 +903,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
               <!-- Key Words and Expressions Section -->
               <div class="space-y-2 p-3">
                 <!-- Words Selection Section -->
-                <LayoutKeyElementWordCard title="Key Words">
+                <LayoutKeyElementWordCard title="Key Words" backgroundClasses="bg-slate-200 border border-slate-300">
                   <template #top-right-corner>
                     <label class="flex items-center gap-3 cursor-pointer group">
                       <span
@@ -939,6 +939,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 <LayoutKeyElementExpressionCard
                   class="mt-8"
                   title="Key Expressions"
+                  backgroundClasses="bg-slate-200 border border-slate-300"
                 >
                   <template #top-right-corner>
                     <label class="flex items-center gap-3 cursor-pointer group">

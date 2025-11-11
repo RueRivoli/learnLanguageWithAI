@@ -22,7 +22,7 @@ const props = withDefaults(
   <div
     :class="[
       props.backgroundClasses
-        ? `group relative overflow-hidden border border-warning/20 rounded-md shadow-md p-4 ${props.backgroundClasses}`
+        ? `group relative overflow-hidden rounded-md shadow-md p-4 ${props.backgroundClasses}`
         : 'group relative bg-warning/10 rounded-md border border-warning/20 shadow-md p-4 transition-all duration-300',
     ]"
   >

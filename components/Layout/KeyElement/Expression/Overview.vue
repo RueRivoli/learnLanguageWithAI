@@ -3,12 +3,14 @@ import { LanguageIcon } from "@heroicons/vue/24/outline";
 
 const props = withDefaults(
   defineProps<{
-    title: string | null;
     description: string | null;
+    lightMode?: boolean;
+    title: string | null;
   }>(),
   {
-    title: null,
     description: null,
+    lightMode: false,
+    title: null,
   },
 );
 </script>
@@ -16,15 +18,20 @@ const props = withDefaults(
 <template>
   <!-- Total Expressions Mastered - Professional Design -->
   <div
-    class="group relative bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-md border border-warning/20 p-4 overflow-hidden transition-all duration-300"
+    :class="[
+      ' p-4 group relative rounded-lg shadow-md p-4 hover:shadow-lg',
+      lightMode ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300' : 'bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-md border border-amber-300/70',
+    ]"
   >
     <!-- Professional background pattern -->
     <div
+      v-if="!lightMode"
       class="absolute inset-0 bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 opacity-90"
     />
 
     <!-- Success celebration overlay -->
     <div
+      v-if="!lightMode"
       class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-green-500/3 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"
     />
 

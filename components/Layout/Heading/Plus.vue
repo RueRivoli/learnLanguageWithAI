@@ -11,7 +11,7 @@ const props = withDefaults(
     description: null,
     title: null,
     textColor: "text-neutral",
-    backgroundColor: "bg-indigo-100",
+    backgroundColor: "",
     descriptionTextColor: "text-base-800",
   },
 );
@@ -23,7 +23,7 @@ const props = withDefaults(
       <slot />
     </div>
     <div>
-      <h1 class="text-2xl font-semibold" :class="props.textColor">
+      <h1 class="text-2xl font-medium" :class="props.textColor">
         {{ props.title }}
       </h1>
       <p v-if="props.description" :class="props.descriptionTextColor">

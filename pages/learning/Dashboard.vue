@@ -34,37 +34,12 @@ watchEffect(async () => {
         method: "GET",
         headers,
       });
-      if (profile && !profile[0].hasFilledProfileSettings) {
-        accountSettingsModal.value?.openModal();
-        await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
-          method: "POST",
-          headers,
-          body: {
-            language_learned: "tr",
-          },
-        });
-      }
-      userStore.setProfile(profile[0]);
     } catch (error) {
       console.log(error);
     }
   }
 });
 
-const handleLanguageUpdated = async (profile: any) => {
-  accountSettingsModal.value?.openModal();
-  if (user.value) {
-    // const headers = await getAuthToken();
-    // TODO: Uncomment this when the language selection is ready
-    // await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
-    //   method: "POST",
-    //   headers,
-    //   body: {
-    //     language_learned: profile.language_learned,
-    //   },
-    // });
-  }
-};
 
 const getInfoUser = async () => {
   const {
@@ -88,7 +63,7 @@ getInfoUser();
               title="Progress on Vocabulary"
               description="Your Knowledge on the Most Important Vocabulary in Turkish"
             >
-              <ChartBarIcon class="h-6 w-6 text-primary" />
+              <ChartBarIcon class="h-6 w-6 text-neutral" />
             </LayoutHeadingPlus>
             <LayoutTabs
               :first-tab="dashboardCategoryTabs.firstTab"

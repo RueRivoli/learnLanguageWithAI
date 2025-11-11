@@ -27,12 +27,9 @@ const currentInfo = computed(() => {
     <div class="col-span-2">
       <div class="mb-4 flex items-center justify-between">
         <div class="flex">
-          <LayoutHeadingPlus title="Progress on Modules">
-            <Square2StackIcon class="h-6 w-6 text-primary" />
+          <LayoutHeadingPlus title="Progress on Key Modules" description="Your Progress on the Different Turkish Key Modules">
+            <Square2StackIcon class="h-6 w-6 text-neutral" />
           </LayoutHeadingPlus>
-          <!-- <h3 class="text-lg font-semibold text-gray-900 ml-3 flex items-center">
-            Progress on Modules
-          </h3> -->
         </div>
         <LayoutTabs
           :first-tab="grammarLevelTabs.firstTab"
