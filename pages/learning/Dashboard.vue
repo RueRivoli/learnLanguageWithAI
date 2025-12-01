@@ -40,7 +40,6 @@ watchEffect(async () => {
   }
 });
 
-
 const getInfoUser = async () => {
   const {
     data: { user },

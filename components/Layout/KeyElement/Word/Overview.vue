@@ -20,7 +20,9 @@ const props = withDefaults(
   <div
     :class="[
       'group p-4 relative rounded-lg shadow-md hover:shadow-lg',
-      lightMode ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300' : 'bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-md border border-violet-300/70',
+      lightMode
+        ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300'
+        : 'bg-gradient-to-br from-violet-100/90 via-purple-50/95 to-violet-100/80 rounded-lg shadow-md border border-violet-300/70',
     ]"
   >
     <!-- Professional background pattern -->
@@ -31,7 +33,7 @@ const props = withDefaults(
 
     <!-- Success celebration overlay -->
     <div
-    v-if="!lightMode"
+      v-if="!lightMode"
       class="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/3 to-green-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"
     />
 

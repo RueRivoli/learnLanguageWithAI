@@ -24,7 +24,7 @@ const props = withDefaults(
 </script>
 <template>
   <!-- Professional Pagination -->
-  <div class="bg-white px-6 py-4 border-t border-gray-200">
+  <div class="px-6 py-4 border-t border-base-300">
     <div class="flex items-center justify-between">
       <!-- Results info -->
       <div class="text-sm text-gray-700">

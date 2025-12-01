@@ -3,6 +3,7 @@ const props = withDefaults(
   defineProps<{
     isMastered?: boolean | undefined;
     lightMode?: boolean | undefined;
+    role?: string | null;
     text?: string | null;
     translation?: string | null;
     size?: "sm" | "xs";
@@ -10,6 +11,7 @@ const props = withDefaults(
   {
     isMastered: false,
     lightMode: false,
+    role: null,
     text: null,
     translation: null,
     size: "sm",
@@ -32,7 +34,7 @@ const emit = defineEmits(["click"]);
     @click="emit('click')"
   >
     <div class="flex items-center justify-between">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 min-w-0">
         <div>
           <span class="text-base font-medium font-serif">
             {{ props.text }}
@@ -40,11 +42,14 @@ const emit = defineEmits(["click"]);
           <span class="text-base font-medium font-serif" v-if="props.isMastered"
             >*</span
           >
+          <span class="text-base ml-2 font-medium font-serif" v-if="props.role"
+            >({{ props.role }})</span
+          >
         </div>
 
         <span
           v-if="props.translation"
-          class="text-sm text-slate-600 font-light italic"
+          class="text-sm text-slate-600 font-light truncate max-w-[10rem] md:max-w-[12rem] lg:max-w-[14rem]"
         >
           {{ props.translation }}
         </span>

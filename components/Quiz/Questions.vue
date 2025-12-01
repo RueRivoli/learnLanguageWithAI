@@ -5,6 +5,7 @@ import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import type { ExpressionContent } from "~/types/vocabulary/expression";
 import type { WordContent } from "~/types/vocabulary/word";
 import { useQuiz } from "~/composables/useQuiz";
+import { BookOpenIcon, LanguageIcon } from "@heroicons/vue/24/outline";
 
 definePageMeta({
   layout: "quiz",
@@ -83,7 +84,8 @@ const handleReturnToSubject = () => {
 <template>
   <div class="quiz-container">
     <!-- Main Quiz Section -->
-    <div class="quiz-main">
+     <div class="m-auto bg-white rounded-lg shadow-lg text-slate-800">
+      <div class="quiz-main">
       <div class="quiz-header">
         <div v-if="isQuizCompleted" class="back-button-container">
           <button @click="handleReturnToSubject" class="back-button">
@@ -115,7 +117,7 @@ const handleReturnToSubject = () => {
 
         <!-- Question -->
         <div class="question-section">
-          <h2 class="question-text">{{ currentQuestion.question }}</h2>
+          <h2 class="question-text text-slate-600">{{ currentQuestion.question }}</h2>
         </div>
 
         <!-- Answer Options -->
@@ -126,7 +128,7 @@ const handleReturnToSubject = () => {
               :key="index"
               @click="!isQuizCompleted ? selectAnswer(option) : null"
               :class="[
-                'option-button',
+                'option-button bg-slate-200',
                 selectedAnswer === option ? 'selected' : '',
                 isQuizCompleted ? 'completed-quiz' : '',
                 isQuizCompleted &&
@@ -218,9 +220,12 @@ const handleReturnToSubject = () => {
         <p class="loading-text">Loading quiz...</p>
       </div>
     </div>
+     </div>
+
+
 
     <!-- Progress Sidebar - Calendar Style -->
-    <div class="progress-sidebar">
+    <div class="progress-sidebar border-l border-slate-200/70 col-span-3">
       <div class="sidebar-header">
         <h3 class="sidebar-title">Quiz Progress</h3>
       </div>
@@ -251,7 +256,7 @@ const handleReturnToSubject = () => {
             :key="index"
             @click="isQuizCompleted ? goToQuestion(item.questionIndex) : null"
             :class="[
-              'progress-square',
+              'progress-square border-l-4 border-success',
               item.completed ? 'completed' : '',
               item.current ? 'current' : '',
               isQuizCompleted && item.correct === true ? 'correct' : '',
@@ -268,12 +273,21 @@ const handleReturnToSubject = () => {
         class="progress-section"
         v-if="props.type === 'full' || props.type === 'vocabulary'"
       >
-        <h4 class="progress-title">Vocabulary</h4>
+        <h4 class="progress-title text-slate-800">Vocabulary</h4>
 
         <!-- Words Subsection -->
         <div class="progress-subsection">
           <div class="flex items-center justify-between">
-            <h5 class="progress-subtitle">Words</h5>
+            <div class="mb-4 flex items-center gap-2">
+                <div
+                  class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2 shadow-lg"
+                >
+                  <BookOpenIcon class="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-medium">Key Words</h3>
+                </div>
+              </div>
             <!-- Words Score -->
             <div v-if="isQuizCompleted" class="score-display small">
               <span class="score-label">Score:</span>
@@ -286,7 +300,7 @@ const handleReturnToSubject = () => {
               :key="index"
               @click="isQuizCompleted ? goToQuestion(item.questionIndex) : null"
               :class="[
-                'progress-square',
+                'progress-square border-l-4 border-primary',
                 item.completed ? 'completed' : '',
                 item.current ? 'current' : '',
                 isQuizCompleted && item.correct === true ? 'correct' : '',
@@ -302,7 +316,16 @@ const handleReturnToSubject = () => {
         <!-- Expressions Subsection -->
         <div class="progress-subsection">
           <div class="flex items-center justify-between">
-            <h5 class="progress-subtitle">Expressions</h5>
+            <div class="mb-4 flex items-center gap-2">
+                <div
+                  class="w-8 h-8 bg-warning rounded-lg flex items-center justify-center mr-2 shadow-lg"
+                >
+                  <LanguageIcon class="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-medium">Key Expressions</h3>
+                </div>
+              </div>
             <!-- Expressions Score -->
             <div v-if="isQuizCompleted" class="score-display small">
               <span class="score-label">Score:</span>
@@ -315,7 +338,7 @@ const handleReturnToSubject = () => {
               :key="index"
               @click="isQuizCompleted ? goToQuestion(item.questionIndex) : null"
               :class="[
-                'progress-square',
+                'progress-square border-l-4 border-warning',
                 item.completed ? 'completed' : '',
                 item.current ? 'current' : '',
                 isQuizCompleted && item.correct === true ? 'correct' : '',
@@ -336,7 +359,7 @@ const handleReturnToSubject = () => {
 /* Container */
 .quiz-container {
   min-height: 100vh;
-  background: var(--color-primary);
+  background: #f8f9fa;
   display: flex;
   font-family:
     "Inter",
@@ -425,29 +448,25 @@ const handleReturnToSubject = () => {
 
 .quiz-progress-indicator {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 0.5rem;
 }
 
 .quiz-section-name {
   font-weight: 600;
-  color: #ffffff;
   font-size: 1.2rem;
 }
 
 .quiz-counter {
   font-weight: 700;
-  color: #ffffff;
   font-size: 1.4rem;
 }
 
 .quiz-total {
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
 }
 
 .quiz-content {
@@ -464,7 +483,6 @@ const handleReturnToSubject = () => {
 .question-text {
   font-size: 2rem;
   font-weight: 600;
-  color: #ffffff;
   line-height: 1.4;
   margin: 0;
   letter-spacing: -0.025em;
@@ -490,7 +508,6 @@ const handleReturnToSubject = () => {
   align-items: center;
   justify-content: flex-start;
   padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   cursor: pointer;
@@ -532,11 +549,6 @@ const handleReturnToSubject = () => {
 
 .option-button:hover {
   border-color: #d1d5db;
-  transform: translateY(-2px);
-  box-shadow:
-    0 10px 25px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .option-button:hover::before {
@@ -544,13 +556,8 @@ const handleReturnToSubject = () => {
 }
 
 .option-button.selected {
-  border-color: #f59e0b;
-  background: linear-gradient(135deg, #f59e0b 0%, #fb923c 50%, #fbbf24 100%);
-  color: white;
-  box-shadow:
-    0 10px 25px -3px rgba(245, 158, 11, 0.4),
-    0 4px 6px -2px rgba(245, 158, 11, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dce4ed 100%);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(148, 163, 184, 0.1);
   transform: translateY(-1px);
 }
 
@@ -753,8 +760,6 @@ const handleReturnToSubject = () => {
 /* Progress Sidebar - Calendar Inspired */
 .progress-sidebar {
   width: 320px;
-  background: var(--color-base-100);
-  border-left: 1px solid var(--color-base-300);
   padding: 2rem;
   overflow-y: auto;
   position: relative;
@@ -780,7 +785,6 @@ const handleReturnToSubject = () => {
 .progress-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #374151;
   margin: 0 0 1rem 0;
   letter-spacing: -0.025em;
 }
@@ -826,9 +830,9 @@ const handleReturnToSubject = () => {
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dce4ed 100%);
+  /* background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dce4ed 100%); */
+  background: white;
   color: #475569;
-  border: 1px solid #cbd5e1;
   box-shadow:
     0 2px 4px -1px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.3),

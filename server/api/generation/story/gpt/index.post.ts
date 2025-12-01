@@ -100,7 +100,7 @@ export default defineEventHandler(async (event) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o",
+        model: "gpt-4.1",
         messages: [
           {
             role: "system",
@@ -110,7 +110,7 @@ export default defineEventHandler(async (event) => {
           { role: "user", content: body.message },
         ],
         response_format: lessonFormat,
-        temperature: 0.7,
+        temperature: 0.2,
         max_tokens: 2000,
       }),
     });

@@ -35,7 +35,11 @@ const totalExpressionsInK = computed(() => {
 
 <template>
   <!-- Main statistics -->
-  <LayoutKeyElementWordOverview title="Words Acquired" description="test" :lightMode="true">
+  <LayoutKeyElementWordOverview
+    title="Words Acquired"
+    description="test"
+    :lightMode="true"
+  >
     <template #content>
       <div class="mb-3">
         <div class="flex items-baseline gap-2">

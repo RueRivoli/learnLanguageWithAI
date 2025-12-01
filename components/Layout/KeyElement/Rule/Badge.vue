@@ -24,8 +24,8 @@ const props = withDefaults(
   <div
     :class="[
       props.lightMode
-        ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300 px-4 py-1 overflow-hidden transition-all duration-300'
-        : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-lg shadow-md border border-emerald-300/70 px-4 py-1 overflow-hidden transition-all duration-300',
+        ? 'bg-slate-200 group relative rounded-lg border border-slate-300 px-4 py-1 overflow-hidden transition-all duration-300'
+        : 'bg-gradient-to-br from-emerald-100/95 via-green-100/90 to-teal-100/85 group relative rounded-lg border border-emerald-300/70 px-4 py-1 overflow-hidden transition-all duration-300',
     ]"
   >
     <!-- Professional background pattern -->

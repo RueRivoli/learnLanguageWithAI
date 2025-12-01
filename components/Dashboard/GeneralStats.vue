@@ -27,7 +27,10 @@ const currentInfo = computed(() => {
     <div class="col-span-2">
       <div class="mb-4 flex items-center justify-between">
         <div class="flex">
-          <LayoutHeadingPlus title="Progress on Key Modules" description="Your Progress on the Different Turkish Key Modules">
+          <LayoutHeadingPlus
+            title="Progress on Key Modules"
+            description="Your Progress on the Different Turkish Key Modules"
+          >
             <Square2StackIcon class="h-6 w-6 text-neutral" />
           </LayoutHeadingPlus>
         </div>

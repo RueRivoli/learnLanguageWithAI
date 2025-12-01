@@ -36,30 +36,24 @@ const emptyMessage = computed(() => {
 
 <template>
   <div v-if="isExistingItem" class="w-full text-pretty shadow-md">
-    <div class="text-2xl flex flex-wrap items-center">
+    <div class="py-2 text-2xl flex flex-wrap items-center">
       <!-- "font-bold mr-2 underline underline-offset-3" -->
-      <span class="font-bold text-gray-900 leading-tight mr-2"
+      <span class="font-medium leading-tight mr-2"
         >{{ props.type === "word" ? props.word.text : props.expression.text }}
       </span>
+      <div v-if="props.type === 'word'" class="mr-2">({{ word.role }})</div>
       <br v-if="props.type === 'expression'" />
-      <span>
+      <span class="font-light">
         {{
           props.type === "word" ? word.translation : expression.translation
         }}</span
       >
-      <div
-        v-if="props.type === 'word'"
-        :class="getClassWordRole(word.role)"
-        class="ml-2"
-      >
-        {{ word.role }}
-      </div>
     </div>
     <div class="mt-2">
       <div>
         <div
           v-if="props.type === 'word' ? word.sentence : expression.sentence"
-          class="font-semibold"
+          class="font-medium"
         >
           <span>
             {{
@@ -67,7 +61,7 @@ const emptyMessage = computed(() => {
             }}
           </span>
         </div>
-        <div>
+        <div class="mt-1 font-light">
           <span>{{
             props.type === "word" ? word.sentenceEn : expression.sentenceEn
           }}</span>
@@ -75,14 +69,14 @@ const emptyMessage = computed(() => {
       </div>
       <div
         v-if="props.type === 'word' ? word.sentence2 : expression.sentence2"
-        class="mt-2"
+        class="mt-2 font-medium"
       >
         <div class="font-semibold flex items-center">
           <span>{{
             props.type === "word" ? word.sentence2 : expression.sentence2
           }}</span>
         </div>
-        <div class="italic">
+        <div class="font-light">
           {{
             props.type === "word" ? word.sentence2En : expression.sentence2En
           }}

@@ -107,6 +107,96 @@ export const lessonFormat = {
         tip_10: {
           type: "string",
         },
+        sentence_11: {
+          type: "string",
+        },
+        sentence_11_en: {
+          type: "string",
+        },
+        tip_11: {
+          type: "string",
+        },
+        sentence_12: {
+          type: "string",
+        },
+        sentence_12_en: {
+          type: "string",
+        },
+        tip_12: {
+          type: "string",
+        },
+        sentence_13: {
+          type: "string",
+        },
+        sentence_13_en: {
+          type: "string",
+        },
+        tip_13: {
+          type: "string",
+        },
+        sentence_14: {
+          type: "string",
+        },
+        sentence_14_en: {
+          type: "string",
+        },
+        tip_14: {
+          type: "string",
+        },
+        sentence_15: {
+          type: "string",
+        },
+        sentence_15_en: {
+          type: "string",
+        },
+        tip_15: {
+          type: "string",
+        },
+        sentence_16: {
+          type: "string",
+        },
+        sentence_16_en: {
+          type: "string",
+        },
+        tip_16: {
+          type: "string",
+        },
+        sentence_17: {
+          type: "string",
+        },
+        sentence_17_en: {
+          type: "string",
+        },
+        tip_17: {
+          type: "string",
+        },
+        sentence_18: {
+          type: "string",
+        },
+        sentence_18_en: {
+          type: "string",
+        },
+        tip_18: {
+          type: "string",
+        },
+        sentence_19: {
+          type: "string",
+        },
+        sentence_19_en: {
+          type: "string",
+        },
+        tip_19: {
+          type: "string",
+        },
+        sentence_20: {
+          type: "string",
+        },
+        sentence_20_en: {
+          type: "string",
+        },
+        tip_20: {
+          type: "string",
+        },
       },
     },
   },

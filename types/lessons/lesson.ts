@@ -15,6 +15,12 @@ export type Lesson = {
     sentenceEn: string;
     sentence2: string;
     sentence2En: string;
+    role: string;
+    role2: string;
+    role3: string;
+    translation: string;
+    translation2: string;
+    translation3: string;
   }>;
   newExpressions: Array<{
     text: string;

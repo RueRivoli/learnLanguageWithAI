@@ -107,15 +107,15 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
 </script>
 
 <template>
-  <div>
-    <div class="max-w-full min-h-screen flex grid grid-cols-4">
-      <div class="min-h-screen col-span-3">
-        <div class="bg-white shadow-md h-full flex flex-col p-5">
+  <div class="max-h-screen">
+    <div class="max-w-full max-h-screen flex grid grid-cols-8">
+      <div class="max-h-screen col-start-2 col-span-6">
+        <div class="h-full flex flex-col p-5">
           <LayoutHeadingPlus
             title="Lessons"
             description="Your History of Tailored Lessons"
           >
-            <DocumentIcon class="h-6 w-6 text-primary" />
+            <DocumentIcon class="h-6 w-6 text-neutral" />
           </LayoutHeadingPlus>
 
           <div class="mt-3 max-h-full grow overflow-auto">
@@ -142,9 +142,9 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
               class="flex flex-col items-center justify-center py-16 px-4"
             >
               <div
-                class="w-24 h-24 mb-6 rounded-full bg-indigo-100 flex items-center justify-center"
+                class="w-24 h-24 mb-6 rounded-full bg-neutral/10 flex items-center justify-center"
               >
-                <DocumentIcon class="h-12 w-12 text-primary" />
+                <DocumentIcon class="h-12 w-12 text-neutral" />
               </div>
               <h3 class="text-xl font-semibold text-gray-900 mb-2">
                 No lessons yet

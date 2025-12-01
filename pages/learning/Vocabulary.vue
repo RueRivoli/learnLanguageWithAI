@@ -222,17 +222,15 @@ const handleExpressionLearningStatus = async (
 <template>
   <div class="max-w-full min-h-screen grid grid-cols-4">
     <div class="min-h-screen col-span-3">
-      <div
-        class="min-h-screen h-full flex flex-col bg-white rounded-lg shadow-md"
-      >
+      <div class="min-h-screen h-full flex flex-col rounded-lg">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-gray-50/50 to-white p-5">
+        <div class="p-5">
           <div class="flex items-center justify-between mb-6">
             <LayoutHeadingPlus
               title="Vocabulary"
               description="Most Common Turkish Words and Expressions"
             >
-              <LanguageIcon class="h-6 w-6 text-primary" />
+              <LanguageIcon class="h-6 w-6 text-neutral" />
             </LayoutHeadingPlus>
 
             <!-- Tab Navigation -->
@@ -348,17 +346,19 @@ const handleExpressionLearningStatus = async (
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               <div v-for="(word, index) in words" :key="index">
-                <LayoutKeyElementWordDefinition
-                  :word="word"
-                  :minified="true"
-                  :is-dark-mode="true"
+                <LayoutKeyElementWordBadge
+                  class="cursor-pointer"
+                  :text="word.text"
+                  :translation="word.translation"
+                  :role="word.role"
+                  :lightMode="true"
                   @click="selectedWord = word"
                 />
               </div>
             </div>
             <LayoutTablePagination
               v-if="words.length > 0"
-              class="mt-2"
+              class="mt-2 bg-base-100"
               :current-page="currentPage"
               :end-item="endItem"
               :start-item="startItem"
@@ -424,10 +424,11 @@ const handleExpressionLearningStatus = async (
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               <div v-for="(expr, index) in expressions" :key="index">
-                <LayoutKeyElementExpressionDefinition
-                  :expression="expr"
-                  :minified="true"
-                  :is-dark-mode="true"
+                <LayoutKeyElementExpressionBadge
+                  class="cursor-pointer"
+                  :text="expr.text"
+                  :translation="expr.translation"
+                  :lightMode="true"
                   @click="selectedExpression = expr"
                 />
               </div>
@@ -457,9 +458,9 @@ const handleExpressionLearningStatus = async (
         <LearningItemDefinition
           class="p-6 rounded-lg"
           :class="{
-            'bg-primary/10 border-l-4 border-primary': selectedWord,
-            'bg-warning/10 border-l-4 border-warning': selectedExpression,
-            'bg-white': !selectedWord && !selectedExpression,
+            'border-l-4 border-primary': selectedWord,
+            'border-l-4 border-warning': selectedExpression,
+            'bg-white': true,
           }"
           :word="selectedWord"
           :expression="selectedExpression"

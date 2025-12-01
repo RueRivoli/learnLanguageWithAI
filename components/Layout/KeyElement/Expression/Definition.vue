@@ -33,11 +33,14 @@ const emit = defineEmits(["click"]);
       class="flex items-center"
       :class="props.minified ? 'justify-center' : 'justify-between'"
     >
-      <div class="flex items-center text-neutral gap-4">
+      <div class="flex items-center text-neutral gap-4 min-w-0">
         <span class="text-lg font-serif">
           {{ expression.text }}
         </span>
-        <span v-if="!props.minified" class="text-lg font-light italic">
+        <span
+          v-if="!props.minified"
+          class="text-lg font-light italic truncate max-w-[10rem] md:max-w-[12rem] lg:max-w-[14rem]"
+        >
           {{ expression.translation || "Translation not available" }}
         </span>
       </div>

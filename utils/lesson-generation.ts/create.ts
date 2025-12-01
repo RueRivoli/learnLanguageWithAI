@@ -29,19 +29,23 @@ const generateStory = async (
 };
 
 export const generateAIPoweredStoryWithParameters = async (
+  language: string,
   userId: string,
   grammarRuleId: number,
   grammarRule: string,
   listWords: any[],
   listExpressions: any[],
   level: string,
+  storyType: string,
   nbLines: number,
 ) => {
   const prompt = getPromptForStoryGeneration(
+    language,
     grammarRule,
     listWords.map((w) => w.text),
     listExpressions.map((e) => e.text),
     level,
+    storyType,
     nbLines,
   );
   return generateStory(

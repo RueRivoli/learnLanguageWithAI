@@ -20,7 +20,9 @@ const props = withDefaults(
   <div
     :class="[
       ' p-4 group relative rounded-lg shadow-md p-4 hover:shadow-lg',
-      lightMode ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300' : 'bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-md border border-amber-300/70',
+      lightMode
+        ? 'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300'
+        : 'bg-gradient-to-br from-amber-100/90 via-yellow-50/95 to-amber-100/80 rounded-lg shadow-md border border-amber-300/70',
     ]"
   >
     <!-- Professional background pattern -->

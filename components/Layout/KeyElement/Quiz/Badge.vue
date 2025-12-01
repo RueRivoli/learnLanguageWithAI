@@ -141,7 +141,7 @@ const currentStyles = computed(() =>
   <button
     v-else
     :class="[
-      'bg-slate-200 group relative rounded-lg shadow-md border border-slate-300',
+      'bg-slate-200 group relative rounded-lg border border-slate-300',
       sizeClasses.container,
     ]"
     @click="emit('click')"

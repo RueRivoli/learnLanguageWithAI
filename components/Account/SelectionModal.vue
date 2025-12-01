@@ -24,7 +24,8 @@ const accountSettingsModal = ref<HTMLDialogElement | null>(null);
 const isSavingProfileSettings = ref(false);
 
 const handleSaveProfileData = async () => {
-  if (!profileFormData.value.pseudo || !profileFormData.value.languageLearned) return;
+  if (!profileFormData.value.pseudo || !profileFormData.value.languageLearned)
+    return;
 
   isSavingProfileSettings.value = true;
   const headers = await getAuthToken();
@@ -41,10 +42,10 @@ const handleSaveProfileData = async () => {
   await $fetch(`/api/grammar-scores/fill/${user.value?.id}`, {
     method: "POST",
     headers,
-      body: {
-        language_learned: profileFormData.value.languageLearned,
-      },
-    });
+    body: {
+      language_learned: profileFormData.value.languageLearned,
+    },
+  });
   accountSettingsModal.value?.close();
   if (userStore.$state.id) {
     userScoreStore.setAllScores(userStore.$state.id);
@@ -77,7 +78,7 @@ defineExpose({
         </div>
 
         <!-- Heading -->
-        <h3 class="text-3xl font-bold text-black mb-12 text-center">
+        <h3 class="text-3xl font-bold text-neutral mb-12 text-center">
           Welcome to TookanAI
         </h3>
 
@@ -96,7 +97,10 @@ defineExpose({
 
           <fieldset class="fieldset">
             <legend class="fieldset-legend text-lg">Targeted Language</legend>
-            <select class="select w-full rounded-lg" v-model="profileFormData.languageLearned">
+            <select
+              class="select w-full rounded-lg"
+              v-model="profileFormData.languageLearned"
+            >
               <option disabled selected>Language</option>
               <option value="fr">French</option>
               <option value="sp">Spanish</option>
@@ -110,7 +114,11 @@ defineExpose({
 
         <!-- Continue Button -->
         <button
-          :disabled="!profileFormData.pseudo || !profileFormData.languageLearned || isSavingProfileSettings"
+          :disabled="
+            !profileFormData.pseudo ||
+            !profileFormData.languageLearned ||
+            isSavingProfileSettings
+          "
           :class="[
             'w-full py-3 cursor-pointer rounded-lg font-semibold transition-all duration-200',
             profileFormData.pseudo && !isSavingProfileSettings

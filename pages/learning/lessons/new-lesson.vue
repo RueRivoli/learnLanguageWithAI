@@ -43,7 +43,8 @@ const openingModalId = ref(0);
 // Boolean for loading and fetching status
 const isGeneratingLesson = ref(false);
 const isFetchingData = ref<boolean>(false);
-
+const selectedStoryLevel = ref<number>(1);
+const storyType = ref<string>("story");
 const initialModuleSelectedId = ref<number | null>(null);
 const lessonGenerationModal = ref<{
   openModal: () => void;
@@ -232,13 +233,15 @@ const handleGenerateStory = async () => {
   isGeneratingLesson.value = true;
   if (userId.value && targetedModule.value?.name) {
     newLesson = await generateAIPoweredStoryWithParameters(
+      'turkish',
       userId.value,
       targetedModule.value.id,
       targetedModule.value.name,
       wordList.value.slice(0, 10),
       expressionList.value.slice(0, 3),
-      STORY_LEVELS[1],
-      10,
+      STORY_LEVELS[selectedStoryLevel.value],
+      storyType.value,
+      20,
     );
     const promptForImageGeneration = newLesson.promptForImageGeneration;
     if (newLesson.id) {
@@ -260,7 +263,7 @@ const handleGenerateStory = async () => {
 <template>
   <div
     id="new_lesson_page"
-    class="min-h-screen bg-base-200 relative overflow-hidden"
+    class="min-h-screen bg-base-100 relative overflow-hidden"
   >
     <!-- Main Content -->
     <div class="relative py-12">
@@ -342,7 +345,9 @@ const handleGenerateStory = async () => {
                 </div>
                 <div class="skeleton h-4 w-48 rounded mb-6"></div>
                 <div class="w-[60%] m-auto">
-                  <div class="bg-white/80 rounded-xl p-4 border border-white/40">
+                  <div
+                    class="bg-white/80 rounded-xl p-4 border border-white/40"
+                  >
                     <div class="flex items-center justify-center mb-4">
                       <div class="skeleton h-16 w-16 rounded-full"></div>
                     </div>
@@ -480,18 +485,18 @@ const handleGenerateStory = async () => {
                 <!-- Loading Skeleton for Words -->
                 <div
                   v-if="isFetchingData"
-                class="bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
+                  class="bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
                 >
                   <div class="flex items-center justify-between mb-4">
-                  <div class="skeleton h-6 w-32 rounded"></div>
-                  <div class="skeleton h-5 w-5 rounded"></div>
+                    <div class="skeleton h-6 w-32 rounded"></div>
+                    <div class="skeleton h-5 w-5 rounded"></div>
                   </div>
-                <div class="skeleton h-4 w-40 rounded mb-4"></div>
+                  <div class="skeleton h-4 w-40 rounded mb-4"></div>
                   <div class="flex flex-wrap gap-3">
                     <div
                       v-for="i in 10"
                       :key="i"
-                    class="skeleton h-8 w-24 rounded-full"
+                      class="skeleton h-8 w-24 rounded-full"
                     ></div>
                   </div>
                 </div>
@@ -527,18 +532,18 @@ const handleGenerateStory = async () => {
                 <!-- Loading Skeleton for Expressions -->
                 <div
                   v-if="isFetchingData"
-                class="bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
+                  class="bg-slate-200 border border-slate-300 shadow-md rounded-2xl p-6 animate-pulse"
                 >
                   <div class="flex items-center justify-between mb-4">
-                  <div class="skeleton h-6 w-40 rounded"></div>
-                  <div class="skeleton h-5 w-5 rounded"></div>
+                    <div class="skeleton h-6 w-40 rounded"></div>
+                    <div class="skeleton h-5 w-5 rounded"></div>
                   </div>
-                <div class="skeleton h-4 w-48 rounded mb-4"></div>
+                  <div class="skeleton h-4 w-48 rounded mb-4"></div>
                   <div class="flex flex-wrap gap-3">
                     <div
                       v-for="i in 3"
                       :key="i"
-                    class="skeleton h-8 w-32 rounded-full"
+                      class="skeleton h-8 w-32 rounded-full"
                     ></div>
                   </div>
                 </div>
@@ -574,26 +579,48 @@ const handleGenerateStory = async () => {
             </div>
 
             <!-- Generate Button Section -->
-            <div class="text-center pt-8">
-              <button
-                class="w-80 m-auto bg-neutral hover:bg-neutral-dark cursor-pointer text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
-                @click="handleGenerateStory"
+            <div
+              class="flex items-center justify-center gap-4 text-center pt-8"
+            >
+              <select
+                v-model="selectedStoryLevel"
+                class="w-40 cursor-pointer select"
                 :disabled="isFetchingData || isGeneratingLesson"
               >
-                <span
-                  v-if="isGeneratingLesson"
-                  class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
-                />
-                <PlayIcon v-else class="w-5 h-5" />
-                <span>Generate My Personalized Lesson</span>
-              </button>
-              <p class="text-sm text-gray-500 mt-2">
+                <option value="1">Very Easy</option>
+                <option value="2">Easy</option>
+                <option value="3">Intermediate</option>
+                <option value="4">Advanced</option>
+              </select>
+              <select
+                v-model="storyType"
+                class="w-40 cursor-pointer select"
+                :disabled="isFetchingData || isGeneratingLesson"
+              >
+                <option value="story">Story</option>
+                <option value="story_book">Story Book</option>
+              </select>
+              <div>
+                <button
+                  class="w-80 m-auto bg-neutral hover:bg-neutral/90 cursor-pointer text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                  @click="handleGenerateStory"
+                  :disabled="isFetchingData || isGeneratingLesson"
+                >
+                  <span
+                    v-if="isGeneratingLesson"
+                    class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
+                  />
+                  <PlayIcon v-else class="w-5 h-5" />
+                  <span>Generate My Personalized Lesson</span>
+                </button>
+                <!-- <p class="text-sm text-gray-500 mt-2">
                 {{
                   isFetchingData
                     ? "Loading your personalized options..."
                     : "Your personalized Turkish Lesson ready in less than 10 seconds"
                 }}
-              </p>
+              </p> -->
+              </div>
             </div>
           </div>
         </div>
