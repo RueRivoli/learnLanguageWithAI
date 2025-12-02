@@ -28,7 +28,7 @@ const {
 } = useLesson(lessonId);
 
 const showAllEnglishTranslations = ref(true);
-const showAllTips = ref(true);
+const showExplanations = ref(false);
 const activeSentenceTranslation = ref<number | null>(null);
 // 1: My Lesson, 2: The Rule, 3: The Quiz
 const menuSelected = ref<number>(1);
@@ -255,12 +255,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           </div>
         </div>
         <div class="col-span-6">
-          <div class="p-6 row-span-1 border-b border-l border-slate-200/70">
+          <div class="p-4 row-span-1 border-b border-l border-slate-200/70">
             <div class="w-full flex items-center justify-between gap-2">
-              <div>
-                <span class="font-light">Lessons</span> /
-                <span class="font-medium">Lesson 23</span>
-              </div>
+              <LayoutBreadcrumbs :firstSection="{ title: `Lessons`, link: '/learning/stories' }" :secondSection="{ title: `Lesson ${lessonId}`, link: null }" />
               <div class="cursor-pointer">
                 <ArrowsPointingOutIcon class="h-5 w-5 text-neutral" />
                 <!-- <ArrowsPointingInIcon class="h-5 w-5 text-neutral" /> -->
@@ -343,12 +340,12 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   >
                     <div class="pb-4">
                       <span
-                        class="text-2xl mr-4 font-bold text-slate-800 mb-3 font-serif tracking-tight leading-tight"
+                        class="text-2xl mr-4 font-semibold text-slate-800"
                       >
                         {{ lesson?.title }}
                       </span>
                       <span
-                        class="text-lg font-medium text-slate-600 tracking-wide"
+                        class="text-lg font-light text-slate-600 tracking-wide"
                       >
                         {{ lesson?.titleEn }}
                       </span>
@@ -369,7 +366,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                           >
                             Introduction
                           </h2>
-                          <p class="text-md leading-relaxed font-light">
+                          <p class="text-md leading-relaxed font-light text-slate-600 font-light">
                             {{ lesson?.introduction }}
                           </p>
                         </div>
@@ -382,6 +379,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       >
                         Story
                       </h2>
+                      <div class="p-2">
                       <div
                         v-for="(sentence, index) in sentences"
                         :key="'hover-' + index"
@@ -393,18 +391,58 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         @mouseleave="scheduleHideHover(index)"
                       >
                         <span
-                          class="border border-transparent px-0.5 py-0.5 leading-relaxed hover:border-blue-200/50 cursor-pointer rounded-md transition-all duration-300 text-md font-light hover:bg-primary/15"
+                          class="items-center gap-2 border border-transparent px-0.5 py-0.5 leading-relaxed rounded-md transition-all duration-300 text-md text-base"
                           :class="{
-                            'ml-4': index === 0,
+                            'hover:border-blue-200/50 cursor-pointer': !showExplanations,
+                            'flex items-center': showExplanations,
                             'bg-primary/15':
-                              hoveredSentenceIndex === index ||
-                              hoveredTooltipIndex === index,
+                              !showExplanations && (hoveredSentenceIndex === index ||
+                              hoveredTooltipIndex === index),
                           }"
                         >
                           {{ sentence.original }}
+                          <span v-if="showExplanations" class="cursor-pointer" @click="addSentenceToNotes(sentence)">
+                            <ClipboardDocumentIcon
+                              class="w-4 h-4"
+                            />
+                          </span>
                         </span>
+                        <div class="p-2 font-light text-slate-600" v-if="showExplanations">
+                          <div
+                                class="flex items-center gap-3 rounded px-2 py-1 cursor-pointer"
+                                @click="handleTranslate(index)"
+                              >
+                                <span
+                                  class="w-5 h-5 flex items-center justify-center"
+                                >
+                                  <LanguageIcon
+                                    class="w-4 h-4"
+                                  />
+                                </span>
+                                <span class="">{{sentence.translation}}</span>
+                          </div>
+
+                          <div
+                                class="font-light text-slate-600 flex items-center gap-3 rounded px-2 py-1 cursor-pointer"
+                                @click="copySentence(sentence.original)"
+                              >
+                                <span
+                                  class="w-5 h-5 flex items-center justify-center shrink-0"
+                                >
+                                  <LightBulbIcon
+                                    class="w-4 h-4"
+                                  />
+                                </span>
+                                <span>{{
+                                  sentence.tip
+                                }}</span>
+                              </div>
+
+                        </div>
+                  
                         <!-- Hover Card -->
                         <div
+                          v-if="!showExplanations"
                           class="absolute left-0 mt-2 z-30 w-72 transition-all"
                           :class="{
                             'opacity-100 translate-y-0 pointer-events-auto':
@@ -427,11 +465,6 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                           <div
                             class="rounded-xl border border-slate-200/70 bg-white shadow-xl p-3"
                           >
-                            <div
-                              class="text-xs font-semibold text-slate-500 mb-2"
-                            >
-                              Helpful Hints
-                            </div>
                             <ul class="space-y-1">
                               <li
                                 class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
@@ -459,9 +492,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                                     class="w-4 h-4 text-slate-600"
                                   />
                                 </span>
-                                <span class="text-sm text-slate-700">{{
-                                  sentence.tip
-                                }}</span>
+                                <span class="text-sm text-slate-700">{{sentence.tip}}</span>
                               </li>
                               <!-- <li
                                 class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
@@ -499,6 +530,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         </div>
                       </div>
                     </div>
+                    </div>
                   </div>
                   <div v-else-if="isQuizShown" id="quiz" class="mb-6"></div>
                 </div>
@@ -522,33 +554,26 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <br />
           </div>
           <!-- Right column (2/6) -->
-          <div class="row-span-9 sticky top-6 space-y-3">
-            <div class="p-6">
+          <div class="row-span-9 sticky top-6">
+            <div class="p-4">
               <h3 class="text-lg font-medium mb-3">View Options</h3>
               <div class="flex flex-col gap-3">
                 <label
                   class="flex items-center justify-between gap-3 cursor-pointer"
                 >
-                  <span class="text-md font-light">Show Tips</span>
+                  <span class="text-md font-light">Show Explanations</span>
                   <input
-                    v-model="showAllTips"
-                    type="checkbox"
-                    class="checkbox checkbox-neutral"
-                  />
-                </label>
-                <label
-                  class="flex items-center justify-between gap-3 cursor-pointer"
-                >
-                  <span class="text-md font-light">Show Translations</span>
-                  <input
-                    v-model="showAllEnglishTranslations"
+                    v-model="showExplanations"
                     type="checkbox"
                     class="checkbox checkbox-neutral"
                   />
                 </label>
               </div>
-              <div class="mt-6 dotted-divider"></div>
             </div>
+            <div class="p-4">
+              <div class="dotted-divider"></div>
+            </div>
+         
             <div class="p-4">
               <div class="mb-4 flex items-center gap-2">
                 <div
@@ -596,7 +621,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                 >
                   <LayoutKeyElementExpressionBadge
                     :text="expression.text"
-                    :translation="expression.textEn"
+                    :translation="expression.translation"
                     :lightMode="true"
                     @click="areWordsExampleShown = !areWordsExampleShown"
                   />
@@ -622,15 +647,19 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 .dotted-divider::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
   bottom: 0;
   height: 6px; /* track height for better visibility */
+  width: 80%; /* slightly wider but still centered */
+  transform: translateX(-50%); /* center the dotted segment */
   /* Bigger dots with more spacing, using slate-300 (#cbd5e1) */
   background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
   background-size: 14px 6px; /* increase spacing between dots */
   background-repeat: repeat-x;
-  background-position: left bottom;
+  background-position: center bottom;
+  /* Subtle fade on sides so it's less pronounced at the edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 @keyframes fade-in {
   from {

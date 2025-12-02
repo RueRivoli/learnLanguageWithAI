@@ -10,23 +10,30 @@ export type Lesson = {
   grammarRuleId?: number;
   newWords: Array<{
     text: string;
-    textEn: string;
+    // 1st meaning
+    role: string;
+    translation: string;
     sentence: string;
     sentenceEn: string;
+    // 2nd meaning
+    role2: string;
+    translation2: string;
     sentence2: string;
     sentence2En: string;
-    role: string;
-    role2: string;
+    // 3rd meaning
     role3: string;
-    translation: string;
-    translation2: string;
     translation3: string;
+    sentence3: string;
+    sentence3En: string;
   }>;
   newExpressions: Array<{
     text: string;
-    textEn: string;
+    // only one meaning
+    translation: string;
+    // 1st example
     sentence: string;
     sentenceEn: string;
+    // 2nd example
     sentence2: string;
     sentence2En: string;
   }>;

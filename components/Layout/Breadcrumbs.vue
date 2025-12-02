@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    firstSection?: string;
-    secondSection?: string;
-    thirdSection?: string;
+    firstSection?: {title: string; link: string | null} | null;
+    secondSection?: {title: string; link: string | null} | null;
+    thirdSection?: {title: string; link: string | null} | null;
   }>(),
   {
     firstSection: null,
@@ -14,15 +14,15 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div class="breadcrumbs text-sm">
+  <div class="breadcrumbs font-light">
     <ul>
       <li v-if="props.firstSection">
-        <a>{{ props.firstSection }}</a>
+        <a :href="props.firstSection.link ?? ''">{{ props.firstSection.title }}</a>
       </li>
       <li v-if="props.secondSection">
-        <a>{{ props.secondSection }}</a>
+        <a :href="props.secondSection.link ?? ''">{{ props.secondSection.title }}</a>
       </li>
-      <li v-if="props.thirdSection">{{ props.thirdSection }}</li>
+      <li v-if="props.thirdSection">{{ props.thirdSection.title }}</li>
     </ul>
   </div>
 </template>

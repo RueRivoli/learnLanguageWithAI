@@ -32,7 +32,7 @@ const emit = defineEmits(["click"]);
   >
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <div>
+        <div class="flex grow items-center gap-2">
           <span class="text-base font-medium font-serif">
             {{ props.text }}
           </span>
@@ -46,12 +46,12 @@ const emit = defineEmits(["click"]);
           >
         </div>
 
-        <span
+        <div
           v-if="props.translation"
           class="text-sm text-slate-600 font-light"
         >
           {{ props.translation }}
-        </span>
+      </div>
         <slot name="action"></slot>
       </div>
     </div>
