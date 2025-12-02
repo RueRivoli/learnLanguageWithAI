@@ -11,6 +11,7 @@ import {
   SparklesIcon,
   BookOpenIcon,
   ArrowsPointingOutIcon,
+  ArrowsPointingInIcon,
 } from "@heroicons/vue/24/outline";
 
 const route = useRoute();
@@ -38,6 +39,7 @@ const areExpressionsExampleShown = ref<boolean>(false);
 const loadingImage = computed(() => route.query.loadingImage as string);
 const user = useSupabaseUser();
 const userStore = useUserStore();
+const isReadingMode = ref<boolean>(false);
 const notes = ref<string>("");
 const hoveredSentenceIndex = ref<number | null>(null);
 const hoveredTooltipIndex = ref<number | null>(null);
@@ -163,9 +165,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
 
 <template>
   <div class="min-h-screen bg-base-100 scroll-smooth">
-    <div class="rounded-lg shadow-lg overflow-hidden">
+    <div class="overflow-hidden" :class="isReadingMode ? 'max-w-5xl mx-auto' : ''">
       <div class="grid grid-cols-12">
-        <div class="col-span-3">
+        <div class="col-span-3" v-show="!isReadingMode">
           <!-- Left column (1/6) -->
           <div class="row-span-1 p-6 border-b border-slate-200/70"><br /></div>
           <div
@@ -254,14 +256,14 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             </div>
           </div>
         </div>
-        <div class="col-span-6">
-          <div class="p-4 row-span-1 border-b border-l border-slate-200/70">
+        <div :class="isReadingMode ? 'col-span-12' : 'col-span-6'">
+          <div class="p-4 row-span-1 border-b border-slate-200/70" :class="{ 'border-l': !isReadingMode }">
             <div class="w-full flex items-center justify-between gap-2">
               <LayoutBreadcrumbs :firstSection="{ title: `Lessons`, link: '/learning/stories' }" :secondSection="{ title: `Lesson ${lessonId}`, link: null }" />
-              <div class="cursor-pointer">
-                <ArrowsPointingOutIcon class="h-5 w-5 text-neutral" />
-                <!-- <ArrowsPointingInIcon class="h-5 w-5 text-neutral" /> -->
-              </div>
+              <button class="cursor-pointer" @click="isReadingMode = !isReadingMode" aria-label="Toggle reading mode">
+                <ArrowsPointingOutIcon v-if="!isReadingMode" class="h-5 w-5 text-neutral" />
+                <ArrowsPointingInIcon v-else class="h-5 w-5 text-neutral" />
+              </button>
             </div>
           </div>
           <div
@@ -338,19 +340,15 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       showAllEnglishTranslations ? 'space-y-4' : 'space-y-1'
                     "
                   >
-                    <div class="pb-4">
-                      <span
-                        class="text-2xl mr-4 font-semibold text-slate-800"
-                      >
+                    <div v-if="!isReadingMode" class="pb-4">
+                      <span class="text-2xl mr-4 font-semibold text-slate-800">
                         {{ lesson?.title }}
                       </span>
-                      <span
-                        class="text-lg font-light text-slate-600 tracking-wide"
-                      >
+                      <span class="text-lg font-light text-slate-600 tracking-wide">
                         {{ lesson?.titleEn }}
                       </span>
                     </div>
-                    <div class="grid grid-cols-3 gap-4">
+                    <div v-if="!isReadingMode" class="grid grid-cols-3 gap-4">
                       <div class="col-span-1 flex items-center justify-center">
                         <img
                           v-if="imageUrl"
@@ -361,14 +359,41 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       </div>
                       <div class="relative z-10 p-2 col-span-2">
                         <div class="prose prose-lg max-w-none">
-                          <h2
-                            class="text-xl font-medium leading-relaxed tracking-wide"
-                          >
+                          <h2 class="text-xl font-medium leading-relaxed tracking-wide">
                             Introduction
                           </h2>
-                          <p class="text-md leading-relaxed font-light text-slate-600 font-light">
+                          <p class="text-md leading-relaxed font-light text-slate-600">
                             {{ lesson?.introduction }}
                           </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div v-else class="space-y-4">
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <div>
+                          <h1 class="text-3xl md:text-4xl font-semibold text-slate-900">
+                            {{ lesson?.title }}
+                          </h1>
+                          <p class="text-lg text-slate-500">
+                            {{ lesson?.titleEn }}
+                          </p>
+                          <div class="mt-4">
+                            <h2 class="text-xl font-medium leading-relaxed tracking-wide">
+                              Introduction
+                            </h2>
+                            <p class="text-lg leading-relaxed font-light text-slate-600">
+                              {{ lesson?.introduction }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="w-full flex justify-end">
+                          <img
+                            v-if="imageUrl"
+                            :src="imageUrl"
+                            alt="Lesson illustration"
+                            class="w-full max-w-xs md:max-w-sm h-auto object-contain rounded-lg"
+                          />
                         </div>
                       </div>
                     </div>
@@ -379,7 +404,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       >
                         Story
                       </h2>
-                      <div class="p-2">
+                      <div class="p-2" :class="isReadingMode ? 'mx-auto max-w-3xl text-lg leading-8' : ''">
                       <div
                         v-for="(sentence, index) in sentences"
                         :key="'hover-' + index"
@@ -549,7 +574,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <!-- </div> -->
           </div>
         </div>
-        <div class="border-l border-slate-200/70 col-span-3">
+        <div class="border-l border-slate-200/70 col-span-3" v-show="!isReadingMode">
           <div class="row-span-1 p-6 border-b border-slate-200/70">
             <br />
           </div>
