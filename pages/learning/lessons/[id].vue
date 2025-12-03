@@ -13,6 +13,7 @@ import {
   ArrowsPointingOutIcon,
   ArrowsPointingInIcon,
 } from "@heroicons/vue/24/outline";
+import { getAuthToken } from "~/utils/auth/auth";
 
 const route = useRoute();
 const lessonId = String(route.params.id);
@@ -46,6 +47,18 @@ const hoveredTooltipIndex = ref<number | null>(null);
 const addSentenceToNotes = (s: { original: string; translation: string }) => {
   const formatted = `• ${s.original}\n   — ${s.translation}`;
   notes.value = notes.value ? `${notes.value}\n${formatted}` : formatted;
+};
+
+const handleNotesUpdate = async (event: FocusEvent) => {
+  const headers = await getAuthToken();
+  const target = event.target as HTMLTextAreaElement | null;
+  if (target) notes.value = target.value;
+  console.log('notes.value', notes.value);
+  $fetch(`/api/lessons/${lessonId}`, {
+    headers,  
+    method: 'PUT',
+    body: { notes: notes.value },
+  });
 };
 let hoverHideTimeout: ReturnType<typeof setTimeout> | null = null;
 const clearHoverHideTimeout = () => {
@@ -84,6 +97,11 @@ const toggleSentenceTranslation = (index: number) => {
 };
 
 // All data fetching is now handled by the useLesson composable
+
+watch(lesson, (newLesson) => {
+  console.log('notes', newLesson?.notes);
+  notes.value = newLesson?.notes || "";
+});
 
 const handleGenerateQuiz = async () => {
   if (!userStore.isEnoughTokensForOneQuiz) {
@@ -126,14 +144,6 @@ const copySentence = async (text: string) => {
   } catch (e) {
     console.warn("Copy failed", e);
   }
-};
-
-const searchOnGoogle = (text: string) => {
-  if (process.client)
-    window.open(
-      `https://www.google.com/search?q=${encodeURIComponent(text)}`,
-      "_blank",
-    );
 };
 
 const handleTranslate = (index: number) => {
@@ -248,6 +258,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                         v-model="notes"
                         class="textarea h-50"
                         placeholder="..."
+                        @focusout="handleNotesUpdate"
                       ></textarea>
                     </fieldset>
                   </div>
@@ -271,7 +282,31 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             class="row-span-9 space-y-0 divide-y divide-slate-200"
           >
             <!-- Content below with padding -->
-            <div class="p-6">
+            <div v-if="isLoading" class="p-6 space-y-6">
+              <div class="flex items-center justify-between">
+                <div class="skeleton h-6 w-40"></div>
+                <div class="skeleton h-5 w-5 rounded"></div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div class="space-y-3">
+                  <div class="skeleton h-8 w-64"></div>
+                  <div class="skeleton h-5 w-48"></div>
+                  <div class="skeleton h-4 w-full"></div>
+                  <div class="skeleton h-4 w-3/4"></div>
+                </div>
+                <div class="w-full">
+                  <div class="skeleton h-40 md:h-56 w-full rounded-lg"></div>
+                </div>
+              </div>
+              <div class="space-y-2 pt-4">
+                <div class="skeleton h-4 w-5/6 mx-auto"></div>
+                <div class="skeleton h-4 w-11/12 mx-auto"></div>
+                <div class="skeleton h-4 w-4/5 mx-auto"></div>
+                <div class="skeleton h-4 w-3/4 mx-auto"></div>
+                <div class="skeleton h-4 w-2/3 mx-auto"></div>
+              </div>
+            </div>
+            <div v-else class="p-6">
               <!-- Story Section (Full Width Below) -->
               <div id="story" class="w-full">
                 <div
@@ -502,7 +537,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                                     class="w-4 h-4 text-slate-600"
                                   />
                                 </span>
-                                <span class="text-sm text-slate-700">{{
+                                <span class="text-sm text-slate-600">{{
                                   sentence.translation
                                 }}</span>
                               </li>
@@ -517,20 +552,11 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                                     class="w-4 h-4 text-slate-600"
                                   />
                                 </span>
-                                <span class="text-sm text-slate-700">{{sentence.tip}}</span>
+                                <span class="text-sm text-slate-600">{{sentence.tip}}</span>
                               </li>
-                              <!-- <li
-                                class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
-                                @click="searchOnGoogle(sentence.original)"
-                              >
-                                <span class="w-5 h-5 flex items-center justify-center shrink-0">
-                                  <MagnifyingGlassIcon class="w-4 h-4 text-slate-600" />
-                                </span>
-                                <span class="text-sm text-slate-700">Search Google</span>
-                              </li> -->
                             </ul>
                             <div
-                              class="text-xs font-semibold text-slate-500 mt-3 mb-1"
+                              class="text-xs font-semibold text-slate-600 mt-3 mb-1"
                             >
                               Actions
                             </div>
@@ -546,7 +572,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                                     class="w-4 h-4 text-slate-600"
                                   />
                                 </span>
-                                <span class="text-sm text-slate-700"
+                                <span class="text-sm text-slate-600"
                                   >Add this sentence to your notes</span
                                 >
                               </li>
@@ -580,7 +606,12 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           </div>
           <!-- Right column (2/6) -->
           <div class="row-span-9 sticky top-6">
-            <div class="p-4">
+            <div v-if="isLoading" class="p-4 space-y-3">
+              <div class="skeleton h-5 w-40"></div>
+              <div class="skeleton h-4 w-full"></div>
+              <div class="skeleton h-4 w-4/5"></div>
+            </div>
+            <div v-else class="p-4">
               <h3 class="text-lg font-medium mb-3">View Options</h3>
               <div class="flex flex-col gap-3">
                 <label
@@ -625,7 +656,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                   />
                 </div>
               </div>
-              <div class="mt-6 dotted-divider"></div>
+            </div>
+            <div class="p-4">
+              <div class="dotted-divider"></div>
             </div>
             <div class="p-4">
               <div class="mb-4 flex items-center gap-2">

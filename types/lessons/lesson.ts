@@ -42,6 +42,7 @@ export type Lesson = {
   grammarRuleIntro: string;
   grammarRuleDescription: string;
   grammarRuleExtendedDescription: string;
+  notes: string;
   sentence1: string | null;
   sentence1En: string | null;
   sentence2: string | null;

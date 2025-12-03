@@ -4,10 +4,10 @@ import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/aut
 export default defineEventHandler(async (event) => {
   const supabase = createSupabaseClientWithUserAuthTokenFromHeader(event);
   const id = getRouterParam(event, "id");
-  const { quizId } = await readBody(event);
+  const { notes, quizId } = await readBody(event);
   const { data, error } = await supabase
     .from("turkish_lessons")
-    .update({ quiz_id: quizId })
+    .update({ quiz_id: quizId, notes })
     .eq("id", id);
   if (error) throw error;
   return data;
