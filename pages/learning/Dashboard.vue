@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChartBarIcon } from "@heroicons/vue/24/solid";
+import { ChartBarIcon, Square2StackIcon } from "@heroicons/vue/24/solid";
 import { useUserStore } from "~/stores/user-store";
 import { useUserScoreStore } from "~/stores/user-score-store";
 import { dashboardCategoryTabs } from "~/utils/dashboard/tabs";
@@ -59,10 +59,18 @@ getInfoUser();
         <div class="mb-4">
           <div class="flex items-center justify-between">
             <LayoutHeadingPlus
+              v-if="activeTab !== 3"
               title="Progress on Vocabulary"
               description="Your Knowledge on the Most Important Vocabulary in Turkish"
             >
               <ChartBarIcon class="h-6 w-6 text-neutral" />
+            </LayoutHeadingPlus>
+            <LayoutHeadingPlus
+              v-if="activeTab === 3"
+              title="Progress on Key Modules"
+              description="Your Progress on the Different Turkish Key Modules"
+            >
+              <Square2StackIcon class="h-6 w-6 text-neutral" />
             </LayoutHeadingPlus>
             <LayoutTabs
               :first-tab="dashboardCategoryTabs.firstTab"
@@ -97,7 +105,7 @@ getInfoUser();
         </template>
         <template v-else-if="activeTab === 3">
           <!-- <DashboardGrammarStats /> -->
-          <DashboardGeneralStats />
+          <DashboardGeneralStats :show-header="false" />
         </template>
       </div>
 

@@ -233,7 +233,7 @@ const handleGenerateStory = async () => {
   isGeneratingLesson.value = true;
   if (userId.value && targetedModule.value?.name) {
     newLesson = await generateAIPoweredStoryWithParameters(
-      'turkish',
+      "turkish",
       userId.value,
       targetedModule.value.id,
       targetedModule.value.name,
