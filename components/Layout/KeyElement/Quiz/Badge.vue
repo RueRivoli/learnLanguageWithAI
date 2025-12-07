@@ -2,7 +2,7 @@
 import {
   ArrowRightCircleIcon,
   QuestionMarkCircleIcon,
-} from "@heroicons/vue/24/solid";
+} from "@heroicons/vue/24/outline";
 
 const props = withDefaults(
   defineProps<{
@@ -107,7 +107,7 @@ const sizeClasses = computed(() => {
       return {
         container: "px-2 py-1.5",
         text: "text-sm",
-        icon: "w-7 h-7",
+        icon: "w-5 h-5",
         badge: "px-2.5 py-0.5 text-sm",
         dot: "w-1.5 h-1.5",
       };
@@ -122,19 +122,18 @@ const currentStyles = computed(() =>
 <template>
   <button
     v-if="!props.filledOut"
-    class="p-3 btn btn-error btn-outline btn-sm group rounded-lg cursor-pointer"
+    :class="[
+      'bg-slate-200 group relative rounded-lg border border-slate-300 cursor-pointer',
+      sizeClasses.container,
+    ]"
     @click="emit('click')"
   >
     <div class="flex items-center gap-3">
       <div class="rounded-lg flex items-center">
-        <ArrowRightCircleIcon
-          :class="[
-            sizeClasses.icon,
-            currentStyles.icon,
-            'group-hover:text-white',
-          ]"
+        <QuestionMarkCircleIcon
+          :class="[sizeClasses.icon, currentStyles.icon]"
         />
-        <span class="ml-2 group-hover:text-white">Complete Quiz</span>
+        <span class="ml-2 text-error">Complete Quiz</span>
       </div>
     </div>
   </button>
@@ -152,7 +151,7 @@ const currentStyles = computed(() =>
         :class="[sizeClasses.icon, 'text-neutral']"
       />
       <div class="ml-2">
-        <span :class="[sizeClasses.text, 'text-gray-900 font-semibold']">
+        <span :class="[sizeClasses.text, 'text-gray-900 font-medium']">
           Quiz
           <span v-if="props.quizId"> #{{ props.quizId }}</span>
         </span>
@@ -166,14 +165,16 @@ const currentStyles = computed(() =>
                 :class="[
                   currentStyles.text,
                   {
-                    'font-semibold text-xl': props.size === 'md',
-                    'font-semibold text-md': props.size === 'sm',
+                    'text-xl font-medium text-gray-900 text-xl':
+                      props.size === 'md',
+                    'text-xl font-medium text-gray-900 text-md':
+                      props.size === 'sm',
                   },
                 ]"
               >
                 {{ props.score }}
               </span>
-              / 100
+              <span class="ml-1 text-base text-gray-500">/ 100</span>
             </span>
           </div>
         </div>

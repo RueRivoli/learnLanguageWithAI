@@ -46,12 +46,9 @@ const emit = defineEmits(["click"]);
           >
         </div>
 
-        <div
-          v-if="props.translation"
-          class="text-sm text-slate-600 font-light"
-        >
+        <div v-if="props.translation" class="text-sm text-slate-600 font-light">
           {{ props.translation }}
-      </div>
+        </div>
         <slot name="action"></slot>
       </div>
     </div>

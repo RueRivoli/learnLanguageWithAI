@@ -301,18 +301,18 @@ watch(
           <button
             @click="goToPreviousBatch"
             :disabled="!canGoBack"
-            class="group p-2 rounded-lg border transition-all duration-200"
+            class="cursor-pointer group p-2 rounded-lg border transition-all duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
             :class="
               canGoBack
-                ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md'
-                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+                ? 'border-gray-200 bg-neutral/10 hover:border-blue-300 hover:bg-neutral/20 active:bg-neutral/30'
+                : 'bg-slate-200  border-gray-100 cursor-not-allowed'
             "
           >
             <ChevronLeftIcon
-              class="h-5 w-5 transition-colors"
+              class="h-5 w-5 transition-colors duration-200 ease-in-out"
               :class="
                 canGoBack
-                  ? 'text-gray-600 group-hover:text-blue-600'
+                  ? 'text-gray-600 group-hover:text-blue-600 group-active:text-blue-700'
                   : 'text-gray-300'
               "
             />
@@ -320,18 +320,18 @@ watch(
           <button
             @click="goToNextBatch"
             :disabled="!canGoForward"
-            class="group p-2 rounded-lg border transition-all duration-200"
+            class="cursor-pointer group p-2 rounded-lg border transition-all duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
             :class="
               canGoForward
-                ? 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md'
-                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+                ? 'bg-neutral/10 border-gray-200 hover:border-blue-300 hover:bg-neutral/20 active:bg-neutral/30 active:border-blue-400'
+                : 'bg-slate-200 border-gray-100 cursor-not-allowed'
             "
           >
             <ChevronRightIcon
-              class="h-5 w-5 transition-colors"
+              class="h-5 w-5 transition-colors duration-200 ease-in-out"
               :class="
                 canGoForward
-                  ? 'text-gray-600 group-hover:text-blue-600'
+                  ? 'text-gray-600 group-hover:text-blue-600 group-active:text-blue-700'
                   : 'text-gray-300'
               "
             />
@@ -366,8 +366,8 @@ watch(
             class="aspect-square rounded-sm cursor-pointer transition-transform"
             :class="
               item.isMastered
-                ? 'bg-primary hover:bg-blue-600'
-                : 'bg-slate-300 hover:bg-slate-400'
+                ? 'bg-primary hover:bg-primary/90'
+                : 'bg-slate-300'
             "
             :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>
@@ -412,18 +412,18 @@ watch(
           <button
             @click="goToPreviousExpressionBatch"
             :disabled="!canGoBackExpression"
-            class="group p-2 rounded-lg border transition-all duration-200"
+            class="cursor-pointer group p-2 rounded-lg border transition-all duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
             :class="
               canGoBackExpression
-                ? 'border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md'
-                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+                ? 'border-gray-200 bg-neutral/10 hover:border-blue-300 hover:bg-neutral/20 active:bg-neutral/30'
+                : 'bg-slate-200 border-gray-100 cursor-not-allowed'
             "
           >
             <ChevronLeftIcon
-              class="h-5 w-5 transition-colors"
+              class="h-5 w-5 transition-colors duration-200 ease-in-out"
               :class="
                 canGoBackExpression
-                  ? 'text-gray-600 group-hover:text-purple-600'
+                  ? 'text-gray-600 group-hover:text-blue-600 group-active:text-blue-700'
                   : 'text-gray-300'
               "
             />
@@ -431,18 +431,18 @@ watch(
           <button
             @click="goToNextExpressionBatch"
             :disabled="!canGoForwardExpression"
-            class="group p-2 rounded-lg border transition-all duration-200"
+            class="cursor-pointer group p-2 rounded-lg border transition-all duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
             :class="
               canGoForwardExpression
-                ? 'border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md'
-                : 'border-gray-100 bg-gray-50 cursor-not-allowed'
+                ? 'bg-neutral/10 border-gray-200 hover:border-blue-300 hover:bg-neutral/20 active:bg-neutral/30 active:border-blue-400'
+                : 'bg-slate-200 border-gray-100 cursor-not-allowed'
             "
           >
             <ChevronRightIcon
-              class="h-5 w-5 transition-colors"
+              class="h-5 w-5 transition-colors duration-200 ease-in-out"
               :class="
                 canGoForwardExpression
-                  ? 'text-gray-600 group-hover:text-purple-600'
+                  ? 'text-gray-600 group-hover:text-blue-600 group-active:text-blue-700'
                   : 'text-gray-300'
               "
             />
@@ -477,8 +477,8 @@ watch(
             class="aspect-square rounded-sm cursor-pointer"
             :class="
               item.isMastered
-                ? 'bg-warning hover:bg-warning/70'
-                : 'bg-slate-300 hover:bg-slate-400'
+                ? 'bg-warning hover:bg-warning/90'
+                : 'bg-slate-300'
             "
             :title="`${item.text.charAt(0).toUpperCase() + item.text.slice(1)}${item.translation ? ' - ' + item.translation : ''}`"
           ></div>

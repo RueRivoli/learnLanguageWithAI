@@ -3,6 +3,15 @@ import { grammarLevelTabs } from "~/utils/learning/grammar";
 import { Square2StackIcon } from "@heroicons/vue/24/solid";
 import { useUserScoreStore } from "~/stores/user-score-store";
 
+const props = withDefaults(
+  defineProps<{
+    showHeader?: boolean;
+  }>(),
+  {
+    showHeader: true,
+  },
+);
+
 const userScoreStore = useUserScoreStore();
 const activeLevelTab = ref(1);
 const router = useRouter();
@@ -28,6 +37,7 @@ const currentInfo = computed(() => {
       <div class="mb-4 flex items-center justify-between">
         <div class="flex">
           <LayoutHeadingPlus
+            v-if="props.showHeader"
             title="Progress on Key Modules"
             description="Your Progress on the Different Turkish Key Modules"
           >
