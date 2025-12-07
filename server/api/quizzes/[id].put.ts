@@ -2,6 +2,9 @@ import { defineEventHandler, getRouterParam, readBody, getHeader } from "h3";
 import { getRandomQuizzes } from "../quiz-models/[id].get";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/auth/supabaseClient";
 
+
+// Generate a new quiz for a given grammar rule != FULL QUIZ
+
 export default defineEventHandler(async (event) => {
   try {
     const ruleId = getRouterParam(event, "id");
@@ -17,7 +20,7 @@ export default defineEventHandler(async (event) => {
       .eq("id", userId)
       .single();
 
-    if (!profile || (profile.credits_available || 0) < 0.5) {
+    if (!profile || (profile.credits_available || 0) < 0.25) {
       throw new Error(
         "Insufficient tokens. Please purchase more tokens to generate quizzes.",
       );
@@ -40,13 +43,15 @@ export default defineEventHandler(async (event) => {
     // Creation of the new quiz
     // 2 questions easy, 2 intermediate and 1 difficult
     const quizPromises = difficultyLevels.map(async (level) => {
-      const questionsForLevel = await getRandomQuizzes(
-        supabase,
-        ruleId,
-        level.category,
-        level.quantity - 1,
-      );
-      return questionsForLevel;
+      if (ruleId) {
+        const questionsForLevel = await getRandomQuizzes(
+          supabase,
+          ruleId,
+          level.category,
+          level.quantity - 1,
+        );
+        return questionsForLevel;
+      }
     });
 
     const allQuizzes = await Promise.all(quizPromises);
@@ -55,7 +60,7 @@ export default defineEventHandler(async (event) => {
     const { data, error } = await supabase
       .from("turkish_quizzes_result")
       .upsert({
-        score_global: 0,
+        score_global: null,
         rule_id: ruleId,
         user_id: userId,
       })
@@ -65,7 +70,7 @@ export default defineEventHandler(async (event) => {
     if (data) {
       await supabase
         .from("profiles")
-        .update({ credits_available: profile.credits_available! - 0.5 })
+        .update({ credits_available: profile.credits_available! - 0.25 })
         .eq("id", userId);
     }
     if (error) throw error;
@@ -98,7 +103,7 @@ export default defineEventHandler(async (event) => {
     }));
 
     const { error: errorUpsert } = await supabase
-      .from("turkish_quizzes_series")
+      .from("turkish_quizzes_grammar_series")
       .upsert(rowsToUpsert);
     if (errorUpsert) throw errorUpsert;
     return { quizId };

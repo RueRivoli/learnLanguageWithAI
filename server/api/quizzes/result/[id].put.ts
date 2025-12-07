@@ -3,7 +3,7 @@ import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../../utils/
 
 // 1. Update the turkish_quiz_result table with the score
 // 2. Update the turkish_grammar_scores table with the score
-// 3. Update the turkish_quizzes_series table with the selected answer ?
+// 3. Update the turkish_quizzes_grammar_series table with the selected answer ?
 
 // Calculate the average score of the user for that rule
 const getAverageScore = async (
@@ -17,8 +17,13 @@ const getAverageScore = async (
     .select("score_global")
     .eq("user_id", id)
     .eq("rule_id", ruleId);
-  const sumScores = scores.reduce((acc, curr) => acc + curr.score_global, 0);
-  return Math.floor((sumScores + score) / (scores.length + 1));
+  const existingScores = scores ?? [];
+  const sumScores = existingScores.reduce(
+    (acc: number, curr: { score_global: number | null }) =>
+      (acc ?? 0) + Number(curr?.score_global ?? 0),
+    0,
+  );
+  return Math.floor((sumScores + score) / (existingScores.length + 1));
 };
 
 // Uncomment this function if you want to remember the quiz selection
@@ -159,18 +164,18 @@ export default defineEventHandler(async (event) => {
 
     // Vocabulary mastering data
     const newMasteredWordsIds = detailedResults.words.validatedList
-      .filter((word) => !word.isMastered)
-      .map((word) => word.id);
+      .filter((word: { isMastered: boolean }) => !word.isMastered)
+      .map((word: { id: number }) => word.id);
     const newForgottenWordIds = detailedResults.words.invalidatedList
-      .filter((word) => word.isMastered)
-      .map((word) => word.id);
+      .filter((word: { isMastered: boolean }) => word.isMastered)
+      .map((word: { id: number }) => word.id);
     const newMasteredExpressionsIds = detailedResults.expressions.validatedList
-      .filter((expr) => !expr.isMastered)
-      .map((expr) => expr.id);
+      .filter((expr: { isMastered: boolean }) => !expr.isMastered)
+      .map((expr: { id: number }) => expr.id);
     const newForgottenExpressionsIds =
       detailedResults.expressions.invalidatedList
-        .filter((expr) => expr.isMastered)
-        .map((expr) => expr.id);
+        .filter((expr: { isMastered: boolean }) => expr.isMastered)
+        .map((expr: { id: number }) => expr.id);
     const updateVocabularyData = async () => {
       if (userId)
         updateVocabularyKnowledge(
