@@ -569,7 +569,7 @@ export type Database = {
           },
         ];
       };
-      turkish_quizzes_series: {
+      turkish_quizzes_grammar_series: {
         Row: {
           created_at: string;
           id: number;
@@ -593,14 +593,14 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "turkish_quizzes_series_question_id_fkey";
+            foreignKeyName: "turkish_quizzes_grammar_series_question_id_fkey";
             columns: ["question_id"];
             isOneToOne: false;
             referencedRelation: "turkish_grammar_quizzes";
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "turkish_quizzes_series_quiz_id_fkey";
+            foreignKeyName: "turkish_quizzes_grammar_series_quiz_id_fkey";
             columns: ["quiz_id"];
             isOneToOne: false;
             referencedRelation: "turkish_quizzes_result";
