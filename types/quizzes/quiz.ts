@@ -8,7 +8,7 @@ export type Quiz = {
 };
 
 export type QuizSeries =
-  Database["public"]["Tables"]["turkish_quizzes_series"]["Row"];
+  Database["public"]["Tables"]["turkish_quizzes_grammar_series"]["Row"];
 export type GrammarQuizModel =
   Database["public"]["Tables"]["turkish_grammar_quizzes"]["Row"];
 
