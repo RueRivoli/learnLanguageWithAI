@@ -315,9 +315,12 @@ export const useQuiz = (
         formGrammarQuiz.value[i + 1].selectedOption !== null;
       progress.push({
         completed: !isQuizCompleted.value && i < currentQuestionIndex.value,
-        current: !isQuizCompleted.value && i === currentQuestionIndex.value,
-        correct:
-          isQuizCompleted.value && hasAnswer ? isQuestionCorrect(i) : null,
+        // Highlight current item even in review mode
+        current: isQuizCompleted.value
+          ? i === currentQuestionIndex.value
+          : i === currentQuestionIndex.value,
+        // When quiz is completed, always compute correctness (unanswered -> false)
+        correct: isQuizCompleted.value ? isQuestionCorrect(i) : null,
         questionIndex: i,
       });
     }
@@ -337,19 +340,21 @@ export const useQuiz = (
           completed:
             !isQuizCompleted.value &&
             questionIndex < currentQuestionIndex.value,
-          current:
-            !isQuizCompleted.value &&
-            questionIndex === currentQuestionIndex.value,
-          correct:
-            isQuizCompleted.value && hasAnswer
-              ? isQuestionCorrect(questionIndex)
-              : null,
+          // Highlight current item even in review mode
+          current: isQuizCompleted.value
+            ? questionIndex === currentQuestionIndex.value
+            : questionIndex === currentQuestionIndex.value,
+          // When quiz is completed, always compute correctness (unanswered -> false)
+          correct: isQuizCompleted.value
+            ? isQuestionCorrect(questionIndex)
+            : null,
           questionIndex: questionIndex,
         });
-      } else if (isQuizCompleted) {
+      } else if (isQuizCompleted.value) {
         progress.push({
           completed: null,
-          current: null,
+          // In non-vocabulary sections, still reflect the current reviewed question
+          current: questionIndex === currentQuestionIndex.value,
           correct: isQuestionCorrect(questionIndex),
           questionIndex: questionIndex,
         });
@@ -382,19 +387,21 @@ export const useQuiz = (
           completed:
             !isQuizCompleted.value &&
             questionIndex < currentQuestionIndex.value,
-          current:
-            !isQuizCompleted.value &&
-            questionIndex === currentQuestionIndex.value,
-          correct:
-            isQuizCompleted.value && hasAnswer
-              ? isQuestionCorrect(questionIndex)
-              : null,
+          // Highlight current item even in review mode
+          current: isQuizCompleted.value
+            ? questionIndex === currentQuestionIndex.value
+            : questionIndex === currentQuestionIndex.value,
+          // When quiz is completed, always compute correctness (unanswered -> false)
+          correct: isQuizCompleted.value
+            ? isQuestionCorrect(questionIndex)
+            : null,
           questionIndex: questionIndex,
         });
-      } else if (isQuizCompleted) {
+      } else if (isQuizCompleted.value) {
         progress.push({
           completed: null,
-          current: null,
+          // Reflect the current reviewed question when outside expressions section
+          current: questionIndex === currentQuestionIndex.value,
           correct: isQuestionCorrect(questionIndex),
           questionIndex: questionIndex,
         });
