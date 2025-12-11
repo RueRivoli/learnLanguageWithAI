@@ -7,23 +7,10 @@ import type {
 } from "~/types/quizzes/quiz";
 import type { WordContent } from "~/types/vocabulary/word";
 import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
-import {
-  promptGeneratedVocabularyQuiz,
-  promptGeneratedWordQuiz,
-  promptGeneratedExpressionQuiz,
-} from "../../prompts/vocabulary-quiz";
+
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
-import {
-  mockExpressionQuizQuestions,
-  mockWordQuizQuestions,
-} from "~/mockData/lessons/quiz/index";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
-import { parseVocabularyGeneratedQuiz } from "~/utils/quiz-creation/parse/generatedQuiz";
-import {
-  mockNotParsedExpressionQuizQuestions,
-  mockNotParsedWordQuizQuestions,
-} from "~/mockData/lessons/quiz/notparsed";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import { getAuthToken } from "~/utils/auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
@@ -146,62 +133,6 @@ const getGrammarQuizData = async () => {
   }
 };
 
-const getGeneratedVocabularyQuiz = async () => {
-  try {
-    if (!userStore.isEnoughTokensForOneQuiz) {
-      myModalToGetCredits.value?.openModal();
-      return;
-    }
-    const headers = await getAuthToken();
-    const generatedWordsQuiz = $fetch(
-      `/api/generation/vocabulary-quiz/claude/words`,
-      {
-        method: "POST",
-        headers,
-        body: {
-          message: promptGeneratedWordQuiz(wordsForQuiz.value),
-        },
-      },
-    );
-
-    const generatedExpressionsQuiz = $fetch(
-      `/api/generation/vocabulary-quiz/claude/expressions`,
-      {
-        headers,
-        method: "POST",
-        body: {
-          message: promptGeneratedExpressionQuiz(expressionsForQuiz.value),
-        },
-      },
-    );
-
-    // const generatedWordsQuiz = mockNotParsedWordQuizQuestions
-    // const generatedExpressionsQuiz = mockNotParsedExpressionQuizQuestions
-
-    const [wordsQuizResult, expressionsQuizResult] = await Promise.all([
-      generatedWordsQuiz,
-      generatedExpressionsQuiz,
-    ]);
-    if (wordsQuizResult) {
-      // change generatedQuiz if using mock data
-      wordsQuizQuestions.value = parseVocabularyGeneratedQuiz(wordsQuizResult);
-      // wordsQuizQuestions.value = mockWordQuizQuestions;
-    }
-
-    if (expressionsQuizResult) {
-      // change generatedQuiz if using mock data
-      expressionsQuizQuestions.value = parseVocabularyGeneratedQuiz(
-        expressionsQuizResult,
-      );
-      // expressionsQuizQuestions.value = mockExpressionQuizQuestions;
-    }
-    userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
-  } catch (error) {
-    console.error("Error generating vocabulary quiz:", error);
-    // Handle error appropriately - maybe set some default values or show error message
-  }
-};
-
 const handleSubmitQuiz = async (results: {
   score: number;
   formGrammarQuiz: FormQuizState;
@@ -232,7 +163,6 @@ await Promise.all([
   getAdditionnalWordsForQuiz(),
   getAdditionnalExpressionsForQuiz(),
 ]);
-await getGeneratedVocabularyQuiz();
 isLoadingQuiz.value = false;
 </script>
 

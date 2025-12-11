@@ -6,6 +6,7 @@ export type Lesson = {
   imgUrl?: string;
   symbol?: string;
   quizId?: number;
+  quizScore?: number | null;
   level: number;
   grammarRuleId?: number;
   newWords: Array<{

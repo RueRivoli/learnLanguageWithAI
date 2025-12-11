@@ -15,9 +15,31 @@ import {
 } from "@heroicons/vue/24/outline";
 import { getAuthToken } from "~/utils/auth/auth";
 
+definePageMeta({
+  layout: "quiz",
+});
+
+
 const route = useRoute();
 const lessonId = String(route.params.id);
-// Use the new lesson composable
+
+
+const showAllEnglishTranslations = ref(true);
+const showExplanations = ref(false);
+const activeSentenceTranslation = ref<number | null>(null);
+// 1: My Lesson, 2: The Rule, 3: The Quiz
+const menuSelected = ref<number>(1);
+const isGeneratingQuiz = ref<boolean>(false);
+const areWordsExampleShown = ref<boolean>(false);
+const user = useSupabaseUser();
+const userStore = useUserStore();
+const isReadingMode = ref<boolean>(false);
+const notes = ref<string>("");
+const quiz = ref<{ id: number; score: number | null } | null>(null);
+const hoveredSentenceIndex = ref<number | null>(null);
+const hoveredTooltipIndex = ref<number | null>(null);
+
+console.log("lessonId", lessonId);
 const {
   lesson,
   grammarRule,
@@ -29,21 +51,6 @@ const {
   refresh,
 } = useLesson(lessonId);
 
-const showAllEnglishTranslations = ref(true);
-const showExplanations = ref(false);
-const activeSentenceTranslation = ref<number | null>(null);
-// 1: My Lesson, 2: The Rule, 3: The Quiz
-const menuSelected = ref<number>(1);
-const isGeneratingQuiz = ref<boolean>(false);
-const areWordsExampleShown = ref<boolean>(false);
-const areExpressionsExampleShown = ref<boolean>(false);
-const loadingImage = computed(() => route.query.loadingImage as string);
-const user = useSupabaseUser();
-const userStore = useUserStore();
-const isReadingMode = ref<boolean>(false);
-const notes = ref<string>("");
-const hoveredSentenceIndex = ref<number | null>(null);
-const hoveredTooltipIndex = ref<number | null>(null);
 const addSentenceToNotes = (s: { original: string; translation: string }) => {
   const formatted = `• ${s.original}\n   — ${s.translation}`;
   notes.value = notes.value ? `${notes.value}\n${formatted}` : formatted;
@@ -53,13 +60,13 @@ const handleNotesUpdate = async (event: FocusEvent) => {
   const headers = await getAuthToken();
   const target = event.target as HTMLTextAreaElement | null;
   if (target) notes.value = target.value;
-  console.log('notes.value', notes.value);
   $fetch(`/api/lessons/${lessonId}`, {
     headers,  
     method: 'PUT',
     body: { notes: notes.value },
   });
 };
+
 let hoverHideTimeout: ReturnType<typeof setTimeout> | null = null;
 const clearHoverHideTimeout = () => {
   if (hoverHideTimeout) {
@@ -67,6 +74,7 @@ const clearHoverHideTimeout = () => {
     hoverHideTimeout = null;
   }
 };
+
 const scheduleHideHover = (index: number) => {
   clearHoverHideTimeout();
   hoverHideTimeout = setTimeout(() => {
@@ -75,64 +83,79 @@ const scheduleHideHover = (index: number) => {
     hoveredSentenceIndex.value = null;
   }, 120);
 };
+
 const quizGenerationModal = ref<{
   openModal: () => void;
   closeModal: () => void;
 } | null>(null);
+
 const myModalToGetCredits = ref<{
   openModal: () => void;
   closeModal: () => void;
 } | null>(null);
 
-definePageMeta({
-  layout: "quiz",
-});
 
 const isStoryShown = computed(() => menuSelected.value === 1);
 const isRuleShown = computed(() => menuSelected.value === 2);
 const isQuizShown = computed(() => menuSelected.value === 3);
-const toggleSentenceTranslation = (index: number) => {
-  activeSentenceTranslation.value =
-    activeSentenceTranslation.value === index ? null : index;
-};
 
-// All data fetching is now handled by the useLesson composable
+const isEnoughTokensForOneQuiz = computed(() => userStore.isEnoughTokensForOneQuiz);
 
-watch(lesson, (newLesson) => {
-  console.log('notes', newLesson?.notes);
+watch(lesson, async (newLesson) => {
+  console.log("watch lesson", newLesson);
+  if (!newLesson) return;
   notes.value = newLesson?.notes || "";
+  if (user.value?.id) await userStore.fetchUserProfile(user.value.id);
+  console.log("isEnoughTokensForOneQuiz", isEnoughTokensForOneQuiz.value);
+  if (isEnoughTokensForOneQuiz && !lesson.value?.quizId) {
+    console.log("Generate quiz ==>", lesson.value);
+    handleGenerateQuiz();
+  }
 });
 
-const handleGenerateQuiz = async () => {
-  if (!userStore.isEnoughTokensForOneQuiz) {
+const handleGenerateQuiz = async() => {
+  console.log("handleGenerateQuiz", userStore.$state, isEnoughTokensForOneQuiz.value);
+  if (!isEnoughTokensForOneQuiz.value) {
+    console.log("Not enough tokens for one quiz");
     myModalToGetCredits.value?.openModal();
     return;
   }
-
+  console.log("Generation quiz...");
+  console.log("Generate quiz", lesson.value, user.value?.id);
   isGeneratingQuiz.value = true;
-  // Open the loading modal
-  quizGenerationModal.value?.openModal();
-
   if (!lesson.value?.grammarRuleId || !user.value?.id) {
-    quizGenerationModal.value?.closeModal();
     isGeneratingQuiz.value = false;
     return;
   }
-
   await handleGenerationQuiz(
     lesson.value?.grammarRuleId,
     user.value?.id,
-    `/learning/lessons/${lessonId}/quiz`,
     lessonId,
-  );
+    1,
+  ).then((response) => {
+    if (response) {
+      quiz.value = {id: response.quizId, score: null};
+    }
+  });
+  isGeneratingQuiz.value = false;
   // Refresh lesson data after quiz generation to get updated quizId
   // await refresh();
   // Notify other components about the lesson modification
   // lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
-
-  // Close the loading modal
 };
 
+
+const routeToQuiz = async () => {
+  if (!lesson.value?.quizId) return;
+    await navigateTo({
+      path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
+    });
+};
+
+const routeToNewGeneratedQuiz = async () => {
+  await handleGenerateQuiz();
+  routeToQuiz();
+};
 const handleCancelModal = () => {
   myModalToGetCredits.value?.closeModal();
 };
@@ -171,6 +194,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
       "",
   ),
 );
+
 </script>
 
 <template>
@@ -230,23 +254,30 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       <span class="text-xl mb-3 cursor-pointer">The Quiz</span>
                     </div>
                     <LayoutKeyElementQuizBadge
-                      v-if="relatedQuiz"
+                      v-if="lesson?.quizId  && lesson?.quizScore !== null"
                       class="ml-10"
-                      :score="relatedQuiz?.score"
-                      :filledOut="Boolean(relatedQuiz)"
+                      :score="quiz?.score"
+                      :filledOut="Boolean(quiz)"
                       size="sm"
                     />
                     <button
-                      v-else
+                      v-else-if="lesson?.quizId && lesson?.quizScore === null"
                       class="ml-10 btn btn-sm btn-error mx-2 btn-outline hover:text-white"
                       :disabled="isGeneratingQuiz || isLoading"
-                      @click="handleGenerateQuiz"
+                      @click="routeToQuiz"
                     >
                       <span
                         v-if="isLoading"
                         class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
                       />
                       <span>Fill out the quiz</span>
+                    </button>
+                    <button
+                      v-else
+                      class="ml-10 btn btn-sm btn-error mx-2 btn-outline hover:text-white"
+                      @click="routeToNewGeneratedQuiz"
+                    >
+                      <span>Generate a New Quiz</span>
                     </button>
                   </div>
                 </div>

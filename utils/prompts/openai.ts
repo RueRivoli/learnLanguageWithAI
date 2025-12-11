@@ -31,5 +31,12 @@ export const getPromptForStoryGeneration = (
 ) => {
   const words = listWords.join(", ");
   const expressions = listExpressions.join(", ");
-  return openAiPrompt(language, level, words, expressions, grammarRule, nbLines);
+  return openAiPrompt(
+    language,
+    level,
+    words,
+    expressions,
+    grammarRule,
+    nbLines,
+  );
 };

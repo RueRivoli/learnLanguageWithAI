@@ -4,7 +4,6 @@ import { createSupabaseClientWithUserAuthTokenFromHeader } from "../../utils/aut
 
 
 // Generate a new quiz for a given grammar rule != FULL QUIZ
-
 export default defineEventHandler(async (event) => {
   try {
     const ruleId = getRouterParam(event, "id");

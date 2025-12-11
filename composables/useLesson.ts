@@ -29,7 +29,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
   // Transform function to map API response to Lesson type
   const transformLessonData = (rawData: any): Lesson => {
     // @ts-expect-error - lessonMapping includes all sentence fields dynamically
-    const result = {
+    const result: Lesson = {
       ...Object.fromEntries(
         Object.entries(lessonMapping).map(([sourceKey, targetKey]) => [
           targetKey,
@@ -47,6 +47,7 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       grammarRuleId: rawData.grammar_rule_id,
       level: rawData.turkish_grammar_rules.difficulty_class,
       quizId: rawData.quiz_id,
+      quizScore: rawData.turkish_quizzes_result ? rawData.turkish_quizzes_result.score_global : null,
       imgUrl: rawData.img_url,
       notes: rawData.notes,
       newWords:

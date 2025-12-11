@@ -7,16 +7,49 @@ import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { getAuthToken } from "../auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "../credits";
 
-export const getScoreBackgroundColorClass = (score: number) => {
-  if (score > 0 && score < 40) {
-    return "bg-error";
-  } else if (score >= 40 && score < 70) {
-    return "bg-warning";
-  } else if (score >= 70) {
-    return "bg-success";
+
+const getVocabularyFromLesson = async (lessonId: number) => {
+  const headers = await getAuthToken();
+  const { data: vocabularyData } = await useFetch(`/api/lessons/${lessonId}/vocabulary`, {
+    headers,
+  });
+  if (vocabularyData.value) {
+    const wordsForQuiz = (vocabularyData.value.turkish_lesson_words || []).map((word: any) => {
+        return { ...word.turkish_words, isMastered: false };
+      })
+    const expressionsForQuiz = (vocabularyData.value.turkish_lesson_expressions || []).map(
+        (expression: any) => {
+          return { ...expression.turkish_expressions, isMastered: false };
+        },
+      )
+
+  const { data: randomWords } = await $fetch(`/api/words/levels/random/?limit=2`, {
+        method: "GET",
+        headers,
+      });
+
+      if (randomWords) {
+        wordsForQuiz.push(
+          ...randomWords.map((word: any) => {
+            return { ...word.turkish_words, isMastered: true };
+          }),
+        );
+      }
+    const randomExpressions = await $fetch(`/api/expressions/levels/random/?limit=2`, {
+        method: "GET",
+        headers,
+      });
+      if (randomExpressions && (randomExpressions as any).data) {
+        expressionsForQuiz.push(
+          ...(randomExpressions as any).data.map((expression: any) => {
+            return { ...expression.turkish_expressions, isMastered: true };
+          }),
+        );
+      }
+    return {wordsForQuiz, expressionsForQuiz}
   }
-  return "bg-neutral";
 };
+
 
 export const parseQuestions = (data: any): GrammarQuizQuestion => {
   return {
@@ -56,14 +89,18 @@ export const parseGrammarQuizQuestion = (
 export const handleGenerationQuiz = async (
   ruleId: number,
   userId: string,
-  redirectionPath: string,
   lessonId?: string | null,
   length = 5,
+  // 1 = grammar + vocabulary, 2 = grammar only
+  type = 1,
 ) => {
+  if (!lessonId) return;
+  console.log("handleGenerationQuiz", ruleId, userId, lessonId, length);
   try {
     const userStore = useUserStore();
-    // Attach Authorization header from Supabase session for secure server-side auth
     const headers = await getAuthToken();
+
+    // Generate a quiz for the grammar rule
     const response = await $fetch<{ quizId: number }>(
       `/api/quizzes/${ruleId}`,
       {
@@ -75,7 +112,35 @@ export const handleGenerationQuiz = async (
         },
       },
     );
-    // response is the id of the new generated quiz
+    if (type === 1) {
+      const headers = await getAuthToken();
+      console.log("Generating vocabulary quiz");
+      await $fetch<{ quizId: number }>(
+        `/api/quizzes/lessons/${lessonId}`,
+        {
+          method: "PUT",
+          headers,
+          body: {
+            userId: userId,
+            quizId: response.quizId,
+          },
+        },
+      );
+
+      // const vocabularyData = await getVocabularyFromLesson(Number(lessonId))
+      // const quizVocabularyResponse = await $fetch<{ quizId: number }>(
+      //   `/api/quizzes/vocabulary/${ruleId}`,
+      //   {
+      //     method: "PUT",
+      //     headers,
+      //     body: {
+      //       numberOfQuestions: length,
+      //       userId: userId,
+      //     },
+      //   },
+      // );
+    }
+    // Save the quiz id to the lesson
     if (lessonId)
       await $fetch(`/api/lessons/${lessonId}`, {
         method: "PUT",
@@ -84,10 +149,9 @@ export const handleGenerationQuiz = async (
           quizId: response.quizId,
         },
       });
+
     userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
-    await navigateTo({
-      path: `${redirectionPath}/${response.quizId}`,
-    });
+    return response;
   } catch (err) {
     console.error(
       "An error occured while generating a new quiz, please try again.",

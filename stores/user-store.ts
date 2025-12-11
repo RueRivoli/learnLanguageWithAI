@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import type { Tables } from "~/supabase/types";
 import type { DatabaseUserProfile, User } from "~/types/users/profile";
 import { getAuthToken } from "~/utils/auth/auth";
 import { CREDITS_FOR_ONE_LESSON, CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
@@ -25,7 +26,7 @@ export const useUserStore = defineStore("user", {
     // 2.5 credits for one quiz
     isEnoughTokensForOneLesson(state: User): boolean {
       if (!state.creditsAvailable) return false;
-      return state.creditsAvailable >= 10;
+      return state.creditsAvailable >= 7.5;
     },
     isEnoughTokensForOneQuiz(state: User): boolean {
       if (!state.creditsAvailable) return false;
@@ -39,6 +40,23 @@ export const useUserStore = defineStore("user", {
     },
   },
   actions: {
+    async fetchUserProfile(userId: string) {
+      this.isLoaded = true;
+      const headers = await getAuthToken();
+      const profile: DatabaseUserProfile = await $fetch(`/api/profiles/${userId}`, { headers }).then((response: DatabaseUserProfile[]) => response[0]);
+      this.creditsAvailable = profile.credits_available;
+      this.creditsPurchasedTotal = profile.credits_purchased_total;
+      this.email = profile.email;
+      this.fullName = profile.full_name;
+      this.hasFilledInitialForm = profile.has_filled_initial_form;
+      this.hasFilledProfileSettings = profile.has_filled_initial_form;
+      this.id = profile.id;
+      this.initials = profile.initials;
+      this.languageLearned = profile.language_learned;
+      this.lastCreditPurchaseDate = profile.last_credit_purchase_date;
+      this.pseudo = profile.pseudo;
+      this.isLoaded = false;
+    },
     async creditsUsageUpdate(
       credits: typeof CREDITS_FOR_ONE_LESSON | typeof CREDITS_FOR_ONE_QUIZ,
     ) {
