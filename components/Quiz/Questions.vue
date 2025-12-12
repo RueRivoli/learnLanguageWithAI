@@ -10,10 +10,12 @@ import {
   LanguageIcon,
   ArrowsPointingOutIcon,
   ArrowsPointingInIcon,
+  Square2StackIcon,
 } from "@heroicons/vue/24/outline";
+import { getBackgroundClassFromGrammarRuleLevel, getLeftBorderStyleClassFromGrammarRuleLevel } from "~/utils/learning/grammar";
 
 definePageMeta({
-  layout: "quiz",
+  layout: "full",
 });
 
 const emit = defineEmits(["submitQuiz"]);
@@ -150,7 +152,8 @@ const handleReturnToSubject = () => {
           </div>
           <div class="row-span-9">
             <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
+              <div class="flex items-center justify-between mb-4">
+              <div class="ml-2 flex items-center gap-2">
                 <span class="text-xl font-medium">{{
                   currentSection.name
                 }}</span>
@@ -159,6 +162,17 @@ const handleReturnToSubject = () => {
                 }}</span>
                 <span class="text-slate-500">/ {{ currentSection.total }}</span>
               </div>
+              <LayoutKeyElementRuleBadge
+                v-if="currentSection.name === 'Grammar'"
+                class="w-60"
+                :title="grammarRuleMetaData?.name ?? null"
+                :titleEn="grammarRuleMetaData?.nameEn ?? null"
+                :level="grammarRuleMetaData?.level ?? null"
+                :symbol="grammarRuleMetaData?.symbol ?? null"
+                size="sm"
+                :lightMode="true"
+              />
+            </div>
               <!-- Content -->
               <div v-if="currentQuestion && !props.isLoading" class="space-y-6">
                 <!-- Question -->
@@ -180,16 +194,16 @@ const handleReturnToSubject = () => {
                     :class="[
                       selectedAnswer === option && !isQuizCompleted
                         ? 'text-black bg-slate-300'
-                        : '',
+                        : 'bg-white',
                       isQuizCompleted &&
                       index + 1 === Number(currentQuestion.correctAnswer)
                         ? 'bg-success border-success'
-                        : '',
+                        : 'bg-white',
                       isQuizCompleted &&
                       index + 1 === getUserAnswer(currentQuestionIndex) &&
                       index + 1 !== Number(currentQuestion.correctAnswer)
                         ? 'bg-error border-error'
-                        : '',
+                        : 'bg-white',
                     ]"
                   >
                     <div class="flex items-center gap-3">
@@ -299,15 +313,24 @@ const handleReturnToSubject = () => {
             <!-- Grammar -->
             <div class="space-y-3">
               <div class="mb-4 flex flex-wrap items-center justify-between">
-                <h4 class="text-lg">Grammar</h4>
-                <LayoutKeyElementRuleBadge
+                <div class="mb-2 flex items-center gap-2">
+                  <div
+                    class="w-8 h-8 rounded-lg flex items-center justify-center mr-2 shadow-lg"
+                    :class="getBackgroundClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)"
+                  >
+                    <Square2StackIcon class="h-4 w-4 text-white" />
+                  </div>
+                  <h3 class="text-lg">Key Module</h3>
+                </div>
+                <!-- <LayoutKeyElementRuleBadge
                   class="w-60"
                   :title="grammarRuleMetaData?.name ?? null"
                   :titleEn="grammarRuleMetaData?.nameEn ?? null"
                   :level="grammarRuleMetaData?.level ?? null"
                   :symbol="grammarRuleMetaData?.symbol ?? null"
                   size="sm"
-                />
+                  :lightMode="true"
+                /> -->
               </div>
               <div
                 v-if="isQuizCompleted"
@@ -326,17 +349,17 @@ const handleReturnToSubject = () => {
                   class="w-10 h-10 rounded-md text-sm font-semibold flex items-center justify-center transition hover:opacity-80 hover:cursor-pointer"
                   :class="[
                     !item.completed && !item.current
-                      ? 'bg-white border-l-4 border-success'
+                      ? `bg-white ${getLeftBorderStyleClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)}`
                       : '',
                     item.completed && !isQuizCompleted
                       ? 'text-black bg-slate-300'
                       : '',
                     item.current ? 'text-black bg-slate-300' : '',
                     isQuizCompleted && item.correct === true
-                      ? 'border-l-4 border-success bg-white'
+                      ? `bg-white ${getLeftBorderStyleClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)}`
                       : '',
                     isQuizCompleted && item.correct === false
-                      ? 'border-l-4 border-error bg-white'
+                      ? `bg-white ${getLeftBorderStyleClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)}`
                       : '',
                   ]"
                 >

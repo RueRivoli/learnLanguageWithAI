@@ -6,7 +6,7 @@ import type {
   FormQuizState,
 } from "~/types/quizzes/quiz";
 import type { WordContent } from "~/types/vocabulary/word";
-import { parseGrammarQuizQuestion } from "~/utils/learning/quiz";
+import { parseGrammarQuizQuestion, parseWordQuizQuestion, parseExpressionQuizQuestion } from "~/utils/learning/quiz";
 
 import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
@@ -14,9 +14,10 @@ import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import { getAuthToken } from "~/utils/auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
+import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
 
 definePageMeta({
-  layout: "quiz",
+  layout: "full",
 });
 
 const route = useRoute();
@@ -59,78 +60,35 @@ const handleCancelModal = () => {
   myModalToGetCredits.value?.closeModal();
 };
 
-// Fetch lesson data
-const getVocabularyFromLesson = async () => {
+const getGrammarRuleInfo = async () => {
   const headers = await getAuthToken();
-  const { data } = await useFetch(`/api/lessons/${lessonId}/vocabulary`, {
-    headers,
-  });
-  if (data.value) {
-    grammarRuleMetaData.value = {
-      level: data.value.turkish_grammar_rules.difficulty_class,
-      name: data.value.turkish_grammar_rules.rule_name,
-      nameEn: data.value.turkish_grammar_rules.rule_name_translation,
-      id: data.value.turkish_grammar_rules.id,
-      symbol: data.value.turkish_grammar_rules.symbol,
-    };
-    wordsForQuiz.value.push(
-      ...(data.value.turkish_lesson_words || []).map((word: any) => {
-        return { ...word.turkish_words, isMastered: false };
-      }),
-    );
-    expressionsForQuiz.value.push(
-      ...(data.value.turkish_lesson_expressions || []).map(
-        (expression: any) => {
-          return { ...expression.turkish_expressions, isMastered: false };
-        },
-      ),
-    );
-  }
-};
-
-const getAdditionnalWordsForQuiz = async () => {
-  const headers = await getAuthToken();
-  const { data } = await $fetch(`/api/words/levels/random/?limit=2`, {
-    method: "GET",
+  const data: any = await $fetch(`/api/lessons/${lessonId}`, {
     headers,
   });
   if (data) {
-    wordsForQuiz.value.push(
-      ...data.map((word: any) => {
-        return { ...word.turkish_words, isMastered: true };
-      }),
-    );
+    grammarRuleMetaData.value = {
+      highlights: null,
+      level: data.turkish_grammar_rules.difficulty_class,
+      name: data.turkish_grammar_rules.rule_name,
+      nameEn: data.turkish_grammar_rules.rule_name_translation,
+      id: data.turkish_grammar_rules.id,
+      symbol: data.turkish_grammar_rules.symbol,
+    };
   }
 };
 
-const getAdditionnalExpressionsForQuiz = async () => {
-  const headers = await getAuthToken();
-  const data = await $fetch(`/api/expressions/levels/random/?limit=2`, {
-    method: "GET",
-    headers,
-  });
-  if (data && (data as any).data) {
-    expressionsForQuiz.value.push(
-      ...(data as any).data.map((expression: any) => {
-        return { ...expression.turkish_expressions, isMastered: true };
-      }),
-    );
-  }
-};
 
 const getGrammarQuizData = async () => {
   const headers = await getAuthToken();
-  const { data } = await useFetch(`/api/quizzes/${quizId}`, {
-    headers,
-    transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
-      return quizQuestions.map((question) =>
-        parseGrammarQuizQuestion(question),
-      );
-    },
+  const data = await $fetch(`/api/quizzes/${quizId}`, {
+    headers
   });
-  if (data.value) {
-    grammarQuizQuestions.value = data.value;
-  }
+  console.log("DATA", data);
+  grammarQuizQuestions.value = data.grammarQuizzes.map((question: QuizFetchedQuestion) => parseGrammarQuizQuestion(question));
+  wordsQuizQuestions.value = data.wordQuizzes.map((question: QuizFetchedQuestion) => parseWordQuizQuestion(question));
+  wordsForQuiz.value = data.wordQuizzes.map((question: QuizFetchedQuestion) => parseWordQuizQuestion(question));
+  expressionsQuizQuestions.value = data.expressionQuizzes.map((question: QuizFetchedQuestion) => parseExpressionQuizQuestion(question));
+  expressionsForQuiz.value = data.expressionQuizzes.map((question: QuizFetchedQuestion) => ({id: question.id, text: question.turkish_expression_quizzes.turkish_expressions.text}));
 };
 
 const handleSubmitQuiz = async (results: {
@@ -159,9 +117,7 @@ const handleSubmitQuiz = async (results: {
 
 await Promise.all([
   getGrammarQuizData(),
-  getVocabularyFromLesson(),
-  getAdditionnalWordsForQuiz(),
-  getAdditionnalExpressionsForQuiz(),
+  getGrammarRuleInfo(),
 ]);
 isLoadingQuiz.value = false;
 </script>

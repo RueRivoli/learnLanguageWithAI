@@ -86,6 +86,37 @@ export const parseGrammarQuizQuestion = (
   };
 };
 
+export const parseWordQuizQuestion = (question: QuizFetchedQuestion): any => {
+  return {
+    id: question.question_id,
+    type: question.turkish_word_quizzes.question_type ?? null,
+    wordId: question.turkish_word_quizzes.turkish_words.id ?? null,
+    wordText: question.turkish_word_quizzes.turkish_words.text ?? null,
+    question: question.turkish_word_quizzes.text ?? null,
+    option1: question.turkish_word_quizzes.option_1 ?? null,
+    option2: question.turkish_word_quizzes.option_2 ?? null,
+    option3: question.turkish_word_quizzes.option_3 ?? null,
+    option4: question.turkish_word_quizzes.option_4 ?? null,
+    correctAnswer: question.turkish_word_quizzes.correct_answer ?? null,
+    note: question.turkish_word_quizzes.note ?? null,
+  };
+};
+
+export const parseExpressionQuizQuestion = (question: QuizFetchedQuestion): any => {
+  return {
+    id: question.question_id,
+    type: question.turkish_expression_quizzes.question_type ?? null,
+    expressionId: question.turkish_expression_quizzes.turkish_expressions.id ?? null,
+    expressionText: question.turkish_expression_quizzes.turkish_expressions.text ?? null,
+    question: question.turkish_expression_quizzes.text ?? null,
+    option1: question.turkish_expression_quizzes.option_1 ?? null,
+    option2: question.turkish_expression_quizzes.option_2 ?? null,
+    option3: question.turkish_expression_quizzes.option_3 ?? null,
+    option4: question.turkish_expression_quizzes.option_4 ?? null,
+    correctAnswer: question.turkish_expression_quizzes.correct_answer ?? null,
+    note: question.turkish_expression_quizzes.note ?? null,
+  };
+};
 export const handleGenerationQuiz = async (
   ruleId: number,
   userId: string,

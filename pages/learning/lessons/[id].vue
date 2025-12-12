@@ -16,7 +16,7 @@ import {
 import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
-  layout: "quiz",
+  layout: "full",
 });
 
 
@@ -101,6 +101,8 @@ const isQuizShown = computed(() => menuSelected.value === 3);
 
 const isEnoughTokensForOneQuiz = computed(() => userStore.isEnoughTokensForOneQuiz);
 
+const isQuizFilledOut = computed(() => Boolean(lesson.value?.quizId && lesson.value?.quizScore !== null));
+
 watch(lesson, async (newLesson) => {
   console.log("watch lesson", newLesson);
   if (!newLesson) return;
@@ -144,8 +146,16 @@ const handleGenerateQuiz = async() => {
   // lessonUpdateBus.notifyLessonModified(lessonId, { quizId: lesson.value?.quizId });
 };
 
+const routeToResultsQuiz = async () => {
+  console.log("routeToQuiz", lesson.value?.quizId);
+  if (!lesson.value?.quizId) return;
+    await navigateTo({
+      path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
+    });
+};
 
 const routeToQuiz = async () => {
+  console.log("routeToQuiz", lesson.value?.quizId);
   if (!lesson.value?.quizId) return;
     await navigateTo({
       path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
@@ -254,11 +264,12 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       <span class="text-xl mb-3 cursor-pointer">The Quiz</span>
                     </div>
                     <LayoutKeyElementQuizBadge
-                      v-if="lesson?.quizId  && lesson?.quizScore !== null"
+                      v-if="isQuizFilledOut"
                       class="ml-10"
-                      :score="quiz?.score"
-                      :filledOut="Boolean(quiz)"
+                      :filledOut="Boolean(lesson.quizId && lesson.quizScore !== null)"
                       size="sm"
+                      :score="lesson.quizScore ?? null"
+                      @click="routeToResultsQuiz"
                     />
                     <button
                       v-else-if="lesson?.quizId && lesson?.quizScore === null"

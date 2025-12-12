@@ -169,6 +169,21 @@ export function getBorderStyleClassFromGrammarRuleLevel(level: number): string {
   }
 }
 
+export function getLeftBorderStyleClassFromGrammarRuleLevel(level: number): string {
+  switch (level) {
+    case RuleDifficulty.BEGINNER:
+      return "border-l-4 border-success";
+    case RuleDifficulty.INTERMEDIATE:
+      return "border-l-4 border-info";
+    case RuleDifficulty.ADVANCED:
+      return "border-l-4 border-error";
+    case RuleDifficulty.EXPERT:
+      return "border border-rounded border-neutral";
+    default:
+      return "border border-rounded border-neutral";
+  }
+}
+
 export function getBackgroundClassFromGrammarRuleLevel(level: number): string {
   switch (level) {
     case RuleDifficulty.BEGINNER:

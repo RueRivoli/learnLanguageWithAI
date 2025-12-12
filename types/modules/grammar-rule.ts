@@ -7,7 +7,7 @@ export type GrammarScoreRow =
 type GrammarRuleLevel = "beginner" | "intermediate" | "advanced" | "expert";
 
 export type GrammarRuleMeta = {
-  highlights: GrammarRow["highlights"];
+  highlights: GrammarRow["highlights"] | null;
   level: number;
   name: GrammarRow["rule_name"];
   nameEn: GrammarRow["rule_name_translation"];

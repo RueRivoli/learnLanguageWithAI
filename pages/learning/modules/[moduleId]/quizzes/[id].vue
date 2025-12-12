@@ -12,7 +12,7 @@ import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import { getAuthToken } from "~/utils/auth/auth";
 
 definePageMeta({
-  layout: "quiz",
+  layout: "full",
 });
 
 const route = useRoute();
