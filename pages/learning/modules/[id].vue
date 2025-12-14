@@ -13,7 +13,7 @@ const route = useRoute();
 const isLoading = ref<boolean>(true);
 const lastQuizzes = ref([]);
 const grammarRule = ref<GrammarRule | null>(null);
-
+const averageScoreGlobal = ref<number | null>(null);
 const getGrammarRule = async () => {
   const headers = await getAuthToken();
   const { data } = await useFetch(`/api/grammar/${route.params.id}`, {
@@ -30,8 +30,10 @@ const getlastQuizzes = async () => {
   const { data } = await useFetch(`/api/quizzes/rules/${route.params.id}`, {
     headers,
   });
+  const rawAverage = Number(data.value?.averageScoreGlobal ?? 0);
+  averageScoreGlobal.value = Math.trunc(rawAverage * 10) / 10;
   if (data) {
-    lastQuizzes.value = data.value?.map(({ id, created_at, score_global }) => ({
+    lastQuizzes.value = data.value?.data.map(({ id, created_at, score_global }) => ({
       id,
       createdAt: created_at,
       score: score_global,
@@ -88,6 +90,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
         :loading="false"
         :rule="grammarRule"
         :quizs="lastQuizzes"
+        :averageScore="averageScoreGlobal"
       />
     </div>
   </div>

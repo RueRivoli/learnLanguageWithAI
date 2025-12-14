@@ -2,7 +2,6 @@ import { defineEventHandler, getRouterParam, readBody } from "h3";
 import { createSupabaseClientWithUserAuthTokenFromHeader } from "~/server/utils/auth/supabaseClient";
 import { getRandomQuizzes } from "../../quiz-models/[id].get";
 
-
 // Generate a new quiz for a given grammar rule != FULL QUIZ
 
 export default defineEventHandler(async (event) => {

@@ -43,6 +43,7 @@ const closeResultsModal = () => {
 const getGrammarRuleMetaData = async () => {
   const headers = await getAuthToken();
   const { data } = await useFetch(`/api/grammar/${moduleId}`, { headers });
+  console.log('data', data.value);
   if (data.value) {
     grammarRuleMetaData.value = {
       level: data.value.difficulty_class,
@@ -50,6 +51,7 @@ const getGrammarRuleMetaData = async () => {
       nameEn: data.value.rule_name_translation,
       id: data.value.id,
       symbol: data.value.symbol,
+      highlights: null,
     };
   }
 };
@@ -59,7 +61,7 @@ const getGrammarQuizData = async () => {
   const { data } = await useFetch(`/api/quizzes/${quizId}`, {
     headers,
     transform: (quizQuestions: Array<QuizFetchedQuestion>) => {
-      return quizQuestions.map((question) =>
+      return quizQuestions.grammarQuizzes.map((question) =>
         parseGrammarQuizQuestion(question),
       );
     },
@@ -113,6 +115,7 @@ isLoadingQuiz.value = false;
   <!-- Results Modal -->
   <div v-if="showResultsModal" class="modal-overlay">
     <QuizModal
+      display="modal"
       :detailedResults="detailedResults"
       :grammarRuleMetaData="grammarRuleMetaData"
       :globalScore="globalScore"

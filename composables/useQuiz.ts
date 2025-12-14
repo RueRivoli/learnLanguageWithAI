@@ -119,7 +119,7 @@ export const useQuiz = (
   const currentSection = computed(() => {
     if (isGrammarQuiz.value) {
       return {
-        name: "Grammar",
+        name: "Module",
         current: currentQuestionIndex.value + 1,
         total: grammarSectionQuizLength.value,
       };

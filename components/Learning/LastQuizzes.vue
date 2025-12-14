@@ -8,6 +8,7 @@ const user = useSupabaseUser();
 const userScoreStore = useUserScoreStore();
 const props = withDefaults(
   defineProps<{
+    averageScore?: number | null;
     loading?: boolean;
     quizs?: Array<{ id: number; score: number; createdAt: string }>;
     rule?: GrammarRule | null;
@@ -18,20 +19,12 @@ const props = withDefaults(
     quizs: () => [],
   },
 );
-const openingModalId = ref(0);
+
 const userStore = useUserStore();
 const myModalToGetCredits = ref<{
   openModal: () => void;
   closeModal: () => void;
 } | null>(null);
-
-const averageScore = computed(() => {
-  return props.rule?.id
-    ? userScoreStore.$state.rulesScores?.find(
-        (rule) => rule.ruleId === props.rule?.id,
-      )?.score
-    : 0;
-});
 
 const handleCancelModal = () => {
   myModalToGetCredits.value?.closeModal();
@@ -45,14 +38,17 @@ const handleGenerateQuiz = async () => {
   if (!props.rule?.id) return;
   isLoading.value = true;
   try {
-    if (!user.value?.id) return;
-    await handleGenerationQuiz(
+    if (!props.rule?.id || !user.value?.id) return;
+    const response = await handleGenerationQuiz(
       props.rule?.id,
       user.value?.id,
-      `/learning/modules/${props.rule.id}/quizzes`,
       null,
       10,
+      2
     );
+    if (response?.quizId) {
+      navigateTo(`/learning/modules/${props.rule?.id}/quizzes/${response.quizId}`);
+    }
   } catch (error) {
     console.error("Error generating quiz:", error);
   } finally {
@@ -60,6 +56,11 @@ const handleGenerateQuiz = async () => {
   }
 };
 
+onBeforeMount(() => {
+  if (!userScoreStore.$state.rulesScores) {
+    userScoreStore.setGrammarScores(user.value?.id)
+  }
+});
 </script>
 
 <template>
@@ -99,7 +100,7 @@ const handleGenerateQuiz = async () => {
 
             <div>
               <span class="text-3xl font-semibold text-primary">{{
-                averageScore ?? 0
+                props.averageScore
               }}</span>
               <span class="text-sm text-gray-600"> / 100 </span>
             </div>

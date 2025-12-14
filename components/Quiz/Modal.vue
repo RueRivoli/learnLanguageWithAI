@@ -2,11 +2,16 @@
 import {
   ArrowLeftIcon,
   BookOpenIcon,
-  EyeIcon,
   LanguageIcon,
+  ListBulletIcon,
   Square2StackIcon,
 } from "@heroicons/vue/24/outline";
-import { DIFFICULTY_IDS } from "~/utils/learning/grammar";
+import type { DetailedResults, GrammarRuleMeta } from "~/types";
+import {
+  getBackgroundClassFromGrammarRuleLevel,
+  getTextStyleClassFromGrammarRuleLevel,
+  RuleDifficulty,
+} from "~/utils/learning/grammar";
 
 definePageMeta({
   layout: "authenticated",
@@ -14,11 +19,12 @@ definePageMeta({
 
 const props = withDefaults(
   defineProps<{
-    grammarRuleMetaData: { level: 1 | 2 | 3 | 4; name: string } | null;
+    grammarRuleMetaData: GrammarRuleMeta | null;
     loading?: boolean;
-    detailedResults?: any;
+    detailedResults?: DetailedResults | null;
     globalScore?: number | null;
     type: "grammar" | "vocabulary" | "full";
+    display: "modal" | "layout";
   }>(),
   {
     type: "full",
@@ -27,6 +33,7 @@ const props = withDefaults(
     rule: null,
     detailedResults: null,
     globalScore: null,
+    display: "modal",
   },
 );
 const greetingMessage = computed(() => {
@@ -107,74 +114,29 @@ const congratulationsMessage = computed(() => {
 });
 
 const emit = defineEmits(["close"]);
-
-// Get grammar rule level for color matching
-const grammarRuleLevel = computed(() => {
-  return props.grammarRuleMetaData?.level || 1;
-});
-
-// Get grammar colors based on rule level (matching KeyElementRule)
-const grammarColors = computed(() => {
-  switch (grammarRuleLevel.value) {
-    case DIFFICULTY_IDS.BEGINNER:
-      return {
-        stroke: "#10b981", // emerald-500 #10b981
-        text: "#10b981",
-      };
-    case DIFFICULTY_IDS.INTERMEDIATE:
-      return {
-        stroke: "#f59e0b", // amber-500
-        text: "#f59e0b",
-      };
-    case DIFFICULTY_IDS.ADVANCED:
-      return {
-        stroke: "#ec4899", // pink-500
-        text: "#ec4899",
-      };
-    case DIFFICULTY_IDS.EXPERT:
-    default:
-      return {
-        stroke: "#2563eb", // blue-600
-        text: "#2563eb",
-      };
-  }
-});
-const grammarClass = computed(() => {
-  switch (grammarRuleLevel.value) {
-    case "beginner":
-      return "grammar-achievement__beginner";
-    case "intermediate":
-      return "grammar-achievement__intermediate";
-    case "advanced":
-      return "grammar-achievement__advanced";
-    case "expert":
-      return "grammar-achievement__expert";
-    default:
-      return "grammar-achievement__beginner";
-  }
-});
 </script>
-
+          <!-- :class="{ 'grammar-achievement__advanced': grammarRuleMetaData?.level === RuleDifficulty.ADVANCED, 'grammar-achievement__intermediate': grammarRuleMetaData?.level === RuleDifficulty.INTERMEDIATE, 'grammar-achievement__beginner': grammarRuleMetaData?.level === RuleDifficulty.BEGINNER }" -->
 <template>
   <!-- Results Modal -->
-  <div class="modal-container rounded-lg" @click.stop>
+  <div
+    class="rounded-lg"
+    :class="{ 'modal-container': props.display === 'modal' }"
+    @click.stop
+  >
     <!-- Modal Content -->
-    <div class="modal-content">
-      <!-- Overall Score Section -->
-      <div class="overall-score-section">
-        <div class="overall-score-card rounded-lg">
-          <div>
-            <div class="score-percentage">
-              {{ props.detailedResults.overall.percentage }}%
-            </div>
-            <div class="score-label">Overall Score</div>
-          </div>
-          <div class="score-details">
-            <p class="score-description">{{ congratulationsMessage }}</p>
-          </div>
-          <button @click="emit('close')" class="modal-close-button">
+    <div class="p-3">
+      <div class="mb-6 grid grid-cols-2 gap-6">
+        <div
+          class="overall-chart-bg relative overflow-hidden rounded-xl border border-slate-300 p-5 shadow"
+        >
+          <button
+            v-if="props.display === 'modal'"
+            @click="emit('close')"
+            class="btn btn-circle btn-ghost btn-sm absolute top-3 right-3"
+            aria-label="Close"
+          >
             <svg
-              class="close-icon"
+              class="h-5 w-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -187,140 +149,79 @@ const grammarClass = computed(() => {
               />
             </svg>
           </button>
-        </div>
-      </div>
-
-      <!-- Performance Charts Section -->
-      <div class="charts-section">
-        <!-- Grammar Chart - Full Width -->
-        <div class="grammar-chart-container">
           <div
-            class="chart-card grammar-full-width rounded-lg"
-            :class="grammarClass"
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
           >
-            <div class="chart-header">
-              <div class="chart-title">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0">
-                    <div class="relative">
-                      <div
-                        :class="[
-                          'absolute inset-0 rounded-lg blur-sm',
-                          grammarRuleLevel === 'beginner'
-                            ? 'bg-gradient-to-br from-emerald-300/20 to-teal-300/20'
-                            : grammarRuleLevel === 'intermediate'
-                              ? 'bg-gradient-to-br from-amber-300/20 to-orange-300/20'
-                              : grammarRuleLevel === 'advanced'
-                                ? 'bg-gradient-to-br from-pink-300/20 to-rose-300/20'
-                                : 'bg-gradient-to-br from-blue-300/20 to-indigo-300/20',
-                        ]"
-                      />
-                      <div
-                        :class="[
-                          'relative p-2 rounded-lg shadow-lg',
-                          grammarRuleLevel === 'beginner'
-                            ? 'bg-gradient-to-br from-emerald-500 to-teal-600'
-                            : grammarRuleLevel === 'intermediate'
-                              ? 'bg-gradient-to-br from-amber-500 to-orange-600'
-                              : grammarRuleLevel === 'advanced'
-                                ? 'bg-gradient-to-br from-pink-500 to-rose-600'
-                                : 'bg-gradient-to-br from-blue-600 to-indigo-700',
-                        ]"
-                      >
-                        <Square2StackIcon class="h-5 w-5 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                  <div clas="flex items-center ml-3">
-                    <h3 class="text-lg font-semibold text-gray-900 ml-3">
-                      Key Module & Scores
-                    </h3>
-                  </div>
-                </div>
+            <div>
+              <div class="text-4xl font-extrabold text-slate-900">
+                {{ props.detailedResults.overall.percentage }}%
               </div>
-              <div class="chart-details">
-                <div
-                  class="chart-percentage"
-                  :style="{ color: grammarColors.text }"
-                >
-                  {{ props.detailedResults.grammar.percentage }}%
-                </div>
+              <div class="text-xs uppercase tracking-wide text-slate-500">
+                Overall Score
               </div>
-            </div>
-
-            <div class="grammar-chart-content">
-              <div class="chart-details">
-                <div>
-                  <div class="chart-stat"></div>
-                  <div class="flex flex-wrap gap-2">
-                    <LayoutKeyElementRuleBadge
-                      class="mb-4"
-                      :title="grammarRuleMetaData?.name"
-                      :titleEn="grammarRuleMetaData?.nameEn"
-                      :level="grammarRuleMetaData?.level"
-                      :symbol="grammarRuleMetaData?.symbol"
-                      :light-mode="true"
-                      size="sm"
-                      :prefix="false"
-                    />
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="chart-visual">
-                      <div class="flex items-center gap-2">
-                        <div class="stat-label">Rule:</div>
-                        <LayoutKeyElementRule class="mb-4" :title="grammarRuleMetaData?.name" :level="grammarRuleMetaData?.level" size="xs" :prefix="false" />
-                      </div>
-                    </div> -->
-
-              <div class="chart-visual">
-                <div class="progress-ring">
-                  <svg class="progress-ring-svg" width="100" height="100">
-                    <circle
-                      class="progress-ring-circle-bg"
-                      cx="50"
-                      cy="50"
-                      r="40"
-                    />
-                    <circle
-                      class="progress-ring-circle"
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      :stroke-dasharray="251"
-                      :stroke-dashoffset="
-                        251 -
-                        (251 * props.detailedResults.grammar.percentage) / 100
-                      "
-                      :stroke="grammarColors.stroke"
-                    />
-                  </svg>
-                  <!-- <div class="progress-ring-text">{{ props.detailedResults.grammar.correct }}/{{ props.detailedResults.grammar.total }}</div> -->
-                  <div class="progress-ring-text">
-                    <div class="flex items-baseline gap-1">
-                      <span
-                        :class="grammarClass"
-                        class="text-2xl font-bold text-gray-900"
-                      >
-                        {{ props.detailedResults.grammar.correct }}
-                      </span>
-                      <span class="text-base text-gray-500"
-                        >/{{ props.detailedResults.grammar.total }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <p class="mt-2 text-sm text-slate-600">
+                {{ congratulationsMessage }}
+              </p>
             </div>
           </div>
         </div>
+        <div
+          class="overall-chart-bg relative overflow-hidden shadow-sm flex flex-col justify-between w-full p-6 border rounded-lg bg-gradient-to-br"
+        >
 
-        <!-- Words and Expressions Charts - Side by Side -->
-        <div v-if="props.type !== 'grammar'" class="vocabulary-charts-grid">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <div class="relative">
+                  <div
+                    class="w-8 h-8 rounded-lg flex items-center justify-center mr-2 shadow-lg"
+                    :class="
+                      getBackgroundClassFromGrammarRuleLevel(
+                        grammarRuleMetaData?.level ?? 0,
+                      )
+                    "
+                  >
+                    <Square2StackIcon class="h-5 w-5 text-white" />
+                  </div>
+                </div>
+              </div>
+              <div clas="flex items-center ml-3">
+                <h3 class="text-base font-medium text-gray-900 mb-0.5">
+                  Module
+                </h3>
+              </div>
+            </div>
+              <div
+                class="text-2xl font-bold"
+                :class="
+                  getTextStyleClassFromGrammarRuleLevel(
+                    grammarRuleMetaData?.level ?? 0,
+                  )
+                "
+              >
+                {{ props.detailedResults.grammar.percentage }}%
+              </div>
+          </div>
+          <div>
+            <LayoutKeyElementRuleBadge
+              :title="grammarRuleMetaData?.name"
+              :titleEn="grammarRuleMetaData?.nameEn"
+              :level="grammarRuleMetaData?.level"
+              :symbol="grammarRuleMetaData?.symbol"
+              :light-mode="true"
+              size="sm"
+              :prefix="false"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div v-if="props.type !== 'grammar'" class="grid grid-cols-2 gap-6">
           <!-- Words Chart -->
-          <div class="chart-card words-chart-bg">
-            <div class="chart-header">
-              <div class="chart-title">
+          <div class="p-6 flex flex-col justify-between border border-slate-200/70 rounded-lg overall-chart-bg">
+            <div class="flex justify-between items-center mb-4">
+              <div>
                 <div class="flex items-center justify-between">
                   <div class="flex-shrink-0 mr-3">
                     <div class="relative">
@@ -335,17 +236,17 @@ const grammarClass = computed(() => {
                     </div>
                   </div>
                   <div class="flex-1">
-                    <h3 class="text-base font-semibold text-gray-900 mb-0.5">
+                    <h3 class="text-base font-medium text-gray-900 mb-0.5">
                       Words Acquired
                     </h3>
                   </div>
                 </div>
               </div>
-              <div class="chart-percentage words-gradient">
+              <div class="text-primary text-2xl font-bold">
                 {{ props.detailedResults.words.percentage }}%
               </div>
             </div>
-            <div class="chart-visual">
+            <div class="flex items-center justify-center">
               <div class="progress-ring">
                 <svg class="progress-ring-svg" width="100" height="100">
                   <defs>
@@ -358,11 +259,17 @@ const grammarClass = computed(() => {
                     >
                       <stop
                         offset="0%"
-                        style="stop-color: #3b82f6; stop-opacity: 1"
+                        style="
+                          stop-color: var(--color-primary);
+                          stop-opacity: 1;
+                        "
                       />
                       <stop
                         offset="100%"
-                        style="stop-color: #3b82f6; stop-opacity: 1"
+                        style="
+                          stop-color: var(--color-primary);
+                          stop-opacity: 1;
+                        "
                       />
                     </linearGradient>
                   </defs>
@@ -386,9 +293,7 @@ const grammarClass = computed(() => {
                 <!-- <div class="progress-ring-text">{{ props.detailedResults.words.correct }}/{{ props.detailedResults.words.total }}</div> -->
                 <div class="progress-ring-text">
                   <div class="flex items-baseline gap-1">
-                    <span
-                      class="word-achievement text-2xl font-bold text-gray-900"
-                    >
+                    <span class="text-2xl font-bold text-gray-900">
                       {{ props.detailedResults.words.correct }}
                     </span>
                     <span class="text-base text-gray-500"
@@ -398,11 +303,11 @@ const grammarClass = computed(() => {
                 </div>
               </div>
             </div>
-            <div class="chart-details">
+            <div class="flex flex-col justify-between gap-2">
               <div>
-                <div class="chart-stat">
-                  <div class="stat-label mb-1">Validated:</div>
-                  <span class="stat-value words-gradient"
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-500 text-sm mb-1">Validated:</div>
+                  <span class="text-primary font-medium"
                     >+{{
                       props.detailedResults.words.validatedList.length
                     }}</span
@@ -421,9 +326,9 @@ const grammarClass = computed(() => {
                 </div>
               </div>
               <div>
-                <div class="chart-stat">
-                  <div class="stat-label mb-1">Invalidated:</div>
-                  <span class="stat-value words-gradient">{{
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-500 text-sm mb-1">Invalidated:</div>
+                  <span class="text-primary font-medium">{{
                     props.detailedResults.words.invalidatedList.length
                   }}</span>
                 </div>
@@ -439,9 +344,9 @@ const grammarClass = computed(() => {
                   </div>
                 </div>
               </div>
-              <div>
-                <div class="chart-stat">
-                  <div class="stat-label mb-1">Note:</div>
+              <div v-if="props.display === 'modal'">
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-500 text-sm mb-1">Note:</div>
                 </div>
                 <div class="text-xs text-gray-600">
                   *The quiz may include a few words already known because
@@ -450,10 +355,10 @@ const grammarClass = computed(() => {
               </div>
             </div>
           </div>
-
-          <!-- Expressions Chart -->
-          <div class="chart-card expressions-chart-bg">
-            <div class="chart-header">
+          <div
+            class="p-6 flex flex-col justify-between border border-slate-200/70 rounded-lg overall-chart-bg"
+          >
+            <div class="flex justify-between items-center mb-4">
               <div class="chart-title">
                 <div class="flex items-center justify-between">
                   <div class="flex-shrink-0 mr-3">
@@ -461,25 +366,23 @@ const grammarClass = computed(() => {
                       <div
                         class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg blur-sm"
                       />
-                      <div
-                        class="relative p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg shadow-lg"
-                      >
+                      <div class="relative p-2 bg-warning rounded-lg shadow-lg">
                         <LanguageIcon class="h-5 w-5 text-white" />
                       </div>
                     </div>
                   </div>
                   <div class="flex-1">
-                    <h3 class="text-base font-semibold text-gray-900 mb-0.5">
+                    <h3 class="text-base font-medium text-gray-900 mb-0.5">
                       Expressions Acquired
                     </h3>
                   </div>
                 </div>
               </div>
-              <div class="chart-percentage expressions-gradient">
+              <div class="text-warning text-2xl font-bold">
                 {{ props.detailedResults.expressions.percentage }}%
               </div>
             </div>
-            <div class="chart-visual">
+            <div class="relative z-1">
               <div class="progress-ring">
                 <svg class="progress-ring-svg" width="100" height="100">
                   <defs>
@@ -492,15 +395,15 @@ const grammarClass = computed(() => {
                     >
                       <stop
                         offset="0%"
-                        style="stop-color: #8b5cf6; stop-opacity: 1"
+                        style="stop-color: #f59e0b; stop-opacity: 1"
                       />
                       <stop
                         offset="50%"
-                        style="stop-color: #ec4899; stop-opacity: 1"
+                        style="stop-color: #fbbf24; stop-opacity: 1"
                       />
                       <stop
                         offset="100%"
-                        style="stop-color: #f472b6; stop-opacity: 1"
+                        style="stop-color: #f59e0b; stop-opacity: 1"
                       />
                     </linearGradient>
                   </defs>
@@ -526,9 +429,7 @@ const grammarClass = computed(() => {
               </div>
               <div class="progress-ring-text">
                 <div class="flex items-baseline gap-1">
-                  <span
-                    class="expression-achievement text-2xl font-bold text-gray-900"
-                  >
+                  <span class="text-2xl font-bold text-gray-900">
                     {{ props.detailedResults.expressions.correct }}
                   </span>
                   <span class="text-base text-gray-500"
@@ -537,11 +438,11 @@ const grammarClass = computed(() => {
                 </div>
               </div>
             </div>
-            <div class="chart-details">
+            <div class="flex flex-col justify-between gap-2">
               <div>
-                <div class="chart-stat">
-                  <span class="stat-label mb-1">Validated:</span
-                  ><span class="stat-value expressions-gradient"
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 text-sm mb-1">Validated:</span
+                  ><span class="text-warning font-medium"
                     >+{{
                       props.detailedResults.expressions.validatedList.length
                     }}</span
@@ -556,16 +457,16 @@ const grammarClass = computed(() => {
                     <LayoutKeyElementExpressionBadge
                       :text="expression.text"
                       :isMastered="expression.isMastered"
-                      :light-mode="true"
+                      :lightMode="true"
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                <div class="chart-stat">
-                  <div class="stat-label mb-1">Invalidated:</div>
-                  <span class="stat-value expressions-gradient">{{
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-500 text-sm mb-1">Invalidated:</div>
+                  <span class="text-warning font-medium">{{
                     props.detailedResults.expressions.invalidatedList.length
                   }}</span>
                 </div>
@@ -578,14 +479,14 @@ const grammarClass = computed(() => {
                     <LayoutKeyElementExpressionBadge
                       :text="expression.text"
                       :isMastered="expression.isMastered"
-                      :light-mode="true"
+                      :lightMode="true"
                     />
                   </div>
                 </div>
               </div>
-              <div>
-                <div class="chart-stat">
-                  <div class="stat-label mb-1">Note:</div>
+              <div v-if="props.display === 'modal'">
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-500 text-sm mb-1">Note:</div>
                 </div>
                 <div class="text-xs text-gray-600">
                   *The quiz may include a few expressions already known because
@@ -598,7 +499,10 @@ const grammarClass = computed(() => {
       </div>
 
       <!-- Action Buttons -->
-      <div class="modal-actions">
+      <div
+        v-if="props.display === 'modal'"
+        class="mt-8 flex items-center justify-center gap-2"
+      >
         <button
           class="btn-ghost px-4 py-2 text-sm font-medium cursor-pointer flex items-center gap-2"
           @click="$router.push(`/learning/stories/`)"
@@ -607,10 +511,10 @@ const grammarClass = computed(() => {
           <span>Back To Lessons</span>
         </button>
         <button
-          class="bg-primary hover:bg-primary/90 cursor-pointer text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+          class="bg-primary hover:bg-primary/90 cursor-pointer text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
           @click="emit('close')"
         >
-          <EyeIcon class="h-5 w-5" />
+          <ListBulletIcon class="h-5 w-5" />
           <span>See Answers</span>
         </button>
       </div>
@@ -624,12 +528,43 @@ const grammarClass = computed(() => {
   box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.1);
-  max-width: 900px;
+  max-width: 700px;
   width: 90%;
-  max-height: 95vh;
+  max-height: 91vh;
   overflow-y: auto;
   position: relative;
   animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overall-chart-bg {
+  background: linear-gradient(135deg, #ffffff 0%, color-mix(in oklch, var(--color-neutral) 20%, white) 100%);
+  border: 1px solid #dbeafe;
+}
+
+/* Chart Background Colors */
+.grammar-achievement__beginner {
+  background: linear-gradient(135deg, #ffffff 0%, color-mix(in oklch, var(--color-success) 35%, white) 100%);
+  border: 1px solid color-mix(in oklch, var(--color-success) 12%, white);
+}
+
+.grammar-achievement__intermediate {
+  background: linear-gradient(135deg, #ffffff 0%, color-mix(in oklch, var(--color-info) 35%, white) 100%);
+  border: 1px solid color-mix(in oklch, var(--color-info) 12%, white);
+}
+
+.grammar-achievement__advanced {
+  background: linear-gradient(135deg, #ffffff 0%, color-mix(in oklch, var(--color-error) 35%, white) 100%);
+  border: 1px solid color-mix(in oklch, var(--color-error) 12%, white);
+}
+
+.words-chart-bg {
+  background: linear-gradient(135deg, #ffffff 0%, color-mix(in oklch, var(--color-primary-light) 40%, white) 100%);
+  border: 1px solid color-mix(in oklch, var(--color-primary) 15%, white);
+}
+
+.expressions-chart-bg {
+  background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%); /* amber-100 */
+  border: 1px solid #fce7f3; /* amber-200 */
 }
 
 @keyframes modalSlideIn {
@@ -641,19 +576,6 @@ const grammarClass = computed(() => {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
-}
-
-.modal-title-section {
-  position: relative;
-  z-index: 1;
-}
-
-.modal-title {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 0.5rem 0;
-  letter-spacing: -0.025em;
 }
 
 .modal-close-button {
@@ -675,49 +597,6 @@ const grammarClass = computed(() => {
   width: 1.25rem;
   height: 1.25rem;
   color: #ef4444;
-}
-
-.modal-content {
-  padding: 1.5rem 2rem;
-}
-
-/* Overall Score Section */
-.overall-score-section {
-  margin-bottom: 2rem;
-}
-
-.overall-score-card {
-  background: var(--color-primary);
-  padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 20px 40px -12px rgba(79, 70, 229, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.overall-score-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(255, 255, 255, 0.05) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
 }
 
 .score-circle {
@@ -743,48 +622,6 @@ const grammarClass = computed(() => {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.score-label {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 600;
-  text-align: center;
-}
-
-.score-details {
-  flex: 1;
-  position: relative;
-  z-index: 1;
-}
-
-.score-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: white;
-  margin: 0 0 0.75rem 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.score-description {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* Charts Section */
-.charts-section {
-  margin-bottom: 3rem;
-}
-
-/* Grammar Chart - Full Width */
-.grammar-chart-container {
-  margin-bottom: 1.5rem;
-}
-
-.grammar-full-width {
-  width: 100%;
-}
-
 .grammar-chart-content {
   display: flex;
   align-items: center;
@@ -792,87 +629,9 @@ const grammarClass = computed(() => {
   gap: 1.5rem;
 }
 
-.grammar-chart-content .chart-visual {
-  flex-shrink: 0;
-}
-
-/* .grammar-chart-content .chart-details {
-  flex: 1;
-} */
-
 /* Vocabulary Charts - Side by Side */
-.vocabulary-charts-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
 
-.chart-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid #e5e7eb;
-  padding: 1.25rem;
-  box-shadow:
-    0 10px 25px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
 
-.chart-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(120, 119, 198, 0.02) 0%,
-      transparent 50%
-    ),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-/* Chart Background Colors */
-.grammar-achievement__beginner {
-  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-}
-
-.grammar-achievement__intermediate {
-  background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
-}
-
-.grammar-achievement__advanced {
-  background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
-}
-
-.grammar-achievement__expert {
-  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
-}
-
-.words-chart-bg {
-  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
-  border: 1px solid #dbeafe;
-}
-
-.expressions-chart-bg {
-  background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
-  border: 1px solid #fce7f3;
-}
-
-.chart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 1;
-}
 
 .chart-title {
   display: flex;
@@ -881,24 +640,6 @@ const grammarClass = computed(() => {
   font-weight: 600;
   color: #374151;
   font-size: 1.1rem;
-}
-
-.chart-percentage {
-  font-size: 1.5rem;
-  font-weight: 700;
-  /* color: #4f46e5;
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); */
-  /* -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
-  background-clip: text;
-}
-
-.chart-visual {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 1;
 }
 
 .progress-ring {
@@ -946,147 +687,5 @@ const grammarClass = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  .word-achievement {
-    color: #3b82f6;
-  }
-  .expression-achievement {
-    color: #f472b6;
-  }
-  .grammar-achievement__beginner {
-    color: #10b981;
-  }
-  .expression-achievement__intermediate {
-    color: #f472b6;
-  }
-  .expression-achievement__advanced {
-    color: #f472b6;
-  }
-  .expression-achievement__expert {
-    color: #f472b6;
-  }
-}
-
-.chart-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  position: relative;
-  z-index: 1;
-}
-
-.chart-stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stat-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #6b7280;
-}
-
-.stat-value.words-gradient {
-  color: #3b82f6;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.chart-details .stat-value.expressions-gradient {
-  color: #f472b6;
-}
-
-.chart-percentage.words-gradient {
-  color: #3b82f6;
-  /* -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
-  background-clip: text;
-}
-
-.chart-percentage.expressions-gradient {
-  background: linear-gradient(to bottom right, #8b5cf6, #ec4899, #f472b6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Word boxes styling */
-.chart-details .stat-value {
-  color: #3b82f6;
-  font-size: 0.975rem;
-  font-weight: 700;
-  border: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  background-clip: unset;
-}
-
-/* Modal Actions */
-.modal-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  padding-top: 1.5rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .modal-container {
-    width: 95%;
-    max-height: 98vh;
-  }
-
-  .modal-header {
-    padding: 1rem 1.5rem 0.75rem 1.5rem;
-  }
-
-  .modal-title {
-    font-size: 1.5rem;
-  }
-
-  .modal-content {
-    padding: 1rem 1.5rem;
-  }
-
-  .overall-score-card {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
-
-  .score-circle {
-    width: 80px;
-    height: 80px;
-  }
-
-  .score-percentage {
-    font-size: 1.75rem;
-  }
-
-  .score-title {
-    font-size: 1.5rem;
-  }
-
-  .vocabulary-charts-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .grammar-chart-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-
-  .chart-card {
-    padding: 1rem;
-  }
-
-  .modal-actions {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
 }
 </style>

@@ -120,20 +120,16 @@ export default defineEventHandler(async (event) => {
     const detailedResults = body.detailedResults;
     const type = body.type;
     const userId = body.userId;
-    // const questionValues = body.value
-
-    // Grammar mastering data
     const grammarRuleScore = await getAverageScore(
       supabase,
       score,
       userId,
       ruleId,
     );
-
     const updateQuizResult = async () => {
       const { error: errorFromQuizzedResult } = await supabase
         .from("turkish_quizzes_result")
-        .update({ score_global: score })
+        .update({ score_global: score, detailed_results: detailedResults })
         .eq("id", quizId)
         .eq("user_id", userId);
 

@@ -19,7 +19,6 @@ const props = withDefaults(
   },
 );
 const emit = defineEmits(["click"]);
-
 // Score-based styling with modern colors
 const scoreStyles = computed(() => {
   if (props.score === null || props.score === undefined) {
@@ -165,14 +164,16 @@ const currentStyles = computed(() =>
                 :class="[
                   currentStyles.text,
                   {
-                    'text-xl font-medium text-gray-900 text-xl':
+                    'font-medium text-gray-900 text-xl':
                       props.size === 'md',
-                    'text-xl font-medium text-gray-900 text-md':
+                    'font-medium text-gray-900 text-md':
+                      props.size === 'md',
+                    'font-medium text-gray-900 text-md':
                       props.size === 'sm',
                   },
                 ]"
               >
-                {{ props.score }}
+                {{ props.score  }}
               </span>
               <span class="ml-1 text-base text-gray-500">/ 100</span>
             </span>

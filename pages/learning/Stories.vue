@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { EyeIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { ArrowLongRightIcon, ArrowsPointingOutIcon, EyeIcon, ListBulletIcon, TableCellsIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { DocumentIcon } from "@heroicons/vue/24/solid";
 import { getAuthToken } from "~/utils/auth/auth";
 import { handleGenerationQuiz } from "~/utils/learning/quiz";
@@ -17,6 +17,7 @@ const isFetchingData = ref(false);
 const isDeletingLesson = ref(false);
 const itemsPerPage = ref(10);
 const openingModalId = ref(0);
+const displayMode = ref<'list' | 'table'>('list');
 
 const {
   currentPage,
@@ -51,10 +52,12 @@ const fetchLessons = async () => {
   if (results.error) throw results.error;
   else if (results) {
     lessons.value =
-      results?.dataResult.data.map(({ title_en, img_url, ...lesson }) => ({
+      results?.dataResult.data.map(({ title_en, img_url, turkish_lesson_words, turkish_lesson_expressions, ...lesson }) => ({
         ...lesson,
         titleEn: title_en,
         imgUrl: img_url,
+        words: turkish_lesson_words.map((word: any) => word.turkish_words),
+        expressions: turkish_lesson_expressions.map((expression: any) => expression.turkish_expressions),
       })) || [];
     count.value = results?.countResult.count || 0;
   }
@@ -86,9 +89,11 @@ const handleDeleteLesson = async () => {
 const handleLessonToDelete = (id: number, title: string) => {
   lessonNameToDelete.value = { id, title };
 };
+
 const handleCancel = () => {
   lessonNameToDelete.value = null;
 };
+
 const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
   if (!userStore.isEnoughTokensForOneQuiz) {
     myModalToGetCredits.value?.openModal();
@@ -111,14 +116,35 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
     <div class="max-w-full max-h-screen flex grid grid-cols-8">
       <div class="max-h-screen col-start-2 col-span-6">
         <div class="h-full flex flex-col p-5">
-          <LayoutHeadingPlus
+          <div class="flex items-center justify-between">
+            <LayoutHeadingPlus
             title="Lessons"
             description="Your History of Tailored Lessons"
           >
             <DocumentIcon class="h-6 w-6 text-neutral" />
           </LayoutHeadingPlus>
+          <div>
+            <button
+                class="cursor-pointer mr-2"
+                @click="displayMode = 'list'"
+              >
+                <ListBulletIcon
+                  class="h-5 w-5 text-neutral"
+                />
+          </button>
+          <button
+                class="cursor-pointer"
+                @click="displayMode = 'table'"
+              >
+                <TableCellsIcon
+                  class="h-5 w-5 text-neutral"
+                />
+          </button>
+          </div>
 
-          <div class="mt-3 max-h-full grow overflow-auto">
+          </div>
+
+          <div v-if="displayMode === 'table'" class="mt-3 max-h-full grow overflow-auto">
             <div
               v-if="isFetchingData"
               class="h-full flex w-full flex-col gap-4"
@@ -174,11 +200,6 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                   <th
                     class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                   >
-                    #
-                  </th>
-                  <th
-                    class="sticky top-0 bg-gradient-to-r from-gray-50 to-gray-100 z-10 px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                  >
                     Lesson name
                   </th>
                   <th
@@ -198,15 +219,6 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                   v-for="(lesson, index) in lessons"
                   :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
                 >
-                  <td class="px-4 py-3">
-                    <div class="flex items-center justify-center">
-                      <span
-                        class="text-sm font-semibold text-indigo-700 tracking-wide"
-                      >
-                        #{{ lesson.id }}
-                      </span>
-                    </div>
-                  </td>
                   <td>
                     <div
                       class="flex items-center gap-3 hover:cursor-pointer"
@@ -218,14 +230,6 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                         :titleEn="lesson.titleEn"
                         :storyImgUrl="lesson.imgUrl"
                       />
-                      <!-- <div class="hover:cursor-pointer">
-                        <div class="text-md tracking-tight font-semibold text-slate-800 tracking-wide">
-                          {{ lesson.title }}
-                        </div>
-                        <div class="text-sm font-light text-slate-600">
-                          {{ lesson.title_en }}
-                        </div> 
-                      </div> -->
                     </div>
                   </td>
                   <td>
@@ -286,6 +290,63 @@ const handleCompleteQuiz = async (ruleId: number, lessonId: number) => {
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="mt-6" v-else>
+            <div class="bg-white border border-slate-200/70 p-3 rounded-lg mb-2" v-for="lesson in lessons" :key="lesson.id">
+              <div class="flex justify-between items-center gap-2">
+                <LayoutHeadingLesson
+                  :title="lesson.title"
+                  :titleEn="lesson.titleEn"
+                  :storyImgUrl="lesson.imgUrl"
+                  size="lg"
+                />
+                <ArrowLongRightIcon class="h-5 w-5 text-neutral" />
+
+              </div>
+              <div class="py-3 flex justify-start flex-wrap gap-2">
+                <LayoutKeyElementWordBadge v-for="word in lesson.words" :key="word.id" :text="word.text"/>
+              </div>
+              <div class="py-3 flex justify-start flex-wrap gap-2">
+                <LayoutKeyElementExpressionBadge v-for="expression in lesson.expressions" :key="expression.id" :text="expression.text" :lightMode="true" size="xs"/>
+              </div>
+              <div class="mt-2 flex items-center gap-2">
+              <LayoutKeyElementRuleBadge
+                        class="mr-2 w-64"
+                        :title="lesson.turkish_grammar_rules.rule_name"
+                        :titleEn="
+                          lesson.turkish_grammar_rules.rule_name_translation
+                        "
+                        :level="lesson.turkish_grammar_rules.difficulty_class"
+                        :symbol="lesson.turkish_grammar_rules.symbol"
+                        :lightMode="true"
+                        size="xs"
+                      />
+           
+                        <LayoutKeyElementQuizBadge
+                        v-if="
+                          lesson.turkish_quizzes_result?.score_global ||
+                          lesson.turkish_quizzes_result?.score_global === 0
+                        "
+                        :score="lesson.turkish_quizzes_result.score_global"
+                        size="sm"
+                        :filledOut="true"
+                      />
+                      <LayoutKeyElementQuizBadge
+                        v-else
+                        :score="null"
+                        size="sm"
+                        :quizId="null"
+                        :filledOut="false"
+                        @click="
+                          handleCompleteQuiz(
+                            lesson.turkish_grammar_rules.id,
+                            lesson.id,
+                          )
+                        "
+                      />
+                      </div>
+
+            </div>
           </div>
           <LayoutTablePagination
             :current-page="currentPage"

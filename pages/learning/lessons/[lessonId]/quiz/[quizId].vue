@@ -6,15 +6,17 @@ import type {
   FormQuizState,
 } from "~/types/quizzes/quiz";
 import type { WordContent } from "~/types/vocabulary/word";
-import { parseGrammarQuizQuestion, parseWordQuizQuestion, parseExpressionQuizQuestion } from "~/utils/learning/quiz";
+import {
+  parseGrammarQuizQuestion,
+  parseWordQuizQuestion,
+  parseExpressionQuizQuestion,
+} from "~/utils/learning/quiz";
 
-import { DIFFICULTY_LEVELS } from "~/utils/learning/grammar";
 import type { GrammarRuleMeta } from "~/types/modules/grammar-rule";
 import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import type { DetailedResults } from "~/types/quizzes/quiz-result";
 import { getAuthToken } from "~/utils/auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "~/utils/credits";
-import { mockNotParsedExpressionQuizQuestions, mockNotParsedWordQuizQuestions } from "~/mockData/lessons/quiz/notparsed";
 
 definePageMeta({
   layout: "full",
@@ -37,7 +39,6 @@ const expressionsForQuiz = ref<ExpressionContent[]>([]);
 
 // Information data about the targeted grammar rule to display in the quiz
 const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
-
 // Results modal state
 const showResultsModal = ref(false);
 const myModalToGetCredits = ref<{
@@ -66,6 +67,7 @@ const getGrammarRuleInfo = async () => {
     headers,
   });
   if (data) {
+    console.log("data", data);
     grammarRuleMetaData.value = {
       highlights: null,
       level: data.turkish_grammar_rules.difficulty_class,
@@ -74,21 +76,34 @@ const getGrammarRuleInfo = async () => {
       id: data.turkish_grammar_rules.id,
       symbol: data.turkish_grammar_rules.symbol,
     };
+    console.log("grammarRuleMetaData.value", grammarRuleMetaData.value);
   }
 };
-
 
 const getGrammarQuizData = async () => {
   const headers = await getAuthToken();
   const data = await $fetch(`/api/quizzes/${quizId}`, {
-    headers
+    headers,
   });
   console.log("DATA", data);
-  grammarQuizQuestions.value = data.grammarQuizzes.map((question: QuizFetchedQuestion) => parseGrammarQuizQuestion(question));
-  wordsQuizQuestions.value = data.wordQuizzes.map((question: QuizFetchedQuestion) => parseWordQuizQuestion(question));
-  wordsForQuiz.value = data.wordQuizzes.map((question: QuizFetchedQuestion) => parseWordQuizQuestion(question));
-  expressionsQuizQuestions.value = data.expressionQuizzes.map((question: QuizFetchedQuestion) => parseExpressionQuizQuestion(question));
-  expressionsForQuiz.value = data.expressionQuizzes.map((question: QuizFetchedQuestion) => ({id: question.id, text: question.turkish_expression_quizzes.turkish_expressions.text}));
+  grammarQuizQuestions.value = data.grammarQuizzes.map(
+    (question: QuizFetchedQuestion) => parseGrammarQuizQuestion(question),
+  );
+  wordsQuizQuestions.value = data.wordQuizzes.map(
+    (question: QuizFetchedQuestion) => parseWordQuizQuestion(question),
+  );
+  wordsForQuiz.value = data.wordQuizzes.map((question: QuizFetchedQuestion) =>
+    parseWordQuizQuestion(question),
+  );
+  expressionsQuizQuestions.value = data.expressionQuizzes.map(
+    (question: QuizFetchedQuestion) => parseExpressionQuizQuestion(question),
+  );
+  expressionsForQuiz.value = data.expressionQuizzes.map(
+    (question: QuizFetchedQuestion) => ({
+      id: question.id,
+      text: question.turkish_expression_quizzes.turkish_expressions.text,
+    }),
+  );
 };
 
 const handleSubmitQuiz = async (results: {
@@ -96,13 +111,14 @@ const handleSubmitQuiz = async (results: {
   formGrammarQuiz: FormQuizState;
   detailedResults: DetailedResults;
 }) => {
+  console.log("handleSubmitQuiz", results);
   detailedResults.value = results.detailedResults;
   const headers = await getAuthToken();
   await $fetch(`/api/quizzes/result/${quizId}`, {
     method: "PUT",
     headers,
     body: {
-      userId: userStore.id,
+      userId: userStore.$state.id,
       ruleId: grammarRuleMetaData.value?.id,
       score: results.score,
       detailedResults: results.detailedResults,
@@ -115,10 +131,7 @@ const handleSubmitQuiz = async (results: {
   }, 200);
 };
 
-await Promise.all([
-  getGrammarQuizData(),
-  getGrammarRuleInfo(),
-]);
+await Promise.all([getGrammarQuizData(), getGrammarRuleInfo()]);
 isLoadingQuiz.value = false;
 </script>
 
@@ -269,7 +282,7 @@ isLoadingQuiz.value = false;
       @submitQuiz="(results) => handleSubmitQuiz(results)"
     />
     <!-- Results Modal -->
-    <div v-if="showResultsModal" class="modal-overlay">
+    <div v-if="showResultsModal" class="modal-overlay p-6">
       <QuizModal
         :detailedResults="detailedResults"
         :grammarRuleMetaData="grammarRuleMetaData"

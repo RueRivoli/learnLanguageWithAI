@@ -169,7 +169,9 @@ export function getBorderStyleClassFromGrammarRuleLevel(level: number): string {
   }
 }
 
-export function getLeftBorderStyleClassFromGrammarRuleLevel(level: number): string {
+export function getLeftBorderStyleClassFromGrammarRuleLevel(
+  level: number,
+): string {
   switch (level) {
     case RuleDifficulty.BEGINNER:
       return "border-l-4 border-success";

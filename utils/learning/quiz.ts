@@ -7,49 +7,58 @@ import type { VocabularyQuizQuestion } from "~/types/quizzes/vocabulary-quiz";
 import { getAuthToken } from "../auth/auth";
 import { CREDITS_FOR_ONE_QUIZ } from "../credits";
 
-
 const getVocabularyFromLesson = async (lessonId: number) => {
   const headers = await getAuthToken();
-  const { data: vocabularyData } = await useFetch(`/api/lessons/${lessonId}/vocabulary`, {
-    headers,
-  });
+  const { data: vocabularyData } = await useFetch(
+    `/api/lessons/${lessonId}/vocabulary`,
+    {
+      headers,
+    },
+  );
   if (vocabularyData.value) {
-    const wordsForQuiz = (vocabularyData.value.turkish_lesson_words || []).map((word: any) => {
+    const wordsForQuiz = (vocabularyData.value.turkish_lesson_words || []).map(
+      (word: any) => {
         return { ...word.turkish_words, isMastered: false };
-      })
-    const expressionsForQuiz = (vocabularyData.value.turkish_lesson_expressions || []).map(
-        (expression: any) => {
-          return { ...expression.turkish_expressions, isMastered: false };
-        },
-      )
+      },
+    );
+    const expressionsForQuiz = (
+      vocabularyData.value.turkish_lesson_expressions || []
+    ).map((expression: any) => {
+      return { ...expression.turkish_expressions, isMastered: false };
+    });
 
-  const { data: randomWords } = await $fetch(`/api/words/levels/random/?limit=2`, {
+    const { data: randomWords } = await $fetch(
+      `/api/words/levels/random/?limit=2`,
+      {
         method: "GET",
         headers,
-      });
+      },
+    );
 
-      if (randomWords) {
-        wordsForQuiz.push(
-          ...randomWords.map((word: any) => {
-            return { ...word.turkish_words, isMastered: true };
-          }),
-        );
-      }
-    const randomExpressions = await $fetch(`/api/expressions/levels/random/?limit=2`, {
+    if (randomWords) {
+      wordsForQuiz.push(
+        ...randomWords.map((word: any) => {
+          return { ...word.turkish_words, isMastered: true };
+        }),
+      );
+    }
+    const randomExpressions = await $fetch(
+      `/api/expressions/levels/random/?limit=2`,
+      {
         method: "GET",
         headers,
-      });
-      if (randomExpressions && (randomExpressions as any).data) {
-        expressionsForQuiz.push(
-          ...(randomExpressions as any).data.map((expression: any) => {
-            return { ...expression.turkish_expressions, isMastered: true };
-          }),
-        );
-      }
-    return {wordsForQuiz, expressionsForQuiz}
+      },
+    );
+    if (randomExpressions && (randomExpressions as any).data) {
+      expressionsForQuiz.push(
+        ...(randomExpressions as any).data.map((expression: any) => {
+          return { ...expression.turkish_expressions, isMastered: true };
+        }),
+      );
+    }
+    return { wordsForQuiz, expressionsForQuiz };
   }
 };
-
 
 export const parseQuestions = (data: any): GrammarQuizQuestion => {
   return {
@@ -102,12 +111,16 @@ export const parseWordQuizQuestion = (question: QuizFetchedQuestion): any => {
   };
 };
 
-export const parseExpressionQuizQuestion = (question: QuizFetchedQuestion): any => {
+export const parseExpressionQuizQuestion = (
+  question: QuizFetchedQuestion,
+): any => {
   return {
     id: question.question_id,
     type: question.turkish_expression_quizzes.question_type ?? null,
-    expressionId: question.turkish_expression_quizzes.turkish_expressions.id ?? null,
-    expressionText: question.turkish_expression_quizzes.turkish_expressions.text ?? null,
+    expressionId:
+      question.turkish_expression_quizzes.turkish_expressions.id ?? null,
+    expressionText:
+      question.turkish_expression_quizzes.turkish_expressions.text ?? null,
     question: question.turkish_expression_quizzes.text ?? null,
     option1: question.turkish_expression_quizzes.option_1 ?? null,
     option2: question.turkish_expression_quizzes.option_2 ?? null,
@@ -117,6 +130,8 @@ export const parseExpressionQuizQuestion = (question: QuizFetchedQuestion): any 
     note: question.turkish_expression_quizzes.note ?? null,
   };
 };
+
+
 export const handleGenerationQuiz = async (
   ruleId: number,
   userId: string,
@@ -125,15 +140,14 @@ export const handleGenerationQuiz = async (
   // 1 = grammar + vocabulary, 2 = grammar only
   type = 1,
 ) => {
-  if (!lessonId) return;
-  console.log("handleGenerationQuiz", ruleId, userId, lessonId, length);
+  if (!lessonId && type === 1) return;
   try {
     const userStore = useUserStore();
     const headers = await getAuthToken();
 
     // Generate a quiz for the grammar rule
     const response = await $fetch<{ quizId: number }>(
-      `/api/quizzes/${ruleId}`,
+      `/api/quizzes/rules/${ruleId}`,
       {
         method: "PUT",
         headers,
@@ -146,31 +160,15 @@ export const handleGenerationQuiz = async (
     if (type === 1) {
       const headers = await getAuthToken();
       console.log("Generating vocabulary quiz");
-      await $fetch<{ quizId: number }>(
-        `/api/quizzes/lessons/${lessonId}`,
-        {
-          method: "PUT",
-          headers,
-          body: {
-            userId: userId,
-            quizId: response.quizId,
-          },
+      await $fetch<{ quizId: number }>(`/api/quizzes/lessons/${lessonId}`, {
+        method: "PUT",
+        headers,
+        body: {
+          userId: userId,
+          quizId: response.quizId,
         },
-      );
+      });
 
-      // const vocabularyData = await getVocabularyFromLesson(Number(lessonId))
-      // const quizVocabularyResponse = await $fetch<{ quizId: number }>(
-      //   `/api/quizzes/vocabulary/${ruleId}`,
-      //   {
-      //     method: "PUT",
-      //     headers,
-      //     body: {
-      //       numberOfQuestions: length,
-      //       userId: userId,
-      //     },
-      //   },
-      // );
-    }
     // Save the quiz id to the lesson
     if (lessonId)
       await $fetch(`/api/lessons/${lessonId}`, {
@@ -180,7 +178,7 @@ export const handleGenerationQuiz = async (
           quizId: response.quizId,
         },
       });
-
+    }
     userStore.creditsUsageUpdate(CREDITS_FOR_ONE_QUIZ);
     return response;
   } catch (err) {

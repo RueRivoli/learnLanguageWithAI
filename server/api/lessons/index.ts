@@ -16,8 +16,7 @@ export default defineEventHandler(async (event) => {
     supabase
       .from("turkish_lessons")
       .select(
-        `
-        id,
+        `id,
         title,
         title_en,
         img_url,
@@ -39,6 +38,14 @@ export default defineEventHandler(async (event) => {
             translation,
             word_sentence,
             word_sentence_translation
+          )
+        ),
+        turkish_lesson_expressions (
+          turkish_expressions (
+            text,
+            translation,
+            expression_sentence,
+            expression_sentence_translation
           )
         ),
         turkish_quizzes_result (

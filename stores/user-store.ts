@@ -43,7 +43,10 @@ export const useUserStore = defineStore("user", {
     async fetchUserProfile(userId: string) {
       this.isLoaded = true;
       const headers = await getAuthToken();
-      const profile: DatabaseUserProfile = await $fetch(`/api/profiles/${userId}`, { headers }).then((response: DatabaseUserProfile[]) => response[0]);
+      const profile: DatabaseUserProfile = await $fetch(
+        `/api/profiles/${userId}`,
+        { headers },
+      ).then((response: DatabaseUserProfile[]) => response[0]);
       this.creditsAvailable = profile.credits_available;
       this.creditsPurchasedTotal = profile.credits_purchased_total;
       this.email = profile.email;

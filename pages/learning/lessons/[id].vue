@@ -14,15 +14,14 @@ import {
   ArrowsPointingInIcon,
 } from "@heroicons/vue/24/outline";
 import { getAuthToken } from "~/utils/auth/auth";
+import type { DetailedResults, GrammarRuleMeta } from "~/types";
 
 definePageMeta({
   layout: "full",
 });
 
-
 const route = useRoute();
 const lessonId = String(route.params.id);
-
 
 const showAllEnglishTranslations = ref(true);
 const showExplanations = ref(false);
@@ -38,8 +37,9 @@ const notes = ref<string>("");
 const quiz = ref<{ id: number; score: number | null } | null>(null);
 const hoveredSentenceIndex = ref<number | null>(null);
 const hoveredTooltipIndex = ref<number | null>(null);
+const grammarRuleMetaData = ref<GrammarRuleMeta | null>(null);
+const detailedResults = ref<DetailedResults | null>(null);
 
-console.log("lessonId", lessonId);
 const {
   lesson,
   grammarRule,
@@ -61,8 +61,8 @@ const handleNotesUpdate = async (event: FocusEvent) => {
   const target = event.target as HTMLTextAreaElement | null;
   if (target) notes.value = target.value;
   $fetch(`/api/lessons/${lessonId}`, {
-    headers,  
-    method: 'PUT',
+    headers,
+    method: "PUT",
     body: { notes: notes.value },
   });
 };
@@ -94,19 +94,31 @@ const myModalToGetCredits = ref<{
   closeModal: () => void;
 } | null>(null);
 
-
 const isStoryShown = computed(() => menuSelected.value === 1);
 const isRuleShown = computed(() => menuSelected.value === 2);
 const isQuizShown = computed(() => menuSelected.value === 3);
 
-const isEnoughTokensForOneQuiz = computed(() => userStore.isEnoughTokensForOneQuiz);
+const isEnoughTokensForOneQuiz = computed(
+  () => userStore.isEnoughTokensForOneQuiz,
+);
 
-const isQuizFilledOut = computed(() => Boolean(lesson.value?.quizId && lesson.value?.quizScore !== null));
+const isQuizFilledOut = computed(() =>
+  Boolean(lesson.value?.quizId && lesson.value?.quizScore !== null),
+);
 
 watch(lesson, async (newLesson) => {
   console.log("watch lesson", newLesson);
   if (!newLesson) return;
   notes.value = newLesson?.notes || "";
+  grammarRuleMetaData.value = {
+    level: newLesson?.level ?? 0,
+    name: newLesson?.grammarRuleName ?? "",
+    nameEn: newLesson?.grammarRuleNameEn ?? "",
+    id: newLesson?.grammarRuleId ?? 0,
+    symbol: newLesson?.symbol ?? "",
+    highlights: null,
+  };
+  detailedResults.value = newLesson?.detailedResults ?? null;
   if (user.value?.id) await userStore.fetchUserProfile(user.value.id);
   console.log("isEnoughTokensForOneQuiz", isEnoughTokensForOneQuiz.value);
   if (isEnoughTokensForOneQuiz && !lesson.value?.quizId) {
@@ -115,15 +127,11 @@ watch(lesson, async (newLesson) => {
   }
 });
 
-const handleGenerateQuiz = async() => {
-  console.log("handleGenerateQuiz", userStore.$state, isEnoughTokensForOneQuiz.value);
+const handleGenerateQuiz = async () => {
   if (!isEnoughTokensForOneQuiz.value) {
-    console.log("Not enough tokens for one quiz");
     myModalToGetCredits.value?.openModal();
     return;
   }
-  console.log("Generation quiz...");
-  console.log("Generate quiz", lesson.value, user.value?.id);
   isGeneratingQuiz.value = true;
   if (!lesson.value?.grammarRuleId || !user.value?.id) {
     isGeneratingQuiz.value = false;
@@ -136,7 +144,7 @@ const handleGenerateQuiz = async() => {
     1,
   ).then((response) => {
     if (response) {
-      quiz.value = {id: response.quizId, score: null};
+      quiz.value = { id: response.quizId, score: null };
     }
   });
   isGeneratingQuiz.value = false;
@@ -149,17 +157,17 @@ const handleGenerateQuiz = async() => {
 const routeToResultsQuiz = async () => {
   console.log("routeToQuiz", lesson.value?.quizId);
   if (!lesson.value?.quizId) return;
-    await navigateTo({
-      path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
-    });
+  await navigateTo({
+    path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
+  });
 };
 
 const routeToQuiz = async () => {
   console.log("routeToQuiz", lesson.value?.quizId);
   if (!lesson.value?.quizId) return;
-    await navigateTo({
-      path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
-    });
+  await navigateTo({
+    path: `/learning/lessons/${lessonId}/quiz/${lesson.value?.quizId}`,
+  });
 };
 
 const routeToNewGeneratedQuiz = async () => {
@@ -204,12 +212,14 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
       "",
   ),
 );
-
 </script>
 
 <template>
   <div class="min-h-screen bg-base-100 scroll-smooth">
-    <div class="overflow-hidden" :class="isReadingMode ? 'max-w-5xl mx-auto' : ''">
+    <div
+      class="overflow-hidden"
+      :class="isReadingMode ? 'max-w-5xl mx-auto' : ''"
+    >
       <div class="grid grid-cols-12">
         <div class="col-span-3" v-show="!isReadingMode">
           <!-- Left column (1/6) -->
@@ -265,11 +275,12 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     </div>
                     <LayoutKeyElementQuizBadge
                       v-if="isQuizFilledOut"
-                      class="ml-10"
-                      :filledOut="Boolean(lesson.quizId && lesson.quizScore !== null)"
+                      class="ml-10 cursor-pointer"
+                      :filledOut="
+                        Boolean(lesson.quizId && lesson.quizScore !== null)
+                      "
                       size="sm"
                       :score="lesson.quizScore ?? null"
-                      @click="routeToResultsQuiz"
                     />
                     <button
                       v-else-if="lesson?.quizId && lesson?.quizScore === null"
@@ -310,11 +321,24 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
           </div>
         </div>
         <div :class="isReadingMode ? 'col-span-12' : 'col-span-6'">
-          <div class="p-4 row-span-1 border-b border-slate-200/70" :class="{ 'border-l': !isReadingMode }">
+          <div
+            class="p-4 row-span-1 border-b border-slate-200/70"
+            :class="{ 'border-l': !isReadingMode }"
+          >
             <div class="w-full flex items-center justify-between gap-2">
-              <LayoutBreadcrumbs :firstSection="{ title: `Lessons`, link: '/learning/stories' }" :secondSection="{ title: `Lesson ${lessonId}`, link: null }" />
-              <button class="cursor-pointer" @click="isReadingMode = !isReadingMode" aria-label="Toggle reading mode">
-                <ArrowsPointingOutIcon v-if="!isReadingMode" class="h-5 w-5 text-neutral" />
+              <LayoutBreadcrumbs
+                :firstSection="{ title: `Lessons`, link: '/learning/stories' }"
+                :secondSection="{ title: `Lesson ${lessonId}`, link: null }"
+              />
+              <button
+                class="cursor-pointer"
+                @click="isReadingMode = !isReadingMode"
+                aria-label="Toggle reading mode"
+              >
+                <ArrowsPointingOutIcon
+                  v-if="!isReadingMode"
+                  class="h-5 w-5 text-neutral"
+                />
                 <ArrowsPointingInIcon v-else class="h-5 w-5 text-neutral" />
               </button>
             </div>
@@ -351,67 +375,66 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <div v-else class="p-6">
               <!-- Story Section (Full Width Below) -->
               <div id="story" class="w-full">
+                <!-- Header with Rule Button and Global Toggle -->
+
+                <!-- Grammar Rule Content Section -->
                 <div
+                  v-if="grammarRule && isRuleShown"
+                  id="grammar"
+                  class="mb-6"
+                >
+                  <div
+                    class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-lg p-6 border border-blue-200/30 shadow-sm"
+                  >
+                    <!-- Grammar Rule Header -->
+                    <div
+                      class="flex items-center gap-4 mb-4 pb-3 border-b border-blue-200/40"
+                    >
+                      <div
+                        class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md"
+                      >
+                        <span class="text-lg">{{
+                          grammarRule.symbol || grammarRule.ruleName?.charAt(0)
+                        }}</span>
+                      </div>
+                      <div>
+                        <h4 class="text-lg font-semibold text-slate-800">
+                          {{ grammarRule.ruleNameTranslation }}
+                        </h4>
+                        <p class="text-sm text-slate-600">
+                          {{ grammarRule.ruleName }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Grammar Rule Content -->
+                    <div class="space-y-4 text-slate-700">
+                      <div
+                        v-if="sanitizedIntroTemplate"
+                        class="prose prose-sm max-w-none prose-slate"
+                        v-html="sanitizedIntroTemplate"
+                      />
+                      <div
+                        v-if="sanitizedDescriptionTemplate"
+                        class="prose prose-sm max-w-none prose-slate"
+                        v-html="sanitizedDescriptionTemplate"
+                      />
+                      <div
+                        v-if="sanitizedExtendedDescriptionTemplate"
+                        class="prose prose-sm max-w-none prose-slate"
+                        v-html="sanitizedExtendedDescriptionTemplate"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Individual Sentences -->
+                <div
+                  v-else-if="isStoryShown"
                   id="story_content"
                   class="rounded-lg bg-white"
                   :class="{ 'p-8 ': !isRuleShown }"
                 >
-                  <!-- Header with Rule Button and Global Toggle -->
-
-                  <!-- Grammar Rule Content Section -->
                   <div
-                    v-if="grammarRule && isRuleShown"
-                    id="grammar"
-                    class="mb-6"
-                  >
-                    <div
-                      class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-lg p-6 border border-blue-200/30 shadow-sm"
-                    >
-                      <!-- Grammar Rule Header -->
-                      <div
-                        class="flex items-center gap-4 mb-4 pb-3 border-b border-blue-200/40"
-                      >
-                        <div
-                          class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md"
-                        >
-                          <span class="text-lg">{{
-                            grammarRule.symbol ||
-                            grammarRule.ruleName?.charAt(0)
-                          }}</span>
-                        </div>
-                        <div>
-                          <h4 class="text-lg font-semibold text-slate-800">
-                            {{ grammarRule.ruleNameTranslation }}
-                          </h4>
-                          <p class="text-sm text-slate-600">
-                            {{ grammarRule.ruleName }}
-                          </p>
-                        </div>
-                      </div>
-
-                      <!-- Grammar Rule Content -->
-                      <div class="space-y-4 text-slate-700">
-                        <div
-                          v-if="sanitizedIntroTemplate"
-                          class="prose prose-sm max-w-none prose-slate"
-                          v-html="sanitizedIntroTemplate"
-                        />
-                        <div
-                          v-if="sanitizedDescriptionTemplate"
-                          class="prose prose-sm max-w-none prose-slate"
-                          v-html="sanitizedDescriptionTemplate"
-                        />
-                        <div
-                          v-if="sanitizedExtendedDescriptionTemplate"
-                          class="prose prose-sm max-w-none prose-slate"
-                          v-html="sanitizedExtendedDescriptionTemplate"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Individual Sentences -->
-                  <div
-                    v-else-if="isStoryShown"
                     class="bg-white"
                     :class="
                       showAllEnglishTranslations ? 'space-y-4' : 'space-y-1'
@@ -421,7 +444,9 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       <span class="text-2xl mr-4 font-semibold text-slate-800">
                         {{ lesson?.title }}
                       </span>
-                      <span class="text-lg font-light text-slate-600 tracking-wide">
+                      <span
+                        class="text-lg font-light text-slate-600 tracking-wide"
+                      >
                         {{ lesson?.titleEn }}
                       </span>
                     </div>
@@ -436,10 +461,14 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       </div>
                       <div class="relative z-10 p-2 col-span-2">
                         <div class="prose prose-lg max-w-none">
-                          <h2 class="text-xl font-medium leading-relaxed tracking-wide">
+                          <h2
+                            class="text-xl font-medium leading-relaxed tracking-wide"
+                          >
                             Introduction
                           </h2>
-                          <p class="text-md leading-relaxed font-light text-slate-600">
+                          <p
+                            class="text-md leading-relaxed font-light text-slate-600"
+                          >
                             {{ lesson?.introduction }}
                           </p>
                         </div>
@@ -447,19 +476,27 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                     </div>
 
                     <div v-else class="space-y-4">
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                      <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start"
+                      >
                         <div>
-                          <h1 class="text-3xl md:text-4xl font-semibold text-slate-900">
+                          <h1
+                            class="text-3xl md:text-4xl font-semibold text-slate-900"
+                          >
                             {{ lesson?.title }}
                           </h1>
                           <p class="text-lg text-slate-500">
                             {{ lesson?.titleEn }}
                           </p>
                           <div class="mt-4">
-                            <h2 class="text-xl font-medium leading-relaxed tracking-wide">
+                            <h2
+                              class="text-xl font-medium leading-relaxed tracking-wide"
+                            >
                               Introduction
                             </h2>
-                            <p class="text-lg leading-relaxed font-light text-slate-600">
+                            <p
+                              class="text-lg leading-relaxed font-light text-slate-600"
+                            >
                               {{ lesson?.introduction }}
                             </p>
                           </div>
@@ -481,152 +518,169 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
                       >
                         Story
                       </h2>
-                      <div class="p-2" :class="isReadingMode ? 'mx-auto max-w-3xl text-lg leading-8' : ''">
                       <div
-                        v-for="(sentence, index) in sentences"
-                        :key="'hover-' + index"
-                        class="relative inline-block group mr-1 mt-2"
-                        @mouseenter="
-                          clearHoverHideTimeout();
-                          hoveredSentenceIndex = index;
+                        class="p-2"
+                        :class="
+                          isReadingMode
+                            ? 'mx-auto max-w-3xl text-lg leading-8'
+                            : ''
                         "
-                        @mouseleave="scheduleHideHover(index)"
                       >
-                        <span
-                          class="items-center gap-2 border border-transparent px-0.5 py-0.5 leading-relaxed rounded-md transition-all duration-300 text-md text-base"
-                          :class="{
-                            'hover:border-blue-200/50 cursor-pointer': !showExplanations,
-                            'flex items-center': showExplanations,
-                            'bg-primary/15':
-                              !showExplanations && (hoveredSentenceIndex === index ||
-                              hoveredTooltipIndex === index),
-                          }"
-                        >
-                          {{ sentence.original }}
-                          <span v-if="showExplanations" class="cursor-pointer" @click="addSentenceToNotes(sentence)">
-                            <ClipboardDocumentIcon
-                              class="w-4 h-4"
-                            />
-                          </span>
-                        </span>
-                        <div class="p-2 font-light text-slate-600" v-if="showExplanations">
-                          <div
-                                class="flex items-center gap-3 rounded px-2 py-1 cursor-pointer"
-                                @click="handleTranslate(index)"
-                              >
-                                <span
-                                  class="w-5 h-5 flex items-center justify-center"
-                                >
-                                  <LanguageIcon
-                                    class="w-4 h-4"
-                                  />
-                                </span>
-                                <span class="">{{sentence.translation}}</span>
-                          </div>
-
-                          <div
-                                class="font-light text-slate-600 flex items-center gap-3 rounded px-2 py-1 cursor-pointer"
-                                @click="copySentence(sentence.original)"
-                              >
-                                <span
-                                  class="w-5 h-5 flex items-center justify-center shrink-0"
-                                >
-                                  <LightBulbIcon
-                                    class="w-4 h-4"
-                                  />
-                                </span>
-                                <span>{{
-                                  sentence.tip
-                                }}</span>
-                              </div>
-
-                        </div>
-                  
-                        <!-- Hover Card -->
                         <div
-                          v-if="!showExplanations"
-                          class="absolute left-0 mt-2 z-30 w-72 transition-all"
-                          :class="{
-                            'opacity-100 translate-y-0 pointer-events-auto':
-                              hoveredSentenceIndex === index ||
-                              hoveredTooltipIndex === index,
-                            'opacity-0 translate-y-1 pointer-events-none': !(
-                              hoveredSentenceIndex === index ||
-                              hoveredTooltipIndex === index
-                            ),
-                          }"
+                          v-for="(sentence, index) in sentences"
+                          :key="'hover-' + index"
+                          class="relative inline-block group mr-1 mt-2"
                           @mouseenter="
                             clearHoverHideTimeout();
-                            hoveredTooltipIndex = index;
+                            hoveredSentenceIndex = index;
                           "
-                          @mouseleave="
-                            hoveredTooltipIndex = null;
-                            scheduleHideHover(index);
-                          "
+                          @mouseleave="scheduleHideHover(index)"
                         >
-                          <div
-                            class="rounded-xl border border-slate-200/70 bg-white shadow-xl p-3"
+                          <span
+                            class="items-center gap-2 border border-transparent px-0.5 py-0.5 leading-relaxed rounded-md transition-all duration-300 text-md text-base"
+                            :class="{
+                              'hover:border-blue-200/50 cursor-pointer':
+                                !showExplanations,
+                              'flex items-center': showExplanations,
+                              'bg-primary/15':
+                                !showExplanations &&
+                                (hoveredSentenceIndex === index ||
+                                  hoveredTooltipIndex === index),
+                            }"
                           >
-                            <ul class="space-y-1">
-                              <li
-                                class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
-                                @click="handleTranslate(index)"
-                              >
-                                <span
-                                  class="w-5 h-5 flex items-center justify-center shrink-0"
-                                >
-                                  <LanguageIcon
-                                    class="w-4 h-4 text-slate-600"
-                                  />
-                                </span>
-                                <span class="text-sm text-slate-600">{{
-                                  sentence.translation
-                                }}</span>
-                              </li>
-                              <li
-                                class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
-                                @click="copySentence(sentence.original)"
-                              >
-                                <span
-                                  class="w-5 h-5 flex items-center justify-center shrink-0"
-                                >
-                                  <LightBulbIcon
-                                    class="w-4 h-4 text-slate-600"
-                                  />
-                                </span>
-                                <span class="text-sm text-slate-600">{{sentence.tip}}</span>
-                              </li>
-                            </ul>
-                            <div
-                              class="text-xs font-semibold text-slate-600 mt-3 mb-1"
+                            {{ sentence.original }}
+                            <span
+                              v-if="showExplanations"
+                              class="cursor-pointer"
+                              @click="addSentenceToNotes(sentence)"
                             >
-                              Actions
-                            </div>
-                            <ul class="space-y-1">
-                              <li
-                                class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
-                                @click="addSentenceToNotes(sentence)"
+                              <ClipboardDocumentIcon class="w-4 h-4" />
+                            </span>
+                          </span>
+                          <div
+                            class="p-2 font-light text-slate-600"
+                            v-if="showExplanations"
+                          >
+                            <div
+                              class="flex items-center gap-3 rounded px-2 py-1 cursor-pointer"
+                              @click="handleTranslate(index)"
+                            >
+                              <span
+                                class="w-5 h-5 flex items-center justify-center"
                               >
-                                <span
-                                  class="w-5 h-5 flex items-center justify-center shrink-0"
+                                <LanguageIcon class="w-4 h-4" />
+                              </span>
+                              <span class="">{{ sentence.translation }}</span>
+                            </div>
+
+                            <div
+                              class="font-light text-slate-600 flex items-center gap-3 rounded px-2 py-1 cursor-pointer"
+                              @click="copySentence(sentence.original)"
+                            >
+                              <span
+                                class="w-5 h-5 flex items-center justify-center shrink-0"
+                              >
+                                <LightBulbIcon class="w-4 h-4" />
+                              </span>
+                              <span>{{ sentence.tip }}</span>
+                            </div>
+                          </div>
+
+                          <!-- Hover Card -->
+                          <div
+                            v-if="!showExplanations"
+                            class="absolute left-0 mt-2 z-30 w-72 transition-all"
+                            :class="{
+                              'opacity-100 translate-y-0 pointer-events-auto':
+                                hoveredSentenceIndex === index ||
+                                hoveredTooltipIndex === index,
+                              'opacity-0 translate-y-1 pointer-events-none': !(
+                                hoveredSentenceIndex === index ||
+                                hoveredTooltipIndex === index
+                              ),
+                            }"
+                            @mouseenter="
+                              clearHoverHideTimeout();
+                              hoveredTooltipIndex = index;
+                            "
+                            @mouseleave="
+                              hoveredTooltipIndex = null;
+                              scheduleHideHover(index);
+                            "
+                          >
+                            <div
+                              class="rounded-xl border border-slate-200/70 bg-white shadow-xl p-3"
+                            >
+                              <ul class="space-y-1">
+                                <li
+                                  class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
+                                  @click="handleTranslate(index)"
                                 >
-                                  <SparklesIcon
-                                    class="w-4 h-4 text-slate-600"
-                                  />
-                                </span>
-                                <span class="text-sm text-slate-600"
-                                  >Add this sentence to your notes</span
+                                  <span
+                                    class="w-5 h-5 flex items-center justify-center shrink-0"
+                                  >
+                                    <LanguageIcon
+                                      class="w-4 h-4 text-slate-600"
+                                    />
+                                  </span>
+                                  <span class="text-sm text-slate-600">{{
+                                    sentence.translation
+                                  }}</span>
+                                </li>
+                                <li
+                                  class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
+                                  @click="copySentence(sentence.original)"
                                 >
-                              </li>
-                            </ul>
+                                  <span
+                                    class="w-5 h-5 flex items-center justify-center shrink-0"
+                                  >
+                                    <LightBulbIcon
+                                      class="w-4 h-4 text-slate-600"
+                                    />
+                                  </span>
+                                  <span class="text-sm text-slate-600">{{
+                                    sentence.tip
+                                  }}</span>
+                                </li>
+                              </ul>
+                              <div
+                                class="text-xs font-semibold text-slate-600 mt-3 mb-1"
+                              >
+                                Actions
+                              </div>
+                              <ul class="space-y-1">
+                                <li
+                                  class="flex items-start gap-3 rounded px-2 py-1 cursor-pointer"
+                                  @click="addSentenceToNotes(sentence)"
+                                >
+                                  <span
+                                    class="w-5 h-5 flex items-center justify-center shrink-0"
+                                  >
+                                    <SparklesIcon
+                                      class="w-4 h-4 text-slate-600"
+                                    />
+                                  </span>
+                                  <span class="text-sm text-slate-600"
+                                    >Add this sentence to your notes</span
+                                  >
+                                </li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    </div>
                   </div>
-                  <div v-else-if="isQuizShown" id="quiz" class="mb-6"></div>
                 </div>
+                <QuizModal
+                  class="w-full"
+                  v-else-if="isQuizShown"
+                  :detailedResults="detailedResults"
+                  :grammarRuleMetaData="grammarRuleMetaData"
+                  :globalScore="lesson?.quizScore ?? 0"
+                  type="full"
+                  display="layout"
+                />
               </div>
 
               <AccountPaymentModal
@@ -642,7 +696,10 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <!-- </div> -->
           </div>
         </div>
-        <div class="border-l border-slate-200/70 col-span-3" v-show="!isReadingMode">
+        <div
+          class="border-l border-slate-200/70 col-span-3"
+          v-show="!isReadingMode"
+        >
           <div class="row-span-1 p-6 border-b border-slate-200/70">
             <br />
           </div>
@@ -671,7 +728,7 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
             <div class="p-4">
               <div class="dotted-divider"></div>
             </div>
-         
+
             <div class="p-4">
               <div class="mb-4 flex items-center gap-2">
                 <div
@@ -758,8 +815,20 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
   background-repeat: repeat-x;
   background-position: center bottom;
   /* Subtle fade on sides so it's less pronounced at the edges */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
 }
 @keyframes fade-in {
   from {
@@ -802,5 +871,4 @@ const sanitizedExtendedDescriptionTemplate = computed(() =>
   background-size: 1000px 100%;
   animation: shimmer-bg 2s infinite linear;
 }
-
 </style>

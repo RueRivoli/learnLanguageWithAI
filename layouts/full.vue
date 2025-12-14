@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const user = useSupabaseUser();
+const userStore = useUserStore();
+onMounted(async () => {
+  if (user.value?.id) await userStore.fetchUserProfile(user.value.id);
+});
+</script>
+
 <template>
   <div class="quiz-layout">
     <!-- Only the main content, no sidebar -->

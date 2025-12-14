@@ -23,7 +23,7 @@ const emit = defineEmits(["click"]);
 <template>
   <div
     :class="{
-      'rounded-md bg-white py-1 px-4 transition-all duration-300 border-l-4 border-warning':
+      'rounded-md bg-gradient-to-br from-gray-100 to-slate-200 text-slate-700 py-1 px-2 transition-all duration-300 border-l-4 border-warning':
         props.lightMode,
       'rounded-md py-1 px-2 transition-all duration-300 bg-gradient-to-br from-purple-500 to-pink-500 border-l-4 border-warning':
         !props.lightMode,

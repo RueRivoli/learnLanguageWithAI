@@ -7,6 +7,7 @@ const props = withDefaults(
     backgroundColor?: string;
     descriptionTextColor?: string;
     storyImgUrl?: string | null;
+    size?: "sm" | "md" | "lg";
   }>(),
   {
     title: null,
@@ -15,6 +16,7 @@ const props = withDefaults(
     backgroundColor: "bg-indigo-100",
     descriptionTextColor: "text-base-800",
     storyImgUrl: null,
+    size: "sm",
   },
 );
 </script>
@@ -25,7 +27,8 @@ const props = withDefaults(
       <img
         v-if="props.storyImgUrl"
         :src="props.storyImgUrl"
-        class="w-10 h-10 rounded-lg"
+        class="rounded-lg"
+        :class="props.size === 'sm' ? 'w-10 h-10' : props.size === 'md' ? 'w-12 h-12' : 'w-14 h-14'"
       />
       <img
         v-else

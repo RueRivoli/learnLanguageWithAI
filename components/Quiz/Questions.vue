@@ -12,7 +12,10 @@ import {
   ArrowsPointingInIcon,
   Square2StackIcon,
 } from "@heroicons/vue/24/outline";
-import { getBackgroundClassFromGrammarRuleLevel, getLeftBorderStyleClassFromGrammarRuleLevel } from "~/utils/learning/grammar";
+import {
+  getBackgroundClassFromGrammarRuleLevel,
+  getLeftBorderStyleClassFromGrammarRuleLevel,
+} from "~/utils/learning/grammar";
 
 definePageMeta({
   layout: "full",
@@ -153,26 +156,28 @@ const handleReturnToSubject = () => {
           <div class="row-span-9">
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
-              <div class="ml-2 flex items-center gap-2">
-                <span class="text-xl font-medium">{{
-                  currentSection.name
-                }}</span>
-                <span class="text-xl font-semibold">{{
-                  currentSection.current
-                }}</span>
-                <span class="text-slate-500">/ {{ currentSection.total }}</span>
+                <div class="ml-2 flex items-center gap-2">
+                  <span class="text-xl font-medium">{{
+                    currentSection.name
+                  }}</span>
+                  <span class="text-xl font-semibold">{{
+                    currentSection.current
+                  }}</span>
+                  <span class="text-slate-500"
+                    >/ {{ currentSection.total }}</span
+                  >
+                </div>
+                <LayoutKeyElementRuleBadge
+                  v-if="currentSection.name === 'Grammar'"
+                  class="w-60"
+                  :title="grammarRuleMetaData?.name ?? null"
+                  :titleEn="grammarRuleMetaData?.nameEn ?? null"
+                  :level="grammarRuleMetaData?.level ?? null"
+                  :symbol="grammarRuleMetaData?.symbol ?? null"
+                  size="sm"
+                  :lightMode="true"
+                />
               </div>
-              <LayoutKeyElementRuleBadge
-                v-if="currentSection.name === 'Grammar'"
-                class="w-60"
-                :title="grammarRuleMetaData?.name ?? null"
-                :titleEn="grammarRuleMetaData?.nameEn ?? null"
-                :level="grammarRuleMetaData?.level ?? null"
-                :symbol="grammarRuleMetaData?.symbol ?? null"
-                size="sm"
-                :lightMode="true"
-              />
-            </div>
               <!-- Content -->
               <div v-if="currentQuestion && !props.isLoading" class="space-y-6">
                 <!-- Question -->
@@ -190,21 +195,19 @@ const handleReturnToSubject = () => {
                     v-for="(option, index) in currentQuestionOptions"
                     :key="index"
                     @click="!isQuizCompleted ? selectAnswer(option) : null"
-                    class="w-full text-left cursor-pointer rounded-xl border border-slate-200/70 p-4 transition"
-                    :class="[
-                      selectedAnswer === option && !isQuizCompleted
-                        ? 'text-black bg-slate-300'
-                        : 'bg-white',
-                      isQuizCompleted &&
-                      index + 1 === Number(currentQuestion.correctAnswer)
-                        ? 'bg-success border-success'
-                        : 'bg-white',
-                      isQuizCompleted &&
-                      index + 1 === getUserAnswer(currentQuestionIndex) &&
-                      index + 1 !== Number(currentQuestion.correctAnswer)
-                        ? 'bg-error border-error'
-                        : 'bg-white',
-                    ]"
+                    class="w-full text-left cursor-pointer rounded-xl p-4 transition"
+                    :class="
+                      isQuizCompleted
+                        ? index + 1 === Number(currentQuestion.correctAnswer)
+                          ? 'bg-success border-success'
+                          : index + 1 === getUserAnswer(currentQuestionIndex)
+                            ? 'bg-error border-error'
+                            : 'rounded-lg bg-white border border-slate-200/70 shadow-sm'
+                        : selectedAnswer === option
+                          ? 'bg-slate-200 border-slate-200/70'
+                          : 'rounded-lg bg-white border border-slate-200/70 shadow-sm'
+                    "
+                    ,
                   >
                     <div class="flex items-center gap-3">
                       <div
@@ -313,31 +316,27 @@ const handleReturnToSubject = () => {
             <!-- Grammar -->
             <div class="space-y-3">
               <div class="mb-4 flex flex-wrap items-center justify-between">
-                <div class="mb-2 flex items-center gap-2">
+                <div class="flex items-center gap-2">
                   <div
                     class="w-8 h-8 rounded-lg flex items-center justify-center mr-2 shadow-lg"
-                    :class="getBackgroundClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)"
+                    :class="
+                      getBackgroundClassFromGrammarRuleLevel(
+                        grammarRuleMetaData?.level ?? 0,
+                      )
+                    "
                   >
                     <Square2StackIcon class="h-4 w-4 text-white" />
                   </div>
-                  <h3 class="text-lg">Key Module</h3>
+                  <h3 class="text-lg">Module</h3>
                 </div>
-                <!-- <LayoutKeyElementRuleBadge
-                  class="w-60"
-                  :title="grammarRuleMetaData?.name ?? null"
-                  :titleEn="grammarRuleMetaData?.nameEn ?? null"
-                  :level="grammarRuleMetaData?.level ?? null"
-                  :symbol="grammarRuleMetaData?.symbol ?? null"
-                  size="sm"
-                  :lightMode="true"
-                /> -->
-              </div>
-              <div
-                v-if="isQuizCompleted"
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200 text-sm"
-              >
-                <span class="opacity-70">Score:</span>
-                <span class="font-semibold">{{ grammarScore }}%</span>
+                <div
+                  v-if="isQuizCompleted"
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm"
+                  :class="`${getBackgroundClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)} text-white`"
+                >
+                  <span class="opacity-70">Score:</span>
+                  <span class="font-semibold">{{ grammarScore }}%</span>
+                </div>
               </div>
               <div class="grid grid-cols-5 gap-2">
                 <button
@@ -346,22 +345,18 @@ const handleReturnToSubject = () => {
                   @click="
                     isQuizCompleted ? goToQuestion(item.questionIndex) : null
                   "
-                  class="w-10 h-10 rounded-md text-sm font-semibold flex items-center justify-center transition hover:opacity-80 hover:cursor-pointer"
-                  :class="[
-                    !item.completed && !item.current
-                      ? `bg-white ${getLeftBorderStyleClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)}`
-                      : '',
-                    item.completed && !isQuizCompleted
-                      ? 'text-black bg-slate-300'
-                      : '',
-                    item.current ? 'text-black bg-slate-300' : '',
-                    isQuizCompleted && item.correct === true
-                      ? `bg-white ${getLeftBorderStyleClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)}`
-                      : '',
-                    isQuizCompleted && item.correct === false
-                      ? `bg-white ${getLeftBorderStyleClassFromGrammarRuleLevel(grammarRuleMetaData?.level ?? 0)}`
-                      : '',
-                  ]"
+                  class="w-10 h-10 cursor-pointer rounded-md text-sm text-cursor font-semibold flex items-center justify-center transition hover:opacity-80"
+                  :class="
+                    isQuizCompleted
+                      ? item.current
+                        ? 'bg-slate-200 border-slate-200/70'
+                        : item.correct === true
+                          ? 'bg-slate-200 border-slate-200/70 text-success/70'
+                          : 'bg-slate-200 border-slate-200/70 text-error/70'
+                      : item.current || item.completed
+                        ? 'bg-slate-200 border-slate-200/70'
+                        : 'rounded-lg bg-white border border-slate-200/70 shadow-sm'
+                  "
                 >
                   {{ index + 1 }}
                 </button>
@@ -375,18 +370,18 @@ const handleReturnToSubject = () => {
               v-if="props.type === 'full' || props.type === 'vocabulary'"
               class="space-y-3"
             >
-              <div class="flex items-center justify-between">
-                <div class="mb-2 flex items-center gap-2">
+              <div class="mb-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
                   <div
                     class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2 shadow-lg"
                   >
                     <BookOpenIcon class="h-4 w-4 text-white" />
                   </div>
-                  <h3 class="text-lg">Key Words</h3>
+                  <h3 class="text-lg">Words</h3>
                 </div>
                 <div
                   v-if="isQuizCompleted"
-                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200 text-sm"
+                  class="rounded-md bg-primary inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm text-white"
                 >
                   <span class="opacity-70">Score:</span>
                   <span class="font-semibold">{{ wordsScore }}%</span>
@@ -399,22 +394,18 @@ const handleReturnToSubject = () => {
                   @click="
                     isQuizCompleted ? goToQuestion(item.questionIndex) : null
                   "
-                  class="w-10 h-10 rounded-md text-sm font-semibold flex items-center justify-center transition hover:bg-slate-50"
-                  :class="[
-                    item.completed && !isQuizCompleted
-                      ? 'text-black bg-slate-300'
-                      : '',
-                    item.current ? 'text-black bg-slate-300' : '',
-                    !isQuizCompleted && !item.completed && !item.current
-                      ? 'bg-white border-l-4 border-primary'
-                      : '',
-                    isQuizCompleted && item.correct === true
-                      ? 'border-l-4 border-success bg-white'
-                      : '',
-                    isQuizCompleted && item.correct === false
-                      ? 'border-l-4 border-error bg-white'
-                      : '',
-                  ]"
+                  class="w-10 h-10 cursor-pointer rounded-md text-sm text-cursor font-semibold flex items-center justify-center transition hover:opacity-80"
+                  :class="
+                    isQuizCompleted
+                      ? item.current
+                        ? 'bg-slate-200 border-slate-200/70'
+                        : item.correct === true
+                          ? 'bg-slate-200 border-slate-200/70 text-success/70'
+                          : 'bg-slate-200 border-slate-200/70 text-error/70'
+                      : item.current || item.completed
+                        ? 'bg-slate-200 border-slate-200/70'
+                        : 'rounded-lg bg-white border border-slate-200/70 shadow-sm'
+                  "
                 >
                   {{ index + 1 }}
                 </button>
@@ -428,18 +419,18 @@ const handleReturnToSubject = () => {
               v-if="props.type === 'full' || props.type === 'vocabulary'"
               class="space-y-3"
             >
-              <div class="flex items-center justify-between">
-                <div class="mb-2 flex items-center gap-2">
+              <div class="mb-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
                   <div
                     class="w-8 h-8 bg-warning rounded-lg flex items-center justify-center mr-2 shadow-lg"
                   >
                     <LanguageIcon class="h-4 w-4 text-white" />
                   </div>
-                  <h3 class="text-lg">Key Expressions</h3>
+                  <h3 class="text-lg">Expressions</h3>
                 </div>
                 <div
                   v-if="isQuizCompleted"
-                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200 text-sm"
+                  class="rounded-md bg-warning inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm text-white"
                 >
                   <span class="opacity-70">Score:</span>
                   <span class="font-semibold">{{ expressionsScore }}%</span>
@@ -452,28 +443,18 @@ const handleReturnToSubject = () => {
                   @click="
                     isQuizCompleted ? goToQuestion(item.questionIndex) : null
                   "
-                  class="w-10 h-10 rounded-md text-sm font-semibold flex items-center justify-center transition hover:bg-slate-50"
-                  :class="[
-                    !isQuizCompleted && item.completed
-                      ? 'text-black bg-slate-300'
-                      : '',
-                    !isQuizCompleted && item.current
-                      ? 'text-black bg-slate-300'
-                      : '',
-                    !isQuizCompleted && !item.completed && !item.current
-                      ? 'bg-white border-l-4 border-warning'
-                      : '',
-                    isQuizCompleted && item.correct === true
+                  class="w-10 h-10 cursor-pointer rounded-md text-sm text-cursor font-semibold flex items-center justify-center transition hover:opacity-80"
+                  :class="
+                    isQuizCompleted
                       ? item.current
-                        ? 'text-black bg-slate-300'
-                        : 'border-l-4 border-success bg-white'
-                      : '',
-                    isQuizCompleted && item.correct === false
-                      ? item.current
-                        ? 'text-black bg-slate-300'
-                        : 'border-l-4 border-error bg-white'
-                      : '',
-                  ]"
+                        ? 'bg-slate-200 border-slate-200/70'
+                        : item.correct === true
+                          ? 'bg-slate-200 border-slate-200/70 text-success/70'
+                          : 'bg-slate-200 border-slate-200/70 text-error/70'
+                      : item.current || item.completed
+                        ? 'bg-slate-200 border-slate-200/70'
+                        : 'rounded-lg bg-white border border-slate-200/70 shadow-sm'
+                  "
                 >
                   {{ index + 1 }}
                 </button>

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     .from("turkish_grammar_scores")
     .select(
       "id, score, rule_id, turkish_grammar_rules ( position, symbol, rule_name, rule_name_translation, difficulty_class)",
-    )
+    ).eq("user_id", userId)
     .order("rule_id", { ascending: true });
   // if (query.order_by) reqGrammarScores.order(query.order_by, { ascending: true });
   const reqVocabularyScores = supabase

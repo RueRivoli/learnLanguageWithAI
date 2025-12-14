@@ -592,14 +592,15 @@ const handleGenerateStory = async () => {
                 <option value="3">Intermediate</option>
                 <option value="4">Advanced</option>
               </select>
-              <select
+              <!-- TODO: Uncomment when story book is implemented -->
+              <!-- <select
                 v-model="storyType"
                 class="w-40 cursor-pointer select"
                 :disabled="isFetchingData || isGeneratingLesson"
               >
                 <option value="story">Story</option>
                 <option value="story_book">Story Book</option>
-              </select>
+              </select> -->
               <div>
                 <button
                   class="w-80 m-auto bg-neutral hover:bg-neutral/90 cursor-pointer text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50"

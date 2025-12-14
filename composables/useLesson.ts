@@ -47,7 +47,12 @@ export const useLesson = (lessonId: string | Ref<string>) => {
       grammarRuleId: rawData.grammar_rule_id,
       level: rawData.turkish_grammar_rules.difficulty_class,
       quizId: rawData.quiz_id,
-      quizScore: rawData.turkish_quizzes_result ? rawData.turkish_quizzes_result.score_global : null,
+      quizScore: rawData.turkish_quizzes_result
+        ? rawData.turkish_quizzes_result.score_global
+        : null,
+      detailedResults: rawData.turkish_quizzes_result
+        ? rawData.turkish_quizzes_result.detailed_results
+        : null,
       imgUrl: rawData.img_url,
       notes: rawData.notes,
       newWords:
